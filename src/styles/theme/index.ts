@@ -1,5 +1,7 @@
+import typo from './typo';
+
 const theme = {
-  testColor: 'red',
+  typo,
 };
 
 export default theme;
