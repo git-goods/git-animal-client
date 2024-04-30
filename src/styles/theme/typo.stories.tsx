@@ -1,24 +1,32 @@
 import styled from 'styled-components';
 
+import typo from './typo';
+
 const meta = {
   title: 'Typography',
   component: Typography,
-  parameters: {
-    controls: { expanded: true },
-  },
 };
 
 export default meta;
 
+const typos = Object.keys(typo);
+
 export function Typography() {
   return (
     <div>
-      <p>global pink color</p>
-      <Styled>styled red color</Styled>
+      {typos.map((key) => (
+        <Typo key={key} $typoKey={key as keyof typeof typo}>
+          Depromeet Marker Typo Theme {key}
+        </Typo>
+      ))}
     </div>
   );
 }
 
-const Styled = styled.div`
-  color: ${({ theme }) => theme.testColor};
+const Typo = styled.div<{ $typoKey: keyof typeof typo }>`
+  ${({ theme, $typoKey }) => theme.typo[$typoKey]};
+
+  & + & {
+    margin-top: 12px;
+  }
 `;
