@@ -57,6 +57,7 @@ export default SelectAnimals;
 const AnimalList = styled.ul`
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 
   button {
     position: relative;

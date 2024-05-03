@@ -6,7 +6,11 @@ import styled from 'styled-components';
 
 import { FarmSection } from './index.styles';
 
-function FarmType() {
+interface Props {
+  username: string;
+}
+
+function FarmType({ username }: Props) {
   const [selectedPet, setSelectedPet] = useState<number[]>([]);
 
   return (
@@ -33,7 +37,7 @@ function FarmType() {
       </ChangePet>
       <Preview>
         <a href="https://github.com/devxb/gitanimals">
-          <img src="https://render.gitanimals.org/farms/sumi-0011" width="600" height={300} alt="preview farm" />
+          <img src={`https://render.gitanimals.org/farms/${username}`} width="600" height={300} alt="preview farm" />
         </a>
       </Preview>
     </>

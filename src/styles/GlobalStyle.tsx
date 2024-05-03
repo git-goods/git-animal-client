@@ -20,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
     font-weight: 400;
     line-height: 140%; /* 107.8px */
+    background-color: #2A7442;
   }
 
   button {

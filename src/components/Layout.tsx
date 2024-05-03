@@ -19,7 +19,8 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   min-height: 100vh;
-
+  min-width: fit-content;
+  min-width: 1400px;
   > img {
     z-index: -1;
     object-fit: cover;

@@ -11,7 +11,7 @@ import FarmType from './FarmType';
 import OneType from './OneType';
 
 type ChooseType = '1-type' | 'farm-type';
-
+const USER_NAME = 'sumi-0011';
 function Mypage() {
   const [selectedType, setSelectedType] = useState<ChooseType>('1-type');
 
@@ -41,8 +41,10 @@ function Mypage() {
               Farm Type
             </Button>
           </TypeSelect>
-          {selectedType === '1-type' && <OneType />}
-          {selectedType === 'farm-type' && <FarmType />}
+          <div style={{ minWidth: '1000px' }}>
+            {selectedType === '1-type' && <OneType username={USER_NAME} />}
+            {selectedType === 'farm-type' && <FarmType username={USER_NAME} />}
+          </div>
           <ButtonWrapper>
             <Button>Copy Link</Button>
           </ButtonWrapper>
@@ -55,7 +57,7 @@ function Mypage() {
 export default Mypage;
 
 const ButtonWrapper = styled.div`
-  margin: 72px auto 0;
+  margin: 72px auto;
   width: fit-content;
 `;
 
