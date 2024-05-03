@@ -1,18 +1,19 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
-import Image from 'next/image';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
 import Header from '@/components/Header';
 import Layout from '@/components/Layout';
 
+import FarmType from './FarmType';
+import OneType from './OneType';
+
 type ChooseType = '1-type' | 'farm-type';
 
 function Mypage() {
   const [selectedType, setSelectedType] = useState<ChooseType>('1-type');
-  const [selectedPet, setSelectedPet] = useState<number>();
 
   return (
     <Layout>
@@ -40,26 +41,8 @@ function Mypage() {
               Farm Type
             </Button>
           </TypeSelect>
-          <ChangePet>
-            <h2>Change pet</h2>
-            <div className="pet-list">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <button
-                  className={selectedPet && selectedPet === index ? 'selected' : ''}
-                  key={index}
-                  onClick={() => setSelectedPet(index)}
-                >
-                  <Image className="pet-image" src="/pets/penguin.svg" alt="penguin" width={41} height={80} />
-                  {selectedPet === index && (
-                    <Image className="check-icon" src="/icon/check-mono.svg" alt="check" width={24} height={24} />
-                  )}
-                </button>
-              ))}
-            </div>
-          </ChangePet>
-          <Preview>
-            <img alt="preview image" src="/preview-image.png" width={600} height={300} />
-          </Preview>
+          {selectedType === '1-type' && <OneType />}
+          {selectedType === 'farm-type' && <FarmType />}
           <ButtonWrapper>
             <Button>Copy Link</Button>
           </ButtonWrapper>
@@ -72,7 +55,7 @@ function Mypage() {
 export default Mypage;
 
 const ButtonWrapper = styled.div`
-  margin: 0 auto;
+  margin: 72px auto 0;
   width: fit-content;
 `;
 
@@ -133,42 +116,4 @@ const TypeSelect = styled.section`
   button.selected {
     opacity: 1;
   }
-`;
-
-const ChangePet = styled.section`
-  margin-top: 46px;
-  padding-left: 36px;
-  > h2 {
-    color: #fff;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    margin-bottom: 30px;
-    line-height: normal;
-  }
-  .pet-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
-  .check-icon {
-    position: absolute;
-    top: 30px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    filter: brightness(1);
-  }
-  button {
-    position: relative;
-    &.selected .pet-image {
-      filter: brightness(0.5);
-    }
-  }
-`;
-
-const Preview = styled.section`
-  width: fit-content;
-  margin: 84px auto 77px;
 `;
