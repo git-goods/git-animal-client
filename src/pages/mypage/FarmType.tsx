@@ -4,7 +4,9 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import { GitanimalsFarm } from '@/components/Gitanimals';
+import Button from '@/components/Button';
+import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals';
+import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 
 import { FarmSection } from './index.styles';
 
@@ -13,7 +15,13 @@ interface Props {
 }
 
 function FarmType({ username }: Props) {
+  const [_, copy] = useCopyToClipboard();
+
   const [selectedPet, setSelectedPet] = useState<number[]>([]);
+
+  const onCopyLink = () => {
+    copy(getGitanimalsFarmString({ username }));
+  };
 
   return (
     <>
@@ -40,11 +48,18 @@ function FarmType({ username }: Props) {
       <Preview>
         <GitanimalsFarm username={username} sizes={[600, 300]} />
       </Preview>
+      <ButtonWrapper>
+        <Button onClick={onCopyLink}>Copy Link</Button>
+      </ButtonWrapper>
     </>
   );
 }
 
 export default FarmType;
+const ButtonWrapper = styled.div`
+  margin: 72px auto;
+  width: fit-content;
+`;
 
 const ChangePet = styled(FarmSection)`
   .pet-list {

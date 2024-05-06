@@ -4,8 +4,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
+import { getGitanimalsLineString } from '@/components/Gitanimals';
 import Header from '@/components/Header';
 import Layout from '@/components/Layout';
+import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 import { useUser } from '@/store/user';
 
 import FarmType from './FarmType';
@@ -16,7 +18,15 @@ type ChooseType = '1-type' | 'farm-type';
 function Mypage() {
   const { username } = useUser();
 
+  const [_, copy] = useCopyToClipboard();
+
   const [selectedType, setSelectedType] = useState<ChooseType>('1-type');
+
+  const onCopyLink = () => {
+    if (selectedType === '1-type') {
+      copy(getGitanimalsLineString({ username }));
+    }
+  };
 
   return (
     <Layout>
@@ -48,9 +58,6 @@ function Mypage() {
             {selectedType === '1-type' && <OneType username={username} />}
             {selectedType === 'farm-type' && <FarmType username={username} />}
           </div>
-          <ButtonWrapper>
-            <Button>Copy Link</Button>
-          </ButtonWrapper>
         </RightSection>
       </Main>
     </Layout>
@@ -58,11 +65,6 @@ function Mypage() {
 }
 
 export default Mypage;
-
-const ButtonWrapper = styled.div`
-  margin: 72px auto;
-  width: fit-content;
-`;
 
 const Main = styled.main`
   padding-top: 170px;

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { GitanimalsLine } from '@/components/Gitanimals';
+import Button from '@/components/Button';
+import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
 import SelectAnimals from '@/components/SelectAnimals';
+import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 
 import { FarmSection } from './index.styles';
 
@@ -11,6 +13,8 @@ interface Props {
 }
 
 function OneType({ username }: Props) {
+  const [_, copy] = useCopyToClipboard();
+
   const [selected, setSelected] = useState<string>();
   const [sizes, setSizes] = useState<[number, number]>([600, 120]);
   const [error, setError] = useState('');
@@ -29,6 +33,10 @@ function OneType({ username }: Props) {
   const onHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError('');
     setSizes([sizes[0], parseInt(e.target.value)]);
+  };
+
+  const onCopyLink = () => {
+    copy(getGitanimalsLineString({ username, sizes }));
   };
 
   return (
@@ -56,11 +64,19 @@ function OneType({ username }: Props) {
           <GitanimalsLine username={username} sizes={sizes} />
         </LineContainer>
       </FarmSection>
+      <ButtonWrapper>
+        <Button onClick={onCopyLink}>Copy Link</Button>
+      </ButtonWrapper>
     </>
   );
 }
 
 export default OneType;
+
+const ButtonWrapper = styled.div`
+  margin: 72px auto;
+  width: fit-content;
+`;
 
 const InputWrapper = styled.div`
   color: white;
