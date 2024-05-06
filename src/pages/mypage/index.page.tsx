@@ -6,13 +6,16 @@ import styled from 'styled-components';
 import Button from '@/components/Button';
 import Header from '@/components/Header';
 import Layout from '@/components/Layout';
+import { useUser } from '@/store/user';
 
 import FarmType from './FarmType';
 import OneType from './OneType';
 
 type ChooseType = '1-type' | 'farm-type';
-const USER_NAME = 'sumi-0011';
+
 function Mypage() {
+  const { username } = useUser();
+
   const [selectedType, setSelectedType] = useState<ChooseType>('1-type');
 
   return (
@@ -21,7 +24,7 @@ function Mypage() {
       <Main>
         <Profile>
           <div className="profile-image">{/* <Image src="/" alt="profile image" width={160} height={160} /> */}</div>
-          <p className="profile-name">Devxb</p>
+          <p className="profile-name">{username}</p>
           <p className="point">Points: 477,000</p>
         </Profile>
         <RightSection>
@@ -42,8 +45,8 @@ function Mypage() {
             </Button>
           </TypeSelect>
           <div style={{ minWidth: '1000px' }}>
-            {selectedType === '1-type' && <OneType username={USER_NAME} />}
-            {selectedType === 'farm-type' && <FarmType username={USER_NAME} />}
+            {selectedType === '1-type' && <OneType username={username} />}
+            {selectedType === 'farm-type' && <FarmType username={username} />}
           </div>
           <ButtonWrapper>
             <Button>Copy Link</Button>
@@ -98,6 +101,8 @@ const Profile = styled.section`
 
     margin-top: 40px;
     margin-bottom: 30px;
+
+    white-space: nowrap;
   }
 
   .point {

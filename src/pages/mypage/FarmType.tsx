@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import { GitanimalsFarm } from '@/components/Gitanimals';
+
 import { FarmSection } from './index.styles';
 
 interface Props {
@@ -36,9 +38,7 @@ function FarmType({ username }: Props) {
         </div>
       </ChangePet>
       <Preview>
-        <a href="https://github.com/devxb/gitanimals">
-          <img src={`https://render.gitanimals.org/farms/${username}`} width="600" height={300} alt="preview farm" />
-        </a>
+        <GitanimalsFarm username={username} sizes={[600, 300]} />
       </Preview>
     </>
   );
