@@ -1,16 +1,21 @@
-import React from 'react';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
+import { useUser } from '@/store/user';
 
 function Welcome() {
+  const { setUsername } = useUser();
+
   return (
     <Container>
       <Heading>
-        Have your pet in <strong>GITHUB!</strong>{' '}
+        Have your pet in <strong>GITHUB!</strong>
       </Heading>
       <SeeExampleButton>See Example →</SeeExampleButton>
-      <Button href="/start">HAVE PET!</Button>
+      {/* TODO: 임시로 수미로 설정 */}
+      <Button href="/start" onClick={() => setUsername('sumi-0011')}>
+        HAVE PET!
+      </Button>
     </Container>
   );
 }

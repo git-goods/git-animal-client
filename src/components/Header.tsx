@@ -4,7 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 
+import { useUser } from '@/store/user';
+
 function Header() {
+  const { username, isLogin } = useUser();
+
   return (
     <>
       <HeaderStyled>
@@ -15,7 +19,7 @@ function Header() {
           <nav>
             <ul>
               <li>
-                <Link href="#">SHOP</Link>
+                <Link href={isLogin ? '/shop' : '#'}>SHOP</Link>
               </li>
               <li>
                 <a href="#">GITHUB</a>
@@ -23,11 +27,17 @@ function Header() {
             </ul>
           </nav>
           <Profile>
-            <div className="profile-image"></div>
-            <button>
-              <span className="profile-name">Devxb</span>
-              <Image src="/icon/chervon-right.svg" width={12} height={12} alt="arrow-down" />
-            </button>
+            {isLogin ? (
+              <>
+                <div className="profile-image"></div>
+                <button>
+                  <span className="profile-name">{username}</span>
+                  <Image src="/icon/chervon-right.svg" width={12} height={12} alt="arrow-down" />
+                </button>
+              </>
+            ) : (
+              <></>
+            )}
           </Profile>
         </div>
       </HeaderStyled>

@@ -8,6 +8,8 @@ import SelectAnimals from '@/components/SelectAnimals';
 
 function StartPage() {
   const [selected, setSelected] = useState<string>();
+  // TODO : postCoupons 연결
+
   return (
     <Layout>
       <Header />
