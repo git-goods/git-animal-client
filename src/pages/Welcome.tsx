@@ -10,7 +10,7 @@ function Welcome() {
         Have your pet in <strong>GITHUB!</strong>{' '}
       </Heading>
       <SeeExampleButton>See Example →</SeeExampleButton>
-      <Button>HAVE PET!</Button>
+      <Button href="/start">HAVE PET!</Button>
     </Container>
   );
 }

@@ -1,8 +1,7 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { GitanimalsLine } from '@/components/Gitanimals';
 import SelectAnimals from '@/components/SelectAnimals';
 
 import { FarmSection } from './index.styles';
@@ -13,7 +12,24 @@ interface Props {
 
 function OneType({ username }: Props) {
   const [selected, setSelected] = useState<string>();
-  const [sizes, setSizes] = useState([600, 120]);
+  const [sizes, setSizes] = useState<[number, number]>([600, 120]);
+  const [error, setError] = useState('');
+
+  const onWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    setError('');
+
+    if (value > 1000) {
+      setError('1000 이상은 설정할 수 없습니다.');
+    }
+
+    setSizes([value, sizes[1]]);
+  };
+
+  const onHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setError('');
+    setSizes([sizes[0], parseInt(e.target.value)]);
+  };
 
   return (
     <>
@@ -25,32 +41,19 @@ function OneType({ username }: Props) {
         <h2>영역을 customize 하세요</h2>
         <InputWrapper>
           <label htmlFor="width">width</label>
-          <input
-            type="number"
-            name="width"
-            id="width"
-            value={sizes[0]}
-            onChange={(e) => setSizes([parseInt(e.target.value), sizes[1]])}
-          />
+          <input type="number" name="width" id="width" value={sizes[0]} onChange={(e) => onWidthChange(e)} />
 
           <label htmlFor="height">height</label>
-          <input
-            type="number"
-            name="height"
-            id="height"
-            value={sizes[1]}
-            onChange={(e) => setSizes([sizes[0], parseInt(e.target.value)])}
-          />
+          <input type="number" name="height" id="height" value={sizes[1]} onChange={(e) => onHeightChange(e)} />
         </InputWrapper>
+        {error && <ErrorMsg>{error}</ErrorMsg>}
         <LineContainer
           style={{
             width: sizes[0],
             height: sizes[1],
           }}
         >
-          <a href="https://github.com/devxb/gitanimals">
-            <img src={`https://render.gitanimals.org/lines/${username} `} width={sizes[0]} height={sizes[1]} />
-          </a>
+          <GitanimalsLine username={username} sizes={sizes} />
         </LineContainer>
       </FarmSection>
     </>
@@ -95,4 +98,14 @@ const LineContainer = styled.div`
   max-width: 1000px;
 
   margin: 24px auto;
+
+  img {
+    max-width: 100%;
+  }
+`;
+
+const ErrorMsg = styled.p`
+  color: white;
+  margin-bottom: 12px;
+  font-size: 14px;
 `;

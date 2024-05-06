@@ -4,5 +4,6 @@
     "source.fixAll.stylelint": "explicit",
     "source.addMissingImports": "explicit"
   },
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "cSpell.words": ["Gitanimals"]
 }
