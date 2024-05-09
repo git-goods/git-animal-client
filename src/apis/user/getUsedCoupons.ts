@@ -35,3 +35,12 @@ export const checkUsedCouponsByToken = async (token: string): Promise<boolean> =
   }
   return false;
 };
+
+export const checkUsedCoupons = async (): Promise<boolean> => {
+  const data = await get<GetUsedCouponsResponse>('/coupons/users');
+
+  if (data.coupons.length > 0) {
+    return true;
+  }
+  return false;
+};

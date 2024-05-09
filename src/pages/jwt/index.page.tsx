@@ -16,9 +16,9 @@ function JWTPage() {
       await login(token);
 
       if (await checkUsedCouponsByToken(token)) {
-        router.push('/mypage');
+        router.replace('/mypage');
       } else {
-        router.push('/start');
+        router.replace('/start');
       }
     },
     [login, router],

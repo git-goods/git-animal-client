@@ -1,9 +1,21 @@
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
+import { checkUsedCoupons } from '@/apis/user/getUsedCoupons';
 import Button from '@/components/Button';
 import LoginButton from '@/components/LoginButton';
 
 function Welcome() {
+  const router = useRouter();
+
+  const onClickHavePet = async () => {
+    if (await checkUsedCoupons()) {
+      router.replace('/mypage');
+    } else {
+      router.replace('/start');
+    }
+  };
+
   return (
     <Container>
       <Heading>
@@ -12,7 +24,7 @@ function Welcome() {
       <SeeExampleButton>See Example →</SeeExampleButton>
       {/* TODO: 임시로 수미로 설정 */}
       <LoginButton>
-        <Button>HAVE PET!</Button>
+        <Button onClick={onClickHavePet}>HAVE PET!</Button>
       </LoginButton>
     </Container>
   );
