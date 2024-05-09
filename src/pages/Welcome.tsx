@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
-import { useUser } from '@/store/user';
+import LoginButton from '@/components/LoginButton';
 
 function Welcome() {
-  const { setUsername } = useUser();
-
   return (
     <Container>
       <Heading>
@@ -13,9 +11,9 @@ function Welcome() {
       </Heading>
       <SeeExampleButton>See Example →</SeeExampleButton>
       {/* TODO: 임시로 수미로 설정 */}
-      <Button href="/start" onClick={() => setUsername('sumi-0011')}>
-        HAVE PET!
-      </Button>
+      <LoginButton>
+        <Button>HAVE PET!</Button>
+      </LoginButton>
     </Container>
   );
 }
