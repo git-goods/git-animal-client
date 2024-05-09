@@ -104,6 +104,23 @@
         <rect x="7.33334" y="5.33437" width="2.88889" height="2.66719" fill="#FF6F0F"/>
         <rect x="8.77778" y="6.66795" width="2.88889" height="1.33359" fill="#FF6F0F"/>
       </g>
+
+      <g id="14-sunglasses" transform="translate(1, -6.5)">
+        <rect x="2.88017" y="5.35229" width="5.14286" height="0.571429" transform="rotate(-18 2.88017 5.35229)" fill="black"/>
+        <rect x="2.16013" y="4.98544" width="0.571429" height="0.571429" transform="rotate(-18 2.16013 4.98544)" fill="black"/>
+        <rect x="1.44009" y="4.61856" width="0.571429" height="0.571429" transform="rotate(-18 1.44009 4.61856)" fill="black"/>
+        <rect x="0.720047" y="4.25168" width="0.571429" height="0.571429" transform="rotate(-18 0.720047 4.25168)" fill="black"/>
+        <rect y="3.8848" width="0.571429" height="0.571429" transform="rotate(-18 0 3.8848)" fill="black"/>
+        <rect x="3.6002" y="5.71918" width="4" height="0.571429" transform="rotate(-18 3.6002 5.71918)" fill="black"/>
+        <rect x="4.32025" y="6.08606" width="2.85714" height="0.571429" transform="rotate(-18 4.32025 6.08606)" fill="black"/>
+        <rect x="7.77132" y="3.76306" width="5.14286" height="0.571429" transform="rotate(-18 7.77132 3.76306)" fill="black"/>
+        <rect x="8.49136" y="4.12994" width="4" height="0.571429" transform="rotate(-18 8.49136 4.12994)" fill="black"/>
+        <rect x="9.2114" y="4.49683" width="2.85714" height="0.571429" transform="rotate(-18 9.2114 4.49683)" fill="black"/>
+        <rect x="4.14367" y="5.5426" width="0.571429" height="0.571429" transform="rotate(-18 4.14367 5.5426)" fill="white"/>
+        <rect x="4.86371" y="5.90948" width="0.571429" height="0.571429" transform="rotate(-18 4.86371 5.90948)" fill="white"/>
+        <rect x="9.03482" y="3.95337" width="0.571429" height="0.571429" transform="rotate(-18 9.03482 3.95337)" fill="white"/>
+        <rect x="9.75486" y="4.32025" width="0.571429" height="0.571429" transform="rotate(-18 9.75486 4.32025)" fill="white"/>
+      </g>
     </svg>
   </g>
 </svg>

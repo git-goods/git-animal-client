@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { useGetAllPets } from '@/apis/user/useGetAllPets';
 import { GitanimalsLine } from '@/components/Gitanimals';
-import SelectAnimals from '@/components/SelectAnimals';
+import SelectAnimal from '@/components/SelectAnimal';
+import { useUser } from '@/store/user';
 
 import { FarmSection } from './index.styles';
 
@@ -10,10 +12,31 @@ interface Props {
   username: string;
 }
 
-function OneType({ username }: Props) {
+function OneType({}: Props) {
   const [selected, setSelected] = useState<string>();
   const [sizes, setSizes] = useState<[number, number]>([600, 120]);
   const [error, setError] = useState('');
+
+  const { username } = useUser();
+  const { data } = useGetAllPets(username, {
+    enabled: Boolean(username),
+    select: (data) => {
+      const personaList = data?.personas || [];
+      const typeSet = new Set();
+      const filteredPersonas = personaList.filter((item) => {
+        const isExist = typeSet.has(item.type);
+        typeSet.add(item.type);
+        return !isExist;
+      });
+      return {
+        ...data,
+        personas: filteredPersonas,
+      };
+    },
+  });
+
+  const personaList = data?.personas || [];
+  console.log('personaList: ', personaList);
 
   const onWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
@@ -35,7 +58,7 @@ function OneType({ username }: Props) {
     <>
       <FarmSection>
         <h2>choose only one pet</h2>
-        <SelectAnimals selected={selected} setSelected={setSelected} size={120} />
+        <SelectAnimal selected={selected} setSelected={setSelected} size={120} personList={personaList} />
       </FarmSection>
       <FarmSection>
         <h2>영역을 customize 하세요</h2>

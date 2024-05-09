@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" overflow="visible"><style>
+  @keyframes goblin-14-head-move {
+  0% {
+  transform: translate(0px, -6px);
+  }
+  50% {
+  transform: translate(0px, -5px);
+  }
+  100% {
+  transform: translate(0px, -6px);
+  }
+  }
+
+  @keyframes goblin-14-leg-1-move {
+  0% {
+  transform: translate(1px, 5px);
+  }
+  50% {
+  transform: translate(1px, 4.5px);
+  }
+  100% {
+  transform: translate(1px, 5px);
+  }
+  }
+
+  @keyframes goblin-14-leg-2-move {
+  0% {
+  transform: translate(4px, 4.5px);
+  }
+  50% {
+  transform: translate(4px, 5px);
+  }
+  100% {
+  transform: translate(4px, 4.5px);
+  }
+  }
+
+  #goblin-14-head {
+  animation-name:goblin-14-head-move;
+  animation-duration:1s;
+  animation-iteration-count:infinite;
+  animation-timing-function: ease-in-out;
+  }
+
+  #goblin-14-leg-1 {
+  animation-name:goblin-14-leg-1-move;
+  animation-duration:1s;
+  animation-iteration-count:infinite;
+  animation-timing-function: ease-in-out;
+  }
+
+  #goblin-14-leg-2 {
+  animation-name:goblin-14-leg-2-move;
+  animation-duration:1s;
+  animation-iteration-count:infinite;
+  animation-timing-function: ease-in-out;
+  }
+</style>
+  <g id="goblin-14" transform="translate(30, 51)">
+    <svg width="600" height="300" viewBox="0 0 200 100" fill="none" overflow="visible">
+
+      <g id="shadow" transform="translate(0, 8)">
+        <rect y="0.5" width="7" height="1" fill="#2B4447" fill-opacity="0.1"/>
+        <rect x="0.53846" y="0.25" width="5.92308" height="0.25" fill="#2B4447" fill-opacity="0.1"/>
+        <rect x="0.53846" y="1.5" width="5.92308" height="0.25" fill="#2B4447" fill-opacity="0.1"/>
+        <rect x="1.07693" width="4.84615" height="0.25" fill="#2B4447" fill-opacity="0.1"/>
+        <rect x="1.07693" y="1.75" width="4.84615" height="0.25" fill="#2B4447" fill-opacity="0.1"/>
+      </g>
+
+      <g id="goblin-bag" transform="translate(-8, -2)">
+        <rect x="3" y="1" width="7" height="6" fill="#855319"/>
+        <rect x="7" y="8" width="1" height="1" fill="#855319"/>
+        <rect x="4" width="4" height="9" fill="#855319"/>
+        <rect x="2" y="1" width="2" height="8" fill="#855319"/>
+        <rect x="1" y="2" width="1" height="3" fill="#855319"/>
+        <rect y="3" width="7" height="3" fill="#855319"/>
+        <rect x="1" y="4" width="1" height="4" fill="#855319"/>
+        <rect x="2" y="8" width="1" height="1" fill="#855319"/>
+        <rect x="3" y="6" width="4" height="4" fill="#855319"/>
+        <rect x="2" y="8" width="1" height="1" fill="black" fill-opacity="0.2"/>
+        <rect x="3" y="9" width="4" height="1" fill="black" fill-opacity="0.2"/>
+        <rect x="7" y="8" width="1" height="1" fill="black" fill-opacity="0.2"/>
+        <rect y="5" width="1" height="1" fill="black" fill-opacity="0.2"/>
+        <rect x="1" y="6" width="1" height="2" fill="black" fill-opacity="0.2"/>
+      </g>
+
+      <g id="goblin-14-leg-1" transform="translate(1, 5)">
+        <rect width="2" height="4" fill="#6DB33F"/>
+      </g>
+
+      <g id="goblin-14-leg-2" transform="translate(4, 5)">
+        <rect width="2" height="4" fill="#6DB33F"/>
+      </g>
+
+      <g id="goblin-body" transform="translate(0, -2)">
+        <rect x="4" y="1" width="1" height="1" fill="#6DB33F"/>
+        <rect x="2" y="8" width="4" height="1" fill="#6DB33F"/>
+        <rect x="1" y="2" width="5" height="3" fill="#6DB33F"/>
+        <rect x="2" width="3" height="5" fill="#6DB33F"/>
+        <rect y="3" width="7" height="4" fill="#6DB33F"/>
+        <rect x="1" y="4" width="6" height="4" fill="#6DB33F"/>
+        <rect x="1" y="6" width="1" height="2" fill="#5EA033"/>
+        <rect y="5" width="1" height="2" fill="#5EA033"/>
+        <rect x="2" y="8" width="1" height="1" fill="#5EA033"/>
+        <rect x="3" y="8" width="3" height="1" fill="#5EA033"/>
+        <rect width="1" height="1" transform="matrix(-1 0 0 1 6 6)" fill="black" fill-opacity="0.1"/>
+      </g>
+
+      <g id="goblin-14-head" transform="translate(0, -6)">
+        <rect x="3" y="1" width="5" height="6" fill="#6DB33F"/>
+        <rect x="4" y="4" width="3" height="4" fill="#6DB33F"/>
+        <rect x="2" y="2" width="1" height="4" fill="#6DB33F"/>
+        <rect x="3" width="4" height="5" fill="#6DB33F"/>
+        <rect x="2" y="4" width="1" height="2" fill="black" fill-opacity="0.1"/>
+        <rect x="3" y="6" width="1" height="1" fill="black" fill-opacity="0.1"/>
+        <rect x="4" y="7" width="3" height="1" fill="black" fill-opacity="0.1"/>
+        <rect x="2" y="1" width="1" height="3" fill="#6DB33F"/>
+        <rect x="1" y="2" width="1" height="2" fill="#6DB33F"/>
+        <rect y="2" width="1" height="1" fill="#6DB33F"/>
+        <rect x="1" y="3" width="1" height="1" fill="black" fill-opacity="0.1"/>
+        <rect x="6" y="4" width="3" height="1" fill="#6DB33F"/>
+        <rect x="3" y="2" width="2" height="2" fill="white"/>
+        <rect x="4" y="3" width="1" height="1" fill="black"/>
+        <rect x="6" y="2" width="2" height="2" fill="white"/>
+        <rect x="7" y="3" width="1" height="1" fill="black"/>
+        <rect x="7" y="6" width="1" height="1" fill="black" fill-opacity="0.1"/>
+        <rect x="5" y="5" width="2" height="0.5" fill="black"/>
+      </g>
+    </svg>
+  </g>
+  <style>
+    #contributions {
+    filter: url(#contribution_blur)
+    }
+  </style>
+
+  <defs>
+    <filter id="contribution_blur" x="-100" y="-100" width="200" height="200" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset/>
+      <feGaussianBlur stdDeviation="2"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_216_87060"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_216_87060" result="shape"/>
+    </filter>
+  </defs><style>
+    #level {
+    filter: url(#level_shadow)
+    }
+  </style>
+
+  <defs>
+    <filter id="level_shadow" x="-200" y="-200" width="400" height="400" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset/>
+      <feGaussianBlur stdDeviation="0.5"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_138_125"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_138_125" result="shape"/>
+    </filter>
+  </defs></svg>
