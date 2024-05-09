@@ -1,0 +1,53 @@
+<svg width="41" height="80" viewBox="0 0 41 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 64">
+<g id="Group 7">
+<rect id="Rectangle 81" x="41" y="71.7037" width="40.0078" height="11.6944" transform="rotate(180 41 71.7037)" fill="#2B4447" fill-opacity="0.1"/>
+<rect id="Rectangle 84" x="37.666" y="75.6018" width="33.3398" height="3.89813" transform="rotate(180 37.666 75.6018)" fill="#2B4447" fill-opacity="0.1"/>
+<rect id="Rectangle 86" x="37.5782" y="59.9067" width="33.3398" height="3.89813" transform="rotate(180 37.5782 59.9067)" fill="#2B4447" fill-opacity="0.1"/>
+<rect id="Rectangle 85" x="34.332" y="79.5" width="26.6718" height="3.89813" transform="rotate(180 34.332 79.5)" fill="#2B4447" fill-opacity="0.1"/>
+<rect id="Rectangle 87" x="34.1564" y="55.9059" width="26.6718" height="3.89813" transform="rotate(180 34.1564 55.9059)" fill="#2B4447" fill-opacity="0.1"/>
+</g>
+<g id="leg">
+<g id="Group 19">
+<rect id="Rectangle 117" width="8.00155" height="8.00156" transform="matrix(-1 0 0 1 32.9985 64.0101)" fill="#FF6F0F"/>
+<rect id="Rectangle 118" width="8.00155" height="4.00078" transform="matrix(-1 0 0 1 28.9977 68.0109)" fill="#FF6F0F"/>
+</g>
+<g id="Group 20">
+<rect id="Rectangle 117_2" width="8.00155" height="8.00156" transform="matrix(-1 0 0 1 16.9954 64.0101)" fill="#FF6F0F"/>
+<rect id="Rectangle 118_2" width="8.00155" height="4.00078" transform="matrix(-1 0 0 1 12.9947 68.0109)" fill="#FF6F0F"/>
+</g>
+</g>
+<g id="body">
+<rect id="Rectangle 366" width="28.0054" height="36.4541" transform="matrix(-1 0 0 1 32.9985 27)" fill="white"/>
+<rect id="Rectangle 357" x="4.99304" y="31.5568" width="4.00078" height="22.7838" fill="#2D2D2D"/>
+<rect id="Rectangle 358" x="0.992188" y="36.1135" width="4.00078" height="27.3406" fill="#2D2D2D"/>
+<rect id="Rectangle 359" x="36.9992" y="36.1135" width="4.00078" height="22.7838" fill="#2D2D2D"/>
+<rect id="Rectangle 360" x="32.9985" y="31.5568" width="4.00078" height="31.8974" fill="#2D2D2D"/>
+<rect id="Rectangle 362" x="30" y="27" width="3" height="27" fill="#2D2D2D"/>
+<rect id="Rectangle 361" x="32.9985" y="68.0109" width="28.0054" height="4.55676" transform="rotate(180 32.9985 68.0109)" fill="#2D2D2D"/>
+</g>
+<g id="head">
+<rect id="Rectangle 107" x="5" y="13" width="25" height="8" fill="#2D2D2D"/>
+<rect id="Rectangle 107_2" x="5.12926" y="18" width="27.8708" height="6" fill="#2D2D2D"/>
+<rect id="Rectangle 368" x="30" y="18" width="3" height="12" fill="#2D2D2D"/>
+<rect id="Rectangle 367" x="5" y="21" width="9" height="6" fill="#2D2D2D"/>
+<rect id="Rectangle 97" width="17" height="24" transform="matrix(-1 0 0 1 26 13)" fill="white"/>
+<rect id="Rectangle 366_2" width="21" height="14" transform="matrix(-1 0 0 1 30 23)" fill="white"/>
+<rect id="Rectangle 365" width="17" height="4" transform="matrix(1 0 0 -1 9 13)" fill="#2D2D2D"/>
+<rect id="Rectangle 98" width="4" height="6" transform="matrix(-1 0 0 1 21 21)" fill="black"/>
+<rect id="Rectangle 99" width="4" height="6" transform="matrix(-1 0 0 1 14 17)" fill="black"/>
+<rect id="Rectangle 106" x="15" y="13" width="5" height="4" fill="#2D2D2D"/>
+<g id="Group 18">
+<rect id="Rectangle 117_3" width="8.66667" height="8.00156" transform="matrix(-1 0 0 1 13 25.0031)" fill="#FF6F0F"/>
+<rect id="Rectangle 118_3" width="8.66667" height="4.00078" transform="matrix(-1 0 0 1 8.66667 29.0039)" fill="#FF6F0F"/>
+</g>
+</g>
+<g id="Group 21">
+<rect id="Rectangle 171" width="1.8" height="5.4" transform="matrix(-1 0 0 1 29 0)" fill="black"/>
+<rect id="Rectangle 172" width="1.8" height="1.8" transform="matrix(-1 0 0 1 27.2 3.60004)" fill="black"/>
+<rect id="Rectangle 173" width="1.8" height="1.8" transform="matrix(-1 0 0 1 23.6 3.60004)" fill="black"/>
+<rect id="Rectangle 174" width="1.8" height="1.8" transform="matrix(-1 0 0 1 25.4 1.80005)" fill="black"/>
+<rect id="Rectangle 175" width="1.8" height="1.8" transform="matrix(-1 0 0 1 21.8 1.80005)" fill="black"/>
+</g>
+</g>
+</svg>
