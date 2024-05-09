@@ -1,0 +1,9 @@
+export const NEW_USER_BONUS_PET_LIST = [
+  'PIG',
+  'LITTLE_CHICK',
+  'GOOSE',
+  'SLIME_RED',
+  'SLIME_GREEN',
+  'PENGUIN',
+  'SLIME_BLUE',
+];

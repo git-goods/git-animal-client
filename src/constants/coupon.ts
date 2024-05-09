@@ -1,0 +1,3 @@
+export const COUPON_CODE = {
+  NEW_USER_BONUS_PET: 'NEW_USER_BONUS_PET',
+};

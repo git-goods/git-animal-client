@@ -7,6 +7,7 @@ import Button from '@/components/Button';
 import Header from '@/components/Header';
 import Layout from '@/components/Layout';
 import { useUser } from '@/store/user';
+import { addNumberComma } from '@/utils/number';
 
 import FarmType from './FarmType';
 import OneType from './OneType';
@@ -14,7 +15,7 @@ import OneType from './OneType';
 type ChooseType = '1-type' | 'farm-type';
 
 function Mypage() {
-  const { username } = useUser();
+  const { username, profileImage, points } = useUser();
 
   const [selectedType, setSelectedType] = useState<ChooseType>('1-type');
 
@@ -23,9 +24,11 @@ function Mypage() {
       <Header />
       <Main>
         <Profile>
-          <div className="profile-image">{/* <Image src="/" alt="profile image" width={160} height={160} /> */}</div>
+          <div className="profile-image">
+            <img src={profileImage} alt="profile image" width={160} height={160} />
+          </div>
           <p className="profile-name">{username}</p>
-          <p className="point">Points: 477,000</p>
+          <p className="point">Points: {addNumberComma(points)}</p>
         </Profile>
         <RightSection>
           <TypeSelect>
@@ -83,7 +86,7 @@ const Profile = styled.section`
     height: 160px;
     border-radius: 50%;
     background-color: #fff;
-
+    overflow: hidden;
     img {
       width: 100%;
       height: 100%;
@@ -98,7 +101,6 @@ const Profile = styled.section`
     font-style: normal;
     font-weight: 400;
     line-height: 140%; /* 56px */
-
     margin-top: 40px;
     margin-bottom: 30px;
 

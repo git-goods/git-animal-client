@@ -43,6 +43,9 @@ const useUserStore = create(
 export const useUser = () =>
   useUserStore((state) => ({
     username: state.username,
+    profileImage: state.profileImage,
+    points: state.points,
+    id: state.id,
     isLogin: state.isLogin,
   }));
 
