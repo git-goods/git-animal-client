@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
+import { checkUsedCouponsByToken } from '@/apis/user/getUsedCoupons';
 import { useLogin } from '@/store/user';
 
 function JWTPage() {
@@ -13,8 +14,14 @@ function JWTPage() {
     async (jwtToken: string) => {
       const token = jwtToken.split(' ')[1];
       await login(token);
+
+      if (await checkUsedCouponsByToken(token)) {
+        router.push('/mypage');
+      } else {
+        router.push('/start');
+      }
     },
-    [login],
+    [login, router],
   );
 
   useEffect(() => {
