@@ -1,6 +1,8 @@
 import type { UseQueryOptions } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 
+import { getUniqueFilterList } from '@/utils/list';
+
 import { renderGet } from '../render';
 
 interface UseGetAllPetsResponse {
@@ -20,4 +22,20 @@ export const useGetAllPets = (username: string, options?: Omit<UseQueryOptions<U
     queryKey: ['users', 'all-pet', { username }],
     queryFn: () => getAllPets(username),
     ...options,
+  });
+
+export const useGetUniqueTypeAllPets = (
+  username: string,
+  options?: Omit<UseQueryOptions<UseGetAllPetsResponse>, 'queryKey' | 'select'>,
+) =>
+  useGetAllPets(username, {
+    ...options,
+    select: (data) => {
+      const personaList = data?.personas || [];
+      const filteredPersonas = getUniqueFilterList(personaList, 'type');
+      return {
+        ...data,
+        personas: filteredPersonas,
+      };
+    },
   });

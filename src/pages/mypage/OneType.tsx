@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { useGetAllPets } from '@/apis/user/useGetAllPets';
+import { useGetUniqueTypeAllPets } from '@/apis/user/useGetAllPets';
 import { GitanimalsLine } from '@/components/Gitanimals';
 import SelectAnimal from '@/components/SelectAnimal';
 import { useUser } from '@/store/user';
@@ -16,16 +16,8 @@ function OneType({}: Props) {
   const [error, setError] = useState('');
 
   const { username } = useUser();
-  const { data } = useGetAllPets(username, {
+  const { data } = useGetUniqueTypeAllPets(username, {
     enabled: Boolean(username),
-    select: (data) => {
-      const personaList = data?.personas || [];
-      const filteredPersonas = getUniqueTypeList(personaList);
-      return {
-        ...data,
-        personas: filteredPersonas,
-      };
-    },
   });
 
   const personaList = data?.personas || [];
@@ -77,19 +69,6 @@ function OneType({}: Props) {
 
 export default OneType;
 
-// 중복 type 제거
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getUniqueTypeList = (list: any[]) => {
-  const typeSet = new Set();
-  const filteredPersonas = list.filter((item) => {
-    const isExist = typeSet.has(item.type);
-    typeSet.add(item.type);
-    return !isExist;
-  });
-
-  return filteredPersonas;
-};
-
 const InputWrapper = styled.div`
   color: white;
   display: flex;
@@ -137,3 +116,6 @@ const ErrorMsg = styled.p`
   margin-bottom: 12px;
   font-size: 14px;
 `;
+function getUniqueTypeList(personaList: { id: string; type: string; level: string }[]) {
+  throw new Error('Function not implemented.');
+}

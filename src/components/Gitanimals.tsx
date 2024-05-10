@@ -5,7 +5,7 @@ import { useUser } from '@/store/user';
 export function GitanimalsLine({ petId, sizes = [600, 120] }: { sizes?: [number, number]; petId?: string }) {
   const { username } = useUser();
 
-  const pet = petId ? `?pet=${petId}` : '';
+  const pet = petId ? `?pet-id=${petId}` : '';
 
   return (
     <a href="https://github.com/devxb/gitanimals">
