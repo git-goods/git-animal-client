@@ -1,33 +1,30 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import { convertPersonaTypeToImageName } from '@/utils/string';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
+import type { PetInfoSchema } from '@/schema/user';
 
 interface Props {
-  selected?: string;
-  setSelected: (key: string) => void;
+  selected?: PetInfoSchema;
+  setSelected: (persona: PetInfoSchema) => void;
   size?: number;
-  personList: {
-    id: string;
-    type: string;
-    level: string;
-  }[];
+  personaList: PetInfoSchema[];
 }
 
-function SelectAnimal({ selected, setSelected, personList, size = 196 }: Props) {
-  const animals = personList.map((person) => ({
-    key: person.type,
-    image: `/pets/${convertPersonaTypeToImageName(person.type)}.svg`,
+function SelectAnimal({ selected, setSelected, personaList, size = 196 }: Props) {
+  const animals = personaList.map((persona) => ({
+    key: persona.type,
+    image: `${STATIC_IMAGE_URL}/${persona.type}`,
+    ...persona,
   }));
 
-  console.log('animals: ', animals);
   return (
     <AnimalList>
       {animals.map((animal) => (
-        <Item key={animal.key} onClick={() => setSelected(animal.key)} size={size}>
-          {selected === animal.key && <SelectedImage src="/animals/animal-selected.svg" alt="animal" fill />}
-          <img className="animal" src={animal.image} alt="animal" />
+        <Item key={animal.key} onClick={() => setSelected(animal)} size={size}>
+          {selected?.type === animal.key && <SelectedImage src="/animals/animal-selected.svg" alt="animal" fill />}
+          <img className="animal" src={animal.image} alt="animal" width={size} height={size} />
         </Item>
       ))}
     </AnimalList>
@@ -39,17 +36,15 @@ export default SelectAnimal;
 const Item = styled.button<{ size: number }>`
   position: relative;
   width: ${({ size }) => size}px;
+  min-width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
   display: flex;
   justify-content: center;
   align-items: center;
+
   .animal {
     position: absolute;
     left: 0;
-    /* left: 50%;
-    transform: translateX(-50%); */
-    /* top: 50%; */
-    /* transform: translate(-50%, -50%); */
     height: 100%;
     object-fit: contain;
   }
@@ -57,8 +52,9 @@ const Item = styled.button<{ size: number }>`
 
 const AnimalList = styled.ul`
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  max-width: 100%;
+  width: 1000px;
+  overflow-x: auto;
 
   button {
     position: relative;

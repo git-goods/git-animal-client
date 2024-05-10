@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useGetUniqueTypeAllPets } from '@/apis/user/useGetAllPets';
 import { GitanimalsLine } from '@/components/Gitanimals';
 import SelectAnimal from '@/components/SelectAnimal';
+import type { PetInfoSchema } from '@/schema/user';
 import { useUser } from '@/store/user';
 
 import { FarmSection } from './index.styles';
@@ -11,7 +12,7 @@ import { FarmSection } from './index.styles';
 interface Props {}
 
 function OneType({}: Props) {
-  const [selected, setSelected] = useState<string>();
+  const [selected, setSelected] = useState<PetInfoSchema>();
   const [sizes, setSizes] = useState<[number, number]>([600, 120]);
   const [error, setError] = useState('');
 
@@ -42,7 +43,7 @@ function OneType({}: Props) {
     <>
       <FarmSection>
         <h2>choose only one pet</h2>
-        <SelectAnimal selected={selected} setSelected={setSelected} size={120} personList={personaList} />
+        <SelectAnimal selected={selected} setSelected={setSelected} size={120} personaList={personaList} />
       </FarmSection>
       <FarmSection>
         <h2>영역을 customize 하세요</h2>
@@ -60,7 +61,7 @@ function OneType({}: Props) {
             height: sizes[1],
           }}
         >
-          <GitanimalsLine sizes={sizes} petId={selected} />
+          <GitanimalsLine sizes={sizes} petId={selected?.id} />
         </LineContainer>
       </FarmSection>
     </>

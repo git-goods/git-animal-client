@@ -11,3 +11,9 @@ export interface CouponSchema {
   code: string;
   usedAt: string;
 }
+
+export interface PetInfoSchema {
+  id: string;
+  type: string;
+  level: string;
+}
