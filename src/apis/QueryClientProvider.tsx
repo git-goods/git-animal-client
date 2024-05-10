@@ -1,5 +1,3 @@
-'use client';
-
 import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 import type { QueryClientConfig } from '@tanstack/react-query';

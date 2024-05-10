@@ -8,9 +8,7 @@ import { useUser } from '@/store/user';
 
 import { FarmSection } from './index.styles';
 
-interface Props {
-  username: string;
-}
+interface Props {}
 
 function OneType({}: Props) {
   const [selected, setSelected] = useState<string>();
@@ -22,12 +20,7 @@ function OneType({}: Props) {
     enabled: Boolean(username),
     select: (data) => {
       const personaList = data?.personas || [];
-      const typeSet = new Set();
-      const filteredPersonas = personaList.filter((item) => {
-        const isExist = typeSet.has(item.type);
-        typeSet.add(item.type);
-        return !isExist;
-      });
+      const filteredPersonas = getUniqueTypeList(personaList);
       return {
         ...data,
         personas: filteredPersonas,
@@ -36,7 +29,6 @@ function OneType({}: Props) {
   });
 
   const personaList = data?.personas || [];
-  console.log('personaList: ', personaList);
 
   const onWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
@@ -76,7 +68,7 @@ function OneType({}: Props) {
             height: sizes[1],
           }}
         >
-          <GitanimalsLine username={username} sizes={sizes} />
+          <GitanimalsLine sizes={sizes} petId={selected} />
         </LineContainer>
       </FarmSection>
     </>
@@ -84,6 +76,19 @@ function OneType({}: Props) {
 }
 
 export default OneType;
+
+// 중복 type 제거
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getUniqueTypeList = (list: any[]) => {
+  const typeSet = new Set();
+  const filteredPersonas = list.filter((item) => {
+    const isExist = typeSet.has(item.type);
+    typeSet.add(item.type);
+    return !isExist;
+  });
+
+  return filteredPersonas;
+};
 
 const InputWrapper = styled.div`
   color: white;

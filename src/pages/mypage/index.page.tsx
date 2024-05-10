@@ -48,7 +48,7 @@ function Mypage() {
             </Button>
           </TypeSelect>
           <div style={{ minWidth: '1000px' }}>
-            {selectedType === '1-type' && <OneType username={username} />}
+            {selectedType === '1-type' && <OneType />}
             {selectedType === 'farm-type' && <FarmType username={username} />}
           </div>
           <ButtonWrapper>

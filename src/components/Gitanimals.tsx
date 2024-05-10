@@ -1,10 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 
-export function GitanimalsLine({ username, sizes = [600, 120] }: { username: string; sizes?: [number, number] }) {
+import { useUser } from '@/store/user';
+
+export function GitanimalsLine({ petId, sizes = [600, 120] }: { sizes?: [number, number]; petId?: string }) {
+  const { username } = useUser();
+
+  const pet = petId ? `?pet=${petId}` : '';
+
   return (
     <a href="https://github.com/devxb/gitanimals">
       <img
-        src={`https://render.gitanimals.org/lines/${username} `}
+        src={`https://render.gitanimals.org/lines/${username}${pet}`}
         width={sizes[0]}
         height={sizes[1]}
         alt="gitanimals"
@@ -13,7 +19,8 @@ export function GitanimalsLine({ username, sizes = [600, 120] }: { username: str
   );
 }
 
-export function GitanimalsFarm({ username, sizes = [600, 300] }: { username: string; sizes?: [number, number] }) {
+export function GitanimalsFarm({ sizes = [600, 300] }: { username: string; sizes?: [number, number] }) {
+  const { username } = useUser();
   return (
     <a href="https://github.com/devxb/gitanimals">
       <img

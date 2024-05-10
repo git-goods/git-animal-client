@@ -16,7 +16,7 @@ interface Props {
 
 function SelectAnimal({ selected, setSelected, personList, size = 196 }: Props) {
   const animals = personList.map((person) => ({
-    key: person.id,
+    key: person.type,
     image: `/pets/${convertPersonaTypeToImageName(person.type)}.svg`,
   }));
 
