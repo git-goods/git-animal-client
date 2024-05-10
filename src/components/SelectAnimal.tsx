@@ -2,6 +2,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 import { convertPersonaTypeToImageName } from '@/utils/string';
+import { STATIC_IMAGE_URL } from '@/constants/outlink';
 
 interface Props {
   selected?: string;
