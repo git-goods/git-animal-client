@@ -1,25 +1,42 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
-import Image from 'next/image';
 import styled from 'styled-components';
 
+import { useGetAllPets } from '@/apis/user/useGetAllPets';
 import { GitanimalsFarm } from '@/components/Gitanimals';
+import SelectAnimalList from '@/components/SelectAnimalList';
+import type { PetInfoSchema } from '@/schema/user';
+import { useUser } from '@/store/user';
 
 import { FarmSection } from './index.styles';
 
-interface Props {
-  username: string;
-}
+function FarmType() {
+  const [selectedPet, setSelectedPet] = useState<PetInfoSchema[]>([]);
+  const { username } = useUser();
 
-function FarmType({ username }: Props) {
-  const [selectedPet, setSelectedPet] = useState<number[]>([]);
+  const { data } = useGetAllPets(username, {
+    enabled: Boolean(username),
+  });
+  const personaList = data?.personas || [];
+
+  const onSelectedPet = (index: PetInfoSchema) => {
+    const isSelected = selectedPet.find((key) => key === index);
+    if (isSelected) {
+      setSelectedPet((prev) => prev.filter((key) => key !== index));
+      return;
+    }
+    setSelectedPet((prev) => [...prev, index]);
+  };
 
   return (
     <>
       <ChangePet>
         <h2>Change pet</h2>
-        <div className="pet-list">
+
+        <SelectAnimalList selectedList={selectedPet} setSelected={onSelectedPet} size={120} personaList={personaList} />
+
+        {/* <div className="pet-list">
           {Array.from({ length: 10 }).map((_, index) => {
             const isSelected = selectedPet.find((key) => key === index);
             return (
@@ -35,7 +52,7 @@ function FarmType({ username }: Props) {
               </button>
             );
           })}
-        </div>
+        </div> */}
       </ChangePet>
       <Preview>
         <GitanimalsFarm username={username} sizes={[600, 300]} />
