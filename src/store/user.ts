@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import type { UserSchema } from '@/apis/user/schema';
 import { getUserByToken } from '@/apis/user/useGetUser';
+import type { UserSchema } from '@/schema/user';
 
 interface UserStore extends UserSchema {
   isLogin: boolean;
