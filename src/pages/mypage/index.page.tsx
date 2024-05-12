@@ -51,9 +51,6 @@ function Mypage() {
             {selectedType === '1-type' && <OneType />}
             {selectedType === 'farm-type' && <FarmType />}
           </div>
-          <ButtonWrapper>
-            <Button>Copy Link</Button>
-          </ButtonWrapper>
         </RightSection>
       </Main>
     </Layout>

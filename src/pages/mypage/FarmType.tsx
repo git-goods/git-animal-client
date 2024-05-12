@@ -6,10 +6,12 @@ import styled from 'styled-components';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
 import { useGetAllPets } from '@/apis/user/useGetAllPets';
-import { GitanimalsFarm } from '@/components/Gitanimals';
+import Button from '@/components/Button';
+import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
 import type { PetInfoSchema } from '@/schema/user';
 import { useUser } from '@/store/user';
+import { copyClipBoard } from '@/utils/copy';
 
 import { FarmSection } from './index.styles';
 
@@ -87,11 +89,25 @@ function FarmType() {
       <Preview>
         <GitanimalsFarm key={`farm-${isSuccess}`} sizes={[600, 300]} />
       </Preview>
+      <ButtonWrapper>
+        <Button
+          onClick={() => {
+            copyClipBoard(getGitanimalsFarmString({ username }));
+          }}
+        >
+          Copy Link
+        </Button>
+      </ButtonWrapper>
     </>
   );
 }
 
 export default FarmType;
+
+const ButtonWrapper = styled.div`
+  margin: 72px auto;
+  width: fit-content;
+`;
 
 const ChangePet = styled(FarmSection)`
   .pet-list {

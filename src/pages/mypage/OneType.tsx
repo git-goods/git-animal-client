@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { useGetUniqueTypeAllPets } from '@/apis/user/useGetAllPets';
-import { GitanimalsLine } from '@/components/Gitanimals';
+import Button from '@/components/Button';
+import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
 import SelectAnimal from '@/components/SelectAnimal';
 import type { PetInfoSchema } from '@/schema/user';
 import { useUser } from '@/store/user';
+import { copyClipBoard } from '@/utils/copy';
 
 import { FarmSection } from './index.styles';
 
@@ -64,12 +66,24 @@ function OneType({}: Props) {
           <GitanimalsLine sizes={sizes} petId={selected?.id} />
         </LineContainer>
       </FarmSection>
+      <ButtonWrapper>
+        <Button
+          onClick={() => {
+            copyClipBoard(getGitanimalsLineString({ username, petId: selected?.id, sizes }));
+          }}
+        >
+          Copy Link
+        </Button>
+      </ButtonWrapper>
     </>
   );
 }
 
 export default OneType;
-
+const ButtonWrapper = styled.div`
+  margin: 72px auto;
+  width: fit-content;
+`;
 const InputWrapper = styled.div`
   color: white;
   display: flex;
@@ -117,6 +131,3 @@ const ErrorMsg = styled.p`
   margin-bottom: 12px;
   font-size: 14px;
 `;
-function getUniqueTypeList(personaList: { id: string; type: string; level: string }[]) {
-  throw new Error('Function not implemented.');
-}
