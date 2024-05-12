@@ -65,10 +65,6 @@ function FarmType() {
     setAnimals(setInitData());
   }, [data, setInitData]);
 
-  const onCopyLink = () => {
-    copy(getGitanimalsFarmString({ username }));
-  };
-
   return (
     <>
       <ChangePet>
@@ -107,11 +103,6 @@ function FarmType() {
 }
 
 export default FarmType;
-const ButtonWrapper = styled.div`
-  margin: 72px auto;
-  width: fit-content;
-`;
-
 const ButtonWrapper = styled.div`
   margin: 72px auto;
   width: fit-content;

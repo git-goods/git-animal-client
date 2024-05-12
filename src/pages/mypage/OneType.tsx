@@ -41,10 +41,6 @@ function OneType({}: Props) {
     setSizes([sizes[0], parseInt(e.target.value)]);
   };
 
-  const onCopyLink = () => {
-    copy(getGitanimalsLineString({ username, sizes }));
-  };
-
   return (
     <>
       <FarmSection>
