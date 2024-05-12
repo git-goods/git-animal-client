@@ -14,9 +14,11 @@ interface UseGetAllPetsResponse {
 
 export const getAllPets = async (username: string) => renderGet<UseGetAllPetsResponse>(`/users/${username}`);
 
+export const getAllPetsQueryKey = (username?: string) => ['users', 'all-pet', { username }];
+
 export const useGetAllPets = (username: string, options?: Omit<UseQueryOptions<UseGetAllPetsResponse>, 'queryKey'>) =>
   useQuery({
-    queryKey: ['users', 'all-pet', { username }],
+    queryKey: getAllPetsQueryKey(username),
     queryFn: () => getAllPets(username),
     ...options,
   });

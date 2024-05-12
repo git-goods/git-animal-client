@@ -51,9 +51,6 @@ function Mypage() {
             {selectedType === '1-type' && <OneType />}
             {selectedType === 'farm-type' && <FarmType />}
           </div>
-          <ButtonWrapper>
-            <Button>Copy Link</Button>
-          </ButtonWrapper>
         </RightSection>
       </Main>
     </Layout>
@@ -61,11 +58,6 @@ function Mypage() {
 }
 
 export default Mypage;
-
-const ButtonWrapper = styled.div`
-  margin: 72px auto;
-  width: fit-content;
-`;
 
 const Main = styled.main`
   padding-top: 170px;
