@@ -16,4 +16,5 @@ export interface PetInfoSchema {
   id: string;
   type: string;
   level: string;
+  visible: boolean;
 }

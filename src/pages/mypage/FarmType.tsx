@@ -1,61 +1,91 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import Image from 'next/image';
 import styled from 'styled-components';
 
+import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
 import { useGetAllPets } from '@/apis/user/useGetAllPets';
 import { GitanimalsFarm } from '@/components/Gitanimals';
-import SelectAnimalList from '@/components/SelectAnimalList';
+import { STATIC_IMAGE_URL } from '@/constants/outlink';
 import type { PetInfoSchema } from '@/schema/user';
 import { useUser } from '@/store/user';
 
 import { FarmSection } from './index.styles';
 
+const size = 120;
 function FarmType() {
-  const [selectedPet, setSelectedPet] = useState<PetInfoSchema[]>([]);
   const { username } = useUser();
 
   const { data } = useGetAllPets(username, {
     enabled: Boolean(username),
   });
-  const personaList = data?.personas || [];
 
-  const onSelectedPet = (index: PetInfoSchema) => {
-    const isSelected = selectedPet.find((key) => key === index);
-    if (isSelected) {
-      setSelectedPet((prev) => prev.filter((key) => key !== index));
-      return;
-    }
-    setSelectedPet((prev) => [...prev, index]);
+  const setInitData = useCallback(() => {
+    const personaList = data?.personas || [];
+
+    const initList = personaList.map((persona) => ({
+      key: persona.type,
+      image: `${STATIC_IMAGE_URL}/${persona.type}`,
+      isSelected: persona.visible,
+      ...persona,
+    }));
+
+    return initList;
+  }, [data]);
+
+  const [animals, setAnimals] = useState(setInitData());
+
+  const { mutate, isSuccess } = useChangePersonaVisible({
+    onSuccess: (res) => {
+      setAnimals((prev) =>
+        prev.map((animal) => {
+          if (animal.id === res.id) {
+            return {
+              ...animal,
+              isSelected: res.visible,
+            };
+          }
+          return animal;
+        }),
+      );
+    },
+  });
+
+  const onClick = (persona: PetInfoSchema) => {
+    mutate({
+      personaId: persona.id,
+      visible: !persona.visible,
+    });
   };
+
+  useEffect(() => {
+    setAnimals(setInitData());
+  }, [data, setInitData]);
 
   return (
     <>
       <ChangePet>
         <h2>Change pet</h2>
-
-        <SelectAnimalList selectedList={selectedPet} setSelected={onSelectedPet} size={120} personaList={personaList} />
-
-        {/* <div className="pet-list">
-          {Array.from({ length: 10 }).map((_, index) => {
-            const isSelected = selectedPet.find((key) => key === index);
+        <AnimalList>
+          {animals.map((animal) => {
             return (
-              <button
-                className={isSelected ? 'selected' : ''}
-                key={index}
-                onClick={() => setSelectedPet((prev) => [...prev, index])}
+              <Item
+                key={animal.key}
+                size={size}
+                style={{
+                  filter: animal.isSelected ? 'brightness(0.5)' : 'brightness(1)',
+                }}
+                onClick={() => onClick(animal)}
               >
-                <Image className="pet-image" src="/pets/penguin.svg" alt="penguin" width={41} height={80} />
-                {isSelected && (
-                  <Image className="check-icon" src="/icon/check-mono.svg" alt="check" width={24} height={24} />
-                )}
-              </button>
+                <img className="animal" src={animal.image} alt="animal" width={size} height={size} />
+              </Item>
             );
           })}
-        </div> */}
+        </AnimalList>
       </ChangePet>
       <Preview>
-        <GitanimalsFarm username={username} sizes={[600, 300]} />
+        <GitanimalsFarm key={`farm-${isSuccess}`} sizes={[600, 300]} />
       </Preview>
     </>
   );
@@ -89,4 +119,43 @@ const ChangePet = styled(FarmSection)`
 const Preview = styled(FarmSection)`
   width: fit-content;
   margin: 44px auto 0;
+  padding: 0;
+`;
+
+const Item = styled.button<{ size: number }>`
+  position: relative;
+  width: ${({ size }) => size}px;
+  min-width: ${({ size }) => size}px;
+  height: ${({ size }) => size}px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .animal {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    object-fit: contain;
+  }
+`;
+
+const AnimalList = styled.ul`
+  display: flex;
+  max-width: 100%;
+  width: 1000px;
+  overflow-x: auto;
+
+  button {
+    position: relative;
+    z-index: 1;
+  }
+`;
+
+const SelectedImage = styled(Image)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 `;
