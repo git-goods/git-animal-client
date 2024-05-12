@@ -10,6 +10,7 @@ const instance = axios.create({
 });
 
 const interceptorRequestFulfilled = (config: InternalAxiosRequestConfig) => {
+  console.log('config: ', config);
   if (typeof window === 'undefined') return config;
 
   const accessToken = getToken();
