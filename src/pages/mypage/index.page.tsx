@@ -59,11 +59,6 @@ function Mypage() {
 
 export default Mypage;
 
-const ButtonWrapper = styled.div`
-  margin: 72px auto;
-  width: fit-content;
-`;
-
 const Main = styled.main`
   padding-top: 170px;
   display: grid;
