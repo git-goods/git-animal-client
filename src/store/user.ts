@@ -1,36 +1,40 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface UserStore {
-  username: string;
-  setUsername: (username: string) => void;
+import { getUserByToken } from '@/apis/user/useGetUser';
+import type { UserSchema } from '@/schema/user';
+
+interface UserStore extends UserSchema {
   isLogin: boolean;
+  login: (token: string) => Promise<void>;
+  token: string;
 }
 
 const useUserStore = create(
   persist<UserStore>(
     (set, get) => ({
+      // user info
+      id: '',
       username: '',
-      setUsername: (username: string) => set({ username, isLogin: true }),
+      points: '',
+      profileImage: '',
+
+      // login
+      token: '',
       isLogin: false,
+      login: async (token: string) => {
+        set({ token, isLogin: true });
+        const res = await getUserByToken(token);
+        set({ ...res });
+      },
     }),
     {
-      onRehydrateStorage: (state) => {
-        console.log('hydration starts');
-
-        // optional
-        return (state, error) => {
-          if (!state) return;
-
-          if (state.username !== '') {
-            state.isLogin = true;
-          }
-
-          if (error) {
-            console.log('an error happened during hydration', error);
-          }
-        };
-      },
+      // onRehydrateStorage: () => {
+      //   // optional
+      //   return (state, error) => {
+      //     if (!state) return;
+      //   };
+      // },
       name: 'user-storage', // name of the item in the storage (must be unique)
     },
   ),
@@ -39,6 +43,11 @@ const useUserStore = create(
 export const useUser = () =>
   useUserStore((state) => ({
     username: state.username,
-    setUsername: state.setUsername,
+    profileImage: state.profileImage,
+    points: state.points,
+    id: state.id,
     isLogin: state.isLogin,
   }));
+
+export const getToken = () => useUserStore.getState().token;
+export const useLogin = () => useUserStore((state) => ({ login: state.login }));

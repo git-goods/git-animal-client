@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { useGetUniqueTypeAllPets } from '@/apis/user/useGetAllPets';
 import Button from '@/components/Button';
 import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
-import SelectAnimals from '@/components/SelectAnimals';
-import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
+import SelectAnimal from '@/components/SelectAnimal';
+import type { PetInfoSchema } from '@/schema/user';
+import { useUser } from '@/store/user';
+import { copyClipBoard } from '@/utils/copy';
 
 import { FarmSection } from './index.styles';
 
-interface Props {
-  username: string;
-}
+interface Props {}
 
-function OneType({ username }: Props) {
-  const [_, copy] = useCopyToClipboard();
-
-  const [selected, setSelected] = useState<string>();
+function OneType({}: Props) {
+  const [selected, setSelected] = useState<PetInfoSchema>();
   const [sizes, setSizes] = useState<[number, number]>([600, 120]);
   const [error, setError] = useState('');
+
+  const { username } = useUser();
+  const { data } = useGetUniqueTypeAllPets(username, {
+    enabled: Boolean(username),
+  });
+
+  const personaList = data?.personas || [];
 
   const onWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
@@ -43,7 +49,7 @@ function OneType({ username }: Props) {
     <>
       <FarmSection>
         <h2>choose only one pet</h2>
-        <SelectAnimals selected={selected} setSelected={setSelected} size={120} />
+        <SelectAnimal selected={selected} setSelected={setSelected} size={120} personaList={personaList} />
       </FarmSection>
       <FarmSection>
         <h2>영역을 customize 하세요</h2>
@@ -61,23 +67,27 @@ function OneType({ username }: Props) {
             height: sizes[1],
           }}
         >
-          <GitanimalsLine username={username} sizes={sizes} />
+          <GitanimalsLine sizes={sizes} petId={selected?.id} />
         </LineContainer>
       </FarmSection>
       <ButtonWrapper>
-        <Button onClick={onCopyLink}>Copy Link</Button>
+        <Button
+          onClick={() => {
+            copyClipBoard(getGitanimalsLineString({ username, petId: selected?.id, sizes }));
+          }}
+        >
+          Copy Link
+        </Button>
       </ButtonWrapper>
     </>
   );
 }
 
 export default OneType;
-
 const ButtonWrapper = styled.div`
   margin: 72px auto;
   width: fit-content;
 `;
-
 const InputWrapper = styled.div`
   color: white;
   display: flex;

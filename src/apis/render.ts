@@ -2,7 +2,7 @@ import axios, { type AxiosResponse, type InternalAxiosRequestConfig } from 'axio
 
 import { getToken } from '@/store/user';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_RENDER_API_URL;
 
 const instance = axios.create({
   baseURL: API_URL,
@@ -34,22 +34,22 @@ const interceptorResponseFulfilled = (res: AxiosResponse) => {
 
 instance.interceptors.response.use(interceptorResponseFulfilled);
 
-export const get = <T>(...args: Parameters<typeof instance.get>) => {
+export const renderGet = <T>(...args: Parameters<typeof instance.get>) => {
   return instance.get<T, T>(...args);
 };
 
-export const post = <T>(...args: Parameters<typeof instance.post>) => {
+export const renderPost = <T>(...args: Parameters<typeof instance.post>) => {
   return instance.post<T, T>(...args);
 };
 
-export const put = <T>(...args: Parameters<typeof instance.put>) => {
+export const renderPut = <T>(...args: Parameters<typeof instance.put>) => {
   return instance.put<T, T>(...args);
 };
 
-export const patch = <T>(...args: Parameters<typeof instance.patch>) => {
+export const renderPatch = <T>(...args: Parameters<typeof instance.patch>) => {
   return instance.patch<T, T>(...args);
 };
 
-export const del = <T>(...args: Parameters<typeof instance.delete>) => {
+export const renderDelete = <T>(...args: Parameters<typeof instance.delete>) => {
   return instance.delete<T, T>(...args);
 };

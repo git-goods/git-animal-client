@@ -1,36 +1,12 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-const ANIMAL_LIST = [
-  {
-    key: '1',
-    image: '/animals/Animals-1.png',
-  },
-  {
-    key: '2',
-    image: '/animals/Animals-2.png',
-  },
-  {
-    key: '3',
-    image: '/animals/Animals-3.png',
-  },
-  {
-    key: '4',
-    image: '/animals/Animals-4.png',
-  },
-  {
-    key: '5',
-    image: '/animals/Animals-5.png',
-  },
-  {
-    key: '6',
-    image: '/animals/Animals-6.png',
-  },
-  {
-    key: '7',
-    image: '/animals/Animals-7.png',
-  },
-];
+import { NEW_USER_BONUS_PET_LIST } from '@/constants/pet';
+
+const ANIMAL_LIST = NEW_USER_BONUS_PET_LIST.map((key) => ({
+  key,
+  image: `/animals/${key}.png`,
+}));
 
 interface Props {
   selected?: string;

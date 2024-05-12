@@ -1,14 +1,36 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
+import { useUseCoupon } from '@/apis/user/useUseCoupons';
 import Button from '@/components/Button';
 import Header from '@/components/Header';
 import Layout from '@/components/Layout';
 import SelectAnimals from '@/components/SelectAnimals';
+import { COUPON_CODE } from '@/constants/coupon';
 
 function StartPage() {
+  const router = useRouter();
+
   const [selected, setSelected] = useState<string>();
-  // TODO : postCoupons 연결
+
+  const { mutate } = useUseCoupon({
+    onSuccess: () => {
+      router.replace('/mypage');
+    },
+    onError: () => {
+      alert('Failed to choose pet retry!');
+    },
+  });
+
+  const onChoose = () => {
+    if (!selected) return;
+
+    mutate({
+      code: COUPON_CODE.NEW_USER_BONUS_PET,
+      dynamic: selected,
+    });
+  };
 
   return (
     <Layout>
@@ -16,7 +38,7 @@ function StartPage() {
       <Main>
         <Heading>Select 1 Start Pet</Heading>
         <SelectAnimals selected={selected} setSelected={setSelected} />
-        <Button href="/mypage" disabled={!selected}>
+        <Button onClick={onChoose} disabled={!selected}>
           I Choosed!
         </Button>
       </Main>
