@@ -22,6 +22,7 @@ function SellSection() {
   return (
     <div>
       <ShopRow item={DUMMY} />
+      <h3>Pets</h3>
       <PetList />
     </div>
   );
