@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
@@ -30,8 +30,8 @@ const TAB: TabItemType[] = [
   },
 ];
 
-function Tab() {
-  const [selectedTab, setSelectedTab] = useState('products');
+function Tab({ selectedTab, setSelectedTab }: { selectedTab: string; setSelectedTab: (key: string) => void }) {
+  //   const [selectedTab, setSelectedTab] = useState('products');
   return (
     <TabContainer>
       {TAB.map((item) => (

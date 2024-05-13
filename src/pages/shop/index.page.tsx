@@ -1,17 +1,22 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import HistoryTable from './HistoryTable';
+import ProductTable from './ProductTable';
+import SellListSection from './SellListSection';
+import SellSection from './SellSection';
 import Tab from './Tab';
-import ShopTable from './Table';
 
 function ShopPage() {
+  const [selectedTab, setSelectedTab] = useState('products');
   return (
     <Main>
       <ShopMain>
         <TopSection>
           <Heading>Git Animals Auction</Heading>
         </TopSection>
-        <Tab />
+        <Tab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
         <GotchaSection>
           <Image src="/shop/gotcha.svg" width={384} height={80} alt="gotcha" className="gotcha-title" />
           <Image src="/shop/gotcha-list.png" width={384} height={620} alt="gotcha list" className="gotcha-list" />
@@ -19,7 +24,12 @@ function ShopPage() {
             <Image src="/shop/press.svg" width={384} height={80} alt="press" />
           </button>
         </GotchaSection>
-        <ShopTable />
+        <section style={{ height: '644px' }}>
+          {selectedTab === 'products' && <ProductTable />}
+          {selectedTab === 'history' && <HistoryTable />}
+          {selectedTab === 'sell' && <SellSection />}
+          {selectedTab === 'sellList' && <SellListSection />}
+        </section>
       </ShopMain>
     </Main>
   );
