@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import Tab from './Tab';
 import ShopTable from './Table';
 
 function ShopPage() {
@@ -10,6 +11,7 @@ function ShopPage() {
         <TopSection>
           <Heading>Git Animals Auction</Heading>
         </TopSection>
+        <Tab />
         <GotchaSection>
           <Image src="/shop/gotcha.svg" width={384} height={80} alt="gotcha" className="gotcha-title" />
           <Image src="/shop/gotcha-list.png" width={384} height={620} alt="gotcha list" className="gotcha-list" />
@@ -36,7 +38,10 @@ const Main = styled.main`
 
 const TopSection = styled.section`
   margin-bottom: 30px;
+  display: flex;
+  gap: 120px;
 `;
+
 const Heading = styled.h1`
   font-size: 32px;
   font-style: normal;
@@ -77,8 +82,4 @@ const ShopMain = styled.main`
   display: grid;
   grid-template-columns: 384px 1fr;
   grid-column-gap: 132px;
-
-  ${TopSection} {
-    grid-column: 1 / span 2;
-  }
 `;
