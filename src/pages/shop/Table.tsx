@@ -1,55 +1,28 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import { useGetProducts } from '@/apis/auctions/useGetProducts';
+import type { ProductStatusType } from '@/schema/action';
+
 import SmallButton from './SmallButton';
 
-const List = [
-  {
-    name: 'CHEESE_CAT',
-    level: 2147483647,
-    price: 922337203685477,
-    status: 'ON_SALE',
-  },
-  {
-    name: 'CHEESE_CAT',
-    level: 2147483647,
-    price: 922337203685477,
-    status: 'ON_SALE',
-  },
-  {
-    name: 'CHEESE_CAT',
-    level: 2147483647,
-    price: 922337203685477,
-    status: 'ON_SALE',
-  },
-  {
-    name: 'CHEESE_CAT',
-    level: 2147483647,
-    price: 922337203685477,
-    status: 'ON_SALE',
-  },
-  {
-    name: 'CHEESE_CAT',
-    level: 2147483647,
-    price: 922337203685477,
-    status: 'ON_SALE',
-  },
-];
-
 function ShopTable() {
+  const { data } = useGetProducts();
+  console.log('data: ', data);
+
   return (
     <Bg>
       <TableStyled>
-        {List.map((item, index) => (
+        {data?.products.map((item, index) => (
           <div className="row" key={index}>
             <div>
               <Image src="/shop/cat.png" width={60} height={67} alt="animal1" />
             </div>
-            <div>{item.name}</div>
-            <div>{item.level}</div>
+            <div>{item.persona.personaType}</div>
+            <div>{item.persona.personaLevel}</div>
             <div>{item.price}</div>
             <div>
-              <SmallButton>{item.status}</SmallButton>
+              <ActionButton paymentState={item.paymentState} onClick={() => null} />
             </div>
           </div>
         ))}
@@ -59,6 +32,15 @@ function ShopTable() {
 }
 
 export default ShopTable;
+
+const PAYMENT_STATE_BUTTON_TEXT: Record<ProductStatusType, string> = {
+  ON_SALE: 'buy!',
+  SOLD_OUT: 'cancel!',
+};
+
+function ActionButton({ paymentState, onClick }: { paymentState: ProductStatusType; onClick: () => void }) {
+  return <SmallButton onClick={onClick}>{PAYMENT_STATE_BUTTON_TEXT[paymentState]}</SmallButton>;
+}
 
 const Bg = styled.div`
   height: 644px;
@@ -89,6 +71,16 @@ const TableStyled = styled.div`
     }
     > div:nth-child(1) {
       padding-bottom: 0;
+    }
+
+    > div:nth-child(2),
+    > div:nth-child(3),
+    > div:nth-child(4) {
+      padding-right: 12px;
+      padding-left: 16px;
+      padding-bottom: 0;
+      padding-top: 4px;
+      justify-content: flex-start;
     }
   }
 `;

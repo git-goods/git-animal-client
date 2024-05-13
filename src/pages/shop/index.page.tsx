@@ -1,13 +1,9 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import { useGetProducts } from '@/apis/auctions/useGetProducts';
-
 import ShopTable from './Table';
 
 function ShopPage() {
-  const { data } = useGetProducts();
-  console.log('data: ', data);
   return (
     <Main>
       <ShopMain>

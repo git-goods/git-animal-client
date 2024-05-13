@@ -4,10 +4,12 @@ export interface PersonaSchema {
   personaLevel: number;
 }
 
+export type ProductStatusType = 'ON_SALE' | 'SOLD_OUT';
+
 export interface Product {
   id: string;
   sellerId: string;
   persona: PersonaSchema;
   price: string;
-  paymentState: string;
+  paymentState: ProductStatusType;
 }
