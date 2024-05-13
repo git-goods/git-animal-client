@@ -35,7 +35,7 @@ const Row = styled.div`
     align-items: center;
 
     font-size: 20px;
-    padding-bottom: 6px;
+    /* padding-bottom: 6px; */
     padding-right: 4px;
   }
   > div:nth-child(1) {
