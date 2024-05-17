@@ -1,6 +1,8 @@
+import type { AxiosError } from 'axios';
 import axios, { type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
 
-import { getToken } from '@/store/user';
+import type { ApiErrorScheme } from '@/exceptions/type';
+import { getToken, logout } from '@/store/user';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -32,7 +34,17 @@ const interceptorResponseFulfilled = (res: AxiosResponse) => {
   return Promise.reject(res.data);
 };
 
-instance.interceptors.response.use(interceptorResponseFulfilled);
+// Response interceptor
+const interceptorResponseRejected = (error: AxiosError<ApiErrorScheme>) => {
+  if (error.response?.status === 401) {
+    // TODO : logout and refresh login
+    logout();
+  }
+
+  return Promise.reject(error);
+};
+
+instance.interceptors.response.use(interceptorResponseFulfilled, interceptorResponseRejected);
 
 export const get = <T>(...args: Parameters<typeof instance.get>) => {
   return instance.get<T, T>(...args);
