@@ -35,6 +35,7 @@
     "@storybook/test": "^8.0.9",
     "@tanstack/eslint-plugin-query": "^5.28.11",
     "@tanstack/react-query-devtools": "^5.32.0",
+    "@types/gtag.js": "^0.0.19",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
