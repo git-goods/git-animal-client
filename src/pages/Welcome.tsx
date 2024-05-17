@@ -4,11 +4,14 @@ import styled from 'styled-components';
 import { checkUsedCoupons } from '@/apis/user/getUsedCoupons';
 import Button from '@/components/Button';
 import LoginButton from '@/components/LoginButton';
+import { recordEvent } from '@/lib/gtag';
 
 function Welcome() {
   const router = useRouter();
 
   const onClickHavePet = async () => {
+    recordEvent({ action: 'onClickHavePet' });
+
     if (await checkUsedCoupons()) {
       router.replace('/mypage');
     } else {
