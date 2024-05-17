@@ -21,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     line-height: 140%; /* 107.8px */
     background-color: #2A7442;
+    position: relative;
   }
 
   button {

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import Image from 'next/image';
@@ -7,7 +8,7 @@ import styled from 'styled-components';
 import { useUser } from '@/store/user';
 
 function Header() {
-  const { username, isLogin } = useUser();
+  const { username, isLogin, profileImage } = useUser();
 
   return (
     <>
@@ -26,19 +27,19 @@ function Header() {
               </li>
             </ul>
           </nav>
-          <Profile>
-            {isLogin ? (
+          {isLogin && (
+            <Profile>
               <>
-                <div className="profile-image"></div>
+                <div className="profile-image">
+                  <img src={profileImage} alt="profile" width={160} height={160} />
+                </div>
                 <button>
                   <span className="profile-name">{username}</span>
                   <Image src="/icon/chervon-right.svg" width={12} height={12} alt="arrow-down" />
                 </button>
               </>
-            ) : (
-              <></>
-            )}
-          </Profile>
+            </Profile>
+          )}
         </div>
       </HeaderStyled>
     </>
@@ -95,6 +96,12 @@ const Profile = styled.div`
     height: 45px;
     border-radius: 50%;
     background-color: #fff;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .profile-name {
