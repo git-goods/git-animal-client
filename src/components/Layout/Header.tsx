@@ -14,7 +14,9 @@ function Header() {
     <>
       <HeaderStyled>
         <div>
-          <Image src="/logo.svg" width={137} height={42} alt="logo" />
+          <a href="/">
+            <Image src="/logo.svg" width={137} height={42} alt="logo" />
+          </a>
         </div>
         <div>
           <nav>
