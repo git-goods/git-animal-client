@@ -32,6 +32,8 @@ const interceptorResponseRejected = (error: AxiosError<ApiErrorScheme>) => {
     // TODO : logout 안내
   }
 
+  // 403 처리
+
   return Promise.reject(error);
 };
 

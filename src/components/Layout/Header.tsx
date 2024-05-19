@@ -1,15 +1,30 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
+import { useSnackBar } from '@/components/SnackBar/useSnackBar';
+import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { useUser } from '@/store/user';
 
 function Header() {
   const { username, isLogin, profileImage } = useUser();
 
+  const router = useRouter();
+  const { showSnackBar } = useSnackBar();
+
+  const onShopClick = () => {
+    router.push('/prepare');
+
+    // if (isLogin) {
+    //   router.push('/shop');
+    // } else {
+    //   showSnackBar({ message: '로그인이 필요합니다. ' });
+    // }
+  };
   return (
     <>
       <HeaderStyled>
@@ -22,10 +37,10 @@ function Header() {
           <nav>
             <ul>
               <li>
-                <Link href={isLogin ? '/shop' : '#'}>SHOP</Link>
+                <button onClick={onShopClick}>SHOP</button>
               </li>
               <li>
-                <a href="#">GITHUB</a>
+                <a href={GIT_ANIMALS_MAIN_URL}>GITHUB</a>
               </li>
             </ul>
           </nav>
@@ -63,7 +78,8 @@ const HeaderStyled = styled.header`
   padding: 0 40px;
 
   &,
-  a {
+  a,
+  button {
     color: #fff;
     font-family: 'SF Pro Display';
     font-size: 16px;

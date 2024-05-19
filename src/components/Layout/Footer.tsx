@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { SUMI_GITHUB_URL } from '@/constants/outlink';
+
 function Footer() {
   return (
     <FooterStyled>
@@ -8,7 +10,7 @@ function Footer() {
         <img src="/icon/github.png" alt="github" width={24} height={24} />
       </button>
       <p>
-        made by <a href="https://github.com/sumi-0011">sumi-0011</a>
+        made by <a href={SUMI_GITHUB_URL}>sumi-0011</a>
       </p>
     </FooterStyled>
   );
