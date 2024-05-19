@@ -3,11 +3,14 @@ import React from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import Footer from './Footer';
+
 function Layout({ children }: PropsWithChildren) {
   return (
     <Container>
       <Image src="/bg.png" fill alt="bg" />
       {children}
+      <Footer />
     </Container>
   );
 }

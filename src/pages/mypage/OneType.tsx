@@ -5,6 +5,7 @@ import { useGetUniqueTypeAllPets } from '@/apis/user/useGetAllPets';
 import Button from '@/components/Button';
 import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
 import SelectAnimal from '@/components/SelectAnimal';
+import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 import type { PetInfoSchema } from '@/schema/user';
 import { useUser } from '@/store/user';
 import { copyClipBoard } from '@/utils/copy';
@@ -19,6 +20,8 @@ function OneType({}: Props) {
   const [error, setError] = useState('');
 
   const { username } = useUser();
+  const { showSnackBar } = useSnackBar();
+
   const { data } = useGetUniqueTypeAllPets(username, {
     enabled: Boolean(username),
   });
@@ -39,6 +42,14 @@ function OneType({}: Props) {
   const onHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError('');
     setSizes([sizes[0], parseInt(e.target.value)]);
+  };
+
+  const onLinkCopy = async () => {
+    try {
+      await copyClipBoard(getGitanimalsLineString({ username, petId: selected?.id, sizes }));
+
+      showSnackBar({ message: '복사 성공!' });
+    } catch (error) {}
   };
 
   return (
@@ -67,13 +78,7 @@ function OneType({}: Props) {
         </LineContainer>
       </FarmSection>
       <ButtonWrapper>
-        <Button
-          onClick={() => {
-            copyClipBoard(getGitanimalsLineString({ username, petId: selected?.id, sizes }));
-          }}
-        >
-          Copy Link
-        </Button>
+        <Button onClick={onLinkCopy}>Copy Link</Button>
       </ButtonWrapper>
     </>
   );

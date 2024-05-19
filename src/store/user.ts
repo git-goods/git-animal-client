@@ -7,25 +7,37 @@ import type { UserSchema } from '@/schema/user';
 interface UserStore extends UserSchema {
   isLogin: boolean;
   login: (token: string) => Promise<void>;
+  logout: () => void;
   token: string;
 }
+
+const initialState: UserStore = {
+  // user info
+  id: '',
+  username: '',
+  points: '',
+  profileImage: '',
+
+  // login
+  token: '',
+  isLogin: false,
+  login: async () => {},
+  logout: () => {},
+};
 
 const useUserStore = create(
   persist<UserStore>(
     (set, get) => ({
-      // user info
-      id: '',
-      username: '',
-      points: '',
-      profileImage: '',
+      ...initialState,
 
       // login
-      token: '',
-      isLogin: false,
       login: async (token: string) => {
         set({ token, isLogin: true });
         const res = await getUserByToken(token);
         set({ ...res });
+      },
+      logout() {
+        set({ ...initialState });
       },
     }),
     {
@@ -51,3 +63,4 @@ export const useUser = () =>
 
 export const getToken = () => useUserStore.getState().token;
 export const useLogin = () => useUserStore((state) => ({ login: state.login }));
+export const logout = () => useUserStore.getState().logout();

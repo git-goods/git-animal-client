@@ -8,6 +8,7 @@ import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible'
 import { useGetAllPets } from '@/apis/user/useGetAllPets';
 import Button from '@/components/Button';
 import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals';
+import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
 import type { PetInfoSchema } from '@/schema/user';
 import { useUser } from '@/store/user';
@@ -18,6 +19,7 @@ import { FarmSection } from './index.styles';
 const size = 120;
 function FarmType() {
   const { username } = useUser();
+  const { showSnackBar } = useSnackBar();
 
   const { data } = useGetAllPets(username, {
     enabled: Boolean(username),
@@ -61,6 +63,14 @@ function FarmType() {
     });
   };
 
+  const onLinkCopy = async () => {
+    try {
+      await copyClipBoard(getGitanimalsFarmString({ username }));
+
+      showSnackBar({ message: '복사 성공!' });
+    } catch (error) {}
+  };
+
   useEffect(() => {
     setAnimals(setInitData());
   }, [data, setInitData]);
@@ -90,13 +100,7 @@ function FarmType() {
         <GitanimalsFarm key={`farm-${isSuccess}`} sizes={[600, 300]} />
       </Preview>
       <ButtonWrapper>
-        <Button
-          onClick={() => {
-            copyClipBoard(getGitanimalsFarmString({ username }));
-          }}
-        >
-          Copy Link
-        </Button>
+        <Button onClick={onLinkCopy}>Copy Link</Button>
       </ButtonWrapper>
     </>
   );
@@ -175,3 +179,6 @@ const SelectedImage = styled(Image)`
   height: 100%;
   z-index: -1;
 `;
+function showSnackBar(arg0: { message: string }) {
+  throw new Error('Function not implemented.');
+}
