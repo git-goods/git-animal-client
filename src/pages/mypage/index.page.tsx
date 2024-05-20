@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -35,7 +34,7 @@ function Mypage() {
       <Main>
         <Profile>
           <div className="profile-image">
-            <img src={profileImage} alt="profile image" width={160} height={160} />
+            <img src={profileImage} alt="profile" width={160} height={160} />
           </div>
           <p className="profile-name">{username}</p>
           <p className="point">Points: {addNumberComma(points)}</p>
