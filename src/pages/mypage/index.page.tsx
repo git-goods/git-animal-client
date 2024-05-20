@@ -3,10 +3,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
-import { getGitanimalsLineString } from '@/components/Gitanimals';
-import Header from '@/components/Header';
-import Layout from '@/components/Layout';
-import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
+import Header from '@/components/Layout/Header';
+import Layout from '@/components/Layout/Layout';
 import { useUser } from '@/store/user';
 import { addNumberComma } from '@/utils/number';
 
@@ -18,15 +16,7 @@ type ChooseType = '1-type' | 'farm-type';
 function Mypage() {
   const { username, profileImage, points } = useUser();
 
-  const [_, copy] = useCopyToClipboard();
-
   const [selectedType, setSelectedType] = useState<ChooseType>('1-type');
-
-  const onCopyLink = () => {
-    if (selectedType === '1-type') {
-      copy(getGitanimalsLineString({ username }));
-    }
-  };
 
   return (
     <Layout>
