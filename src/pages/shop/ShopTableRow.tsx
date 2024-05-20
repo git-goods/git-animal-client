@@ -23,7 +23,7 @@ function ShopTableRow({ item }: { item: Product }) {
 
 export default ShopTableRow;
 
-const Row = styled.div`
+export const Row = styled.div`
   display: grid;
   grid-template-columns: 82px 209px 178px 354px 120px;
   vertical-align: center;
@@ -50,5 +50,12 @@ const Row = styled.div`
     padding-bottom: 0;
     padding-top: 4px;
     justify-content: flex-start;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    flex: 0;
+    min-width: 0%;
+    max-width: 100%;
   }
 `;

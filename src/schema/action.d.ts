@@ -4,7 +4,7 @@ export interface PersonaSchema {
   personaLevel: number;
 }
 
-export type ProductStatusType = 'ON_SALE' | 'SOLD_OUT';
+export type ProductStatusType = 'ON_SALE' | 'SOLD_OUT' | 'SELL';
 
 export interface Product {
   id: string;
