@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
 import type { PetInfoSchema } from '@/schema/user';
 
@@ -9,6 +10,16 @@ import ActionButton from '../ActionButton';
 import { Row } from '../ShopTableRow';
 
 function SellInputRow({ item }: { item?: PetInfoSchema }) {
+  const [price, setPrice] = useState(0);
+  const { mutate } = useRegisterProduct();
+
+  const onSellClick = async () => {
+    if (!item) return;
+    if (!price) return;
+
+    mutate({ personaId: item.id, price });
+  };
+
   if (!item) return <Container />;
 
   return (
@@ -20,10 +31,15 @@ function SellInputRow({ item }: { item?: PetInfoSchema }) {
         <div>{item.type}</div>
         <div>{item.level}</div>
         <div>
-          <input type="number" placeholder="Type price..." />
+          <input
+            type="number"
+            placeholder="Type price..."
+            value={price ? price : ''}
+            onChange={(e) => setPrice(Number(e.target.value))}
+          />
         </div>
         <div>
-          <ActionButton paymentState="SELL" onClick={() => null} />
+          <ActionButton paymentState="SELL" onClick={onSellClick} />
         </div>
       </RowStyled>
     </Container>
