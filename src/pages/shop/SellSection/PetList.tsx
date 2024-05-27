@@ -17,7 +17,7 @@ function PetList(props: Props) {
   const { data } = useGetAllPets(username);
 
   const personas = data?.personas || [];
-  console.log('data: ', data);
+
   return (
     <ListContainer>
       {personas.map((persona) => {

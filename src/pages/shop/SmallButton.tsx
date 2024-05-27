@@ -3,13 +3,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface Props extends HtmlHTMLAttributes<HTMLButtonElement> {
-  color?: string;
+  color: string;
 }
 
-function SmallButton({ children, ...props }: Props) {
+function SmallButton({ children, color, ...props }: Props) {
   return (
     <ButtonStyled {...props}>
-      <ButtonBackground color="#00B2FF" />
+      <ButtonBackground color={color} />
       <span>{children}</span>
     </ButtonStyled>
   );

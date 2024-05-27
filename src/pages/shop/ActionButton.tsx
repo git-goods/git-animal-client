@@ -16,6 +16,10 @@ const PAYMENT_STATE_BUTTON: Record<ProductStatusType, PaymentStateButtonProps> =
     label: 'cancel!',
     color: '#FF0000',
   },
+  MY_SELLING: {
+    label: 'cancel!',
+    color: '#FF0000',
+  },
   SELL: {
     label: 'sell!',
     color: '#00B2FF',
@@ -24,7 +28,12 @@ const PAYMENT_STATE_BUTTON: Record<ProductStatusType, PaymentStateButtonProps> =
 
 // TODO: disabled 추가
 function ActionButton({ paymentState, onClick }: { paymentState: ProductStatusType; onClick: () => void }) {
-  return <SmallButton onClick={onClick}>{PAYMENT_STATE_BUTTON[paymentState].label}</SmallButton>;
+  console.log('paymentState: ', paymentState, PAYMENT_STATE_BUTTON[paymentState].color);
+  return (
+    <SmallButton onClick={onClick} color={PAYMENT_STATE_BUTTON[paymentState].color}>
+      {PAYMENT_STATE_BUTTON[paymentState].label}
+    </SmallButton>
+  );
 }
 
 export default ActionButton;
