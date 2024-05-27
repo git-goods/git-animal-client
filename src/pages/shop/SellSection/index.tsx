@@ -9,7 +9,7 @@ function SellSection() {
   const [selectPersona, setSelectPersona] = useState<PetInfoSchema>();
   return (
     <div>
-      <ShopRow item={selectPersona} />
+      <ShopRow item={selectPersona} initPersona={() => setSelectPersona(undefined)} />
       <h3>Pets</h3>
       <PetList onProductClick={setSelectPersona} />
     </div>

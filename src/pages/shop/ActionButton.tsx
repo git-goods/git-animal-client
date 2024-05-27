@@ -22,6 +22,7 @@ const PAYMENT_STATE_BUTTON: Record<ProductStatusType, PaymentStateButtonProps> =
   },
 };
 
+// TODO: disabled 추가
 function ActionButton({ paymentState, onClick }: { paymentState: ProductStatusType; onClick: () => void }) {
   return <SmallButton onClick={onClick}>{PAYMENT_STATE_BUTTON[paymentState].label}</SmallButton>;
 }

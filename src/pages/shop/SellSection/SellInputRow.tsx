@@ -1,23 +1,40 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
+import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
 import type { PetInfoSchema } from '@/schema/user';
 
 import ActionButton from '../ActionButton';
 import { Row } from '../ShopTableRow';
 
-function SellInputRow({ item }: { item?: PetInfoSchema }) {
+function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona: () => void }) {
+  const queryClient = useQueryClient();
+  const { showSnackBar } = useSnackBar();
+
   const [price, setPrice] = useState(0);
-  const { mutate } = useRegisterProduct();
+
+  const { mutate } = useRegisterProduct({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['users', 'all-pet'], // TODO: getAllPetsQueryKey
+      });
+      initPersona();
+    },
+  });
 
   const onSellClick = async () => {
-    if (!item) return;
-    if (!price) return;
+    try {
+      if (!item) throw new Error('Item is not found');
+      if (!price) throw new Error('가격을 입력해주세요. ');
 
-    mutate({ personaId: item.id, price });
+      mutate({ personaId: item.id, price });
+    } catch (error: unknown) {
+      if (error instanceof Error) showSnackBar({ message: error.message });
+    }
   };
 
   if (!item) return <Container />;
