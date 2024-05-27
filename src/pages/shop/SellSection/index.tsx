@@ -11,7 +11,7 @@ function SellSection() {
     <div>
       <ShopRow item={selectPersona} initPersona={() => setSelectPersona(undefined)} />
       <h3>Pets</h3>
-      <PetList onProductClick={setSelectPersona} />
+      <PetList selectedPersona={selectPersona} onProductClick={setSelectPersona} />
     </div>
   );
 }
