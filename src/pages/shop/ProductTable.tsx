@@ -1,9 +1,8 @@
 import { useGetProductForProductList } from '@/apis/auctions/useGetProducts';
+import ShopTableBackground from '@/components/ProductTable/ShopTableBackground';
+import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import type { ProductItemType } from '@/schema/action';
-
-import ShopTableBackground from './ShopTableBackground';
-import ShopTableRowView from './ShopTableRowView';
 
 function ProductTable() {
   const { data } = useGetProductForProductList();

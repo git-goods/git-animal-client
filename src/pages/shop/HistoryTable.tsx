@@ -2,8 +2,8 @@ import { useMySellHistory } from '@/apis/auctions/useGetHistory';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import type { ProductHistoryType, ProductItemType } from '@/schema/action';
 
-import ShopTableBackground from './ShopTableBackground';
-import ShopTableRowView from './ShopTableRowView';
+import ShopTableBackground from '../../components/ProductTable/ShopTableBackground';
+import ShopTableRowView from '../../components/ProductTable/ShopTableRowView';
 
 const HISTORY_ACTION_OBJ = ACTION_BUTTON_OBJ['SELL_HISTORY'];
 

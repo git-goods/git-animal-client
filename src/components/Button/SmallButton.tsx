@@ -1,5 +1,4 @@
 import type { HtmlHTMLAttributes } from 'react';
-import React from 'react';
 import styled from 'styled-components';
 
 interface Props extends HtmlHTMLAttributes<HTMLButtonElement> {

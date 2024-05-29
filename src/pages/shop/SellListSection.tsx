@@ -1,11 +1,8 @@
-import React from 'react';
-
 import { useGetMyProductsForSellList } from '@/apis/auctions/useGetMyProduct';
+import ShopTableBackground from '@/components/ProductTable/ShopTableBackground';
+import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import type { ProductItemType } from '@/schema/action';
-
-import ShopTableBackground from './ShopTableBackground';
-import ShopTableRowView from './ShopTableRowView';
 
 const SELL_LIST_ACTION_OBJ = ACTION_BUTTON_OBJ['EDIT'];
 function SellListSection() {

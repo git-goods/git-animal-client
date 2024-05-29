@@ -1,10 +1,9 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import SmallButton from '@/components/Button/SmallButton';
 import type { ProductItemType } from '@/schema/action';
 import { getPersonaImage } from '@/utils/image';
-
-import ActionButton from './ActionButton';
 
 interface Props {
   item: ProductItemType;
@@ -30,7 +29,9 @@ function ShopTableRowView({ item, onAction, actionLabel, actionColor }: Props) {
       <div>{item.persona.personaLevel}</div>
       <div>{item.price}</div>
       <div>
-        <ActionButton onClick={() => onAction(item)} label={actionLabel} color={actionColor} />
+        <SmallButton onClick={() => onAction(item)} color={actionColor}>
+          {actionLabel}
+        </SmallButton>
       </div>
     </Row>
   );

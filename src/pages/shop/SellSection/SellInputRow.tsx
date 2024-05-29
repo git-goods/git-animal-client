@@ -4,13 +4,13 @@ import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
+import { Row } from '@/components/ProductTable/ShopTableRowView';
 import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
 import type { PetInfoSchema } from '@/schema/user';
 
-import ActionButton from '../ActionButton';
-import { Row } from '../ShopTableRow';
+import SmallButton from '../../../components/Button/SmallButton';
 
 function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona: () => void }) {
   const queryClient = useQueryClient();
@@ -57,11 +57,9 @@ function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona
           />
         </div>
         <div>
-          <ActionButton
-            label={ACTION_BUTTON_OBJ.SELL.label}
-            color={ACTION_BUTTON_OBJ.SELL.color}
-            onClick={onSellClick}
-          />
+          <SmallButton color={ACTION_BUTTON_OBJ.SELL.color} onClick={onSellClick}>
+            {ACTION_BUTTON_OBJ.SELL.label}
+          </SmallButton>
         </div>
       </RowStyled>
     </Container>
