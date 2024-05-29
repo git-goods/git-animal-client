@@ -8,12 +8,12 @@ export type ProductStatusSchema = 'ON_SALE' | 'SOLD_OUT' | 'SELL'; // serverÏóêÏ
 
 export type ProductStatusType = 'ON_SALE' | 'SOLD_OUT' | 'SELL' | 'MY_SELLING' | 'SELL_HISTORY' | 'EDIT';
 
-export interface ProductType {
+export interface ProductType<PaymentStatus extends ProductStatusType = ProductStatusType> {
   id: string;
   sellerId: string;
   persona: PersonaSchema;
   price: string;
-  paymentState: ProductStatusType;
+  paymentState: PaymentStatus;
 }
 
 export interface ProductSchema {
