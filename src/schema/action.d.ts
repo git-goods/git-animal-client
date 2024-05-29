@@ -24,7 +24,7 @@ export interface ProductSchema {
   paymentState: ProductStatusSchema;
 }
 
-export interface ProductHistoryType extends ProductType {
+export interface ProductHistoryType<PaymentStatus extends ProductStatusType = ProductStatusType> extends ProductType {
   receipt: {
     buyerId: string;
     soldAt: string;

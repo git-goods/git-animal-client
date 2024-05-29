@@ -1,7 +1,7 @@
 import type { UseQueryOptions } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 
-import type { ProductHistorySchema, ProductHistoryType } from '@/schema/action';
+import type { ProductHistorySchema } from '@/schema/action';
 
 import { get } from '..';
 
@@ -15,48 +15,23 @@ interface GetHistoryResponse {
   products: ProductHistorySchema[];
 }
 
-const getHistory = async (request?: GetHistoryRequest): Promise<GetHistoryResponse> =>
+const getHistory = async <T = GetHistoryResponse>(request?: GetHistoryRequest): Promise<T> =>
   get('/auctions/products/histories', { params: request });
 
 export const getHistoryQueryKey = (request?: GetHistoryRequest) => ['history', request];
 
-export const useGetHistory = (
+export const useGetHistory = <T = GetHistoryResponse>(
   request?: GetHistoryRequest,
-  option?: Omit<UseQueryOptions<GetHistoryResponse>, 'queryKey'>,
+  option?: Omit<UseQueryOptions<T>, 'queryKey' | 'queryFn'>,
 ) => {
-  return useQuery<GetHistoryResponse>({
+  return useQuery<T>({
     queryKey: getHistoryQueryKey(request),
     queryFn: () => getHistory(request),
     ...option,
-    initialData: DUMMY_DATA,
   });
 };
 
-interface GetMySellHistoryResponse {
-  products: ProductHistoryType[];
-}
-export const useMySellHistory = (
-  request?: GetHistoryRequest,
-  option?: Omit<UseQueryOptions<GetMySellHistoryResponse>, 'queryKey' | 'select'>,
-) =>
-  useQuery<GetMySellHistoryResponse>({
-    queryKey: getHistoryQueryKey(request),
-    queryFn: () => getHistory(request),
-    ...option,
-    initialData: DUMMY_DATA,
-    select: (data) => ({
-      products: data.products.map((product) =>
-        Boolean(product?.receipt.soldAt)
-          ? {
-              ...product,
-              paymentState: 'SELL_HISTORY',
-            }
-          : product,
-      ),
-    }),
-  });
-
-const DUMMY_DATA: GetHistoryResponse = {
+export const HISTORY_DUMMY_DATA: GetHistoryResponse = {
   products: [
     {
       id: '1',
