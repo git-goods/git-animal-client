@@ -1,14 +1,25 @@
-import { useGetMyProductsForSellList } from '@/apis/auctions/useGetMyProduct';
+import { useGetMyProducts } from '@/apis/auctions/useGetMyProduct';
 import ShopTableBackground from '@/components/ProductTable/ShopTableBackground';
 import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
-import type { ProductItemType } from '@/schema/action';
+import type { ProductType } from '@/schema/action';
 
 const SELL_LIST_ACTION_OBJ = ACTION_BUTTON_OBJ['EDIT'];
-function SellListSection() {
-  const { data } = useGetMyProductsForSellList();
 
-  const onEditAction = (item: ProductItemType) => {
+function SellListSection() {
+  const { data } = useGetMyProducts<{ products: ProductType<'EDIT'>[] }>(
+    {},
+    {
+      select: (data) => ({
+        ...data,
+        products: data.products.map((product) => {
+          return { ...product, paymentState: 'EDIT' };
+        }),
+      }),
+    },
+  );
+
+  const onEditAction = (item: ProductType) => {
     console.log('onEditAction: ', item);
   };
 
