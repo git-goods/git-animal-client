@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { useGetHistory } from '@/apis/auctions/useGetHistory';
+import { useMySellHistory } from '@/apis/auctions/useGetHistory';
 
 import ShopTable from './ShopTable';
 
 function HistoryTable() {
-  const { data } = useGetHistory();
+  const { data } = useMySellHistory();
+  console.log('data: ', data);
 
   return <ShopTable list={data?.products ?? []} />;
 }

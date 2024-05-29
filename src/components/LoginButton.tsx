@@ -8,7 +8,6 @@ interface LoginButtonProps {}
 
 function LoginButton({ children }: PropsWithChildren<LoginButtonProps>) {
   const { isLogin } = useUser();
-  console.log('isLogin: ', isLogin);
 
   if (isLogin) return children;
 

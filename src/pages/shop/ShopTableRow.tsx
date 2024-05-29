@@ -1,12 +1,20 @@
+import { useMemo } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import type { Product } from '@/schema/action';
+import type { Product, ProductHistorySchema } from '@/schema/action';
 import { getPersonaImage } from '@/utils/image';
 
 import ActionButton from './ActionButton';
 
-function ShopTableRow({ item }: { item: Product }) {
+function ShopTableRow({ item }: { item: Product | ProductHistorySchema }) {
+  const actionLabel = useMemo(() => {
+    if (item.paymentState !== 'SELL_HISTORY') return undefined;
+
+    const soldAt = (item as ProductHistorySchema)?.receipt.soldAt;
+    return soldAt?.slice(2, 10).replace(/-/g, '.');
+  }, [item]);
+
   return (
     <Row className="row" key={item.id}>
       <div>
@@ -16,7 +24,7 @@ function ShopTableRow({ item }: { item: Product }) {
       <div>{item.persona.personaLevel}</div>
       <div>{item.price}</div>
       <div>
-        <ActionButton paymentState={item.paymentState} onClick={() => null} />
+        <ActionButton paymentState={item.paymentState} onClick={() => null} label={actionLabel} />
       </div>
     </Row>
   );
