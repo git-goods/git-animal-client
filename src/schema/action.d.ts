@@ -4,9 +4,11 @@ export interface PersonaSchema {
   personaLevel: number;
 }
 
-export type ProductStatusType = 'ON_SALE' | 'SOLD_OUT' | 'SELL' | 'MY_SELLING' | 'SELL_HISTORY';
+export type ProductStatusSchema = 'ON_SALE' | 'SOLD_OUT' | 'SELL'; // server에서 사용하는 type
 
-export interface Product {
+export type ProductStatusType = 'ON_SALE' | 'SOLD_OUT' | 'SELL' | 'MY_SELLING' | 'SELL_HISTORY' | 'EDIT';
+
+export interface ProductType {
   id: string;
   sellerId: string;
   persona: PersonaSchema;
@@ -19,7 +21,14 @@ export interface ProductSchema {
   sellerId: string;
   persona: PersonaSchema;
   price: string;
-  paymentState: ProductStatusType;
+  paymentState: ProductStatusSchema;
+}
+
+export interface ProductHistoryType extends ProductType {
+  receipt: {
+    buyerId: string;
+    soldAt: string;
+  };
 }
 
 export interface ProductHistorySchema extends ProductSchema {
@@ -28,3 +37,5 @@ export interface ProductHistorySchema extends ProductSchema {
     soldAt: string;
   };
 }
+
+export type ProductItemType = ProductType | ProductHistoryType;

@@ -1,23 +1,25 @@
-import { useMemo } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import { ACTION_BUTTON_OBJ } from '@/constants/action';
-import type { ProductHistoryType, ProductItemType } from '@/schema/action';
+import type { ProductItemType } from '@/schema/action';
 import { getPersonaImage } from '@/utils/image';
 
 import ActionButton from './ActionButton';
 
-/**
- * @deprecated
- */
-function ShopTableRow({ item }: { item: ProductItemType }) {
-  const actionLabel = useMemo(() => {
-    if (item.paymentState !== 'SELL_HISTORY') return ACTION_BUTTON_OBJ[item.paymentState].label;
+interface Props {
+  item: ProductItemType;
+  onAction: (item: ProductItemType) => void;
+  actionLabel: string;
+  actionColor: string;
+}
 
-    const soldAt = (item as ProductHistoryType)?.receipt.soldAt;
-    return soldAt?.slice(2, 10).replace(/-/g, '.');
-  }, [item]);
+function ShopTableRowView({ item, onAction, actionLabel, actionColor }: Props) {
+  // const actionLabel = useMemo(() => {
+  //   if (item.paymentState !== 'SELL_HISTORY') return ACTION_BUTTON_OBJ[item.paymentState].label;
+
+  //   const soldAt = (item as ProductHistoryType)?.receipt.soldAt;
+  //   return soldAt?.slice(2, 10).replace(/-/g, '.');
+  // }, [item]);
 
   return (
     <Row className="row" key={item.id}>
@@ -28,13 +30,13 @@ function ShopTableRow({ item }: { item: ProductItemType }) {
       <div>{item.persona.personaLevel}</div>
       <div>{item.price}</div>
       <div>
-        <ActionButton onClick={() => null} label={actionLabel} color={ACTION_BUTTON_OBJ[item.paymentState].color} />
+        <ActionButton onClick={() => onAction(item)} label={actionLabel} color={actionColor} />
       </div>
     </Row>
   );
 }
 
-export default ShopTableRow;
+export default ShopTableRowView;
 
 export const Row = styled.div`
   display: grid;

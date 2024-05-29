@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
 import { useSnackBar } from '@/components/SnackBar/useSnackBar';
+import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
 import type { PetInfoSchema } from '@/schema/user';
 
@@ -56,7 +57,11 @@ function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona
           />
         </div>
         <div>
-          <ActionButton paymentState="SELL" onClick={onSellClick} />
+          <ActionButton
+            label={ACTION_BUTTON_OBJ.SELL.label}
+            color={ACTION_BUTTON_OBJ.SELL.color}
+            onClick={onSellClick}
+          />
         </div>
       </RowStyled>
     </Container>

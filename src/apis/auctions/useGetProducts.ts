@@ -1,7 +1,7 @@
 import type { UseQueryOptions } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 
-import type { Product } from '@/schema/action';
+import type { ProductSchema, ProductType } from '@/schema/action';
 import { useUser } from '@/store/user';
 import { convertCamelObjToSnake } from '@/utils/string';
 
@@ -14,11 +14,12 @@ interface GetProductsRequest {
 }
 
 interface GetProductsResponse {
-  products: Product[];
+  products: ProductSchema[];
 }
+
 export const getProductsQueryKey = (request?: GetProductsRequest) => ['products', request];
 
-export const getProducts = async (request?: GetProductsRequest): Promise<GetProductsResponse> =>
+const getProducts = async (request?: GetProductsRequest): Promise<GetProductsResponse> =>
   get('/auctions/products', {
     params: request ? convertCamelObjToSnake(request) : undefined,
   });
@@ -31,13 +32,17 @@ export const useGetProducts = (request?: GetProductsRequest, option?: UseQueryOp
   });
 };
 
+interface GetProductForProductListResponse {
+  products: ProductType[];
+}
+
 export const useGetProductForProductList = (
   request?: GetProductsRequest,
-  option?: UseQueryOptions<GetProductsResponse>,
+  option?: UseQueryOptions<GetProductForProductListResponse>,
 ) => {
   const myId = useUser()?.id;
 
-  return useQuery<GetProductsResponse>({
+  return useQuery<GetProductForProductListResponse>({
     queryKey: getProductsQueryKey(request),
     queryFn: () => getProducts(request),
     ...option,

@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 
-import type { ProductSchema } from '@/schema/action';
+import type { ProductItemType } from '@/schema/action';
 
 import ShopTableRow from './ShopTableRow';
 
-function ShopTable({ list }: { list: ProductSchema[] }) {
+/**
+ * @deprecated
+ */
+function ShopTable({ list }: { list: ProductItemType[] }) {
   return (
     <Bg>
       <TableStyled>
