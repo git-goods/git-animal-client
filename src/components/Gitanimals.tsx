@@ -1,4 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
+interface GitanimalsProps {
+  username: string;
+  sizes?: [number, number];
+}
 
 import { useUser } from '@/store/user';
 

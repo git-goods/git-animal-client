@@ -5,6 +5,9 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    domains: ['static.gitanimals.org'],
+  },
 };
 
 export default nextConfig;

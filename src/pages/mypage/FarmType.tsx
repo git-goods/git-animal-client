@@ -107,7 +107,6 @@ function FarmType() {
 }
 
 export default FarmType;
-
 const ButtonWrapper = styled.div`
   margin: 72px auto;
   width: fit-content;
