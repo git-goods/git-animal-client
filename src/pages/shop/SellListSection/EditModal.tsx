@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
-import { useDeleteProduct } from '@/apis/auctions/useDeleteProduct';
+import { useChangeProductPrice, useDeleteProduct } from '@/apis/auctions/useProduct';
 import DottedDoubleBox from '@/components/DottedBox/DottedDoubleBox';
 import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
 import Modal from '@/components/Modal/Modal';
 
 function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: () => void; productId?: string }) {
   const queryClient = useQueryClient();
+
+  const [price, setPrice] = useState<number>(0);
 
   const { mutate: deleteMutate } = useDeleteProduct({
     onSuccess: () => {
@@ -19,12 +21,25 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
     },
   });
 
+  const { mutate: changePriceMutate } = useChangeProductPrice({
+    onSuccess: () => {
+      onClose();
+      queryClient.invalidateQueries({
+        queryKey: ['my', 'products'], // TODO :getMyProductsQueryKey()로 변경
+      });
+    },
+  });
   const onDelete = () => {
     if (!productId) return;
     // TODO: loading 추가
     // TODO :optimistic update (react query)
 
     deleteMutate(productId);
+  };
+
+  const onSave = () => {
+    if (!productId) return;
+    changePriceMutate({ id: productId, price: String(price) });
   };
 
   return (
@@ -34,13 +49,20 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
           <InputWrapper>
             <DottedDoubleBox width={358} height={84} bgColor="#fff">
               <InputLabel>price</InputLabel>
-              <Input placeholder="Type price..." />
+              <Input
+                placeholder="Type price..."
+                type="number"
+                value={Boolean(price) ? price : ''}
+                onChange={(e) => setPrice(Number(e.target.value))}
+              />
             </DottedDoubleBox>
           </InputWrapper>
           <ButtonWrapper>
-            <DottedDoubleBox width={103} height={36} bgColor="#3791FF">
-              Save
-            </DottedDoubleBox>
+            <button onClick={onSave}>
+              <DottedDoubleBox width={103} height={36} bgColor="#3791FF">
+                Save
+              </DottedDoubleBox>
+            </button>
             <DottedDoubleBox width={103} height={36} bgColor="#6DB33F">
               Cancel
             </DottedDoubleBox>
@@ -91,6 +113,17 @@ const Input = styled.input`
   font-weight: 400;
   line-height: 140%; /* 28px */
   letter-spacing: -0.413px;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox  */
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
 `;
 
 const ButtonWrapper = styled.div`
