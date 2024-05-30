@@ -1,11 +1,32 @@
 import React from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
+import { useDeleteProduct } from '@/apis/auctions/useDeleteProduct';
 import DottedDoubleBox from '@/components/DottedBox/DottedDoubleBox';
 import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
 import Modal from '@/components/Modal/Modal';
 
 function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: () => void; productId?: string }) {
+  const queryClient = useQueryClient();
+
+  const { mutate: deleteMutate } = useDeleteProduct({
+    onSuccess: () => {
+      onClose();
+      queryClient.invalidateQueries({
+        queryKey: ['my', 'products'], // TODO :getMyProductsQueryKey()로 변경
+      });
+    },
+  });
+
+  const onDelete = () => {
+    if (!productId) return;
+    // TODO: loading 추가
+    // TODO :optimistic update (react query)
+
+    deleteMutate(productId);
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <DottedThreeBox width={402} height={164} bgColor="rgba(255, 255, 255, 0.7)">
@@ -23,9 +44,11 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
             <DottedDoubleBox width={103} height={36} bgColor="#6DB33F">
               Cancel
             </DottedDoubleBox>
-            <DottedDoubleBox width={103} height={36} bgColor="#F6869F">
-              Delete
-            </DottedDoubleBox>
+            <button onClick={onDelete}>
+              <DottedDoubleBox width={103} height={36} bgColor="#F6869F">
+                Delete
+              </DottedDoubleBox>
+            </button>
           </ButtonWrapper>
         </EditModalInner>
       </DottedThreeBox>
