@@ -15,7 +15,7 @@ function TestPage() {
           console.log('close');
         }}
       >
-        <DottedThreeBox width={228} height={228}>
+        <DottedThreeBox width={228} height={228} bgColor="#ffffff10">
           asdasd
         </DottedThreeBox>
         <DottedDoubleBox width={228} height={228} bgColor="red">
