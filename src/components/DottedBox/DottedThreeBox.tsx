@@ -1,6 +1,25 @@
-import type { DottedBoxProps } from './DottedBox';
+import type { PropsWithChildren } from 'react';
 
-function DottedThreeBox({ width, height }: Omit<DottedBoxProps, 'bgColor'>) {
+import type { DottedBoxProps } from './DottedBox';
+import { Container } from './DottedBox.styles';
+
+function DottedThreeBox({ width, height, children }: PropsWithChildren<Omit<DottedBoxProps, 'bgColor'>>) {
+  return (
+    <Container
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+      }}
+    >
+      <DottedThreeBoxBg width={width} height={height} />
+      {children}
+    </Container>
+  );
+}
+
+export default DottedThreeBox;
+
+function DottedThreeBoxBg({ width, height }: Omit<DottedBoxProps, 'bgColor'>) {
   return (
     <svg
       width={width}
@@ -24,5 +43,3 @@ function DottedThreeBox({ width, height }: Omit<DottedBoxProps, 'bgColor'>) {
     </svg>
   );
 }
-
-export default DottedThreeBox;

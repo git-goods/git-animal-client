@@ -1,6 +1,23 @@
-import type { DottedBoxProps } from './DottedBox';
+import type { PropsWithChildren } from 'react';
 
-function DottedDoubleBox({ width, height, bgColor }: DottedBoxProps) {
+import type { DottedBoxProps } from './DottedBox';
+import { Container } from './DottedBox.styles';
+
+function DottedDoubleBox({ width, height, children, ...props }: PropsWithChildren<DottedBoxProps>) {
+  return (
+    <Container
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+      }}
+    >
+      <DottedDoubleBoxBg width={width} height={height} {...props} />
+      {children}
+    </Container>
+  );
+}
+
+function DottedDoubleBoxBg({ width, height, bgColor }: DottedBoxProps) {
   return (
     <svg
       width={width}
