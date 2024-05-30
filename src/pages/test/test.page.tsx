@@ -35,7 +35,7 @@ function EditModal() {
           <InputWrapper>
             <DottedDoubleBox width={358} height={84} bgColor="#fff">
               <InputLabel>price</InputLabel>
-              <Input />
+              <Input placeholder="Type price..." />
             </DottedDoubleBox>
           </InputWrapper>
           <ButtonWrapper>
@@ -65,6 +65,14 @@ const InputWrapper = styled.div`
 
 const InputLabel = styled.span`
   position: absolute;
+  color: #b5b5b5;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 14px */
+  letter-spacing: -0.413px;
+  left: 12px;
+  top: 8px;
 `;
 const Input = styled.input`
   border: none;
@@ -72,6 +80,14 @@ const Input = styled.input`
   height: 100%;
   outline: none;
   background-color: transparent;
+  text-align: center;
+
+  text-align: center;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 28px */
+  letter-spacing: -0.413px;
 `;
 
 const ButtonWrapper = styled.div`
