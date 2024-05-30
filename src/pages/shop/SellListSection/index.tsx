@@ -25,7 +25,6 @@ function SellListSection() {
   );
 
   const onEditAction = (item: ProductType) => {
-    console.log('onEditAction: ', item);
     setEditProductId(item.id);
   };
 
@@ -43,6 +42,7 @@ function SellListSection() {
         );
       })}
       <EditModal
+        key={editProductId}
         isOpen={Boolean(editProductId)}
         productId={editProductId}
         onClose={() => {
