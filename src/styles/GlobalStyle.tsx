@@ -35,6 +35,16 @@ const GlobalStyle = createGlobalStyle`
     line-height: 140%; 
     padding: 0;
   }
+
+  input {
+    font-family: 'DNFBitBitv2';
+
+    &::placeholder {
+      color: #b5b5b5;
+      font-family: 'DNFBitBitv2';
+    
+    }
+  }
  
 `;
 
