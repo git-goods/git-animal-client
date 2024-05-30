@@ -6,8 +6,10 @@ import { useChangeProductPrice, useDeleteProduct } from '@/apis/auctions/useProd
 import DottedDoubleBox from '@/components/DottedBox/DottedDoubleBox';
 import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
 import Modal from '@/components/Modal/Modal';
+import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 
 function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: () => void; productId?: string }) {
+  const { showSnackBar } = useSnackBar();
   const queryClient = useQueryClient();
 
   const [price, setPrice] = useState<number>(0);
@@ -39,6 +41,10 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
 
   const onSave = () => {
     if (!productId) return;
+    if (!price) {
+      showSnackBar({ message: '수정할 금액을 입력해주세요' });
+      return;
+    }
     changePriceMutate({ id: productId, price: String(price) });
   };
 
@@ -63,9 +69,11 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
                 Save
               </DottedDoubleBox>
             </button>
-            <DottedDoubleBox width={103} height={36} bgColor="#6DB33F">
-              Cancel
-            </DottedDoubleBox>
+            <button onClick={onClose}>
+              <DottedDoubleBox width={103} height={36} bgColor="#6DB33F">
+                Cancel
+              </DottedDoubleBox>
+            </button>
             <button onClick={onDelete}>
               <DottedDoubleBox width={103} height={36} bgColor="#F6869F">
                 Delete

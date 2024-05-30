@@ -25,7 +25,6 @@ function SellListSection() {
   );
 
   const onEditAction = (item: ProductType) => {
-    console.log('onEditAction: ', item);
     setEditProductId(item.id);
   };
 
