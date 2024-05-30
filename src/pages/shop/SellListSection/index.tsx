@@ -42,6 +42,7 @@ function SellListSection() {
         );
       })}
       <EditModal
+        key={editProductId}
         isOpen={Boolean(editProductId)}
         productId={editProductId}
         onClose={() => {
