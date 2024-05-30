@@ -47,7 +47,7 @@ const ModalOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  /* background: rgba(0, 0, 0, 0.1); */
+  background: rgba(0, 0, 0, 0.2);
   padding: 28px;
   display: flex;
   justify-content: center;
@@ -56,16 +56,8 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContent = styled.div`
-  /* background: ${({ theme }) => theme.colors.bg.surface4}; */
   border-radius: 30px;
-  max-width: 300px;
-  width: 100%;
+  width: fit-content;
 `;
-// const modalContentCss = {
-//   background: 'bg.surface4',
-//   borderRadius: '30px',
-//   maxWidth: '300px',
-//   width: '100%',
-// };
 
 export default Modal;
