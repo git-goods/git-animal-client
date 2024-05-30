@@ -2,13 +2,26 @@ import styled from 'styled-components';
 
 import DottedDoubleBox from '@/components/DottedBox/DottedDoubleBox';
 import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
+import Modal from '@/components/Modal/Modal';
 
 function TestPage() {
   return (
     <Container>
-      <DottedDoubleBox width={228} height={228} bgColor="red" />
       <br />
-      <DottedThreeBox width={228} height={228} />
+
+      <Modal
+        isOpen={true}
+        onClose={() => {
+          console.log('close');
+        }}
+      >
+        <DottedThreeBox width={228} height={228}>
+          asdasd
+        </DottedThreeBox>
+        <DottedDoubleBox width={228} height={228} bgColor="red">
+          ad
+        </DottedDoubleBox>
+      </Modal>
     </Container>
   );
 }
