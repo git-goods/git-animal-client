@@ -1,8 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-interface GitanimalsProps {
-  username: string;
-  sizes?: [number, number];
-}
 
 import { useUser } from '@/store/user';
 
@@ -36,13 +32,13 @@ export const getGitanimalsLineString = ({
   const pet = petId ? `?pet-id=${petId}` : '';
 
   return `
-    <a href="https://github.com/devxb/gitanimals">
-      <img
-        src={"https://render.gitanimals.org/lines/${username}${pet}"}
-        width={${sizes[0]}}
-        height={${sizes[1]}}
-      />
-    </a>
+<a href="https://github.com/devxb/gitanimals">
+  <img
+    src="https://render.gitanimals.org/lines/${username}${pet}"
+    width="${sizes[0]}"
+    height="${sizes[1]}"
+  />
+</a>
   `;
 };
 
@@ -72,10 +68,10 @@ export const getGitanimalsFarmString = ({
   sizes = [600, 300],
 }: { username: string } & GitanimalsFarmProps) => {
   return `<a href="https://github.com/devxb/gitanimals">
-      <img
-        src={"https://render.gitanimals.org/farms/${username}"}
-        width={${sizes[0]}}
-        height={${sizes[1]}}
-      />
-    </a>`;
+<img
+  src="https://render.gitanimals.org/farms/${username}"
+  width="${sizes[0]}"
+  height="${sizes[1]}"
+/>
+</a>`;
 };
