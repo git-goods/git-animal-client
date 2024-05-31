@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
@@ -43,7 +44,7 @@ function Header() {
             </ul>
           </nav>
           {isLogin && (
-            <Profile>
+            <Profile href="/mypage">
               <>
                 <div className="profile-image">
                   <img src={profileImage} alt="profile" width={160} height={160} />
@@ -102,7 +103,7 @@ const HeaderStyled = styled.header`
   }
 `;
 
-const Profile = styled.div`
+const Profile = styled(Link)`
   padding-left: 33px;
   display: flex;
   align-items: center;
