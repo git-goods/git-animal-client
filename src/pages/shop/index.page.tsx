@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import type { GetServerSidePropsContext } from 'next';
-import Image from 'next/image';
 import styled from 'styled-components';
 
+import GotchaSection from './GotchaSection';
 import HistoryTable from './HistoryTable';
 import ProductTable from './ProductTable';
 import SellListSection from './SellListSection';
@@ -25,13 +25,7 @@ function ShopPage({ tab }: { tab: string }) {
           <Heading>Git Animals Auction</Heading>
         </TopSection>
         <Tab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-        <GotchaSection>
-          <Image src="/shop/gotcha.svg" width={384} height={80} alt="gotcha" className="gotcha-title" />
-          <Image src="/shop/gotcha-list.png" width={384} height={620} alt="gotcha list" className="gotcha-list" />
-          <button className="gotcha-press">
-            <Image src="/shop/press.svg" width={384} height={80} alt="press" />
-          </button>
-        </GotchaSection>
+        <GotchaSection />
         <section style={{ height: '644px' }}>
           {selectedTab === 'products' && <ProductTable />}
           {selectedTab === 'history' && <HistoryTable />}
@@ -66,28 +60,6 @@ const Heading = styled.h1`
   font-weight: 400;
   line-height: 140%; /* 44.8px */
   letter-spacing: -0.3px;
-`;
-
-const GotchaSection = styled.section`
-  position: relative;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  .gotcha-title {
-    position: absolute;
-    top: -6px;
-  }
-
-  .gotcha-press {
-    position: absolute;
-    bottom: -6px;
-    left: 0;
-    transition: all 0.3s;
-
-    &:active {
-      transform: translateY(4px);
-      filter: brightness(0.8);
-    }
-  }
 `;
 
 const ShopMain = styled.main`

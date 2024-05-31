@@ -13,13 +13,6 @@ interface Props {
 }
 
 function ShopTableRowView({ item, onAction, actionLabel, actionColor }: Props) {
-  // const actionLabel = useMemo(() => {
-  //   if (item.paymentState !== 'SELL_HISTORY') return ACTION_BUTTON_OBJ[item.paymentState].label;
-
-  //   const soldAt = (item as ProductHistoryType)?.receipt.soldAt;
-  //   return soldAt?.slice(2, 10).replace(/-/g, '.');
-  // }, [item]);
-
   return (
     <Row className="row" key={item.id}>
       <div>
