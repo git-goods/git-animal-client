@@ -38,7 +38,7 @@ function GotchaSection() {
             <Lottie animationData={Congratulations} loop={false} />;
           </LottieWrapper>
           <GotchaItem>
-            <Image src={getPersonaImage(data.name)} width={160} height={160} alt="persona" className="persona" />
+            <Image src={getPersonaImage(data.name)} width={180} height={180} alt="persona" className="persona" />
           </GotchaItem>
         </>
       )}
