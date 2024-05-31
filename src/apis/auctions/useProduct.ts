@@ -1,9 +1,9 @@
 import type { UseMutationOptions } from '@tanstack/react-query';
 import { useMutation } from '@tanstack/react-query';
 
-import type { PersonaSchema } from '@/schema/action';
+import type { PersonaSchema, ProductHistorySchema } from '@/schema/action';
 
-import { del, patch } from '..';
+import { del, patch, post } from '..';
 
 interface DeleteProductResponse {
   id: string;
@@ -40,5 +40,15 @@ export const useChangeProductPrice = (
 ) =>
   useMutation<ChangeProductPriceResponse, unknown, ChangeProductPriceRequest>({
     mutationFn: changeProductPrice,
+    ...options,
+  });
+
+type BuyProductResponse = ProductHistorySchema;
+
+const buyProduct = async (productId: string): Promise<BuyProductResponse> => post(`/auctions/products/${productId}`);
+
+export const useBuyProduct = (options?: UseMutationOptions<BuyProductResponse, unknown, string>) =>
+  useMutation<BuyProductResponse, unknown, string>({
+    mutationFn: buyProduct,
     ...options,
   });

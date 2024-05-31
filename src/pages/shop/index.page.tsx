@@ -2,6 +2,8 @@ import { useState } from 'react';
 import type { GetServerSidePropsContext } from 'next';
 import styled from 'styled-components';
 
+import Header from '@/components/Layout/Header';
+
 import GotchaSection from './GotchaSection';
 import HistoryTable from './HistoryTable';
 import ProductTable from './ProductTable';
@@ -19,21 +21,24 @@ function ShopPage({ tab }: { tab: string }) {
   const [selectedTab, setSelectedTab] = useState(tab);
 
   return (
-    <Main>
-      <ShopMain>
-        <TopSection>
-          <Heading>Git Animals Auction</Heading>
-        </TopSection>
-        <Tab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-        <GotchaSection />
-        <section style={{ height: '644px' }}>
-          {selectedTab === 'products' && <ProductTable />}
-          {selectedTab === 'history' && <HistoryTable />}
-          {selectedTab === 'sell' && <SellSection />}
-          {selectedTab === 'sellList' && <SellListSection />}
-        </section>
-      </ShopMain>
-    </Main>
+    <>
+      <Header />
+      <Main>
+        <ShopMain>
+          <TopSection>
+            <Heading>Git Animals Auction</Heading>
+          </TopSection>
+          <Tab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+          <GotchaSection />
+          <section style={{ height: '644px' }}>
+            {selectedTab === 'products' && <ProductTable />}
+            {selectedTab === 'history' && <HistoryTable />}
+            {selectedTab === 'sell' && <SellSection />}
+            {selectedTab === 'sellList' && <SellListSection />}
+          </section>
+        </ShopMain>
+      </Main>
+    </>
   );
 }
 

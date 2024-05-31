@@ -16,7 +16,7 @@ interface GetProductsResponse {
   products: ProductSchema[];
 }
 
-export const getProductsQueryKey = (request?: GetProductsRequest) => ['products', request];
+export const getProductsQueryKey = (request?: GetProductsRequest) => ['products', request].filter(Boolean);
 
 const getProducts = async <T = GetProductsResponse>(request?: GetProductsRequest): Promise<T> =>
   get('/auctions/products', {
