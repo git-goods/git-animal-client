@@ -64,7 +64,7 @@ function Header() {
 export default Header;
 
 const HeaderStyled = styled.header`
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   height: 70px;
   position: fixed;
