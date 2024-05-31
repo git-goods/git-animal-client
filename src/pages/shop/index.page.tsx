@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -8,8 +9,15 @@ import SellListSection from './SellListSection';
 import SellSection from './SellSection';
 import Tab from './Tab';
 
-function ShopPage() {
-  const [selectedTab, setSelectedTab] = useState('products');
+export const getServerSideProps = (context: GetServerSidePropsContext) => {
+  const tab = context.query.tab ?? 'products';
+
+  return { props: { tab } };
+};
+
+function ShopPage({ tab }: { tab: string }) {
+  const [selectedTab, setSelectedTab] = useState(tab);
+
   return (
     <Main>
       <ShopMain>
