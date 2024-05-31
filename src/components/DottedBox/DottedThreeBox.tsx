@@ -28,8 +28,8 @@ function DottedThreeBoxBg({ width, height, bgColor }: DottedBoxProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect x="4" y="8" width={width - 8} height={width - 16} fill={bgColor} />
-      <rect x="8" y="4" width={width - 16} height={width - 8} fill={bgColor} />
+      <rect x="4" y="8" width={width - 8} height={height - 16} fill={bgColor} />
+      <rect x="8" y="4" width={width - 16} height={height - 8} fill={bgColor} />
       <rect x={width - 12} y="4" width="4" height="4" fill="#141414" />
       <rect x={width - 8} y="8" width="4" height="4" fill="#141414" />
       <rect x={width - 12} y={height - 8} width="4" height="4" fill="#141414" />

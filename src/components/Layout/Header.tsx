@@ -17,17 +17,15 @@ function Header() {
   const { showSnackBar } = useSnackBar();
 
   const onShopClick = () => {
-    router.push('/prepare');
-
-    // if (isLogin) {
-    //   router.push('/shop');
-    // } else {
-    //   showSnackBar({ message: '로그인이 필요합니다. ' });
-    // }
+    if (isLogin) {
+      router.push('/shop');
+    } else {
+      showSnackBar({ message: '로그인이 필요합니다. ' });
+    }
   };
   return (
     <>
-      <HeaderStyled>
+      <HeaderStyled className="header">
         <div>
           <a href="/">
             <Image src="/logo.svg" width={137} height={42} alt="logo" />

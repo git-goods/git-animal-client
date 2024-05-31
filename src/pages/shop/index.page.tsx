@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { GetServerSidePropsContext } from 'next';
 import styled from 'styled-components';
 
+import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
 import Header from '@/components/Layout/Header';
 
 import GotchaSection from './GotchaSection';
@@ -22,27 +23,37 @@ function ShopPage({ tab }: { tab: string }) {
 
   return (
     <>
-      <Header />
+      <HeaderStyled>
+        <Header />
+      </HeaderStyled>
       <Main>
-        <ShopMain>
-          <TopSection>
-            <Heading>Git Animals Auction</Heading>
-          </TopSection>
-          <Tab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-          <GotchaSection />
-          <section style={{ height: '644px' }}>
-            {selectedTab === 'products' && <ProductTable />}
-            {selectedTab === 'history' && <HistoryTable />}
-            {selectedTab === 'sell' && <SellSection />}
-            {selectedTab === 'sellList' && <SellListSection />}
-          </section>
-        </ShopMain>
+        <DottedThreeBox width={1396} height={800} bgColor="#FFA109">
+          <ShopMain>
+            <TopSection>
+              <Heading>Git Animals Auction</Heading>
+            </TopSection>
+            <Tab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+            <GotchaSection />
+            <section style={{ height: '644px' }}>
+              {selectedTab === 'products' && <ProductTable />}
+              {selectedTab === 'history' && <HistoryTable />}
+              {selectedTab === 'sell' && <SellSection />}
+              {selectedTab === 'sellList' && <SellListSection />}
+            </section>
+          </ShopMain>
+        </DottedThreeBox>
       </Main>
     </>
   );
 }
 
 export default ShopPage;
+
+const HeaderStyled = styled.div`
+  .header {
+    max-width: 1460px;
+  }
+`;
 
 const Main = styled.main`
   display: flex;
@@ -68,13 +79,11 @@ const Heading = styled.h1`
 `;
 
 const ShopMain = styled.main`
-  width: 1500px;
-  height: 800px;
-
-  background-image: url('/shop/shop-bg.svg');
+  /* background-image: url('/shop/shop-bg.svg'); */
   padding: 40px 20px;
 
   display: grid;
-  grid-template-columns: 384px 1fr;
-  grid-column-gap: 132px;
+  grid-template-columns: 384px 944px;
+  /* grid-column-gap: 132px; */
+  grid-column-gap: 16px;
 `;
