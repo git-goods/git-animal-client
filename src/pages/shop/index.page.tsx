@@ -13,7 +13,8 @@ import SellSection from './SellSection';
 import Tab from './Tab';
 
 export const getServerSideProps = (context: GetServerSidePropsContext) => {
-  const tab = context.query.tab ?? 'products';
+  const tab = context?.query?.tab ?? 'products';
+  console.log('tab: ', tab);
 
   return { props: { tab } };
 };
