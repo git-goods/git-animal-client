@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 
 import QueryClientProvider from '@/apis/QueryClientProvider';
 import LoadingProvider from '@/components/Loading/LoadingProvider';
+import MetaHead from '@/components/MetaHead';
 import Monitoring from '@/components/Monitoring';
 import { SnackBarProvider } from '@/components/SnackBar/SnackBarProvider';
 import usePageTrack from '@/hooks/event/usePageTrack';
@@ -15,6 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider>
       <Monitoring />
+      <MetaHead />
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <LazyMotion features={domAnimation}>
