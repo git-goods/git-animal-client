@@ -163,7 +163,16 @@ const AnimalList = styled.ul`
   max-width: 100%;
   width: 1000px;
   overflow-x: auto;
-
+  &::-webkit-scrollbar {
+    width: 2px;
+    height: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #2b2b2b8b;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
   button {
     position: relative;
     z-index: 1;
