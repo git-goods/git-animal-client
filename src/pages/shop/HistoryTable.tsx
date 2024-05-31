@@ -1,4 +1,4 @@
-import { HISTORY_DUMMY_DATA, useGetHistory } from '@/apis/auctions/useGetHistory';
+import { useGetHistory } from '@/apis/auctions/useGetHistory';
 import ShopTableBackground from '@/components/ProductTable/ShopTableBackground';
 import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
@@ -22,7 +22,6 @@ function HistoryTable() {
             : product,
         ),
       }),
-      initialData: HISTORY_DUMMY_DATA,
     },
   );
 
