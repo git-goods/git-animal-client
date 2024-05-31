@@ -3,6 +3,7 @@ import { domAnimation, LazyMotion } from 'framer-motion';
 import { ThemeProvider } from 'styled-components';
 
 import QueryClientProvider from '@/apis/QueryClientProvider';
+import LoadingProvider from '@/components/Loading/LoadingProvider';
 import Monitoring from '@/components/Monitoring';
 import { SnackBarProvider } from '@/components/SnackBar/SnackBarProvider';
 import usePageTrack from '@/hooks/event/usePageTrack';
@@ -18,6 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <GlobalStyle />
         <LazyMotion features={domAnimation}>
           <SnackBarProvider />
+          <LoadingProvider />
           <Component {...pageProps} />
         </LazyMotion>
       </ThemeProvider>
