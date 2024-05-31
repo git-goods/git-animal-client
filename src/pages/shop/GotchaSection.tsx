@@ -10,6 +10,7 @@ import Congratulations from './congratulations.json';
 
 function GotchaSection() {
   const [gotchaVisible, setGotchaVisible] = useState(false);
+  const [isBounce, setIsBounce] = useState(false);
 
   const { mutate, data, isPending } = useGotcha({
     onSuccess: () => {
@@ -32,6 +33,14 @@ function GotchaSection() {
       <button className="gotcha-press" onClick={onPress}>
         <Image src="/shop/press.svg" width={384} height={80} alt="press" />
       </button>
+      <Image
+        className={'point-message' + (isBounce ? ' bounce' : '')}
+        src="/shop/gotcha-point-message.svg"
+        width={357.5}
+        height={115}
+        alt="gotcha point message"
+        onClick={() => setIsBounce(!isBounce)}
+      />
       {data && gotchaVisible && (
         <>
           <LottieWrapper>
@@ -117,5 +126,46 @@ const Container = styled.section`
       transform: translateY(4px);
       filter: brightness(0.8);
     }
+  }
+  .point-message {
+    position: absolute;
+    right: -170px;
+    bottom: 26px;
+    animation: move 1s infinite;
+
+    @keyframes move {
+      0% {
+        rotate: -2deg;
+      }
+      50% {
+        rotate: 2deg;
+      }
+      100% {
+        rotate: -2deg;
+      }
+    }
+  }
+
+  @keyframes bounce {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-30px);
+    }
+    60% {
+      transform: translateY(-20px);
+    }
+  }
+
+  &.bounce {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-name: bounce;
+    animation-name: bounce;
   }
 `;
