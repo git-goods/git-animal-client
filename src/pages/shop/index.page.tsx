@@ -4,6 +4,8 @@ import styled from 'styled-components';
 
 import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
 import Header from '@/components/Layout/Header';
+import { useUser } from '@/store/user';
+import { addNumberComma } from '@/utils/number';
 
 import GotchaSection from './GotchaSection';
 import HistoryTable from './HistoryTable';
@@ -14,14 +16,13 @@ import Tab from './Tab';
 
 export const getServerSideProps = (context: GetServerSidePropsContext) => {
   const tab = context?.query?.tab ?? 'products';
-  console.log('tab: ', tab);
 
   return { props: { tab } };
 };
 
 function ShopPage({ tab }: { tab: string }) {
   const [selectedTab, setSelectedTab] = useState(tab);
-
+  const { points } = useUser();
   return (
     <>
       <HeaderStyled>
@@ -33,7 +34,12 @@ function ShopPage({ tab }: { tab: string }) {
             <TopSection>
               <Heading>Git Animals Auction</Heading>
             </TopSection>
-            <Tab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+
+            <TabSection>
+              <Tab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+
+              <div>my points : {addNumberComma(points)}</div>
+            </TabSection>
             <GotchaSection />
             <section style={{ height: '644px' }}>
               {selectedTab === 'products' && <ProductTable />}
@@ -49,6 +55,14 @@ function ShopPage({ tab }: { tab: string }) {
 }
 
 export default ShopPage;
+
+const TabSection = styled.section`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 24px;
+`;
 
 const HeaderStyled = styled.div`
   .header {
