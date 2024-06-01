@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { checkUsedCoupons } from '@/apis/user/getUsedCoupons';
 import Button from '@/components/Button';
 import LoginButton from '@/components/LoginButton';
+import { SUMI_GITHUB_URL } from '@/constants/outlink';
 import { recordEvent } from '@/lib/gtag';
 
 function Welcome() {
@@ -24,7 +25,7 @@ function Welcome() {
       <Heading>
         Have your pet in <strong>GITHUB!</strong>
       </Heading>
-      <SeeExampleButton>See Example →</SeeExampleButton>
+      <SeeExampleButton href={SUMI_GITHUB_URL}>See Example →</SeeExampleButton>
       {/* TODO: 임시로 수미로 설정 */}
       <LoginButton>
         <Button onClick={onClickHavePet}>HAVE PET!</Button>
@@ -60,10 +61,11 @@ const Heading = styled.h1`
   }
 `;
 
-const SeeExampleButton = styled.button`
+const SeeExampleButton = styled.a`
   color: #fff;
   text-align: center;
   font-size: 36px;
   letter-spacing: -1px;
   margin-bottom: 100px;
+  text-decoration: none;
 `;
