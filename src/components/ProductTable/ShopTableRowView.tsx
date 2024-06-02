@@ -33,6 +33,17 @@ function ShopTableRowView({ item, onAction, actionLabel, actionColor }: Props) {
 export default ShopTableRowView;
 
 export const Row = styled.div`
+  animation: fadeIn 0.3s;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
   display: grid;
   grid-template-columns: 82px 209px 178px 354px 120px;
   vertical-align: center;
