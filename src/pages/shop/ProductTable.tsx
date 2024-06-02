@@ -42,6 +42,9 @@ function ProductTable() {
       queryClient.invalidateQueries({
         queryKey: getProductsQueryKey(),
       });
+      queryClient.invalidateQueries({
+        queryKey: ['user'], // TODO: user query key
+      });
     },
     onSettled: () => {
       setLoading(false);
