@@ -9,6 +9,7 @@ interface UserStore extends UserSchema {
   login: (token: string) => Promise<void>;
   logout: () => void;
   token: string;
+  setUserData: (data: UserSchema) => void;
 }
 
 const initialState: UserStore = {
@@ -17,7 +18,7 @@ const initialState: UserStore = {
   username: '',
   points: '',
   profileImage: '',
-
+  setUserData: () => {},
   // login
   token: '',
   isLogin: false,
@@ -38,6 +39,9 @@ const useUserStore = create(
       },
       logout() {
         set({ ...initialState });
+      },
+      setUserData: (data: UserSchema) => {
+        set({ ...data });
       },
     }),
     {
@@ -60,6 +64,8 @@ export const useUser = () =>
     id: state.id,
     isLogin: state.isLogin,
   }));
+
+export const useSetUserData = () => useUserStore((state) => ({ setUserData: state.setUserData }));
 
 export const getToken = () => useUserStore.getState().token;
 export const useLogin = () => useUserStore((state) => ({ login: state.login }));
