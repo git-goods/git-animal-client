@@ -65,6 +65,7 @@ const TabSection = styled.section`
 `;
 
 const HeaderStyled = styled.div`
+  height: 70px;
   .header {
     max-width: 1460px;
   }
