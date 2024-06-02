@@ -2,15 +2,16 @@ import type { UseQueryOptions } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 
 import type { ProductSchema } from '@/schema/action';
-import type { PaginationSchema } from '@/schema/pagination';
+import type { PaginationRequestSchema, PaginationSchema } from '@/schema/pagination';
 import { convertCamelObjToSnake } from '@/utils/string';
 
 import { get } from '..';
 
-interface GetMyProductRequest extends PaginationSchema {}
+interface GetMyProductRequest extends PaginationRequestSchema {}
 
 interface GetMyProductResponse {
   products: ProductSchema[];
+  pagination: PaginationSchema;
 }
 
 export const getMyProductsQueryKey = (request?: GetMyProductRequest) => ['my', 'products', request];

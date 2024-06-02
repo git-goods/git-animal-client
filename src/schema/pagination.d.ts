@@ -1,10 +1,18 @@
 /**
  * Pagination schema
  * @typedef PaginationSchema
- * @property {string} [lastId] -  last-id를 입력하면, lastId이후의 products들을 조회합니다. (lastId에 해당하는 products는 포함하지 않습니다.) 만약, 입력하지 않을 경우, 가장 처음 products부터 count개 반환합니다.
- *  @property {number} [count] -  last-id 이후의 product를 count개 조회합니다. 입력하지 않을 경우, 8개를 조회합니다.
+ * @property {string} [pageNumber] -  page-number에 해당하는 page를 조회합니다. (첫번째 page-number는 0 이며, 아무것도 입력하지 않을시, 0으로 초기화 됩니다.)
+ *  @property {number} [count] - product를 count개 조회합니다. 입력하지 않을 경우, 8개를 조회합니다.
  */
-export interface PaginationSchema {
-  lastId?: string;
+export interface PaginationRequestSchema {
+  pageNumber?: number;
   count?: number;
+}
+
+export interface PaginationSchema {
+  totalRecords: number;
+  currentPage: number;
+  totalPages: number;
+  nextPage: number | null;
+  prevPage: number | null;
 }

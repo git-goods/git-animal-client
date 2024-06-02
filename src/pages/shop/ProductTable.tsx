@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { getProductsQueryKey, useGetProducts } from '@/apis/auctions/useGetProducts';
 import { useBuyProduct, useDeleteProduct } from '@/apis/auctions/useProduct';
+import Pagination from '@/components/Pagination';
 import ShopTableBackground from '@/components/ProductTable/ShopTableBackground';
 import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
 import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import type { ProductItemType, ProductType } from '@/schema/action';
+import type { PaginationSchema } from '@/schema/pagination';
 import { useLoading } from '@/store/loading';
 import { useUser } from '@/store/user';
 
@@ -18,8 +21,12 @@ function ProductTable() {
   const { showSnackBar } = useSnackBar();
   const { setLoading } = useLoading();
 
-  const { data } = useGetProducts<{ products: ProductType<'MY_SELLING' | 'ON_SALE'>[] }>(
-    {},
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const { data } = useGetProducts<{ products: ProductType<'MY_SELLING' | 'ON_SALE'>[]; pagination: PaginationSchema }>(
+    {
+      pageNumber: currentPage,
+    },
     {
       enabled: Boolean(myId),
       select: (data) => {
@@ -31,6 +38,7 @@ function ProductTable() {
             }
             return product;
           }),
+          pagination: data?.pagination,
         };
       },
     },
@@ -75,19 +83,22 @@ function ProductTable() {
   };
 
   return (
-    <ShopTableBackground>
-      {data?.products.map((product) => {
-        return (
-          <ShopTableRowView
-            key={product.id}
-            item={product}
-            onAction={onAction}
-            actionLabel={ACTION_BUTTON_OBJ[product.paymentState].label}
-            actionColor={ACTION_BUTTON_OBJ[product.paymentState].color}
-          />
-        );
-      })}
-    </ShopTableBackground>
+    <div>
+      <ShopTableBackground>
+        {data?.products.map((product) => {
+          return (
+            <ShopTableRowView
+              key={product.id}
+              item={product}
+              onAction={onAction}
+              actionLabel={ACTION_BUTTON_OBJ[product.paymentState].label}
+              actionColor={ACTION_BUTTON_OBJ[product.paymentState].color}
+            />
+          );
+        })}
+      </ShopTableBackground>
+      {data && <Pagination {...data.pagination} currentPage={currentPage} onSetPage={setCurrentPage} />}
+    </div>
   );
 }
 

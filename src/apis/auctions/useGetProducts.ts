@@ -2,25 +2,25 @@ import type { UseQueryOptions } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 
 import type { ProductSchema } from '@/schema/action';
-import { convertCamelObjToSnake } from '@/utils/string';
+import type { PaginationRequestSchema, PaginationSchema } from '@/schema/pagination';
+import { convertCamelObjToKebab } from '@/utils/string';
 
 import { get } from '..';
 
-interface GetProductsRequest {
-  lastId?: string;
+interface GetProductsRequest extends PaginationRequestSchema {
   personaType?: string;
-  count?: number;
 }
 
 interface GetProductsResponse {
   products: ProductSchema[];
+  pagination: PaginationSchema;
 }
 
 export const getProductsQueryKey = (request?: GetProductsRequest) => ['products', request].filter(Boolean);
 
 const getProducts = async <T = GetProductsResponse>(request?: GetProductsRequest): Promise<T> =>
   get('/auctions/products', {
-    params: request ? convertCamelObjToSnake(request) : undefined,
+    params: request ? convertCamelObjToKebab(request) : undefined,
   });
 
 export const useGetProducts = <T = GetProductsResponse>(

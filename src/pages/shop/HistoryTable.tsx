@@ -30,7 +30,6 @@ function HistoryTable() {
   };
 
   const getHistoryActionLabel = (soldAt: string) => {
-    console.log('soldAt: ', soldAt);
     return String(soldAt)?.slice(2, 10).replace(/-/g, '.');
   };
 

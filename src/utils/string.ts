@@ -21,10 +21,24 @@ export const convertCamelToSnake = (str: string) => {
   return str.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
 };
 
+// camel to kebab
+export const convertCamelToKebab = (str: string) => {
+  return convertCamelToSnake(str).replaceAll('_', '-');
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const convertCamelObjToSnake = (obj: Record<string, any>) => {
   return Object.entries(obj).reduce((acc, [key, value]) => {
     const convertedKey = convertCamelToSnake(key);
+    return { ...acc, [convertedKey]: value };
+  }, {});
+};
+
+// camel to kebab kobj
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const convertCamelObjToKebab = (obj: Record<string, any>) => {
+  return Object.entries(obj).reduce((acc, [key, value]) => {
+    const convertedKey = convertCamelToKebab(key);
     return { ...acc, [convertedKey]: value };
   }, {});
 };

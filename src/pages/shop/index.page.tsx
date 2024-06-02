@@ -29,7 +29,7 @@ function ShopPage({ tab }: { tab: string }) {
         <Header />
       </HeaderStyled>
       <Main>
-        <DottedThreeBox width={1396} height={800} bgColor="#FFA109">
+        <DottedThreeBox width={1396} height={824} bgColor="#FFA109">
           <ShopMain>
             <TopSection>
               <Heading>Git Animals Auction</Heading>
