@@ -77,7 +77,7 @@ const Main = styled.main`
   align-items: center;
   padding: 20px;
   min-width: fit-content;
-  min-height: 100vh;
+  min-height: calc(100vh - 100px);
 `;
 
 const TopSection = styled.section`
