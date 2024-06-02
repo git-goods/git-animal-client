@@ -95,11 +95,8 @@ const Heading = styled.h1`
 `;
 
 const ShopMain = styled.main`
-  /* background-image: url('/shop/shop-bg.svg'); */
   padding: 40px 20px;
-
   display: grid;
   grid-template-columns: 384px 944px;
-  /* grid-column-gap: 132px; */
   grid-column-gap: 16px;
 `;
