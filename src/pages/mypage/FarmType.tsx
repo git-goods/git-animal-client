@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
@@ -11,6 +12,7 @@ import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals
 import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
 import type { PetInfoSchema } from '@/schema/user';
+import { useLoading } from '@/store/loading';
 import { useUser } from '@/store/user';
 import { copyClipBoard } from '@/utils/copy';
 
@@ -18,8 +20,11 @@ import { FarmSection } from './index.styles';
 
 const size = 120;
 function FarmType() {
+  const queryClient = useQueryClient();
+
   const { username } = useUser();
   const { showSnackBar } = useSnackBar();
+  const { setLoading } = useLoading();
 
   const { data } = useGetAllPets(username, {
     enabled: Boolean(username),
@@ -41,6 +46,9 @@ function FarmType() {
   const [animals, setAnimals] = useState(setInitData());
 
   const { mutate, isSuccess } = useChangePersonaVisible({
+    onMutate: () => {
+      setLoading(true);
+    },
     onSuccess: (res) => {
       setAnimals((prev) =>
         prev.map((animal) => {
@@ -53,6 +61,12 @@ function FarmType() {
           return animal;
         }),
       );
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['users', 'all-pet'],
+      });
+      setLoading(false);
     },
   });
 
