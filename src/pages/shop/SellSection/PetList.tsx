@@ -41,6 +41,9 @@ export default PetList;
 const ListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+
+  max-height: 534px;
+  overflow-y: auto;
 `;
 
 const PetItemContainer = styled.div<{ isSelected?: boolean }>`
