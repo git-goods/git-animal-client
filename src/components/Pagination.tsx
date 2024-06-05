@@ -8,7 +8,7 @@ function Pagination(props: { currentPage: number; onSetPage: (page: number) => v
     return new Array(10)
       .fill(undefined)
       .map((_, idx) => start + idx)
-      .filter((page) => page <= props.totalPages);
+      .filter((page) => page < props.totalPages);
   };
 
   return (
