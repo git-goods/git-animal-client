@@ -3,6 +3,14 @@ import styled from 'styled-components';
 import type { PaginationSchema } from '@/schema/pagination';
 
 function Pagination(props: { currentPage: number; onSetPage: (page: number) => void } & PaginationSchema) {
+  const getPaginationGroup = () => {
+    const start = Math.floor(props.currentPage / 10) * 10;
+    return new Array(10)
+      .fill(undefined)
+      .map((_, idx) => start + idx)
+      .filter((page) => page <= props.totalPages);
+  };
+
   return (
     <PaginationContainer>
       <button disabled={!props.prevPage} onClick={() => props.prevPage && props.onSetPage(props.prevPage)}>
@@ -14,7 +22,7 @@ function Pagination(props: { currentPage: number; onSetPage: (page: number) => v
           <rect x="8" y="16" width="4" height="4" fill="#141414" />
         </svg>
       </button>
-      {Array.from({ length: props.totalPages }, (_, i) => (
+      {getPaginationGroup().map((i) => (
         <button
           key={i}
           onClick={() => props.onSetPage(i)}
