@@ -29,7 +29,7 @@ function ShopPage({ tab }: { tab: string }) {
         <Header />
       </HeaderStyled>
       <Main>
-        <DottedThreeBox width={1396} height={824} bgColor="#FFA109">
+        <DottedThreeBox width={1412} height={824} bgColor="#FFA109">
           <ShopMain>
             <TopSection>
               <Heading>Git Animals Auction</Heading>
@@ -41,7 +41,7 @@ function ShopPage({ tab }: { tab: string }) {
               <div>my points : {addNumberComma(points)}</div>
             </TabSection>
             <GotchaSection />
-            <section style={{ height: '644px' }}>
+            <section style={{ height: '655px' }}>
               {selectedTab === 'products' && <ProductTable />}
               {selectedTab === 'history' && <HistoryTable />}
               {selectedTab === 'sell' && <SellSection />}
@@ -97,6 +97,6 @@ const Heading = styled.h1`
 const ShopMain = styled.main`
   padding: 40px 20px;
   display: grid;
-  grid-template-columns: 384px 944px;
+  grid-template-columns: 384px 960px;
   grid-column-gap: 16px;
 `;

@@ -21,6 +21,9 @@ function GotchaSection() {
       queryClient.invalidateQueries({
         queryKey: ['user'], // TODO: user query key
       });
+      queryClient.invalidateQueries({
+        queryKey: ['users', 'all-pet'], // TODO: getAllPetsQueryKey
+      });
 
       const timer = setTimeout(() => {
         setGotchaVisible(false);
