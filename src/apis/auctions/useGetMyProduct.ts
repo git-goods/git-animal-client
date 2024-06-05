@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import type { ProductSchema } from '@/schema/action';
 import type { PaginationRequestSchema, PaginationSchema } from '@/schema/pagination';
-import { convertCamelObjToSnake } from '@/utils/string';
+import { convertCamelObjToKebab } from '@/utils/string';
 
 import { get } from '..';
 
@@ -18,7 +18,7 @@ export const getMyProductsQueryKey = (request?: GetMyProductRequest) => ['my', '
 
 const getMyProducts = async <T = GetMyProductResponse>(request?: GetMyProductRequest): Promise<T> =>
   get('/auctions/products/users', {
-    params: request ? convertCamelObjToSnake(request) : undefined,
+    params: request ? convertCamelObjToKebab(request) : undefined,
   });
 
 /**

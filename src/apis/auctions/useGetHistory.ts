@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import type { ProductHistorySchema } from '@/schema/action';
 import type { PaginationRequestSchema } from '@/schema/pagination';
+import { convertCamelObjToKebab } from '@/utils/string';
 
 import { get } from '..';
 
@@ -15,7 +16,9 @@ interface GetHistoryResponse {
 }
 
 const getHistory = async <T = GetHistoryResponse>(request?: GetHistoryRequest): Promise<T> =>
-  get('/auctions/products/histories', { params: request });
+  get('/auctions/products/histories', {
+    params: request ? convertCamelObjToKebab(request) : undefined,
+  });
 
 export const getHistoryQueryKey = (request?: GetHistoryRequest) => ['history', request];
 
