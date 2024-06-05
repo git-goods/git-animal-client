@@ -41,7 +41,7 @@ function ShopPage({ tab }: { tab: string }) {
               <div>my points : {addNumberComma(points)}</div>
             </TabSection>
             <GotchaSection />
-            <section style={{ height: '644px' }}>
+            <section style={{ height: '655px' }}>
               {selectedTab === 'products' && <ProductTable />}
               {selectedTab === 'history' && <HistoryTable />}
               {selectedTab === 'sell' && <SellSection />}
