@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { useQueryClient } from '@tanstack/react-query';
 import Lottie from 'lottie-react';
 import styled from 'styled-components';
 
@@ -9,12 +10,18 @@ import { getPersonaImage } from '@/utils/image';
 import Congratulations from './congratulations.json';
 
 function GotchaSection() {
+  const queryClient = useQueryClient();
   const [gotchaVisible, setGotchaVisible] = useState(false);
   const [isBounce, setIsBounce] = useState(false);
 
   const { mutate, data, isPending } = useGotcha({
     onSuccess: () => {
       setGotchaVisible(true);
+      // TODO : 포인트 내려가는 애니매이션을 ㄴ허어볼까
+      queryClient.invalidateQueries({
+        queryKey: ['user'], // TODO: user query key
+      });
+
       const timer = setTimeout(() => {
         setGotchaVisible(false);
         clearTimeout(timer);
