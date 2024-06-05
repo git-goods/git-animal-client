@@ -14,7 +14,7 @@ interface GetMyProductResponse {
   pagination: PaginationSchema;
 }
 
-export const getMyProductsQueryKey = (request?: GetMyProductRequest) => ['my', 'products', request];
+export const getMyProductsQueryKey = (request?: GetMyProductRequest) => ['my', 'products', request].filter(Boolean);
 
 const getMyProducts = async <T = GetMyProductResponse>(request?: GetMyProductRequest): Promise<T> =>
   get('/auctions/products/users', {
