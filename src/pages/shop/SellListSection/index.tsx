@@ -17,7 +17,9 @@ function SellListSection() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const { data } = useGetMyProducts<{ products: ProductType<'EDIT'>[]; pagination: PaginationSchema }>(
-    {},
+    {
+      pageNumber: currentPage,
+    },
     {
       select: (data) => ({
         ...data,

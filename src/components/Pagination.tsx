@@ -8,7 +8,7 @@ function Pagination(props: { currentPage: number; onSetPage: (page: number) => v
     return new Array(10)
       .fill(undefined)
       .map((_, idx) => start + idx)
-      .filter((page) => page <= props.totalPages);
+      .filter((page) => page < props.totalPages);
   };
 
   return (
@@ -58,7 +58,7 @@ const PaginationContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 6px;
-  margin-top: 14px;
+  margin-top: 8px;
 
   button {
     min-width: 15px;

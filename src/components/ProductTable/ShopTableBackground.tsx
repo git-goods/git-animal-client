@@ -11,7 +11,7 @@ function ShopTableBackground({ children }: { children: React.ReactNode }) {
 export default ShopTableBackground;
 
 const Bg = styled.div`
-  height: 644px;
+  height: 655px;
   background-image: url('/shop/table-bg.png');
   background-size: cover;
 `;

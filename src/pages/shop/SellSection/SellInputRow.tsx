@@ -23,7 +23,13 @@ function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona
       queryClient.invalidateQueries({
         queryKey: ['users', 'all-pet'], // TODO: getAllPetsQueryKey
       });
+      queryClient.invalidateQueries({
+        queryKey: ['my', 'products'], //getMyProductsQueryKey(),
+      });
       initPersona();
+      setPrice(0);
+
+      showSnackBar({ message: '판매 등록이 완료되었습니다.' });
     },
   });
 

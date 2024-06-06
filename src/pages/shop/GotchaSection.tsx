@@ -11,12 +11,21 @@ import { getPersonaImage } from '@/utils/image';
 import Congratulations from './congratulations.json';
 
 function GotchaSection() {
+  const queryClient = useQueryClient();
   const [gotchaVisible, setGotchaVisible] = useState(false);
   const [isBounce, setIsBounce] = useState(false);
 
   const { mutate, data, isPending } = useGotcha({
     onSuccess: () => {
       setGotchaVisible(true);
+      // TODO : 포인트 내려가는 애니매이션을 ㄴ허어볼까
+      queryClient.invalidateQueries({
+        queryKey: ['user'], // TODO: user query key
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['users', 'all-pet'], // TODO: getAllPetsQueryKey
+      });
+
       const timer = setTimeout(() => {
         setGotchaVisible(false);
         clearTimeout(timer);

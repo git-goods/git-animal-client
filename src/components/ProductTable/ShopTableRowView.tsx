@@ -45,7 +45,8 @@ export const Row = styled.div`
   }
 
   display: grid;
-  grid-template-columns: 82px 209px 178px 354px 120px;
+  grid-template-columns: 82px 214px 181px 360px 122px;
+  /* grid-template-columns: 82px 209px 178px 354px 120px; */
   vertical-align: center;
   height: 82px;
   align-items: center;

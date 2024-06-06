@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 
 import type { PetInfoSchema } from '@/schema/user';
 
@@ -10,10 +11,15 @@ function SellSection() {
   return (
     <div>
       <ShopRow item={selectPersona} initPersona={() => setSelectPersona(undefined)} />
-      <h3>Pets</h3>
+      <PetsHeading>Pets</PetsHeading>
       <PetList selectedPersona={selectPersona} onProductClick={setSelectPersona} />
     </div>
   );
 }
 
 export default SellSection;
+
+const PetsHeading = styled.h3`
+  margin-top: 12px;
+  margin-bottom: 4px;
+`;
