@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import type { GetServerSidePropsContext } from 'next';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 
 import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
 import Header from '@/components/Layout/Header';
-import { useUser } from '@/store/user';
-import { addNumberComma } from '@/utils/number';
 
 import GotchaSection from './GotchaSection';
 import HistoryTable from './HistoryTable';
@@ -13,6 +12,9 @@ import ProductTable from './ProductTable';
 import SellListSection from './SellListSection';
 import SellSection from './SellSection';
 import Tab from './Tab';
+
+// NOTE: 서버 사이드에서 인증 정보를 확인할 수 없기 때문에
+const LazyPoint = dynamic(() => import('./Point'), { ssr: false });
 
 export const getServerSideProps = (context: GetServerSidePropsContext) => {
   const tab = context?.query?.tab ?? 'products';
@@ -22,7 +24,7 @@ export const getServerSideProps = (context: GetServerSidePropsContext) => {
 
 function ShopPage({ tab }: { tab: string }) {
   const [selectedTab, setSelectedTab] = useState(tab);
-  const { points } = useUser();
+
   return (
     <>
       <HeaderStyled>
@@ -38,9 +40,13 @@ function ShopPage({ tab }: { tab: string }) {
             <TabSection>
               <Tab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
 
-              <div>my points : {addNumberComma(points)}</div>
+              <Suspense>
+                <LazyPoint />
+              </Suspense>
             </TabSection>
+
             <GotchaSection />
+
             <section style={{ height: '644px' }}>
               {selectedTab === 'products' && <ProductTable />}
               {selectedTab === 'history' && <HistoryTable />}

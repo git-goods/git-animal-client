@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { useQueryClient } from '@tanstack/react-query';
 import Lottie from 'lottie-react';
 import styled from 'styled-components';
 
 import { useGotcha } from '@/apis/gotcha/useGotcha';
+import { USER_QUERY_KEY } from '@/apis/user/useGetUser';
 import { getPersonaImage } from '@/utils/image';
 
 import Congratulations from './congratulations.json';
@@ -22,8 +24,17 @@ function GotchaSection() {
     },
   });
 
+  const queryClient = useQueryClient();
+
   const onPress = () => {
-    mutate({});
+    mutate(
+      {},
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
+        },
+      },
+    );
   };
 
   return (
