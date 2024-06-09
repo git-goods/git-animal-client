@@ -26,7 +26,9 @@ function Welcome() {
       <Heading>
         Have your pet in <strong>GITHUB!</strong>
       </Heading>
-      <SeeExampleButton href={SUMI_GITHUB_URL}>See Example →</SeeExampleButton>
+      <SeeExampleButton href={SUMI_GITHUB_URL} target="_blank">
+        See Example →
+      </SeeExampleButton>
       {/* TODO: 임시로 수미로 설정 */}
       <LoginButton>
         <Button onClick={onClickHavePet}>HAVE PET!</Button>

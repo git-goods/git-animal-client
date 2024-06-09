@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
-import { useSnackBar } from '@/components/SnackBar/useSnackBar';
+import { GITHUB_OAUTH_REQUEST_URL } from '@/constants/oauth';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { useUser } from '@/store/user';
 
@@ -15,13 +15,12 @@ function Header() {
   const { username, isLogin, profileImage } = useUser();
 
   const router = useRouter();
-  const { showSnackBar } = useSnackBar();
 
   const onShopClick = () => {
     if (isLogin) {
       router.push('/shop');
     } else {
-      showSnackBar({ message: '로그인이 필요합니다. ' });
+      router.push(GITHUB_OAUTH_REQUEST_URL);
     }
   };
   return (
