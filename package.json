@@ -1,5 +1,5 @@
 {
-  "name": "depromeet-makers-fe",
+  "name": "git-animal-client",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "prepare": "husky",
-    "preinstall": "husky init",
+    "preinstall": "husky",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
