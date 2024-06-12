@@ -1,9 +1,6 @@
 import type { Metadata } from 'next';
 
-import QueryClientProvider from '@/apis/QueryClientProvider';
-import Monitoring from '@/components/Monitoring';
-import StyledComponentsRegistry from '@/lib/registry';
-import GlobalStyle from '@/styles/GlobalStyle';
+import ClientProvider from '@/components/ClientProvider';
 
 export const metadata: Metadata = {
   title: 'GitAnimals',
@@ -34,18 +31,11 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // usePageTrack();
   return (
     <html lang="en">
       <body>
-        <QueryClientProvider>
-          <StyledComponentsRegistry>
-            <Monitoring />
-            <GlobalStyle />
-            {children}
-            {/* <ThemeProvider theme={theme}>
-              </ThemeProvider> */}
-          </StyledComponentsRegistry>
-        </QueryClientProvider>
+        <ClientProvider>{children}</ClientProvider>
       </body>
     </html>
   );
