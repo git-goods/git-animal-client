@@ -98,8 +98,8 @@ const BlackOutline = () => (
   <div className="bg">
     <svg width="286" height="80" viewBox="0 0 286 80" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M274 0H12V4H8V8H4V12H0V68H4V72H8V76H12V80H274V76H278V72H282V68H286V12H282V8H278V4H274V0ZM274 4V8H278V12H282V68H278V72H274V76H12V72H8V68H4V12H8V8H12V4H274Z"
         fill="#141414"
       />
@@ -111,8 +111,8 @@ const InnerSvg = ({ color }: { color: string }) => (
   <div className="bg" style={{ padding: '4px' }}>
     <svg width="278" height="72" viewBox="0 0 278 72" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M270 0H8V4H4V8H0V64H4V68H8V72H270V68H274V64H278V8H274V4L270 4V0ZM262 12H16V16H12V56H16V60H262V56H266V16H262V12Z"
         fill={color ?? '#EBEBEB'}
       />

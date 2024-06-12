@@ -4,8 +4,16 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+
   images: {
-    domains: ['static.gitanimals.org'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'static.gitanimals.org',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
 };
 
