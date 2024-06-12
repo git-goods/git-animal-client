@@ -1,15 +1,15 @@
 'use client';
 
 import { useCallback, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import router from 'next/router';
 import styled from 'styled-components';
 
 import { checkUsedCouponsByToken } from '@/apis/user/getUsedCoupons';
 import { useLogin } from '@/store/user';
 
 function JWTPage() {
-  const router = useRouter();
-  const { query } = router;
+  const searchParams = useSearchParams();
   const { login } = useLogin();
 
   const onLogin = useCallback(
@@ -23,15 +23,15 @@ function JWTPage() {
         router.replace('/start');
       }
     },
-    [login, router],
+    [login],
   );
 
   useEffect(() => {
-    const jwtToken = query.jwt;
+    const jwtToken = searchParams?.get('jwt') || '';
     if (!jwtToken) return;
 
     onLogin(jwtToken as string);
-  }, [onLogin, query.jwt, router]);
+  }, [onLogin, searchParams]);
 
   return <Container>Login Loading...</Container>;
 }

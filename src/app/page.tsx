@@ -2,7 +2,8 @@
 
 import Header from '@/components/Layout/Header';
 import Layout from '@/components/Layout/Layout';
-import Welcome from '@/pages/Welcome';
+
+import Welcome from './Welcome';
 
 export default function Home() {
   return (
