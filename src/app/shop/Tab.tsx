@@ -30,17 +30,12 @@ const TAB: TabItemType[] = [
   },
 ];
 
-function Tab({ selectedTab, setSelectedTab }: { selectedTab: string; setSelectedTab: (key: string) => void }) {
+function Tab({ selectedTab }: { selectedTab: string }) {
   //   const [selectedTab, setSelectedTab] = useState('products');
   return (
     <TabContainer>
       {TAB.map((item) => (
-        <TabItem
-          isSelected={item.key === selectedTab}
-          onClick={() => setSelectedTab(item.key)}
-          {...item}
-          key={item.key}
-        />
+        <TabItem isSelected={item.key === selectedTab} {...item} key={item.key} />
       ))}
       {/* <TabItem isSelected />
       <TabItem />
@@ -56,10 +51,9 @@ const TabContainer = styled.div`
   gap: 10px;
   align-items: center;
 `;
-
-function TabItem(props: { isSelected?: boolean; onClick: () => void } & TabItemType) {
+function TabItem(props: { isSelected?: boolean } & TabItemType) {
   return (
-    <TabItemButtonStyled href={props.path} onClick={props.onClick} shallow>
+    <TabItemButtonStyled href={props.path} shallow>
       <TabItemBg color={props.isSelected ? '#D08100' : '#fff'} />
       <span>{props.label}</span>
     </TabItemButtonStyled>

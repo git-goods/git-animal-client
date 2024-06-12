@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import type { GetServerSidePropsContext } from 'next';
+import { useSearchParams } from 'next/navigation';
 import styled from 'styled-components';
 
 import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
@@ -16,15 +15,13 @@ import SellListSection from './SellListSection';
 import SellSection from './SellSection';
 import Tab from './Tab';
 
-export const getServerSideProps = (context: GetServerSidePropsContext) => {
-  const tab = context?.query?.tab ?? 'products';
+// TODO: 폴더정리 필요
+function ShopPage() {
+  const searchParam = useSearchParams();
+  const tab = searchParam?.get('tab') || 'products';
 
-  return { props: { tab } };
-};
-
-function ShopPage({ tab }: { tab: string }) {
-  const [selectedTab, setSelectedTab] = useState(tab);
   const { points } = useUser();
+
   return (
     <>
       <HeaderStyled>
@@ -38,16 +35,16 @@ function ShopPage({ tab }: { tab: string }) {
             </TopSection>
 
             <TabSection>
-              <Tab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+              <Tab selectedTab={tab} />
 
               <div>my points : {addNumberComma(points)}</div>
             </TabSection>
             <GotchaSection />
             <section style={{ height: '655px' }}>
-              {selectedTab === 'products' && <ProductTable />}
-              {selectedTab === 'history' && <HistoryTable />}
-              {selectedTab === 'sell' && <SellSection />}
-              {selectedTab === 'sellList' && <SellListSection />}
+              {tab === 'products' && <ProductTable />}
+              {tab === 'history' && <HistoryTable />}
+              {tab === 'sell' && <SellSection />}
+              {tab === 'sellList' && <SellListSection />}
             </section>
           </ShopMain>
         </DottedThreeBox>
