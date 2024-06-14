@@ -5,5 +5,9 @@
     "source.addMissingImports": "explicit"
   },
   "editor.formatOnSave": true,
-  "cSpell.words": ["Gitanimals"]
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ]
 }
