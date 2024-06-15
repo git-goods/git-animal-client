@@ -1,11 +1,7 @@
 {
   "name": "web",
   "version": "0.1.0",
-  "private": true,
-  "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=9.0.0"
-  },
+  "private": false,
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",

@@ -1,5 +1,5 @@
 {
-  "name": "@gitanimals",
+  "name": "gitanimals",
   "private": true,
   "scripts": {
     "build": "turbo build",
