@@ -24,7 +24,7 @@ function ShopPage() {
 
   const [searchPersona, setSearchPersona] = useState<string>();
 
-  const onSearch = (personaType: string) => {
+  const onSearch = (personaType?: string) => {
     setSearchPersona(personaType);
   };
 
@@ -45,7 +45,7 @@ function ShopPage() {
             <TabSection>
               <TabInnerWrapper>
                 <Tab selectedTab={tab} />
-                {(tab === 'products' || tab === 'history') && <Search onSelect={onSearch} />}
+                {(tab === 'products' || tab === 'history') && <Search onSelect={onSearch} selected={searchPersona} />}
               </TabInnerWrapper>
 
               <div>my points : {addNumberComma(points)}</div>

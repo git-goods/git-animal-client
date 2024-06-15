@@ -8,7 +8,8 @@ import Modal from '@/components/Modal/Modal';
 import { getPersonaImage } from '@/utils/image';
 
 interface SearchProps {
-  onSelect: (personaType: string) => void;
+  onSelect: (personaType?: string) => void;
+  selected?: string;
 }
 
 function Search(props: SearchProps) {
@@ -18,7 +19,7 @@ function Search(props: SearchProps) {
     enabled: isOpen,
   });
 
-  const onClick = (personaType: string) => {
+  const onClick = (personaType?: string) => {
     props.onSelect(personaType);
     setIsOpen(false);
   };
@@ -32,6 +33,14 @@ function Search(props: SearchProps) {
         <SearchPopup>
           <DottedThreeBox width={800} height={700} bgColor="#fff">
             <Heading>Select Find Persona</Heading>
+            {props.selected && (
+              <SelectPersona>
+                Selected Persona : {props.selected}
+                <button onClick={() => onClick()}>
+                  <CloseIcon />
+                </button>
+              </SelectPersona>
+            )}
             <SearchPopupInner>
               {data?.productTypes.map((type) => (
                 <PersonaItem key={type.name} onClick={() => onClick(type.name)}>
@@ -78,6 +87,15 @@ const SearchPopup = styled.div`
   height: 700px;
 `;
 
+const SelectPersona = styled.div`
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  button {
+    height: 24px;
+  }
+`;
 const SearchPopupInner = styled.div`
   width: 100%;
   height: 100%;
@@ -114,3 +132,11 @@ const PersonaItem = styled.div`
     }
   }
 `;
+
+function CloseIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#878787">
+      <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+    </svg>
+  );
+}
