@@ -8,9 +8,16 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
+    "prettier": "*",
     "turbo": "^2.0.4",
-    "typescript": "^5.4.5"
+    "typescript": "*"
+  },
+  "resolutions": {
+    "typescript": "^5.4.5",
+    "react": "^18",
+    "react-dom": "^18.3.1",
+    "next": "14.2.3",
+    "prettier": "^3.2.5"
   },
   "packageManager": "pnpm@9.0.6",
   "engines": {
