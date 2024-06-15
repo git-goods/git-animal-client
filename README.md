@@ -1,81 +1,42 @@
-# Turborepo starter
+![image](https://github.com/sumi-0011/git-animal-client/assets/49177223/f7e40862-9d9f-45ec-8ee6-891d20a17363)
 
-This is an official starter Turborepo.
+Translate to english
 
-## Using this example
+⭐스타를 눌러주세요 개발에 큰 도움이 됩니다!⭐️
 
-Run the following command:
+Press star
+깃허브 활동으로 펫을 키우세요!
+깃허브 활동으로 펫을 획득하고 성장시킬 수 있어요.
+커밋을 30번 하면 1개의 펫을 추가로 입양할 수 있어요.
+1개의 contribution은 랜덤한 펫의 level을 1 증가시켜요.
+키운 펫은 다른사람과 거래할 수 있어요.
 
-```sh
-npx create-turbo@latest
-```
+40 종류가 넘는 펫을 뽑고 기르세요.
 
-## What's inside?
+GitAnimals 펫들을 쉽게 페이지에서 관리하고, 펫을 뽑을 수 있어요!
+[GitAnimals 관리하기 ->](https://www.gitanimals.org/)
 
-This Turborepo includes the following packages/apps:
+<img width="965" alt="스크린샷 2024-06-01 오전 12 54 01" src="https://github.com/sumi-0011/git-animal-client/assets/49177223/d4b9e285-614e-4d82-b05a-a85389286d9f">
 
-### Apps and Packages
+## Line Type
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+<a href="https://github.com/devxb/gitanimals">
+  <img
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+    src="https://render.gitanimals.org/lines/sumi-0011"
+    width="600"
+    height="120"
 
-### Utilities
+  />
+</a>
+  
 
-This Turborepo has some additional tools already setup for you:
+## Farm Type 
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+<a href="https://github.com/devxb/gitanimals">
+<img
+  src="https://render.gitanimals.org/farms/sumi-0011"
+  width="600"
+  height="300"
+/>
+</a>
