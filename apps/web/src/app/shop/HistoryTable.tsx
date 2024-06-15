@@ -10,7 +10,11 @@ import type { PaginationSchema } from '@/schema/pagination';
 
 const HISTORY_ACTION_OBJ = ACTION_BUTTON_OBJ['SELL_HISTORY'];
 
-function HistoryTable() {
+interface ProductTableProps {
+  searchPersona?: string;
+}
+
+function HistoryTable({ searchPersona }: ProductTableProps) {
   const [currentPage, setCurrentPage] = useState(0);
 
   const { data } = useGetHistory<{
@@ -19,6 +23,7 @@ function HistoryTable() {
   }>(
     {
       pageNumber: currentPage,
+      personaType: searchPersona,
     },
     {
       select: (data) => ({

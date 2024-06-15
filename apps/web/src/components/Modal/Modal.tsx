@@ -53,6 +53,8 @@ const ModalOverlay = styled.div`
   justify-content: center;
   align-items: center;
   z-index: modalOverlay;
+  //TODO: 후에 삭제
+  min-width: 1452px;
 `;
 
 const ModalContent = styled.div`

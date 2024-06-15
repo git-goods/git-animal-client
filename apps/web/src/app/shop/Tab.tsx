@@ -37,9 +37,6 @@ function Tab({ selectedTab }: { selectedTab: string }) {
       {TAB.map((item) => (
         <TabItem isSelected={item.key === selectedTab} {...item} key={item.key} />
       ))}
-      {/* <TabItem isSelected />
-      <TabItem />
-      <TabItem /> */}
     </TabContainer>
   );
 }
