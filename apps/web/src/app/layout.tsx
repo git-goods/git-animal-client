@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import ClientProvider from '@/components/ClientProvider';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.gitanimals.org/'),
   title: 'GitAnimals',
   description: '깃허브 활동으로 펫을 키우세요!',
   authors: [
