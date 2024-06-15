@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Default",
+  "compilerOptions": {
+    "lib": ["es2022", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "module": "NodeNext",
+    "isolatedModules": true,
+    "incremental": false,
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true
+  }
+}

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { setInterceptors } from './interceptor';
 
-const API_URL = process.env.NEXT_PUBLIC_RENDER_API_URL;
+const API_URL = 'https://render.gitanimals.org';
 
 const instance = setInterceptors(
   axios.create({
