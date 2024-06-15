@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { checkUsedCoupons } from '@/apis/user/getUsedCoupons';
 import Button from '@/components/Button';
+import Feedback from '@/components/Feedback';
 import LoginButton from '@/components/LoginButton';
 import { SUMI_GITHUB_URL } from '@/constants/outlink';
 import { recordEvent } from '@/lib/gtag';
@@ -39,6 +40,7 @@ function Welcome() {
       <CatWrapper>
         <img src="/main/cats.png" width={216} height={140} alt="cat" />
       </CatWrapper>
+      <Feedback />
     </Container>
   );
 }
