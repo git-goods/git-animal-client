@@ -1,0 +1,122 @@
+name: CI - Web
+
+on:
+  pull_request:
+    branches:
+      - '**'
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+
+env:
+  DEFAULT_NODE_VERSION: '20.11.0'
+  CACHED_DEPENDENCIES_PATHS: '**/node_modules'
+  BUILD_CACHE_KEY: ${{ github.sha }}/web
+  CACHED_BUILD_PATH: ${{ github.workspace }}/apps/web/.next
+  FILTER: '--filter=@gitanimals/web'
+
+jobs:
+  job_compute_diff:
+    name: Compute file diff
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Checkout current commit (${{ github.sha }})
+        uses: actions/checkout@v3
+
+      - name: Compute diff
+        uses: dorny/paths-filter@v2
+        id: compute_diff
+        with:
+          filters: |
+            files:
+              - 'apps/web/**'
+              - 'packages/**'
+    outputs:
+      files: ${{ steps.compute_diff.outputs.files }}
+
+  job_install_dependencies:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    needs: [job_compute_diff]
+    if: ${{ needs.job_compute_diff.outputs.files == 'true' }}
+    steps:
+      - name: Checkout current commit (${{ github.sha }})
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.DEFAULT_NODE_VERSION }}
+
+      - name: Compute dependency cache key
+        id: compute_lockfile_hash
+        run: echo "::set-output name=hash::${{ hashFiles('yarn.lock') }}"
+
+      - name: Check dependencies cache
+        uses: actions/cache@v4
+        id: cache_dependencies
+        with:
+          path: ${{ env.CACHED_DEPENDENCIES_PATHS }}
+          key: ${{ steps.compute_lockfile_hash.outputs.hash }}
+
+      - name: Install dependencies
+        if: steps.cache_dependencies.outputs.cache-hit != 'true'
+        run: pnpm install
+
+    outputs:
+      dependencies_cache_key: ${{ steps.compute_lockfile_hash.outputs.hash }}
+
+  job_lint:
+    name: Run Lint
+    needs: [job_install_dependencies]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current commit (${{ github.sha }})
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.DEFAULT_NODE_VERSION }}
+
+      - name: Check dependencies cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CACHED_DEPENDENCIES_PATHS }}
+          key: ${{ needs.job_install_dependencies.outputs.dependencies_cache_key }}
+
+      - name: Run lint
+        run: pnpm lint ${{ env.FILTER }}
+
+  job_build:
+    name: Build application
+    needs: [job_install_dependencies]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current commit (${{ github.sha }})
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.DEFAULT_NODE_VERSION }}
+
+      - name: Check dependencies cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CACHED_DEPENDENCIES_PATHS }}
+          key: ${{ needs.job_install_dependencies.outputs.dependencies_cache_key }}
+
+      - name: Check build cache
+        uses: actions/cache@v4
+        id: cache_build
+        with:
+          path: ${{ env.CACHED_BUILD_PATH }}
+          key: ${{ env.BUILD_CACHE_KEY }}
+
+      - name: Build
+        if: steps.cache_build.outputs.cache-hit != 'true'
+        run: pnpm build:web
