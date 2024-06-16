@@ -1,0 +1,43 @@
+version: 1
+labels:
+  # FILES
+  - label: 'area: Web'
+    files:
+      - 'apps/web/*'
+
+  - label: 'area: Config'
+    files:
+      - 'packages/eslint-config/*'
+      - 'packages/typescript-config/*'
+
+  - label: 'area: Workflow'
+    files:
+      - .github/workflows/*
+
+  - label: 'documentation'
+    files:
+      - '**/*.md'
+
+  # DIFF
+  - label: 'diff: XS'
+    size:
+      below: 50
+
+  - label: 'diff: S'
+    size:
+      above: 50
+      below: 150
+
+  - label: 'diff: M'
+    size:
+      above: 150
+      below: 250
+
+  - label: 'diff: L'
+    size:
+      above: 250
+      below: 500
+
+  - label: 'diff: XL'
+    size:
+      above: 500
