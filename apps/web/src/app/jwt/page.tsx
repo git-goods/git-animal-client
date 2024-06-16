@@ -1,14 +1,14 @@
 'use client';
 
 import { useCallback, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
-import router from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import styled from 'styled-components';
 
 import { checkUsedCouponsByToken } from '@/apis/user/getUsedCoupons';
 import { useLogin } from '@/store/user';
 
 function JWTPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const { login } = useLogin();
 
@@ -23,7 +23,7 @@ function JWTPage() {
         router.replace('/start');
       }
     },
-    [login],
+    [login, router],
   );
 
   useEffect(() => {
