@@ -50,20 +50,32 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.DEFAULT_NODE_VERSION }}
+          cache: 'pnpm'
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Compute dependency cache key
         id: compute_lockfile_hash
-        run: echo "::set-output name=hash::${{ hashFiles('pnpm-lock.yaml') }}"
+        run: echo "::set-output name=hash::${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}"
 
-      - name: Check dependencies cache
-        uses: actions/cache@v4
-        id: cache_dependencies
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
         with:
           path: ${{ env.CACHED_DEPENDENCIES_PATHS }}
           key: ${{ steps.compute_lockfile_hash.outputs.hash }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        if: steps.cache_dependencies.outputs.cache-hit != 'true'
         run: pnpm install
 
     outputs:
@@ -81,6 +93,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.DEFAULT_NODE_VERSION }}
+          cache: 'pnpm'
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
 
       - name: Check dependencies cache
         uses: actions/cache@v4
@@ -103,6 +122,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.DEFAULT_NODE_VERSION }}
+          cache: 'pnpm'
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
 
       - name: Check dependencies cache
         uses: actions/cache@v4
