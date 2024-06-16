@@ -53,7 +53,7 @@ jobs:
 
       - name: Compute dependency cache key
         id: compute_lockfile_hash
-        run: echo "::set-output name=hash::${{ hashFiles('yarn.lock') }}"
+        run: echo "::set-output name=hash::${{ hashFiles('pnpm-lock.yaml') }}"
 
       - name: Check dependencies cache
         uses: actions/cache@v4
