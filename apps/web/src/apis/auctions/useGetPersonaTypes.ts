@@ -7,11 +7,12 @@ interface GetPersonaTypesResponse {
   productTypes: { name: string }[];
 }
 
-const getPersonaTypes = async (): Promise<GetPersonaTypesResponse> => get('/auctions/products/types');
+const getPersonaTypes = () => get<GetPersonaTypesResponse>('/auctions/products/types');
 
+// TODO : query option type utility로 분리
 export const useGetPersonaTypes = (option?: Omit<UseQueryOptions<GetPersonaTypesResponse>, 'queryKey' | 'queryFn'>) => {
   return useQuery<GetPersonaTypesResponse>({
-    queryKey: ['product', 'types'],
+    queryKey: ['product', 'types'], // TODO : query key 관리 방식 변경하며 수정
     queryFn: getPersonaTypes,
     ...option,
   });
