@@ -15,6 +15,8 @@ function Feedback() {
   };
   return (
     <div>
+      <h2>Feedback</h2>
+      <p>Hello!! I'm Gitanimals Developer. Please leave any improvements, and it will be register GitHub issue.</p>
       <button onClick={onSubmit}>submit</button>
     </div>
   );

@@ -27,5 +27,5 @@ async function postIssue(request: PostIssueRequest) {
   return response.json();
 }
 
-export const usePostIssue = (options: UseMutationOptions<unknown, unknown, PostIssueRequest>) =>
+export const usePostIssue = (options?: UseMutationOptions<unknown, unknown, PostIssueRequest>) =>
   useMutation({ mutationFn: postIssue, ...options });
