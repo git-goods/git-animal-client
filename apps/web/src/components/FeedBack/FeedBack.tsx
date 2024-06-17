@@ -10,9 +10,9 @@ function FeedBack() {
       <Select>
         <Select.Label placeholder="Select label" />
         <Select.Panel>
-          <Select.Option>Option 1</Select.Option>
-          <Select.Option>Option 2</Select.Option>
-          <Select.Option>Option 3</Select.Option>
+          <Select.Option value="Option1" />
+          <Select.Option value="Option2" />
+          <Select.Option value="Option3" />
         </Select.Panel>
       </Select>
     </div>

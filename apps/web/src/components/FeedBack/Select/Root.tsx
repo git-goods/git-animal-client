@@ -23,8 +23,9 @@ const SelectValueContext = React.createContext<SelectValueContextProps>({
 });
 
 function SelectRoot(props: PropsWithChildren) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [value, setValue] = useState<string | undefined>(undefined);
+  console.log('value: ', value);
 
   const openValues = useMemo(
     () => ({
@@ -34,15 +35,12 @@ function SelectRoot(props: PropsWithChildren) {
     [isOpen],
   );
 
-  const valueValues = useMemo(
-    () => ({
-      value,
-      onChangeValue: (value?: string) => {
-        setValue(value);
-      },
-    }),
-    [value],
-  );
+  const valueValues = {
+    value,
+    onChangeValue: (value?: string) => {
+      setValue(value);
+    },
+  };
 
   return (
     <SelectOpenContext.Provider value={openValues}>
