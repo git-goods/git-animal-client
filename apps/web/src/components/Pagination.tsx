@@ -13,7 +13,7 @@ function Pagination(props: { currentPage: number; onSetPage: (page: number) => v
 
   return (
     <PaginationContainer>
-      <button disabled={!props.prevPage} onClick={() => props.prevPage && props.onSetPage(props.prevPage)}>
+      <button disabled={props.prevPage === null} onClick={() => props.onSetPage(props.prevPage || 0)}>
         <svg width="12" height="20" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="8" width="4" height="4" fill="#141414" />
           <rect x="4" y="4" width="4" height="4" fill="#141414" />
