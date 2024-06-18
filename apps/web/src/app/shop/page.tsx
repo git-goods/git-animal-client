@@ -1,16 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import styled from 'styled-components';
 
 import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
 import Header from '@/components/Layout/Header';
-import { useUser } from '@/store/user';
-import { addNumberComma } from '@/utils/number';
 
 import GotchaSection from './GotchaSection';
 import HistoryTable from './HistoryTable';
+import { Point } from './Point';
 import ProductTable from './ProductTable';
 import Search from './Search';
 import SellListSection from './SellListSection';
@@ -27,8 +26,6 @@ function ShopPage() {
   const onSearch = (personaType?: string) => {
     setSearchPersona(personaType);
   };
-
-  const { points } = useUser();
 
   return (
     <>
@@ -48,8 +45,11 @@ function ShopPage() {
                 {(tab === 'products' || tab === 'history') && <Search onSelect={onSearch} selected={searchPersona} />}
               </TabInnerWrapper>
 
-              <div>my points : {addNumberComma(points)}</div>
+              <Suspense>
+                <Point />
+              </Suspense>
             </TabSection>
+
             <GotchaSection />
             <section style={{ height: '655px' }}>
               {tab === 'products' && <ProductTable searchPersona={searchPersona} />}
