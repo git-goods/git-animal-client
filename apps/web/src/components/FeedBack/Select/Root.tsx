@@ -1,10 +1,10 @@
-import type { PropsWithChildren } from 'react';
+import type { Dispatch, PropsWithChildren, SetStateAction } from 'react';
 import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 interface SelectOpenContextProps {
   isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 interface SelectValueContextProps {
@@ -25,7 +25,6 @@ const SelectValueContext = React.createContext<SelectValueContextProps>({
 function SelectRoot(props: PropsWithChildren) {
   const [isOpen, setIsOpen] = useState(true);
   const [value, setValue] = useState<string | undefined>(undefined);
-  console.log('value: ', value);
 
   const openValues = useMemo(
     () => ({
@@ -54,7 +53,9 @@ function SelectRoot(props: PropsWithChildren) {
 export default SelectRoot;
 
 const Container = styled.div`
+  position: relative;
   width: fit-content;
+  min-width: 190px;
 `;
 
 export const useSelectOpenContext = () => {

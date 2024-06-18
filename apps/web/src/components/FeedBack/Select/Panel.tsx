@@ -1,5 +1,4 @@
 import type { PropsWithChildren } from 'react';
-import React from 'react';
 import styled from 'styled-components';
 
 import { useSelectOpenContext } from './Root';
@@ -21,6 +20,19 @@ const PanelStyled = styled.div<{ $isOpen: boolean }>`
   box-shadow: 0px 2px 4px 0px rgba(51, 50, 54, 0.06);
 
   position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
 
-  ${({ $isOpen }) => ($isOpen ? 'display:block' : `display: none;`)}
+  transition: all 0.2s;
+
+  ${({ $isOpen }) =>
+    $isOpen
+      ? `
+      visibility:visible;
+      opacity: 1;`
+      : `
+      visibility: hidden;
+      opacity: 0;
+      `}
 `;

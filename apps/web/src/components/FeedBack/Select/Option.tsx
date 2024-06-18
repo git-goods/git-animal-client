@@ -1,52 +1,75 @@
-import React from 'react';
+import type { ReactNode } from 'react';
 import styled from 'styled-components';
 
-import { useSelectValueContext } from './Root';
+import { useSelectOpenContext, useSelectValueContext } from './Root';
 
 interface SelectOptionProps {
   value: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 function SelectOption({ children, value }: SelectOptionProps) {
   const { value: selectedValue, onChangeValue } = useSelectValueContext();
+  const { setIsOpen } = useSelectOpenContext();
 
   const isSelected = selectedValue === value;
 
+  const onClick = () => {
+    onChangeValue(value);
+    setIsOpen(false);
+  };
+
   return (
-    <OptionStyled onClick={() => onChangeValue(value)}>
-      {isSelected && (
-        <CheckIconWrapper>
-          <CheckIcon />
-        </CheckIconWrapper>
-      )}
-      {children ?? value}
+    <OptionStyled onClick={onClick} $isSelected={isSelected}>
+      <CheckIconWrapper className="check-icon">
+        <CheckIcon />
+      </CheckIconWrapper>
+      <ValueWrapper>{children ?? value}</ValueWrapper>
     </OptionStyled>
   );
 }
 
 export default SelectOption;
 
-const OptionStyled = styled.div`
+const CheckIconWrapper = styled.div`
+  position: absolute;
+  left: 8px;
+  top: calc(50% + 2px);
+
+  transform: translateY(-50%);
+`;
+
+const OptionStyled = styled.div<{ $isSelected: boolean }>`
   position: relative;
   display: flex;
   padding: 6px 14px 6px 32px;
   align-items: center;
   gap: 8px;
-  border-radius: var(--radius-radius-6, 6px);
-  background: var(--text-black-05, rgba(0, 0, 0, 0.05));
+  border-radius: 6px;
 
-  color: var(--text-black-75, rgba(0, 0, 0, 0.75));
-  font-feature-settings:
-    'clig' off,
-    'liga' off;
+  color: rgba(0, 0, 0, 0.75);
+
   /* glyph14 regular */
   font-family: 'Product Sans';
   font-size: 14px;
-  font-style: normal;
   font-weight: 400;
   line-height: 150%; /* 21px */
   letter-spacing: -0.3px;
+
+  transition: background 0.2s;
+
+  ${CheckIconWrapper} {
+    display: none;
+    ${({ $isSelected }) => $isSelected && 'display: block;'}
+  }
+
+  ${({ $isSelected }) => $isSelected && `  background: rgba(0, 0, 0, 0.05); `}
+`;
+
+const ValueWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;
 
 function CheckIcon() {
@@ -59,10 +82,3 @@ function CheckIcon() {
     </svg>
   );
 }
-
-const CheckIconWrapper = styled.div`
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-`;
