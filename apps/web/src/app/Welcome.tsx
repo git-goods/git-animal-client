@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { css } from '_panda/css';
 import styled from 'styled-components';
 
 import { checkUsedCoupons } from '@/apis/user/getUsedCoupons';
@@ -23,6 +24,7 @@ function Welcome() {
 
   return (
     <Container>
+      <h1 className={css({ fontSize: 300, color: 'red' })}>asdasd</h1>
       <Heading>
         Have your pet in <strong>GITHUB!</strong>
       </Heading>

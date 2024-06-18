@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
+import { css } from '_panda/css';
 
 import ClientProvider from '@/components/ClientProvider';
+
+import './globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.gitanimals.org/'),
@@ -36,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
+        <h1 className={css({ fontSize: '300px', color: 'red' })}>asdasd</h1>
         <ClientProvider>{children}</ClientProvider>
       </body>
     </html>

@@ -2,7 +2,8 @@
   "extends": "@gitanimals/typescript-config/nextjs.json",
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "_panda/*": ["./styled-system/*"]
     },
     "plugins": [
       {
@@ -11,6 +12,6 @@
     ],
     "allowJs": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "styled-system"],
   "exclude": ["node_modules"]
 }
