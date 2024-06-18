@@ -1,14 +1,27 @@
+import type { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { useSelectOpenContext, useSelectValueContext } from './Root';
 
-function SelectLabel(props: { placeholder?: string }) {
+interface SelectLabelProps {
+  placeholder?: string;
+  children?: React.ReactNode | (({ value }: { value: string }) => ReactNode);
+}
+
+function SelectLabel(props: SelectLabelProps) {
   const { value: selectedValue } = useSelectValueContext();
   const { isOpen, setIsOpen } = useSelectOpenContext();
 
+  if (!selectedValue)
+    return (
+      <Placeholder $isOpen={isOpen} onClick={() => setIsOpen((prev) => !prev)}>
+        {props.placeholder}
+      </Placeholder>
+    );
+
   return (
     <Label $isOpen={isOpen} onClick={() => setIsOpen((prev) => !prev)}>
-      {selectedValue ? <div>{selectedValue}</div> : <Placeholder>{props.placeholder}</Placeholder>}
+      {typeof props.children === 'function' ? props.children({ value: selectedValue }) : props.children}
     </Label>
   );
 }
@@ -17,8 +30,8 @@ export default SelectLabel;
 
 const Label = styled.div<{ $isOpen: boolean }>`
   display: flex;
-  padding: 14px 14px 13px 20px;
-  align-items: flex-start;
+  padding: 14px 14px 14px 20px;
+  align-items: center;
   gap: 8px;
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -35,6 +48,6 @@ const Label = styled.div<{ $isOpen: boolean }>`
   ${({ $isOpen }) => $isOpen && `border: 1px solid #00894d; `}
 `;
 
-const Placeholder = styled.div`
+const Placeholder = styled(Label)`
   color: rgba(0, 0, 0, 0.5);
 `;

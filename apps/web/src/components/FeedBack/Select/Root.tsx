@@ -23,7 +23,7 @@ const SelectValueContext = React.createContext<SelectValueContextProps>({
 });
 
 function SelectRoot(props: PropsWithChildren) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState<string | undefined>(undefined);
 
   const openValues = useMemo(
