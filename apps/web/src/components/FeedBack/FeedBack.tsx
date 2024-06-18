@@ -2,10 +2,10 @@
 
 import styled from 'styled-components';
 
+import Input from '@/components/Input';
 import TextArea from '@/components/TextArea';
 
 import { ISSUE_LABEL } from './FeedBack.constants';
-import Input from './Input';
 import Select from './Select';
 
 function FeedBack() {
