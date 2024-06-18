@@ -3,9 +3,9 @@
 import styled from 'styled-components';
 
 import Input from '@/components/Input';
+import Select from '@/components/Select';
 
 import { ISSUE_LABEL } from './FeedBack.constants';
-import Select from './Select';
 
 function FeedBack() {
   return (
