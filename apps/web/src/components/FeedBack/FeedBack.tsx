@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
 import styled from 'styled-components';
 
+import { ISSUE_LABEL } from './FeedBack.constants';
 import Input from './Input';
 import Select from './Select';
 
@@ -12,11 +12,23 @@ function FeedBack() {
       <Input placeholder="Input placeholder" />
 
       <Select>
-        <Select.Label placeholder="Select label" />
+        <Select.Label placeholder="Select label">
+          {({ value }) =>
+            value && (
+              <>
+                <IssueOptionColor style={{ background: ISSUE_LABEL[value].color }} />
+                <span>{ISSUE_LABEL[value].label}</span>
+              </>
+            )
+          }
+        </Select.Label>
         <Select.Panel>
-          <Select.Option value="Option1" />
-          <Select.Option value="Option2" />
-          <Select.Option value="Option3" />
+          {Object.entries(ISSUE_LABEL).map(([key, item]) => (
+            <Select.Option key={item.label} value={key}>
+              <IssueOptionColor style={{ background: item.color }} />
+              <span>{item.label}</span>
+            </Select.Option>
+          ))}
         </Select.Panel>
       </Select>
     </Container>
@@ -30,4 +42,10 @@ const Container = styled.div`
   top: 0;
   left: 0;
   padding: 20px;
+`;
+
+const IssueOptionColor = styled.div`
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
 `;
