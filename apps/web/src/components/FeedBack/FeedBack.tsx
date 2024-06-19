@@ -154,6 +154,7 @@ const Container = styled.div`
 
   box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25);
   background-color: #fff;
+  z-index: 100; // TODO: theme에 추가
 
   @media (max-width: 768px) {
     width: 100%;
