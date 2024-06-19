@@ -14,8 +14,9 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@gitanimals/api": "workspace:*",
     "@gitanimals/ui": "workspace:*",
-    "@gitanimals/exceptions": "workspace:*",
+    "@gitanimals/exception": "workspace:*",
     "@tanstack/react-query": "^5.32.0",
     "axios": "^1.6.8",
     "framer-motion": "^11.1.7",
