@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import type { PostIssueRequest } from '@/apis/github/usePostIssue';
+import { usePostIssue } from '@/apis/github/usePostIssue';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
@@ -12,7 +14,17 @@ import TextArea from '@/components/TextArea';
 import { ISSUE_LABEL } from './FeedBack.constants';
 
 function FeedBack() {
-  const { content, onContentChange } = useFeedbackContent();
+  const { content, onContentChange, isValid } = useFeedbackContent();
+
+  const onSubmit = () => {
+    mutate({ ...content, assignees: ['sumi-0011'] });
+  };
+
+  const { mutate } = usePostIssue({
+    onSuccess(data, variables, context) {
+      alert('Thank you for your feedback!');
+    },
+  });
 
   return (
     <Container>
@@ -25,7 +37,7 @@ function FeedBack() {
         </CloseIconWrapper>
       </Heading>
       <Form>
-        <LabelSelect onChange={(relations) => onContentChange('relations', relations)} />
+        <LabelSelect onChange={(relations) => onContentChange('labels', relations)} />
         <Input
           placeholder="Type issue title..."
           value={content.title}
@@ -37,31 +49,31 @@ function FeedBack() {
           onChange={(e) => onContentChange('body', e.target.value)}
         />
       </Form>
-      <ButtonStyled>Send</ButtonStyled>
+      <ButtonStyled disabled={!isValid} onClick={onSubmit}>
+        Send
+      </ButtonStyled>
     </Container>
   );
 }
 
 export default FeedBack;
 
-interface FeedbackContentType {
-  title: string;
-  body: string;
-  relations: string[];
-}
+type FeedbackContentType = Omit<PostIssueRequest, 'assignees'>;
 
 const useFeedbackContent = () => {
   const [content, setContent] = useState<FeedbackContentType>({
     title: '',
     body: '',
-    relations: [],
+    labels: [],
   });
+
+  const isValid = content.title && content.body;
 
   const onContentChange = (key: keyof FeedbackContentType, value: string | string[]) => {
     setContent((prev) => ({ ...prev, [key]: value }));
   };
 
-  return { content, onContentChange };
+  return { content, onContentChange, isValid };
 };
 
 function LabelSelect({ onChange }: { onChange: (value: string[]) => void }) {

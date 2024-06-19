@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 const ISSUE_TOKEN = process.env.NEXT_PUBLIC_ISSUE_TOKEN;
 const POST_ISSUE_URL = 'https://api.github.com/repos/git-goods/git-animal-client/issues';
 
-interface PostIssueRequest {
+export interface PostIssueRequest {
   title: string;
   body: string;
   assignees?: string[];
