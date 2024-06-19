@@ -12,6 +12,7 @@ on:
 
 env:
   DEFAULT_NODE_VERSION: '20.11.0'
+  PNPM_VERSION: '9.0.6'
   CACHED_DEPENDENCIES_PATHS: '**/node_modules'
   BUILD_CACHE_KEY: ${{ github.sha }}/web
   CACHED_BUILD_PATH: ${{ github.workspace }}/apps/web/.next
@@ -49,7 +50,7 @@ jobs:
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 9.0.6
+          version: ${{ env.PNPM_VERSION }}
           run_install: false
 
       - name: Setup Node
@@ -92,7 +93,7 @@ jobs:
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 9.0.6
+          version: ${{ env.PNPM_VERSION }}
           run_install: false
 
       - name: Setup Node
@@ -121,7 +122,7 @@ jobs:
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 9.0.6
+          version: ${{ env.PNPM_VERSION }}
           run_install: false
 
       - name: Setup Node
