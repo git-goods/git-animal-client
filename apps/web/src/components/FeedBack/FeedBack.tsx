@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import Input from '@/components/Input';
 import Select from '@/components/Select';
+import TextArea from '@/components/TextArea';
 
 import { ISSUE_LABEL } from './FeedBack.constants';
 
@@ -32,6 +33,8 @@ function FeedBack() {
           ))}
         </Select.Panel>
       </Select>
+
+      <TextArea placeholder="TextArea placeholder" />
     </Container>
   );
 }
@@ -43,6 +46,10 @@ const Container = styled.div`
   top: 0;
   left: 0;
   padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 const IssueOptionColor = styled.div`
