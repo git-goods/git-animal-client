@@ -1,5 +1,5 @@
 import type { Dispatch, PropsWithChildren, SetStateAction } from 'react';
-import React, { useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 interface SelectOpenContextProps {
@@ -12,12 +12,12 @@ interface SelectValueContextProps {
   onChangeValue: (value?: string) => void;
 }
 
-const SelectOpenContext = React.createContext<SelectOpenContextProps>({
+const SelectOpenContext = createContext<SelectOpenContextProps>({
   isOpen: false,
   setIsOpen: () => {},
 });
 
-const SelectValueContext = React.createContext<SelectValueContextProps>({
+const SelectValueContext = createContext<SelectValueContextProps>({
   value: undefined,
   onChangeValue: () => {},
 });
@@ -59,7 +59,7 @@ const Container = styled.div`
 `;
 
 export const useSelectOpenContext = () => {
-  const context = React.useContext(SelectOpenContext);
+  const context = useContext(SelectOpenContext);
   if (!context) {
     throw new Error('useSelectOpenContext must be used within a Select');
   }
@@ -68,7 +68,7 @@ export const useSelectOpenContext = () => {
 };
 
 export const useSelectValueContext = () => {
-  const context = React.useContext(SelectValueContext);
+  const context = useContext(SelectValueContext);
   if (!context) {
     throw new Error('useSelectValueContext must be used within a Select');
   }
