@@ -13,7 +13,11 @@ import type { PaginationSchema } from '@/schema/pagination';
 import { useLoading } from '@/store/loading';
 import { useUser } from '@/store/user';
 
-function ProductTable() {
+interface ProductTableProps {
+  searchPersona?: string;
+}
+
+function ProductTable({ searchPersona }: ProductTableProps) {
   const myId = useUser()?.id;
 
   const queryClient = useQueryClient();
@@ -26,6 +30,7 @@ function ProductTable() {
   const { data } = useGetProducts<{ products: ProductType<'MY_SELLING' | 'ON_SALE'>[]; pagination: PaginationSchema }>(
     {
       pageNumber: currentPage,
+      personaType: searchPersona,
     },
     {
       enabled: Boolean(myId),

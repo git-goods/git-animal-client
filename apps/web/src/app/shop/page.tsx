@@ -1,16 +1,17 @@
 'use client';
 
+import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import styled from 'styled-components';
 
 import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
 import Header from '@/components/Layout/Header';
-import { useUser } from '@/store/user';
-import { addNumberComma } from '@/utils/number';
 
 import GotchaSection from './GotchaSection';
 import HistoryTable from './HistoryTable';
+import { Point } from './Point';
 import ProductTable from './ProductTable';
+import Search from './Search';
 import SellListSection from './SellListSection';
 import SellSection from './SellSection';
 import Tab from './Tab';
@@ -20,7 +21,11 @@ function ShopPage() {
   const searchParam = useSearchParams();
   const tab = searchParam?.get('tab') || 'products';
 
-  const { points } = useUser();
+  const [searchPersona, setSearchPersona] = useState<string>();
+
+  const onSearch = (personaType?: string) => {
+    setSearchPersona(personaType);
+  };
 
   return (
     <>
@@ -35,14 +40,20 @@ function ShopPage() {
             </TopSection>
 
             <TabSection>
-              <Tab selectedTab={tab} />
+              <TabInnerWrapper>
+                <Tab selectedTab={tab} />
+                {(tab === 'products' || tab === 'history') && <Search onSelect={onSearch} selected={searchPersona} />}
+              </TabInnerWrapper>
 
-              <div>my points : {addNumberComma(points)}</div>
+              <Suspense>
+                <Point />
+              </Suspense>
             </TabSection>
+
             <GotchaSection />
             <section style={{ height: '655px' }}>
-              {tab === 'products' && <ProductTable />}
-              {tab === 'history' && <HistoryTable />}
+              {tab === 'products' && <ProductTable searchPersona={searchPersona} />}
+              {tab === 'history' && <HistoryTable searchPersona={searchPersona} />}
               {tab === 'sell' && <SellSection />}
               {tab === 'sellList' && <SellListSection />}
             </section>
@@ -61,6 +72,12 @@ const TabSection = styled.section`
   align-items: center;
 
   font-size: 24px;
+`;
+
+const TabInnerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 
 const HeaderStyled = styled.div`

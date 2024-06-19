@@ -5,6 +5,7 @@ import Lottie from 'lottie-react';
 import styled from 'styled-components';
 
 import { useGotcha } from '@/apis/gotcha/useGotcha';
+import { USER_QUERY_KEY } from '@/apis/user/useGetUser';
 import Congratulations from '@/assets/lottie/congratulations.json';
 import { getPersonaImage } from '@/utils/image';
 
@@ -18,10 +19,7 @@ function GotchaSection() {
       setGotchaVisible(true);
       // TODO : 포인트 내려가는 애니매이션을 ㄴ허어볼까
       queryClient.invalidateQueries({
-        queryKey: ['user'], // TODO: user query key
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['users', 'all-pet'], // TODO: getAllPetsQueryKey
+        queryKey: [USER_QUERY_KEY], // TODO: user query key
       });
 
       const timer = setTimeout(() => {

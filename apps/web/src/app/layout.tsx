@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import ClientProvider from '@/components/ClientProvider';
+import FeedBack from '@/components/FeedBack/FeedBack';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.gitanimals.org/'),
@@ -36,7 +37,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <ClientProvider>{children}</ClientProvider>
+        <ClientProvider>
+          {children}
+          <FeedBack />
+        </ClientProvider>
       </body>
     </html>
   );

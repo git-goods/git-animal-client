@@ -1,5 +1,5 @@
-import type { UseQueryOptions } from '@tanstack/react-query';
-import { useQuery } from '@tanstack/react-query';
+import type { UseQueryOptions, UseSuspenseQueryOptions } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 import type { UserSchema } from '@/schema/user';
 
@@ -12,9 +12,14 @@ export const getUserByToken = async (token: string): Promise<UserSchema> =>
     },
   });
 
+export const USER_QUERY_KEY = 'user';
+
 export const useGetUser = (option?: UseQueryOptions<UserSchema>) =>
   useQuery<UserSchema>({
-    queryKey: ['user'],
+    queryKey: [USER_QUERY_KEY],
     queryFn: () => get('/users'),
     ...option,
   });
+
+export const useGetSuspenseUser = (options?: UseSuspenseQueryOptions<UserSchema>) =>
+  useSuspenseQuery<UserSchema>({ queryKey: [USER_QUERY_KEY], queryFn: () => get('/users'), ...options });
