@@ -1,0 +1,10 @@
+{
+  "name": "@gitanimals/exceptions",
+  "version": "0.0.0",
+  "main": "./src/index.ts",
+  "devDependencies": {
+    "@gitanimals/eslint-config": "workspace:*",
+    "@gitanimals/typescript-config": "workspace:*",
+    "typescript": "*"
+  }
+}

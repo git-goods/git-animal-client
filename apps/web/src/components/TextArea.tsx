@@ -16,7 +16,7 @@ function TextArea({ maxLength = 300, ...props }: TextAreaProps) {
 
   return (
     <Container $error={props.error}>
-      <TextAreaStyled {...props} onChange={onChange} />
+      <TextAreaStyled {...props} onChange={onChange} maxLength={maxLength} />
       <TextLen>
         <strong>{inputLen}</strong>
         <span> / {maxLength}</span>

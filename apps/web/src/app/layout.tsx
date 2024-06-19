@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import ClientProvider from '@/components/ClientProvider';
 import FeedBack from '@/components/FeedBack/FeedBack';
 
+import './globals.css';
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.gitanimals.org/'),
   title: 'GitAnimals',
