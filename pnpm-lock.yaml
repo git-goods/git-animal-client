@@ -27,6 +27,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@gitanimals/exceptions':
+        specifier: workspace:*
+        version: link:../../packages/exceptions
       '@gitanimals/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -178,6 +181,18 @@ importers:
       eslint-plugin-unused-imports:
         specifier: ^3.1.0
         version: 3.2.0(@typescript-eslint/eslint-plugin@7.1.0(@typescript-eslint/parser@7.1.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
+  packages/exceptions:
+    devDependencies:
+      '@gitanimals/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@gitanimals/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
