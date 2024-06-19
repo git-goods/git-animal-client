@@ -12,6 +12,8 @@ import TextArea from '@/components/TextArea';
 import { ISSUE_LABEL } from './FeedBack.constants';
 
 function FeedBack() {
+  const { content, onContentChange } = useFeedbackContent();
+
   return (
     <Container>
       <Heading>
@@ -23,9 +25,17 @@ function FeedBack() {
         </CloseIconWrapper>
       </Heading>
       <Form>
-        <LabelSelect />
-        <Input placeholder="Type issue title..." />
-        <TextArea placeholder="Please feel free to leave any good points for improvement..." />
+        <LabelSelect onChange={(relations) => onContentChange('relations', relations)} />
+        <Input
+          placeholder="Type issue title..."
+          value={content.title}
+          onChange={(e) => onContentChange('title', e.target.value)}
+        />
+        <TextArea
+          placeholder="Please feel free to leave any good points for improvement..."
+          value={content.body}
+          onChange={(e) => onContentChange('body', e.target.value)}
+        />
       </Form>
       <ButtonStyled>Send</ButtonStyled>
     </Container>
@@ -37,24 +47,24 @@ export default FeedBack;
 interface FeedbackContentType {
   title: string;
   body: string;
-  label: string;
+  relations: string[];
 }
 
 const useFeedbackContent = () => {
   const [content, setContent] = useState<FeedbackContentType>({
     title: '',
     body: '',
-    label: '',
+    relations: [],
   });
 
-  const onContentChange = (key: keyof FeedbackContentType, value: string) => {
+  const onContentChange = (key: keyof FeedbackContentType, value: string | string[]) => {
     setContent((prev) => ({ ...prev, [key]: value }));
   };
 
   return { content, onContentChange };
 };
 
-function LabelSelect() {
+function LabelSelect({ onChange }: { onChange: (value: string[]) => void }) {
   return (
     <Select>
       <Select.Label placeholder="Select label">
@@ -69,7 +79,7 @@ function LabelSelect() {
       </Select.Label>
       <Select.Panel>
         {Object.entries(ISSUE_LABEL).map(([key, item]) => (
-          <Select.Option key={item.label} value={key}>
+          <Select.Option key={item.label} value={key} onClick={() => onChange(item.relations ?? [])}>
             <IssueOptionColor style={{ background: item.color }} />
             <span>{item.label}</span>
           </Select.Option>

@@ -5,22 +5,24 @@ import { useSelectOpenContext, useSelectValueContext } from './Root';
 
 interface SelectOptionProps {
   value: string;
+  onClick: () => void;
   children?: ReactNode;
 }
 
-function SelectOption({ children, value }: SelectOptionProps) {
+function SelectOption({ children, value, onClick }: SelectOptionProps) {
   const { value: selectedValue, onChangeValue } = useSelectValueContext();
   const { setIsOpen } = useSelectOpenContext();
 
   const isSelected = selectedValue === value;
 
-  const onClick = () => {
+  const onOptionClick = () => {
+    onClick();
     onChangeValue(value);
     setIsOpen(false);
   };
 
   return (
-    <OptionStyled onClick={onClick} $isSelected={isSelected}>
+    <OptionStyled onClick={onOptionClick} $isSelected={isSelected}>
       <CheckIconWrapper className="check-icon">
         <CheckIcon />
       </CheckIconWrapper>
