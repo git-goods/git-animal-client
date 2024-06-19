@@ -10,7 +10,7 @@ function TextArea(props: TextAreaProps) {
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputLen(e.target.value.length);
-    props.onChange && props.onChange(e);
+    props?.onChange?.(e);
   };
 
   return (
