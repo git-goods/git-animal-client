@@ -2,6 +2,7 @@
 
 import styled from 'styled-components';
 
+import Input from '@/components/Input';
 import Select from '@/components/Select';
 
 import { ISSUE_LABEL } from './FeedBack.constants';
@@ -9,6 +10,8 @@ import { ISSUE_LABEL } from './FeedBack.constants';
 function FeedBack() {
   return (
     <Container>
+      <Input placeholder="Input placeholder" />
+
       <Select>
         <Select.Label placeholder="Select label">
           {({ value }) =>
@@ -39,6 +42,7 @@ const Container = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  padding: 20px;
 `;
 
 const IssueOptionColor = styled.div`
