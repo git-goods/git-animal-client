@@ -15,7 +15,7 @@ function ClientProvider({ children }: PropsWithChildren) {
       <StyledComponentsRegistry>
         <Monitoring />
         <GlobalStyle />
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </StyledComponentsRegistry>
     </QueryClientProvider>
   );
