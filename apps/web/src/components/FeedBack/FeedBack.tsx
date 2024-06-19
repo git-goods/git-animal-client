@@ -13,10 +13,13 @@ import Select from '@/components/Select';
 import TextArea from '@/components/TextArea';
 
 import { ISSUE_LABEL } from './FeedBack.constants';
+import { CloseIcon, FeedBackCloseIcon, FeedBackOpenIcon } from './FeedBack.icons';
 
 function FeedBack() {
   const { data: userData } = useGetUser();
   const { content, onContentChange, isValid, initContent } = useFeedbackContent();
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const onSubmit = () => {
     const username = userData?.username ?? '';
@@ -32,32 +35,41 @@ function FeedBack() {
   });
 
   return (
-    <Container>
-      <Heading>
-        <h2>Feedback</h2>
-        <Image src="/feedback/feedback-profile.png" alt="feedback" width={67.5} height={67} />
-        <p>Hello!! I’m Gitanimals Developer. Please leave any improvements, and it will be register GitHub issue.</p>
-        <CloseIconWrapper>
-          <CloseIcon />
-        </CloseIconWrapper>
-      </Heading>
-      <Form>
-        <LabelSelect onChange={(relations) => onContentChange('labels', relations)} />
-        <Input
-          placeholder="Type issue title..."
-          value={content.title}
-          onChange={(e) => onContentChange('title', e.target.value)}
-        />
-        <TextArea
-          placeholder="Please feel free to leave any good points for improvement..."
-          value={content.body}
-          onChange={(e) => onContentChange('body', e.target.value)}
-        />
-      </Form>
-      <ButtonStyled disabled={!isValid || isPending} onClick={onSubmit}>
-        Send
-      </ButtonStyled>
-    </Container>
+    <>
+      <OpenIconWrapper onClick={() => setIsOpen((prev) => !prev)}>
+        {isOpen ? <FeedBackCloseIcon /> : <FeedBackOpenIcon />}
+      </OpenIconWrapper>
+      {isOpen && (
+        <Container>
+          <Heading>
+            <h2>Feedback</h2>
+            <Image src="/feedback/feedback-profile.png" alt="feedback" width={67.5} height={67} />
+            <p>
+              Hello!! I’m Gitanimals Developer. Please leave any improvements, and it will be register GitHub issue.
+            </p>
+            <CloseIconWrapper onClick={() => setIsOpen(false)}>
+              <CloseIcon />
+            </CloseIconWrapper>
+          </Heading>
+          <Form>
+            <LabelSelect onChange={(relations) => onContentChange('labels', relations)} />
+            <Input
+              placeholder="Type issue title..."
+              value={content.title}
+              onChange={(e) => onContentChange('title', e.target.value)}
+            />
+            <TextArea
+              placeholder="Please feel free to leave any good points for improvement..."
+              value={content.body}
+              onChange={(e) => onContentChange('body', e.target.value)}
+            />
+          </Form>
+          <ButtonStyled disabled={!isValid || isPending} onClick={onSubmit}>
+            Send
+          </ButtonStyled>
+        </Container>
+      )}
+    </>
   );
 }
 
@@ -122,9 +134,18 @@ const ButtonStyled = styled(Button)`
   }
 `;
 
+const OpenIconWrapper = styled.div`
+  position: fixed;
+  bottom: 0px;
+  right: 4px;
+
+  height: 121px;
+  width: 110px;
+`;
+
 const Container = styled.div`
   position: absolute;
-  bottom: 24px;
+  bottom: 120px;
   right: 24px;
   display: flex;
   flex-direction: column;
@@ -139,6 +160,18 @@ const Container = styled.div`
     right: 0;
     left: 0;
   }
+
+  animation: fadeIn 0.3s ease-in-out;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 `;
 
 const IssueOptionColor = styled.div`
@@ -151,6 +184,7 @@ const CloseIconWrapper = styled.div`
   top: 16px;
   right: 16px;
   position: absolute;
+  cursor: pointer;
 `;
 
 const Heading = styled.section`
@@ -194,17 +228,3 @@ const Form = styled.section`
   flex-direction: column;
   gap: 24px;
 `;
-
-function CloseIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M3.68076 2.62009C3.38788 2.32718 2.91301 2.32716 2.6201 2.62004C2.3272 2.91291 2.32717 3.38779 2.62005 3.6807L8.93938 10.0006L2.62004 16.3206C2.32716 16.6135 2.32718 17.0884 2.62009 17.3812C2.91299 17.6741 3.38787 17.6741 3.68075 17.3812L9.99999 11.0613L16.3192 17.3812C16.6121 17.6741 17.087 17.6741 17.3799 17.3812C17.6728 17.0884 17.6728 16.6135 17.3799 16.3206L11.0606 10.0006L17.3799 3.6807C17.6728 3.38779 17.6728 2.91291 17.3799 2.62004C17.087 2.32716 16.6121 2.32718 16.3192 2.62009L9.99999 8.93992L3.68076 2.62009Z"
-        fill="black"
-        fillOpacity="0.5"
-      />
-    </svg>
-  );
-}
