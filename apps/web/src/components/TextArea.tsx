@@ -1,14 +1,15 @@
+import type { ChangeEvent, ComponentProps } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 
-interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface TextAreaProps extends ComponentProps<'textarea'> {
   error?: boolean;
 }
 
-function TextArea(props: TextAreaProps) {
+function TextArea({ maxLength = 300, ...props }: TextAreaProps) {
   const [inputLen, setInputLen] = useState(String(props.value ?? '')?.length || 0);
 
-  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setInputLen(e.target.value.length);
     props?.onChange?.(e);
   };
@@ -18,15 +19,11 @@ function TextArea(props: TextAreaProps) {
       <TextAreaStyled {...props} onChange={onChange} />
       <TextLen>
         <strong>{inputLen}</strong>
-        <span> / {props.maxLength}</span>
+        <span> / {maxLength}</span>
       </TextLen>
     </Container>
   );
 }
-
-TextArea.defaultProps = {
-  maxLength: 300,
-};
 
 export default TextArea;
 
