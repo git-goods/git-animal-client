@@ -27,6 +27,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@gitanimals/api':
+        specifier: workspace:*
+        version: link:../../packages/api
       '@gitanimals/exception':
         specifier: workspace:*
         version: link:../../packages/exceptions
