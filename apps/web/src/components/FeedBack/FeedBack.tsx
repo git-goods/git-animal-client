@@ -22,26 +22,7 @@ function FeedBack() {
         </CloseIconWrapper>
       </Heading>
       <Form>
-        <Select>
-          <Select.Label placeholder="Select label">
-            {({ value }) =>
-              value && (
-                <>
-                  <IssueOptionColor style={{ background: ISSUE_LABEL[value].color }} />
-                  <span>{ISSUE_LABEL[value].label}</span>
-                </>
-              )
-            }
-          </Select.Label>
-          <Select.Panel>
-            {Object.entries(ISSUE_LABEL).map(([key, item]) => (
-              <Select.Option key={item.label} value={key}>
-                <IssueOptionColor style={{ background: item.color }} />
-                <span>{item.label}</span>
-              </Select.Option>
-            ))}
-          </Select.Panel>
-        </Select>
+        <LabelSelect />
         <Input placeholder="Type issue title..." />
         <TextArea placeholder="Please feel free to leave any good points for improvement..." />
       </Form>
@@ -51,6 +32,31 @@ function FeedBack() {
 }
 
 export default FeedBack;
+
+function LabelSelect() {
+  return (
+    <Select>
+      <Select.Label placeholder="Select label">
+        {({ value }) =>
+          value && (
+            <>
+              <IssueOptionColor style={{ background: ISSUE_LABEL[value].color }} />
+              <span>{ISSUE_LABEL[value].label}</span>
+            </>
+          )
+        }
+      </Select.Label>
+      <Select.Panel>
+        {Object.entries(ISSUE_LABEL).map(([key, item]) => (
+          <Select.Option key={item.label} value={key}>
+            <IssueOptionColor style={{ background: item.color }} />
+            <span>{item.label}</span>
+          </Select.Option>
+        ))}
+      </Select.Panel>
+    </Select>
+  );
+}
 
 const ButtonStyled = styled(Button)`
   width: fit-content;
