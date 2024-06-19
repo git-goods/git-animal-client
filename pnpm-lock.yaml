@@ -27,7 +27,7 @@ importers:
 
   apps/web:
     dependencies:
-      '@gitanimals/exceptions':
+      '@gitanimals/exception':
         specifier: workspace:*
         version: link:../../packages/exceptions
       '@gitanimals/ui':
@@ -136,6 +136,28 @@ importers:
       storybook:
         specifier: ^8.0.9
         version: 8.1.9(@babel/preset-env@7.24.7(@babel/core@7.24.7))(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
+  packages/api:
+    dependencies:
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@gitanimals/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@gitanimals/exception':
+        specifier: workspace:*
+        version: link:../exceptions
+      '@gitanimals/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      axios:
+        specifier: ^1.6.8
+        version: 1.7.2
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -6947,6 +6969,9 @@ packages:
   yocto-queue@1.0.0:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
+
+  zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
   zustand@4.5.2:
     resolution: {integrity: sha512-2cN1tPkDVkwCy5ickKrI7vijSjPksFRfqS6237NzT0vqSsztTNnQdHw9mmN7uBdk3gceVXU0a+21jFzFzAc9+g==}
@@ -15214,6 +15239,8 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   yocto-queue@1.0.0: {}
+
+  zod@3.23.8: {}
 
   zustand@4.5.2(@types/react@18.2.61)(react@18.2.0):
     dependencies:
