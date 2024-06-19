@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -32,6 +33,26 @@ function FeedBack() {
 }
 
 export default FeedBack;
+
+interface FeedbackContentType {
+  title: string;
+  body: string;
+  label: string;
+}
+
+const useFeedbackContent = () => {
+  const [content, setContent] = useState<FeedbackContentType>({
+    title: '',
+    body: '',
+    label: '',
+  });
+
+  const onContentChange = (key: keyof FeedbackContentType, value: string) => {
+    setContent((prev) => ({ ...prev, [key]: value }));
+  };
+
+  return { content, onContentChange };
+};
 
 function LabelSelect() {
   return (
