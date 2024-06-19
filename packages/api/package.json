@@ -7,9 +7,7 @@
     "@gitanimals/eslint-config": "workspace:*",
     "@gitanimals/typescript-config": "workspace:*",
     "axios": "^1.6.8",
-    "typescript": "*"
-  },
-  "dependencies": {
+    "typescript": "*",
     "zod": "^3.23.8"
   }
 }
