@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import type { PostIssueRequest } from '@/apis/github/usePostIssue';
 import { usePostIssue } from '@/apis/github/usePostIssue';
+import { useGetUser } from '@/apis/user/useGetUser';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
@@ -14,14 +15,18 @@ import TextArea from '@/components/TextArea';
 import { ISSUE_LABEL } from './FeedBack.constants';
 
 function FeedBack() {
-  const { content, onContentChange, isValid } = useFeedbackContent();
+  const { data: userData } = useGetUser();
+  const { content, onContentChange, isValid, initContent } = useFeedbackContent();
 
   const onSubmit = () => {
-    mutate({ ...content, assignees: ['sumi-0011'] });
+    const username = userData?.username ?? '';
+
+    mutate({ ...content, assignees: [username] });
   };
 
-  const { mutate } = usePostIssue({
-    onSuccess(data, variables, context) {
+  const { mutate, isPending } = usePostIssue({
+    onSuccess() {
+      initContent();
       alert('Thank you for your feedback!');
     },
   });
@@ -49,7 +54,7 @@ function FeedBack() {
           onChange={(e) => onContentChange('body', e.target.value)}
         />
       </Form>
-      <ButtonStyled disabled={!isValid} onClick={onSubmit}>
+      <ButtonStyled disabled={!isValid || isPending} onClick={onSubmit}>
         Send
       </ButtonStyled>
     </Container>
@@ -60,12 +65,14 @@ export default FeedBack;
 
 type FeedbackContentType = Omit<PostIssueRequest, 'assignees'>;
 
+const INIT_CONTENT: FeedbackContentType = {
+  title: '',
+  body: '',
+  labels: [],
+};
+
 const useFeedbackContent = () => {
-  const [content, setContent] = useState<FeedbackContentType>({
-    title: '',
-    body: '',
-    labels: [],
-  });
+  const [content, setContent] = useState<FeedbackContentType>(INIT_CONTENT);
 
   const isValid = content.title && content.body;
 
@@ -73,7 +80,11 @@ const useFeedbackContent = () => {
     setContent((prev) => ({ ...prev, [key]: value }));
   };
 
-  return { content, onContentChange, isValid };
+  const initContent = () => {
+    setContent(INIT_CONTENT);
+  };
+
+  return { content, onContentChange, isValid, initContent };
 };
 
 function LabelSelect({ onChange }: { onChange: (value: string[]) => void }) {
