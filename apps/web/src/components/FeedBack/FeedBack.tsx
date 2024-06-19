@@ -29,6 +29,7 @@ function FeedBack() {
 
   const { mutate, isPending } = usePostIssue({
     onSuccess() {
+      setIsOpen(false);
       initContent();
       alert('Thank you for your feedback!');
     },
