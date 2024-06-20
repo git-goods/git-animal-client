@@ -13,7 +13,7 @@ import Select from '@/components/Select';
 import TextArea from '@/components/TextArea';
 
 import { ISSUE_LABEL } from './FeedBack.constants';
-import { CloseIcon, FeedBackCloseIcon, FeedBackOpenIcon } from './FeedBack.icons';
+import { CloseIcon, FeedBackCloseIcon, FeedBackOpenIcon } from './Feedback.icons';
 
 function FeedBack() {
   const { data: userData } = useGetUser();
@@ -24,22 +24,26 @@ function FeedBack() {
   const onSubmit = () => {
     const username = userData?.username ?? '';
 
-    mutate({ ...content, assignees: [username] });
+    mutate(
+      { ...content, assignees: [username] },
+      {
+        onSuccess() {
+          setIsOpen(false);
+          initContent();
+          alert('Thank you for your feedback!');
+        },
+      },
+    );
   };
 
-  const { mutate, isPending } = usePostIssue({
-    onSuccess() {
-      setIsOpen(false);
-      initContent();
-      alert('Thank you for your feedback!');
-    },
-  });
+  const { mutate, isPending } = usePostIssue();
 
   return (
     <>
       <OpenIconWrapper onClick={() => setIsOpen((prev) => !prev)}>
         {isOpen ? <FeedBackCloseIcon /> : <FeedBackOpenIcon />}
       </OpenIconWrapper>
+      ㄷ
       {isOpen && (
         <Container>
           <Heading>
