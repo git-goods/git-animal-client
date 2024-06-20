@@ -43,7 +43,7 @@ function FeedBack() {
       <OpenIconWrapper onClick={() => setIsOpen((prev) => !prev)}>
         {isOpen ? <FeedBackCloseIcon /> : <FeedBackOpenIcon />}
       </OpenIconWrapper>
-      ㄷ
+
       {isOpen && (
         <Container>
           <Heading>
