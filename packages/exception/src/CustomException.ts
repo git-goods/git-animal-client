@@ -1,9 +1,10 @@
-type CustomErrorCode = 'NETWORK_ERROR' | 'NETWORK_TIMEOUT' | 'UNKNOWN_ERROR';
+type CustomErrorCode = 'NETWORK_ERROR' | 'NETWORK_TIMEOUT' | 'UNKNOWN_ERROR' | 'API_TYPE_NOT_MATCH';
 
 const ERROR_MESSAGE: Record<CustomErrorCode, string> = {
-  NETWORK_ERROR: 'Network error',
-  NETWORK_TIMEOUT: 'Network timeout',
-  UNKNOWN_ERROR: 'Unknown error',
+  NETWORK_ERROR: '네트워크 에러',
+  NETWORK_TIMEOUT: '네트워크 타임아웃',
+  UNKNOWN_ERROR: '알 수 없는 에러',
+  API_TYPE_NOT_MATCH: 'API 응답 타입 불일치',
 };
 
 export class CustomException extends Error {

@@ -1,10 +1,13 @@
 {
-  "name": "@gitanimals/exceptions",
+  "name": "@gitanimals/api",
   "version": "0.0.0",
   "main": "./src/index.ts",
   "devDependencies": {
+    "@gitanimals/exception": "workspace:*",
     "@gitanimals/eslint-config": "workspace:*",
     "@gitanimals/typescript-config": "workspace:*",
-    "typescript": "*"
+    "axios": "^1.6.8",
+    "typescript": "*",
+    "zod": "^3.23.8"
   }
 }
