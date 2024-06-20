@@ -149,7 +149,7 @@ const OpenIconWrapper = styled.div`
 `;
 
 const Container = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 120px;
   right: 24px;
   display: flex;
