@@ -13,7 +13,7 @@ import Select from '@/components/Select';
 import TextArea from '@/components/TextArea';
 
 import { ISSUE_LABEL } from './FeedBack.constants';
-import { CloseIcon, FeedBackCloseIcon, FeedBackOpenIcon } from './Feedback.icons';
+import { CloseIcon, FeedBackCloseIcon, FeedBackOpenIcon } from './Icons';
 
 function FeedBack() {
   const { data: userData } = useGetUser();
