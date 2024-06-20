@@ -18,6 +18,7 @@ const PanelStyled = styled.div<{ $isOpen: boolean }>`
   border: 1px solid rgba(0, 0, 0, 0.1);
   background: var(--gray-color-gray-05, #fbfbfb);
   box-shadow: 0px 2px 4px 0px rgba(51, 50, 54, 0.06);
+  z-index: 1;
 
   position: absolute;
   top: 100%;
