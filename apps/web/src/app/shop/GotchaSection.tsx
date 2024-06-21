@@ -44,8 +44,8 @@ function GotchaSection() {
         <Image
           className={'point-message' + (isBounce ? ' bounce' : '')}
           src="/shop/gotcha-point-message.svg"
-          width={357.5}
-          height={115}
+          width={147}
+          height={112}
           alt="gotcha point message"
           onClick={() => setIsBounce(!isBounce)}
         />
@@ -76,7 +76,7 @@ const PointMessage = styled.div`
   pointer-events: none;
   .point-message {
     position: absolute;
-    right: -170px;
+    right: -70px;
     bottom: 26px;
     animation: move 1s infinite;
 
