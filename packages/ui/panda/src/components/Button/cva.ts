@@ -1,4 +1,4 @@
-import { cva } from '../../../styled-system/css';
+import { cva } from '_panda/css';
 
 export const buttonStyle = cva({
   base: {
