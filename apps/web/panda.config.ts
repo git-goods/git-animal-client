@@ -6,7 +6,7 @@ export default defineConfig({
   preflight: true,
 
   // Where to look for your css declarations
-  include: ['./src/**/*.{ts,tsx}', '../../packages/ui/panda/src/**/*.{ts,tsx}'],
+  include: ['./src/**/*.{ts,tsx}'],
 
   // Files to exclude
   exclude: [],
