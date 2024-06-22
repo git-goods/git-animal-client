@@ -10,6 +10,10 @@ labels:
       - 'packages/eslint-config/*'
       - 'packages/typescript-config/*'
 
+  - label: 'area: API'
+    files:
+      - 'packages/api/*'
+
   - label: 'area: Workflow'
     files:
       - .github/workflows/*
