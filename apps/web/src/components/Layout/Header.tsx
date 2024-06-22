@@ -49,12 +49,7 @@ function Header() {
                 <div className="profile-image">
                   <img src={profileImage} alt="profile" width={160} height={160} />
                 </div>
-                <button
-                  className={css`
-                    display: flex;
-                    align-items: center;
-                  `}
-                >
+                <button className={css({ display: 'flex', alignItems: 'center' })}>
                   <span className="profile-name">{username}</span>
                   <Image src="/icon/chervon-right.svg" width={12} height={12} alt="arrow-down" />
                 </button>
