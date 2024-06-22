@@ -1,4 +1,4 @@
-export const BLACK_AND_WHITE = {
+export const BLACK = {
   black: '#000000',
   black_100: 'rgba(0, 0, 0, 1)',
   black_90: 'rgba(0, 0, 0, 0.9)',
@@ -7,6 +7,9 @@ export const BLACK_AND_WHITE = {
   black_25: 'rgba(0, 0, 0, 0.25)',
   black_10: 'rgba(0, 0, 0, 0.1)',
   black_5: 'rgba(0, 0, 0, 0.05)',
+} as const;
+
+export const WHITE = {
   white: '#FFFFFF',
   white_100: 'rgba(255, 255, 255, 1)',
   white_90: 'rgba(255, 255, 255, 0.9)',

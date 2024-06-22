@@ -1,4 +1,6 @@
-import { BLACK_AND_WHITE } from './black-and-white';
-import { BRAND_COLOR } from './brand';
+import { BLACK, WHITE } from './black-and-white';
+import { BRAND } from './brand';
 
-export const COLORS = { ...BLACK_AND_WHITE, ...BRAND_COLOR };
+export const COLORS = { ...BLACK, ...WHITE, ...BRAND };
+export { BLACK, WHITE } from './black-and-white';
+export { BRAND } from './brand';

@@ -1,4 +1,4 @@
-export const BRAND_COLOR = {
+export const BRAND = {
   sky: '#C4F2F7',
   mint: '#DAFDEC',
   blush: '#FFE6DB',
