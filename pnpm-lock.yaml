@@ -234,6 +234,9 @@ importers:
       '@gitanimals/ui-token':
         specifier: workspace:*
         version: link:../token
+      '@gitanimals/util-typescript':
+        specifier: workspace:*
+        version: link:../../util/typescript
       '@pandacss/dev':
         specifier: ^0.41.0
         version: 0.41.0(typescript@5.4.5)
