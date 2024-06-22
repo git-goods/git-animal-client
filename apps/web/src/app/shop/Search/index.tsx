@@ -30,8 +30,8 @@ function Search(props: SearchProps) {
         <SearchIcon />
       </ButtonWrapper>
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <SearchPopup>
-          <DottedThreeBox width={800} height={700} bgColor="#fff">
+        <DottedThreeBox width={800} height={700} bgColor="#fff">
+          <SearchPopup>
             <Heading>Select Find Persona</Heading>
             {props.selected && (
               <SelectPersona>
@@ -41,6 +41,7 @@ function Search(props: SearchProps) {
                 </button>
               </SelectPersona>
             )}
+
             <SearchPopupInner>
               {data?.productTypes.map((type) => (
                 <PersonaItem key={type.name} onClick={() => onClick(type.name)}>
@@ -51,8 +52,8 @@ function Search(props: SearchProps) {
                 </PersonaItem>
               ))}
             </SearchPopupInner>
-          </DottedThreeBox>
-        </SearchPopup>
+          </SearchPopup>
+        </DottedThreeBox>
       </Modal>
     </DottedThreeBox>
   );
@@ -82,9 +83,13 @@ const Heading = styled.h2`
   font-size: 24px;
   margin: 24px 0;
 `;
+
 const SearchPopup = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 800px;
   height: 700px;
+  padding: 8px;
 `;
 
 const SelectPersona = styled.div`
@@ -96,10 +101,11 @@ const SelectPersona = styled.div`
     height: 24px;
   }
 `;
+
 const SearchPopupInner = styled.div`
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  overflow-y: scroll;
   display: flex;
   flex-wrap: wrap;
   padding: 24px;
@@ -107,6 +113,7 @@ const SearchPopupInner = styled.div`
   text-align: center;
   gap: 24px 8px;
 `;
+
 const PersonaItemImg = styled.div`
   min-height: 76px;
 `;
