@@ -35,7 +35,7 @@ importers:
         version: link:../../packages/exception
       '@gitanimals/ui-panda':
         specifier: workspace:*
-        version: link:../../packages/ui/token
+        version: link:../../packages/ui/panda
       '@tanstack/react-query':
         specifier: ^5.32.0
         version: 5.45.0(react@18.2.0)
@@ -231,6 +231,12 @@ importers:
       '@gitanimals/typescript-config':
         specifier: workspace:*
         version: link:../../typescript-config
+      '@gitanimals/ui-token':
+        specifier: workspace:*
+        version: link:../token
+      '@pandacss/dev':
+        specifier: ^0.41.0
+        version: 0.41.0(typescript@5.4.5)
       '@turbo/gen':
         specifier: ^1.12.4
         version: 1.12.4(@types/node@20.11.24)(typescript@5.4.5)
