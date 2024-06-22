@@ -35,7 +35,7 @@ importers:
         version: link:../../packages/exception
       '@gitanimals/ui-panda':
         specifier: workspace:*
-        version: link:../../packages/ui/panda
+        version: link:../../packages/ui/token
       '@tanstack/react-query':
         specifier: ^5.32.0
         version: 5.45.0(react@18.2.0)
@@ -252,6 +252,21 @@ importers:
       react:
         specifier: ^18
         version: 18.2.0
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
+  packages/ui/token:
+    devDependencies:
+      '@gitanimals/eslint-config':
+        specifier: workspace:*
+        version: link:../../eslint-config
+      '@gitanimals/typescript-config':
+        specifier: workspace:*
+        version: link:../../typescript-config
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
       typescript:
         specifier: ^5.4.5
         version: 5.4.5

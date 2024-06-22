@@ -1,0 +1,15 @@
+{
+  "name": "@gitanimals/ui-token",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint . --max-warnings 0"
+  },
+  "devDependencies": {
+    "@gitanimals/eslint-config": "workspace:*",
+    "@gitanimals/typescript-config": "workspace:*",
+    "eslint": "^8.57.0",
+    "typescript": "*"
+  }
+}
