@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['@gitanimals/ui'],
+  transpilePackages: ['@gitanimals/ui-panda'],
   reactStrictMode: true,
   compiler: {
     styledComponents: true,

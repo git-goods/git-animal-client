@@ -17,4 +17,7 @@ export default defineConfig({
 
   // The output directory for your css system
   outdir: 'styled-system',
+
+  // delete default presets
+  presets: [],
 });

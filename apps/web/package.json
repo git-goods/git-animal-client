@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@gitanimals/api": "workspace:*",
-    "@gitanimals/ui": "workspace:*",
+    "@gitanimals/ui-panda": "workspace:*",
     "@gitanimals/exception": "workspace:*",
     "@tanstack/react-query": "^5.32.0",
     "axios": "^1.6.8",
