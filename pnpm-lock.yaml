@@ -277,6 +277,21 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
 
+  packages/util/typescript:
+    devDependencies:
+      '@gitanimals/eslint-config':
+        specifier: workspace:*
+        version: link:../../eslint-config
+      '@gitanimals/typescript-config':
+        specifier: workspace:*
+        version: link:../../typescript-config
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
 packages:
 
   '@aashutoshrathi/word-wrap@1.2.6':
