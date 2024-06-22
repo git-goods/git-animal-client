@@ -19,7 +19,7 @@ export default defineConfig({
     },
   },
 
-  outExtension: 'mjs',
+  outExtension: 'js',
   jsxFramework: 'react',
 
   // The output directory for your css system
