@@ -1,6 +1,7 @@
 import { ZodType, z } from 'zod';
 import { del, get, patch, post, put } from './default';
 import { CustomException } from '@gitanimals/exception';
+import { renderGet, renderDelete, renderPatch, renderPost, renderPut } from './render';
 
 type Method = typeof get | typeof post | typeof put | typeof patch | typeof del;
 
@@ -21,3 +22,9 @@ export const safePost = safeFactory(post);
 export const safePut = safeFactory(put);
 export const safePatch = safeFactory(patch);
 export const safeDel = safeFactory(del);
+
+export const safeRenderGet = safeFactory(renderGet);
+export const safeRenderPost = safeFactory(renderPost);
+export const safeRenderPut = safeFactory(renderPut);
+export const safeRenderPatch = safeFactory(renderPatch);
+export const safeRenderDel = safeFactory(renderDelete);
