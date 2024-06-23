@@ -1,6 +1,5 @@
 import { z } from 'zod';
-import { CustomException } from '@gitanimals/exception';
-import { get } from '../_instance';
+import { safeGet } from '../_instance/safe';
 
 const UserSchema = z.object({
   id: z.string(),
@@ -9,13 +8,8 @@ const UserSchema = z.object({
   profileImage: z.string(),
 });
 
-type User = z.infer<typeof UserSchema>;
-
 export const getUser = async () => {
-  const res = await get<User>(`/users`);
-
-  const parsed = UserSchema.safeParse(res);
-  if (parsed.error) throw new CustomException('API_TYPE_NOT_MATCH');
+  const res = await safeGet(UserSchema)(`/users`);
 
   return res;
 };
