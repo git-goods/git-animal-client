@@ -1,28 +1,29 @@
-import { SemanticTokens } from '@pandacss/dev';
+import { defineSemanticTokens } from '@pandacss/dev';
 import { BLACK, WHITE, BRAND } from '@gitanimals/ui-token';
+import { objectKeys } from '@gitanimals/util-typescript';
 
-export const semanticTokens: SemanticTokens = {
+export const semanticTokens = defineSemanticTokens({
   colors: {
     brand: {
       DEFAULT: { value: BRAND.sky },
-      ...Object.keys(BRAND).reduce<Record<string, { value: string }>>((acc, key) => {
-        acc[key] = { value: BRAND[key as keyof typeof BRAND] };
+      ...objectKeys(BRAND).reduce<Record<string, { value: string }>>((acc, key) => {
+        acc[key] = { value: BRAND[key] };
         return acc;
       }, {}),
     },
     black: {
       DEFAULT: { value: BLACK.black },
-      ...Object.keys(BLACK).reduce<Record<string, { value: string }>>((acc, key) => {
-        acc[key] = { value: BLACK[key as keyof typeof BLACK] };
+      ...objectKeys(BLACK).reduce<Record<string, { value: string }>>((acc, key) => {
+        acc[key] = { value: BLACK[key] };
         return acc;
       }, {}),
     },
     white: {
       DEFAULT: { value: WHITE.white },
-      ...Object.keys(WHITE).reduce<Record<string, { value: string }>>((acc, key) => {
-        acc[key] = { value: WHITE[key as keyof typeof WHITE] };
+      ...objectKeys(WHITE).reduce<Record<string, { value: string }>>((acc, key) => {
+        acc[key] = { value: WHITE[key] };
         return acc;
       }, {}),
     },
   },
-};
+});

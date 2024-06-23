@@ -13,6 +13,7 @@
     "@gitanimals/eslint-config": "workspace:*",
     "@gitanimals/typescript-config": "workspace:*",
     "@gitanimals/ui-token": "workspace:*",
+    "@gitanimals/util-typescript": "workspace:*",
     "@turbo/gen": "^1.12.4",
     "@types/node": "^20.11.24",
     "@types/eslint": "^8.56.5",
