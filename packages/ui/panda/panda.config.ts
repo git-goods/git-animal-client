@@ -1,12 +1,12 @@
-import { semanticTokens, tokens } from '@gitanimals/ui-panda';
 import { defineConfig } from '@pandacss/dev';
+import { tokens, semanticTokens } from './src/theme';
 
 export default defineConfig({
   // Whether to use css reset
   preflight: true,
 
   // Where to look for your css declarations
-  include: ['./src/**/*.{ts,tsx}', '../../packages/ui/panda/src/**/*.{ts,tsx}'],
+  include: ['./src/**/*.{ts,tsx}'],
 
   // Files to exclude
   exclude: [],
@@ -19,7 +19,7 @@ export default defineConfig({
     },
   },
 
-  syntax: 'object-literal',
+  outExtension: 'js',
   jsxFramework: 'react',
 
   // The output directory for your css system

@@ -9,13 +9,18 @@ import StyledComponentsRegistry from '@/lib/registry';
 import GlobalStyle from '@/styles/GlobalStyle';
 import theme from '@/styles/theme';
 
+import { SnackBarProvider } from './SnackBar/SnackBarProvider';
+
 function ClientProvider({ children }: PropsWithChildren) {
   return (
     <QueryClientProvider>
       <StyledComponentsRegistry>
         <Monitoring />
         <GlobalStyle />
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <SnackBarProvider />
+          {children}
+        </ThemeProvider>
       </StyledComponentsRegistry>
     </QueryClientProvider>
   );

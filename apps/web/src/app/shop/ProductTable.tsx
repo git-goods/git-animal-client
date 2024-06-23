@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { getProductsQueryKey, useGetProducts } from '@/apis/auctions/useGetProducts';
@@ -26,6 +26,13 @@ function ProductTable({ searchPersona }: ProductTableProps) {
   const { setLoading } = useLoading();
 
   const [currentPage, setCurrentPage] = useState(0);
+
+  useEffect(
+    function 선택_동물_변경시_페이지_초기화() {
+      setCurrentPage(0);
+    },
+    [searchPersona],
+  );
 
   const { data } = useGetProducts<{ products: ProductType<'MY_SELLING' | 'ON_SALE'>[]; pagination: PaginationSchema }>(
     {

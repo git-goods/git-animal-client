@@ -1,0 +1,10 @@
+{
+  "extends": "@gitanimals/typescript-config/react-library.json",
+  "compilerOptions": {
+    "paths": {
+      "_panda/*": ["./styled-system/*"]
+    }
+  },
+  "include": ["src", "**/*.ts", "**/*.tsx", "styled-system"],
+  "exclude": ["node_modules"]
+}
