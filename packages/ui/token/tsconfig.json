@@ -1,5 +1,5 @@
 {
-  "extends": "@gitanimals/typescript-config/react-library.json",
+  "extends": "@gitanimals/typescript-config/base.json",
   "compilerOptions": {
     "outDir": "dist"
   },

@@ -1,19 +1,19 @@
 {
-  "name": "@gitanimals/ui",
+  "name": "@gitanimals/ui-panda",
   "version": "0.0.0",
   "private": true,
-  "exports": {
-    "./button": "./src/button.tsx",
-    "./card": "./src/card.tsx",
-    "./code": "./src/code.tsx"
-  },
+  "main": "src/index.ts",
   "scripts": {
+    "prepare": "panda codegen",
     "lint": "eslint . --max-warnings 0",
     "generate:component": "turbo gen react-component"
   },
   "devDependencies": {
+    "@pandacss/dev": "^0.41.0",
     "@gitanimals/eslint-config": "workspace:*",
     "@gitanimals/typescript-config": "workspace:*",
+    "@gitanimals/ui-token": "workspace:*",
+    "@gitanimals/util-typescript": "workspace:*",
     "@turbo/gen": "^1.12.4",
     "@types/node": "^20.11.24",
     "@types/eslint": "^8.56.5",
