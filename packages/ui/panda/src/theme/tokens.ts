@@ -1,4 +1,4 @@
-import { Tokens } from '@pandacss/dev';
+import { defineTokens } from '@pandacss/dev';
 import { COLORS } from '@gitanimals/ui-token';
 import { objectKeys } from '@gitanimals/util-typescript';
 
@@ -7,6 +7,6 @@ const colors = objectKeys(COLORS).reduce<Record<string, { value: string }>>((acc
   return acc;
 }, {});
 
-export const tokens: Tokens = {
+export const tokens = defineTokens({
   colors,
-};
+});
