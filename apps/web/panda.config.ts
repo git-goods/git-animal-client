@@ -18,6 +18,8 @@ export default defineConfig({
       semanticTokens,
     },
   },
+
+  syntax: 'object-literal',
   jsxFramework: 'react',
 
   // The output directory for your css system
