@@ -234,6 +234,9 @@ importers:
       '@gitanimals/ui-token':
         specifier: workspace:*
         version: link:../token
+      '@gitanimals/util-typescript':
+        specifier: workspace:*
+        version: link:../../util/typescript
       '@pandacss/dev':
         specifier: ^0.41.0
         version: 0.41.0(typescript@5.4.5)
@@ -263,6 +266,21 @@ importers:
         version: 5.4.5
 
   packages/ui/token:
+    devDependencies:
+      '@gitanimals/eslint-config':
+        specifier: workspace:*
+        version: link:../../eslint-config
+      '@gitanimals/typescript-config':
+        specifier: workspace:*
+        version: link:../../typescript-config
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
+  packages/util/typescript:
     devDependencies:
       '@gitanimals/eslint-config':
         specifier: workspace:*
