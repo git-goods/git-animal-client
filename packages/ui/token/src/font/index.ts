@@ -1,2 +1,1 @@
-import { GLYPH } from './glyph';
-export { GLYPH };
+export * from './glyph';
