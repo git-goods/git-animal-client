@@ -5,10 +5,10 @@ import { Button } from '@gitanimals/ui-panda';
 function DevComponentPage() {
   return (
     <div className={containerStyle}>
-      <Button size="s">s size Button</Button>
-      <Button size="m">m size Button</Button>
-      <Button size="l">l size Button</Button>
-      <Button disabled>disabled size Button</Button>
+      <Button size="s">S size Button</Button>
+      <Button size="m">M size Button</Button>
+      <Button size="l">L size Button</Button>
+      <Button disabled>disabled Button</Button>
       <Button floating>floating Button</Button>
     </div>
   );
