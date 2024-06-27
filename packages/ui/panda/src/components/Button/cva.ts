@@ -52,6 +52,16 @@ export const buttonStyle = cva({
         minHeight: '76px',
       },
     },
+    floating: {
+      true: {
+        width: '100%',
+        maxWidth: 'calc(100% - 32px)',
+        position: 'fixed',
+        bottom: '16px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+      },
+    },
   },
   defaultVariants: {},
 });
