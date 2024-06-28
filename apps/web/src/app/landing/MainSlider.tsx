@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import Flicking from '@egjs/react-flicking';
 
 import '@egjs/react-flicking/dist/flicking.css';
@@ -13,13 +13,16 @@ function LandingMainSlider() {
   const moveToNextPanel = async () => {
     if (!flicking.current) return;
 
-    flicking.current.next();
+    try {
+      flicking.current.next();
+    } catch (error) {}
   };
 
   const moveToPrevPanel = async () => {
     if (!flicking.current) return;
-
-    flicking.current.prev();
+    try {
+      flicking.current.prev();
+    } catch (error) {}
   };
 
   return (
@@ -30,28 +33,47 @@ function LandingMainSlider() {
       <button onClick={moveToNextPanel}>
         <ActiveArrow />
       </button>
-      <Flicking ref={flicking}>
-        {panels.map((idx) => (
-          <div className="panel" key={idx}>
-            {idx}
-          </div>
-        ))}
-      </Flicking>
+      <div className={sliderContainerStyle}>
+        <Flicking ref={flicking} circular={true}>
+          {panels.map((idx) => (
+            <div className={cx('panel', sliderContainerStyle, panelStyle)} key={idx}>
+              {idx}
+            </div>
+          ))}
+        </Flicking>
+      </div>
     </div>
   );
 }
 
+const sliderContainerStyle = css({
+  width: '1040px',
+  height: '594px',
+  overflow: 'hidden',
+});
+
 const containerStyle = css({
-  '& .panel': {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+  //   '& .panel': {
+  //     display: 'flex',
+  //     justifyContent: 'center',
+  //     alignItems: 'center',
+  //     height: '100%',
+  //     fontSize: '30px',
+  //     minHeight: '200px',
+  //     width: '500px',
+  //     color: 'white',
+  //     backgroundColor: 'black',
+  //   },
+});
+
+const panelStyle = css({
+  backgroundColor: 'black',
+  height: '500px',
+  color: 'white',
+  '& img': {
+    width: '100%',
     height: '100%',
-    fontSize: '30px',
-    minHeight: '200px',
-    width: '500px',
-    color: 'white',
-    backgroundColor: 'black',
+    objectFit: 'cover',
   },
 });
 
