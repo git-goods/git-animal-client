@@ -63,5 +63,8 @@ export const buttonStyle = cva({
       },
     },
   },
-  defaultVariants: {},
+  defaultVariants: {
+    size: 'm',
+    floating: false,
+  },
 });
