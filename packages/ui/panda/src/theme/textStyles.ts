@@ -1,26 +1,16 @@
-import { defineTextStyles } from '@pandacss/dev';
-// import { GLYPH } from '@gitanimals/ui-token';
+import { TextStyles, defineTextStyles } from '@pandacss/dev';
+import { GLYPH } from '@gitanimals/ui-token';
 
-// const glyphTextStyle: any = Object.keys(GLYPH).reduce((acc, size) => {
-//   const thicknesses = Object.keys(GLYPH[size as keyof typeof GLYPH]);
+const glyphTextStyles = Object.entries(GLYPH).reduce<TextStyles>((acc, [key, value]) => {
+  const styles = Object.entries(value).reduce<TextStyles>((_acc, [key, value]) => {
+    _acc[key] = { value: value };
+    return _acc;
+  }, {});
 
-//   thicknesses.reduce<Record<string, any>>((innerAcc, thickness) => {
-//     innerAcc[size][thickness] = {
-//       value: {
-//         ...GLYPH[size as keyof typeof GLYPH][thicknes],
-//       },
-//     };
-//     return innerAcc;
-//   }, acc);
-
-//   return acc;
-// }, {});
+  acc[key] = styles;
+  return acc;
+}, {});
 
 export const textStyles = defineTextStyles({
-  // ...glyphTextStyle,
-  glyph82: {
-    bold: {
-      value: { fontWeight: 700 },
-    },
-  },
+  ...glyphTextStyles,
 });
