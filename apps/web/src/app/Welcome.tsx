@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import type { TextStyles } from '@pandacss/dev';
 import styled from 'styled-components';
 
 import { checkUsedCoupons } from '@/apis/user/getUsedCoupons';
@@ -9,22 +8,8 @@ import LoginButton from '@/components/LoginButton';
 import { SUMI_GITHUB_URL } from '@/constants/outlink';
 import { recordEvent } from '@/lib/gtag';
 
-import { GLYPH } from '../../../../packages/ui/token/src';
-
 function Welcome() {
   const router = useRouter();
-
-  const glyphTextStyles = Object.entries(GLYPH).reduce<TextStyles>((acc, [key, value]) => {
-    const styles = Object.entries(value).reduce<TextStyles>((_acc, [key, value]) => {
-      _acc[key] = { value: value };
-      return _acc;
-    }, {});
-
-    acc[key] = styles;
-    return acc;
-  }, {});
-
-  console.log('glyphTextStyles: ', glyphTextStyles);
 
   const onClickHavePet = async () => {
     recordEvent({ action: 'onClickHavePet' });
