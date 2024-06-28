@@ -1,4 +1,4 @@
-import { semanticTokens, tokens } from '@gitanimals/ui-panda';
+import { semanticTokens, textStyles, tokens } from '@gitanimals/ui-panda';
 import { defineConfig } from '@pandacss/dev';
 
 export default defineConfig({
@@ -16,6 +16,7 @@ export default defineConfig({
     extend: {
       tokens,
       semanticTokens,
+      textStyles,
     },
   },
 
