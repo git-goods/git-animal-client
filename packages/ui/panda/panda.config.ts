@@ -1,5 +1,5 @@
 import { defineConfig } from '@pandacss/dev';
-import { tokens, semanticTokens } from './src/theme';
+import { tokens, semanticTokens, textStyles } from './src/theme';
 
 export default defineConfig({
   // Whether to use css reset
@@ -16,6 +16,7 @@ export default defineConfig({
     extend: {
       tokens,
       semanticTokens,
+      textStyles,
     },
   },
 
