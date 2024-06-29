@@ -37,10 +37,10 @@
 
   input {
     font-family: 'DNFBitBitv2';
+  }
 
-    &::placeholder {
-      color: #b5b5b5;
-      font-family: 'DNFBitBitv2';
-    }
+  input::placeholder {
+    color: #b5b5b5;
+    font-family: 'DNFBitBitv2';
   }
 }
