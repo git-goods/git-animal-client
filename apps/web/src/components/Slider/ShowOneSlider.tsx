@@ -6,12 +6,12 @@ import Flicking from '@egjs/react-flicking';
 import '@egjs/react-flicking/dist/flicking.css';
 import '@egjs/react-flicking/dist/flicking-inline.css';
 
-interface ShowOneSliderProps {
+interface Props {
   width: string;
   height: string;
 }
 
-function ShowOneSlider(props: PropsWithChildren<ShowOneSliderProps>) {
+function ShowOneSlider({ children, width, height }: PropsWithChildren<Props>) {
   const flicking = useRef<Flicking | null>(null);
 
   const moveToNextPanel = async () => {
@@ -30,39 +30,25 @@ function ShowOneSlider(props: PropsWithChildren<ShowOneSliderProps>) {
   };
 
   return (
-    <div className={containerStyle}>
+    <div className={css({ position: 'relative', width: width, height: height })}>
       <button onClick={moveToPrevPanel} style={{ rotate: '180deg' }} className={prevArrowStyle}>
         <ActiveArrow />
       </button>
       <button onClick={moveToNextPanel} className={nextArrowStyle}>
         <ActiveArrow />
       </button>
-      <div
-        className={cx(
-          sliderContainerStyle,
-          css({
-            width: props.width,
-            height: props.height,
-          }),
-        )}
-      >
-        <Flicking ref={flicking} circular={true}>
-          {Children.map(props.children, (child, idx) => (
-            <div className={cx('panel', panelStyle)} key={idx}>
-              {child}
-            </div>
-          ))}
-        </Flicking>
-      </div>
+      <Flicking ref={flicking} circular={true} panelsPerView={1}>
+        {Children.map(children, (child, idx) => (
+          <div className={cx('panel', panelStyle)} key={idx}>
+            {child}
+          </div>
+        ))}
+      </Flicking>
     </div>
   );
 }
 
 export default ShowOneSlider;
-
-const sliderContainerStyle = css({
-  overflow: 'hidden',
-});
 
 const arrowStyle = css({
   position: 'absolute',
@@ -71,35 +57,13 @@ const arrowStyle = css({
   margin: 'auto',
 });
 
-const prevArrowStyle = cx(
-  arrowStyle,
-  css({
-    left: '-22px',
-  }),
-);
+const prevArrowStyle = cx(arrowStyle, css({ left: '-62px' }));
 
-const nextArrowStyle = cx(
-  arrowStyle,
-  css({
-    right: '-22px',
-  }),
-);
-const containerStyle = css({
-  position: 'relative',
-  width: 'fit-content',
-  height: 'fit-content',
-});
+const nextArrowStyle = cx(arrowStyle, css({ right: '-62px' }));
 
 const panelStyle = css({
-  backgroundColor: 'black',
-  color: 'white',
   width: 'fit-content',
   height: 'fit-content',
-  //   '& img': {
-  //     width: '100%',
-  //     height: '100%',
-  //     objectFit: 'cover',
-  //   },
 });
 
 function ActiveArrow() {
