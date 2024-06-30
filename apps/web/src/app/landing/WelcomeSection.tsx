@@ -10,7 +10,13 @@ function WelcomeSection() {
       <p className={descStyle}>
         You can acquire and grow pets through GitHub activities. Choose from over 50 different pets and raise them.
       </p>
-      <Button size="l">Have Pet</Button>
+      {/* TODO: button 반응형 처리 */}
+      <Button size="m" className="mobile">
+        Have Pet
+      </Button>
+      <Button size="l" className="desktop">
+        Have Pet
+      </Button>
       <picture className={bgStyle}>
         <source srcSet="/main/section1_bg-mobile.png" media="(max-width: 768px)" type="image/png" />
         <source srcSet="/main/section1_bg-pc.png" type="image/png" />
@@ -30,12 +36,33 @@ const sectionStyle = flex({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  _mobile: {
+    padding: '80px 12px',
+  },
+
+  '& .mobile': {
+    display: 'none',
+    _mobile: {
+      display: 'block',
+    },
+  },
+
+  '& .desktop': {
+    display: 'block',
+    _mobile: {
+      display: 'none',
+    },
+  },
 });
 
 const headingStyle = css({
   textStyle: 'glyph82.bold',
   maxWidth: '800px',
   color: 'white',
+
+  _mobile: {
+    textStyle: 'glyph40.bold',
+  },
 });
 
 const descStyle = css({
@@ -44,6 +71,11 @@ const descStyle = css({
   color: 'white',
   marginTop: '16px',
   marginBottom: '40px',
+  _mobile: {
+    textStyle: 'glyph16.regular',
+    marginBottom: '20px',
+    marginTop: '20px',
+  },
 });
 
 const bgStyle = css({
