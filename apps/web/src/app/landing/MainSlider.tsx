@@ -6,8 +6,6 @@ import { css, cx } from '_panda/css';
 import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
 
-import ArrowButton from '@/components/Slider/ArrowButton';
-
 const MODE_ITEM_LIST = [
   {
     title: 'Line Mode',
@@ -155,3 +153,43 @@ const hgroupStyle = css({
     textStyle: 'glyph18.regular',
   },
 });
+
+function ArrowButton({
+  onClick,
+  direction,
+  disabled,
+}: {
+  onClick: () => void;
+  direction: 'prev' | 'next';
+  disabled: boolean;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={cx(
+        direction === 'prev' ? prevArrowStyle : nextArrowStyle,
+        css({
+          rotate: direction === 'prev' ? '180deg' : '0deg',
+          cursor: disabled ? 'not-allowed' : 'pointer',
+        }),
+      )}
+    >
+      {disabled ? (
+        <Image src="/icon/circle-arrow-disable.svg" alt="arrow" width={36} height={36} />
+      ) : (
+        <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
+      )}
+    </button>
+  );
+}
+
+const arrowStyle = css({
+  position: 'absolute',
+  top: '0',
+  bottom: '0',
+  margin: 'auto',
+});
+
+const prevArrowStyle = cx(arrowStyle, css({ left: '-62px' }));
+
+const nextArrowStyle = cx(arrowStyle, css({ right: '-62px' }));
