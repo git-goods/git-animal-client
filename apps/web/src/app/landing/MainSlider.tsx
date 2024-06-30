@@ -103,13 +103,16 @@ const sliderContainerStyle = css({
   position: 'relative',
   width: '1120px',
   height: '800px',
+  _mobile: {
+    width: 'calc(100vw - 40px)',
+    height: 'auto',
+  },
 });
 
 const containerStyle = css({
   width: 'fit-content',
   height: 'fit-content',
   margin: 'auto',
-
   borderRadius: '16px',
   background: 'rgba(255, 255, 255, 0.10)',
 });
