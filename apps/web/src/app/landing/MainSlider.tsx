@@ -4,9 +4,6 @@ import { css, cx } from '_panda/css';
 import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
 
-import '@egjs/react-flicking/dist/flicking.css';
-import '@egjs/react-flicking/dist/flicking-inline.css';
-
 const MODE_ITEM_LIST = [
   {
     title: 'Line Mode',

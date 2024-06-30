@@ -1,3 +1,6 @@
+@import '@egjs/react-flicking/dist/flicking.css';
+@import '@egjs/react-flicking/dist/flicking-inline.css';
+
 @layer reset, base, tokens, recipes, utilities;
 
 @layer reset {

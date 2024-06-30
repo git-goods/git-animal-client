@@ -1,5 +1,7 @@
 'use client';
 
+import { css } from '_panda/css';
+
 import Header from '@/components/Layout/Header';
 import Layout from '@/components/Layout/Layout';
 
@@ -9,8 +11,13 @@ export default function Home() {
   return (
     <Layout>
       <Header />
-      {/* <Welcome /> */}
-      <LandingMainSlider />
+      <main className={mainCss}>
+        <LandingMainSlider />
+      </main>
     </Layout>
   );
 }
+
+const mainCss = css({
+  marginTop: '80px',
+});
