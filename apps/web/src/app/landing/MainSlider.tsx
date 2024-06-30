@@ -226,6 +226,7 @@ const arrowStyle = css({
   top: '0',
   bottom: '0',
   margin: 'auto',
+  zIndex: '2', // TODO : zIndex theme 적용
 
   '& img': {
     width: '100%',
