@@ -1,9 +1,4 @@
-'use client';
-
 import { css } from '_panda/css';
-
-import Header from '@/components/Layout/Header';
-import Layout from '@/components/Layout/Layout';
 
 import LandingMainSlider from './landing/MainSlider';
 
@@ -12,15 +7,14 @@ import '@egjs/react-flicking/dist/flicking-inline.css';
 
 export default function Home() {
   return (
-    <Layout>
-      <Header />
-      <main className={mainCss}>
+    <div>
+      <section className={modeDemoSectionStyle}>
         <LandingMainSlider />
-      </main>
-    </Layout>
+      </section>
+    </div>
   );
 }
 
-const mainCss = css({
-  marginTop: '80px',
+const modeDemoSectionStyle = css({
+  backgroundColor: 'brand.green',
 });
