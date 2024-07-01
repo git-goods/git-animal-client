@@ -6,6 +6,8 @@ import { css, cx } from '_panda/css';
 import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
 
+import * as styles from './MainSlider.style';
+
 const MODE_ITEM_LIST = [
   {
     title: 'Line Mode',
@@ -65,8 +67,8 @@ function LandingMainSlider() {
   };
 
   return (
-    <div className={containerStyle}>
-      <div className={tabStyle}>
+    <div className={styles.container}>
+      <div className={styles.tab}>
         {MODE_ITEM_LIST.map((item, index) => (
           <button
             key={item.title}
@@ -78,18 +80,18 @@ function LandingMainSlider() {
         ))}
       </div>
 
-      <div className={sliderContainerStyle}>
+      <div className={styles.sliderContainer}>
         <ArrowButton onClick={moveToPrevPanel} direction="prev" disabled={isFirstPanel} />
         <ArrowButton onClick={moveToNextPanel} direction="next" disabled={isLastPanel} />
         <Flicking ref={flicking} {...sliderOptions}>
           {MODE_ITEM_LIST.map((item) => (
-            <div key={item.title} className={panelStyle}>
-              <div className={panelInnerStyle}>
-                <picture className={modeImageStyle}>
+            <div key={item.title} className={styles.sliderItem}>
+              <div className={styles.sliderItemInner}>
+                <picture className={styles.sliderItemImage}>
                   <source srcSet={item.webpImg} type="image/webp" />
                   <Image src={item.img} alt={item.title} width={1024} height={594} />
                 </picture>
-                <hgroup className={hgroupStyle}>
+                <hgroup className={styles.sliderItemHgroup}>
                   <h2>{item.title}</h2>
                   <p>{item.description}</p>
                 </hgroup>
@@ -103,94 +105,6 @@ function LandingMainSlider() {
 }
 
 export default LandingMainSlider;
-
-const sliderContainerStyle = css({
-  position: 'relative',
-  width: '1120px',
-  height: '800px',
-  _mobile: {
-    width: 'calc(100vw - 40px)',
-    height: 'auto',
-  },
-});
-
-const containerStyle = css({
-  width: 'fit-content',
-  height: 'fit-content',
-  margin: 'auto',
-  borderRadius: '16px',
-  background: 'rgba(255, 255, 255, 0.10)',
-});
-
-const tabStyle = css({
-  display: 'flex',
-  gap: '0',
-  alignItems: 'center',
-  justifyContent: 'center',
-  paddingTop: '40px',
-
-  '& button': {
-    padding: '4px 10px',
-    color: '#fff',
-    textStyle: 'glyph18.regular',
-    opacity: '0.5',
-
-    '&.active': {
-      opacity: '1',
-      textStyle: 'glyph18.bold',
-    },
-  },
-
-  _mobile: {
-    paddingTop: '26px',
-    '& button': {
-      padding: '2px 8px',
-      textStyle: 'glyph16.regular',
-      '&.active': {
-        textStyle: 'glyph16.bold',
-      },
-    },
-  },
-});
-
-const panelStyle = css({
-  width: 'fit-content',
-  height: 'fit-content',
-});
-
-const modeImageStyle = css({
-  padding: '0 24px',
-});
-
-const panelInnerStyle = css({
-  padding: '40px 40px 60px 40px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '40px',
-  _mobile: {
-    gap: '28px',
-    padding: '20px 20px 28px 20px',
-  },
-});
-
-const hgroupStyle = css({
-  padding: '0 20px',
-  color: '#fff',
-  textAlign: 'left',
-  '& h2': {
-    textStyle: 'glyph32.bold',
-    _mobile: {
-      textStyle: 'glyph18.bold',
-    },
-  },
-  '& p': {
-    marginTop: '8px',
-    textStyle: 'glyph18.regular',
-    _mobile: {
-      textStyle: 'glyph14.regular',
-    },
-  },
-});
 
 function ArrowButton({
   onClick,
