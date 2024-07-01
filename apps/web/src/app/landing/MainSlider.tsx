@@ -12,11 +12,13 @@ const MODE_ITEM_LIST = [
     description:
       'Line mode allows you to specify one of your pets to move within the specified width and height range.When using line mode, if you request the image in markdown, you cannot set width and height, so please use HTML format instead.',
     img: '/main/mode_demo-line.png',
+    webpImg: '/main/mode_demo-line.webp',
   },
   {
     title: 'Farm mode',
     description: 'Farm mode shows all your animals and additional information.',
     img: '/main/mode_demo-farm.png',
+    webpImg: '/main/mode_demo-farm.webp',
   },
 ];
 
@@ -81,7 +83,10 @@ function LandingMainSlider() {
           {MODE_ITEM_LIST.map((item) => (
             <div key={item.title} className={panelStyle}>
               <div className={panelInnerStyle}>
-                <Image src={item.img} alt={item.title} width={1024} height={594} />
+                <picture>
+                  <source srcSet={item.webpImg} type="image/webp" />
+                  <Image src={item.img} alt={item.title} width={1024} height={594} />
+                </picture>
                 <hgroup className={hgroupStyle}>
                   <h2>{item.title}</h2>
                   <p>{item.description}</p>
