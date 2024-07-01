@@ -17,6 +17,16 @@ export const GLYPH = {
       letterSpacing: '-0.3px',
     },
   },
+  glyph40: {
+    bold: {
+      fontFamily: 'Product Sans',
+      fontSize: '40px',
+      fontWeight: '700',
+      lineHeight: '120%',
+      letterSpacing: '-0.3px',
+    },
+  },
+
   glyph32: {
     bold: {
       fontFamily: 'Product Sans',

@@ -19,6 +19,11 @@ export default defineConfig({
       textStyles,
     },
   },
+  conditions: {
+    extend: {
+      mobile: '@media (max-width: 768px)',
+    },
+  },
 
   syntax: 'object-literal',
   jsxFramework: 'react',
