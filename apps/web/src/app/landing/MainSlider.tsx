@@ -12,11 +12,13 @@ const MODE_ITEM_LIST = [
     description:
       'Line mode allows you to specify one of your pets to move within the specified width and height range.When using line mode, if you request the image in markdown, you cannot set width and height, so please use HTML format instead.',
     img: '/main/mode_demo-line.png',
+    webpImg: '/main/mode_demo-line.webp',
   },
   {
     title: 'Farm mode',
     description: 'Farm mode shows all your animals and additional information.',
     img: '/main/mode_demo-farm.png',
+    webpImg: '/main/mode_demo-farm.webp',
   },
 ];
 
@@ -28,6 +30,8 @@ function LandingMainSlider() {
   const isLastPanel = currentPanelIndex === MODE_ITEM_LIST.length - 1;
 
   const onPanelIndexChange = (index: number) => {
+    if (!flicking.current) return;
+    if (flicking.current.animating) return;
     flicking.current?.moveTo(index);
   };
 
@@ -81,9 +85,10 @@ function LandingMainSlider() {
           {MODE_ITEM_LIST.map((item) => (
             <div key={item.title} className={panelStyle}>
               <div className={panelInnerStyle}>
-                <div className={modeImageStyle}>
+                <picture className={modeImageStyle}>
+                  <source srcSet={item.webpImg} type="image/webp" />
                   <Image src={item.img} alt={item.title} width={1024} height={594} />
-                </div>
+                </picture>
                 <hgroup className={hgroupStyle}>
                   <h2>{item.title}</h2>
                   <p>{item.description}</p>
@@ -171,6 +176,7 @@ const panelInnerStyle = css({
 const hgroupStyle = css({
   padding: '0 20px',
   color: '#fff',
+  textAlign: 'left',
   '& h2': {
     textStyle: 'glyph32.bold',
     _mobile: {
