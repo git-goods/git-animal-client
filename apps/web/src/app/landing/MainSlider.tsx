@@ -146,6 +146,7 @@ const panelInnerStyle = css({
 const hgroupStyle = css({
   padding: '0 20px',
   color: '#fff',
+  textAlign: 'left',
   '& h2': {
     textStyle: 'glyph32.bold',
   },

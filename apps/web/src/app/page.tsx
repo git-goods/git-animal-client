@@ -1,6 +1,4 @@
-import { css } from '_panda/css';
-
-import LandingMainSlider from './landing/MainSlider';
+import WelcomeSection from './landing/WelcomeSection';
 
 import '@egjs/react-flicking/dist/flicking.css';
 import '@egjs/react-flicking/dist/flicking-inline.css';
@@ -8,13 +6,7 @@ import '@egjs/react-flicking/dist/flicking-inline.css';
 export default function Home() {
   return (
     <div>
-      <section className={modeDemoSectionStyle}>
-        <LandingMainSlider />
-      </section>
+      <WelcomeSection />
     </div>
   );
 }
-
-const modeDemoSectionStyle = css({
-  backgroundColor: 'brand.green',
-});
