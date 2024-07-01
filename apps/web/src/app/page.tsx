@@ -1,3 +1,9 @@
+import WelcomeSection from './landing/WelcomeSection';
+
 export default function Home() {
-  return <div></div>;
+  return (
+    <div>
+      <WelcomeSection />
+    </div>
+  );
 }
