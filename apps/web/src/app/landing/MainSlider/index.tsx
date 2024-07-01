@@ -7,6 +7,7 @@ import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-f
 import Flicking from '@egjs/react-flicking';
 
 import * as styles from './MainSlider.style';
+import SliderItem from './SliderItem';
 
 const MODE_ITEM_LIST = [
   {
@@ -86,16 +87,7 @@ function LandingMainSlider() {
         <Flicking ref={flicking} {...sliderOptions}>
           {MODE_ITEM_LIST.map((item) => (
             <div key={item.title} className={styles.sliderItem}>
-              <div className={styles.sliderItemInner}>
-                <picture className={styles.sliderItemImage}>
-                  <source srcSet={item.webpImg} type="image/webp" />
-                  <Image src={item.img} alt={item.title} width={1024} height={594} />
-                </picture>
-                <hgroup className={styles.sliderItemHgroup}>
-                  <h2>{item.title}</h2>
-                  <p>{item.description}</p>
-                </hgroup>
-              </div>
+              <SliderItem item={item} />
             </div>
           ))}
         </Flicking>
