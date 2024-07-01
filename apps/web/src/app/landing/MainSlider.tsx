@@ -30,6 +30,8 @@ function LandingMainSlider() {
   const isLastPanel = currentPanelIndex === MODE_ITEM_LIST.length - 1;
 
   const onPanelIndexChange = (index: number) => {
+    if (!flicking.current) return;
+    if (flicking.current.animating) return;
     flicking.current?.moveTo(index);
   };
 
