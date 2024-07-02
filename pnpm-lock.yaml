@@ -30,9 +30,9 @@ importers:
       '@gitanimals/api':
         specifier: workspace:*
         version: link:../../packages/api
-      '@gitanimals/asset-fonts':
+      '@gitanimals/asset-font':
         specifier: workspace:*
-        version: link:../../packages/asset/fonts
+        version: link:../../packages/asset/font
       '@gitanimals/exception':
         specifier: workspace:*
         version: link:../../packages/exception
@@ -167,7 +167,7 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
 
-  packages/asset/fonts: {}
+  packages/asset/font: {}
 
   packages/eslint-config:
     devDependencies:

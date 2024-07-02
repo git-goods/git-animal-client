@@ -4,7 +4,7 @@ import ClientProvider from '@/components/ClientProvider';
 import FeedBack from '@/components/FeedBack/FeedBack';
 
 import './globals.css';
-import '@gitanimals/asset-fonts/product-sans/index.css';
+import '@gitanimals/asset-font/product-sans/index.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.gitanimals.org/'),
