@@ -27,6 +27,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@egjs/react-flicking':
+        specifier: ^4.11.3
+        version: 4.11.3
       '@gitanimals/api':
         specifier: workspace:*
         version: link:../../packages/api
@@ -1082,6 +1085,12 @@ packages:
   '@base2/pretty-print-object@1.0.1':
     resolution: {integrity: sha512-4iri8i1AqYHJE2DstZYkyEprg6Pq6sKx3xn5FpySk9sNhH7qN2LLlHJCfDTZRILNwQNPD7mATWM0TBui7uC1pA==}
 
+  '@cfcs/core@0.0.24':
+    resolution: {integrity: sha512-feB38qu+eDk0Pggh/yR7gjaNmvUYA2uCxHP3Pz2MLE4LZ/9jPdtu8bzCSI47yTEhWyZCF5Pk698hdz8IN2mTjA==}
+
+  '@cfcs/core@0.1.0':
+    resolution: {integrity: sha512-kvYX0RpL45XTHJ5sW7teNbKeAa7pK3nNqaJPoFfZDPTIBJOkTtRD3QhkBG+O3Hu69a8xeMoPvF6y/RtJ6JUOdA==}
+
   '@chromatic-com/storybook@1.5.0':
     resolution: {integrity: sha512-LkLKv7SWu/6kGep1ft2HA1T/cm14wU0zoW71gE4cZRcgUoRQJtyhITFTLHrjqAxz6bVqNgqzQtd5oBZ2nK3L3g==}
     engines: {node: '>=16.0.0', yarn: '>=1.22.18'}
@@ -1117,6 +1126,27 @@ packages:
   '@discoveryjs/json-ext@0.5.7':
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
     engines: {node: '>=10.0.0'}
+
+  '@egjs/agent@2.4.3':
+    resolution: {integrity: sha512-XvksSENe8wPeFlEVouvrOhKdx8HMniJ3by7sro2uPF3M6QqWwjzVcmvwoPtdjiX8O1lfRoLhQMp1a7NGlVTdIA==}
+
+  '@egjs/axes@3.9.0':
+    resolution: {integrity: sha512-V+HxHxEGmlu/0yJ9kqlj2doiJt1yVeROTy/0Qf+IaJ9hMabjzUgfYffGR+3atcRpejjGbcpAIiBrGbAkDVaLjg==}
+
+  '@egjs/component@3.0.5':
+    resolution: {integrity: sha512-cLcGizTrrUNA2EYE3MBmEDt2tQv1joVP1Q3oDisZ5nw0MZDx2kcgEXM+/kZpfa/PAkFvYVhRUZwytIQWoN3V/w==}
+
+  '@egjs/flicking@4.11.3':
+    resolution: {integrity: sha512-90IbXMwdiNL4+Yrvfgi4zYk9XKLbjVaVLus5lIl28twQiT/KV3W9ypJOJEK7U5U9oS2q7dn8OJZolD8JNOsxag==}
+
+  '@egjs/imready@1.4.1':
+    resolution: {integrity: sha512-JIOBs4lB7FYdsKi5uvz2j3SObX8eShtZjtqlOH41tm185aJOQZwiKBK8+V4MxzG4X6DqVhpdN8UcuVwBbElfsg==}
+
+  '@egjs/list-differ@1.0.1':
+    resolution: {integrity: sha512-OTFTDQcWS+1ZREOdCWuk5hCBgYO4OsD30lXcOCyVOAjXMhgL5rBRDnt/otb6Nz8CzU0L/igdcaQBDLWc4t9gvg==}
+
+  '@egjs/react-flicking@4.11.3':
+    resolution: {integrity: sha512-OsRHUDlFR1z0FVRB+ljf7d+uAyRV0weVU4ckDshgKwHfb4htLJeGzc3zPUQyKIIEQNzYKIIGiKoCqsF5Hk2ahg==}
 
   '@emnapi/runtime@1.2.0':
     resolution: {integrity: sha512-bV21/9LQmcQeCPEg3BDFtvwL6cwiTMksYNWQQ4KOxCZikEGalWtenoZ0wCiukJINlGCIi2KXx01g4FoH/LxpzQ==}
@@ -8072,6 +8102,14 @@ snapshots:
 
   '@base2/pretty-print-object@1.0.1': {}
 
+  '@cfcs/core@0.0.24':
+    dependencies:
+      '@egjs/component': 3.0.5
+
+  '@cfcs/core@0.1.0':
+    dependencies:
+      '@egjs/component': 3.0.5
+
   '@chromatic-com/storybook@1.5.0(react@18.2.0)':
     dependencies:
       chromatic: 11.5.4
@@ -8113,6 +8151,36 @@ snapshots:
       postcss-selector-parser: 6.1.0
 
   '@discoveryjs/json-ext@0.5.7': {}
+
+  '@egjs/agent@2.4.3': {}
+
+  '@egjs/axes@3.9.0':
+    dependencies:
+      '@cfcs/core': 0.1.0
+      '@egjs/agent': 2.4.3
+      '@egjs/component': 3.0.5
+
+  '@egjs/component@3.0.5': {}
+
+  '@egjs/flicking@4.11.3':
+    dependencies:
+      '@egjs/axes': 3.9.0
+      '@egjs/component': 3.0.5
+      '@egjs/imready': 1.4.1
+      '@egjs/list-differ': 1.0.1
+
+  '@egjs/imready@1.4.1':
+    dependencies:
+      '@cfcs/core': 0.0.24
+      '@egjs/component': 3.0.5
+
+  '@egjs/list-differ@1.0.1': {}
+
+  '@egjs/react-flicking@4.11.3':
+    dependencies:
+      '@egjs/component': 3.0.5
+      '@egjs/flicking': 4.11.3
+      '@egjs/list-differ': 1.0.1
 
   '@emnapi/runtime@1.2.0':
     dependencies:

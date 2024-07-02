@@ -3,6 +3,8 @@ import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { Button } from '@gitanimals/ui-panda';
 
+import LandingMainSlider from './MainSlider';
+
 function WelcomeSection() {
   return (
     <section className={sectionStyle}>
@@ -22,6 +24,9 @@ function WelcomeSection() {
         <source srcSet="/main/section1_bg-pc.png" type="image/png" />
         <img src="/main/section1_bg-pc.png" alt="section background" />
       </picture>
+      <div className={sliderContainerStyle}>
+        <LandingMainSlider />
+      </div>
     </section>
   );
 }
@@ -92,4 +97,8 @@ const bgStyle = css({
     height: '100%',
     objectFit: 'cover',
   },
+});
+
+const sliderContainerStyle = css({
+  marginTop: '80px',
 });
