@@ -1,0 +1,8 @@
+{
+  "name": "@gitanimals/asset-font",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    "product-sans/*.css"
+  ]
+}
