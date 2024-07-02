@@ -85,7 +85,7 @@ function LandingMainSlider() {
           {MODE_ITEM_LIST.map((item) => (
             <div key={item.title} className={panelStyle}>
               <div className={panelInnerStyle}>
-                <picture>
+                <picture className={modeImageStyle}>
                   <source srcSet={item.webpImg} type="image/webp" />
                   <Image src={item.img} alt={item.title} width={1024} height={594} />
                 </picture>
@@ -108,13 +108,16 @@ const sliderContainerStyle = css({
   position: 'relative',
   width: '1120px',
   height: '800px',
+  _mobile: {
+    width: 'calc(100vw - 40px)',
+    height: 'auto',
+  },
 });
 
 const containerStyle = css({
   width: 'fit-content',
   height: 'fit-content',
   margin: 'auto',
-
   borderRadius: '16px',
   background: 'rgba(255, 255, 255, 0.10)',
 });
@@ -129,11 +132,23 @@ const tabStyle = css({
   '& button': {
     padding: '4px 10px',
     color: '#fff',
-    textStyle: 'glyph18.bold',
+    textStyle: 'glyph18.regular',
     opacity: '0.5',
 
     '&.active': {
       opacity: '1',
+      textStyle: 'glyph18.bold',
+    },
+  },
+
+  _mobile: {
+    paddingTop: '26px',
+    '& button': {
+      padding: '2px 8px',
+      textStyle: 'glyph16.regular',
+      '&.active': {
+        textStyle: 'glyph16.bold',
+      },
     },
   },
 });
@@ -143,11 +158,19 @@ const panelStyle = css({
   height: 'fit-content',
 });
 
+const modeImageStyle = css({
+  padding: '0 24px',
+});
+
 const panelInnerStyle = css({
   padding: '40px 40px 60px 40px',
   display: 'flex',
   flexDirection: 'column',
   gap: '40px',
+  _mobile: {
+    gap: '28px',
+    padding: '20px 20px 28px 20px',
+  },
 });
 
 const hgroupStyle = css({
@@ -156,9 +179,16 @@ const hgroupStyle = css({
   textAlign: 'left',
   '& h2': {
     textStyle: 'glyph32.bold',
+    _mobile: {
+      textStyle: 'glyph18.bold',
+    },
   },
   '& p': {
+    marginTop: '8px',
     textStyle: 'glyph18.regular',
+    _mobile: {
+      textStyle: 'glyph14.regular',
+    },
   },
 });
 
@@ -179,6 +209,12 @@ function ArrowButton({
         css({
           rotate: direction === 'prev' ? '180deg' : '0deg',
           cursor: disabled ? 'not-allowed' : 'pointer',
+          width: disabled ? '36px' : '40px',
+          height: disabled ? '36px' : '40px',
+          _mobile: {
+            width: disabled ? '24px' : '26px',
+            height: disabled ? '24px' : '26px',
+          },
         }),
       )}
     >
@@ -196,8 +232,34 @@ const arrowStyle = css({
   top: '0',
   bottom: '0',
   margin: 'auto',
+  zIndex: '2', // TODO : zIndex theme 적용
+
+  '& img': {
+    width: '100%',
+    height: '100%',
+  },
+
+  _mobile: {
+    bottom: '191px',
+  },
 });
 
-const prevArrowStyle = cx(arrowStyle, css({ left: '-62px' }));
+const prevArrowStyle = cx(
+  arrowStyle,
+  css({
+    left: '-62px',
+    _mobile: {
+      left: '8px',
+    },
+  }),
+);
 
-const nextArrowStyle = cx(arrowStyle, css({ right: '-62px' }));
+const nextArrowStyle = cx(
+  arrowStyle,
+  css({
+    right: '-62px',
+    _mobile: {
+      right: '8px',
+    },
+  }),
+);
