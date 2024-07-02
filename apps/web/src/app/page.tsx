@@ -1,3 +1,4 @@
+import AvailablePetSection from './landing/AvailablePetSection/AvailablePetSection';
 import WelcomeSection from './landing/WelcomeSection';
 
 import '@egjs/react-flicking/dist/flicking.css';
@@ -7,6 +8,7 @@ export default function Home() {
   return (
     <div>
       <WelcomeSection />
+      <AvailablePetSection />
     </div>
   );
 }
