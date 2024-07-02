@@ -3,21 +3,25 @@ import { Button } from '@gitanimals/ui-panda';
 
 import * as styles from './AvailablePetSection.style';
 
+const TOTAL_USERS = 550;
+const TOTAL_ADOPTED_PETS = 950;
+const REGISTERED_PETS = 3400;
+
 function AvailablePetSection() {
   return (
     <section className={styles.container}>
       <h2 className={styles.heading}>50+ Available Pets</h2>
       <div className={styles.infoContainer}>
         <div className={styles.infoItem}>
-          <p>550+</p>
+          <p>{TOTAL_USERS}+</p>
           <p>Total Users</p>
         </div>
         <div className={styles.infoItem}>
-          <p>950+</p>
+          <p>{TOTAL_ADOPTED_PETS}+</p>
           <p>Total Adopted Pets</p>
         </div>
         <div className={styles.infoItem}>
-          <p>3400+</p>
+          <p>{REGISTERED_PETS}+</p>
           <p>Registered Pets for Adoption</p>
         </div>
       </div>
