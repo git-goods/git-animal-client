@@ -24,3 +24,5 @@ export const ISSUE_LABEL: Record<
     color: '#FFCC91',
   },
 } as const;
+
+export const MAINTAINER = ['sumi-0011', 'hyesungoh', 'devxb'];
