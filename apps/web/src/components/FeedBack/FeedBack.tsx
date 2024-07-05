@@ -23,9 +23,10 @@ function FeedBack() {
 
   const onSubmit = () => {
     const username = userData?.username ?? '';
+    console.log('username: ', username);
 
     mutate(
-      { ...content, assignees: [username] },
+      { ...content, assignees: [username, 'sumi-0011', 'hyesungoh'] },
       {
         onSuccess() {
           setIsOpen(false);
