@@ -60,10 +60,10 @@ export default AnimalSliderContainer;
 
 const sliderContainer = css({
   position: 'relative',
-  width: '1120px',
-  height: '1024px',
+  width: '100%',
+  height: '100%',
   _mobile: {
-    width: 'calc(100vw - 40px)',
+    width: '100%',
     height: 'auto',
   },
 });
