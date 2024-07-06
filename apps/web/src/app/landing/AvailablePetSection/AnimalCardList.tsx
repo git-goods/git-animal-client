@@ -6,7 +6,7 @@ import AnimalCard from '@/components/AnimalCard';
 const ANIMAL_LIST = [
   {
     type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '10%',
+    dropRate: '0%',
   },
   {
     type: 'LITTLE_CHICK_SUNGLASSES',
@@ -14,15 +14,15 @@ const ANIMAL_LIST = [
   },
   {
     type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '33%',
+    dropRate: '0.02%',
   },
   {
     type: 'LITTLE_CHICK',
-    dropRate: '24%',
+    dropRate: '0.01%',
   },
   {
     type: 'GOBLIN_BAG',
-    dropRate: '10%',
+    dropRate: '0.13%',
   },
   {
     type: 'LITTLE_CHICK_SUNGLASSES',
