@@ -7,6 +7,7 @@ import { css, cx } from '_panda/css';
 import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
 
+// TODO: 후에 공통으로 사용할 수 있을 것 같다.
 function AnimalSliderContainer({ children }: { children: React.ReactNode }) {
   const flicking = useRef<Flicking | null>(null);
 
