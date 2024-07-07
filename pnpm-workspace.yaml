@@ -3,3 +3,4 @@ packages:
   - 'packages/*'
   - 'packages/ui/*'
   - 'packages/util/*'
+  - 'packages/asset/*'
