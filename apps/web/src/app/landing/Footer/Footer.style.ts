@@ -30,7 +30,8 @@ const defaultContentWrapper: SystemStyleObject = {
 };
 
 export const teamContentWrapper = css(defaultContentWrapper, {
-  bg: 'blue',
+  display: 'flex',
+  gap: 12,
 });
 
 export const repoContentWrapper = css(defaultContentWrapper, {
