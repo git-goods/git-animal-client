@@ -1,4 +1,4 @@
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { flex, grid } from '_panda/patterns';
 
 export const container = flex({
@@ -7,10 +7,25 @@ export const container = flex({
   gap: '60px',
   alignItems: 'center',
   justifyContent: 'center',
-  background: 'black',
+  position: 'relative',
+  background: '#171717',
 
   _mobile: {
     padding: '80px 0',
+    gap: '40px',
+  },
+});
+
+export const content = flex({
+  position: 'relative',
+  zIndex: 1,
+  flexDirection: 'column',
+  gap: '60px',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: '#171717',
+
+  _mobile: {
     gap: '40px',
   },
 });
@@ -64,3 +79,24 @@ export const buttonWrapper = css({
     paddingTop: 0,
   },
 });
+
+const bgPicture = css({
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  zIndex: 0,
+});
+
+export const bgPictureTop = cx(
+  bgPicture,
+  css({
+    top: 0,
+  }),
+);
+
+export const bgPictureBottom = cx(
+  bgPicture,
+  css({
+    bottom: 0,
+  }),
+);
