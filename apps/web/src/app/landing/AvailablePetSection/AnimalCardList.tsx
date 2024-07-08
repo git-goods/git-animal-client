@@ -1,7 +1,7 @@
 import React from 'react';
 import { grid } from '_panda/patterns';
 
-import AnimalCard from '@/components/AnimalCard';
+import { AnimalCard } from '@/components/AnimalCard';
 
 const ANIMAL_LIST = [
   {
