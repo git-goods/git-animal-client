@@ -18,6 +18,7 @@
     "@gitanimals/api": "workspace:*",
     "@gitanimals/exception": "workspace:*",
     "@gitanimals/ui-panda": "workspace:*",
+    "@gitanimals/asset-font": "workspace:*",
     "@tanstack/react-query": "^5.32.0",
     "axios": "^1.6.8",
     "framer-motion": "^11.1.7",

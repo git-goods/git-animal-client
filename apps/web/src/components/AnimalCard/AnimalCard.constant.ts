@@ -1,11 +1,13 @@
-export enum AnimalTier {
-  EX = 'EX',
-  S_PLUS = 'S_PLUS',
-  A_PLUS = 'A_PLUS',
-  B_MINUS = 'B_MINUS',
-}
+export const AnimalTier = {
+  EX: 'EX',
+  S_PLUS: 'S_PLUS',
+  A_PLUS: 'A_PLUS',
+  B_MINUS: 'B_MINUS',
+} as const;
 
-export const ANIMAL_TIER_INFO: Record<AnimalTier, { min: number; max: number; label: string }> = {
+export type AnimalTierType = (typeof AnimalTier)[keyof typeof AnimalTier];
+
+export const ANIMAL_TIER_INFO: Record<AnimalTierType, { min: number; max: number; label: string }> = {
   EX: {
     min: 0,
     max: 0,

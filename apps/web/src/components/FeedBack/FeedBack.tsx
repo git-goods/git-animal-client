@@ -12,7 +12,7 @@ import Input from '@/components/Input';
 import Select from '@/components/Select';
 import TextArea from '@/components/TextArea';
 
-import { ISSUE_LABEL } from './FeedBack.constants';
+import { ISSUE_LABEL, MAINTAINER } from './FeedBack.constants';
 import { CloseIcon, FeedBackCloseIcon, FeedBackOpenIcon } from './Icons';
 
 function FeedBack() {
@@ -23,9 +23,10 @@ function FeedBack() {
 
   const onSubmit = () => {
     const username = userData?.username ?? '';
+    // TODO: username 없는지 있는지 로깅
 
     mutate(
-      { ...content, assignees: [username] },
+      { ...content, assignees: [username, ...MAINTAINER] },
       {
         onSuccess() {
           setIsOpen(false);

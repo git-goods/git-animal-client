@@ -4,6 +4,7 @@ import ClientProvider from '@/components/ClientProvider';
 import FeedBack from '@/components/FeedBack/FeedBack';
 
 import './globals.css';
+import '@gitanimals/asset-font/product-sans/index.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.gitanimals.org/'),
@@ -35,7 +36,6 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  // usePageTrack();
   return (
     <html lang="en">
       <body>
