@@ -1,4 +1,4 @@
-import AnimalCard from '@/components/AnimalCard';
+import { AnimalCard } from '@/components/AnimalCard';
 
 import * as styles from './AnimalSlider.style';
 import AnimalSliderContainer from './AnimalSliderContainer';
