@@ -19,10 +19,10 @@ function AnimalCard(props: AnimalCardProps) {
   return (
     <div className={styles.container}>
       <div className={styles.bgImage}>
-        <Image src={`${ANIMAL_CARD_IMAGE_BASE_URL}/card-bg-${tier}.png`} alt={tier} width={265} height={328} />
+        <Image src={`${ANIMAL_CARD_IMAGE_BASE_URL}/card-bg-${tier}.webp`} alt={tier} width={265} height={328} />
       </div>
       <div className={styles.thumbnailImage}>
-        <Image src={`${ANIMAL_CARD_IMAGE_BASE_URL}/card-thumbnail-${tier}.png`} alt={tier} width={233} height={233} />
+        <Image src={`${ANIMAL_CARD_IMAGE_BASE_URL}/card-thumbnail-${tier}.webp`} alt={tier} width={233} height={233} />
       </div>
       <picture className={styles.thumbnailImage}>
         <Image src={getPersonaImage(props.type)} alt={props.type} width={233} height={233} />
