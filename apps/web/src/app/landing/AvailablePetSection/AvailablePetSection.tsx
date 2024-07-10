@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from '@gitanimals/ui-panda';
 
+import AnimalCardList from './AnimalCardList';
 import * as styles from './AvailablePetSection.style';
 
 const TOTAL_USERS = 550;
@@ -35,6 +36,10 @@ function AvailablePetSection() {
             <p>Registered Pets for Adoption</p>
           </div>
         </div>
+        <div>
+          <AnimalCardList />
+        </div>
+
         <div className={styles.buttonWrapper}>
           <Button size="m" className="mobile">
             Show More Pets
