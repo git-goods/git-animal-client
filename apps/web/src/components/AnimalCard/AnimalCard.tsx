@@ -28,9 +28,9 @@ function AnimalCard(props: AnimalCardProps) {
       <picture className={styles.thumbnailImage}>
         <Image src={getPersonaImage(props.type)} alt={props.type} width={233} height={233} />
       </picture>
-      <div className={styles.infoWrapper}>
-        <p className={styles.typeText}>{getAnimalTypeLabel(props.type)}</p>
-        <p className={styles.ratingText}>{props.dropRate}</p>
+      <div className={cx('animal-card-info', styles.infoWrapper)}>
+        <p className={cx('animal-card-type', styles.typeText)}>{getAnimalTypeLabel(props.type)}</p>
+        <p className={cx('animal-card-rating', styles.ratingText)}>{props.dropRate}</p>
       </div>
     </div>
   );

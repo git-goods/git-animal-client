@@ -4,6 +4,7 @@ import React, { Children, useState } from 'react';
 import { useRef } from 'react';
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
+import { Fade, Perspective } from '@egjs/flicking-plugins';
 import type { ChangedEvent, FlickingOptions, FlickingProps, MoveEvent, Panel, ReadyEvent } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
 
@@ -60,12 +61,13 @@ function AnimalSliderContainerMobile({ children }: { children: React.ReactNode }
     });
   };
 
+  const _plugins = [new Perspective({ rotate: 0.5, scale: 0.2 }), new Fade()];
   return (
     <div>
       <div className={sliderContainer}>
         <ArrowButton onClick={moveToPrevPanel} direction="prev" disabled={isFirstPanel} />
         <ArrowButton onClick={moveToNextPanel} direction="next" disabled={isLastPanel} />
-        <Flicking ref={flicking} {...sliderOptions} onMove={updateTransform} onReady={updateTransform}>
+        <Flicking ref={flicking} {...sliderOptions} plugins={_plugins}>
           {children}
         </Flicking>
       </div>
