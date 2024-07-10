@@ -146,19 +146,32 @@ function AnimalSlider() {
 
   return (
     <div className={styles.container}>
-      <AnimalSliderContainer>
-        {animalList.map((animalList: Animal[], idx) => {
-          return (
-            <div key={idx}>
-              <div className={styles.cardContainer}>
-                {animalList.map((animal: Animal, index: number) => (
-                  <AnimalCard key={index} type={animal.type} dropRate={animal.dropRate} />
-                ))}
+      <div className={styles.showDesktop}>
+        <AnimalSliderContainer>
+          {animalList.map((animalList: Animal[], idx) => {
+            return (
+              <div key={idx}>
+                <div className={styles.cardContainer}>
+                  {animalList.map((animal: Animal, index: number) => (
+                    <AnimalCard key={index} type={animal.type} dropRate={animal.dropRate} />
+                  ))}
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </AnimalSliderContainer>
+            );
+          })}
+        </AnimalSliderContainer>
+      </div>
+      <div className={styles.showMobile}>
+        <AnimalSliderContainer>
+          {ANIMAL_LIST.map((animal: Animal, idx) => {
+            return (
+              <div key={idx}>
+                <AnimalCard type={animal.type} dropRate={animal.dropRate} />
+              </div>
+            );
+          })}
+        </AnimalSliderContainer>
+      </div>
     </div>
   );
 }
