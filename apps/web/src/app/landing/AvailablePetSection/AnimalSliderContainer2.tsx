@@ -4,7 +4,7 @@ import React, { Children, useState } from 'react';
 import { useRef } from 'react';
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
-import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
+import type { ChangedEvent, FlickingOptions, FlickingProps, MoveEvent, Panel, ReadyEvent } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
 
 import { sliderContainer } from '../MainSlider/MainSlider.style';
@@ -45,37 +45,15 @@ function AnimalSliderContainer2({ children }: { children: React.ReactNode }) {
     onChanged: onPanelChanged,
     align: 'center',
   };
-  // '& .animal-card-container': {
-  //   zIndex: 0,
-  //   transform: 'scale(0.8) translateX(0px)',
-  //   transition: 'transform 0.5s',
-  // },
-  // '& .prev .animal-card-container': {
-  //   transform: 'scale(0.8) translateX(20vw)',
-  // },
-  // '& .next .animal-card-container': {
-  //   transform: 'scale(0.8) translateX(-20vw)',
-  // },
 
-  // '& .current .animal-card-container': {
-  //   zIndex: 2,
-  //   transform: 'scale(1) translateX(0px)',
-  // },
-
-  // Ex
-  // const rotateVal = -panel.progress * 20;
-  // const sinRot = Math.sin(Math.abs(rotateVal * Math.PI / 180));
-  // const depth = 150 * sinRot * sinRot;
-  // panel.element.style.transform = `translateZ(-${depth}px) rotateX(${rotateVal}deg)`;
-
-  const updateTransform = (e: any) => {
-    e.currentTarget.panels.forEach((panel: any) => {
+  const updateTransform = (e: MoveEvent<Flicking> | ReadyEvent<Flicking>) => {
+    e.currentTarget.panels.forEach((panel: Panel) => {
       const progress = Math.abs(panel.progress);
       const scale = 0.8 + 0.2 * (1 - progress);
       const translateX = panel.progress === 0 ? 0 : panel.progress > 0 ? `${-20 * progress}vw` : `${20 * progress}vw`;
 
       panel.element.style.transform = `scale(${scale}) translateX(${translateX})`;
-      panel.element.style.zIndex = progress < 0.8 ? 10 : 1;
+      panel.element.style.zIndex = progress < 0.8 ? '10' : '1';
     });
   };
 
