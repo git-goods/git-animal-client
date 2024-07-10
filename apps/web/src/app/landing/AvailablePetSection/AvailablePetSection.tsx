@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from '@gitanimals/ui-panda';
 
-import AnimalCardList from './AnimalCardList';
+import AnimalSlider from './AnimalSlider';
 import * as styles from './AvailablePetSection.style';
 
 const TOTAL_USERS = 550;
@@ -37,7 +37,7 @@ function AvailablePetSection() {
           </div>
         </div>
         <div>
-          <AnimalCardList />
+          <AnimalSlider />
         </div>
 
         <div className={styles.buttonWrapper}>
