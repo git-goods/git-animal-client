@@ -7,6 +7,8 @@ import { css, cx } from '_panda/css';
 import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
 
+import { sliderContainer } from '../MainSlider/MainSlider.style';
+
 // TODO: 후에 공통으로 사용할 수 있을 것 같다.
 function AnimalSliderContainer2({ children }: { children: React.ReactNode }) {
   const flicking = useRef<Flicking | null>(null);
@@ -68,21 +70,12 @@ function AnimalSliderContainer2({ children }: { children: React.ReactNode }) {
 
   const updateTransform = (e: any) => {
     e.currentTarget.panels.forEach((panel: any) => {
-      // scale 0.8 ~ 1
-      // z-index 0 ~ 2
-      // 왼쪽은 translateX(20vw), 오른쪽은 translateX(-20vw)
-
-      // 현재 보여지는 panel인 currentPanelIndex 과 최대 1 차이나는 panel들만 계산
-      if (Math.abs(currentPanelIndex - panel.index) > 1) return;
-
       const progress = Math.abs(panel.progress);
       const scale = 0.8 + 0.2 * (1 - progress);
-      const zIndex = 2 - progress * 2;
-      const translateX = progress > 0 ? `${-20 * progress}vw` : `${20 * progress}vw`;
-      console.log('panel: ', panel.index, translateX);
+      const translateX = panel.progress === 0 ? 0 : panel.progress > 0 ? `${-20 * progress}vw` : `${20 * progress}vw`;
 
       panel.element.style.transform = `scale(${scale}) translateX(${translateX})`;
-      panel.element.style.zIndex = zIndex;
+      panel.element.style.zIndex = progress < 0.8 ? 10 : 1;
     });
   };
 
@@ -91,7 +84,7 @@ function AnimalSliderContainer2({ children }: { children: React.ReactNode }) {
       <div className={sliderContainer}>
         <ArrowButton onClick={moveToPrevPanel} direction="prev" disabled={isFirstPanel} />
         <ArrowButton onClick={moveToNextPanel} direction="next" disabled={isLastPanel} />
-        <Flicking ref={flicking} {...sliderOptions} onMove={updateTransform}>
+        <Flicking ref={flicking} {...sliderOptions} onMove={updateTransform} onReady={updateTransform}>
           {children}
         </Flicking>
       </div>
@@ -100,16 +93,6 @@ function AnimalSliderContainer2({ children }: { children: React.ReactNode }) {
 }
 
 export default AnimalSliderContainer2;
-
-const sliderContainer = css({
-  position: 'relative',
-  width: '100%',
-  height: '100%',
-  _mobile: {
-    width: '100%',
-    height: 'auto',
-  },
-});
 
 function ArrowButton({
   onClick,

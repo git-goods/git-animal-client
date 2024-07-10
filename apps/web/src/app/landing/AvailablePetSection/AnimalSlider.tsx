@@ -169,20 +169,7 @@ function AnimalSlider() {
           styles.showMobile,
           css({
             '& .animal-card-container': {
-              zIndex: 0,
-              transform: 'scale(0.8) translateX(0px)',
-              transition: 'transform 0.5s',
-            },
-            '& .prev .animal-card-container': {
-              transform: 'scale(0.8) translateX(20vw)',
-            },
-            '& .next .animal-card-container': {
-              transform: 'scale(0.8) translateX(-20vw)',
-            },
-
-            '& .current .animal-card-container': {
-              zIndex: 2,
-              transform: 'scale(1) translateX(0px)',
+              transition: 'transform 0.5s, z-index 0.1s',
             },
           }),
         )}
