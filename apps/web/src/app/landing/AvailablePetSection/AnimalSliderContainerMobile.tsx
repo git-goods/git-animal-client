@@ -9,8 +9,7 @@ import Flicking from '@egjs/react-flicking';
 
 import { sliderContainer } from '../MainSlider/MainSlider.style';
 
-// TODO: 후에 공통으로 사용할 수 있을 것 같다.
-function AnimalSliderContainer2({ children }: { children: React.ReactNode }) {
+function AnimalSliderContainerMobile({ children }: { children: React.ReactNode }) {
   const flicking = useRef<Flicking | null>(null);
 
   const [currentPanelIndex, setCurrentPanelIndex] = useState(0);
@@ -52,8 +51,12 @@ function AnimalSliderContainer2({ children }: { children: React.ReactNode }) {
       const scale = 0.8 + 0.2 * (1 - progress);
       const translateX = panel.progress === 0 ? 0 : panel.progress > 0 ? `${-20 * progress}vw` : `${20 * progress}vw`;
 
+      const isActivePanel = progress < 0.8;
+
       panel.element.style.transform = `scale(${scale}) translateX(${translateX})`;
-      panel.element.style.zIndex = progress < 0.8 ? '10' : '1';
+      panel.element.style.zIndex = isActivePanel ? '10' : '1';
+      panel.element.style.opacity = isActivePanel ? '1' : '0.4';
+      panel.element.style.transition = isActivePanel ? '' : 'opacity 0.3s';
     });
   };
 
@@ -70,7 +73,7 @@ function AnimalSliderContainer2({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default AnimalSliderContainer2;
+export default AnimalSliderContainerMobile;
 
 function ArrowButton({
   onClick,
@@ -120,7 +123,7 @@ const arrowStyle = css({
   },
 
   _mobile: {
-    bottom: '191px',
+    bottom: '0',
   },
 });
 
