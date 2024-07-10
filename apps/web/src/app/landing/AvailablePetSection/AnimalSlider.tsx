@@ -1,7 +1,10 @@
+import { css, cx } from '_panda/css';
+
 import { AnimalCard } from '@/components/AnimalCard';
 
 import * as styles from './AnimalSlider.style';
 import AnimalSliderContainer from './AnimalSliderContainer';
+import AnimalSliderContainer2 from './AnimalSliderContainer2';
 
 // TODO: api 연동 후 데이터 받아오기
 const ANIMAL_LIST = [
@@ -161,16 +164,40 @@ function AnimalSlider() {
           })}
         </AnimalSliderContainer>
       </div>
-      <div className={styles.showMobile}>
-        <AnimalSliderContainer>
-          {ANIMAL_LIST.map((animal: Animal, idx) => {
+      <div
+        className={cx(
+          styles.showMobile,
+          css({
+            '& .animal-card-container': {
+              zIndex: 0,
+              transform: 'scale(0.8) translateX(0px)',
+              transition: 'transform 0.5s',
+            },
+            '& .prev .animal-card-container': {
+              transform: 'scale(0.8) translateX(20vw)',
+            },
+            '& .next .animal-card-container': {
+              transform: 'scale(0.8) translateX(-20vw)',
+            },
+
+            '& .current .animal-card-container': {
+              zIndex: 2,
+              transform: 'scale(1) translateX(0px)',
+            },
+          }),
+        )}
+      >
+        <AnimalSliderContainer2>
+          {ANIMAL_LIST.map((animalList: Animal, idx) => {
             return (
-              <div key={idx}>
-                <AnimalCard type={animal.type} dropRate={animal.dropRate} />
+              // <div key={idx} className="card-wrapper">
+              <div key={idx} className={styles.cardContainerMobile}>
+                <AnimalCard type={animalList.type} dropRate={animalList.dropRate} />
               </div>
+              // </div>
             );
           })}
-        </AnimalSliderContainer>
+        </AnimalSliderContainer2>
       </div>
     </div>
   );

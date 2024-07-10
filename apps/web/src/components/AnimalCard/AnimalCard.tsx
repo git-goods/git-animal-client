@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { cx } from '_panda/css';
 
 import { getPersonaImage } from '@/utils/image';
 
@@ -17,7 +18,7 @@ function AnimalCard(props: AnimalCardProps) {
   const tier = getAnimalTierInfo(Number(props.dropRate.replace('%', '')));
 
   return (
-    <div className={styles.container}>
+    <div className={cx('animal-card-container', styles.container)}>
       <div className={styles.bgImage}>
         <Image src={`${ANIMAL_CARD_IMAGE_BASE_URL}/card-bg-${tier}.webp`} alt={tier} width={265} height={328} />
       </div>

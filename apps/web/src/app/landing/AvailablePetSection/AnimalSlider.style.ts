@@ -7,6 +7,8 @@ export const container = css({
 
   _mobile: {
     width: 'calc(100vw - 40px)',
+    height: '325px',
+    position: 'relative',
   },
 });
 
@@ -33,7 +35,18 @@ export const cardContainer = grid({
   height: '1024px',
   padding: '0 1px',
   display: 'grid',
-  _mobile: {
-    display: 'none',
-  },
+  // _mobile: {
+  //   display: 'none',
+  // },
+});
+
+export const cardContainerMobile = grid({
+  // gap: 20,
+  width: '256px',
+  height: '325px',
+  padding: '0 1px',
+  // display: 'grid',
+  // _mobile: {
+  //   display: 'none',
+  // },
 });
