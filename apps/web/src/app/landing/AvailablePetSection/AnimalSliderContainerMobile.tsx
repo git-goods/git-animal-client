@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import { Fade, Perspective } from '@egjs/flicking-plugins';
-import type { ChangedEvent, FlickingOptions, FlickingProps, MoveEvent, Panel, ReadyEvent } from '@egjs/react-flicking';
+import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
 
 import { sliderContainer } from '../MainSlider/MainSlider.style';
@@ -40,34 +40,20 @@ function AnimalSliderContainerMobile({ children }: { children: React.ReactNode }
   const onPanelChanged = (e: ChangedEvent<Flicking>) => {
     setCurrentPanelIndex(e.index);
   };
+  const _plugins = [new Perspective({ rotate: 0.5, scale: 0.2 }), new Fade()];
 
   const sliderOptions: Partial<FlickingProps & FlickingOptions> = {
     onChanged: onPanelChanged,
     align: 'center',
+    plugins: _plugins,
   };
 
-  const updateTransform = (e: MoveEvent<Flicking> | ReadyEvent<Flicking>) => {
-    e.currentTarget.panels.forEach((panel: Panel) => {
-      const progress = Math.abs(panel.progress);
-      const scale = 0.8 + 0.2 * (1 - progress);
-      const translateX = panel.progress === 0 ? 0 : panel.progress > 0 ? `${-20 * progress}vw` : `${20 * progress}vw`;
-
-      const isActivePanel = progress < 0.8;
-
-      panel.element.style.transform = `scale(${scale}) translateX(${translateX})`;
-      panel.element.style.zIndex = isActivePanel ? '10' : '1';
-      panel.element.style.opacity = isActivePanel ? '1' : '0.4';
-      panel.element.style.transition = isActivePanel ? '' : 'opacity 0.3s';
-    });
-  };
-
-  const _plugins = [new Perspective({ rotate: 0.5, scale: 0.2 }), new Fade()];
   return (
     <div>
       <div className={sliderContainer}>
         <ArrowButton onClick={moveToPrevPanel} direction="prev" disabled={isFirstPanel} />
         <ArrowButton onClick={moveToNextPanel} direction="next" disabled={isLastPanel} />
-        <Flicking ref={flicking} {...sliderOptions} plugins={_plugins}>
+        <Flicking ref={flicking} {...sliderOptions}>
           {children}
         </Flicking>
       </div>
