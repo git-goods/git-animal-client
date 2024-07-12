@@ -3,6 +3,7 @@ import { flex } from '_panda/patterns';
 
 export const container = css({
   position: 'relative',
+  height: '100%',
 });
 
 export const bgImage = css({

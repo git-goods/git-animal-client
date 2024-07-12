@@ -2,6 +2,7 @@ import { AnimalCard } from '@/components/AnimalCard';
 
 import * as styles from './AnimalSlider.style';
 import AnimalSliderContainer from './AnimalSliderContainer';
+import AnimalSliderContainerMobile from './AnimalSliderContainerMobile';
 
 // TODO: api 연동 후 데이터 받아오기
 const ANIMAL_LIST = [
@@ -144,21 +145,35 @@ function AnimalSlider() {
     return acc;
   }, []);
 
+  // TODO: 화면 크기가 바뀌면 (breakpoint에 도달하면 slider 다시 렌더링)
   return (
     <div className={styles.container}>
-      <AnimalSliderContainer>
-        {animalList.map((animalList: Animal[], idx) => {
-          return (
-            <div key={idx}>
-              <div className={styles.cardContainer}>
-                {animalList.map((animal: Animal, index: number) => (
-                  <AnimalCard key={index} type={animal.type} dropRate={animal.dropRate} />
-                ))}
+      <div className={styles.showDesktop}>
+        <AnimalSliderContainer>
+          {animalList.map((animalList: Animal[], idx) => {
+            return (
+              <div key={idx}>
+                <div className={styles.cardContainer}>
+                  {animalList.map((animal: Animal, index: number) => (
+                    <AnimalCard key={index} type={animal.type} dropRate={animal.dropRate} />
+                  ))}
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </AnimalSliderContainer>
+            );
+          })}
+        </AnimalSliderContainer>
+      </div>
+      <div className={styles.showMobile}>
+        <AnimalSliderContainerMobile>
+          {ANIMAL_LIST.map((animalList: Animal, idx) => {
+            return (
+              <div key={idx} className={styles.cardContainerMobile}>
+                <AnimalCard type={animalList.type} dropRate={animalList.dropRate} />
+              </div>
+            );
+          })}
+        </AnimalSliderContainerMobile>
+      </div>
     </div>
   );
 }
