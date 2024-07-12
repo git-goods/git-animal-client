@@ -2,6 +2,8 @@ import { semanticTokens, textStyles, tokens } from '@gitanimals/ui-panda';
 import { defineConfig } from '@pandacss/dev';
 
 export default defineConfig({
+  presets: ['@shadow-panda/preset'],
+
   // Whether to use css reset
   preflight: true,
 
@@ -23,7 +25,10 @@ export default defineConfig({
       textStyles,
     },
   },
+  jsxFramework: 'react',
 
   // The output directory for your css system
+  // outdir: 'styled-system',
+  emitPackage: true,
   outdir: 'styled-system',
 });

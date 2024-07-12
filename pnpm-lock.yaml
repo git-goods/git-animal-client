@@ -48,6 +48,9 @@ importers:
       '@remix-run/serve':
         specifier: ^2.10.2
         version: 2.10.2(typescript@5.4.5)
+      '@shadow-panda/style-context':
+        specifier: ^0.7.1
+        version: 0.7.1(@types/react-dom@18.2.19)(@types/react@18.2.61)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       isbot:
         specifier: ^4.1.0
         version: 4.4.0
@@ -70,6 +73,9 @@ importers:
       '@remix-run/dev':
         specifier: ^2.10.2
         version: 2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(@remix-run/serve@2.10.2(typescript@5.4.5))(@types/node@20.11.24)(lightningcss@1.23.0)(terser@5.31.1)(ts-node@10.9.1(@types/node@20.11.24)(typescript@5.4.5))(typescript@5.4.5)(vite@5.3.3(@types/node@20.11.24)(lightningcss@1.23.0)(terser@5.31.1))
+      '@shadow-panda/preset':
+        specifier: ^0.7.1
+        version: 0.7.1(@pandacss/dev@0.41.0(typescript@5.4.5))
       '@types/react':
         specifier: ^18.2.20
         version: 18.2.61
@@ -1937,6 +1943,9 @@ packages:
   '@pandacss/preset-base@0.41.0':
     resolution: {integrity: sha512-hvrC3pk8pK+bOMmBbTCUbYLPTjHshggke48YYqGCXF2UAoWm0DAZff5pO2IlZDjV3ljlPrNMIJaS7hGhuTQfDw==}
 
+  '@pandacss/preset-panda@0.15.5':
+    resolution: {integrity: sha512-ZYv/6H/hqA2AP+gx58KPJBDJU+/oCDoUDpZ/mmWbqpS/D+7mMxJOonhvW/b2BQMxFdy4TehBFL3N8wW3ftXRqA==}
+
   '@pandacss/preset-panda@0.41.0':
     resolution: {integrity: sha512-lzYqZfcii6u6zq97OJ1HVF/ioP5L+nfedCeuBohrjiNqFtok2GXhIE0cKaaIlRin3G/RBI/ywsQOXzB62FUcaA==}
 
@@ -1945,6 +1954,9 @@ packages:
 
   '@pandacss/token-dictionary@0.41.0':
     resolution: {integrity: sha512-fO+1R55tzIs1HYiqLnQDqTNQ7RJTpxQGF54XASQVsUCNnX4yoD68OuxeLORzo6wWnlzVQzWnjMO1hMVPPYlazw==}
+
+  '@pandacss/types@0.15.5':
+    resolution: {integrity: sha512-3XNmWN/UhOgTiPUCBOBJEtwgxPOcSCZIP5fY9F/xc0BrwMUcZzcT0AKb7fWq0xY2U4w6SreS3HeoMyINWq7c6A==}
 
   '@pandacss/types@0.41.0':
     resolution: {integrity: sha512-WGFxRozTK+6lQOk1nPfJ1H/5wJyT0mm68rIMNX8dtDAbessPdKZAz0orgIJ9INijbdPRtFUWlDTrJ4F0MgD2dA==}
@@ -2315,6 +2327,24 @@ packages:
 
   '@rushstack/eslint-patch@1.5.1':
     resolution: {integrity: sha512-6i/8UoL0P5y4leBIGzvkZdS85RDMG9y1ihZzmTZQ5LdHUYmZ7pKFoj8X0236s3lusPs1Fa5HTQUpwI+UfTcmeA==}
+
+  '@shadow-panda/preset@0.7.1':
+    resolution: {integrity: sha512-WPb0jAkAJHNBtn8zPWQUGTuQseo4sCdUCQNjCfe3Cb8BHub6wDZb6DLrpKNwIep9Szb98oAr5TV5Y93ikIgvSQ==}
+    peerDependencies:
+      '@pandacss/dev': 0.15.5
+
+  '@shadow-panda/style-context@0.7.1':
+    resolution: {integrity: sha512-1vNZewZvqUWyiSX0+BxIYrqPP/7QUgjqKITMw6RALdz6AqnlPIB+EBIvbnScsa++7NrnUbxe/XKem2wzeZy3RA==}
+    peerDependencies:
+      '@types/react': ^18.2
+      '@types/react-dom': ^18.2
+      react: ^18
+      react-dom: ^18.3.1
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -9876,6 +9906,10 @@ snapshots:
     dependencies:
       '@pandacss/types': 0.41.0
 
+  '@pandacss/preset-panda@0.15.5':
+    dependencies:
+      '@pandacss/types': 0.15.5
+
   '@pandacss/preset-panda@0.41.0':
     dependencies:
       '@pandacss/types': 0.41.0
@@ -9888,6 +9922,8 @@ snapshots:
       '@pandacss/shared': 0.41.0
       '@pandacss/types': 0.41.0
       ts-pattern: 5.0.8
+
+  '@pandacss/types@0.15.5': {}
 
   '@pandacss/types@0.41.0': {}
 
@@ -10282,6 +10318,19 @@ snapshots:
     optional: true
 
   '@rushstack/eslint-patch@1.5.1': {}
+
+  '@shadow-panda/preset@0.7.1(@pandacss/dev@0.41.0(typescript@5.4.5))':
+    dependencies:
+      '@pandacss/dev': 0.41.0(typescript@5.4.5)
+      '@pandacss/preset-panda': 0.15.5
+
+  '@shadow-panda/style-context@0.7.1(@types/react-dom@18.2.19)(@types/react@18.2.61)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.3.1(react@18.2.0)
+    optionalDependencies:
+      '@types/react': 18.2.61
+      '@types/react-dom': 18.2.19
 
   '@sinclair/typebox@0.27.8': {}
 

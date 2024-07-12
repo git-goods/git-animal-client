@@ -13,12 +13,13 @@
   },
   "dependencies": {
     "@gitanimals/api": "workspace:*",
-    "@gitanimals/ui-panda": "workspace:*",
-    "@gitanimals/exception": "workspace:*",
     "@gitanimals/asset-font": "workspace:*",
+    "@gitanimals/exception": "workspace:*",
+    "@gitanimals/ui-panda": "workspace:*",
     "@remix-run/node": "^2.10.2",
     "@remix-run/react": "^2.10.2",
     "@remix-run/serve": "^2.10.2",
+    "@shadow-panda/style-context": "^0.7.1",
     "isbot": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -28,6 +29,7 @@
     "@gitanimals/typescript-config": "workspace:*",
     "@pandacss/dev": "^0.41.0",
     "@remix-run/dev": "^2.10.2",
+    "@shadow-panda/preset": "^0.7.1",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
