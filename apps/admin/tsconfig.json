@@ -1,4 +1,5 @@
 {
+  "extends": "@gitanimals/typescript-config/react-library.json",
   "include": [
     "**/*.ts",
     "**/*.tsx",
