@@ -69,4 +69,21 @@ export const cardContainerMobile = grid({
   width: '265px',
   height: '325px',
   padding: '0 1px',
+
+  // 0.75배
+
+  '@media (max-width: 400px)': {
+    width: '200px',
+    height: '244px',
+
+    '& .animal-card-info': {
+      bottom: '10px',
+    },
+    '& .animal-card-type': {
+      textStyle: 'glyph18.bold',
+    },
+    '& .animal-card-rating': {
+      textStyle: 'glyph16.regular',
+    },
+  },
 });

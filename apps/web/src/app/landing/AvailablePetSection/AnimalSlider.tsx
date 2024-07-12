@@ -1,5 +1,3 @@
-import { css, cx } from '_panda/css';
-
 import { AnimalCard } from '@/components/AnimalCard';
 
 import * as styles from './AnimalSlider.style';
@@ -165,16 +163,7 @@ function AnimalSlider() {
           })}
         </AnimalSliderContainer>
       </div>
-      <div
-        className={cx(
-          styles.showMobile,
-          css({
-            '& .animal-card-container': {
-              transition: 'transform 0.5s, z-index 0.1s, opacity 1s',
-            },
-          }),
-        )}
-      >
+      <div className={styles.showMobile}>
         <AnimalSliderContainerMobile>
           {ANIMAL_LIST.map((animalList: Animal, idx) => {
             return (
