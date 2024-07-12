@@ -27,6 +27,18 @@ importers:
 
   apps/admin:
     dependencies:
+      '@gitanimals/api':
+        specifier: workspace:*
+        version: link:../../packages/api
+      '@gitanimals/asset-font':
+        specifier: workspace:*
+        version: link:../../packages/asset/font
+      '@gitanimals/exception':
+        specifier: workspace:*
+        version: link:../../packages/exception
+      '@gitanimals/ui-panda':
+        specifier: workspace:*
+        version: link:../../packages/ui/panda
       '@remix-run/node':
         specifier: ^2.10.2
         version: 2.10.2(typescript@5.4.5)
@@ -46,6 +58,12 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.2.0)
     devDependencies:
+      '@gitanimals/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@gitanimals/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
       '@pandacss/dev':
         specifier: ^0.41.0
         version: 0.41.0(typescript@5.4.5)

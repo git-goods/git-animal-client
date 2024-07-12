@@ -6,5 +6,5 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  return <div className={css({ fontSize: '2xl', fontWeight: 'bold', color: 'red' })}>Hello 🐼!</div>;
+  return <div className={css({ fontSize: '2xl', fontWeight: 'bold', color: 'black_90' })}>Hello 🐼!</div>;
 }
