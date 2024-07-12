@@ -4,6 +4,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "prepare": "panda codegen",
     "build": "remix vite:build",
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
@@ -19,6 +20,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@pandacss/dev": "^0.41.0",
     "@remix-run/dev": "^2.10.2",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
