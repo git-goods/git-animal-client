@@ -1,5 +1,5 @@
-import { styled, type HTMLStyledProps } from 'styled-system/jsx';
-import { badge } from 'styled-system/recipes';
+import { HTMLStyledProps, styled } from '_panda/jsx';
+import { badge } from '_panda/recipes';
 
 export const Badge = styled('div', badge);
 
