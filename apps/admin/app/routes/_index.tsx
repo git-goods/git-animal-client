@@ -1,4 +1,6 @@
+import { Header } from '@/components/layout/Header';
 import { Badge } from '@/components/ui/badge';
+
 import type { MetaFunction } from '@remix-run/node';
 import { css } from '_panda/css';
 
@@ -9,6 +11,8 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   return (
     <div>
+      <Header />
+      Copy
       <p className={css({ textStyle: 'glyph82.bold' })}>Hello !</p>
       <br />
       <div>

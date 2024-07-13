@@ -17,11 +17,13 @@
     "@gitanimals/asset-font": "workspace:*",
     "@gitanimals/exception": "workspace:*",
     "@gitanimals/ui-panda": "workspace:*",
+    "@radix-ui/react-navigation-menu": "^1.2.0",
     "@remix-run/node": "^2.10.2",
     "@remix-run/react": "^2.10.2",
     "@remix-run/serve": "^2.10.2",
     "@shadow-panda/style-context": "^0.7.1",
     "isbot": "^4.1.0",
+    "lucide-react": "^0.408.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
