@@ -1,4 +1,5 @@
 import { Header } from '@/components/layout/Header';
+import { Main, MainHeading } from '@/components/layout/Main';
 import { Badge } from '@/components/ui/badge';
 
 import type { MetaFunction } from '@remix-run/node';
@@ -12,12 +13,9 @@ export default function Index() {
   return (
     <div>
       <Header />
-      Copy
-      <p className={css({ textStyle: 'glyph82.bold' })}>Hello !</p>
-      <br />
-      <div>
-        <Badge variant="outline">Badge</Badge>
-      </div>
+      <Main>
+        <MainHeading>Hello</MainHeading>
+      </Main>
     </div>
   );
 }
