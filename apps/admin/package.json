@@ -1,5 +1,6 @@
 {
-  "name": "admin",
+  "name": "@gitanimals/admin",
+  "version": "0.1.0",
   "private": true,
   "sideEffects": false,
   "type": "module",
