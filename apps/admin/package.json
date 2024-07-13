@@ -17,6 +17,7 @@
     "@gitanimals/asset-font": "workspace:*",
     "@gitanimals/exception": "workspace:*",
     "@gitanimals/ui-panda": "workspace:*",
+    "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-navigation-menu": "^1.2.0",
     "@remix-run/node": "^2.10.2",
     "@remix-run/react": "^2.10.2",
