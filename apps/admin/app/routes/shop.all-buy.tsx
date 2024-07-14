@@ -1,6 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { getProducts } from '@gitanimals/api';
 import { Flex } from '_panda/jsx';
+import { useEffect } from 'react';
 
 const invoices = [
   {
@@ -11,6 +13,12 @@ const invoices = [
   },
 ];
 function ActionAllBuyPage() {
+  useEffect(() => {
+    getProducts().then((res) => {
+      console.log(res);
+    });
+  }, []);
+
   return (
     <Flex p={4}>
       <Card x-chunk="dashboard-05-chunk-3">
