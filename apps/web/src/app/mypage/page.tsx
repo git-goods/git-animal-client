@@ -1,13 +1,13 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import styled from 'styled-components';
 
+import { useGetSuspenseUser } from '@/apis/user/useGetUser';
 import Button from '@/components/Button';
 import Header from '@/components/Layout/Header';
 import Layout from '@/components/Layout/Layout';
-import { useUser } from '@/store/user';
 import { addNumberComma } from '@/utils/number';
 
 import FarmType from './FarmType';
@@ -16,21 +16,15 @@ import OneType from './OneType';
 type ChooseType = '1-type' | 'farm-type';
 
 function Mypage() {
-  const { username, profileImage, points } = useUser();
-
   const [selectedType, setSelectedType] = useState<ChooseType>('1-type');
 
   return (
     <Layout>
       <Header />
       <Main>
-        <Profile>
-          <div className="profile-image">
-            <img src={profileImage} alt="profile" width={160} height={160} />
-          </div>
-          <p className="profile-name">{username}</p>
-          <p className="point">Points: {addNumberComma(points)}</p>
-        </Profile>
+        <Suspense fallback={<section></section>}>
+          <ProfileSection />
+        </Suspense>
         <RightSection>
           <TypeSelect>
             <Button
@@ -59,6 +53,22 @@ function Mypage() {
 }
 
 export default Mypage;
+
+function ProfileSection() {
+  const { data } = useGetSuspenseUser();
+
+  const { username, profileImage, points } = data;
+
+  return (
+    <Profile>
+      <div className="profile-image">
+        <img src={profileImage} alt="profile" width={160} height={160} />
+      </div>
+      <p className="profile-name">{username}</p>
+      <p className="point">Points: {addNumberComma(points)}</p>
+    </Profile>
+  );
+}
 
 const Main = styled.main`
   padding-top: 170px;
