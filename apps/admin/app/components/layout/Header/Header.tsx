@@ -2,14 +2,14 @@ import { css } from '_panda/css';
 import Nav from './Nav';
 import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
 
+const PROFILE_IMG = 'https://avatars.githubusercontent.com/u/171903401?s=200&v=4';
 function Header() {
   return (
     <div className={containerStyle}>
       <Nav />
       <div className={avatarStyle}>
         <Avatar>
-          <AvatarImage src="https://avatars.githubusercontent.com/u/49177223?v=4" alt="@nanopx" />
-          <AvatarFallback>NP</AvatarFallback>
+          <AvatarImage src={PROFILE_IMG} alt="@gitanimals" />
         </Avatar>
       </div>
     </div>
