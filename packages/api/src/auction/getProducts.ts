@@ -1,6 +1,7 @@
 import z from 'zod';
 import { safeGet } from '../_instance/safe';
 import { ProductSchema, PaginationSchema } from './schema';
+import { convertCamelObjToKebab } from '../utils';
 
 const GetProductsSchema = z.object({
   products: z.array(ProductSchema),
@@ -19,5 +20,7 @@ export type GetProductsRequest = z.infer<typeof GetProductsRequestSchema>;
 export type GetProductsResponse = z.infer<typeof GetProductsSchema>;
 
 export const getProducts = async (request?: GetProductsRequest): Promise<GetProductsResponse> => {
-  return await safeGet(GetProductsSchema)(`/auctions/products`);
+  return await safeGet(GetProductsSchema)(`/auctions/products`, {
+    params: request ? convertCamelObjToKebab(request) : undefined,
+  });
 };

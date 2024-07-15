@@ -1,21 +1,32 @@
-import ProductDataTable from '@/components/Shop/ProductTable';
+import ProductDataTable from '@/components/Shop/AllBuy/ProductTable';
+import SortFilter from '@/components/Shop/AllBuy/SortFilter';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { getProducts } from '@gitanimals/api';
 import { LoaderFunction, json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import { css } from '_panda/css';
 
 import { Flex } from '_panda/jsx';
 
-export const loader: LoaderFunction = async ({ request, params }) => {
-  const data = await getProducts();
+export const loader: LoaderFunction = async ({ request }) => {
+  const query = new URL(request.url).searchParams;
+
+  const params = Object.fromEntries(
+    Object.entries({
+      pageNumber: query.get('pageNumber'),
+      personaType: query.get('personaType'),
+      count: query.get('count'),
+      orderType: query.get('orderType'),
+      sortDirection: query.get('sortDirection'),
+    }).filter(([, v]) => v != null),
+  );
+
+  const data = await getProducts(params);
   return json(data);
 };
 
 function ActionAllBuyPage() {
   const { products } = useLoaderData<typeof loader>();
-  console.log('products: ', products);
 
   return (
     <Flex p={4}>
@@ -26,7 +37,10 @@ function ActionAllBuyPage() {
 
           <Button mt={4}>일괄 구매</Button>
         </CardHeader>
-        <CardContent>{products && <ProductDataTable data={products} />}</CardContent>
+        <CardContent>
+          <SortFilter />
+          {products && <ProductDataTable data={products} />}
+        </CardContent>
       </Card>
     </Flex>
   );
