@@ -56,6 +56,9 @@ const useUserStore = create(
   ),
 );
 
+/**
+ * @deprecated
+ */
 export const useUser = () =>
   useUserStore((state) => ({
     username: state.username,
