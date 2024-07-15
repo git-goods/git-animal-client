@@ -35,8 +35,9 @@ const GetProductsRequestSchema = z.object({
 });
 
 export type GetProductsRequest = z.infer<typeof GetProductsRequestSchema>;
+export type GetProductsResponse = z.infer<typeof GetProductsSchema>;
 
-export const getProducts = async (request?: GetProductsRequest) => {
+export const getProducts = async (request?: GetProductsRequest): Promise<GetProductsResponse> => {
   return await safeGet(GetProductsSchema)(`/auctions/products`);
 };
 

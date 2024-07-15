@@ -1,6 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { getProducts } from '@gitanimals/api';
+import { LoaderFunction, json } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
 import { Flex } from '_panda/jsx';
 import { useEffect } from 'react';
 
@@ -12,12 +14,16 @@ const invoices = [
     paymentMethod: 'Credit Card',
   },
 ];
+
+export const loader: LoaderFunction = async ({ request, params }) => {
+  // console.log('request, params: ', request, params);
+  const data = await getProducts();
+  return json(data);
+};
+
 function ActionAllBuyPage() {
-  useEffect(() => {
-    getProducts().then((res) => {
-      console.log(res);
-    });
-  }, []);
+  const { products } = useLoaderData<typeof loader>();
+  // console.log('products: ', products);
 
   return (
     <Flex p={4}>
