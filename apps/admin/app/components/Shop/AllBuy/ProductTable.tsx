@@ -26,7 +26,23 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
-import { Product } from '@gitanimals/api';
+import { Product, buyProduct } from '@gitanimals/api';
+
+function ProductBuyButton({ productId }: { productId: string }) {
+  const action = async () => {
+    try {
+      await buyProduct({ productId });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <Button onClick={action} variant="outline">
+      Buy
+    </Button>
+  );
+}
 
 export const columns: ColumnDef<Product>[] = [
   {
@@ -80,6 +96,11 @@ export const columns: ColumnDef<Product>[] = [
     accessorKey: 'paymentState',
     header: 'Payment State',
     cell: ({ row }) => <div className="capitalize">{row.getValue('paymentState')}</div>,
+  },
+  {
+    accessorKey: 'actions',
+    header: 'Actions',
+    cell: ({ row }) => <ProductBuyButton productId={row.original.id} />,
   },
 ];
 
