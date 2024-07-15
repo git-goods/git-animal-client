@@ -21,13 +21,29 @@ const SORT_OPTION: {
   },
 ];
 
-function SortFilter() {
+const PAGE_SIZE = [20, 40, 100];
+
+function SortFilter({ tableParams }: { tableParams: Record<string, string> }) {
   return (
     <Grid w="full" gridTemplateColumns="3">
       {SORT_OPTION.map((option) => (
-        <Link key={option.label} to={getNewTableUrl({ baseUrl: '/shop/all-buy', newParams: option.options ?? {} })}>
+        <Link
+          key={option.label}
+          to={getNewTableUrl({ baseUrl: '/shop/all-buy', newParams: option.options ?? {}, oldParams: tableParams })}
+        >
           <Button variant="outline" size="sm" w="full">
             {option.label}
+          </Button>
+        </Link>
+      ))}
+
+      {PAGE_SIZE.map((size) => (
+        <Link
+          key={size}
+          to={getNewTableUrl({ baseUrl: '/shop/all-buy', newParams: { count: size }, oldParams: tableParams })}
+        >
+          <Button variant="outline" size="sm" w="full">
+            {size}개씩
           </Button>
         </Link>
       ))}
