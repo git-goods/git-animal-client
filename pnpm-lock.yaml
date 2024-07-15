@@ -69,6 +69,9 @@ importers:
       '@shadow-panda/style-context':
         specifier: ^0.7.1
         version: 0.7.1(@types/react-dom@18.2.19)(@types/react@18.2.61)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      '@tanstack/react-query':
+        specifier: ^5.32.0
+        version: 5.45.0(react@18.2.0)
       '@tanstack/react-table':
         specifier: ^8.19.3
         version: 8.19.3(react-dom@18.3.1(react@18.2.0))(react@18.2.0)

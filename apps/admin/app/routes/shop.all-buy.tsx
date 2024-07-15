@@ -18,8 +18,8 @@ export const loader: LoaderFunction = async ({ request }) => {
       pageNumber: query.get('pageNumber'),
       personaType: query.get('personaType'),
       count: query.get('count') ?? INIT_COUNT,
-      orderType: query.get('orderType'),
-      sortDirection: query.get('sortDirection'),
+      orderType: query.get('orderType') ?? 'PRICE',
+      sortDirection: query.get('sortDirection') ?? 'ASC',
     }).filter(([, v]) => v != null),
   );
 
@@ -37,7 +37,9 @@ function ActionAllBuyPage() {
           <CardTitle>경매장 일괄 구매</CardTitle>
           <CardDescription>시장 경제 손보다가, 손이 빠질 것 같아여.......</CardDescription>
 
-          <Button mt={4}>일괄 구매 (평균{getProductAveragePrice(products)}원)</Button>
+          <Button mt={4}>
+            일괄 구매 (평균{getProductAveragePrice(products)}원, 총 {products?.length}개)
+          </Button>
         </CardHeader>
         <CardContent>
           <SortFilter tableParams={tableParams} />

@@ -14,8 +14,6 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { ChevronDown } from 'lucide-react';
-import { Box, Flex } from '@shadow-panda/styled-system/jsx';
-import { icon } from '@shadow-panda/styled-system/recipes';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -26,20 +24,21 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
-import { Product, buyProduct } from '@gitanimals/api';
+import { Product } from '@gitanimals/api';
+import { Box, Flex } from '_panda/jsx';
+import { icon } from '_panda/recipes';
+import { useBuyProduct } from '@/hooks/query/action/useBuyProduct';
 
 function ProductBuyButton({ productId }: { productId: string }) {
-  const action = async () => {
-    try {
-      await buyProduct({ productId });
-    } catch (error) {
-      console.error(error);
-    }
+  const { mutate, isSuccess, isPending } = useBuyProduct();
+
+  const onClick = async () => {
+    mutate({ productId });
   };
 
   return (
-    <Button onClick={action} variant="outline">
-      Buy
+    <Button onClick={onClick} variant="outline" disabled={isPending || isSuccess}>
+      {isPending ? 'Buying...' : isSuccess ? 'succuss' : 'Buy'}
     </Button>
   );
 }
@@ -99,7 +98,7 @@ export const columns: ColumnDef<Product>[] = [
   },
   {
     accessorKey: 'actions',
-    header: 'Actions',
+    header: () => <Box minW={32}>Actions</Box>,
     cell: ({ row }) => <ProductBuyButton productId={row.original.id} />,
   },
 ];
