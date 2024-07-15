@@ -37,8 +37,9 @@ function ProductBuyButton({ productId }: { productId: string }) {
   };
 
   return (
-    <Button onClick={onClick} variant="outline" disabled={isPending || isSuccess}>
-      {isPending ? 'Buying...' : isSuccess ? 'succuss' : 'Buy'}
+    <Button onClick={onClick} variant="outline" isLoading={isPending}>
+      {/* {isPending ? 'Buying...' : isSuccess ? 'succuss' : 'Buy'} */}
+      {isSuccess ? 'succuss' : 'Buy'}
     </Button>
   );
 }

@@ -65,7 +65,7 @@ function ActionAllBuyPage() {
           <CardTitle>경매장 일괄 구매</CardTitle>
           <CardDescription>시장 경제 손보다가, 손이 빠질 것 같아여.......</CardDescription>
 
-          <Button mt={4} onClick={onClickAllBuy} disabled={isLoading}>
+          <Button mt={4} onClick={onClickAllBuy} isLoading={isLoading}>
             일괄 구매 (평균{getProductAveragePrice(products)}원, 총 {products?.length}개)
           </Button>
         </CardHeader>
