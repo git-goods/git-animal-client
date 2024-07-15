@@ -3,6 +3,7 @@ import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@re
 
 import styles from './index.css?url';
 import { Header } from './components/layout/Header';
+import QueryClientProvider from './QueryClientProvider';
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
 
@@ -16,11 +17,13 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Header />
-        <Outlet />
+        <QueryClientProvider>
+          <Header />
+          <Outlet />
+        </QueryClientProvider>
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
+        {/* <LiveReload /> */}
       </body>
     </html>
   );
