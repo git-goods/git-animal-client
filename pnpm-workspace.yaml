@@ -1,5 +1,7 @@
 packages:
   - 'apps/*'
+  - 'apps/web/*'
+  - 'apps/admin/*'
   - 'packages/*'
   - 'packages/ui/*'
   - 'packages/util/*'
