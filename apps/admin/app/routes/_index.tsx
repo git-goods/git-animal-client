@@ -1,4 +1,5 @@
-import { Badge } from '@/components/ui/badge';
+import { Main, MainHeading } from '@/components/layout/Main';
+
 import type { MetaFunction } from '@remix-run/node';
 import { css } from '_panda/css';
 
@@ -8,12 +9,9 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div>
-      <p className={css({ textStyle: 'glyph82.bold' })}>Hello !</p>
-      <br />
-      <div>
-        <Badge variant="outline">Badge</Badge>
-      </div>
-    </div>
+    <Main>
+      <MainHeading>Home</MainHeading>
+      <p className={css({ pt: '2' })}>Gitanimals Admin 페이지입니다. </p>
+    </Main>
   );
 }
