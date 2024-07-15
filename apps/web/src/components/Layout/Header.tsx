@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import { GITHUB_OAUTH_REQUEST_URL } from '@/constants/oauth';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { useUser } from '@/store/user';
+import { useDevAccess } from '@/utils/dev';
 
 function Header() {
   const { username, isLogin, profileImage } = useUser();
@@ -41,6 +42,7 @@ function Header() {
               <li>
                 <a href={GIT_ANIMALS_MAIN_URL}>GITHUB</a>
               </li>
+              <DevMenu />
             </ul>
           </nav>
           {isLogin && (
@@ -62,6 +64,20 @@ function Header() {
   );
 }
 export default Header;
+
+function DevMenu() {
+  const { isDevAccessPossible } = useDevAccess();
+
+  return (
+    <li
+      className={css({
+        display: isDevAccessPossible ? 'static' : 'none',
+      })}
+    >
+      <Link href="/dev">Dev</Link>
+    </li>
+  );
+}
 
 const HeaderStyled = styled.header`
   max-width: 1400px;
