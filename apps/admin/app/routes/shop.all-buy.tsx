@@ -2,11 +2,13 @@ import ProductDataTable from '@/components/Shop/AllBuy/ProductTable';
 import SortFilter from '@/components/Shop/AllBuy/SortFilter';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
-import { Product, getProducts } from '@gitanimals/api';
+import { getToken } from '@/utils/token';
+import { Product, buyProductWithToken, getProducts } from '@gitanimals/api';
 import { LoaderFunction, json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 
 import { Flex } from '_panda/jsx';
+import { useState } from 'react';
 
 const INIT_COUNT = 20;
 
@@ -30,6 +32,32 @@ export const loader: LoaderFunction = async ({ request }) => {
 function ActionAllBuyPage() {
   const { products, tableParams } = useLoaderData<typeof loader>();
 
+  // async function parallel(array) {
+  //   const promises = array.map((url) => async_download(url));
+  //   await Promise.all(promises);
+  //   console.log('all done :)');
+  // }
+
+  const [isLoading, setIsLoading] = useState(false);
+  const onClickAllBuy = async () => {
+    setIsLoading(true);
+    try {
+      const token = getToken();
+      if (!token) throw new Error('토큰이 없습니다. 로그인을 해주세요.');
+
+      const promises = products.map((product: Product) => buyProductWithToken({ productId: product.id, token }));
+      await Promise.all(promises);
+      alert('구매가 완료되었습니다.');
+
+      // remix page reload
+      window.location.reload();
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Flex p={4}>
       <Card x-chunk="dashboard-05-chunk-3">
@@ -37,7 +65,7 @@ function ActionAllBuyPage() {
           <CardTitle>경매장 일괄 구매</CardTitle>
           <CardDescription>시장 경제 손보다가, 손이 빠질 것 같아여.......</CardDescription>
 
-          <Button mt={4}>
+          <Button mt={4} onClick={onClickAllBuy} disabled={isLoading}>
             일괄 구매 (평균{getProductAveragePrice(products)}원, 총 {products?.length}개)
           </Button>
         </CardHeader>
