@@ -1,19 +1,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { getProducts } from '@gitanimals/api';
+import { STATIC_IMAGE_URL } from '@/constants/outlink';
+import { Product, getProducts } from '@gitanimals/api';
+import { Button } from '@gitanimals/ui-panda';
+import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import { LoaderFunction, json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
+import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
-import { useEffect } from 'react';
-
-const invoices = [
-  {
-    invoice: 'INV001',
-    paymentStatus: 'Paid',
-    totalAmount: '$250.00',
-    paymentMethod: 'Credit Card',
-  },
-];
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   // console.log('request, params: ', request, params);
@@ -31,25 +26,35 @@ function ActionAllBuyPage() {
         <CardHeader className="px-7">
           <CardTitle>경매장 일괄 구매</CardTitle>
           <CardDescription>시장 경제 손보다가, 손이 빠질 것 같아여.......</CardDescription>
+
+          <Button>ad</Button>
         </CardHeader>
         <CardContent>
           <Table>
             <TableCaption>A list of your recent invoices.</TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead w="100px">Invoice</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Method</TableHead>
-                <TableHead textAlign="right">Amount</TableHead>
+                <TableHead></TableHead>
+                <TableHead>Image</TableHead>
+                <TableHead>Level</TableHead>
+                <TableHead>Price</TableHead>
+                <TableHead textAlign="right">Payment State</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {invoices.map((invoice) => (
-                <TableRow key={invoice.invoice}>
-                  <TableCell fontWeight="medium">{invoice.invoice}</TableCell>
-                  <TableCell>{invoice.paymentStatus}</TableCell>
-                  <TableCell>{invoice.paymentMethod}</TableCell>
-                  <TableCell textAlign="right">{invoice.totalAmount}</TableCell>
+              {products.map((product: Product) => (
+                <TableRow key={product.id}>
+                  <TableCell>
+                    <Checkbox id={product.id} />
+                  </TableCell>
+                  <TableCell className={imageWrapperStyle}>
+                    <Avatar>
+                      <AvatarImage src={`${STATIC_IMAGE_URL}/${product.persona.personaType}`} />
+                    </Avatar>
+                  </TableCell>
+                  <TableCell textAlign="center">{product.persona.personaLevel}</TableCell>
+                  <TableCell>{product.price}</TableCell>
+                  <TableCell>{product.paymentState}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -61,3 +66,13 @@ function ActionAllBuyPage() {
 }
 
 export default ActionAllBuyPage;
+
+const imageWrapperStyle = css({
+  padding: '0',
+  '& img': {
+    width: '64px',
+    height: '64px',
+    objectFit: 'cover',
+    margin: '0 auto',
+  },
+});

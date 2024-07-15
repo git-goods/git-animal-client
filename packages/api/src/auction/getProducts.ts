@@ -1,25 +1,6 @@
 import z from 'zod';
 import { safeGet } from '../_instance/safe';
-
-const ProductSchema = z.object({
-  id: z.string(),
-  sellerId: z.string(),
-  persona: z.object({
-    personaId: z.string(),
-    personaType: z.string(),
-    personaLevel: z.number(),
-  }),
-  price: z.string(),
-  paymentState: z.string(),
-});
-
-const PaginationSchema = z.object({
-  totalRecords: z.number(),
-  currentPage: z.number(),
-  totalPages: z.number(),
-  nextPage: z.number().nullable(),
-  prevPage: z.number().nullable(),
-});
+import { ProductSchema, PaginationSchema } from './schema';
 
 const GetProductsSchema = z.object({
   products: z.array(ProductSchema),
@@ -40,5 +21,3 @@ export type GetProductsResponse = z.infer<typeof GetProductsSchema>;
 export const getProducts = async (request?: GetProductsRequest): Promise<GetProductsResponse> => {
   return await safeGet(GetProductsSchema)(`/auctions/products`);
 };
-
-export type Pagination = z.infer<typeof PaginationSchema>;
