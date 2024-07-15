@@ -1,9 +1,9 @@
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
 import { Product, getProducts } from '@gitanimals/api';
-import { Button } from '@gitanimals/ui-panda';
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import { LoaderFunction, json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
@@ -27,7 +27,7 @@ function ActionAllBuyPage() {
           <CardTitle>경매장 일괄 구매</CardTitle>
           <CardDescription>시장 경제 손보다가, 손이 빠질 것 같아여.......</CardDescription>
 
-          <Button>ad</Button>
+          <Button mt={4}>일괄 구매</Button>
         </CardHeader>
         <CardContent>
           <Table>
