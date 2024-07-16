@@ -1,5 +1,5 @@
-import ProductDataTable from '@/components/Shop/AllBuy/ProductTable';
-import SortFilter from '@/components/Shop/AllBuy/SortFilter';
+import ProductDataTable from '@/components/Auction/AllBuy/ProductTable';
+import SortFilter from '@/components/Auction/AllBuy/SortFilter';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { getToken } from '@/utils/token';
