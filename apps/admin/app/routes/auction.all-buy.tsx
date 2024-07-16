@@ -60,8 +60,8 @@ function ActionAllBuyPage() {
 
   return (
     <Flex p={4}>
-      <Card x-chunk="dashboard-05-chunk-3">
-        <CardHeader className="px-7">
+      <Card>
+        <CardHeader>
           <CardTitle>경매장 일괄 구매</CardTitle>
           <CardDescription>시장 경제 손보다가, 손이 빠질 것 같아여.......</CardDescription>
 
