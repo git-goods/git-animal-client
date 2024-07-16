@@ -8,7 +8,7 @@ import { Fade, Perspective } from '@egjs/flicking-plugins';
 import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
 
-import { sliderContainer } from '../MainSlider/MainSlider.style';
+import { sliderContainer } from '../MainSection/MainSlider.style';
 
 function AnimalSliderContainerMobile({ children }: { children: React.ReactNode }) {
   const flicking = useRef<Flicking | null>(null);
