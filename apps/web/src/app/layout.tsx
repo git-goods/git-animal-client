@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 import ClientProvider from '@/components/ClientProvider';
 import FeedBack from '@/components/FeedBack/FeedBack';
@@ -34,6 +35,13 @@ export const metadata: Metadata = {
     siteName: 'GitAnimals',
   },
 };
+const isProd = process.env.NODE_ENV === 'production';
+
+const MONITORING_KEY = {
+  GA: isProd ? 'G-RNEDVMFT5X' : 'G-N45935GS2S',
+  GTM: 'GTM-T6DQHP7X',
+  JENNIFER: isProd ? 'e9e023ee' : '000000',
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -41,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ClientProvider>
           {children}
+          <GoogleAnalytics gaId={MONITORING_KEY.GA} />
           <FeedBack />
         </ClientProvider>
       </body>
