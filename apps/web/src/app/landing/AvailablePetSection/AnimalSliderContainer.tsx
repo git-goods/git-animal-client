@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRef } from 'react';
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import { Arrow } from '@egjs/flicking-plugins';
 import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
-import Flicking, { ViewportSlot } from '@egjs/react-flicking';
+import Flicking from '@egjs/react-flicking';
 
 // TODO: 후에 공통으로 사용할 수 있을 것 같다.
 function AnimalSliderContainer({ children }: { children: React.ReactNode }) {
@@ -22,7 +22,11 @@ function AnimalSliderContainer({ children }: { children: React.ReactNode }) {
     setCurrentPanelIndex(e.index);
   };
 
-  const plugins = [new Arrow({})];
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => setIsMounted(true), []);
+
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const plugins = [new Arrow({ parentEl: wrapperRef.current })];
 
   // NOTE: dom 로드 후 플러그인을 넣으면 나을까 싶었음
   // useEffect(() => {
@@ -38,29 +42,29 @@ function AnimalSliderContainer({ children }: { children: React.ReactNode }) {
   const sliderOptions: Partial<FlickingProps & FlickingOptions> = {
     panelsPerView: 1,
     onChanged: onPanelChanged,
-    plugins,
+    plugins: isMounted ? plugins : undefined,
   };
 
   return (
     <div>
-      <div className={sliderContainer}>
+      <div ref={wrapperRef} className={sliderContainer}>
         <Flicking ref={flicking} {...sliderOptions}>
           {children}
-          <ViewportSlot>
+          {/* <ViewportSlot>
             <span className={cx('flicking-arrow-prev', 'is-outside', sliderArrowStyle, prevArrowStyle)}>
               <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
             </span>
             <span className={cx('flicking-arrow-next', 'is-outside', sliderArrowStyle, nextArrowStyle)}>
               <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
             </span>
-          </ViewportSlot>
+          </ViewportSlot> */}
         </Flicking>
-        {/* <span className={cx('flicking-arrow-prev', 'is-outside', sliderArrowStyle, prevArrowStyle)}>
+        <span className={cx('flicking-arrow-prev', 'is-outside', sliderArrowStyle, prevArrowStyle)}>
           <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
         </span>
         <span className={cx('flicking-arrow-next', 'is-outside', sliderArrowStyle, nextArrowStyle)}>
           <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
-        </span> */}
+        </span>
       </div>
     </div>
   );
@@ -89,7 +93,8 @@ const sliderArrowStyle = css({
 
 const prevArrowStyle = css({
   rotate: '180deg',
-  left: '-62px',
+  // left: '-62px',
+  transform: 'translateX(40px)',
   _mobile: {
     left: '8px',
   },
