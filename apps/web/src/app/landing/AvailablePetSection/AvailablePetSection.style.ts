@@ -23,7 +23,6 @@ export const content = flex({
   gap: '60px',
   alignItems: 'center',
   justifyContent: 'center',
-  background: '#171717',
 
   _mobile: {
     gap: '40px',
