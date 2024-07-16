@@ -1,4 +1,4 @@
-import { css, cx } from '_panda/css';
+import { css } from '_panda/css';
 import { flex, grid } from '_panda/patterns';
 
 export const container = flex({
@@ -80,23 +80,13 @@ export const buttonWrapper = css({
   },
 });
 
-const bgPicture = css({
+const bgPicture = {
   position: 'absolute',
   left: 0,
   right: 0,
   zIndex: 0,
-});
+};
 
-export const bgPictureTop = cx(
-  bgPicture,
-  css({
-    top: 0,
-  }),
-);
+export const bgPictureTop = css(bgPicture, { top: 0 });
 
-export const bgPictureBottom = cx(
-  bgPicture,
-  css({
-    bottom: 0,
-  }),
-);
+export const bgPictureBottom = css(bgPicture, { bottom: 0 });

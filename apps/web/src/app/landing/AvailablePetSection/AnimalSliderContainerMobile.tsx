@@ -18,6 +18,7 @@ function AnimalSliderContainerMobile({ children }: { children: React.ReactNode }
   const isFirstPanel = currentPanelIndex === 0;
   const isLastPanel = Children.count(children) - 1 === currentPanelIndex;
 
+  // TODO: arrow plugin을 사용
   const moveToNextPanel = async () => {
     if (!flicking.current) return;
     if (isLastPanel) return;

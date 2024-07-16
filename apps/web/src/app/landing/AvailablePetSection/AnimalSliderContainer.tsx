@@ -12,6 +12,7 @@ import Flicking from '@egjs/react-flicking';
 function AnimalSliderContainer({ children }: { children: React.ReactNode }) {
   const flicking = useRef<Flicking | null>(null);
 
+  // TODO: useMounted hook으로 분리
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => setIsMounted(true), []);
 
