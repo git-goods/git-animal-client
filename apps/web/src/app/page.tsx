@@ -1,5 +1,4 @@
-import AvailablePetSection from './landing/AvailablePetSection/AvailablePetSection';
-import { MainSection } from './landing/MainSection';
+import { AvailablePetSection, MainSection } from './landing';
 
 import '@egjs/react-flicking/dist/flicking.css';
 import '@egjs/react-flicking/dist/flicking-inline.css';
