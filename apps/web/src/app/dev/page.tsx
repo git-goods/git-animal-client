@@ -1,6 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import { Center } from '_panda/jsx';
 import { Button } from '@gitanimals/ui-panda';
+import { sendGTMEvent } from '@next/third-parties/google';
 
 function DevPage() {
   return (
@@ -11,6 +14,9 @@ function DevPage() {
           <Link href="/dev/token">
             <Button>get user token</Button>
           </Link>
+        </li>
+        <li>
+          <button onClick={() => sendGTMEvent({ event: 'buttonClicked', value: 'xyz' })}>Send Event</button>
         </li>
       </ul>
     </Center>
