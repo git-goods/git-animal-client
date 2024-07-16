@@ -18,4 +18,14 @@ export const MENU: {
       },
     ],
   },
+  {
+    title: '상점',
+    items: [
+      {
+        title: '펫 판매',
+        href: '/shop/drop-pet',
+        description: '펫을 판매할 수 있습니다.',
+      },
+    ],
+  },
 ];

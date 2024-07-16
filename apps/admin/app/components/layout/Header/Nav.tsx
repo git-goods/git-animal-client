@@ -21,18 +21,20 @@ export default function Example() {
             <a href="/">Home</a>
           </NavigationMenuLink>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>{MENU[0].title}</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className={listStyle}>
-              {MENU[0].items.map((component) => (
-                <ListItem key={component.title} href={component.href} title={component.title}>
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
+        {MENU.map((menu) => (
+          <NavigationMenuItem key={menu.title}>
+            <NavigationMenuTrigger>{menu.title}</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className={listStyle}>
+                {menu.items.map((component) => (
+                  <ListItem key={component.title} href={component.href} title={component.title}>
+                    {component.description}
+                  </ListItem>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        ))}
       </NavigationMenuList>
     </NavigationMenu>
   );
