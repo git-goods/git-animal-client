@@ -25,13 +25,16 @@ export const TeammateProfile: FC<Props> = ({ nickname, image, urlType, url, role
   return (
     <div className={styles.wrapperCss}>
       <Image className={styles.imageCss} src={image.src} width={image.width} height={image.height} alt={nickname} />
-      <span className={styles.nicknameWrapperCss}>
-        <span>{nickname}</span>
-        <a target="_blank" href={url}>
-          {ICON_MAP[urlType]}
-        </a>
-      </span>
-      <span className={styles.roleCss}>{role}</span>
+
+      <div className={styles.textWrapperCss}>
+        <span className={styles.nicknameWrapperCss}>
+          <span>{nickname}</span>
+          <a target="_blank" href={url}>
+            {ICON_MAP[urlType]}
+          </a>
+        </span>
+        <span className={styles.roleCss}>{role}</span>
+      </div>
     </div>
   );
 };
