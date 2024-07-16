@@ -46,6 +46,9 @@ export const repoLi = css({
 });
 
 export const repoLiTitle = css({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 8,
   width: 226,
   textStyle: 'glyph18.bold',
 });
