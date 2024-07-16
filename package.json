@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build:web": "turbo build --filter=@gitanimals/web",
+    "analyze:web": "ANALYZE=true turbo build --filter=@gitanimals/web",
     "dev:web": "turbo dev --filter=@gitanimals/web",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
