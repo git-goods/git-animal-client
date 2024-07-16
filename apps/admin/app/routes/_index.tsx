@@ -10,7 +10,22 @@ import { Box } from '_panda/jsx';
 import { useState } from 'react';
 
 export const meta: MetaFunction = () => {
-  return [{ title: 'New Remix App' }, { name: 'description', content: 'Welcome to Remix!' }];
+  return [
+    { title: 'GitAnimals Admin' },
+    { name: 'description', content: 'GitAnimals 관리를 위한 admin 페이지입니다. ' },
+    {
+      property: 'og:title',
+      content: 'GitAnimals Admin',
+    },
+    {
+      property: 'og:description',
+      content: 'GitAnimals 관리를 위한 admin 페이지입니다. ',
+    },
+    {
+      property: 'og:image',
+      content: '/og-image.png',
+    },
+  ];
 };
 
 export async function action({ request }: ActionFunctionArgs) {
