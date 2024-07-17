@@ -78,6 +78,13 @@ export const GLYPH = {
       lineHeight: '150%',
       letterSpacing: '-0.3px',
     },
+    bold: {
+      fontFamily: 'Product Sans',
+      fontSize: '20px',
+      fontWeight: '700',
+      lineHeight: '120%',
+      letterSpacing: '-0.3px',
+    },
   },
   glyph18: {
     bold: {
