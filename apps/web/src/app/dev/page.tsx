@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { Center } from '_panda/jsx';
 import { Button } from '@gitanimals/ui-panda';
-import { sendGTMEvent } from '@next/third-parties/google';
+
+import { getToken } from '@/store/user';
 
 function DevPage() {
   return (
@@ -16,7 +17,7 @@ function DevPage() {
           </Link>
         </li>
         <li>
-          <button onClick={() => sendGTMEvent({ event: 'buttonClicked', value: 'xyz' })}>Send Event</button>
+          <LocalLogin />
         </li>
       </ul>
     </Center>
@@ -24,3 +25,17 @@ function DevPage() {
 }
 
 export default DevPage;
+
+const LOCAL_URL = 'http://localhost:3000';
+
+function LocalLogin() {
+  const accessToken = getToken();
+
+  if (!accessToken) return null;
+
+  return (
+    <a href={LOCAL_URL + `/dev/local?token=${accessToken}`}>
+      <Button>go to local page</Button>
+    </a>
+  );
+}
