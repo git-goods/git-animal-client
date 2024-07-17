@@ -1,9 +1,14 @@
 'use client';
 
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Center } from '_panda/jsx';
 import { Button } from '@gitanimals/ui-panda';
 import { sendGTMEvent } from '@next/third-parties/google';
+
+export const metadata: Metadata = {
+  title: 'GitAnimals | Dev',
+};
 
 function DevPage() {
   return (

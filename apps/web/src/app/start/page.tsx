@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import type { Metadata } from 'next';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
@@ -10,6 +11,10 @@ import Header from '@/components/Layout/Header';
 import Layout from '@/components/Layout/Layout';
 import SelectAnimals from '@/components/SelectAnimals';
 import { COUPON_CODE } from '@/constants/coupon';
+
+export const metadata: Metadata = {
+  title: 'GitAnimals | Start',
+};
 
 function StartPage() {
   const router = useRouter();

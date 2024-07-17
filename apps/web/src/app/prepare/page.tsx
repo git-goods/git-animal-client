@@ -1,11 +1,13 @@
-'use client';
-
-import React from 'react';
+import type { Metadata } from 'next';
 import styled from 'styled-components';
 
 import Button from '@/components/Button';
 import Header from '@/components/Layout/Header';
 import Layout from '@/components/Layout/Layout';
+
+export const metadata: Metadata = {
+  title: 'GitAnimals | Prepare',
+};
 
 function PreparePage() {
   return (

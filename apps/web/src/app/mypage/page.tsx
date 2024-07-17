@@ -1,6 +1,7 @@
 'use client';
 
 import React, { Suspense, useState } from 'react';
+import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 
@@ -14,6 +15,10 @@ import OneType from './OneType';
 const LazyProfileSection = dynamic(() => import('./ProfileSection'), { ssr: false });
 
 type ChooseType = '1-type' | 'farm-type';
+
+export const metadata: Metadata = {
+  title: 'GitAnimals | Mypage',
+};
 
 function Mypage() {
   const [selectedType, setSelectedType] = useState<ChooseType>('1-type');
