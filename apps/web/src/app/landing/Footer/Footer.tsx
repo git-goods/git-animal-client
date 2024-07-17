@@ -1,4 +1,5 @@
 import type { ComponentProps } from 'react';
+import { LinkMonoIcon } from '@gitanimals/ui-icon';
 
 import * as styles from './Footer.style';
 import { TeammateProfile } from './TeammateProfile';
@@ -76,7 +77,10 @@ export function Footer() {
         <ul className={styles.repoContentWrapper}>
           {REPO_DATA.map((repo) => (
             <li key={repo.title} className={styles.repoLi}>
-              <span className={styles.repoLiTitle}>{repo.title}</span>
+              <span className={styles.repoLiTitle}>
+                <LinkMonoIcon color="#9E9E9E" />
+                <span>{repo.title}</span>
+              </span>
 
               <a href={repo.href} target="_blank" className={styles.repoLiLink}>
                 {repo.href}
