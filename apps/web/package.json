@@ -14,6 +14,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@egjs/flicking-plugins": "^4.7.1",
     "@egjs/react-flicking": "^4.11.3",
     "@gitanimals/api": "workspace:*",
     "@gitanimals/asset-font": "workspace:*",

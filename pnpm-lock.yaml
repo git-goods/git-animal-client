@@ -27,6 +27,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@egjs/flicking-plugins':
+        specifier: ^4.7.1
+        version: 4.7.1(@egjs/flicking@4.11.3)
       '@egjs/react-flicking':
         specifier: ^4.11.3
         version: 4.11.3
@@ -1176,6 +1179,11 @@ packages:
 
   '@egjs/component@3.0.5':
     resolution: {integrity: sha512-cLcGizTrrUNA2EYE3MBmEDt2tQv1joVP1Q3oDisZ5nw0MZDx2kcgEXM+/kZpfa/PAkFvYVhRUZwytIQWoN3V/w==}
+
+  '@egjs/flicking-plugins@4.7.1':
+    resolution: {integrity: sha512-J0k499sCs5IAMXAJuBcrY1OoiHRi4BPbS1/RCCkIzsYgdoHzcAUjKyhSsms3gLz4O/K5eTbBmWBUtFO86fETHg==}
+    peerDependencies:
+      '@egjs/flicking': ^4.1.0
 
   '@egjs/flicking@4.11.3':
     resolution: {integrity: sha512-90IbXMwdiNL4+Yrvfgi4zYk9XKLbjVaVLus5lIl28twQiT/KV3W9ypJOJEK7U5U9oS2q7dn8OJZolD8JNOsxag==}
@@ -8289,6 +8297,10 @@ snapshots:
       '@egjs/component': 3.0.5
 
   '@egjs/component@3.0.5': {}
+
+  '@egjs/flicking-plugins@4.7.1(@egjs/flicking@4.11.3)':
+    dependencies:
+      '@egjs/flicking': 4.11.3
 
   '@egjs/flicking@4.11.3':
     dependencies:
