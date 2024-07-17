@@ -9,6 +9,11 @@ export const footer = css({
   width: '100%',
   color: 'white.white',
   padding: '120px 0',
+
+  _mobile: {
+    padding: '80px 16px',
+    gap: 60,
+  },
 });
 
 export const article = css({
@@ -16,6 +21,11 @@ export const article = css({
   width: '100%',
   maxWidth: '1120px',
   margin: '0 auto',
+
+  _mobile: {
+    flexDir: 'column',
+    gap: 24,
+  },
 });
 
 export const title = css({
@@ -23,6 +33,10 @@ export const title = css({
   flexShrink: 1,
   textStyle: 'glyph28.bold',
   color: 'white.white',
+
+  _mobile: {
+    textStyle: 'glyph18.bold',
+  },
 });
 
 const defaultContentWrapper: SystemStyleObject = {
@@ -30,7 +44,13 @@ const defaultContentWrapper: SystemStyleObject = {
 };
 
 export const teamContentWrapper = css(defaultContentWrapper, {
-  bg: 'blue',
+  display: 'flex',
+  gap: 12,
+
+  _mobile: {
+    flexDir: 'column',
+    gap: 16,
+  },
 });
 
 export const repoContentWrapper = css(defaultContentWrapper, {
@@ -42,15 +62,33 @@ export const repoContentWrapper = css(defaultContentWrapper, {
 export const repoLi = css({
   display: 'flex',
   gap: 8,
+
+  _mobile: {
+    flexDir: 'column',
+    gap: 1,
+  },
 });
 
 export const repoLiTitle = css({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 8,
   width: 226,
   textStyle: 'glyph18.bold',
+
+  _mobile: {
+    textStyle: 'glyph15.bold',
+    gap: 17,
+  },
 });
 
 export const repoLiLink = css({
   textStyle: 'glyph16.regular',
   color: 'white.white_75',
   textDecoration: 'underline',
+
+  _mobile: {
+    textStyle: 'glyph12.regular',
+    marginLeft: 37,
+  },
 });
