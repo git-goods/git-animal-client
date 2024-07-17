@@ -12,14 +12,12 @@ const REGISTERED_PETS = 3400;
 function AvailablePetSection() {
   return (
     <section className={styles.container}>
-      <picture className={styles.bgPictureTop}>
-        <source srcSet="/main/section2_bg-top.webp" type="image/webp" />
-        <Image src="/main/section2_bg-top.png" alt="Available Pets" width={1920} height={382} />
-      </picture>
-      <picture className={styles.bgPictureBottom}>
-        <source srcSet="/main/section2_bg-bottom.webp" type="image/webp" />
-        <Image src="/main/section2_bg-bottom.png" alt="Available Pets" width={1920} height={382} />
-      </picture>
+      <div className={styles.bgPictureTop}>
+        <Image src="/main/section2_bg-top.webp" alt="Available Pets" width={1920} height={382} />
+      </div>
+      <div className={styles.bgPictureBottom}>
+        <Image src="/main/section2_bg-bottom.webp" alt="Available Pets" width={1920} height={382} />
+      </div>
       <div className={styles.content}>
         <h2 className={styles.heading}>50+ Available Pets</h2>
         <div className={styles.infoContainer}>
