@@ -1,3 +1,4 @@
+import { Footer } from './landing/Footer';
 import { AvailablePetSection, HavePetWaySection, MainSection } from './landing';
 
 import '@egjs/react-flicking/dist/flicking.css';
@@ -9,6 +10,7 @@ export default function Home() {
       <MainSection />
       <AvailablePetSection />
       <HavePetWaySection />
+      <Footer />
     </div>
   );
 }
