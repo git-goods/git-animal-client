@@ -1,3 +1,4 @@
+import { ChoosePetSection } from './landing/ChoosePetSection';
 import { Footer } from './landing/Footer';
 import { AvailablePetSection, HavePetWaySection, MainSection } from './landing';
 
@@ -8,8 +9,9 @@ export default function Home() {
   return (
     <div>
       <MainSection />
-      <AvailablePetSection />
+      {/* <AvailablePetSection /> */}
       <HavePetWaySection />
+      <ChoosePetSection />
       <Footer />
     </div>
   );
