@@ -1,5 +1,6 @@
 import * as styles from './ChoosePetSection.style';
 import { Button } from '@gitanimals/ui-panda';
+import LoginButton from '@/components/LoginButton';
 
 function ChoosePetSection() {
   return (
@@ -12,12 +13,14 @@ function ChoosePetSection() {
         Choose from <br />
         over 50+ different pets and raise them
       </h2>
-      <Button className="desktop" size="l">
-        Have Pet
-      </Button>
-      <Button className="mobile" size="m">
-        Have Pet
-      </Button>
+      <LoginButton>
+        <Button className="desktop" size="l">
+          Have Pet
+        </Button>
+        <Button className="mobile" size="m">
+          Have Pet
+        </Button>
+      </LoginButton>
     </section>
   );
 }
