@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { Center } from '_panda/jsx';
 import { Button } from '@gitanimals/ui-panda';
 import { sendGTMEvent } from '@next/third-parties/google';
-import axios from 'axios';
+
+import { sendLog } from '@/utils/log';
 
 function DevPage() {
   return (
@@ -27,20 +28,9 @@ function DevPage() {
 
 export default DevPage;
 
-const sendLog = async (data: any) => {
-  try {
-    const res = await axios.post('/api/googleSheet', data);
-    if (!res.data.success) {
-      throw new Error('Failed to send log');
-    }
-  } catch (e) {
-    console.error(e);
-  }
-};
-
 function GoogleSheet() {
   const handleSubmit = async () => {
-    await sendLog({ sumi: '21ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅇ3' });
+    await sendLog({ test: 'test data 입니다 ' });
   };
 
   return <Button onClick={handleSubmit}>sheet</Button>;
