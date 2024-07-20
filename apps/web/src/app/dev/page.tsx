@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { Center } from '_panda/jsx';
 import { Button } from '@gitanimals/ui-panda';
-import { sendGTMEvent } from '@next/third-parties/google';
 
 import { sendLog } from '@/utils/log';
 
@@ -17,9 +16,7 @@ function DevPage() {
             <Button>get user token</Button>
           </Link>
         </li>
-        <li>
-          <button onClick={() => sendGTMEvent({ event: 'buttonClicked', value: 'xyz' })}>Send Event</button>
-        </li>
+
         <GoogleSheet />
       </ul>
     </Center>
