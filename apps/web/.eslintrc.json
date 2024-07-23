@@ -5,5 +5,5 @@
   "parserOptions": {
     "project": true
   },
-  "exclude": ["node_modules", "next.config.mjs"]
+  "ignorePatterns": ["node_modules/", "next.config.mjs"]
 }
