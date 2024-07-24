@@ -163,6 +163,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.32.0
         version: 5.45.0(react@18.2.0)
+      '@toss/async-boundary':
+        specifier: ^1.5.0
+        version: 1.5.0(react@18.2.0)
       axios:
         specifier: ^1.6.8
         version: 1.7.2
@@ -3028,6 +3031,27 @@ packages:
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
+  '@toss/async-boundary@1.5.0':
+    resolution: {integrity: sha512-E2PQBN+lckEhsKoowyP6F8lPKOy4MeZLztJqLaGJYxNUS6ZKigxCxpbMimRLPPh+J/5ATENneMGSG1Uxl+D1KA==}
+    peerDependencies:
+      react: ^18
+
+  '@toss/error-boundary@1.5.0':
+    resolution: {integrity: sha512-v1nQKXe6zfM2vVPBhS3SkKAnRX7Rp2gVYRZE3uLjN8xxZgceC7QeUWkuqJopuAxew4BXcJ48Lpfc3V9VwfaDRg==}
+    peerDependencies:
+      react: ^18
+
+  '@toss/react@1.7.0':
+    resolution: {integrity: sha512-aD6pIPUdCyxj4QK2HmLCC6HESgZeqIi5Slzc84Sw/r/PJaRKRG+ukV/Vft7c2NXzqG7TXdFvTzgc4dtfjT3ieA==}
+    peerDependencies:
+      react: ^18
+
+  '@toss/storage@1.4.0':
+    resolution: {integrity: sha512-rT0AKWS41hX/JmPQ2JZZ7GdicJZM1DPO5VFeiZwDbNFhfgHMGuEAc6w5qDN8+a8R+sQi5jG1oMFd3QNM/EcpRA==}
+
+  '@toss/utils@1.5.0':
+    resolution: {integrity: sha512-zIZoth29c0IGXenFo34dB97CSaGurCtuQ2GRPxcqvj1CfBB/cxEu0GVGFLv/Dg74fNxrkBnv7sbLkrZ6egpzwA==}
+
   '@ts-morph/common@0.22.0':
     resolution: {integrity: sha512-HqNBuV/oIlMKdkLshXd1zKBqNQCsuPEsgQOkfFQ/eUKjRlwndXW1AjN9LVkBEIukm00gGXSRmfkl0Wv5VXLnlw==}
 
@@ -4099,6 +4123,9 @@ packages:
   cjs-module-lexer@1.3.1:
     resolution: {integrity: sha512-a3KdPAANPbNE4ZUv9h6LckSl9zLsYOP4MBmhIPkRaeyybt+r4UghLvq+xw/YwUcC1gqylCkL4rdVs3Lwupjm4Q==}
 
+  classnames@2.5.1:
+    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
+
   clean-css@5.3.3:
     resolution: {integrity: sha512-D5J+kHaVb/wKSFcyyV75uCn8fiY4sV38XJoe4CUyGQ+mOU/fMVYUdH1hJC+CJQ5uY3EnW27SbJYS4X8BiLrAFg==}
     engines: {node: '>= 10.0'}
@@ -4358,6 +4385,10 @@ packages:
   data-uri-to-buffer@5.0.1:
     resolution: {integrity: sha512-a9l6T1qqDogvvnw0nKlfZzqsyikEBZBClF39V3TFoKhDtGBqHu2HkuomJc02j5zft8zrUaXEuoicLeW54RkzPg==}
     engines: {node: '>= 14'}
+
+  date-fns@2.30.0:
+    resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
+    engines: {node: '>=0.11'}
 
   debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -6095,6 +6126,9 @@ packages:
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
+
+  lodash.throttle@4.1.1:
+    resolution: {integrity: sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==}
 
   lodash.uniq@4.5.0:
     resolution: {integrity: sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==}
@@ -11916,6 +11950,36 @@ snapshots:
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
+  '@toss/async-boundary@1.5.0(react@18.2.0)':
+    dependencies:
+      '@toss/error-boundary': 1.5.0(react@18.2.0)
+      react: 18.2.0
+
+  '@toss/error-boundary@1.5.0(react@18.2.0)':
+    dependencies:
+      '@toss/react': 1.7.0(react@18.2.0)
+      '@toss/utils': 1.5.0
+      react: 18.2.0
+
+  '@toss/react@1.7.0(react@18.2.0)':
+    dependencies:
+      '@babel/runtime': 7.24.7
+      '@toss/storage': 1.4.0
+      '@toss/utils': 1.5.0
+      classnames: 2.5.1
+      lodash.debounce: 4.0.8
+      lodash.throttle: 4.1.1
+      react: 18.2.0
+
+  '@toss/storage@1.4.0':
+    dependencies:
+      '@babel/runtime': 7.24.7
+
+  '@toss/utils@1.5.0':
+    dependencies:
+      '@babel/runtime': 7.24.7
+      date-fns: 2.30.0
+
   '@ts-morph/common@0.22.0':
     dependencies:
       fast-glob: 3.3.2
@@ -13304,6 +13368,8 @@ snapshots:
 
   cjs-module-lexer@1.3.1: {}
 
+  classnames@2.5.1: {}
+
   clean-css@5.3.3:
     dependencies:
       source-map: 0.6.1
@@ -13565,6 +13631,10 @@ snapshots:
   data-uri-to-buffer@3.0.1: {}
 
   data-uri-to-buffer@5.0.1: {}
+
+  date-fns@2.30.0:
+    dependencies:
+      '@babel/runtime': 7.24.7
 
   debug@2.6.9:
     dependencies:
@@ -15647,6 +15717,8 @@ snapshots:
   lodash.memoize@4.1.2: {}
 
   lodash.merge@4.6.2: {}
+
+  lodash.throttle@4.1.1: {}
 
   lodash.uniq@4.5.0: {}
 
