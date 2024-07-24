@@ -1,7 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import React from 'react';
 
-import { GITHUB_OAUTH_REQUEST_URL } from '@/constants/oauth';
 import { useUser } from '@/store/user';
 
 interface LoginButtonProps {}
@@ -9,13 +8,16 @@ interface LoginButtonProps {}
 function LoginButton({ children }: PropsWithChildren<LoginButtonProps>) {
   const { isLogin } = useUser();
 
+  const onLogin = async () => {
+    const res = await fetch('/api/oauth');
+    const data = await res.json();
+
+    window.location.assign(data.url);
+  };
+
   if (isLogin) return children;
 
-  return (
-    <a href={GITHUB_OAUTH_REQUEST_URL} onClick={(e) => e.stopPropagation()}>
-      {children}
-    </a>
-  );
+  return <button onClick={onLogin}>{children}</button>;
 }
 
 export default LoginButton;
