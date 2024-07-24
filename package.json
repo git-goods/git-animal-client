@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "build:web": "turbo build --filter=@gitanimals/web",
-    "analyze:web": "ANALYZE=true turbo build --filter=@gitanimals/web",
     "build:admin": "turbo build --filter=@gitanimals/admin",
+    "analyze:web": "ANALYZE=true turbo build --filter=@gitanimals/web",
     "dev:web": "turbo dev --filter=@gitanimals/web",
     "dev:admin": "turbo dev --filter=@gitanimals/admin",
     "lint": "turbo lint",
