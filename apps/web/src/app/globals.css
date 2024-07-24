@@ -1,5 +1,4 @@
 @layer reset, base, tokens, recipes, utilities;
-
 @layer reset {
   @font-face {
     font-family: 'DNFBitBitv2';
@@ -19,7 +18,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: 140%; /* 107.8px */
-    background-color: #2a7442;
+    /* background-color: #2a7442; */
     position: relative;
   }
 
@@ -42,5 +41,23 @@
   input::placeholder {
     color: #b5b5b5;
     font-family: 'DNFBitBitv2';
+  }
+
+  .mobile {
+    display: none;
+  }
+
+  .desktop {
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .mobile {
+      display: block;
+    }
+
+    .desktop {
+      display: none;
+    }
   }
 }

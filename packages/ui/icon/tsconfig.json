@@ -1,0 +1,6 @@
+{
+  "extends": "@gitanimals/typescript-config/react-library.json",
+  "compilerOptions": {},
+  "include": ["src", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}

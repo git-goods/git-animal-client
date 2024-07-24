@@ -14,11 +14,14 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@egjs/flicking-plugins": "^4.7.1",
+    "@egjs/react-flicking": "^4.11.3",
     "@gitanimals/api": "workspace:*",
     "@gitanimals/asset-font": "workspace:*",
     "@gitanimals/exception": "workspace:*",
     "@gitanimals/ui-panda": "workspace:*",
     "@next/third-parties": "^14.2.5",
+    "@gitanimals/ui-icon": "workspace:*",
     "@tanstack/react-query": "^5.32.0",
     "axios": "^1.6.8",
     "framer-motion": "^11.1.7",
@@ -36,6 +39,7 @@
     "@chromatic-com/storybook": "^1.3.3",
     "@gitanimals/eslint-config": "workspace:*",
     "@gitanimals/typescript-config": "workspace:*",
+    "@next/bundle-analyzer": "^14.2.5",
     "@pandacss/dev": "^0.41.0",
     "@storybook/addon-essentials": "^8.0.9",
     "@storybook/addon-interactions": "^8.0.9",

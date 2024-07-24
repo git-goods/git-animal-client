@@ -1,24 +1,18 @@
 {
-  "name": "@gitanimals/ui-panda",
+  "name": "@gitanimals/ui-icon",
   "version": "0.0.0",
   "private": true,
   "main": "src/index.ts",
   "scripts": {
-    "prepare": "panda codegen",
-    "lint": "eslint . ",
-    "generate:component": "turbo gen react-component"
+    "lint": "eslint . --max-warnings 0"
   },
   "devDependencies": {
-    "@pandacss/dev": "^0.41.0",
     "@gitanimals/eslint-config": "workspace:*",
     "@gitanimals/typescript-config": "workspace:*",
-    "@gitanimals/ui-token": "workspace:*",
-    "@gitanimals/util-typescript": "workspace:*",
-    "@turbo/gen": "^1.12.4",
-    "@types/node": "^20.11.24",
     "@types/eslint": "^8.56.5",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
+    "@typescript-eslint/parser": "^7.16.1",
     "eslint": "^8.57.0",
     "react": "*",
     "typescript": "*"
