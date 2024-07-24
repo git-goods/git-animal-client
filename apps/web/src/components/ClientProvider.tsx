@@ -19,6 +19,7 @@ function ClientProvider({ children }: PropsWithChildren) {
         <GlobalStyle />
         <ThemeProvider theme={theme}>
           <SnackBarProvider />
+
           {children}
         </ThemeProvider>
       </StyledComponentsRegistry>
