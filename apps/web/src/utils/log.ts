@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const sendLog = async (data: any, description?: string) => {
+export const sendLog = async (data: object, description?: string) => {
   try {
     const res = await axios.post('/api/googleSheet', { description, ...data });
     if (!res.data.success) {

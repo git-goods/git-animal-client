@@ -29,7 +29,7 @@ function SortFilter({ tableParams }: { tableParams: Record<string, string> }) {
       {SORT_OPTION.map((option) => (
         <Link
           key={option.label}
-          to={getNewTableUrl({ baseUrl: '/shop/all-buy', newParams: option.options ?? {}, oldParams: tableParams })}
+          to={getNewTableUrl({ baseUrl: '/auction/all-buy', newParams: option.options ?? {}, oldParams: tableParams })}
         >
           <Button variant="outline" size="sm" w="full">
             {option.label}
@@ -40,7 +40,7 @@ function SortFilter({ tableParams }: { tableParams: Record<string, string> }) {
       {PAGE_SIZE.map((size) => (
         <Link
           key={size}
-          to={getNewTableUrl({ baseUrl: '/shop/all-buy', newParams: { count: size }, oldParams: tableParams })}
+          to={getNewTableUrl({ baseUrl: '/auction/all-buy', newParams: { count: size }, oldParams: tableParams })}
         >
           <Button variant="outline" size="sm" w="full">
             {size}개씩
