@@ -2,7 +2,7 @@ import z from 'zod';
 import { safeRenderGet } from '../_instance/safe';
 
 const GetTotalRenderUserCountResponseSchema = z.object({
-  userCount: z.number(),
+  userCount: z.string(),
 });
 
 export type GetTotalRenderUserCountResponse = z.infer<typeof GetTotalRenderUserCountResponseSchema>;

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { Suspense } from 'react';
 import Image from 'next/image';
 import { Button } from '@gitanimals/ui-panda';
@@ -23,11 +25,15 @@ function AvailablePetSection() {
         <h2 className={styles.heading}>50+ Available Pets</h2>
         <div className={styles.infoContainer}>
           <div className={styles.infoItem}>
-            <Suspense fallback={<p></p>}>{/* <TotalUsers /> */}</Suspense>
+            <Suspense fallback={<p></p>}>
+              <TotalUsers />
+            </Suspense>
             <p>Total Users</p>
           </div>
           <div className={styles.infoItem}>
-            <Suspense fallback={<p></p>}>{/* <TotalAdoptedPets /> */}</Suspense>
+            <Suspense fallback={<p></p>}>
+              <TotalAdoptedPets />
+            </Suspense>
 
             <p>Total Adopted Pets</p>
           </div>
@@ -60,17 +66,16 @@ export default AvailablePetSection;
 function TotalUsers() {
   const { data: identityData } = useGetTotalIdentityUserCount();
   const { data: renderData } = useGetTotalRenderUserCount();
-
-  return <p>{(identityData?.userCount ?? 0) + (renderData?.userCount ?? 0)}+</p>;
+  return <p>{Number(identityData.userCount ?? 0) + Number(renderData.userCount ?? 0)}+</p>;
 }
 
 function TotalAdoptedPets() {
   const { data } = useGetTotalPersonaCount();
-  return <p>{data?.personaCount}+</p>;
+  return <p>{data.personaCount}+</p>;
 }
 
 function RegisteredPets() {
   const { data } = useGetTotalProductCount();
 
-  return <p>{data?.count}+</p>;
+  return <p>{data.count}+</p>;
 }

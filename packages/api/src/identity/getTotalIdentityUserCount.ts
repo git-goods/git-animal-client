@@ -2,7 +2,7 @@ import z from 'zod';
 import { safeGet } from '../_instance/safe';
 
 const GetTotalIdentityUserCountResponseSchema = z.object({
-  userCount: z.number(),
+  userCount: z.string(),
 });
 
 export type GetTotalIdentityUserCountResponse = z.infer<typeof GetTotalIdentityUserCountResponseSchema>;
