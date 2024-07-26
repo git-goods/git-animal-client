@@ -45,7 +45,9 @@ function AvailablePetSection() {
           </div>
         </div>
         <div>
-          <AnimalSlider />
+          <Suspense fallback={<></>}>
+            <AnimalSlider />
+          </Suspense>
         </div>
 
         <div className={styles.buttonWrapper}>
