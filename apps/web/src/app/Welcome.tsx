@@ -3,6 +3,8 @@ import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import { checkUsedCoupons } from '@/apis/user/getUsedCoupons';
+import Button from '@/components/Button';
+import LoginButton from '@/components/LoginButton';
 import { SUMI_GITHUB_URL } from '@/constants/outlink';
 import { recordEvent } from '@/lib/gtag';
 
@@ -31,9 +33,9 @@ function Welcome() {
       </SeeExampleButton>
       {/* TODO: 임시로 수미로 설정 */}
       {/* TODO:고치기 */}
-      {/* <LoginButton>
+      <LoginButton>
         <Button onClick={onClickHavePet}>HAVE PET!</Button>
-      </LoginButton> */}
+      </LoginButton>
       <DuckWrapper>
         <Image src="/main/ducks.png" width={300} height={200} alt="duck" />
       </DuckWrapper>
