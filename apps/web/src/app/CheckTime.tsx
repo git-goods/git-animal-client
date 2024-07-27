@@ -2,7 +2,7 @@ import React from 'react';
 import { css } from '_panda/css';
 import { Center } from '_panda/jsx';
 
-const CHECK_DATE = '2024-07-27T22:00:00';
+const CHECK_DATE = '2024-07-28T18:00:00';
 
 function CheckTime() {
   const isCheckTime = new Date().getTime() < new Date(CHECK_DATE).getTime();
@@ -54,7 +54,7 @@ function CheckTime() {
           textAlign: 'center',
         })}
       >
-        서버 이전 시간 : ~ 7월 27일 22시
+        서버 이전 시간 : ~ 7월 28일 18시
       </p>
     </Center>
   );
