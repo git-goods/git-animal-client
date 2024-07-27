@@ -1,12 +1,14 @@
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import { checkUsedCoupons } from '@/apis/user/getUsedCoupons';
 import Button from '@/components/Button';
-import LoginButton from '@/components/LoginButton';
 import { SUMI_GITHUB_URL } from '@/constants/outlink';
 import { recordEvent } from '@/lib/gtag';
+
+const LoginButton = dynamic(() => import('../components/LoginButton'), { ssr: false });
 
 function Welcome() {
   const router = useRouter();

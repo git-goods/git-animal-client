@@ -2,11 +2,9 @@ import React from 'react';
 import { css } from '_panda/css';
 import { Center } from '_panda/jsx';
 
-const CHECK_DATE = '2024-07-27T18:00:00';
+const CHECK_DATE = '2024-07-27T22:00:00';
 
 function CheckTime() {
-  // 7월 27일 18시까지 서버 이전 작업으로 인한 서비스 중지 안내
-
   const isCheckTime = new Date().getTime() < new Date(CHECK_DATE).getTime();
   if (!isCheckTime) return null;
 
@@ -56,7 +54,7 @@ function CheckTime() {
           textAlign: 'center',
         })}
       >
-        서버 이전 시간 : ~ 7월 27일 6시
+        서버 이전 시간 : ~ 7월 27일 22시
       </p>
     </Center>
   );
