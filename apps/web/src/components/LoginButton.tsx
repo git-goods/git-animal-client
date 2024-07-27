@@ -11,10 +11,9 @@ function LoginButton({ children }: PropsWithChildren<LoginButtonProps>) {
   const { isLogin } = useUser();
 
   const onLogin = async () => {
-    const res = await fetch('/api/oauth');
-    const data = await res.json();
-
-    window.location.assign(data.url);
+    // const res = await fetch('/api/oauth');
+    // const data = await res.json();
+    // window.location.assign(data.url);
   };
 
   if (isLogin) return children;
