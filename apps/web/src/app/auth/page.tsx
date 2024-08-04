@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import { checkUsedCouponsByToken } from '@/apis/user/getUsedCoupons';
 import { useLogin } from '@/store/user';
 
-// TODO: 삭제 예정
 function JWTPage() {
   const router = useRouter();
   const searchParams = useSearchParams();

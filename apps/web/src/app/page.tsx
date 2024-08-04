@@ -9,7 +9,6 @@ export default function Home() {
   return (
     <div>
       <MainSection />
-      {/* image error로 인해 잠시 주석 처리 @hyesungoh */}
       <AvailablePetSection />
       <HavePetWaySection />
       <ChoosePetSection />

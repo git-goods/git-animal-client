@@ -8,6 +8,8 @@ import LoginButton from '@/components/LoginButton';
 import { SUMI_GITHUB_URL } from '@/constants/outlink';
 import { recordEvent } from '@/lib/gtag';
 
+// const LoginButton = dynamic(() => import('../components/LoginButton'), { ssr: false });
+
 function Welcome() {
   const router = useRouter();
 
@@ -30,6 +32,7 @@ function Welcome() {
         See Example →
       </SeeExampleButton>
       {/* TODO: 임시로 수미로 설정 */}
+      {/* TODO:고치기 */}
       <LoginButton>
         <Button onClick={onClickHavePet}>HAVE PET!</Button>
       </LoginButton>
