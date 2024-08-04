@@ -18,9 +18,10 @@ const GetAllPersonasResponseSchema = z.object({
 
 export type RenderPersonaItem = z.infer<typeof PersonaSchema>;
 
-export type GetAllPersonasRequest = z.infer<typeof GetAllPersonasRequestSchema>;
-export type GetAllPersonasResponse = z.infer<typeof GetAllPersonasResponseSchema>;
+export type GetAllMyPersonasRequest = z.infer<typeof GetAllPersonasRequestSchema>;
+export type GetAllMyPersonasResponse = z.infer<typeof GetAllPersonasResponseSchema>;
 
-export const getAllPets = (request: GetAllPersonasRequest): Promise<GetAllPersonasResponse> => {
+//
+export const getAllMyPets = (request: GetAllMyPersonasRequest): Promise<GetAllMyPersonasResponse> => {
   return safeRenderGet(GetAllPersonasResponseSchema)(`/users/${request.username}`);
 };
