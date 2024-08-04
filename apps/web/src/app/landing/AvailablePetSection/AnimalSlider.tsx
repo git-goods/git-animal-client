@@ -1,144 +1,27 @@
+'use client';
+
 import { AnimalCard } from '@/components/AnimalCard';
+import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
 
 import * as styles from './AnimalSlider.style';
 import AnimalSliderContainer from './AnimalSliderContainer';
 import AnimalSliderContainerMobile from './AnimalSliderContainerMobile';
-
-// TODO: api 연동 후 데이터 받아오기
-const ANIMAL_LIST = [
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0.7%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0.02%',
-  },
-  {
-    type: 'LITTLE_CHICK',
-    dropRate: '0.01%',
-  },
-  {
-    type: 'GOBLIN_BAG',
-    dropRate: '0.13%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '10%',
-  },
-  {
-    type: 'GOOSE',
-    dropRate: '10%',
-  },
-  {
-    type: 'FISH_MAN',
-    dropRate: '10%',
-  },
-  {
-    type: 'GOBLIN',
-    dropRate: '10%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0.7%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0.02%',
-  },
-  {
-    type: 'LITTLE_CHICK',
-    dropRate: '0.01%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0.7%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0.02%',
-  },
-  {
-    type: 'LITTLE_CHICK',
-    dropRate: '0.01%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0.7%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0.02%',
-  },
-  {
-    type: 'LITTLE_CHICK',
-    dropRate: '0.01%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0.7%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0.02%',
-  },
-  {
-    type: 'LITTLE_CHICK',
-    dropRate: '0.01%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0.7%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '0.02%',
-  },
-  {
-    type: 'LITTLE_CHICK',
-    dropRate: '0.01%',
-  },
-  {
-    type: 'LITTLE_CHICK_SUNGLASSES',
-    dropRate: '10%',
-  },
-  {
-    type: 'LITTLE_CHICK',
-    dropRate: '10%',
-  },
-];
 
 interface Animal {
   type: string;
   dropRate: string;
 }
 
+function shuffle(array: Animal[]): Animal[] {
+  return array.sort(() => Math.random() - 0.5);
+}
+
 function AnimalSlider() {
-  const animalList: Animal[][] = ANIMAL_LIST.reduce<Animal[][]>((acc, _, idx) => {
+  const { data } = useGetAllPersona();
+
+  const ANIMAL_LIST = shuffle(data.personas);
+
+  const animalList: Animal[][] = data.personas.reduce<Animal[][]>((acc, _, idx) => {
     if (idx % 12 === 0) {
       acc.push(ANIMAL_LIST.slice(idx, idx + 12));
     }
@@ -165,7 +48,7 @@ function AnimalSlider() {
       </div>
       <div className={styles.showMobile}>
         <AnimalSliderContainerMobile>
-          {ANIMAL_LIST.map((animalList: Animal, idx) => {
+          {data.personas.map((animalList: Animal, idx) => {
             return (
               <div key={idx} className={styles.cardContainerMobile}>
                 <AnimalCard type={animalList.type} dropRate={animalList.dropRate} />
