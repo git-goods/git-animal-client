@@ -3,6 +3,7 @@ import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 
 import ClientProvider from '@/components/ClientProvider';
 import FeedBack from '@/components/FeedBack/FeedBack';
+import { MONITORING_KEY } from '@/constants/monitoring';
 
 import './globals.css';
 import '@gitanimals/asset-font/product-sans/index.css';
@@ -34,13 +35,6 @@ export const metadata: Metadata = {
     description: '깃허브 활동으로 펫을 키우세요!',
     siteName: 'GitAnimals',
   },
-};
-const isProd = process.env.NODE_ENV === 'production';
-
-const MONITORING_KEY = {
-  GA: isProd ? 'G-RNEDVMFT5X' : 'G-N45935GS2S',
-  GTM: 'GTM-T6DQHP7X',
-  JENNIFER: isProd ? 'e9e023ee' : '000000',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
