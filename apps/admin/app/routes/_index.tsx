@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { userToken } from '@/cookies.server';
 
 import { ActionFunctionArgs, redirect, type MetaFunction } from '@remix-run/node';
-import { Form } from '@remix-run/react';
+import { Form, Link } from '@remix-run/react';
 import { css } from '_panda/css';
 import { Box } from '_panda/jsx';
 import { useState } from 'react';
@@ -31,18 +31,21 @@ export const meta: MetaFunction = () => {
 export async function action({ request }: ActionFunctionArgs) {
   const cookieHeader = request.headers.get('Cookie');
   const cookie = (await userToken.parse(cookieHeader)) || {};
+  console.log('cookie: ', cookie);
   const bodyParams = await request.formData();
+  console.log('bodyParams: ', bodyParams);
 
-  const token = bodyParams.get('token') as string;
-  if (token) {
-    cookie.token = token;
-  }
+  return {};
+  // const token = bodyParams.get('token') as string;
+  // if (token) {
+  //   cookie.token = token;
+  // }
 
-  return redirect('/', {
-    headers: {
-      'Set-Cookie': await userToken.serialize(cookie),
-    },
-  });
+  // return redirect('/', {
+  //   headers: {
+  //     'Set-Cookie': await userToken.serialize(cookie),
+  //   },
+  // });
 }
 
 export default function Index() {
@@ -62,11 +65,12 @@ function Login() {
 
   const onSubmit = () => {
     console.log('value: ', value);
-    window.localStorage && window.localStorage.setItem(ADMIN_TOKEN, value);
+    // window.localStorage && window.localStorage.setItem(ADMIN_TOKEN, value);
   };
 
   return (
     <Box mt={8}>
+      <Link to="/auth">Login</Link>
       <p>token을 입력해주세요</p>
       <Form method="post">
         <Input type="text" name="token" my={4} onChange={(e) => setValue(e.target.value)} />
