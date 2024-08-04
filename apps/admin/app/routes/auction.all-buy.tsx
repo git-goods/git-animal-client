@@ -2,20 +2,20 @@ import ProductDataTable from '@/components/Auction/AllBuy/ProductTable';
 import SortFilter from '@/components/Auction/AllBuy/SortFilter';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
+import { userToken } from '@/cookies.server';
 import { getToken } from '@/utils/token';
-import { Product, buyProductWithToken, getProducts } from '@gitanimals/api';
-import { LoaderFunction, json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { GetProductsResponse, Product, buyProductWithToken, getProducts } from '@gitanimals/api';
+import { ActionFunctionArgs, LoaderFunction, json, redirect, redirect } from '@remix-run/node';
+import { Form, useLoaderData, useSubmit } from '@remix-run/react';
 
 import { Flex } from '_panda/jsx';
+import { token } from '_panda/tokens';
 import { useState } from 'react';
 
 const INIT_COUNT = 20;
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const query = new URL(request.url).searchParams;
-
-  const params = Object.fromEntries(
+const getProductParams = (query: URLSearchParams) => {
+  return Object.fromEntries(
     Object.entries({
       pageNumber: query.get('pageNumber'),
       personaType: query.get('personaType'),
@@ -24,20 +24,40 @@ export const loader: LoaderFunction = async ({ request }) => {
       sortDirection: query.get('sortDirection') ?? 'ASC',
     }).filter(([, v]) => v != null),
   );
-
-  const data = await getProducts(params);
-  return json({ ...data, tableParams: params });
 };
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const query = new URL(request.url).searchParams;
+
+  const params = getProductParams(query);
+
+  const data: GetProductsResponse = await getProducts(params);
+  return json({ products: data.products, tableParams: params });
+};
+
+export async function action({ request }: ActionFunctionArgs) {
+  const cookieHeader = request.headers.get('Cookie');
+  const { token } = (await userToken.parse(cookieHeader)) || {};
+
+  let formData = await request.formData();
+  let items = formData.get('products');
+  let itemsArray = items ? JSON.parse(items as string) : [];
+  try {
+    console.log('token:', token);
+    await buyProductWithToken({ productId: itemsArray[0], token });
+    // const promises = itemsArray.map((id: string) => buyProductWithToken({ productId: id, token }));
+    // await Promise.all(promises);
+  } catch (error) {
+    console.log('error: ', error);
+  }
+
+  return redirect('/auction/all-buy');
+}
 
 function ActionAllBuyPage() {
   const { products, tableParams } = useLoaderData<typeof loader>();
 
-  // async function parallel(array) {
-  //   const promises = array.map((url) => async_download(url));
-  //   await Promise.all(promises);
-  //   console.log('all done :)');
-  // }
-
+  const submit = useSubmit();
   const [isLoading, setIsLoading] = useState(false);
   const onClickAllBuy = async () => {
     setIsLoading(true);
@@ -65,9 +85,13 @@ function ActionAllBuyPage() {
           <CardTitle>경매장 일괄 구매</CardTitle>
           <CardDescription>시장 경제 손보다가, 손이 빠질 것 같아여.......</CardDescription>
 
-          <Button mt={4} onClick={onClickAllBuy} isLoading={isLoading}>
-            일괄 구매 (평균{getProductAveragePrice(products)}원, 총 {products?.length}개)
-          </Button>
+          <Form method="post" onSubmit={() => submit(tableParams, { method: 'post', encType: 'application/json' })}>
+            <input type="hidden" name="products" value={JSON.stringify(products?.map((item: Product) => item.id))} />
+
+            <Button mt={4} type="submit" isLoading={isLoading}>
+              일괄 구매 (평균{getProductAveragePrice(products)}원, 총 {products?.length}개)
+            </Button>
+          </Form>
         </CardHeader>
         <CardContent>
           <SortFilter tableParams={tableParams} />
