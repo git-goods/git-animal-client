@@ -16,7 +16,7 @@ function LoginButton({ children }: PropsWithChildren<LoginButtonProps>) {
 
   if (isLogin) return children;
 
-  return <button onClick={onLogin}>{children}</button>;
+  return <div onClick={onLogin}>{children}</div>;
 }
 
 export default LoginButton;

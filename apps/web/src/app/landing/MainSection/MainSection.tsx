@@ -1,8 +1,9 @@
 import { Button } from '@gitanimals/ui-panda';
 
+import LoginButton from '@/components/LoginButton';
+
 import * as styles from './MainSection.style';
 import MainSlider from './MainSlider';
-import LoginButton from '@/components/LoginButton';
 
 function MainSection() {
   return (
