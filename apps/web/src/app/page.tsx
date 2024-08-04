@@ -1,17 +1,18 @@
-'use client';
+import { ChoosePetSection } from './landing/ChoosePetSection';
+import { Footer } from './landing/Footer';
+import { AvailablePetSection, HavePetWaySection, MainSection } from './landing';
 
-import Header from '@/components/Layout/Header';
-import Layout from '@/components/Layout/Layout';
-
-import CheckTime from './CheckTime';
-import Welcome from './Welcome';
+import '@egjs/react-flicking/dist/flicking.css';
+import '@egjs/react-flicking/dist/flicking-inline.css';
 
 export default function Home() {
   return (
-    <Layout>
-      <CheckTime />
-      <Header />
-      <Welcome />
-    </Layout>
+    <div>
+      <MainSection />
+      <AvailablePetSection />
+      <HavePetWaySection />
+      <ChoosePetSection />
+      <Footer />
+    </div>
   );
 }

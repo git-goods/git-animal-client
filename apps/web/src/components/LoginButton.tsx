@@ -1,14 +1,12 @@
 'use client';
-
 import type { PropsWithChildren } from 'react';
-import React from 'react';
 
 import { useUser } from '@/store/user';
 
 interface LoginButtonProps {}
 
 function LoginButton({ children }: PropsWithChildren<LoginButtonProps>) {
-  const { isLogin } = useUser();
+  const { isLogin } = useUser(); // TODO: useUser 제거
 
   const onLogin = async () => {
     const res = await fetch('/api/oauth');
@@ -18,7 +16,7 @@ function LoginButton({ children }: PropsWithChildren<LoginButtonProps>) {
 
   if (isLogin) return children;
 
-  return <button onClick={onLogin}>{children}</button>;
+  return <div onClick={onLogin}>{children}</div>;
 }
 
 export default LoginButton;

@@ -11,6 +11,7 @@ import Button from '@/components/Button/Button';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
 import TextArea from '@/components/TextArea';
+import { sendLog } from '@/utils/log';
 
 import { ISSUE_LABEL, MAINTAINER } from './FeedBack.constants';
 import { CloseIcon, FeedBackCloseIcon, FeedBackOpenIcon } from './Icons';
@@ -22,8 +23,9 @@ function FeedBack() {
   const [isOpen, setIsOpen] = useState(false);
 
   const onSubmit = () => {
-    const username = userData?.username ?? '';
-    // TODO: username 없는지 있는지 로깅
+    const username = userData?.username ?? 'not login';
+
+    sendLog({ title: content.title, username }, 'feedback form submitted');
 
     mutate(
       { ...content, assignees: [username, ...MAINTAINER] },

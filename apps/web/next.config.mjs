@@ -1,3 +1,6 @@
+// import withBundleAnalyzer from '@next/bundle-analyzer';
+// withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ['@gitanimals/ui-panda'],
@@ -18,3 +21,4 @@ const nextConfig = {
 };
 
 export default nextConfig;
+// export default withBundleAnalyzer(nextConfig);
