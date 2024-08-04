@@ -36,16 +36,6 @@ export async function action({ request }: ActionFunctionArgs) {
   console.log('bodyParams: ', bodyParams);
 
   return {};
-  // const token = bodyParams.get('token') as string;
-  // if (token) {
-  //   cookie.token = token;
-  // }
-
-  // return redirect('/', {
-  //   headers: {
-  //     'Set-Cookie': await userToken.serialize(cookie),
-  //   },
-  // });
 }
 
 export default function Index() {

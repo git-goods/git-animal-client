@@ -4,7 +4,6 @@ import { useLoaderData } from '@remix-run/react';
 
 export let loader: LoaderFunction = async ({ request }) => {
   const query = new URL(request.url).searchParams;
-
   const authToken = query.get('jwt');
 
   if (authToken) {
