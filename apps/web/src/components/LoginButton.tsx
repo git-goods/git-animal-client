@@ -1,5 +1,6 @@
 'use client';
 import type { PropsWithChildren } from 'react';
+import Link from 'next/link';
 
 import { useUser } from '@/store/user';
 
@@ -14,7 +15,7 @@ function LoginButton({ children }: PropsWithChildren<LoginButtonProps>) {
     window.location.assign(data.url);
   };
 
-  if (isLogin) return children;
+  if (isLogin) return <Link href="/mypage">{children}</Link>;
 
   return <div onClick={onLogin}>{children}</div>;
 }
