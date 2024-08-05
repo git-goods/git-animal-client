@@ -9,7 +9,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 const queryClientOption: QueryClientConfig = {
   defaultOptions: {
     queries: {
-      retry: false,
+      retry: 1,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
     },
