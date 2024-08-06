@@ -9,6 +9,9 @@ const instance = setInterceptors(
     timeout: 15000,
   }),
 );
+export const setAccessToken = (token: string) => {
+  instance.defaults.headers.common['Authorization'] = token;
+};
 
 export const get = <T>(...args: Parameters<typeof instance.get>) => {
   return instance.get<T, T>(...args);

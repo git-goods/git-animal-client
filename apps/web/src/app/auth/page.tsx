@@ -1,49 +1,45 @@
-'use client';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { Button } from '@gitanimals/ui-panda';
 
-import { useCallback, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import styled from 'styled-components';
+import * as styles from './form.style';
 
-import { checkUsedCouponsByToken } from '@/apis/user/getUsedCoupons';
-import { useLogin } from '@/store/user';
+function JWTPage({ searchParams }: { searchParams: Record<string, string> }) {
+  const jwt = searchParams['jwt'] || '';
 
-function JWTPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const { login } = useLogin();
+  if (!jwt) {
+    console.log('jwtToken is empty');
+    return redirect('/');
+  }
 
-  const onLogin = useCallback(
-    async (jwtToken: string) => {
-      const token = jwtToken.split(' ')[1];
-      await login(token);
+  const jwtToken = jwt.split(' ')[1];
 
-      if (await checkUsedCouponsByToken(token)) {
-        router.replace('/mypage');
-      } else {
-        router.replace('/start');
-      }
-    },
-    [login, router],
+  const handleLogin = async () => {
+    'use server';
+
+    cookies().set('@gitanimals/auth-token', jwtToken, {
+      maxAge: 48 * 60 * 60,
+    });
+
+    return redirect('/mypage');
+
+    // TODO: coupons 사용 여부 확인 후 페이지 이동
+    // if (await getUsedCouponsByToken(jwtToken)) {
+    //   return redirect('/mypage');
+    // } else {
+    //   return redirect('/start');
+    // }
+  };
+  // form 자동 제출
+
+  return (
+    <div className={styles.container}>
+      <form action={handleLogin} className={styles.form}>
+        <h1 className={styles.heading}>Successfully logged in!</h1>
+        <Button>Go Next Page</Button>
+      </form>
+    </div>
   );
-
-  useEffect(() => {
-    const jwtToken = searchParams?.get('jwt') || '';
-    if (!jwtToken) return;
-
-    onLogin(jwtToken as string);
-  }, [onLogin, searchParams]);
-
-  return <Container>Login Loading...</Container>;
 }
 
 export default JWTPage;
-
-const Container = styled.div`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 2rem;
-`;

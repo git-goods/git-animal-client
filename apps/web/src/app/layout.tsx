@@ -37,6 +37,8 @@ export const metadata: Metadata = {
   },
 };
 
+// setAccessToken('http://localhost:3000');
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
