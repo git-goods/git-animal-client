@@ -1,15 +1,21 @@
-import type { NextRequest, NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function middleware(request: NextRequest, res: NextResponse) {
-  //   const code = req.cookies.get('token')?.value;
-  // const token = new URLSearchParams(request.nextUrl.search);
-  // console.log('request.nextUrl.href: ', request.nextUrl.href);
-  // console.log('token: ', token);
-  // console.log('req.url: ', request.nextUrl);
-  //   console.log('token: ', token);
-  //   if (!code) {
+const NO_AUTH_PATHS = ['/api', '/_next/static', '/_next/image', '/favicon.ico', '.png', '/auth'];
+
+export async function middleware(request: NextRequest) {
+  const token = request.cookies.get('@gitanimals/auth-token');
+
+  if (request.nextUrl.pathname === '/' || NO_AUTH_PATHS.some((path) => request.nextUrl.pathname.includes(path))) {
+    return null;
+  }
+
+  if (!token) {
+    console.log('token not found ');
+    return NextResponse.redirect(new URL('/', request.url));
+  }
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.png).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$|.*\\.webp$|.*\\.svg$).*)'],
 };
