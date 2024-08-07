@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
 import Header from '@/components/Layout/Header';
@@ -15,6 +15,12 @@ import Search from './Search';
 import SellListSection from './SellListSection';
 import SellSection from './SellSection';
 import Tab from './Tab';
+
+// TODO: 판다 이용한 방법으로 변경 필요
+const TempGloablStyle = createGlobalStyle`
+body {
+  background-color: rgba(0, 0, 0, 0.75);
+}`;
 
 // TODO: 폴더정리 필요
 function ShopPage() {
@@ -29,6 +35,8 @@ function ShopPage() {
 
   return (
     <>
+      <TempGloablStyle />
+
       <HeaderStyled>
         <Header />
       </HeaderStyled>
