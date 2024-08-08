@@ -8,6 +8,7 @@ import ShopRow from './SellInputRow';
 
 function SellSection() {
   const [selectPersona, setSelectPersona] = useState<PetInfoSchema>();
+
   return (
     <div>
       <ShopRow item={selectPersona} initPersona={() => setSelectPersona(undefined)} />
