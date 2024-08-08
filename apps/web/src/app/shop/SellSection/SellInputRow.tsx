@@ -17,8 +17,7 @@ const MAX_PRICE = 100_000_000;
 
 function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona: () => void }) {
   const { showSnackBar } = useSnackBar();
-
-  const [price, setPrice] = useState(0);
+  const { price, resetPrice, onChangePriceInput } = usePrice();
 
   const queryClient = useQueryClient();
 
@@ -31,7 +30,7 @@ function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona
         queryKey: ['my', 'products'], //getMyProductsQueryKey(),
       });
       initPersona();
-      setPrice(0);
+      resetPrice();
 
       showSnackBar({ message: '판매 등록이 완료되었습니다.' });
     },
@@ -46,22 +45,6 @@ function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona
     } catch (error: unknown) {
       if (error instanceof Error) showSnackBar({ message: error.message });
     }
-  };
-
-  const onChangePriceInput: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { value } = e.target;
-    const parsedValue = Number(value);
-
-    if (Number.isNaN(parsedValue)) {
-      return;
-    }
-
-    if (MAX_PRICE < parsedValue) {
-      setPrice(MAX_PRICE);
-      return;
-    }
-
-    setPrice(parsedValue);
   };
 
   if (!item) return <Container />;
@@ -122,3 +105,29 @@ const RowStyled = styled(Row)`
     }
   }
 `;
+
+function usePrice() {
+  const INITIAL_VALUE = 0;
+
+  const [price, setPrice] = useState(INITIAL_VALUE);
+
+  const resetPrice = () => setPrice(INITIAL_VALUE);
+
+  const onChangePriceInput: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const { value } = e.target;
+    const parsedValue = Number(value);
+
+    if (Number.isNaN(parsedValue)) {
+      return;
+    }
+
+    if (MAX_PRICE < parsedValue) {
+      setPrice(MAX_PRICE);
+      return;
+    }
+
+    setPrice(parsedValue);
+  };
+
+  return { price, onChangePriceInput, resetPrice };
+}
