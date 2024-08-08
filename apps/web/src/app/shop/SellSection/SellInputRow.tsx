@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import type { ChangeEventHandler } from 'react';
 import React, { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
@@ -12,11 +13,14 @@ import type { PetInfoSchema } from '@/schema/user';
 
 import SmallButton from '../../../components/Button/SmallButton';
 
+const MAX_PRICE = 100_000_000;
+
 function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona: () => void }) {
-  const queryClient = useQueryClient();
   const { showSnackBar } = useSnackBar();
 
   const [price, setPrice] = useState(0);
+
+  const queryClient = useQueryClient();
 
   const { mutate } = useRegisterProduct({
     onSuccess: () => {
@@ -44,6 +48,22 @@ function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona
     }
   };
 
+  const onChangePriceInput: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const { value } = e.target;
+    const parsedValue = Number(value);
+
+    if (Number.isNaN(parsedValue)) {
+      return;
+    }
+
+    if (MAX_PRICE < parsedValue) {
+      setPrice(MAX_PRICE);
+      return;
+    }
+
+    setPrice(parsedValue);
+  };
+
   if (!item) return <Container />;
 
   return (
@@ -55,12 +75,7 @@ function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona
         <div>{item.type}</div>
         <div>{item.level}</div>
         <div>
-          <input
-            type="number"
-            placeholder="Type price..."
-            value={price ? price : ''}
-            onChange={(e) => setPrice(Number(e.target.value))}
-          />
+          <input inputMode="numeric" placeholder="Type price..." value={price} onChange={onChangePriceInput} />
         </div>
         <div>
           <SmallButton color={ACTION_BUTTON_OBJ.SELL.color} onClick={onSellClick}>
