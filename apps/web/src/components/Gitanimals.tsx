@@ -46,12 +46,19 @@ interface GitanimalsFarmProps {
   sizes?: [number, number];
 }
 
-export function GitanimalsFarm({ sizes = [600, 300] }: GitanimalsFarmProps) {
+interface FarmImageProps extends GitanimalsFarmProps {
+  /**
+   * @description 이미지를 최신화하기 위함
+   */
+  imageKey?: string;
+}
+
+export function GitanimalsFarm({ sizes = [600, 300], imageKey }: FarmImageProps) {
   const { username } = useUser();
   return (
     <a href="https://github.com/devxb/gitanimals">
       <img
-        src={`https://render.gitanimals.org/farms/${username}`}
+        src={`https://render.gitanimals.org/farms/${username}?${imageKey}`}
         width={sizes[0]}
         height={sizes[1]}
         alt="preview farm"
@@ -63,10 +70,11 @@ export function GitanimalsFarm({ sizes = [600, 300] }: GitanimalsFarmProps) {
   );
 }
 
-export const getGitanimalsFarmString = ({
-  username,
-  sizes = [600, 300],
-}: { username: string } & GitanimalsFarmProps) => {
+interface FarmStringProps extends GitanimalsFarmProps {
+  username: string;
+}
+
+export const getGitanimalsFarmString = ({ username, sizes = [600, 300] }: FarmStringProps) => {
   return `<a href="https://github.com/devxb/gitanimals">
 <img
   src="https://render.gitanimals.org/farms/${username}"
