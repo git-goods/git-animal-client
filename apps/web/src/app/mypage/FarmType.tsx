@@ -44,8 +44,9 @@ function FarmType() {
   }, [data]);
 
   const [animals, setAnimals] = useState(setInitData());
+  const selectedAnimals = animals.filter((animal) => animal.isSelected);
 
-  const { mutate, isSuccess } = useChangePersonaVisible({
+  const { mutate } = useChangePersonaVisible({
     onMutate: () => {
       setLoading(true);
     },
@@ -82,7 +83,7 @@ function FarmType() {
       await copyClipBoard(getGitanimalsFarmString({ username }));
 
       showSnackBar({ message: '복사 성공!' });
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -110,9 +111,11 @@ function FarmType() {
           })}
         </AnimalList>
       </ChangePet>
+
       <Preview>
-        <GitanimalsFarm key={`farm-${isSuccess}`} sizes={[600, 300]} />
+        <GitanimalsFarm imageKey={`${selectedAnimals.length}`} sizes={[600, 300]} />
       </Preview>
+
       <ButtonWrapper>
         <Button onClick={onLinkCopy}>Copy Link</Button>
       </ButtonWrapper>
