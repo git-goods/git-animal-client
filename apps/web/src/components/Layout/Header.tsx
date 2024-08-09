@@ -40,11 +40,14 @@ function Header() {
                 <button onClick={onShopClick}>SHOP</button>
               </li>
               <li>
-                <a href={GIT_ANIMALS_MAIN_URL}>GITHUB</a>
+                <a target="_blank" href={GIT_ANIMALS_MAIN_URL}>
+                  GITHUB
+                </a>
               </li>
               <DevMenu />
             </ul>
           </nav>
+
           {isLogin && (
             <Profile href="/mypage">
               <>
