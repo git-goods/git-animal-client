@@ -149,6 +149,13 @@ const OpenIconWrapper = styled.div`
 
   height: 121px;
   width: 110px;
+  z-index: 100;
+
+  @media screen and (max-width: 768px) {
+    scale: 0.7;
+    right: -12px;
+    bottom: -12px;
+  }
 `;
 
 const Container = styled.div`
