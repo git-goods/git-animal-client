@@ -24,12 +24,15 @@ function FeedBack() {
   const [isOpen, setIsOpen] = useState(false);
 
   const onSubmit = () => {
-    const username = userData?.username ?? 'not login';
+    const username = userData?.username;
 
-    sendLog({ title: content.title, username }, 'feedback form submitted');
+    const assignees = [username, ...MAINTAINER].filter((i) => i) as string[];
 
+    sendLog({ title: content.title, username: username ?? 'not login' }, 'feedback form submitted');
+
+    // not login일 때 content.body에 Not Logined 추가해주기
     mutate(
-      { ...content, assignees: [username, ...MAINTAINER] },
+      { ...content, assignees },
       {
         onSuccess() {
           setIsOpen(false);
@@ -155,6 +158,13 @@ const OpenIconWrapper = styled.div`
 
   height: 121px;
   width: 110px;
+  z-index: 100;
+
+  @media screen and (max-width: 768px) {
+    scale: 0.7;
+    right: -12px;
+    bottom: -12px;
+  }
 `;
 
 const Container = styled.div`
