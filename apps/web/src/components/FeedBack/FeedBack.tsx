@@ -24,12 +24,15 @@ function FeedBack() {
   const [isOpen, setIsOpen] = useState(false);
 
   const onSubmit = () => {
-    const username = userData?.username ?? 'not login';
+    const username = userData?.username;
 
-    sendLog({ title: content.title, username }, 'feedback form submitted');
+    const assignees = [username, ...MAINTAINER].filter((i) => i) as string[];
 
+    sendLog({ title: content.title, username: username ?? 'not login' }, 'feedback form submitted');
+
+    // not login일 때 content.body에 Not Logined 추가해주기
     mutate(
-      { ...content, assignees: [username, ...MAINTAINER] },
+      { ...content, assignees },
       {
         onSuccess() {
           setIsOpen(false);
