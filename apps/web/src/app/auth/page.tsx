@@ -13,33 +13,9 @@ function JWTPage(
     // };
   },
 ) {
-  // const router = useRouter();
   const searchParams = useSearchParams();
-  // const { login } = useLogin();
   const jwtToken = searchParams?.get('jwt') || '';
-  // const jwtToken = searchParams?.jwt || '';
   const token = jwtToken.split(' ')[1];
-
-  // const onLogin = useCallback(
-  //   async (jwtToken: string) => {
-  //     const token = jwtToken.split(' ')[1];
-  //     await login(token);
-
-  //     if (await checkUsedCouponsByToken(token)) {
-  //       router.replace('/mypage');
-  //     } else {
-  //       router.replace('/start');
-  //     }
-  //   },
-  //   [login, router],
-  // );
-
-  // useEffect(() => {
-  //   const jwtToken = searchParams?.get('jwt') || '';
-  //   if (!jwtToken) return;
-
-  //   onLogin(jwtToken as string);
-  // }, [onLogin, searchParams]);
 
   return (
     <>

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
+import { getServerSession } from 'next-auth/next';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 
+import { authOptions } from '@/auth';
 import ClientProvider from '@/components/ClientProvider';
 import FeedBack from '@/components/FeedBack/FeedBack';
 import { MONITORING_KEY } from '@/constants/monitoring';
@@ -37,7 +39,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const session = await getServerSession(authOptions);
+  console.log('session: ', session);
   return (
     <html lang="en">
       <body>

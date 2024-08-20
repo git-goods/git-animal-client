@@ -32,7 +32,15 @@ export const config = {
             },
           });
 
-          return res.data;
+          const user = {
+            name: res.data.username,
+            image: res.data.profileImage,
+            email: res.data.id,
+            id: res.data.id,
+          };
+
+          if (user) return user;
+          return null;
         } catch (error) {
           console.error(error);
           return null;
@@ -42,14 +50,16 @@ export const config = {
   ],
   callbacks: {
     async session({ session, token, user }) {
-      console.log('user: ', user);
+      console.log('session, token, user: ', session, token, user);
       return session;
     },
-    async jwt({ token, user, account, profile, isNewUser }) {
-      return token;
-    },
+    // async jwt({ token, user, account, profile, isNewUser }) {
+    //   return token;
+    // },
   },
 } satisfies NextAuthOptions;
+
+export const authOptions = config;
 
 // Use it in server contexts
 export function auth(

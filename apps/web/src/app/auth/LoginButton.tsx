@@ -1,16 +1,18 @@
 'use client';
 import React from 'react';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 
 function LoginButton({ token }: { token: string }) {
-  console.log('token: ', token);
+  const { data: session } = useSession();
+  console.log('session: ', session);
+
   return (
     <div>
       <button
         onClick={() =>
           signIn('credentials', {
             token: token,
-            callbackUrl: 'http://localhost:3000/mypage',
+            callbackUrl: 'http://localhost:3000/dev',
           })
         }
       >
