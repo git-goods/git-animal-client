@@ -2,21 +2,12 @@ import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 
 import type { NextAuthOptions } from 'next-auth';
 import { getServerSession } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import axios from 'axios';
+import { getUserByToken } from '@gitanimals/api';
 
-// You'll need to import and pass this
-// to `NextAuth` in `app/api/auth/[...nextauth]/route.ts`
 export const config = {
   providers: [
     CredentialsProvider({
-      //   id: 'github-oauth',
-
-      // The name to display on the sign in form (e.g. 'Sign in with...')
       name: 'Credentials',
-      // The credentials is used to generate a suitable form on the sign in page.
-      // You can specify whatever fields you are expecting to be submitted.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
         token: { type: 'string' },
       },
@@ -26,17 +17,13 @@ export const config = {
         }
 
         try {
-          const res = await axios.get('https://api.gitanimals.org/users', {
-            headers: {
-              Authorization: `Bearer ${credentials.token}`,
-            },
-          });
+          const data = await getUserByToken(`Bearer ${credentials.token}`);
 
           const user = {
-            name: res.data.username,
-            image: res.data.profileImage,
-            email: res.data.id,
-            id: res.data.id,
+            name: data.username,
+            image: data.profileImage,
+            id: data.id,
+            token: credentials.token,
           };
 
           if (user) return user;
@@ -49,13 +36,23 @@ export const config = {
     }),
   ],
   callbacks: {
-    async session({ session, token, user }) {
-      console.log('session, token, user: ', session, token, user);
-      return session;
+    async session({ session, token }) {
+      console.log('session, token: ', session, token);
+      //   console.log('session, token, user : ', Boolean(session), Boolean(token), Boolean(user));
+      //   //   console.log('-----------------------');
+
+      const newUser = {
+        ...session.user,
+        id: token.id,
+      };
+
+      return { ...session, user: newUser, token: token.token };
     },
-    // async jwt({ token, user, account, profile, isNewUser }) {
-    //   return token;
-    // },
+    async jwt({ token, user }) {
+      //   console.log('jwt token, user : ', Boolean(token), Boolean(user));
+      //   console.log('-----------------------');
+      return { ...user, ...token };
+    },
   },
 } satisfies NextAuthOptions;
 

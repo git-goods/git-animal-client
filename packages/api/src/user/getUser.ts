@@ -13,3 +13,13 @@ export const getUser = async () => {
 
   return res;
 };
+
+export const getUserByToken = async (token: string) => {
+  const res = await safeGet(UserSchema)(`/users`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+
+  return res;
+};

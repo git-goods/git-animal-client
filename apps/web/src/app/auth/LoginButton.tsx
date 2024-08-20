@@ -1,11 +1,8 @@
 'use client';
 import React from 'react';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 
 function LoginButton({ token }: { token: string }) {
-  const { data: session } = useSession();
-  console.log('session: ', session);
-
   return (
     <div>
       <button

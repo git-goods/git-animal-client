@@ -1,11 +1,8 @@
 import type { Metadata } from 'next';
-import { getServerSession } from 'next-auth/next';
-import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 
-import { authOptions } from '@/auth';
+import { auth } from '@/auth';
 import ClientProvider from '@/components/ClientProvider';
-import FeedBack from '@/components/FeedBack/FeedBack';
-import { MONITORING_KEY } from '@/constants/monitoring';
+import FeedBack from '@/components/Feedback/FeedBack';
 
 import './globals.css';
 import '@gitanimals/asset-font/product-sans/index.css';
@@ -40,15 +37,13 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const session = await getServerSession(authOptions);
-  console.log('session: ', session);
+  const session = await auth();
+  console.log('root server session: ', session);
   return (
     <html lang="en">
       <body>
-        <GoogleTagManager gtmId={MONITORING_KEY.GTM} />
         <ClientProvider>
           {children}
-          <GoogleAnalytics gaId={MONITORING_KEY.GA} />
           <FeedBack />
         </ClientProvider>
       </body>

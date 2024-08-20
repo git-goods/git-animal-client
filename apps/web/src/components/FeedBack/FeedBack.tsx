@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -11,8 +11,7 @@ import Button from '@/components/Button/Button';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
 import TextArea from '@/components/TextArea';
-import { isTest } from '@/constants/test';
-import { getIsOnLoadSheet, sendLog } from '@/utils/log';
+import { sendLog } from '@/utils/log';
 
 import { ISSUE_LABEL, MAINTAINER } from './FeedBack.constants';
 import { CloseIcon, FeedBackCloseIcon, FeedBackOpenIcon } from './Icons';
@@ -44,11 +43,6 @@ function FeedBack() {
   };
 
   const { mutate, isPending } = usePostIssue();
-
-  useEffect(() => {
-    if (!isTest) return;
-    getIsOnLoadSheet();
-  }, []);
 
   return (
     <>

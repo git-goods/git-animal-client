@@ -1,34 +1,51 @@
 'use client';
 
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
-import { Center } from '_panda/jsx';
+import { Box } from '_panda/jsx';
+import { flex } from '_panda/patterns';
 import { Button } from '@gitanimals/ui-panda';
 
-import { sendLog } from '@/utils/log';
+import { useClientSession } from '@/utils/clientAuth';
+import { getIsOnLoadSheet, sendLog } from '@/utils/log';
 
 function DevPage() {
-  const { data: session, status } = useSession();
-  console.log('status: ', status);
-  console.log('session: ', session?.user);
+  const { data: session, status } = useClientSession();
+  console.log(' client status: ', status);
+  console.log('client session: ', session?.user);
 
   return (
-    <Center h="100vh" flexDir="column" gap="24px" bg="white">
+    <Box p={32}>
       <h1>Dev list </h1>
-      <ul>
+      <ul className={listStyle}>
+        <li>client session status : {status}</li>
+        <li>
+          client session user : <br /> {session?.user && JSON.stringify(session.user)}
+        </li>
         <li>
           <Link href="/dev/token">
             <Button>get user token</Button>
           </Link>
         </li>
-
-        <GoogleSheet />
+        <li>
+          <GoogleSheet />
+        </li>
+        <li>
+          <GoogleSheetLoad />
+        </li>
       </ul>
-    </Center>
+    </Box>
   );
 }
 
 export default DevPage;
+
+const listStyle = flex({
+  gap: '24px',
+  flexDir: 'column',
+  bg: 'white',
+  w: '90%',
+  fontFamily: 'sans-serif',
+});
 
 function GoogleSheet() {
   const handleSubmit = async () => {
@@ -36,4 +53,12 @@ function GoogleSheet() {
   };
 
   return <Button onClick={handleSubmit}>sheet</Button>;
+}
+
+function GoogleSheetLoad() {
+  const handleSubmit = () => {
+    getIsOnLoadSheet();
+  };
+
+  return <Button onClick={handleSubmit}>Goggle Sheet Load Check</Button>;
 }
