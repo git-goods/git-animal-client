@@ -8,8 +8,8 @@ export function FeedBackCloseIcon() {
         <rect x="26.6641" y="20.332" width="56.6667" height="63.3333" fill="#141414" />
         <path d="M47 45H42V50H47V55H52V60H57V55H62V50H67V45H62V50H57V55H52V50H47V45Z" fill="white" />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M26.6689 20.332V26.999H23.3359V80.3324H26.6689V83.6654L83.3356 83.666L83.3359 80.3324H86.6689V26.999H83.3359V20.332H26.6689ZM33.3359 70.332H36.6689V73.666H73.3359V70.332H76.6689V33.6654H73.3359V30.332H36.6689V33.6654H33.3359V70.332Z"
           fill="#141414"
         />
@@ -36,9 +36,9 @@ export function FeedBackCloseIcon() {
           width="110"
           height="120"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -111,9 +111,9 @@ export function FeedBackOpenIcon() {
           width="110"
           height="120.002"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
