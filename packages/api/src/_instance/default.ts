@@ -7,9 +7,7 @@ const instance = setInterceptors(
   axios.create({
     baseURL: API_URL,
     timeout: 15000,
-    headers: {
-      Authorization: 'Bearer test ',
-    },
+    headers: {},
   }),
 );
 

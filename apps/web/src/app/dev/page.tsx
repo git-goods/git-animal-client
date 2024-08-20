@@ -39,6 +39,11 @@ function DevPage() {
         <li>
           <GoogleSheetLoad />
         </li>
+        <li>
+          <Link href="/dev/server">
+            <Button>Server</Button>
+          </Link>
+        </li>
       </ul>
     </Box>
   );

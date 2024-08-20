@@ -23,8 +23,6 @@ export const config = {
         try {
           const data = await getUserByToken(`Bearer ${credentials.token}`);
 
-          // setInstanceToken(credentials.token);
-
           const user = {
             name: data.username,
             image: data.profileImage,
@@ -47,6 +45,8 @@ export const config = {
         ...session.user,
         id: token.id,
       };
+
+      setInstanceToken(token.token as string);
 
       return { ...session, user: newUser, token: token.token };
     },

@@ -10,6 +10,7 @@ const safeFactory =
   <Z extends ZodType>(zodSchema: Z) =>
   async (...args: A): Promise<z.infer<Z>> => {
     const response = await method(...args);
+    console.log('response: ', response);
 
     const parsed = zodSchema.safeParse(response);
     if (parsed.error) throw new CustomException('API_TYPE_NOT_MATCH');
