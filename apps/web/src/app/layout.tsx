@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 
-import { auth } from '@/auth';
 import ClientProvider from '@/components/ClientProvider';
 import FeedBack from '@/components/Feedback/FeedBack';
 
@@ -37,8 +36,8 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const session = await auth();
-  console.log('root server session: ', session);
+  // const session = await auth();
+
   return (
     <html lang="en">
       <body>

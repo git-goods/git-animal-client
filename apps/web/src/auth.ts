@@ -37,10 +37,6 @@ export const config = {
   ],
   callbacks: {
     async session({ session, token }) {
-      console.log('session, token: ', session, token);
-      //   console.log('session, token, user : ', Boolean(session), Boolean(token), Boolean(user));
-      //   //   console.log('-----------------------');
-
       const newUser = {
         ...session.user,
         id: token.id,
@@ -49,8 +45,6 @@ export const config = {
       return { ...session, user: newUser, token: token.token };
     },
     async jwt({ token, user }) {
-      //   console.log('jwt token, user : ', Boolean(token), Boolean(user));
-      //   console.log('-----------------------');
       return { ...user, ...token };
     },
   },
@@ -58,7 +52,6 @@ export const config = {
 
 export const authOptions = config;
 
-// Use it in server contexts
 export function auth(
   ...args: [GetServerSidePropsContext['req'], GetServerSidePropsContext['res']] | [NextApiRequest, NextApiResponse] | []
 ) {

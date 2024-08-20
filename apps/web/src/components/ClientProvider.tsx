@@ -15,7 +15,6 @@ import theme from '@/styles/theme';
 import { SnackBarProvider } from './SnackBar/SnackBarProvider';
 
 function ClientProvider({ children }: PropsWithChildren) {
-  console.log('ClientProvider: ');
   return (
     <QueryClientProvider>
       <GoogleTagManager gtmId={MONITORING_KEY.GTM} />

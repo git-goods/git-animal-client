@@ -10,9 +10,6 @@ import { getIsOnLoadSheet, sendLog } from '@/utils/log';
 
 function DevPage() {
   const { data: session, status } = useClientSession();
-  console.log(' client status: ', status);
-  console.log('client session: ', session?.user);
-
   return (
     <Box p={32}>
       <h1>Dev list </h1>
