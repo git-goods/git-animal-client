@@ -2,7 +2,11 @@ import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 
 import type { NextAuthOptions } from 'next-auth';
 import { getServerSession } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { getUserByToken } from '@gitanimals/api';
+import { getUserByToken, setInstanceToken } from '@gitanimals/api';
+
+const setAuthHeader = (token: string) => {
+  setInstanceToken(`Bearer ${token}`);
+};
 
 export const config = {
   providers: [
@@ -18,6 +22,8 @@ export const config = {
 
         try {
           const data = await getUserByToken(`Bearer ${credentials.token}`);
+
+          // setInstanceToken(credentials.token);
 
           const user = {
             name: data.username,

@@ -2,69 +2,65 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { css } from '_panda/css';
 import styled from 'styled-components';
 
-import { GITHUB_OAUTH_REQUEST_URL } from '@/constants/oauth';
-import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
-import { useUser } from '@/store/user';
 import { useDevAccess } from '@/utils/dev';
 
 function Header() {
-  const { username, isLogin, profileImage } = useUser();
+  return <></>;
+  // const { username, isLogin, profileImage } = useUser();
 
-  const router = useRouter();
+  // const router = useRouter();
 
-  const onShopClick = () => {
-    if (isLogin) {
-      router.push('/shop');
-    } else {
-      router.push(GITHUB_OAUTH_REQUEST_URL);
-    }
-  };
-  return (
-    <>
-      <HeaderStyled className="header">
-        <div>
-          <a href="/">
-            <Image src="/logo.svg" width={137} height={42} alt="logo" />
-          </a>
-        </div>
-        <div>
-          <nav>
-            <ul>
-              <li>
-                <button onClick={onShopClick}>SHOP</button>
-              </li>
-              <li>
-                <a target="_blank" href={GIT_ANIMALS_MAIN_URL}>
-                  GITHUB
-                </a>
-              </li>
-              <DevMenu />
-            </ul>
-          </nav>
+  // const onShopClick = () => {
+  //   if (isLogin) {
+  //     router.push('/shop');
+  //   } else {
+  //     router.push(GITHUB_OAUTH_REQUEST_URL);
+  //   }
+  // };
+  // return (
+  //   <>
+  //     <HeaderStyled className="header">
+  //       <div>
+  //         <a href="/">
+  //           <Image src="/logo.svg" width={137} height={42} alt="logo" />
+  //         </a>
+  //       </div>
+  //       <div>
+  //         <nav>
+  //           <ul>
+  //             <li>
+  //               <button onClick={onShopClick}>SHOP</button>
+  //             </li>
+  //             <li>
+  //               <a target="_blank" href={GIT_ANIMALS_MAIN_URL}>
+  //                 GITHUB
+  //               </a>
+  //             </li>
+  //             <DevMenu />
+  //           </ul>
+  //         </nav>
 
-          {isLogin && (
-            <Profile href="/mypage">
-              <>
-                <div className="profile-image">
-                  <img src={profileImage} alt="profile" width={160} height={160} />
-                </div>
-                <button className={css({ display: 'flex', alignItems: 'center' })}>
-                  <span className="profile-name">{username}</span>
-                  <Image src="/icon/chervon-right.svg" width={12} height={12} alt="arrow-down" />
-                </button>
-              </>
-            </Profile>
-          )}
-        </div>
-      </HeaderStyled>
-    </>
-  );
+  //         {isLogin && (
+  //           <Profile href="/mypage">
+  //             <>
+  //               <div className="profile-image">
+  //                 <img src={profileImage} alt="profile" width={160} height={160} />
+  //               </div>
+  //               <button className={css({ display: 'flex', alignItems: 'center' })}>
+  //                 <span className="profile-name">{username}</span>
+  //                 <Image src="/icon/chervon-right.svg" width={12} height={12} alt="arrow-down" />
+  //               </button>
+  //             </>
+  //           </Profile>
+  //         )}
+  //       </div>
+  //     </HeaderStyled>
+  //   </>
+  // );
 }
 export default Header;
 

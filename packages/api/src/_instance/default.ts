@@ -7,10 +7,28 @@ const instance = setInterceptors(
   axios.create({
     baseURL: API_URL,
     timeout: 15000,
+    headers: {
+      Authorization: 'Bearer test ',
+    },
   }),
 );
 
+export const setInstanceToken = (token: string) => {
+  instance.defaults.headers.common['Authorization'] = token;
+};
+
+export const setRequestInterceptor = ({
+  onFulfilled,
+  onRejected,
+}: {
+  onFulfilled: (config: any) => any;
+  onRejected: (error: any) => any;
+}) => {
+  return instance.interceptors.request.use(onFulfilled, onRejected);
+};
+
 export const get = <T>(...args: Parameters<typeof instance.get>) => {
+  console.log('args: ', args[1]?.headers);
   return instance.get<T, T>(...args);
 };
 

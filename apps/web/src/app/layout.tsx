@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 
 import ClientProvider from '@/components/ClientProvider';
-import FeedBack from '@/components/Feedback/FeedBack';
 
 import './globals.css';
 import '@gitanimals/asset-font/product-sans/index.css';
@@ -41,10 +40,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <body>
-        <ClientProvider>
-          {children}
-          <FeedBack />
-        </ClientProvider>
+        <ClientProvider>{children}</ClientProvider>
       </body>
     </html>
   );

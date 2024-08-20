@@ -1,8 +1,10 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { Box } from '_panda/jsx';
 import { flex } from '_panda/patterns';
+import { getUser } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 
 import { useClientSession } from '@/utils/clientAuth';
@@ -10,6 +12,14 @@ import { getIsOnLoadSheet, sendLog } from '@/utils/log';
 
 function DevPage() {
   const { data: session, status } = useClientSession();
+
+  useEffect(() => {
+    // 여기서 정보를 가져올 수 있는게 목표임
+    getUser().then((res) => {
+      console.log(res);
+    });
+  }, []);
+
   return (
     <Box p={32}>
       <h1>Dev list </h1>
