@@ -11,6 +11,14 @@ const instance = setInterceptors(
   }),
 );
 
+/**
+ * @deprecated packages/api 를 사용하세요.
+ * 기존의 호환성을 위한 임시 코드입니다.
+ */
+export const setAPIInstantToken = (token: string) => {
+  instance.defaults.headers.common['Authorization'] = token;
+};
+
 export const get = <T>(...args: Parameters<typeof instance.get>) => {
   return instance.get<T, T>(...args);
 };

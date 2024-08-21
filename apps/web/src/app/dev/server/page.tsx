@@ -13,7 +13,15 @@ async function ServerDevPage() {
   // console.log('data: ', data);
   // };
 
-  return <div>server{/* <button onClick={onClick}>asd</button> */}</div>;
+  return (
+    <div>
+      server{/* <button onClick={onClick}>asd</button> */}
+      <div>
+        <h3>User</h3>
+        <div>{JSON.stringify(data)}</div>
+      </div>
+    </div>
+  );
 }
 
 export default ServerDevPage;
