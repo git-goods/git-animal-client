@@ -13,7 +13,6 @@ import GlobalStyle from '@/styles/GlobalStyle';
 import theme from '@/styles/theme';
 
 import FeedBack from './Feedback/FeedBack';
-import { SnackBarProvider } from './SnackBar/SnackBarProvider';
 
 function ClientProvider({ children }: PropsWithChildren) {
   return (
@@ -24,7 +23,7 @@ function ClientProvider({ children }: PropsWithChildren) {
           <Monitoring />
           <GlobalStyle />
           <ThemeProvider theme={theme}>
-            <SnackBarProvider />
+            {/* <SnackBarProvider /> */}
 
             {children}
             <FeedBack />
