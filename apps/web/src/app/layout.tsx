@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
-import { token } from '_panda/tokens';
-import { setRequestInterceptor } from '@gitanimals/api';
+import { setInstanceToken } from '@gitanimals/api';
 
 import { auth } from '@/auth';
 import ClientProvider from '@/components/ClientProvider';
@@ -38,31 +37,36 @@ export const metadata: Metadata = {
 };
 // const secret = process.env.NEXTAUTH_SECRET;
 
-const setToken = async () => {
-  const session = await auth();
-  console.log('session: ', session);
-  setRequestInterceptor({
-    onFulfilled: (config) => {
-      if (token) {
-        config.headers['Authorization'] = token;
-      }
-      console.log('config: ', config.headers);
-      return config;
-    },
-    onRejected: (error) => {
-      return Promise.reject(error);
-    },
-  });
-};
+// const setToken = async () => {
+//   const session = await auth();
+//   console.log('session: ', session);
+//   setRequestInterceptor({
+//     onFulfilled: (config) => {
+//       if (token) {
+//         config.headers['Authorization'] = token;
+//       }
+//       console.log('config: ', config.headers);
+//       return config;
+//     },
+//     onRejected: (error) => {
+//       return Promise.reject(error);
+//     },
+//   });
+// };
 // setToken();
 
+const setToken = async () => {
+  const session = await auth();
+
+  const accessToken = session?.user.accessToken;
+  setInstanceToken(`Bearer ${accessToken}`);
+};
+
+setToken();
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  // const data = await fetch('http://localhost:3000/api/auth/jwt/route.ts');
-
-  // const token = session?.token;
-  // console.log('token: ', token);
-
-  // setInstanceToken(`Bearer ${token}`);
+  // const data = await axios.get('http://localhost:3000/api/auth/jwt');
+  // console.log('data: ', data);
 
   return (
     <html lang="en">

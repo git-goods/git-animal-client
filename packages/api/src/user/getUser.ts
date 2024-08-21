@@ -9,7 +9,6 @@ const UserSchema = z.object({
 });
 
 export const getUser = async () => {
-  console.log('getUser: ');
   const res = await safeGet(UserSchema)(`/users`);
 
   return res;
