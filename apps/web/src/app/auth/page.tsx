@@ -1,4 +1,5 @@
 import { center } from '_panda/patterns';
+import { setInstanceToken } from '@gitanimals/api';
 
 import LoginButton from './LoginButton';
 
@@ -11,6 +12,8 @@ function JWTPage({
 }) {
   const jwtToken = searchParams.jwt;
   const token = jwtToken.split(' ')[1];
+
+  setInstanceToken(`Bearer ${token}`);
 
   return (
     <div className={loadingContainerStyle}>

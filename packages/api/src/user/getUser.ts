@@ -8,6 +8,8 @@ const UserSchema = z.object({
   profileImage: z.string(),
 });
 
+export type UserResponse = z.infer<typeof UserSchema>;
+
 export const getUser = async () => {
   const res = await safeGet(UserSchema)(`/users`);
 

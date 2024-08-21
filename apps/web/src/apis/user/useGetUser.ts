@@ -1,5 +1,7 @@
 'use client';
 
+import type { UserResponse } from '@gitanimals/api';
+import { getUser } from '@gitanimals/api';
 import type { UseQueryOptions, UseSuspenseQueryOptions } from '@tanstack/react-query';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
@@ -23,5 +25,5 @@ export const useGetUser = (option?: UseQueryOptions<UserSchema>) =>
     ...option,
   });
 
-export const useGetSuspenseUser = (options?: UseSuspenseQueryOptions<UserSchema>) =>
-  useSuspenseQuery<UserSchema>({ queryKey: [USER_QUERY_KEY], queryFn: () => get('/users'), ...options });
+export const useGetSuspenseUser = (options?: UseSuspenseQueryOptions<UserResponse>) =>
+  useSuspenseQuery<UserResponse>({ queryKey: [USER_QUERY_KEY], queryFn: () => getUser(), ...options });

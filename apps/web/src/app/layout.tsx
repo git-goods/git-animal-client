@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { setInstanceToken } from '@gitanimals/api';
 
+import { setAPIInstantToken } from '@/apis';
 import { auth } from '@/auth';
 import ClientProvider from '@/components/ClientProvider';
 
@@ -35,39 +36,18 @@ export const metadata: Metadata = {
     siteName: 'GitAnimals',
   },
 };
-// const secret = process.env.NEXTAUTH_SECRET;
-
-// const setToken = async () => {
-//   const session = await auth();
-//   console.log('session: ', session);
-//   setRequestInterceptor({
-//     onFulfilled: (config) => {
-//       if (token) {
-//         config.headers['Authorization'] = token;
-//       }
-//       console.log('config: ', config.headers);
-//       return config;
-//     },
-//     onRejected: (error) => {
-//       return Promise.reject(error);
-//     },
-//   });
-// };
-// setToken();
 
 const setToken = async () => {
   const session = await auth();
 
   const accessToken = session?.user.accessToken;
   setInstanceToken(`Bearer ${accessToken}`);
+  setAPIInstantToken(`Bearer ${accessToken}`);
 };
 
 setToken();
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  // const data = await axios.get('http://localhost:3000/api/auth/jwt');
-  // console.log('data: ', data);
-
   return (
     <html lang="en">
       <body>

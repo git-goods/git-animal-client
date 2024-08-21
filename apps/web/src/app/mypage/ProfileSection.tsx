@@ -1,21 +1,26 @@
+/* eslint-disable @next/next/no-img-element */
+import { useSession } from 'next-auth/react';
 import styled from 'styled-components';
 
 import { useGetSuspenseUser } from '@/apis/user/useGetUser';
 import { addNumberComma } from '@/utils/number';
 
 export default function ProfileSection() {
-  const { data } = useGetSuspenseUser();
+  const { data } = useSession();
 
-  const { username, profileImage, points } = data;
+  const { data: userData } = useGetSuspenseUser();
+
+  if (!data) return null;
+
+  const { name, image } = data?.user;
 
   return (
     <Profile>
       <div className="profile-image">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={profileImage} alt="profile" width={160} height={160} />
+        <img src={image} alt="profile" width={160} height={160} />
       </div>
-      <p className="profile-name">{username}</p>
-      <p className="point">Points: {addNumberComma(points)}</p>
+      <p className="profile-name">{name}</p>
+      <p className="point">Points: {addNumberComma(userData.points)}</p>
     </Profile>
   );
 }

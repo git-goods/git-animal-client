@@ -8,6 +8,7 @@ function LoginButton({ token }: { token: string }) {
   React.useEffect(() => {
     if (ref.current) {
       ref.current.click();
+      localStorage.setItem('accessToken', token);
     }
   }, [ref.current]);
 
@@ -18,7 +19,7 @@ function LoginButton({ token }: { token: string }) {
         onClick={() =>
           signIn('credentials', {
             token: token,
-            callbackUrl: 'http://localhost:3000/dev',
+            callbackUrl: '/mypage',
           })
         }
       >

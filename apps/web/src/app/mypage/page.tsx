@@ -1,22 +1,18 @@
 'use client';
 
-import React, { Suspense, useState } from 'react';
+import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 
-import Button from '@/components/Button';
 import Header from '@/components/Layout/Header';
 import Layout from '@/components/Layout/Layout';
-
-import FarmType from './FarmType';
-import OneType from './OneType';
 
 const LazyProfileSection = dynamic(() => import('./ProfileSection'), { ssr: false });
 
 type ChooseType = '1-type' | 'farm-type';
 
 function Mypage() {
-  const [selectedType, setSelectedType] = useState<ChooseType>('1-type');
+  // const [selectedType, setSelectedType] = useState<ChooseType>('1-type');
 
   return (
     <Layout>
@@ -25,7 +21,7 @@ function Mypage() {
         <Suspense fallback={<section></section>}>
           <LazyProfileSection />
         </Suspense>
-        <RightSection>
+        {/* <RightSection>
           <TypeSelect>
             <Button
               color="secondary"
@@ -46,7 +42,7 @@ function Mypage() {
             {selectedType === '1-type' && <OneType />}
             {selectedType === 'farm-type' && <FarmType />}
           </div>
-        </RightSection>
+        </RightSection> */}
       </Main>
     </Layout>
   );
