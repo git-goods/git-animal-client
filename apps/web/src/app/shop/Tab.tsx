@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import styled from 'styled-components';
+import { css } from '_panda/css';
 
 interface TabItemType {
   label: string;
@@ -31,55 +31,55 @@ const TAB: TabItemType[] = [
 ];
 
 function Tab({ selectedTab }: { selectedTab: string }) {
-  //   const [selectedTab, setSelectedTab] = useState('products');
   return (
-    <TabContainer>
+    <div className={tabContainerStyle}>
       {TAB.map((item) => (
         <TabItem isSelected={item.key === selectedTab} {...item} key={item.key} />
       ))}
-    </TabContainer>
+    </div>
   );
 }
 
 export default Tab;
 
-const TabContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-`;
+const tabContainerStyle = css({
+  display: 'flex',
+  gap: '10px',
+  alignItems: 'center',
+});
+
 function TabItem(props: { isSelected?: boolean } & TabItemType) {
   return (
-    <TabItemButtonStyled href={props.path} shallow>
+    <Link className={tabItemButtonStyle} href={props.path} shallow>
       <TabItemBg color={props.isSelected ? '#D08100' : '#fff'} />
       <span>{props.label}</span>
-    </TabItemButtonStyled>
+    </Link>
   );
 }
 
-const TabItemButtonStyled = styled(Link)`
-  position: relative;
-  width: 128px;
-  height: 54px;
+const tabItemButtonStyle = css({
+  position: 'relative',
+  width: '128px',
+  height: '54px',
 
-  line-height: 54px;
-  color: #141414;
-  text-decoration: none;
-  text-align: center;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
+  lineHeight: '54px',
+  color: '#141414',
+  textDecoration: 'none',
+  textAlign: 'center',
+  fontSize: '15px',
+  fontStyle: 'normal',
+  fontWeight: 400,
 
-  span {
-    position: relative;
-  }
+  '& > span': {
+    position: 'relative',
+  },
 
-  > svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-`;
+  '& > svg': {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+});
 
 const TabItemBg = ({ color = '#fff' }: { color?: string }) => (
   <svg width="128" height="54" viewBox="0 0 128 54" fill="none" xmlns="http://www.w3.org/2000/svg">
