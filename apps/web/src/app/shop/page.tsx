@@ -17,12 +17,11 @@ function ShopPage({
     tab: string;
   };
 }) {
-  console.log('searchParams: ', searchParams);
   return (
     <Layout>
       <Header />
       <main className={mainStyle}>
-        <DottedThreeBox width={1412} height={824} bgColor="#FFA109">
+        <DottedThreeBox width={1412} height={900} bgColor="#FFA109">
           <div className={shopMainStyle}>
             <section className={topSectionStyle}>
               <h1 className={headingStyle}>Git Animals Auction</h1>
@@ -52,12 +51,6 @@ const mainStyle = css({
   minWidth: 'fit-content',
   minHeight: 'calc(100vh - 100px)',
 });
-// const TopSection = styled.section`
-//   margin-bottom: 30px;
-//   display: flex;
-//   gap: 120px;
-// `;
-
 const tabSectionStyle = css({
   display: 'flex',
   justifyContent: 'space-between',

@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -13,11 +15,11 @@ import type { PaginationSchema } from '@/schema/pagination';
 import { useLoading } from '@/store/loading';
 import { useClientUser } from '@/utils/clientAuth';
 
-interface ProductTableProps {
-  searchPersona?: string;
-}
+import Search from './Search';
 
-function ProductTable({ searchPersona }: ProductTableProps) {
+interface ProductTableProps {}
+
+function ProductTable({}: ProductTableProps) {
   const { id: myId } = useClientUser();
 
   const queryClient = useQueryClient();
@@ -26,6 +28,7 @@ function ProductTable({ searchPersona }: ProductTableProps) {
   const { setLoading } = useLoading();
 
   const [currentPage, setCurrentPage] = useState(0);
+  const [searchPersona, setSearchPersona] = useState<string>();
 
   useEffect(
     function 선택_동물_변경시_페이지_초기화() {
@@ -96,6 +99,8 @@ function ProductTable({ searchPersona }: ProductTableProps) {
 
   return (
     <div>
+      <Search onSelect={setSearchPersona} selected={searchPersona} />
+
       <ShopTableBackground>
         {data?.products.map((product) => {
           return (

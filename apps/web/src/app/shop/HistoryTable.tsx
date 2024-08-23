@@ -8,14 +8,15 @@ import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import type { ProductHistoryType, ProductItemType } from '@/schema/action';
 import type { PaginationSchema } from '@/schema/pagination';
 
+import Search from './Search';
+
 const HISTORY_ACTION_OBJ = ACTION_BUTTON_OBJ['SELL_HISTORY'];
 
-interface ProductTableProps {
-  searchPersona?: string;
-}
+interface ProductTableProps {}
 
-function HistoryTable({ searchPersona }: ProductTableProps) {
+function HistoryTable({}: ProductTableProps) {
   const [currentPage, setCurrentPage] = useState(0);
+  const [searchPersona, setSearchPersona] = useState<string>();
 
   const { data } = useGetHistory<{
     products: ProductHistoryType<'SELL_HISTORY'>[];
@@ -50,6 +51,7 @@ function HistoryTable({ searchPersona }: ProductTableProps) {
 
   return (
     <div>
+      <Search onSelect={setSearchPersona} selected={searchPersona} />
       <ShopTableBackground>
         {data?.products.map((product) => {
           return (

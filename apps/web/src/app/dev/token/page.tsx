@@ -2,29 +2,22 @@
 
 import { Button } from '@gitanimals/ui-panda';
 
-import { getToken } from '@/store/user';
+import { useClientSession } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
-import { useDevAccess } from '@/utils/dev';
 
 import * as styles from './token.style';
 
 function DevTokenPage() {
-  const { isDevAccessPossible } = useDevAccess();
+  const { data } = useClientSession();
 
-  if (!isDevAccessPossible) {
-    return <div>Not allowed</div>;
-  }
+  const accessToken = data?.user.accessToken ?? '';
 
   const getTokenClick = async () => {
-    const accessToken = getToken();
-
     await copyClipBoard(accessToken);
     alert('Token copied to clipboard');
   };
 
   const goToAdmin = async () => {
-    const accessToken = getToken();
-
     window.open(`${process.env.NEXT_PUBLIC_ADMIN_URL}?login/token=${accessToken}`);
   };
 

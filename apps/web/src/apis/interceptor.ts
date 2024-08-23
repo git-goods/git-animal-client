@@ -1,7 +1,6 @@
 import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import type { ApiErrorScheme } from '@/exceptions/type';
-import { logout } from '@/store/user';
 
 const interceptorRequestFulfilled = (config: InternalAxiosRequestConfig) => {
   if (typeof window === 'undefined') return config;
@@ -28,7 +27,7 @@ const interceptorResponseFulfilled = (res: AxiosResponse) => {
 const interceptorResponseRejected = (error: AxiosError<ApiErrorScheme>) => {
   if (error.response?.status === 401) {
     // TODO : logout and refresh login
-    logout();
+    // logout();
     // TODO : logout 안내
   }
 

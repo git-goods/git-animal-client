@@ -3,10 +3,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import Link from 'next/link';
-import { css } from '_panda/css';
 import styled from 'styled-components';
-
-import { useDevAccess } from '@/utils/dev';
 
 function Header() {
   return <></>;
@@ -63,20 +60,6 @@ function Header() {
   // );
 }
 export default Header;
-
-function DevMenu() {
-  const { isDevAccessPossible } = useDevAccess();
-
-  return (
-    <li
-      className={css({
-        display: isDevAccessPossible ? 'static' : 'none',
-      })}
-    >
-      <Link href="/dev">Dev</Link>
-    </li>
-  );
-}
 
 const HeaderStyled = styled.header`
   max-width: 1400px;

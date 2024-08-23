@@ -1,13 +1,14 @@
 'use client';
+
 import type { PropsWithChildren } from 'react';
 import Link from 'next/link';
 
-import { useUser } from '@/store/user';
+import { useClientSession } from '@/utils/clientAuth';
 
 interface LoginButtonProps {}
 
 function LoginButton({ children }: PropsWithChildren<LoginButtonProps>) {
-  const { isLogin } = useUser(); // TODO: useUser 제거
+  const session = useClientSession();
 
   const onLogin = async () => {
     const res = await fetch('/api/oauth');
@@ -15,7 +16,7 @@ function LoginButton({ children }: PropsWithChildren<LoginButtonProps>) {
     window.location.assign(data.url);
   };
 
-  if (isLogin) return <Link href="/mypage">{children}</Link>;
+  if (session) return <Link href="/mypage">{children}</Link>;
 
   return <div onClick={onLogin}>{children}</div>;
 }
