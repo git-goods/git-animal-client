@@ -1,10 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import React from 'react';
 import styled from 'styled-components';
 
 import { useGetAllPets } from '@/apis/user/useGetAllPets';
 import type { PetInfoSchema } from '@/schema/user';
-import { useUser } from '@/store/user';
+import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 interface Props {
@@ -13,7 +12,7 @@ interface Props {
 }
 
 function PetList(props: Props) {
-  const { username } = useUser();
+  const { name: username } = useClientUser();
 
   const { data } = useGetAllPets(username);
 
