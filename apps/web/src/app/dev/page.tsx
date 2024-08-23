@@ -1,20 +1,19 @@
 import { css } from '_panda/css';
 import { Box } from '_panda/jsx';
-import { getUser } from '@gitanimals/api';
 
 import DevClient from './Client';
 
 async function DevPage() {
-  const data = await getUser();
+  // const data = await getUser();
 
   return (
     <Box p={32}>
       <h1>server</h1>
 
-      <div>
+      {/* <div>
         <h3>User</h3>
         <div>{JSON.stringify(data)}</div>
-      </div>
+      </div> */}
       <hr className={dividerStyle} />
       <h1>client</h1>
       <DevClient />
