@@ -29,9 +29,14 @@ async function Header() {
         <nav>
           <ul>
             {isLogin && (
-              <li>
-                <Link href="/mypage">MYPAGE</Link>
-              </li>
+              <>
+                <li>
+                  <Link href="/mypage">MYPAGE</Link>
+                </li>
+                <li>
+                  <Link href="/shop">SHOP</Link>
+                </li>
+              </>
             )}
             {!isLogin && (
               <li>

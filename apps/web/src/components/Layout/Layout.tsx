@@ -1,38 +1,33 @@
-'use client';
-
 import type { PropsWithChildren } from 'react';
-import React from 'react';
 import Image from 'next/image';
-import styled from 'styled-components';
+import { css } from '_panda/css';
 
 import Footer from './Footer';
 
 function Layout({ children }: PropsWithChildren) {
   return (
-    <Container>
+    <div className={containerStyle}>
       <Image src="/bg.png" fill alt="bg" />
       {children}
       <Footer />
-    </Container>
+    </div>
   );
 }
 
 export default Layout;
 
-const Container = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  min-width: fit-content;
-  min-width: 1400px;
-  > img {
-    z-index: -1;
-    object-fit: cover;
-  }
-
-  > main {
-    min-height: 100vh;
-    z-index: 1;
-  }
-`;
+const containerStyle = css({
+  position: 'relative',
+  width: '100%',
+  height: '100%',
+  minHeight: '100vh',
+  minWidth: '1400px',
+  '& > img': {
+    zIndex: -1,
+    objectFit: 'cover',
+  },
+  '& > main': {
+    minHeight: '100vh',
+    zIndex: 1,
+  },
+});

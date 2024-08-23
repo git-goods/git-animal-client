@@ -11,14 +11,14 @@ import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import type { ProductItemType, ProductType } from '@/schema/action';
 import type { PaginationSchema } from '@/schema/pagination';
 import { useLoading } from '@/store/loading';
-import { useUser } from '@/store/user';
+import { useClientUser } from '@/utils/clientAuth';
 
 interface ProductTableProps {
   searchPersona?: string;
 }
 
 function ProductTable({ searchPersona }: ProductTableProps) {
-  const myId = useUser()?.id;
+  const { id: myId } = useClientUser();
 
   const queryClient = useQueryClient();
 
