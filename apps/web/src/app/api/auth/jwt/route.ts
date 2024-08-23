@@ -5,7 +5,7 @@ const secret = process.env.NEXTAUTH_SECRET;
 export async function GET(req: NextRequest, res: NextResponse) {
   const accessToken = req.headers.get('authorization');
   console.log('req.headers: ', req.headers);
-  console.log('accessToken: ', accessToken);
+  // console.log('accessToken: ', accessToken);
 
   // const session = await getServerSession(authOptions);
 

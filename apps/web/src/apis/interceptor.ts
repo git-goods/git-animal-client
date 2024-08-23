@@ -7,7 +7,6 @@ const interceptorRequestFulfilled = (config: InternalAxiosRequestConfig) => {
   if (typeof window === 'undefined') return config;
 
   const accessToken = localStorage.getItem('accessToken');
-  console.log('accessToken: ', accessToken);
   if (!config.headers) return config;
   if (!accessToken) return config;
 

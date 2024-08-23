@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { useUser } from '@/store/user';
+import { useClientUser } from '@/utils/clientAuth';
 
 interface GitanimalsLineProps {
   sizes?: [number, number];
@@ -8,7 +8,7 @@ interface GitanimalsLineProps {
 }
 
 export function GitanimalsLine({ petId, sizes = [600, 120] }: GitanimalsLineProps) {
-  const { username } = useUser();
+  const { name: username } = useClientUser();
 
   const pet = petId ? `?pet-id=${petId}` : '';
 
@@ -54,7 +54,7 @@ interface FarmImageProps extends GitanimalsFarmProps {
 }
 
 export function GitanimalsFarm({ sizes = [600, 300], imageKey }: FarmImageProps) {
-  const { username } = useUser();
+  const { name: username } = useClientUser();
   return (
     <a href="https://github.com/devxb/gitanimals">
       <img
