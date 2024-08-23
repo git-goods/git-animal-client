@@ -71,3 +71,9 @@ export function auth(
 ) {
   return getServerSession(...args, config);
 }
+
+export function getServerAuth(
+  ...args: [GetServerSidePropsContext['req'], GetServerSidePropsContext['res']] | [NextApiRequest, NextApiResponse] | []
+) {
+  return getServerSession(...args, config);
+}

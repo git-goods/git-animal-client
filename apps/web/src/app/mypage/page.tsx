@@ -1,10 +1,8 @@
-'use client';
-
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { css } from '_panda/css';
 
-import Header from '@/components/Layout/Header';
+import Header from '@/components/Layout/Header2';
 import Layout from '@/components/Layout/Layout';
 
 import RightSection from './RightSection';
@@ -12,8 +10,6 @@ import RightSection from './RightSection';
 const LazyProfileSection = dynamic(() => import('./ProfileSection'), { ssr: false });
 
 function Mypage() {
-  // const [selectedType, setSelectedType] = useState<ChooseType>('1-type');
-
   return (
     <Layout>
       <Header />
