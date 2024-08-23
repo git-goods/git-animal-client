@@ -6,7 +6,6 @@ import styled from 'styled-components';
 
 import { useUseCoupon } from '@/apis/user/useUseCoupons';
 import Button from '@/components/Button';
-import Header from '@/components/Layout/Header';
 import Layout from '@/components/Layout/Layout';
 import SelectAnimals from '@/components/SelectAnimals';
 import { COUPON_CODE } from '@/constants/coupon';
@@ -36,7 +35,6 @@ function StartPage() {
 
   return (
     <Layout>
-      <Header />
       <Main>
         <Heading>Select 1 Start Pet</Heading>
         <SelectAnimals selected={selected} setSelected={setSelected} />
