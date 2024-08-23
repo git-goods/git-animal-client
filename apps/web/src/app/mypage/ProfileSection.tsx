@@ -1,64 +1,50 @@
 /* eslint-disable @next/next/no-img-element */
+import { Suspense } from 'react';
 import { useSession } from 'next-auth/react';
-import styled from 'styled-components';
+import { css } from '_panda/css';
 
-import { useGetSuspenseUser } from '@/apis/user/useGetUser';
-import { addNumberComma } from '@/utils/number';
+import { prevTextTokenBlack3 } from '@/styles/prevTextToken';
+
+import PointInfo from './PointInfo';
 
 export default function ProfileSection() {
   const { data } = useSession();
 
-  const { data: userData } = useGetSuspenseUser();
-
-  if (!data) return null;
-
-  const { name, image } = data?.user;
-
   return (
-    <Profile>
-      <div className="profile-image">
-        <img src={image} alt="profile" width={160} height={160} />
+    <section>
+      <div className={profileImageStyle}>
+        <img src={data?.user.image} alt="profile" width={160} height={160} />
       </div>
-      <p className="profile-name">{name}</p>
-      <p className="point">Points: {addNumberComma(userData.points)}</p>
-    </Profile>
+      <p className={profileNameStyle}>{data?.user.name}</p>
+      <Suspense>
+        <PointInfo />
+      </Suspense>
+    </section>
   );
 }
 
-const Profile = styled.section`
-  .profile-image {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    background-color: #fff;
-    overflow: hidden;
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
+const profileImageStyle = css({
+  width: '160px',
+  height: '160px',
+  borderRadius: '50%',
+  backgroundColor: '#fff',
+  overflow: 'hidden',
+  '& img': {
+    width: '100%',
+    height: '100%',
+  },
+});
 
-  .profile-name {
-    color: #fff;
-    -webkit-text-stroke-width: 3px;
-    -webkit-text-stroke-color: #141414;
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%; /* 56px */
-    margin-top: 40px;
-    margin-bottom: 30px;
+const profileNameStyle = css({
+  color: '#fff',
 
-    white-space: nowrap;
-  }
+  fontSize: '40px',
+  fontStyle: 'normal',
+  fontWeight: 400,
+  lineHeight: '140%' /* 56px */,
+  marginTop: '40px',
+  marginBottom: '30px',
 
-  .point {
-    color: #fff;
-    -webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: #141414;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%; /* 33.6px */
-  }
-`;
+  whiteSpace: 'nowrap',
+  ...prevTextTokenBlack3,
+});

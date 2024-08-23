@@ -26,4 +26,4 @@ export const useGetUser = (option?: UseQueryOptions<UserSchema>) =>
   });
 
 export const useGetSuspenseUser = (options?: UseSuspenseQueryOptions<UserResponse>) =>
-  useSuspenseQuery<UserResponse>({ queryKey: [USER_QUERY_KEY], queryFn: () => getUser(), ...options });
+  useSuspenseQuery<UserResponse>({ queryKey: [USER_QUERY_KEY], queryFn: getUser, ...options });
