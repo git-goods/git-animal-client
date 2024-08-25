@@ -11,8 +11,9 @@ function LoginButton({ children }: PropsWithChildren<LoginButtonProps>) {
   const session = useClientSession();
 
   const onLogin = async () => {
-    const res = await fetch('/api/oauth');
+    const res = await fetch('http://localhost:3000/api/oauth');
     const data = await res.json();
+    console.log('data: ', data);
     window.location.assign(data.url);
   };
 
