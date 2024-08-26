@@ -1,3 +1,4 @@
 import FeedBack from './FeedBack';
 
-export { FeedBack };
+const FeedBackForm = FeedBack;
+export { FeedBack, FeedBackForm };

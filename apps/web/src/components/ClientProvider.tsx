@@ -11,6 +11,7 @@ import GlobalStyle from '@/styles/GlobalStyle';
 import theme from '@/styles/theme';
 
 import { SnackBarProvider } from './SnackBar/SnackBarProvider';
+import { FeedBackForm } from './Feedback';
 import SessionLoader from './SessionLoader';
 
 function ClientProvider({ children }: PropsWithChildren) {
@@ -26,7 +27,7 @@ function ClientProvider({ children }: PropsWithChildren) {
               <SnackBarProvider />
 
               {children}
-              {/* <FeedBack /> */}
+              <FeedBackForm />
             </ThemeProvider>
           </SessionLoader>
         </StyledComponentsRegistry>
