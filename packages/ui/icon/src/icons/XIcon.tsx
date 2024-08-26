@@ -1,4 +1,4 @@
-import React, { ComponentProps, FC } from 'react';
+import { ComponentProps, FC } from 'react';
 import Svg from '../Svg';
 
 export const XIcon: FC<ComponentProps<typeof Svg>> = ({ color = 'white', fillOpacity = 0.5, ...rest }) => {
