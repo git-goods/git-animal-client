@@ -5,12 +5,13 @@ import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'styled-components';
 
 import QueryClientProvider from '@/apis/QueryClientProvider';
-import Feedback from '@/components/Feedback/FeedBack';
 import Monitoring from '@/components/Monitoring';
 import StyledComponentsRegistry from '@/lib/registry';
 import GlobalStyle from '@/styles/GlobalStyle';
 import theme from '@/styles/theme';
 
+import { SnackBarProvider } from './SnackBar/SnackBarProvider';
+import { FeedBack } from './Feedback';
 import SessionLoader from './SessionLoader';
 
 function ClientProvider({ children }: PropsWithChildren) {
@@ -23,10 +24,10 @@ function ClientProvider({ children }: PropsWithChildren) {
           <GlobalStyle />
           <SessionLoader>
             <ThemeProvider theme={theme}>
-              {/* <SnackBarProvider /> */}
+              <SnackBarProvider />
 
               {children}
-              <Feedback />
+              <FeedBack />
             </ThemeProvider>
           </SessionLoader>
         </StyledComponentsRegistry>
