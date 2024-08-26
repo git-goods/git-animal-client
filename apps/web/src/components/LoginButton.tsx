@@ -1,8 +1,8 @@
 'use client';
 
 import type { PropsWithChildren } from 'react';
-import Link from 'next/link';
 
+import { getGithubOauthUrl } from '@/apis/auth/getGithubOauth';
 import { useClientSession } from '@/utils/clientAuth';
 
 interface LoginButtonProps {}
@@ -11,15 +11,18 @@ function LoginButton({ children }: PropsWithChildren<LoginButtonProps>) {
   const session = useClientSession();
 
   const onLogin = async () => {
-    const res = await fetch('http://localhost:3000/api/oauth');
-    const data = await res.json();
-    console.log('data: ', data);
-    window.location.assign(data.url);
+    const url = await getGithubOauthUrl();
+    window.location.assign(url);
   };
 
-  if (session) return <Link href="/mypage">{children}</Link>;
+  // if (session.status === 'loading') return <div>loading...</div>;
 
-  return <div onClick={onLogin}>{children}</div>;
+  // if (session.status === 'authenticated') return <Link href="/mypage">{children}</Link>;
+
+  if (session.status === 'unauthenticated') {
+    return <button onClick={onLogin}>{children}</button>;
+  }
+  return <></>;
 }
 
 export default LoginButton;

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { Button } from '@gitanimals/ui-panda';
 
@@ -17,63 +18,51 @@ async function Header() {
   const isDevAccessPossible = DEV_USERNAMES.includes(username);
 
   return (
-    <header className={headerStyle}>
-      <Link href="/">
-        <Image src="/main/gnb_right_logo.svg" width={154} height={42} alt="logo" />
-      </Link>
-      <div>
-        <ul className={navStyle}>
-          {isLogin && (
-            <>
-              <li>
-                <Link href="/mypage">MYPAGE</Link>
-              </li>
-              <li>
-                <Link href="/shop">Auction</Link>
-              </li>
-            </>
-          )}
+    <>
+      <header className={headerStyle}>
+        <Link href="/">
+          <Image src="/main/gnb_right_logo.svg" width={154} height={42} alt="logo" />
+        </Link>
+        <div>
+          <ul className={navStyle}>
+            {isLogin && (
+              <>
+                <li>
+                  <Link href="/mypage">MYPAGE</Link>
+                </li>
+                <li>
+                  <Link href="/shop">AUCTION</Link>
+                </li>
+              </>
+            )}
 
-          <li>
-            <a target="_blank" href={GIT_ANIMALS_MAIN_URL}>
-              GITHUB
-            </a>
-          </li>
-          {/* <DevMenu /> */}
-          {isDevAccessPossible && (
             <li>
-              <Link href="/dev">DEV</Link>
+              <a target="_blank" href={GIT_ANIMALS_MAIN_URL}>
+                GITHUB
+              </a>
             </li>
-          )}
-          {!isLogin && (
-            <li>
-              <LoginButton>
-                {/* <a href={GITHUB_OAUTH_REQUEST_URL}> */}
-                <Button>Login</Button>
-              </LoginButton>
-              {/* </a> */}
-            </li>
-          )}
-        </ul>
-
-        {/* {session && (
-          <a href="/mypage" className={profileStyle}>
-            <>
-              <div className="profile-image">
-                <img src={session.user.image} alt="profile" width={160} height={160} />
-              </div>
-              <button className={center()}>
-                <span className="profile-name">{session.user.name}</span>
-                <Image src="/icon/chervon-right.svg" width={12} height={12} alt="arrow-down" />
-              </button>
-            </>
-          </a>
-        )} */}
-      </div>
-    </header>
+            {/* <DevMenu /> */}
+            {isDevAccessPossible && (
+              <li>
+                <Link href="/dev">DEV</Link>
+              </li>
+            )}
+            {!isLogin && (
+              <li>
+                <LoginButton>
+                  <Button>Login</Button>
+                </LoginButton>
+              </li>
+            )}
+          </ul>
+        </div>
+      </header>
+      <div className={headerBlockStyle} />
+    </>
   );
 }
 export default Header;
+
 const headerStyle = flex({
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -85,6 +74,10 @@ const headerStyle = flex({
   position: 'fixed',
   top: 0,
   width: '100%',
+});
+
+const headerBlockStyle = css({
+  height: 60,
 });
 
 const navStyle = flex({
