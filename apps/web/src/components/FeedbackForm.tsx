@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { XIcon } from '@gitanimals/ui-icon';
 import styled from 'styled-components';
 
 import type { PostIssueRequest } from '@/apis/github/usePostIssue';
@@ -13,8 +14,34 @@ import Select from '@/components/Select';
 import TextArea from '@/components/TextArea';
 import { sendLog } from '@/utils/log';
 
-import { ISSUE_LABEL, MAINTAINER } from './FeedBack.constants';
-import { CloseIcon, FeedBackCloseIcon, FeedBackOpenIcon } from './Icons';
+const GITHUB_ISSUE_TYPE = ['bug', 'enhancement', 'question'] as const;
+type GithubIssueType = (typeof GITHUB_ISSUE_TYPE)[number];
+
+export const ISSUE_LABEL: Record<
+  string,
+  {
+    label: string;
+    color: string;
+    relations?: GithubIssueType[];
+  }
+> = {
+  BUG: {
+    label: 'bug',
+    color: '#FFDBEE',
+    relations: ['bug'],
+  },
+  REQUEST: {
+    label: 'request',
+    color: '#C4F2F7',
+    relations: ['enhancement'],
+  },
+  ETC: {
+    label: 'etc',
+    color: '#FFCC91',
+  },
+} as const;
+
+export const MAINTAINER = ['sumi-0011', 'hyesungoh', 'devxb'];
 
 function FeedBack() {
   const { data: userData } = useGetUser();
@@ -47,7 +74,12 @@ function FeedBack() {
   return (
     <>
       <OpenIconWrapper onClick={() => setIsOpen((prev) => !prev)}>
-        {isOpen ? <FeedBackCloseIcon /> : <FeedBackOpenIcon />}
+        <Image
+          src={isOpen ? `/feedback/icon-channeltalk-default.svg` : `/feedback/icon-channeltalk-close.svg`}
+          alt="feedback"
+          width={70}
+          height={80}
+        />
       </OpenIconWrapper>
 
       {isOpen && (
@@ -59,7 +91,7 @@ function FeedBack() {
               Hello!! I’m Gitanimals Developer. Please leave any improvements, and it will be register GitHub issue.
             </p>
             <CloseIconWrapper onClick={() => setIsOpen(false)}>
-              <CloseIcon />
+              <XIcon color="black" width={20} height={20} />
             </CloseIconWrapper>
           </Heading>
           <Form>
