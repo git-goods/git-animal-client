@@ -16,7 +16,6 @@ export const setInstanceToken = (token: string) => {
 };
 
 export const get = <T>(...args: Parameters<typeof instance.get>) => {
-  console.log('호출 instants header', instance.defaults.headers.common.Authorization);
   return instance.get<T, T>(...args);
 };
 
