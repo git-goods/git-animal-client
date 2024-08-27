@@ -12,12 +12,11 @@ import Button from '@/components/Button/Button';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
 import TextArea from '@/components/TextArea';
+import type { GithubIssueType } from '@/constants/github';
+import { GITHUB_ISSUE_TYPE } from '@/constants/github';
 import { sendLog } from '@/utils/log';
 
-const GITHUB_ISSUE_TYPE = ['bug', 'enhancement', 'question'] as const;
-type GithubIssueType = (typeof GITHUB_ISSUE_TYPE)[number];
-
-export const ISSUE_LABEL: Record<
+const ISSUE_LABEL: Record<
   string,
   {
     label: string;
@@ -28,12 +27,12 @@ export const ISSUE_LABEL: Record<
   BUG: {
     label: 'bug',
     color: '#FFDBEE',
-    relations: ['bug'],
+    relations: [GITHUB_ISSUE_TYPE.BUG],
   },
   REQUEST: {
     label: 'request',
     color: '#C4F2F7',
-    relations: ['enhancement'],
+    relations: [GITHUB_ISSUE_TYPE.ENHANCEMENT],
   },
   ETC: {
     label: 'etc',
