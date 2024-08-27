@@ -1,3 +1,4 @@
+import { signOut } from 'next-auth/react';
 import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import type { ApiErrorScheme } from '@/exceptions/type';
@@ -29,6 +30,9 @@ const interceptorResponseRejected = (error: AxiosError<ApiErrorScheme>) => {
     // TODO : logout and refresh login
     // logout();
     // TODO : logout 안내
+    if (typeof window !== 'undefined') {
+      signOut();
+    }
   }
 
   // 403 처리
