@@ -23,15 +23,12 @@ const withAuth = (
   }
 };
 
-const checkToken = async (request: NextRequest, token: any) => {
-  return;
-};
-
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
 
   const token = await getToken({ req: request });
 
+  // Verify token
   if (token) {
     await axios
       .get(getBaseUrl(request.url) + '/api/auth/verifyToken' + `?token=${token?.accessToken}`)
