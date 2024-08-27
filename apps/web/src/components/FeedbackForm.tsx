@@ -71,7 +71,7 @@ function FeedBack() {
     <>
       <button className={openIconStyle} onClick={() => setIsOpen((prev) => !prev)}>
         <Image
-          src={isOpen ? `/feedback/icon-channeltalk-default.svg` : `/feedback/icon-channeltalk-close.svg`}
+          src={isOpen ? `/feedback/icon-channeltalk-close.svg` : `/feedback/icon-channeltalk-default.svg`}
           alt="feedback"
           width={140}
           height={160}
