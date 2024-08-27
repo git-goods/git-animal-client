@@ -8,7 +8,7 @@ import { center } from '_panda/patterns';
 import { getServerAuth } from '@/auth';
 import { GITHUB_OAUTH_REQUEST_URL } from '@/constants/oauth';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
-import { DEV_USERNAMES } from '@/utils/dev';
+import { checkIdDevAccessPossible } from '@/utils/dev';
 
 async function Header() {
   const session = await getServerAuth();
@@ -16,7 +16,7 @@ async function Header() {
   const isLogin = Boolean(session);
   const username = session?.user.name ?? '';
 
-  const isDevAccessPossible = DEV_USERNAMES.includes(username);
+  const isDevAccessPossible = checkIdDevAccessPossible(username);
 
   return (
     <header className={headerStyle}>

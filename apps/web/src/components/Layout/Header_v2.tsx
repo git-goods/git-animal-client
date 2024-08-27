@@ -7,15 +7,14 @@ import { Button } from '@gitanimals/ui-panda';
 import { getServerAuth } from '@/auth';
 import LoginButton from '@/components/LoginButton';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
-import { DEV_USERNAMES } from '@/utils/dev';
+import { checkIdDevAccessPossible } from '@/utils/dev';
 
 async function Header() {
   const session = await getServerAuth();
 
   const isLogin = Boolean(session);
-  const username = session?.user.name ?? '';
 
-  const isDevAccessPossible = DEV_USERNAMES.includes(username);
+  const isDevAccessPossible = checkIdDevAccessPossible(session?.user.name ?? '');
 
   return (
     <>
