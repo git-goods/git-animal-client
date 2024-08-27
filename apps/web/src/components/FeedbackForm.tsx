@@ -2,18 +2,18 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { css } from '_panda/css';
 import { XIcon } from '@gitanimals/ui-icon';
-import styled from 'styled-components';
+import { Button } from '@gitanimals/ui-panda';
 
 import type { PostIssueRequest } from '@/apis/github/usePostIssue';
 import { usePostIssue } from '@/apis/github/usePostIssue';
 import { useGetUser } from '@/apis/user/useGetUser';
-import Button from '@/components/Button/Button';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
 import TextArea from '@/components/TextArea';
 import type { GithubIssueType } from '@/constants/github';
-import { GITHUB_ISSUE_TYPE } from '@/constants/github';
+import { GITHUB_ISSUE_TYPE, SERVICE_MAINTAINER } from '@/constants/github';
 import { sendLog } from '@/utils/log';
 
 const ISSUE_LABEL: Record<
@@ -40,18 +40,17 @@ const ISSUE_LABEL: Record<
   },
 } as const;
 
-export const MAINTAINER = ['sumi-0011', 'hyesungoh', 'devxb'];
-
 function FeedBack() {
+  const [isOpen, setIsOpen] = useState(false);
+
   const { data: userData } = useGetUser();
   const { content, onContentChange, isValid, initContent } = useFeedbackContent();
-
-  const [isOpen, setIsOpen] = useState(false);
+  const { mutate, isPending } = usePostIssue();
 
   const onSubmit = () => {
     const username = userData?.username;
 
-    const assignees = [username, ...MAINTAINER].filter((i) => i) as string[];
+    const assignees = [username, ...SERVICE_MAINTAINER].filter((i) => i) as string[];
 
     sendLog({ title: content.title, username: username ?? 'not login' }, 'feedback form submitted');
 
@@ -68,32 +67,30 @@ function FeedBack() {
     );
   };
 
-  const { mutate, isPending } = usePostIssue();
-
   return (
     <>
-      <OpenIconWrapper onClick={() => setIsOpen((prev) => !prev)}>
+      <button className={openIconStyle} onClick={() => setIsOpen((prev) => !prev)}>
         <Image
           src={isOpen ? `/feedback/icon-channeltalk-default.svg` : `/feedback/icon-channeltalk-close.svg`}
           alt="feedback"
-          width={70}
-          height={80}
+          width={140}
+          height={160}
         />
-      </OpenIconWrapper>
+      </button>
 
       {isOpen && (
-        <Container>
-          <Heading>
+        <div className={containerStyle}>
+          <section className={headingStyle}>
             <h2>Feedback</h2>
             <Image src="/feedback/feedback-profile.png" alt="feedback" width={67.5} height={67} />
             <p>
               Hello!! I’m Gitanimals Developer. Please leave any improvements, and it will be register GitHub issue.
             </p>
-            <CloseIconWrapper onClick={() => setIsOpen(false)}>
+            <button className={closeIconWrapperStyle} onClick={() => setIsOpen(false)}>
               <XIcon color="black" width={20} height={20} />
-            </CloseIconWrapper>
-          </Heading>
-          <Form>
+            </button>
+          </section>
+          <section className={formStyle}>
             <LabelSelect onChange={(relations) => onContentChange('labels', relations)} />
             <Input
               placeholder="Type issue title..."
@@ -105,11 +102,13 @@ function FeedBack() {
               value={content.body}
               onChange={(e) => onContentChange('body', e.target.value)}
             />
-          </Form>
-          <ButtonStyled disabled={!isValid || isPending} onClick={onSubmit}>
-            Send
-          </ButtonStyled>
-        </Container>
+          </section>
+          <div className={buttonWrapperStyle}>
+            <Button disabled={!isValid || isPending} onClick={onSubmit}>
+              Send
+            </Button>
+          </div>
+        </div>
       )}
     </>
   );
@@ -148,7 +147,7 @@ function LabelSelect({ onChange }: { onChange: (value: string[]) => void }) {
         {({ value }) =>
           value && (
             <>
-              <IssueOptionColor style={{ background: ISSUE_LABEL[value].color }} />
+              <div className={issueOptionColorStyle} style={{ background: ISSUE_LABEL[value].color }} />
               <span>{ISSUE_LABEL[value].label}</span>
             </>
           )
@@ -157,7 +156,7 @@ function LabelSelect({ onChange }: { onChange: (value: string[]) => void }) {
       <Select.Panel>
         {Object.entries(ISSUE_LABEL).map(([key, item]) => (
           <Select.Option key={item.label} value={key} onClick={() => onChange(item.relations ?? [])}>
-            <IssueOptionColor style={{ background: item.color }} />
+            <div className={issueOptionColorStyle} style={{ background: item.color }} />
             <span>{item.label}</span>
           </Select.Option>
         ))}
@@ -166,115 +165,82 @@ function LabelSelect({ onChange }: { onChange: (value: string[]) => void }) {
   );
 }
 
-const ButtonStyled = styled(Button)`
-  width: fit-content;
-  margin: 24px auto;
+const buttonWrapperStyle = css({
+  textAlign: 'center',
+  margin: '24px auto',
+});
 
-  @media (max-width: 768px) {
-    width: calc(100% - 32px);
-    margin: 16px;
-  }
-`;
+const openIconStyle = css({
+  position: 'fixed',
+  bottom: '0',
+  right: '4px',
+  height: '121px',
+  width: '110px',
+  zIndex: '100',
+  '@media screen and (max-width: 768px)': {
+    scale: '0.7',
+    right: '-12px',
+    bottom: '-12px',
+  },
+});
 
-const OpenIconWrapper = styled.div`
-  position: fixed;
-  bottom: 0px;
-  right: 4px;
+const containerStyle = css({
+  position: 'fixed',
+  bottom: '120px',
+  right: '24px',
+  display: 'flex',
+  flexDirection: 'column',
+  width: '406px',
+  boxShadow: '0px 4px 24px 0px rgba(0, 0, 0, 0.25)',
+  backgroundColor: '#fff',
+  zIndex: 100,
+  '@media screen and (max-width: 768px)': {
+    width: '100%',
+    bottom: '0',
+    right: '0',
+    left: '0',
+  },
+  animation: 'fadeIn 0.3s ease-in-out',
+});
 
-  height: 121px;
-  width: 110px;
-  z-index: 100;
+const issueOptionColorStyle = css({
+  width: '14px',
+  height: '14px',
+  borderRadius: '50%',
+});
 
-  @media screen and (max-width: 768px) {
-    scale: 0.7;
-    right: -12px;
-    bottom: -12px;
-  }
-`;
+const closeIconWrapperStyle = css({
+  top: '16px',
+  right: '16px',
+  position: 'absolute',
+  cursor: 'pointer',
+});
 
-const Container = styled.div`
-  position: fixed;
-  bottom: 120px;
-  right: 24px;
-  display: flex;
-  flex-direction: column;
-  width: 406px;
+const headingStyle = css({
+  padding: '24px 32px',
+  position: 'relative',
+  background: 'brand.sky',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '24px',
+  alignItems: 'center',
+  '& h2': {
+    color: 'black.black_90',
+    textAlign: 'center',
+    textStyle: 'glyph18.bold',
+  },
+  '& p': {
+    color: 'black.black_75',
+    textStyle: 'glyph14.regular',
+  },
+  '@media screen and (max-width: 768px)': {
+    padding: '16px',
+  },
+});
 
-  box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25);
-  background-color: #fff;
-  z-index: 100; // TODO: theme에 추가
-
-  @media (max-width: 768px) {
-    width: 100%;
-    bottom: 0;
-    right: 0;
-    left: 0;
-  }
-
-  animation: fadeIn 0.3s ease-in-out;
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-`;
-
-const IssueOptionColor = styled.div`
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-`;
-
-const CloseIconWrapper = styled.div`
-  top: 16px;
-  right: 16px;
-  position: absolute;
-  cursor: pointer;
-`;
-
-const Heading = styled.section`
-  padding: 24px 32px;
-  position: relative;
-  background: var(--brand-color-sky, #c4f2f7);
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  align-items: center;
-
-  h2 {
-    color: var(--text-black-90, rgba(0, 0, 0, 0.9));
-    text-align: center;
-    /* glyph18 bold */
-    font-family: 'Product Sans';
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 120%; /* 21.6px */
-    letter-spacing: -0.3px;
-  }
-  p {
-    color: var(--text-black-75, rgba(0, 0, 0, 0.75));
-    text-align: center;
-    font-family: 'Product Sans';
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 130%; /* 18.2px */
-    letter-spacing: -0.3px;
-  }
-  @media (max-width: 768px) {
-    padding: 16px;
-  }
-`;
-
-const Form = styled.section`
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-`;
+const formStyle = css({
+  padding: '20px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '24px',
+});
