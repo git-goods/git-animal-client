@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
+import { setInstanceToken } from '@gitanimals/api';
 
+import { setAPIInstantToken } from '@/apis';
+import { auth } from '@/auth';
 import ClientProvider from '@/components/ClientProvider';
-import FeedBack from '@/components/FeedBack/FeedBack';
-import { MONITORING_KEY } from '@/constants/monitoring';
 
 import './globals.css';
 import '@gitanimals/asset-font/product-sans/index.css';
@@ -37,16 +37,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+const setToken = async () => {
+  const session = await auth();
+
+  const accessToken = session?.user.accessToken;
+  setInstanceToken(`Bearer ${accessToken}`);
+  setAPIInstantToken(`Bearer ${accessToken}`);
+};
+
+setToken();
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <GoogleTagManager gtmId={MONITORING_KEY.GTM} />
-        <ClientProvider>
-          {children}
-          <GoogleAnalytics gaId={MONITORING_KEY.GA} />
-          <FeedBack />
-        </ClientProvider>
+        <ClientProvider>{children}</ClientProvider>
       </body>
     </html>
   );

@@ -11,6 +11,7 @@ const interceptorRequestFulfilled = (config: InternalAxiosRequestConfig) => {
   // if (!accessToken) return config;
 
   // config.headers.Authorization = `Bearer ${accessToken}`;
+  // cookie에 있는 값 헤더에 넣기
 
   return config;
 };

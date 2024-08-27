@@ -1,12 +1,12 @@
 import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import type { ApiErrorScheme } from '@/exceptions/type';
-import { getToken, logout } from '@/store/user';
+import { logout } from '@/store/user';
 
 const interceptorRequestFulfilled = (config: InternalAxiosRequestConfig) => {
   if (typeof window === 'undefined') return config;
 
-  const accessToken = getToken();
+  const accessToken = localStorage.getItem('accessToken');
   if (!config.headers) return config;
   if (!accessToken) return config;
 

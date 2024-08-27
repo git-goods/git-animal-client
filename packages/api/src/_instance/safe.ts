@@ -9,12 +9,16 @@ const safeFactory =
   <A extends Parameters<Method>>(method: (...args: A) => ReturnType<Method>) =>
   <Z extends ZodType>(zodSchema: Z) =>
   async (...args: A): Promise<z.infer<Z>> => {
-    const response = await method(...args);
+    try {
+      const response = await method(...args);
 
-    const parsed = zodSchema.safeParse(response);
-    if (parsed.error) throw new CustomException('API_TYPE_NOT_MATCH');
+      const parsed = zodSchema.safeParse(response);
+      if (parsed.error) throw new CustomException('API_TYPE_NOT_MATCH');
 
-    return response;
+      return response;
+    } catch (error) {
+      throw error;
+    }
   };
 
 export const safeGet = safeFactory(get);
