@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { setInstanceToken } from '@gitanimals/api';
 
 import { setAPIInstantToken } from '@/apis';
-import { auth } from '@/auth';
+import { getServerAuth } from '@/auth';
 import ClientProvider from '@/components/ClientProvider';
 
 import './globals.css';
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 };
 
 const setToken = async () => {
-  const session = await auth();
+  const session = await getServerAuth();
 
   const accessToken = session?.user.accessToken;
   setInstanceToken(`Bearer ${accessToken}`);

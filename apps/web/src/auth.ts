@@ -47,26 +47,12 @@ export const config = {
       session.user = token as any;
       return session;
     },
-    // async session({ session, token }) {
-    //   const newUser = {
-    //     ...session.user,
-    //     id: token.id,
-    //     token: token.token,
-    //   };
-
-    //   // setInstanceToken(token.token as string);
-
-    //   return { ...session, user: newUser, token: token.token };
-    // },
-    // async jwt({ token, user }) {
-    //   return { ...user, ...token };
-    // },
   },
 } satisfies NextAuthOptions;
 
 export const authOptions = config;
 
-export function auth(
+export function getServerAuth(
   ...args: [GetServerSidePropsContext['req'], GetServerSidePropsContext['res']] | [NextApiRequest, NextApiResponse] | []
 ) {
   return getServerSession(...args, config);
