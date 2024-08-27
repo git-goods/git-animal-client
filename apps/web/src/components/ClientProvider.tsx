@@ -2,6 +2,7 @@
 
 import { type PropsWithChildren } from 'react';
 import { SessionProvider } from 'next-auth/react';
+import { Toaster } from 'sonner';
 import { ThemeProvider } from 'styled-components';
 
 import QueryClientProvider from '@/apis/QueryClientProvider';
@@ -25,6 +26,7 @@ function ClientProvider({ children }: PropsWithChildren) {
           <SessionLoader>
             <ThemeProvider theme={theme}>
               <SnackBarProvider />
+              <Toaster position="top-right" />
 
               {children}
               <FeedBack />
