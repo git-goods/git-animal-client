@@ -50,6 +50,7 @@ const mainStyle = css({
   padding: '20px',
   minWidth: 'fit-content',
   minHeight: 'calc(100vh - 100px)',
+  backgroundColor: '#297542',
 });
 const tabSectionStyle = css({
   display: 'flex',

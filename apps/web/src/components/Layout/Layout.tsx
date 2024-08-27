@@ -1,17 +1,8 @@
 import type { PropsWithChildren } from 'react';
-import Image from 'next/image';
 import { css } from '_panda/css';
 
-import Footer from './Footer';
-
 function Layout({ children }: PropsWithChildren) {
-  return (
-    <div className={containerStyle}>
-      <Image src="/bg.png" fill alt="bg" />
-      {children}
-      <Footer />
-    </div>
-  );
+  return <div className={containerStyle}>{children}</div>;
 }
 
 export default Layout;
