@@ -1,8 +1,9 @@
-import * as styles from './ChoosePetSection.style';
-import { Button } from '@gitanimals/ui-panda';
 import LoginButton from '@/components/LoginButton';
 
-function ChoosePetSection() {
+import * as styles from './ChoosePetSection.style';
+
+async function ChoosePetSection() {
+  // const session = await getServerAuth();
   return (
     <section className={styles.section}>
       <picture className={styles.bg}>
@@ -13,14 +14,7 @@ function ChoosePetSection() {
         Choose from <br />
         over 50+ different pets and raise them
       </h2>
-      <LoginButton>
-        <Button className="desktop" size="l">
-          Have Pet
-        </Button>
-        <Button className="mobile" size="m">
-          Have Pet
-        </Button>
-      </LoginButton>
+      <LoginButton>Have Pet</LoginButton>
     </section>
   );
 }

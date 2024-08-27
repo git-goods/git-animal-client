@@ -1,6 +1,7 @@
 'use client';
 
 import type { PropsWithChildren } from 'react';
+import { Button } from '@gitanimals/ui-panda';
 
 import { getGithubOauthUrl } from '@/apis/auth/getGithubOauth';
 import { useClientSession } from '@/utils/clientAuth';
@@ -11,18 +12,21 @@ function LoginButton({ children }: PropsWithChildren<LoginButtonProps>) {
   const session = useClientSession();
 
   const onLogin = async () => {
-    const url = await getGithubOauthUrl();
-    window.location.assign(url);
+    await getGithubOauthUrl();
   };
 
-  // if (session.status === 'loading') return <div>loading...</div>;
+  if (session.status !== 'unauthenticated') return <></>;
 
-  // if (session.status === 'authenticated') return <Link href="/mypage">{children}</Link>;
-
-  if (session.status === 'unauthenticated') {
-    return <button onClick={onLogin}>{children}</button>;
-  }
-  return <></>;
+  return (
+    <button onClick={onLogin}>
+      <Button className="desktop" size="l">
+        {children}
+      </Button>
+      <Button className="mobile" size="m">
+        {children}
+      </Button>
+    </button>
+  );
 }
 
 export default LoginButton;

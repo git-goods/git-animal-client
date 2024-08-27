@@ -5,7 +5,6 @@ import { flex } from '_panda/patterns';
 import { Button } from '@gitanimals/ui-panda';
 
 import { getServerAuth } from '@/auth';
-import LoginButton from '@/components/LoginButton';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
@@ -56,9 +55,7 @@ async function Header() {
               </li>
             ) : (
               <li>
-                <LoginButton>
-                  <Button>Login</Button>
-                </LoginButton>
+                <Button>Login</Button>
               </li>
             )}
           </ul>
