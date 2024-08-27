@@ -13,6 +13,7 @@ const containerStyle = css({
   height: '100%',
   minHeight: '100vh',
   minWidth: '1400px',
+  backgroundColor: '#297542',
   '& > img': {
     zIndex: -1,
     objectFit: 'cover',
