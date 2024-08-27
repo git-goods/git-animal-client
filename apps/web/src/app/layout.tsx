@@ -37,17 +37,19 @@ export const metadata: Metadata = {
   },
 };
 
-const setToken = async () => {
-  const session = await getServerAuth();
-
-  const accessToken = session?.user.accessToken;
-  setInstanceToken(`Bearer ${accessToken}`);
-  setAPIInstantToken(`Bearer ${accessToken}`);
-};
-
-setToken();
-
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const setToken = async () => {
+    if (typeof window === 'undefined') {
+      const session = await getServerAuth();
+
+      const accessToken = session?.user.accessToken;
+      setInstanceToken(`Bearer ${accessToken}`);
+      setAPIInstantToken(`Bearer ${accessToken}`);
+    }
+  };
+
+  setToken();
+
   return (
     <html lang="en">
       <body>
