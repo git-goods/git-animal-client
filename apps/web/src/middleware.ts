@@ -24,7 +24,7 @@ const withAuth = (
 };
 
 const checkToken = async (request: NextRequest, token: any) => {
-  return axios.get(getBaseUrl(request.url) + '/api/auth/verifyToken' + `?token=${token?.accessToken}`);
+  return;
 };
 
 export async function middleware(request: NextRequest) {
@@ -33,7 +33,8 @@ export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
 
   if (token) {
-    await checkToken(request, token)
+    await axios
+      .get(getBaseUrl(request.url) + '/api/auth/verifyToken' + `?token=${token?.accessToken}`)
       .then((res) => {
         return res.status === 200;
       })
