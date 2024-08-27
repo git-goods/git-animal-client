@@ -9,6 +9,8 @@ import LoginButton from '@/components/LoginButton';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
+import LogoutButton from '../LogoutButton';
+
 async function Header() {
   const session = await getServerAuth();
 
@@ -46,7 +48,13 @@ async function Header() {
                 <Link href="/dev">DEV</Link>
               </li>
             )}
-            {!isLogin && (
+            {isLogin ? (
+              <li>
+                <LogoutButton>
+                  <Button>Logout</Button>
+                </LogoutButton>
+              </li>
+            ) : (
               <li>
                 <LoginButton>
                   <Button>Login</Button>
