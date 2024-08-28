@@ -1,37 +1,73 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from '@gitanimals/ui-panda';
+import { performCancellableAsyncTask } from '@gitanimals/util-common';
 import { toast } from 'sonner';
 
 import { NOTICE_LIST } from './notice';
 
-function NoticeToast() {
-  const [isRender, setIsRender] = useState(false);
+const generationNoticeKey = (noticeKey: string) => {
+  return `notice_${noticeKey}`;
+};
 
-  const noticeDataList = NOTICE_LIST;
+function NoticeToast() {
   const router = useRouter();
 
-  const getRenderNoticeList = () => {
-    const viewNotice = window.localStorage.getItem('viewNotice');
+  const setViewNoticeItem = (id: string | number) => {
+    const viewStorageData = window.localStorage.getItem('viewNotice');
+    const viewList = viewStorageData ? JSON.parse(viewStorageData) : [];
 
-    if (!viewNotice) {
-      window.localStorage.setItem('viewNotice', JSON.stringify(noticeDataList));
-      return noticeDataList;
+    viewList.push(id);
+    window.localStorage.setItem('viewNotice', JSON.stringify(viewList));
+  };
+
+  const getRenderNoticeList = () => {
+    const viewStorageData = window.localStorage.getItem('viewNotice');
+
+    if (!viewStorageData) {
+      return NOTICE_LIST;
     }
+
+    const viewList = JSON.parse(viewStorageData);
+
+    return NOTICE_LIST.filter((notice) => !viewList.includes(generationNoticeKey(notice.key)));
+  };
+
+  const renderToast = (notice: (typeof NOTICE_LIST)[number]) => {
+    const toastId = generationNoticeKey(notice.key);
+    toast(notice.label, {
+      id: toastId,
+      duration: Infinity,
+      className: 'notice-toast',
+      onDismiss: () => setViewNoticeItem(toastId),
+      onAutoClose: () => setViewNoticeItem(toastId),
+      closeButton: true,
+      action: notice.url
+        ? {
+            label: 'GO',
+            onClick: () => {
+              router.push(notice.url);
+              setViewNoticeItem(toastId);
+            },
+          }
+        : undefined,
+    });
   };
 
   useEffect(() => {
-    if (isRender) return;
-    setIsRender(true);
+    const controller = new AbortController();
 
-    console.log('noticeDataList: ', noticeDataList);
-    noticeDataList.forEach((notice) => {
-      toast(notice.label, {
-        action: <Button onClick={() => router.push(notice.url)}>Action</Button>,
-      });
+    performCancellableAsyncTask(null, {
+      signal: controller.signal,
+    }).then(() => {
+      const renderList = getRenderNoticeList();
+      renderList.forEach((notice) => renderToast(notice));
     });
+
+    return () => {
+      controller.abort();
+    };
   }, []);
 
   return <div></div>;

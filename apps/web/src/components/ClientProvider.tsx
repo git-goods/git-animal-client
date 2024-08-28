@@ -18,7 +18,6 @@ import SessionLoader from './SessionLoader';
 function ClientProvider({ children }: PropsWithChildren) {
   return (
     <QueryClientProvider>
-      {/* <GoogleTagManager gtmId={MONITORING_KEY.GTM} /> */}
       <SessionProvider>
         <StyledComponentsRegistry>
           <Monitoring />
@@ -26,7 +25,16 @@ function ClientProvider({ children }: PropsWithChildren) {
           <SessionLoader>
             <ThemeProvider theme={theme}>
               <SnackBarProvider />
-              <Toaster position="top-right" />
+              <Toaster
+                position="top-right"
+                toastOptions={{
+                  classNames: {
+                    title: 'toast-title',
+                    actionButton: 'toast-action-button',
+                    toast: 'toast-container',
+                  },
+                }}
+              />
 
               {children}
               <FeedBack />
@@ -34,7 +42,6 @@ function ClientProvider({ children }: PropsWithChildren) {
           </SessionLoader>
         </StyledComponentsRegistry>
       </SessionProvider>
-      {/* <GoogleAnalytics gaId={MONITORING_KEY.GA} /> */}
     </QueryClientProvider>
   );
 }

@@ -166,6 +166,9 @@ importers:
       '@gitanimals/ui-panda':
         specifier: workspace:*
         version: link:../../packages/ui/panda
+      '@gitanimals/util-common':
+        specifier: workspace:*
+        version: link:../../packages/util/common
       '@next/third-parties':
         specifier: ^14.2.5
         version: 14.2.5(next@14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react@18.2.0)
@@ -449,6 +452,21 @@ importers:
         version: 5.4.5
 
   packages/ui/token:
+    devDependencies:
+      '@gitanimals/eslint-config':
+        specifier: workspace:*
+        version: link:../../eslint-config
+      '@gitanimals/typescript-config':
+        specifier: workspace:*
+        version: link:../../typescript-config
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
+  packages/util/common:
     devDependencies:
       '@gitanimals/eslint-config':
         specifier: workspace:*
@@ -18450,7 +18468,7 @@ snapshots:
   terser@5.31.1:
     dependencies:
       '@jridgewell/source-map': 0.3.6
-      acorn: 8.10.0
+      acorn: 8.11.3
       commander: 2.20.3
       source-map-support: 0.5.21
 

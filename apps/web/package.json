@@ -21,6 +21,7 @@
     "@gitanimals/exception": "workspace:*",
     "@gitanimals/ui-icon": "workspace:*",
     "@gitanimals/ui-panda": "workspace:*",
+    "@gitanimals/util-common": "workspace:*",
     "@next/third-parties": "^14.2.5",
     "@tanstack/react-query": "^5.32.0",
     "axios": "^1.6.8",
