@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { performCancellableAsyncTask } from '@gitanimals/util-common';
 import { toast } from 'sonner';
 
+import { useClientSession } from '@/utils/clientAuth';
+
 import { NOTICE_LIST } from './notice';
 
 const generationNoticeKey = (noticeKey: string) => {
@@ -13,6 +15,8 @@ const generationNoticeKey = (noticeKey: string) => {
 
 function NoticeToast() {
   const router = useRouter();
+  const { status } = useClientSession();
+  const isLogin = status === 'authenticated';
 
   const setViewNoticeItem = (id: string | number) => {
     const viewStorageData = window.localStorage.getItem('viewNotice');
@@ -36,6 +40,8 @@ function NoticeToast() {
 
   const renderToast = (notice: (typeof NOTICE_LIST)[number]) => {
     const toastId = generationNoticeKey(notice.key);
+    if (notice?.isAuth && notice.isAuth === isLogin) return;
+
     toast(notice.label, {
       id: toastId,
       duration: Infinity,
@@ -43,7 +49,7 @@ function NoticeToast() {
       onDismiss: () => setViewNoticeItem(toastId),
       onAutoClose: () => setViewNoticeItem(toastId),
       closeButton: true,
-      action: notice.url
+      action: notice.redirectUrl
         ? {
             label: 'GO',
             onClick: () => {
@@ -68,6 +74,7 @@ function NoticeToast() {
     return () => {
       controller.abort();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <div></div>;

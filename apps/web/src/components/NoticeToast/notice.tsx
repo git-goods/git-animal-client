@@ -2,7 +2,8 @@ export const NOTICE_LIST = [
   {
     key: '1',
     label: `Welcome aboard!\nYou should stop by the store`,
-    url: '/shop',
+    redirectUrl: '/shop',
+    isAuth: true,
   },
   {
     key: '2',
