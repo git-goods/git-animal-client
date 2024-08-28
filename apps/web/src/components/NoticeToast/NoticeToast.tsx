@@ -57,7 +57,7 @@ function NoticeToast() {
         ? {
             label: notice.redirect.label,
             onClick: () => {
-              router.push(notice.redirect.url);
+              notice.redirect?.isOutLink ? window.open(notice.redirect.url) : router.push(notice.redirect.url);
               setViewNoticeItem(toastId);
               sendLog({ noticeKey: toastId, type: 'notice' }, `notice : ${notice.redirect.label}`);
             },

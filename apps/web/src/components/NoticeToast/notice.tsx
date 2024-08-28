@@ -9,4 +9,15 @@ export const NOTICE_LIST = [
     isAuth: true,
     closeButton: false,
   },
+  {
+    key: 'github-star',
+    label: 'Enjoying GitAnimals?\nGive us a GitHub Star! ⭐',
+    redirect: {
+      url: 'https://github.com/git-goods/gitanimals',
+      isOutLink: true,
+      label: 'Star Now!',
+    },
+    isAuth: true,
+    closeButton: false,
+  },
 ];
