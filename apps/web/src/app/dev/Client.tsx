@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { Box } from '_panda/jsx';
 import { flex } from '_panda/patterns';
 import { Button } from '@gitanimals/ui-panda';
-import { toast } from 'sonner';
 
 import { useClientSession } from '@/utils/clientAuth';
 import { getIsOnLoadSheet, sendLog } from '@/utils/log';
@@ -15,9 +14,6 @@ function DevClient() {
   return (
     <Box>
       <ul className={listStyle}>
-        <li>
-          <Button onClick={() => toast('asdadsasd')}>Toast</Button>
-        </li>
         <li>client session status : {status}</li>
         <li>
           client session user : <br /> {session?.user && JSON.stringify(session.user)}
