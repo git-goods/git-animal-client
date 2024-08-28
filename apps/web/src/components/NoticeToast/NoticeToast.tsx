@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
-import { performCancellableAsyncTask } from '@gitanimals/util-common';
 import { toast } from 'sonner';
 
+import useEffectOnce from '@/hooks/lifeCycle/useEffectOnce';
 import { useClientSession } from '@/utils/clientAuth';
 import { sendLog } from '@/utils/log';
 
@@ -66,23 +66,12 @@ function NoticeToast() {
     });
   };
 
-  useEffect(() => {
-    const controller = new AbortController();
+  useEffectOnce(() => {
+    const renderList = getRenderNoticeList();
+    renderList.forEach((notice) => renderToast(notice));
+  });
 
-    performCancellableAsyncTask(null, {
-      signal: controller.signal,
-    }).then(() => {
-      const renderList = getRenderNoticeList();
-      renderList.forEach((notice) => renderToast(notice));
-    });
-
-    return () => {
-      controller.abort();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return <div></div>;
+  return <></>;
 }
 
 export default NoticeToast;
