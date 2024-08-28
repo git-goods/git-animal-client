@@ -6,6 +6,7 @@ import { performCancellableAsyncTask } from '@gitanimals/util-common';
 import { toast } from 'sonner';
 
 import { useClientSession } from '@/utils/clientAuth';
+import { sendLog } from '@/utils/log';
 
 import { NOTICE_LIST } from './notice';
 
@@ -40,21 +41,25 @@ function NoticeToast() {
 
   const renderToast = (notice: (typeof NOTICE_LIST)[number]) => {
     const toastId = generationNoticeKey(notice.key);
-    if (notice?.isAuth && notice.isAuth === isLogin) return;
+    if (notice?.isAuth && notice.isAuth !== isLogin) return;
 
     toast(notice.label, {
       id: toastId,
       duration: Infinity,
       className: 'notice-toast',
-      onDismiss: () => setViewNoticeItem(toastId),
+      onDismiss: () => {
+        setViewNoticeItem(toastId);
+        sendLog({ noticeKey: toastId, type: 'notice' }, 'notice toast dismiss');
+      },
       onAutoClose: () => setViewNoticeItem(toastId),
-      closeButton: true,
-      action: notice.redirectUrl
+      ...notice,
+      action: notice.redirect
         ? {
-            label: 'GO',
+            label: notice.redirect.label,
             onClick: () => {
-              router.push(notice.url);
+              router.push(notice.redirect.url);
               setViewNoticeItem(toastId);
+              sendLog({ noticeKey: toastId, type: 'notice' }, `notice : ${notice.redirect.label}`);
             },
           }
         : undefined,
