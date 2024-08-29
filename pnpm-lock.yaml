@@ -166,6 +166,9 @@ importers:
       '@gitanimals/ui-panda':
         specifier: workspace:*
         version: link:../../packages/ui/panda
+      '@gitanimals/util-common':
+        specifier: workspace:*
+        version: link:../../packages/util/common
       '@next/third-parties':
         specifier: ^14.2.5
         version: 14.2.5(next@14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react@18.2.0)
@@ -202,6 +205,9 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.2.0)
+      sonner:
+        specifier: ^1.5.0
+        version: 1.5.0(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       styled-components:
         specifier: ^6.1.8
         version: 6.1.11(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
@@ -446,6 +452,21 @@ importers:
         version: 5.4.5
 
   packages/ui/token:
+    devDependencies:
+      '@gitanimals/eslint-config':
+        specifier: workspace:*
+        version: link:../../eslint-config
+      '@gitanimals/typescript-config':
+        specifier: workspace:*
+        version: link:../../typescript-config
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
+  packages/util/common:
     devDependencies:
       '@gitanimals/eslint-config':
         specifier: workspace:*
@@ -7936,6 +7957,12 @@ packages:
   socks@2.7.1:
     resolution: {integrity: sha512-7maUZy1N7uo6+WVEX6psASxtNlKaNVMlGQKkG/63nEDdLOWNbiUMoLK7X4uYoLhQstau72mLgfEWcXcwsaHbYQ==}
     engines: {node: '>= 10.13.0', npm: '>= 3.0.0'}
+
+  sonner@1.5.0:
+    resolution: {integrity: sha512-FBjhG/gnnbN6FY0jaNnqZOMmB73R+5IiyYAw8yBj7L54ER7HB3fOSE5OFiQiE2iXWxeXKvg6fIP4LtVppHEdJA==}
+    peerDependencies:
+      react: ^18
+      react-dom: ^18.3.1
 
   sort-object-keys@1.1.3:
     resolution: {integrity: sha512-855pvK+VkU7PaKYPc+Jjnmt4EzejQHyhhF33q31qG8x7maDzkeFhAAThdCYay11CISO+qAMwjOBP+fPZe0IPyg==}
@@ -18143,6 +18170,11 @@ snapshots:
       ip: 2.0.0
       smart-buffer: 4.2.0
 
+  sonner@1.5.0(react-dom@18.3.1(react@18.2.0))(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.3.1(react@18.2.0)
+
   sort-object-keys@1.1.3: {}
 
   sort-package-json@2.6.0:
@@ -18436,7 +18468,7 @@ snapshots:
   terser@5.31.1:
     dependencies:
       '@jridgewell/source-map': 0.3.6
-      acorn: 8.10.0
+      acorn: 8.11.3
       commander: 2.20.3
       source-map-support: 0.5.21
 

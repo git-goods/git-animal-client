@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
 import { setInstanceToken } from '@gitanimals/api';
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 
 import { setAPIInstantToken } from '@/apis';
 import { getServerAuth } from '@/auth';
 import ClientProvider from '@/components/ClientProvider';
+import NoticeToast from '@/components/NoticeToast/NoticeToast';
+import { MONITORING_KEY } from '@/constants/monitoring';
 
 import './globals.css';
 import '@gitanimals/asset-font/product-sans/index.css';
@@ -53,7 +56,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <body>
-        <ClientProvider>{children}</ClientProvider>
+        <GoogleTagManager gtmId={MONITORING_KEY.GTM} />
+        <ClientProvider>
+          {children}
+
+          <NoticeToast />
+        </ClientProvider>
+        <GoogleAnalytics gaId={MONITORING_KEY.GA} />
       </body>
     </html>
   );

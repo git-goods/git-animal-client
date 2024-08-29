@@ -21,6 +21,7 @@
     "@gitanimals/exception": "workspace:*",
     "@gitanimals/ui-icon": "workspace:*",
     "@gitanimals/ui-panda": "workspace:*",
+    "@gitanimals/util-common": "workspace:*",
     "@next/third-parties": "^14.2.5",
     "@tanstack/react-query": "^5.32.0",
     "axios": "^1.6.8",
@@ -33,6 +34,7 @@
     "next-auth": "^4.24.7",
     "react": "*",
     "react-dom": "*",
+    "sonner": "^1.5.0",
     "styled-components": "^6.1.8",
     "zustand": "^4.5.2"
   },

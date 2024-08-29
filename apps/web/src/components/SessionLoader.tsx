@@ -1,6 +1,5 @@
 'use client';
 
-// SessionLoader.tsx
 import { useSession } from 'next-auth/react';
 import { setInstanceToken } from '@gitanimals/api';
 
@@ -14,7 +13,6 @@ const SessionLoader = ({ children }: { children: React.ReactNode }) => {
   }
 
   if (session.status === 'authenticated') {
-    console.log('session.data.user.accessToken: ', session.data.user.accessToken);
     setAPIInstantToken(`Bearer ${session.data.user.accessToken}`);
     setInstanceToken(`Bearer ${session.data.user.accessToken}`);
   }
