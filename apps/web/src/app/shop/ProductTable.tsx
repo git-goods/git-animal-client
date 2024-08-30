@@ -62,7 +62,10 @@ function ProductTable({}: ProductTableProps) {
 
   const { mutate: buyProduct } = useBuyProduct({
     onSuccess: () => {
-      toast.success('Purchase complete!');
+      toast.success('Purchase complete!', {
+        position: 'top-center',
+        duration: 1000,
+      });
       queryClient.invalidateQueries({
         queryKey: getProductsQueryKey(),
       });
