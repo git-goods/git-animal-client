@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { getProductsQueryKey, useGetProducts } from '@/apis/auctions/useGetProducts';
 import { useBuyProduct, useDeleteProduct } from '@/apis/auctions/useProduct';
@@ -61,7 +62,10 @@ function ProductTable({}: ProductTableProps) {
 
   const { mutate: buyProduct } = useBuyProduct({
     onSuccess: () => {
-      showSnackBar({ message: '구매가 완료되었습니다!!' });
+      toast.success('Purchase complete!', {
+        position: 'top-center',
+        duration: 1000,
+      });
       queryClient.invalidateQueries({
         queryKey: getProductsQueryKey(),
       });

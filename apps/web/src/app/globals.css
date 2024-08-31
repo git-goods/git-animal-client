@@ -66,7 +66,7 @@
 .toast-title {
   white-space: break-spaces;
 }
-.notice-toast .toast-action-button {
+.toast-action-button {
   color: #000 !important;
   background-color: #fcfd9c !important;
   box-shadow:
@@ -81,7 +81,7 @@
   font-weight: 500;
 }
 
-.notice-toast.toast-container {
+.toast-container {
   box-shadow:
     0 2px 4px #00000040,
     inset 0 -3px #c8c8c888,

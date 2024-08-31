@@ -28,6 +28,10 @@ function ClientProvider({ children }: PropsWithChildren) {
               <Toaster
                 position="top-right"
                 toastOptions={{
+                  style: {
+                    top: '48px',
+                    right: '-12px',
+                  },
                   classNames: {
                     title: 'toast-title',
                     actionButton: 'toast-action-button',
