@@ -30,10 +30,6 @@ export const meta: MetaFunction = () => {
 
 export async function action({ request }: ActionFunctionArgs) {
   const cookieHeader = request.headers.get('Cookie');
-  const cookie = (await userToken.parse(cookieHeader)) || {};
-  console.log('cookie: ', cookie);
-  const bodyParams = await request.formData();
-  console.log('bodyParams: ', bodyParams);
 
   return {};
 }
@@ -43,31 +39,8 @@ export default function Index() {
     <Main>
       <MainHeading>Home</MainHeading>
       <p className={css({ pt: '2' })}>Gitanimals Admin 페이지입니다. </p>
-      <Login />
     </Main>
   );
 }
 
 const ADMIN_TOKEN = 'gitanimals-admin-token';
-
-function Login() {
-  const [value, setValue] = useState('');
-
-  const onSubmit = () => {
-    console.log('value: ', value);
-    // window.localStorage && window.localStorage.setItem(ADMIN_TOKEN, value);
-  };
-
-  return (
-    <Box mt={8}>
-      <Link to="/auth">Login</Link>
-      <p>token을 입력해주세요</p>
-      <Form method="post">
-        <Input type="text" name="token" my={4} onChange={(e) => setValue(e.target.value)} />
-        <Button type="submit" onClick={() => onSubmit()}>
-          Submit
-        </Button>
-      </Form>
-    </Box>
-  );
-}
