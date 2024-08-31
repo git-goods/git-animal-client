@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import { useRef } from 'react';
-import styled from 'styled-components';
+import { css } from '_panda/css';
 
 import useOutsideClick from '@/hooks/useOutsideClick';
 
@@ -32,34 +32,32 @@ function Modal({ isOpen, children, onClose }: PropsWithChildren<ModalProps>) {
   if (!isOpen) return null;
   return (
     <Portal>
-      <ModalOverlay>
-        <ModalContent key="modal" ref={modalRef}>
+      <div className={modalOverlayStyle}>
+        <div className={modalContentStyle} key="modal" ref={modalRef}>
           {children}
-        </ModalContent>
-      </ModalOverlay>
+        </div>
+      </div>
     </Portal>
   );
 }
 
-const ModalOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 28px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: modalOverlay;
-  //TODO: 후에 삭제
-  min-width: 1452px;
-`;
+const modalOverlayStyle = css({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  background: 'rgba(0, 0, 0, 0.2)',
+  padding: '28px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: '200', // TODO: zIndex 관리
+});
 
-const ModalContent = styled.div`
-  border-radius: 30px;
-  width: fit-content;
-`;
+const modalContentStyle = css({
+  borderRadius: '30px',
+  width: 'fit-content',
+});
 
 export default Modal;
