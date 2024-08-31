@@ -28,9 +28,7 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export async function action({ request }: ActionFunctionArgs) {
-  const cookieHeader = request.headers.get('Cookie');
-
+export async function action() {
   return {};
 }
 
@@ -39,8 +37,9 @@ export default function Index() {
     <Main>
       <MainHeading>Home</MainHeading>
       <p className={css({ pt: '2' })}>Gitanimals Admin 페이지입니다. </p>
+      <br />
+      <br />
+      <img src="https://pbs.twimg.com/media/EOKxWAbUUAcCOyg.jpg" alt="" width={800} />
     </Main>
   );
 }
-
-const ADMIN_TOKEN = 'gitanimals-admin-token';
