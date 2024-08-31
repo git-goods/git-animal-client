@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
-import styled from 'styled-components';
+import { css, cx } from '_panda/css';
+import { center, flex } from '_panda/patterns';
 
 import { useGetPersonaTypes } from '@/apis/auctions/useGetPersonaTypes';
 import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
@@ -26,33 +27,33 @@ function Search(props: SearchProps) {
 
   return (
     <DottedThreeBox width={54} height={54} bgColor="white">
-      <ButtonWrapper onClick={() => setIsOpen(true)}>
+      <button className={buttonWrapperStyle} onClick={() => setIsOpen(true)}>
         <SearchIcon />
-      </ButtonWrapper>
+      </button>
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <DottedThreeBox width={800} height={700} bgColor="#fff">
-          <SearchPopup>
-            <Heading>Select Find Persona</Heading>
+          <div className={searchPopupStyle}>
+            <h2 className={headingStyle}>Select Find Persona</h2>
             {props.selected && (
-              <SelectPersona>
+              <div className={selectPersonaStyle}>
                 Selected Persona : {props.selected}
                 <button onClick={() => onClick()}>
                   <CloseIcon />
                 </button>
-              </SelectPersona>
+              </div>
             )}
 
-            <SearchPopupInner>
+            <div className={searchPopupInnerStyle}>
               {data?.productTypes.map((type) => (
-                <PersonaItem key={type.name} onClick={() => onClick(type.name)}>
-                  <PersonaItemImg>
+                <div className={personaItemStyle} key={type.name} onClick={() => onClick(type.name)}>
+                  <div className={cx('persona-item-img', personaItemImgStyle)}>
                     <img src={getPersonaImage(type.name)} alt={type.name} width={70} height={70} />
-                  </PersonaItemImg>
+                  </div>
                   <span>{type.name}</span>
-                </PersonaItem>
+                </div>
               ))}
-            </SearchPopupInner>
-          </SearchPopup>
+            </div>
+          </div>
         </DottedThreeBox>
       </Modal>
     </DottedThreeBox>
@@ -69,76 +70,59 @@ function SearchIcon() {
   );
 }
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
+const buttonWrapperStyle = center({
+  width: '100%',
+  height: '100%',
+});
 
-const Heading = styled.h2`
-  text-align: center;
-  font-weight: 700;
-  font-size: 24px;
-  margin: 24px 0;
-`;
+const headingStyle = css({
+  textAlign: 'center',
+  fontWeight: 700,
+  fontSize: '24px',
+  margin: '24px 0',
+});
 
-const SearchPopup = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 800px;
-  height: 700px;
-  padding: 8px;
-`;
+const searchPopupStyle = flex({
+  flexDirection: 'column',
+  width: '800px',
+  height: '700px',
+  padding: '8px',
+});
 
-const SelectPersona = styled.div`
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  button {
-    height: 24px;
-  }
-`;
+const selectPersonaStyle = css({
+  padding: '20px',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '12px',
+  '& button': {
+    height: '24px',
+  },
+});
 
-const SearchPopupInner = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 24px;
-  justify-content: space-between;
-  text-align: center;
-  gap: 24px 8px;
-`;
+const searchPopupInnerStyle = css({
+  width: '100%',
+  height: '100%',
+  overflowY: 'scroll',
+  display: 'flex',
+  flexWrap: 'wrap',
+  padding: '24px',
+  justifyContent: 'space-between',
+  textAlign: 'center',
+  gap: '24px 8px',
+});
 
-const PersonaItemImg = styled.div`
-  min-height: 76px;
-`;
+const personaItemImgStyle = css({
+  minHeight: '76px',
+});
 
-const PersonaItem = styled.div`
-  cursor: pointer;
-  &:hover {
-    // 점프하는 애니메이션
-    ${PersonaItemImg} {
-      animation: jump 0.5s infinite;
-
-      @keyframes jump {
-        0% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
-        100% {
-          transform: translateY(0);
-        }
-      }
-    }
-  }
-`;
+const personaItemStyle = css({
+  cursor: 'pointer',
+  '&:hover': {
+    '& .persona-item-img': {
+      animation: 'jump 0.5s infinite',
+    },
+  },
+});
 
 function CloseIcon() {
   return (
