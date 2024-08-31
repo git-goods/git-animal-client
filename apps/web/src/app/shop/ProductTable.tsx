@@ -1,5 +1,8 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { getProductsQueryKey, useGetProducts } from '@/apis/auctions/useGetProducts';
 import { useBuyProduct, useDeleteProduct } from '@/apis/auctions/useProduct';
@@ -11,14 +14,14 @@ import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import type { ProductItemType, ProductType } from '@/schema/action';
 import type { PaginationSchema } from '@/schema/pagination';
 import { useLoading } from '@/store/loading';
-import { useUser } from '@/store/user';
+import { useClientUser } from '@/utils/clientAuth';
 
-interface ProductTableProps {
-  searchPersona?: string;
-}
+import Search from './Search';
 
-function ProductTable({ searchPersona }: ProductTableProps) {
-  const myId = useUser()?.id;
+interface ProductTableProps {}
+
+function ProductTable({}: ProductTableProps) {
+  const { id: myId } = useClientUser();
 
   const queryClient = useQueryClient();
 
@@ -26,6 +29,7 @@ function ProductTable({ searchPersona }: ProductTableProps) {
   const { setLoading } = useLoading();
 
   const [currentPage, setCurrentPage] = useState(0);
+  const [searchPersona, setSearchPersona] = useState<string>();
 
   useEffect(
     function 선택_동물_변경시_페이지_초기화() {
@@ -58,7 +62,10 @@ function ProductTable({ searchPersona }: ProductTableProps) {
 
   const { mutate: buyProduct } = useBuyProduct({
     onSuccess: () => {
-      showSnackBar({ message: '구매가 완료되었습니다!!' });
+      toast.success('Purchase complete!', {
+        position: 'top-center',
+        duration: 1000,
+      });
       queryClient.invalidateQueries({
         queryKey: getProductsQueryKey(),
       });
@@ -96,6 +103,8 @@ function ProductTable({ searchPersona }: ProductTableProps) {
 
   return (
     <div>
+      <Search onSelect={setSearchPersona} selected={searchPersona} />
+
       <ShopTableBackground>
         {data?.products.map((product) => {
           return (

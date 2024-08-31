@@ -1,11 +1,12 @@
 import type { PropsWithChildren } from 'react';
+import { css } from '_panda/css';
 
 import type { DottedBoxProps } from './DottedBox';
-import { Container } from './DottedBox.styles';
 
 function DottedThreeBox({ width, height, children, ...props }: PropsWithChildren<DottedBoxProps>) {
   return (
-    <Container
+    <div
+      className={containerStyle}
       style={{
         width: `${width}px`,
         height: `${height}px`,
@@ -13,7 +14,7 @@ function DottedThreeBox({ width, height, children, ...props }: PropsWithChildren
     >
       <DottedThreeBoxBg width={width} height={height} {...props} />
       {children}
-    </Container>
+    </div>
   );
 }
 
@@ -45,3 +46,20 @@ function DottedThreeBoxBg({ width, height, bgColor }: DottedBoxProps) {
     </svg>
   );
 }
+
+const containerStyle = css({
+  position: 'relative',
+  display: 'inline-block',
+  overflow: 'hidden',
+  backgroundColor: 'transparent',
+  boxSizing: 'border-box',
+  padding: '8px',
+  zIndex: 0,
+
+  '& > svg': {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: -1,
+  },
+});

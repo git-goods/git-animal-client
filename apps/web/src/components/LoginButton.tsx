@@ -1,23 +1,32 @@
 'use client';
-import type { PropsWithChildren } from 'react';
-import Link from 'next/link';
 
-import { useUser } from '@/store/user';
+import type { PropsWithChildren } from 'react';
+import { Button } from '@gitanimals/ui-panda';
+
+import { getGithubOauthUrl } from '@/apis/auth/getGithubOauth';
+import { useClientSession } from '@/utils/clientAuth';
 
 interface LoginButtonProps {}
 
 function LoginButton({ children }: PropsWithChildren<LoginButtonProps>) {
-  const { isLogin } = useUser(); // TODO: useUser 제거
+  const session = useClientSession();
 
   const onLogin = async () => {
-    const res = await fetch('/api/oauth');
-    const data = await res.json();
-    window.location.assign(data.url);
+    await getGithubOauthUrl();
   };
 
-  if (isLogin) return <Link href="/mypage">{children}</Link>;
+  if (session.status !== 'unauthenticated') return <></>;
 
-  return <div onClick={onLogin}>{children}</div>;
+  return (
+    <button onClick={onLogin}>
+      <Button className="desktop" size="l">
+        {children}
+      </Button>
+      <Button className="mobile" size="m">
+        {children}
+      </Button>
+    </button>
+  );
 }
 
 export default LoginButton;

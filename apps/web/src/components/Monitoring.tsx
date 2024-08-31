@@ -11,6 +11,7 @@ const MONITORING_KEY = {
 };
 
 function Monitoring() {
+  if (!isProd) return <></>;
   return (
     <>
       <Script

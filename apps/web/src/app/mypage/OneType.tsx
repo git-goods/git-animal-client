@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -7,7 +9,7 @@ import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals
 import SelectAnimal from '@/components/SelectAnimal';
 import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 import type { PetInfoSchema } from '@/schema/user';
-import { useUser } from '@/store/user';
+import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
 
 import { FarmSection } from './index.styles';
@@ -19,7 +21,8 @@ function OneType({}: Props) {
   const [sizes, setSizes] = useState<[number, number]>([600, 120]);
   const [error, setError] = useState('');
 
-  const { username } = useUser();
+  const { name: username } = useClientUser();
+
   const { showSnackBar } = useSnackBar();
 
   const { data } = useGetUniqueTypeAllPets(username, {

@@ -1,34 +1,28 @@
-'use client';
+import { css } from '_panda/css';
+import { Box } from '_panda/jsx';
 
-import Link from 'next/link';
-import { Center } from '_panda/jsx';
-import { Button } from '@gitanimals/ui-panda';
+import DevClient from './Client';
 
-import { sendLog } from '@/utils/log';
+async function DevPage() {
+  // const data = await getUser();
 
-function DevPage() {
   return (
-    <Center h="100vh" flexDir="column" gap="24px" bg="white">
-      <h1>Dev list </h1>
-      <ul>
-        <li>
-          <Link href="/dev/token">
-            <Button>get user token</Button>
-          </Link>
-        </li>
+    <Box p={32}>
+      <h1>server</h1>
 
-        <GoogleSheet />
-      </ul>
-    </Center>
+      {/* <div>
+        <h3>User</h3>
+        <div>{JSON.stringify(data)}</div>
+      </div> */}
+      <hr className={dividerStyle} />
+      <h1>client</h1>
+      <DevClient />
+    </Box>
   );
 }
 
 export default DevPage;
 
-function GoogleSheet() {
-  const handleSubmit = async () => {
-    await sendLog({ test: 'test data 입니다 ' });
-  };
-
-  return <Button onClick={handleSubmit}>sheet</Button>;
-}
+const dividerStyle = css({
+  margin: '24px 0',
+});

@@ -7,8 +7,13 @@ const instance = setInterceptors(
   axios.create({
     baseURL: API_URL,
     timeout: 15000,
+    headers: {},
   }),
 );
+
+export const setInstanceToken = (token: string) => {
+  instance.defaults.headers.common['Authorization'] = token;
+};
 
 export const get = <T>(...args: Parameters<typeof instance.get>) => {
   return instance.get<T, T>(...args);

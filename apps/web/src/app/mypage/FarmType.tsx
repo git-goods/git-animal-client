@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable @next/next/no-img-element */
 import React, { useCallback, useEffect, useState } from 'react';
@@ -13,16 +15,17 @@ import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
 import type { PetInfoSchema } from '@/schema/user';
 import { useLoading } from '@/store/loading';
-import { useUser } from '@/store/user';
+import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
 
 import { FarmSection } from './index.styles';
 
 const size = 120;
+
 function FarmType() {
   const queryClient = useQueryClient();
 
-  const { username } = useUser();
+  const { name: username } = useClientUser();
   const { showSnackBar } = useSnackBar();
   const { setLoading } = useLoading();
 
@@ -44,8 +47,9 @@ function FarmType() {
   }, [data]);
 
   const [animals, setAnimals] = useState(setInitData());
+  const selectedAnimals = animals.filter((animal) => animal.isSelected);
 
-  const { mutate, isSuccess } = useChangePersonaVisible({
+  const { mutate } = useChangePersonaVisible({
     onMutate: () => {
       setLoading(true);
     },
@@ -110,9 +114,11 @@ function FarmType() {
           })}
         </AnimalList>
       </ChangePet>
+
       <Preview>
-        <GitanimalsFarm key={`farm-${isSuccess}`} sizes={[600, 300]} />
+        <GitanimalsFarm imageKey={`${selectedAnimals.length}`} sizes={[600, 300]} />
       </Preview>
+
       <ButtonWrapper>
         <Button onClick={onLinkCopy}>Copy Link</Button>
       </ButtonWrapper>

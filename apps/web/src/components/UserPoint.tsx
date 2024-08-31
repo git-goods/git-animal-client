@@ -1,8 +1,11 @@
+'use client';
+
 import { useGetSuspenseUser } from '@/apis/user/useGetUser';
 import { addNumberComma } from '@/utils/number';
 
-export function Point() {
+function UserPoint() {
   const { data } = useGetSuspenseUser();
-
-  return <div>my points : {addNumberComma(data.points)}</div>;
+  return <>{addNumberComma(data.points)}</>;
 }
+
+export default UserPoint;

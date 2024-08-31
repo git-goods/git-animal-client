@@ -1,49 +1,42 @@
-'use client';
+import { center } from '_panda/patterns';
+import { setInstanceToken } from '@gitanimals/api';
 
-import { useCallback, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import styled from 'styled-components';
+import LoginButton from './LoginButton';
 
-import { checkUsedCouponsByToken } from '@/apis/user/getUsedCoupons';
-import { useLogin } from '@/store/user';
+function JWTPage({
+  searchParams,
+}: {
+  searchParams: {
+    jwt: string;
+  };
+}) {
+  const jwtToken = searchParams.jwt;
+  const token = jwtToken.split(' ')[1];
 
-function JWTPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const { login } = useLogin();
+  setInstanceToken(`Bearer ${token}`);
 
-  const onLogin = useCallback(
-    async (jwtToken: string) => {
-      const token = jwtToken.split(' ')[1];
-      await login(token);
-
-      if (await checkUsedCouponsByToken(token)) {
-        router.replace('/mypage');
-      } else {
-        router.replace('/start');
-      }
-    },
-    [login, router],
+  return (
+    <div className={loadingContainerStyle}>
+      Loading....
+      <div style={{ visibility: 'hidden' }}>
+        <LoginButton token={token} />
+      </div>
+    </div>
   );
-
-  useEffect(() => {
-    const jwtToken = searchParams?.get('jwt') || '';
-    if (!jwtToken) return;
-
-    onLogin(jwtToken as string);
-  }, [onLogin, searchParams]);
-
-  return <Container>Login Loading...</Container>;
 }
 
 export default JWTPage;
 
-const Container = styled.div`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 2rem;
-`;
+const loadingContainerStyle = center({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+  zIndex: 9999,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  fontSize: '36px',
+});

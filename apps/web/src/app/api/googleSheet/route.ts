@@ -52,6 +52,22 @@ const loadGoogleSheet = async (doc: GoogleSpreadsheet, type: GoogleSheetType): P
   return sheet;
 };
 
+// google sheet load get
+export async function GET() {
+  const type = 'general';
+
+  try {
+    const doc = await loadGoogleDocument();
+    if (!doc) return Response.json({ success: false, error: 'google sheet를 찾지 못했습니다.' });
+
+    await loadGoogleSheet(doc, type);
+
+    return Response.json({ success: true });
+  } catch (error: any) {
+    return new Response(error.message, { status: 400 });
+  }
+}
+
 export async function POST(request: Request) {
   const res = await request.json();
   const type = 'general';

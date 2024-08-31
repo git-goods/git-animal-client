@@ -1,3 +1,5 @@
+'use client';
+
 import type { ComponentProps } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -29,6 +31,9 @@ interface ButtonProps extends ComponentProps<'button'> {
   href?: string;
 }
 
+/**
+ * @deprecated
+ */
 function Button({ href, color = 'primary', ...props }: ButtonProps) {
   if (href) {
     return (

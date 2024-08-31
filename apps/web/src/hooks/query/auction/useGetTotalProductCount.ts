@@ -6,6 +6,5 @@ export const useGetTotalProductCount = (options?: UseSuspenseQueryOptions<GetTot
   useSuspenseQuery<GetTotalProductCountResponse>({
     queryKey: ['product', 'auction', 'statistics', 'total'],
     queryFn: getTotalProductCount,
-    initialData: { count: 0 },
     ...options,
   });
