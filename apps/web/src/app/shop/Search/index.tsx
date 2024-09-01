@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
-import styled from 'styled-components';
+import { css, cx } from '_panda/css';
+import { center, flex } from '_panda/patterns';
+import { CloseIcon, SearchIcon } from '@gitanimals/ui-icon';
 
 import { useGetPersonaTypes } from '@/apis/auctions/useGetPersonaTypes';
 import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
@@ -26,33 +28,33 @@ function Search(props: SearchProps) {
 
   return (
     <DottedThreeBox width={54} height={54} bgColor="white">
-      <ButtonWrapper onClick={() => setIsOpen(true)}>
+      <button className={buttonWrapperStyle} onClick={() => setIsOpen(true)}>
         <SearchIcon />
-      </ButtonWrapper>
+      </button>
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <DottedThreeBox width={800} height={700} bgColor="#fff">
-          <SearchPopup>
-            <Heading>Select Find Persona</Heading>
+          <div className={searchPopupStyle}>
+            <h2 className={headingStyle}>Select Find Persona</h2>
             {props.selected && (
-              <SelectPersona>
+              <div className={selectPersonaStyle}>
                 Selected Persona : {props.selected}
                 <button onClick={() => onClick()}>
-                  <CloseIcon />
+                  <CloseIcon color="#878787" />
                 </button>
-              </SelectPersona>
+              </div>
             )}
 
-            <SearchPopupInner>
+            <div className={searchPopupInnerStyle}>
               {data?.productTypes.map((type) => (
-                <PersonaItem key={type.name} onClick={() => onClick(type.name)}>
-                  <PersonaItemImg>
+                <div className={personaItemStyle} key={type.name} onClick={() => onClick(type.name)}>
+                  <div className={cx('persona-item-img', personaItemImgStyle)}>
                     <img src={getPersonaImage(type.name)} alt={type.name} width={70} height={70} />
-                  </PersonaItemImg>
+                  </div>
                   <span>{type.name}</span>
-                </PersonaItem>
+                </div>
               ))}
-            </SearchPopupInner>
-          </SearchPopup>
+            </div>
+          </div>
         </DottedThreeBox>
       </Modal>
     </DottedThreeBox>
@@ -61,89 +63,64 @@ function Search(props: SearchProps) {
 
 export default Search;
 
-function SearchIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 50 50">
-      <path d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z"></path>
-    </svg>
-  );
-}
+const buttonWrapperStyle = center({
+  width: '100%',
+  height: '100%',
+});
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
+const headingStyle = css({
+  textAlign: 'center',
+  fontWeight: 700,
+  fontSize: '24px',
+  margin: '24px 0',
+});
 
-const Heading = styled.h2`
-  text-align: center;
-  font-weight: 700;
-  font-size: 24px;
-  margin: 24px 0;
-`;
+const searchPopupStyle = flex({
+  flexDirection: 'column',
+  width: '800px',
+  height: '700px',
+  padding: '8px',
+});
 
-const SearchPopup = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 800px;
-  height: 700px;
-  padding: 8px;
-`;
+const selectPersonaStyle = css({
+  padding: '20px',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '12px',
+  '& button': {
+    height: '24px',
+  },
+});
 
-const SelectPersona = styled.div`
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  button {
-    height: 24px;
-  }
-`;
+const searchPopupInnerStyle = css({
+  width: '100%',
+  height: '100%',
+  overflowY: 'scroll',
+  display: 'flex',
+  flexWrap: 'wrap',
+  padding: '24px',
+  justifyContent: 'space-between',
+  textAlign: 'center',
+  gap: '24px 8px',
+});
 
-const SearchPopupInner = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 24px;
-  justify-content: space-between;
-  text-align: center;
-  gap: 24px 8px;
-`;
+const personaItemImgStyle = css({
+  minHeight: '76px',
+});
 
-const PersonaItemImg = styled.div`
-  min-height: 76px;
-`;
+const personaItemStyle = css({
+  cursor: 'pointer',
+  '&:hover': {
+    '& .persona-item-img': {
+      animation: 'jump 0.5s infinite',
+    },
+  },
+});
 
-const PersonaItem = styled.div`
-  cursor: pointer;
-  &:hover {
-    // 점프하는 애니메이션
-    ${PersonaItemImg} {
-      animation: jump 0.5s infinite;
-
-      @keyframes jump {
-        0% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
-        100% {
-          transform: translateY(0);
-        }
-      }
-    }
-  }
-`;
-
-function CloseIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#878787">
-      <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-    </svg>
-  );
-}
+// function CloseIcon() {
+//   return (
+//     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#878787">
+//       <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+//     </svg>
+//   );
+// }
