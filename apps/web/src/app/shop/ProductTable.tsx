@@ -9,7 +9,6 @@ import { useBuyProduct, useDeleteProduct } from '@/apis/auctions/useProduct';
 import Pagination from '@/components/Pagination';
 import ShopTableBackground from '@/components/ProductTable/ShopTableBackground';
 import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
-import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import type { ProductItemType, ProductType } from '@/schema/action';
 import type { PaginationSchema } from '@/schema/pagination';
@@ -22,11 +21,6 @@ interface ProductTableProps {}
 
 function ProductTable({}: ProductTableProps) {
   const { id: myId } = useClientUser();
-
-  const queryClient = useQueryClient();
-
-  const { showSnackBar } = useSnackBar();
-  const { setLoading } = useLoading();
 
   const [currentPage, setCurrentPage] = useState(0);
   const [searchPersona, setSearchPersona] = useState<string>();
@@ -60,6 +54,26 @@ function ProductTable({}: ProductTableProps) {
     },
   );
 
+  return (
+    <div>
+      <Search onSelect={setSearchPersona} selected={searchPersona} />
+
+      <ShopTableBackground>
+        {data?.products.map((product) => {
+          return <ProductTableRow product={product} key={product.id} />;
+        })}
+      </ShopTableBackground>
+      {data && <Pagination {...data.pagination} currentPage={currentPage} onSetPage={setCurrentPage} />}
+    </div>
+  );
+}
+
+export default ProductTable;
+
+function ProductTableRow({ product }: { product: ProductItemType }) {
+  const queryClient = useQueryClient();
+  const { setLoading } = useLoading();
+
   const { mutate: buyProduct } = useBuyProduct({
     onSuccess: () => {
       toast.success('Purchase complete!', {
@@ -80,7 +94,11 @@ function ProductTable({}: ProductTableProps) {
 
   const { mutate: deleteProduct } = useDeleteProduct({
     onSuccess: () => {
-      showSnackBar({ message: '판매 취소가 완료되었습니다!!' });
+      toast.success('Cancellation complete!', {
+        position: 'top-center',
+        duration: 1000,
+      });
+
       queryClient.invalidateQueries({
         queryKey: getProductsQueryKey(),
       });
@@ -102,25 +120,12 @@ function ProductTable({}: ProductTableProps) {
   };
 
   return (
-    <div>
-      <Search onSelect={setSearchPersona} selected={searchPersona} />
-
-      <ShopTableBackground>
-        {data?.products.map((product) => {
-          return (
-            <ShopTableRowView
-              key={product.id}
-              item={product}
-              onAction={onAction}
-              actionLabel={ACTION_BUTTON_OBJ[product.paymentState].label}
-              actionColor={ACTION_BUTTON_OBJ[product.paymentState].color}
-            />
-          );
-        })}
-      </ShopTableBackground>
-      {data && <Pagination {...data.pagination} currentPage={currentPage} onSetPage={setCurrentPage} />}
-    </div>
+    <ShopTableRowView
+      key={product.id}
+      item={product}
+      onAction={onAction}
+      actionLabel={ACTION_BUTTON_OBJ[product.paymentState].label}
+      actionColor={ACTION_BUTTON_OBJ[product.paymentState].color}
+    />
   );
 }
-
-export default ProductTable;
