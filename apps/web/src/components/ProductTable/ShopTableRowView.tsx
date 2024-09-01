@@ -1,13 +1,13 @@
 import Image from 'next/image';
+import type { Product } from '@gitanimals/api/src/auction';
 import styled from 'styled-components';
 
 import SmallButton from '@/components/Button/SmallButton';
-import type { ProductItemType } from '@/schema/action';
 import { getPersonaImage } from '@/utils/image';
 
 interface Props {
-  item: ProductItemType;
-  onAction: (item: ProductItemType) => void;
+  item: Product;
+  onAction: (item: Product) => void;
   actionLabel: string;
   actionColor: string;
 }

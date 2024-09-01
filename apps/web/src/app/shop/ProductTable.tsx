@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import type { Product } from '@gitanimals/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -10,8 +11,6 @@ import Pagination from '@/components/Pagination';
 import ShopTableBackground from '@/components/ProductTable/ShopTableBackground';
 import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
-import type { ProductItemType, ProductType } from '@/schema/action';
-import type { PaginationSchema } from '@/schema/pagination';
 import { useLoading } from '@/store/loading';
 import { useClientUser } from '@/utils/clientAuth';
 
@@ -32,27 +31,7 @@ function ProductTable({}: ProductTableProps) {
     [searchPersona],
   );
 
-  const { data } = useGetProducts<{ products: ProductType<'MY_SELLING' | 'ON_SALE'>[]; pagination: PaginationSchema }>(
-    {
-      pageNumber: currentPage,
-      personaType: searchPersona,
-    },
-    {
-      enabled: Boolean(myId),
-      select: (data) => {
-        const products = data?.products || [];
-        return {
-          products: products.map((product) => {
-            if (product.sellerId === myId) {
-              return { ...product, paymentState: 'MY_SELLING' };
-            }
-            return product;
-          }),
-          pagination: data?.pagination,
-        };
-      },
-    },
-  );
+  const { data } = useGetProducts({ pageNumber: currentPage, personaType: searchPersona }, { enabled: Boolean(myId) });
 
   return (
     <div>
@@ -70,9 +49,12 @@ function ProductTable({}: ProductTableProps) {
 
 export default ProductTable;
 
-function ProductTableRow({ product }: { product: ProductItemType }) {
+function ProductTableRow({ product }: { product: Product }) {
   const queryClient = useQueryClient();
+  const { id: myId } = useClientUser();
   const { setLoading } = useLoading();
+
+  const productStatus = product.sellerId === myId ? 'MY_SELLING' : product.paymentState;
 
   const { mutate: buyProduct } = useBuyProduct({
     onSuccess: () => {
@@ -108,14 +90,16 @@ function ProductTableRow({ product }: { product: ProductItemType }) {
     },
   });
 
-  const onAction = (item: ProductItemType) => {
+  const onAction = (item: Product) => {
     setLoading(true);
+
+    if (productStatus === 'MY_SELLING') {
+      deleteProduct(item.id);
+      return;
+    }
 
     if (item.paymentState === 'ON_SALE') {
       buyProduct(item.id);
-    }
-    if (item.paymentState === 'MY_SELLING') {
-      deleteProduct(item.id);
     }
   };
 
@@ -124,8 +108,8 @@ function ProductTableRow({ product }: { product: ProductItemType }) {
       key={product.id}
       item={product}
       onAction={onAction}
-      actionLabel={ACTION_BUTTON_OBJ[product.paymentState].label}
-      actionColor={ACTION_BUTTON_OBJ[product.paymentState].color}
+      actionLabel={ACTION_BUTTON_OBJ[productStatus].label}
+      actionColor={ACTION_BUTTON_OBJ[productStatus].color}
     />
   );
 }

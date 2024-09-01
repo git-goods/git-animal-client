@@ -9,10 +9,11 @@ export const ProductSchema = z.object({
     personaLevel: z.number(),
   }),
   price: z.string(),
-  paymentState: z.string(),
+  paymentState: z.union([z.literal('ON_SALE'), z.literal('SOLD_OUT'), z.literal('SELL')]),
 });
 
 export type Product = z.infer<typeof ProductSchema>;
+export type ProductStatusType = Product['paymentState'];
 
 export const PaginationSchema = z.object({
   totalRecords: z.number(),
