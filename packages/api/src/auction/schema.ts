@@ -12,6 +12,8 @@ export const ProductSchema = z.object({
   paymentState: z.string(),
 });
 
+export type Product = z.infer<typeof ProductSchema>;
+
 export const PaginationSchema = z.object({
   totalRecords: z.number(),
   currentPage: z.number(),
@@ -19,6 +21,8 @@ export const PaginationSchema = z.object({
   nextPage: z.number().nullable(),
   prevPage: z.number().nullable(),
 });
+
+export type Pagination = z.infer<typeof PaginationSchema>;
 
 export const HistoryProductSchema = z.object({
   id: z.string(),
@@ -35,3 +39,5 @@ export const HistoryProductSchema = z.object({
     soldAt: z.string(),
   }),
 });
+
+export type HistoryProduct = z.infer<typeof HistoryProductSchema>;
