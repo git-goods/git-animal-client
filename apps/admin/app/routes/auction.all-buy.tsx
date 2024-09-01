@@ -27,10 +27,12 @@ const getProductParams = (query: URLSearchParams) => {
 export const loader: LoaderFunction = async ({ request }) => {
   const query = new URL(request.url).searchParams;
 
+  const alertQuery = { alert: query.get('alert'), failed: query.get('failed') };
+
   const params = getProductParams(query);
 
   const data: GetProductsResponse = await getProducts(params);
-  return json({ products: data.products, tableParams: params, query });
+  return json({ products: data.products, tableParams: params, query: alertQuery });
 };
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -43,14 +45,20 @@ export async function action({ request }: ActionFunctionArgs) {
 
   try {
     const promises = itemsArray.map((id: string) => buyProductWithToken({ productId: id, token }));
-    await Promise.allSettled(promises);
+    const results = await Promise.allSettled(promises);
+
+    const failed = results.filter((result) => result.status === 'rejected');
+    if (failed.length === itemsArray.length) {
+      throw new Error(`Failed to buy ${failed.length} products`);
+    }
 
     console.info('buy product success');
+
+    return redirect(`/auction/all-buy?alert=success&failed=${failed.length}`);
   } catch (error) {
     console.error('buy products error');
+    return redirect('/auction/all-buy?alert=error');
   }
-
-  return redirect('/auction/all-buy?alert=success');
 }
 
 function ActionAllBuyPage() {
