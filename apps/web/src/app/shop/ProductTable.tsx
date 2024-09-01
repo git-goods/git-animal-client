@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import type { Product } from '@gitanimals/api';
+import { flex } from '_panda/patterns';
+import type { Product, ProductOrderType, ProductSortDirection } from '@gitanimals/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -23,6 +24,8 @@ function ProductTable({}: ProductTableProps) {
 
   const [currentPage, setCurrentPage] = useState(0);
   const [searchPersona, setSearchPersona] = useState<string>();
+  const [orderType, setOrderType] = useState<ProductOrderType>('PRICE');
+  const [sortDirection, setSortDirection] = useState<ProductSortDirection>('ASC');
 
   useEffect(
     function 선택_동물_변경시_페이지_초기화() {
@@ -31,11 +34,16 @@ function ProductTable({}: ProductTableProps) {
     [searchPersona],
   );
 
-  const { data } = useGetProducts({ pageNumber: currentPage, personaType: searchPersona }, { enabled: Boolean(myId) });
+  const { data } = useGetProducts(
+    { pageNumber: currentPage, personaType: searchPersona, orderType, sortDirection },
+    { enabled: Boolean(myId) },
+  );
 
   return (
     <div>
-      <Search onSelect={setSearchPersona} selected={searchPersona} />
+      <div className={flex({ gap: '4px' })}>
+        <Search onSelect={setSearchPersona} selected={searchPersona} />
+      </div>
 
       <ShopTableBackground>
         {data?.products.map((product) => {
