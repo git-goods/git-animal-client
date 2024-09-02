@@ -36,7 +36,7 @@ function NoticeToast() {
 
     const viewList = JSON.parse(viewStorageData);
 
-    return NOTICE_LIST.filter((notice) => !viewList.includes(generationNoticeKey(notice.key)));
+    return NOTICE_LIST.filter((notice) => !viewList.includes(generationNoticeKey(notice.key) && notice.visible));
   };
 
   const renderToast = (notice: (typeof NOTICE_LIST)[number]) => {
