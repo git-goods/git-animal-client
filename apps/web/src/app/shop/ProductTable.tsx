@@ -1,13 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { flex } from '_panda/patterns';
+import { css } from '_panda/css';
+import { center, flex } from '_panda/patterns';
 import type { Product, ProductOrderType, ProductSortDirection } from '@gitanimals/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { getProductsQueryKey, useGetProducts } from '@/apis/auctions/useGetProducts';
 import { useBuyProduct, useDeleteProduct } from '@/apis/auctions/useProduct';
+import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
 import Pagination from '@/components/Pagination';
 import ShopTableBackground from '@/components/ProductTable/ShopTableBackground';
 import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
@@ -23,26 +25,41 @@ function ProductTable({}: ProductTableProps) {
   const { id: myId } = useClientUser();
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [searchPersona, setSearchPersona] = useState<string>();
-  const [orderType, setOrderType] = useState<ProductOrderType>('PRICE');
-  const [sortDirection, setSortDirection] = useState<ProductSortDirection>('ASC');
+
+  const { searchOptions, onSearchOptionChange } = useSearchOptions();
 
   useEffect(
-    function 선택_동물_변경시_페이지_초기화() {
+    function 옵션_변경시_페이지_초기화() {
       setCurrentPage(0);
     },
-    [searchPersona],
+    [searchOptions],
   );
 
-  const { data } = useGetProducts(
-    { pageNumber: currentPage, personaType: searchPersona, orderType, sortDirection },
-    { enabled: Boolean(myId) },
-  );
+  const { data } = useGetProducts({ pageNumber: currentPage, ...searchOptions }, { enabled: Boolean(myId) });
 
   return (
     <div>
-      <div className={flex({ gap: '4px' })}>
-        <Search onSelect={setSearchPersona} selected={searchPersona} />
+      <div className={flex({ gap: '4px', mb: '8px', alignItems: 'center' })}>
+        <Search
+          onSelect={(option) => onSearchOptionChange('personaType', option)}
+          selected={searchOptions.personaType}
+        />
+        <hr className={css({ mx: '6px' })} />
+
+        <p>order :</p>
+        <DottedThreeBox width={110} height={54} bgColor="white">
+          <select className={selectStyle} onChange={(e) => onSearchOptionChange('orderType', e.target.value)}>
+            <option value="PRICE">Price</option>
+            <option value="CREATED_AT">Date</option>
+            <option value="LEVEL">Level</option>
+          </select>
+        </DottedThreeBox>
+        <DottedThreeBox width={160} height={54} bgColor="white">
+          <select className={selectStyle} onChange={(e) => onSearchOptionChange('sortDirection', e.target.value)}>
+            <option value="ASC">Ascending</option>
+            <option value="DESC">Descending</option>
+          </select>
+        </DottedThreeBox>
       </div>
 
       <ShopTableBackground>
@@ -56,6 +73,36 @@ function ProductTable({}: ProductTableProps) {
 }
 
 export default ProductTable;
+
+const selectStyle = center({
+  width: '100%',
+  height: '100%',
+  padding: '0 8px',
+  border: 'none',
+  backgroundColor: 'transparent',
+  outline: 'none',
+});
+
+const useSearchOptions = () => {
+  const [searchOptions, setSearchOptions] = useState<{
+    personaType: string;
+    orderType: ProductOrderType;
+    sortDirection: ProductSortDirection;
+  }>({
+    personaType: '',
+    orderType: 'PRICE',
+    sortDirection: 'ASC',
+  });
+
+  const onSearchOptionChange = (key: keyof typeof searchOptions, value?: string) => {
+    setSearchOptions((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  return { searchOptions, onSearchOptionChange };
+};
 
 function ProductTableRow({ product }: { product: Product }) {
   const queryClient = useQueryClient();
