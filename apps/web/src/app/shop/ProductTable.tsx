@@ -17,7 +17,8 @@ import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import { useLoading } from '@/store/loading';
 import { useClientUser } from '@/utils/clientAuth';
 
-import Search from './Search';
+import OrderTypeSelect from './SearchOption/OrderType';
+import Search from './SearchOption/PersonaType';
 
 interface ProductTableProps {}
 
@@ -47,13 +48,14 @@ function ProductTable({}: ProductTableProps) {
         <hr className={css({ mx: '6px' })} />
 
         <p>order :</p>
-        <DottedThreeBox width={110} height={54} bgColor="white">
+        <OrderTypeSelect onSelect={(option) => onSearchOptionChange('orderType', option)} />
+        {/* <DottedThreeBox width={110} height={54} bgColor="white">
           <select className={selectStyle} onChange={(e) => onSearchOptionChange('orderType', e.target.value)}>
             <option value="PRICE">Price</option>
             <option value="CREATED_AT">Date</option>
             <option value="LEVEL">Level</option>
           </select>
-        </DottedThreeBox>
+        </DottedThreeBox> */}
         <DottedThreeBox width={160} height={54} bgColor="white">
           <select className={selectStyle} onChange={(e) => onSearchOptionChange('sortDirection', e.target.value)}>
             <option value="ASC">Ascending</option>
