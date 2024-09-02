@@ -5,10 +5,9 @@ import Image from 'next/image';
 import { css } from '_panda/css';
 import { XIcon } from '@gitanimals/ui-icon';
 import { Button } from '@gitanimals/ui-panda';
-import { toast } from 'sonner';
 
-import { usePostFeedback } from '@/apis/github/usePostFeedback';
 import type { PostIssueRequest } from '@/apis/github/usePostIssue';
+import { usePostIssue } from '@/apis/github/usePostIssue';
 import { useGetUser } from '@/apis/user/useGetUser';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
@@ -46,30 +45,23 @@ function FeedBack() {
 
   const { data: userData } = useGetUser();
   const { content, onContentChange, isValid, initContent } = useFeedbackContent();
-  const { mutate, isPending } = usePostFeedback();
+  const { mutate, isPending } = usePostIssue();
 
-  const onSubmit = async () => {
+  const onSubmit = () => {
     const username = userData?.username;
+
+    const assignees = [username, ...SERVICE_MAINTAINER].filter((i) => i) as string[];
 
     sendLog({ title: content.title, username: username ?? 'not login' }, 'feedback form submitted');
 
+    // not login일 때 content.body에 Not Logined 추가해주기
     mutate(
-      { ...content, assignees: SERVICE_MAINTAINER, username },
+      { ...content, assignees },
       {
-        onSuccess(data) {
-          toast.success(`Thank you for your feedback!`, {
-            duration: 3000,
-            position: 'top-center',
-            action: {
-              label: 'View',
-              onClick: () => {
-                toast.dismiss();
-                window.open(data.html_url);
-              },
-            },
-          });
+        onSuccess() {
           setIsOpen(false);
           initContent();
+          alert('Thank you for your feedback!');
         },
       },
     );
