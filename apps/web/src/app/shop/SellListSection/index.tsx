@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { Product } from '@gitanimals/api';
 
 import { useGetMyProducts } from '@/apis/auctions/useGetMyProduct';
 import Pagination from '@/components/Pagination';
@@ -30,8 +31,8 @@ function SellListSection() {
     },
   );
 
-  const onEditAction = (item: ProductType) => {
-    setEditProductId(item.id);
+  const onEditAction = (id: Product['id']) => {
+    setEditProductId(id);
   };
 
   return (
@@ -41,7 +42,9 @@ function SellListSection() {
           return (
             <ShopTableRowView
               key={product.id}
-              item={product}
+              id={product.id}
+              persona={product.persona}
+              price={product.price}
               onAction={onEditAction}
               actionLabel={SELL_LIST_ACTION_OBJ.label}
               actionColor={SELL_LIST_ACTION_OBJ.color}
