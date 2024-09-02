@@ -145,23 +145,25 @@ function ProductTableRow({ product }: { product: Product }) {
     },
   });
 
-  const onAction = (item: Product) => {
+  const onAction = (id: Product['id']) => {
     setLoading(true);
 
     if (productStatus === 'MY_SELLING') {
-      deleteProduct(item.id);
+      deleteProduct(id);
       return;
     }
 
-    if (item.paymentState === 'ON_SALE') {
-      buyProduct(item.id);
+    if (product.paymentState === 'ON_SALE') {
+      buyProduct(id);
     }
   };
 
   return (
     <ShopTableRowView
       key={product.id}
-      item={product}
+      id={product.id}
+      persona={product.persona}
+      price={product.price}
       onAction={onAction}
       actionLabel={ACTION_BUTTON_OBJ[productStatus].label}
       actionColor={ACTION_BUTTON_OBJ[productStatus].color}

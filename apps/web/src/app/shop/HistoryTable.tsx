@@ -5,7 +5,7 @@ import Pagination from '@/components/Pagination';
 import ShopTableBackground from '@/components/ProductTable/ShopTableBackground';
 import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
-import type { ProductHistoryType, ProductItemType } from '@/schema/action';
+import type { ProductHistoryType } from '@/schema/action';
 import type { PaginationSchema } from '@/schema/pagination';
 
 import Search from './Search';
@@ -41,10 +41,6 @@ function HistoryTable({}: ProductTableProps) {
     },
   );
 
-  const onAction = (item: ProductItemType) => {
-    console.log('onAction: ', item);
-  };
-
   const getHistoryActionLabel = (soldAt: string) => {
     return String(soldAt)?.slice(2, 10).replace(/-/g, '.');
   };
@@ -57,8 +53,10 @@ function HistoryTable({}: ProductTableProps) {
           return (
             <ShopTableRowView
               key={product.id}
-              item={product}
-              onAction={onAction}
+              id={product.id}
+              persona={product.persona}
+              price={product.price}
+              onAction={() => null}
               actionLabel={getHistoryActionLabel((product as ProductHistoryType<'SELL_HISTORY'>)?.receipt.soldAt)}
               actionColor={HISTORY_ACTION_OBJ.color}
             />
