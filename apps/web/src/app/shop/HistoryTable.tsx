@@ -5,8 +5,6 @@ import Pagination from '@/components/Pagination';
 import ShopTableBackground from '@/components/ProductTable/ShopTableBackground';
 import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
-import type { ProductHistoryType } from '@/schema/action';
-import type { PaginationSchema } from '@/schema/pagination';
 
 import Search from './SearchOption/PersonaType';
 
@@ -18,28 +16,10 @@ function HistoryTable({}: ProductTableProps) {
   const [currentPage, setCurrentPage] = useState(0);
   const [searchPersona, setSearchPersona] = useState<string>();
 
-  const { data } = useGetHistory<{
-    products: ProductHistoryType<'SELL_HISTORY'>[];
-    pagination: PaginationSchema;
-  }>(
-    {
-      pageNumber: currentPage,
-      personaType: searchPersona,
-    },
-    {
-      select: (data) => ({
-        products: data.products.map((product) =>
-          Boolean(product?.receipt.soldAt)
-            ? {
-                ...product,
-                paymentState: 'SELL_HISTORY',
-              }
-            : product,
-        ),
-        pagination: data.pagination,
-      }),
-    },
-  );
+  const { data } = useGetHistory({
+    pageNumber: currentPage,
+    personaType: searchPersona,
+  });
 
   const getHistoryActionLabel = (soldAt: string) => {
     return String(soldAt)?.slice(2, 10).replace(/-/g, '.');
@@ -57,7 +37,7 @@ function HistoryTable({}: ProductTableProps) {
               persona={product.persona}
               price={product.price}
               onAction={() => null}
-              actionLabel={getHistoryActionLabel((product as ProductHistoryType<'SELL_HISTORY'>)?.receipt.soldAt)}
+              actionLabel={getHistoryActionLabel(product?.receipt.soldAt)}
               actionColor={HISTORY_ACTION_OBJ.color}
             />
           );

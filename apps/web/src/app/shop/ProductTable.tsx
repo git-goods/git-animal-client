@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { flex } from '_panda/patterns';
-import type { Product, ProductOrderType, ProductSortDirection } from '@gitanimals/api';
+import type { OrderType, Product, SortDirection } from '@gitanimals/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -64,8 +64,8 @@ export default ProductTable;
 const useSearchOptions = () => {
   const [searchOptions, setSearchOptions] = useState<{
     personaType: string;
-    orderType: ProductOrderType;
-    sortDirection: ProductSortDirection;
+    orderType: OrderType;
+    sortDirection: SortDirection;
   }>({
     personaType: '',
     orderType: 'PRICE',
