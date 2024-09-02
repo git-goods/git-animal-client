@@ -5,16 +5,21 @@ import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
 
 function SearchOptionSelect({
   onSelect,
+  options,
+  size,
 }: {
   onSelect: (orderType: string) => void;
   options: { label: string; value: string }[];
+  size: number;
 }) {
   return (
-    <DottedThreeBox width={110} height={54} bgColor="white">
+    <DottedThreeBox width={size} height={54} bgColor="white">
       <select className={selectStyle} onChange={(e) => onSelect(e.target.value)}>
-        <option value="PRICE">Price</option>
-        <option value="CREATED_AT">Date</option>
-        <option value="LEVEL">Level</option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
       </select>
     </DottedThreeBox>
   );
