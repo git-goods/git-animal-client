@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { flex } from '_panda/patterns';
 
 import { useGetHistory } from '@/apis/auctions/useGetHistory';
 import Pagination from '@/components/Pagination';
@@ -6,7 +7,8 @@ import ShopTableBackground from '@/components/ProductTable/ShopTableBackground';
 import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 
-import Search from './SearchOption/PersonaType';
+import { OrderTypeSelect, PersonaType, SortDirectionSelect } from './SearchOption';
+import { useSearchOptions } from './useSearchOptions';
 
 const HISTORY_ACTION_OBJ = ACTION_BUTTON_OBJ['SELL_HISTORY'];
 
@@ -14,12 +16,20 @@ interface ProductTableProps {}
 
 function HistoryTable({}: ProductTableProps) {
   const [currentPage, setCurrentPage] = useState(0);
-  const [searchPersona, setSearchPersona] = useState<string>();
+
+  const { searchOptions, onSearchOptionChange } = useSearchOptions();
 
   const { data } = useGetHistory({
     pageNumber: currentPage,
-    personaType: searchPersona,
+    ...searchOptions,
   });
+
+  useEffect(
+    function 옵션_변경시_페이지_초기화() {
+      setCurrentPage(0);
+    },
+    [searchOptions],
+  );
 
   const getHistoryActionLabel = (soldAt: string) => {
     return String(soldAt)?.slice(2, 10).replace(/-/g, '.');
@@ -27,7 +37,18 @@ function HistoryTable({}: ProductTableProps) {
 
   return (
     <div>
-      <Search onSelect={setSearchPersona} selected={searchPersona} />
+      <div className={flex({ justifyContent: 'space-between', alignItems: 'center', mb: '8px' })}>
+        <div className={flex({ gap: '10px', alignItems: 'center' })}>
+          <OrderTypeSelect onSelect={(option) => onSearchOptionChange('orderType', option)} />
+          <SortDirectionSelect onSelect={(option) => onSearchOptionChange('sortDirection', option)} />
+        </div>
+
+        <PersonaType
+          onSelect={(option) => onSearchOptionChange('personaType', option)}
+          selected={searchOptions.personaType}
+        />
+      </div>
+
       <ShopTableBackground>
         {data?.products.map((product) => {
           return (
