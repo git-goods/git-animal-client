@@ -1,7 +1,8 @@
 import type { UseMutationOptions } from '@tanstack/react-query';
 import { useMutation } from '@tanstack/react-query';
 
-import { octokit } from './core';
+const ISSUE_TOKEN = process.env.NEXT_PUBLIC_ISSUE_TOKEN;
+const POST_ISSUE_URL = 'https://api.github.com/repos/git-goods/gitanimals/issues';
 
 export interface PostIssueRequest {
   title: string;
@@ -9,29 +10,22 @@ export interface PostIssueRequest {
   assignees?: string[];
   labels?: string[];
 }
-
-interface PostIssueResponse {
-  comments_url: string;
-  number: number;
-  url: string;
-  html_url: string;
-}
-
-export async function postIssue(request: PostIssueRequest): Promise<PostIssueResponse> {
-  const response = await octokit.request('POST /repos/git-goods/gitanimals/issues', {
-    owner: 'git-good-w',
-    repo: 'gitanimals',
-    title: request.title,
-    body: request.body,
-    assignees: request.assignees,
-    labels: request.labels,
+async function postIssue(request: PostIssueRequest) {
+  const response = await fetch(POST_ISSUE_URL, {
+    method: 'POST',
     headers: {
-      'X-GitHub-Api-Version': '2022-11-28',
+      Authorization: `Bearer ${ISSUE_TOKEN}`,
+      'Content-Type': 'application/json',
     },
+    body: JSON.stringify(request),
   });
 
-  return response.data;
+  if (!response.ok) {
+    throw new Error('Failed to post issue');
+  }
+
+  return response.json();
 }
 
-export const usePostIssue = (options?: UseMutationOptions<PostIssueResponse, unknown, PostIssueRequest>) =>
+export const usePostIssue = (options?: UseMutationOptions<unknown, unknown, PostIssueRequest>) =>
   useMutation({ mutationFn: postIssue, ...options });
