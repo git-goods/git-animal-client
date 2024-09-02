@@ -1,33 +1,15 @@
+import type { GetProductsRequest, GetProductsResponse } from '@gitanimals/api';
+import { getProducts } from '@gitanimals/api';
 import type { UseQueryOptions } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 
-import type { ProductSchema } from '@/schema/action';
-import type { PaginationRequestSchema, PaginationSchema } from '@/schema/pagination';
-import { convertCamelObjToKebab } from '@/utils/string';
-
-import { get } from '..';
-
-interface GetProductsRequest extends PaginationRequestSchema {
-  personaType?: string;
-}
-
-interface GetProductsResponse {
-  products: ProductSchema[];
-  pagination: PaginationSchema;
-}
-
 export const getProductsQueryKey = (request?: GetProductsRequest) => ['products', request].filter(Boolean);
 
-const getProducts = async <T = GetProductsResponse>(request?: GetProductsRequest): Promise<T> =>
-  get('/auctions/products', {
-    params: request ? convertCamelObjToKebab(request) : undefined,
-  });
-
-export const useGetProducts = <T = GetProductsResponse>(
+export const useGetProducts = (
   request?: GetProductsRequest,
-  option?: Omit<UseQueryOptions<T>, 'queryKey'>,
+  option?: Omit<UseQueryOptions<GetProductsResponse>, 'queryKey'>,
 ) => {
-  return useQuery<T>({
+  return useQuery({
     queryKey: getProductsQueryKey(request),
     queryFn: () => getProducts(request),
     ...option,

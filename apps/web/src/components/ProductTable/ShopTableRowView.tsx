@@ -1,18 +1,17 @@
 import Image from 'next/image';
+import type { Product } from '@gitanimals/api/src/auction';
 import styled from 'styled-components';
 
 import SmallButton from '@/components/Button/SmallButton';
-import type { ProductItemType } from '@/schema/action';
 import { getPersonaImage } from '@/utils/image';
 
-interface Props {
-  item: ProductItemType;
-  onAction: (item: ProductItemType) => void;
+interface Props extends Pick<Product, 'id' | 'persona' | 'price'> {
+  onAction: (itemId: Product['id']) => void;
   actionLabel: string;
   actionColor: string;
 }
 
-function ShopTableRowView({ item, onAction, actionLabel, actionColor }: Props) {
+function ShopTableRowView({ onAction, actionLabel, actionColor, ...item }: Props) {
   return (
     <Row className="row" key={item.id}>
       <div>
@@ -22,7 +21,7 @@ function ShopTableRowView({ item, onAction, actionLabel, actionColor }: Props) {
       <div>{item.persona.personaLevel}</div>
       <div>{item.price}</div>
       <div>
-        <SmallButton onClick={() => onAction(item)} color={actionColor}>
+        <SmallButton onClick={() => onAction(item.id)} color={actionColor}>
           {actionLabel}
         </SmallButton>
       </div>
