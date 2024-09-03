@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { css } from '_panda/css';
 import type { Product } from '@gitanimals/api/src/auction';
 import styled from 'styled-components';
 
@@ -78,3 +79,35 @@ export const Row = styled.div`
     max-width: 100%;
   }
 `;
+
+export const rowStyle = css({
+  display: 'grid',
+  gridTemplateColumns: '82px 214px 181px 360px 122px',
+  verticalAlign: 'center',
+  height: '82px',
+  alignItems: 'center',
+  '& > div': {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: '20px',
+    paddingRight: '4px',
+  },
+  '& > div:nth-child(1)': {
+    paddingBottom: 0,
+  },
+  '& > div:nth-child(2), & > div:nth-child(3), & > div:nth-child(4)': {
+    paddingRight: '12px',
+    paddingLeft: '16px',
+    paddingBottom: 0,
+    paddingTop: '4px',
+    justifyContent: 'flex-start',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    wordBreak: 'break-all',
+    flex: 0,
+    minWidth: '0%',
+    maxWidth: '100%',
+  },
+});
