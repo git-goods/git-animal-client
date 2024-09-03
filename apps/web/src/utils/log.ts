@@ -1,8 +1,11 @@
+import { sendGAEvent } from '@next/third-parties/google';
 import axios from 'axios';
 
 export const sendLog = async (data: object, description?: string) => {
   try {
     const res = await axios.post('/api/googleSheet', { description, ...data });
+    sendGAEvent('log', description ?? 'send log', { value: data });
+
     if (!res.data.success) {
       throw new Error('Failed to send log');
     }
