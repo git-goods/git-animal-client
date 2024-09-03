@@ -1,4 +1,4 @@
-import { octokit } from './core';
+import { requestOctokit } from './core';
 
 export interface CreateCommentRequest {
   issueNumber: number;
@@ -6,13 +6,8 @@ export interface CreateCommentRequest {
 }
 
 export async function createComment(request: CreateCommentRequest) {
-  return await octokit.request(`POST /repos/git-goods/gitanimals/issues/${request.issueNumber}/comments`, {
-    owner: 'git-good-w',
-    repo: 'gitanimals',
+  return requestOctokit('POST', `/repos/git-goods/gitanimals/issues/${request.issueNumber}/comments`, {
     issue_number: request.issueNumber,
     body: request.body,
-    headers: {
-      'X-GitHub-Api-Version': '2022-11-28',
-    },
   });
 }

@@ -1,7 +1,7 @@
 import type { UseMutationOptions } from '@tanstack/react-query';
 import { useMutation } from '@tanstack/react-query';
 
-import { octokit } from './core';
+import { requestOctokit } from './core';
 
 export interface PostIssueRequest {
   title: string;
@@ -18,19 +18,12 @@ interface PostIssueResponse {
 }
 
 export async function postIssue(request: PostIssueRequest): Promise<PostIssueResponse> {
-  const response = await octokit.request('POST /repos/git-goods/gitanimals/issues', {
-    owner: 'git-good-w',
-    repo: 'gitanimals',
+  return requestOctokit('POST', '/repos/git-goods/gitanimals/issues', {
     title: request.title,
     body: request.body,
     assignees: request.assignees,
     labels: request.labels,
-    headers: {
-      'X-GitHub-Api-Version': '2022-11-28',
-    },
   });
-
-  return response.data;
 }
 
 export const usePostIssue = (options?: UseMutationOptions<PostIssueResponse, unknown, PostIssueRequest>) =>
