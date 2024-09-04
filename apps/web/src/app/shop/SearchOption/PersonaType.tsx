@@ -14,7 +14,7 @@ interface SearchProps {
   selected?: string;
 }
 
-function Search(props: SearchProps) {
+function PersonaType(props: SearchProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const { data } = useGetPersonaTypes({
@@ -61,7 +61,7 @@ function Search(props: SearchProps) {
   );
 }
 
-export default Search;
+export default PersonaType;
 
 const buttonWrapperStyle = center({
   width: '100%',

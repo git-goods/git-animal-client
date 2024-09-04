@@ -1,15 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { css } from '_panda/css';
-import { center, flex } from '_panda/patterns';
+import { flex } from '_panda/patterns';
 import type { Product, ProductOrderType, ProductSortDirection } from '@gitanimals/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { getProductsQueryKey, useGetProducts } from '@/apis/auctions/useGetProducts';
 import { useBuyProduct, useDeleteProduct } from '@/apis/auctions/useProduct';
-import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
 import Pagination from '@/components/Pagination';
 import ShopTableBackground from '@/components/ProductTable/ShopTableBackground';
 import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
@@ -17,7 +15,7 @@ import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import { useLoading } from '@/store/loading';
 import { useClientUser } from '@/utils/clientAuth';
 
-import Search from './Search';
+import { OrderTypeSelect, PersonaType, SortDirectionSelect } from './SearchOption';
 
 interface ProductTableProps {}
 
@@ -39,27 +37,16 @@ function ProductTable({}: ProductTableProps) {
 
   return (
     <div>
-      <div className={flex({ gap: '4px', mb: '8px', alignItems: 'center' })}>
-        <Search
+      <div className={flex({ justifyContent: 'space-between', alignItems: 'center', mb: '8px' })}>
+        <div className={flex({ gap: '10px', alignItems: 'center' })}>
+          <OrderTypeSelect onSelect={(option) => onSearchOptionChange('orderType', option)} />
+          <SortDirectionSelect onSelect={(option) => onSearchOptionChange('sortDirection', option)} />
+        </div>
+
+        <PersonaType
           onSelect={(option) => onSearchOptionChange('personaType', option)}
           selected={searchOptions.personaType}
         />
-        <hr className={css({ mx: '6px' })} />
-
-        <p>order :</p>
-        <DottedThreeBox width={110} height={54} bgColor="white">
-          <select className={selectStyle} onChange={(e) => onSearchOptionChange('orderType', e.target.value)}>
-            <option value="PRICE">Price</option>
-            <option value="CREATED_AT">Date</option>
-            <option value="LEVEL">Level</option>
-          </select>
-        </DottedThreeBox>
-        <DottedThreeBox width={160} height={54} bgColor="white">
-          <select className={selectStyle} onChange={(e) => onSearchOptionChange('sortDirection', e.target.value)}>
-            <option value="ASC">Ascending</option>
-            <option value="DESC">Descending</option>
-          </select>
-        </DottedThreeBox>
       </div>
 
       <ShopTableBackground>
@@ -73,15 +60,6 @@ function ProductTable({}: ProductTableProps) {
 }
 
 export default ProductTable;
-
-const selectStyle = center({
-  width: '100%',
-  height: '100%',
-  padding: '0 8px',
-  border: 'none',
-  backgroundColor: 'transparent',
-  outline: 'none',
-});
 
 const useSearchOptions = () => {
   const [searchOptions, setSearchOptions] = useState<{
