@@ -1,6 +1,4 @@
-import { signOut } from 'next-auth/react';
 import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-import axios from 'axios';
 
 import type { ApiErrorScheme } from '@/exceptions/type';
 
@@ -27,16 +25,16 @@ const interceptorResponseFulfilled = (res: AxiosResponse) => {
 
 // Response interceptor
 const interceptorResponseRejected = async (error: AxiosError<ApiErrorScheme>) => {
-  if (error.response?.status === 401) {
-    if (typeof window !== 'undefined') {
-      signOut();
-    } else {
-      axios.get('/api/auth/signOut');
-      // server side logout
-      // cookies().delete('next-auth.session-token');
-      // redirect('/');
-    }
-  }
+  // if (error.response?.status === 401) {
+  //   if (typeof window !== 'undefined') {
+  //     signOut();
+  //   } else {
+  //     axios.get('/api/auth/signOut');
+  //     // server side logout
+  //     // cookies().delete('next-auth.session-token');
+  //     // redirect('/');
+  //   }
+  // }
 
   // 403 처리
 
