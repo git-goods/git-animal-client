@@ -3,7 +3,7 @@
 import HistoryTable from './HistoryTable';
 import ProductTable from './ProductTable';
 import SellListSection from './SellListSection';
-import SellSection from './SellSection';
+import { SellSection } from './SellSection';
 
 function ShopInner({ tab }: { tab: string }) {
   return (

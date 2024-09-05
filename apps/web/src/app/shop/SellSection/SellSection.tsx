@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import { css } from '_panda/css';
 
 import type { PetInfoSchema } from '@/schema/user';
 
@@ -14,7 +14,7 @@ function SellSection() {
   return (
     <div>
       <ShopRow item={selectPersona} initPersona={() => setSelectPersona(undefined)} />
-      <PetsHeading>Pets</PetsHeading>
+      <h3 className={petHeadingStyle}>Pets</h3>
       <PetList selectedPersona={selectPersona} onProductClick={setSelectPersona} />
     </div>
   );
@@ -22,7 +22,7 @@ function SellSection() {
 
 export default SellSection;
 
-const PetsHeading = styled.h3`
-  margin-top: 12px;
-  margin-bottom: 4px;
-`;
+const petHeadingStyle = css({
+  marginTop: '12px',
+  marginBottom: '4px',
+});

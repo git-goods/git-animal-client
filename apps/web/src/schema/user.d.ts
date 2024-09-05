@@ -1,10 +1,15 @@
+/**
+ * @deprecated
+ */
 export interface UserSchema {
   id: string;
   username: string;
   points: string;
   profileImage: string;
 }
-
+/**
+ * @deprecated
+ */
 export interface CouponSchema {
   id: string;
   userId: string;
@@ -12,6 +17,9 @@ export interface CouponSchema {
   usedAt: string;
 }
 
+/**
+ * @deprecated
+ */
 export interface PetInfoSchema {
   id: string;
   type: string;
