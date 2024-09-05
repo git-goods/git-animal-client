@@ -19,6 +19,9 @@ const GetProductsRequestSchema = z.object({
 export type GetProductsRequest = z.infer<typeof GetProductsRequestSchema>;
 export type GetProductsResponse = z.infer<typeof GetProductsSchema>;
 
+export type ProductOrderType = GetProductsRequest['orderType'];
+export type ProductSortDirection = GetProductsRequest['sortDirection'];
+
 export const getProducts = async (request?: GetProductsRequest): Promise<GetProductsResponse> => {
   return await safeGet(GetProductsSchema)(`/auctions/products`, {
     params: request ? convertCamelObjToKebab(request) : undefined,

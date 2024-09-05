@@ -8,6 +8,7 @@ export const NOTICE_LIST = [
     },
     isAuth: true,
     closeButton: false,
+    visible: false,
   },
   {
     key: 'github-star',
@@ -19,5 +20,17 @@ export const NOTICE_LIST = [
     },
     isAuth: true,
     closeButton: false,
+    visible: true,
+  },
+  {
+    key: 'visit-shop',
+    label: 'Update: Try our new shop sorting options',
+    redirect: {
+      url: '/shop',
+      label: 'Go!',
+    },
+    isAuth: true,
+    closeButton: false,
+    visible: true,
   },
 ];

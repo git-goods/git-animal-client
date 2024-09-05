@@ -5,15 +5,16 @@ import Image from 'next/image';
 import { css } from '_panda/css';
 import { XIcon } from '@gitanimals/ui-icon';
 import { Button } from '@gitanimals/ui-panda';
+import { toast } from 'sonner';
 
+import { usePostFeedback } from '@/apis/github/usePostFeedback';
 import type { PostIssueRequest } from '@/apis/github/usePostIssue';
-import { usePostIssue } from '@/apis/github/usePostIssue';
-import { useGetUser } from '@/apis/user/useGetUser';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
 import TextArea from '@/components/TextArea';
 import type { GithubIssueType } from '@/constants/github';
 import { GITHUB_ISSUE_TYPE, SERVICE_MAINTAINER } from '@/constants/github';
+import { useClientUser } from '@/utils/clientAuth';
 import { sendLog } from '@/utils/log';
 
 const ISSUE_LABEL: Record<
@@ -42,26 +43,31 @@ const ISSUE_LABEL: Record<
 
 function FeedBack() {
   const [isOpen, setIsOpen] = useState(false);
+  const { name: username } = useClientUser();
 
-  const { data: userData } = useGetUser();
   const { content, onContentChange, isValid, initContent } = useFeedbackContent();
-  const { mutate, isPending } = usePostIssue();
+  const { mutate, isPending } = usePostFeedback();
 
-  const onSubmit = () => {
-    const username = userData?.username;
-
-    const assignees = [username, ...SERVICE_MAINTAINER].filter((i) => i) as string[];
-
+  const onSubmit = async () => {
     sendLog({ title: content.title, username: username ?? 'not login' }, 'feedback form submitted');
 
-    // not login일 때 content.body에 Not Logined 추가해주기
     mutate(
-      { ...content, assignees },
+      { ...content, assignees: SERVICE_MAINTAINER, username },
       {
-        onSuccess() {
+        onSuccess(data) {
+          toast.success(`Thank you for your feedback!`, {
+            duration: 3000,
+            position: 'top-center',
+            action: {
+              label: 'View',
+              onClick: () => {
+                toast.dismiss();
+                window.open(data.html_url);
+              },
+            },
+          });
           setIsOpen(false);
           initContent();
-          alert('Thank you for your feedback!');
         },
       },
     );
