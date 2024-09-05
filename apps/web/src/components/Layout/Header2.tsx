@@ -10,6 +10,9 @@ import { GITHUB_OAUTH_REQUEST_URL } from '@/constants/oauth';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
+/**
+ * @deprecated
+ */
 async function Header() {
   const session = await getServerAuth();
 
