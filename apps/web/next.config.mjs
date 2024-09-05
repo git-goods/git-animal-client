@@ -2,6 +2,11 @@
 // withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
 
 /** @type {import('next').NextConfig} */
+
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin();
+
 const nextConfig = {
   transpilePackages: ['@gitanimals/ui-panda'],
   reactStrictMode: true,
@@ -20,5 +25,5 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);
 // export default withBundleAnalyzer(nextConfig);

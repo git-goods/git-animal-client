@@ -1,8 +1,15 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import type { JWT } from 'next-auth/jwt';
 import { getToken } from 'next-auth/jwt';
+import createIntlMiddleware from 'next-intl/middleware';
+
+import { routing } from './i18n/routing';
 
 const withoutAuthList = ['/', '/auth'];
+
+const intlMiddleware = createIntlMiddleware({
+  ...routing,
+});
 
 const withAuth = (
   req: NextRequest,
@@ -26,9 +33,23 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const isWithoutAuth = withoutAuthList.includes(pathname);
 
+  const pathnameIsMissingLocale = routing.locales.every(
+    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
+  );
+
+  if (pathnameIsMissingLocale) {
+    return intlMiddleware(request);
+  }
+
   if (!isWithoutAuth) return withAuth(request, token);
+
+  // return intlMiddleware(request);
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$|.*\\.webp$|.*\\.svg$).*)'],
+  matcher: ['/', '/(ko|en)/:path*'],
+
+  // matcher: ['/((?!api|_next/static|_next/image|.*\\.png$|.*\\.webp$|.*\\.svg$).*)'],
 };
