@@ -1,17 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import type { ChangeEventHandler } from 'react';
 import React, { useState } from 'react';
+import { css, cx } from '_panda/css';
 import { useQueryClient } from '@tanstack/react-query';
-import styled from 'styled-components';
 
 import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
-import { Row } from '@/components/ProductTable/ShopTableRowView';
+import SmallButton from '@/components/Button/SmallButton';
+import { rowStyle } from '@/components/ProductTable/ShopTableRowView';
 import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
 import type { PetInfoSchema } from '@/schema/user';
-
-import SmallButton from '../../../components/Button/SmallButton';
 
 const MAX_PRICE = 100_000_000;
 
@@ -47,64 +46,63 @@ function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona
     }
   };
 
-  if (!item) return <Container />;
+  if (!item) return <div className={containerStyle} />;
 
   return (
-    <Container>
-      <RowStyled className="row" key={item.id}>
+    <div className={containerStyle}>
+      <div className={cx(rowStyle, 'row')} key={item.id}>
         <div>
           <img src={`${STATIC_IMAGE_URL}/${item.type}`} alt={item.type} width={60} height={67} />
         </div>
         <div>{item.type}</div>
         <div>{item.level}</div>
         <div>
-          <input inputMode="numeric" placeholder="Type price..." value={price} onChange={onChangePriceInput} />
+          <input
+            className={inputStyle}
+            inputMode="numeric"
+            placeholder="Type price..."
+            value={price}
+            onChange={onChangePriceInput}
+          />
         </div>
         <div>
           <SmallButton color={ACTION_BUTTON_OBJ.SELL.color} onClick={onSellClick}>
             {ACTION_BUTTON_OBJ.SELL.label}
           </SmallButton>
         </div>
-      </RowStyled>
-    </Container>
+      </div>
+    </div>
   );
 }
 
 export default SellInputRow;
 
-const Container = styled.div`
-  height: 84px;
-  background-image: url('/shop/table-bg-row.png');
-  background-size: cover;
-`;
+const containerStyle = css({
+  height: '84px',
+  backgroundImage: 'url(/shop/table-bg-row.png)',
+  backgroundSize: 'cover',
+});
 
-const RowStyled = styled(Row)`
-  input {
-    width: 100%;
-    height: 100%;
-    min-height: 64px;
-    font-size: 20px;
-    font-weight: 700;
-    border: none;
-    outline: none;
+const inputStyle = css({
+  width: '100%',
+  height: '100%',
+  minHeight: '64px',
+  fontSize: '20px',
+  fontWeight: 700,
+  border: 'none',
+  outline: 'none',
 
-    &::placeholder {
-      color: gray;
-      font-size: 20px;
-      font-weight: 700;
-    }
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+  '&::placeholder': {
+    color: 'gray',
+    fontSize: '20px',
+    fontWeight: 700,
+  },
 
-    /* Firefox  */
-    &[type='number'] {
-      -moz-appearance: textfield;
-    }
-  }
-`;
+  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+    WebkitAppearance: 'none',
+    margin: 0,
+  },
+});
 
 function usePrice() {
   const INITIAL_VALUE = 0;
