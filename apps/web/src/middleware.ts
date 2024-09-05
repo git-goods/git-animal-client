@@ -4,9 +4,11 @@ import createIntlMiddleware from 'next-intl/middleware';
 
 import { routing } from './i18n/routing';
 
-const locales = ['ko', 'en'];
-const publicPathsWithoutLocale = ['', 'auth']; // 주의: 루트 경로는 빈 문자열로 표현
+// const publicPathsWithoutLocale = ['', 'auth']; // 주의: 루트 경로는 빈 문자열로 표현
+const publicPathsWithoutLocale = new Set(['', 'auth']); // Set for faster lookups
 
+const locales = routing.locales;
+const defaultLocale = routing.defaultLocale;
 const intlMiddleware = createIntlMiddleware({
   ...routing,
   localeDetection: false,
@@ -25,23 +27,21 @@ const withAuth = async (request: NextRequest) => {
 function isPublicPath(pathname: string): boolean {
   // locale을 제거한 경로 추출
   const pathWithoutLocale = pathname.split('/').slice(2).join('/');
-  return publicPathsWithoutLocale.some(
-    (path) => pathWithoutLocale === path || pathWithoutLocale.startsWith(`${path}/`),
-  );
+  return publicPathsWithoutLocale.has(pathWithoutLocale);
 }
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // 항상 intlMiddleware를 먼저 실행
-  const response = intlMiddleware(request);
+  const response = await intlMiddleware(request);
 
   const pathnameIsMissingLocale = locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
   );
 
   if (pathnameIsMissingLocale) {
-    const locale = request.cookies.get('NEXT_LOCALE')?.value || routing.defaultLocale;
+    const locale = request.cookies.get('NEXT_LOCALE')?.value || defaultLocale;
     return NextResponse.redirect(new URL(`/${locale}${pathname}`, request.url));
   }
 
