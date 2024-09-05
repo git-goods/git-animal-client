@@ -1,7 +1,5 @@
 'use client';
 
-import { Button } from '@gitanimals/ui-panda';
-
 import { getGithubOauthUrl } from '@/apis/auth/getGithubOauth';
 
 function LoginBtn() {
@@ -9,7 +7,7 @@ function LoginBtn() {
     await getGithubOauthUrl();
   };
 
-  return <Button onClick={onLogin}>Login</Button>;
+  return <button onClick={onLogin}>Login</button>;
 }
 
 export default LoginBtn;
