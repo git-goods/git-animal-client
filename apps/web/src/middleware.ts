@@ -1,55 +1,20 @@
-import { type NextRequest, NextResponse } from 'next/server';
-import type { JWT } from 'next-auth/jwt';
-import { getToken } from 'next-auth/jwt';
-import createIntlMiddleware from 'next-intl/middleware';
+import createMiddleware from 'next-intl/middleware';
 
-import { routing } from './i18n/routing';
+export default createMiddleware({
+  // 지원하는 언어 목록
+  locales: ['en', 'ko'],
 
-const withoutAuthList = ['/', '/auth'];
+  // 기본 언어
+  defaultLocale: 'en',
 
-const intlMiddleware = createIntlMiddleware({
-  ...routing,
+  // 로케일 감지 전략 (optional)
+  localeDetection: false,
+
+  // 로케일 프리픽스 전략
+  localePrefix: 'always',
 });
 
-const withAuth = (
-  req: NextRequest,
-  token: JWT | null,
-  options?: {
-    redirectUrl?: string;
-  },
-) => {
-  const url = req.nextUrl.clone();
-
-  if (!token) {
-    url.pathname = options?.redirectUrl ?? '/';
-
-    return NextResponse.redirect(url);
-  }
-};
-
-export async function middleware(request: NextRequest) {
-  const token = await getToken({ req: request });
-
-  const pathname = request.nextUrl.pathname;
-  const isWithoutAuth = withoutAuthList.includes(pathname);
-
-  const pathnameIsMissingLocale = routing.locales.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
-  );
-
-  if (pathnameIsMissingLocale) {
-    return intlMiddleware(request);
-  }
-
-  if (!isWithoutAuth) return withAuth(request, token);
-
-  // return intlMiddleware(request);
-
-  return NextResponse.next();
-}
-
 export const config = {
-  matcher: ['/', '/(ko|en)/:path*'],
-
-  // matcher: ['/((?!api|_next/static|_next/image|.*\\.png$|.*\\.webp$|.*\\.svg$).*)'],
+  // 모든 경로에 대해 미들웨어를 실행하도록 설정
+  matcher: ['/((?!api|_next|.*\\..*).*)'],
 };

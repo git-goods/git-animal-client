@@ -7,7 +7,7 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin();
 
-const nextConfig = {
+const nextConfig = withNextIntl({
   transpilePackages: ['@gitanimals/ui-panda'],
   reactStrictMode: true,
   compiler: {
@@ -23,7 +23,7 @@ const nextConfig = {
       },
     ],
   },
-};
+});
 
-export default withNextIntl(nextConfig);
+export default nextConfig;
 // export default withBundleAnalyzer(nextConfig);
