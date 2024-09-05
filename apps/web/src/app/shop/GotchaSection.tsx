@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { css } from '_panda/css';
 import { useQueryClient } from '@tanstack/react-query';
 import Lottie from 'lottie-react';
 import styled from 'styled-components';
@@ -36,13 +37,13 @@ function GotchaSection() {
   };
 
   return (
-    <Container>
-      <Image src="/shop/gotcha.svg" width={384} height={80} alt="gotcha" className="gotcha-title" />
+    <div className={containerStyle}>
+      <Image src="/shop/gotcha.svg" width={384} height={80} alt="gotcha" className={gotchaTitleStyle} />
       <Image src="/shop/gotcha-list.png" width={384} height={620} alt="gotcha list" className="gotcha-list" />
-      <button className="gotcha-press" onClick={onPress}>
+      <button className={gotchaPressStyle} onClick={onPress}>
         <Image src="/shop/press.svg" width={384} height={80} alt="press" />
       </button>
-      <PointMessage>
+      <div className={pointMessageStyle}>
         <Image
           className={'point-message' + (isBounce ? ' bounce' : '')}
           src="/shop/gotcha-point-message.svg"
@@ -51,73 +52,43 @@ function GotchaSection() {
           alt="gotcha point message"
           onClick={() => setIsBounce(!isBounce)}
         />
-      </PointMessage>
+      </div>
       {data && gotchaVisible && (
         <>
-          <LottieWrapper>
+          <div className={lottieWrapperStyle}>
             <Lottie animationData={Congratulations} loop={false} />;
-          </LottieWrapper>
-          <GotchaItem>
+          </div>
+          <div className={gotchaItemStyle}>
             <Image src={getPersonaImage(data.name)} width={180} height={180} alt="persona" className="persona" />
-          </GotchaItem>
+          </div>
         </>
       )}
 
       {isPending && (
-        <LoadingWrapper>
+        <div className={loadingWrapperStyle}>
           <Image src="/icon/loading.svg" width={100} height={100} alt="loading" />
-        </LoadingWrapper>
+        </div>
       )}
-    </Container>
+    </div>
   );
 }
 
 export default GotchaSection;
 
-const PointMessage = styled.div`
-  pointer-events: none;
-  .point-message {
-    position: absolute;
-    right: -70px;
-    bottom: 26px;
-    animation: move 1s infinite;
+const pointMessageStyle = css({
+  pointerEvents: 'none',
+  '& .point-message': {
+    position: 'absolute',
+    right: '-70px',
+    bottom: '26px',
+    animation: 'move 1s infinite',
+  },
 
-    @keyframes move {
-      0% {
-        rotate: -2deg;
-      }
-      50% {
-        rotate: 2deg;
-      }
-      100% {
-        rotate: -2deg;
-      }
-    }
-  }
+  '& .bounce': {
+    animation: 'bounce 1s',
+  },
+});
 
-  @keyframes bounce {
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-      transform: translateY(0);
-    }
-    40% {
-      transform: translateY(-30px);
-    }
-    60% {
-      transform: translateY(-20px);
-    }
-  }
-
-  &.bounce {
-    -webkit-animation-duration: 1s;
-    animation-duration: 1s;
-    -webkit-animation-name: bounce;
-    animation-name: bounce;
-  }
-`;
 const LoadingWrapper = styled.div`
   position: absolute;
   top: -4px;
@@ -132,54 +103,51 @@ const LoadingWrapper = styled.div`
   align-items: center;
 `;
 
-const LottieWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
+const loadingWrapperStyle = css({
+  position: 'absolute',
+  top: '-4px',
+  borderRadius: '16px',
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: 'rgba(0, 0, 0, 0.2)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
 
-const GotchaItem = styled.div`
-  position: absolute;
-  top: 120px;
-  left: 90px;
+const lottieWrapperStyle = css({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+});
 
-  animation: move 0.3s infinite;
-  -webkit-animation: move 0.3s infinite;
+const gotchaItemStyle = css({
+  position: 'absolute',
+  top: '120px',
+  left: '90px',
+  animation: 'move_5 0.3s infinite',
+});
 
-  @keyframes move {
-    0% {
-      transform: translateY(0);
-      rotate: -5deg;
-    }
-    50% {
-      transform: translateY(0);
-      rotate: 5deg;
-    }
-    100% {
-      transform: translateY(0);
-      rotate: -5deg;
-    }
-  }
-`;
+const containerStyle = css({
+  position: 'relative',
+  paddingTop: '6px',
+  paddingBottom: '6px',
+});
 
-const Container = styled.section`
-  position: relative;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  .gotcha-title {
-    position: absolute;
-    top: -6px;
-  }
+const gotchaTitleStyle = css({
+  position: 'absolute',
+  top: '-6px',
+});
 
-  .gotcha-press {
-    position: absolute;
-    bottom: -6px;
-    left: 0;
-    transition: all 0.3s;
+const gotchaPressStyle = css({
+  position: 'absolute',
+  bottom: '-6px',
+  left: 0,
+  transition: 'all 0.3s',
 
-    &:active {
-      transform: translateY(4px);
-      filter: brightness(0.8);
-    }
-  }
-`;
+  _active: {
+    transform: 'translateY(4px)',
+    filter: 'brightness(0.8)',
+  },
+});
