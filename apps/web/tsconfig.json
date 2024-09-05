@@ -11,7 +11,8 @@
       }
     ],
     "allowJs": true,
-    "forceConsistentCasingInFileNames": false
+    "forceConsistentCasingInFileNames": false,
+    "types": ["@pandacss/dev"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "styled-system", "types/**/*.ts"],
   "exclude": ["node_modules"]
