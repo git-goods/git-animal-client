@@ -2,11 +2,12 @@ import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { css } from '_panda/css';
 
-import RightSection from '@/app/mypage/RightSection';
 import Header from '@/components/Layout/Header2';
 import Layout from '@/components/Layout/Layout';
 
-const LazyProfileSection = dynamic(() => import('../../mypage/ProfileSection'), { ssr: false });
+import RightSection from './RightSection';
+
+const LazyProfileSection = dynamic(() => import('./ProfileSection'), { ssr: false });
 
 function Mypage() {
   return (

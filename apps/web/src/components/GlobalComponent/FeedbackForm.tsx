@@ -206,7 +206,7 @@ const containerStyle = css({
     right: '0',
     left: '0',
   },
-  animation: 'fadeIn 0.3s ease-in-out',
+  animation: 'fadeInUp 0.3s ease-in-out',
 });
 
 const issueOptionColorStyle = css({

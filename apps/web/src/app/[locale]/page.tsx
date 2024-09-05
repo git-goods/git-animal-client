@@ -2,9 +2,9 @@ import { useTranslations } from 'next-intl';
 
 import Header from '@/components/Layout/Header_v2';
 
-import { AvailablePetSection, HavePetWaySection, MainSection } from '../landing';
-import { ChoosePetSection } from '../landing/ChoosePetSection';
-import { Footer } from '../landing/Footer';
+import { ChoosePetSection } from './landing/ChoosePetSection';
+import { Footer } from './landing/Footer';
+import { AvailablePetSection, HavePetWaySection, MainSection } from './landing';
 
 import '@egjs/react-flicking/dist/flicking.css';
 import '@egjs/react-flicking/dist/flicking-inline.css';
