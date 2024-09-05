@@ -10,6 +10,8 @@ import { checkIdDevAccessPossible } from '@/utils/dev';
 
 import LogoutButton from '../LogoutButton';
 
+import LoginBtn from './LoginBtn';
+
 async function Header() {
   const session = await getServerAuth();
 
@@ -55,7 +57,7 @@ async function Header() {
               </li>
             ) : (
               <li>
-                <Button>Login</Button>
+                <LoginBtn />
               </li>
             )}
           </ul>
