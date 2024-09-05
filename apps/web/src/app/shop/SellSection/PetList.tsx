@@ -32,7 +32,7 @@ function PetList(props: Props) {
               width={82}
               height={82}
               alt={persona.type}
-              className={css({ noSelect: 'true' })}
+              // className={css({ noSelect: 'true' })}
             />
           </button>
         );

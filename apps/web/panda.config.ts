@@ -1,4 +1,4 @@
-import { semanticTokens, textStyles, tokens, utilities } from '@gitanimals/ui-panda';
+import { semanticTokens, textStyles, tokens } from '@gitanimals/ui-panda';
 import { defineConfig } from '@pandacss/dev';
 
 export default defineConfig({
@@ -81,9 +81,9 @@ export default defineConfig({
       mobile: '@media (max-width: 768px)',
     },
   },
-  utilities: {
-    extend: utilities,
-  },
+  // utilities: {
+  //   extend: utilities,
+  // },
   syntax: 'object-literal',
   jsxFramework: 'react',
 
