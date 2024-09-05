@@ -9,8 +9,8 @@ import SmallButton from '@/components/Button/SmallButton';
 import { rowStyle } from '@/components/ProductTable/ShopTableRowView';
 import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
-import { STATIC_IMAGE_URL } from '@/constants/outlink';
 import type { PetInfoSchema } from '@/schema/user';
+import { getPersonaImage } from '@/utils/image';
 
 const MAX_PRICE = 100_000_000;
 
@@ -52,7 +52,7 @@ function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona
     <div className={containerStyle}>
       <div className={cx(rowStyle, 'row')} key={item.id}>
         <div>
-          <img src={`${STATIC_IMAGE_URL}/${item.type}`} alt={item.type} width={60} height={67} />
+          <img src={getPersonaImage(item.type)} alt={item.type} width={60} height={67} />
         </div>
         <div>{item.type}</div>
         <div>{item.level}</div>

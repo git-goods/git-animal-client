@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import styled from 'styled-components';
+import { css, cx } from '_panda/css';
 
 import { useGetAllPets } from '@/apis/user/useGetAllPets';
 import type { PetInfoSchema } from '@/schema/user';
@@ -19,55 +19,50 @@ function PetList(props: Props) {
   const personas = data?.personas || [];
 
   return (
-    <ListContainer>
+    <div className={listContainerStyle}>
       {personas.map((persona) => {
         return (
-          <PetItemContainer
+          <button
+            className={cx(petItemContainerStyle, props.selectedPersona?.id === persona.id && 'isSelected')}
             key={persona.id}
             onClick={() => props.onProductClick(persona)}
-            isSelected={props.selectedPersona?.id === persona.id}
           >
-            <img src={getPersonaImage(persona.type)} width={82} height={82} alt={persona.type} />
-          </PetItemContainer>
+            <img
+              src={getPersonaImage(persona.type)}
+              width={82}
+              height={82}
+              alt={persona.type}
+              className={css({ noSelect: 'true' })}
+            />
+          </button>
         );
       })}
-    </ListContainer>
+    </div>
   );
 }
 
 export default PetList;
 
-const ListContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+const listContainerStyle = css({
+  display: 'flex',
+  flexWrap: 'wrap',
+  maxHeight: '534px',
+  overflowY: 'auto',
+});
 
-  max-height: 534px;
-  overflow-y: auto;
-`;
+const petItemContainerStyle = css({
+  backgroundImage: 'url(/shop/pet-box-bg.svg)',
+  width: '80px',
+  height: '80px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundPosition: 'center',
 
-const PetItemContainer = styled.div<{ isSelected?: boolean }>`
-  background-image: url('/shop/pet-box-bg.svg');
-  width: 80px;
-  height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-position: center;
+  '&.isSelected': {
+    filter: 'brightness(0.7)',
+  },
 
-  ${({ isSelected }) => isSelected && 'filter: brightness(0.7);'}
-  cursor: pointer;
-  transition: filter 0.3s;
-
-  img {
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-    user-drag: none;
-  }
-`;
+  cursor: 'pointer',
+  transition: 'filter 0.3s',
+});
