@@ -1,32 +1,15 @@
+import type { GetProductHistoriesRequest, GetProductHistoriesResponse } from '@gitanimals/api';
+import { getHistory } from '@gitanimals/api';
 import type { UseQueryOptions } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 
-import type { ProductHistorySchema } from '@/schema/action';
-import type { PaginationRequestSchema } from '@/schema/pagination';
-import { convertCamelObjToKebab } from '@/utils/string';
+export const getHistoryQueryKey = (request?: GetProductHistoriesRequest) => ['history', request];
 
-import { get } from '..';
-
-interface GetHistoryRequest extends PaginationRequestSchema {
-  personaType?: string;
-}
-
-interface GetHistoryResponse {
-  products: ProductHistorySchema[];
-}
-
-const getHistory = async <T = GetHistoryResponse>(request?: GetHistoryRequest): Promise<T> =>
-  get('/auctions/products/histories', {
-    params: request ? convertCamelObjToKebab(request) : undefined,
-  });
-
-export const getHistoryQueryKey = (request?: GetHistoryRequest) => ['history', request];
-
-export const useGetHistory = <T = GetHistoryResponse>(
-  request?: GetHistoryRequest,
-  option?: Omit<UseQueryOptions<T>, 'queryKey' | 'queryFn'>,
+export const useGetHistory = (
+  request?: GetProductHistoriesRequest,
+  option?: Omit<UseQueryOptions<GetProductHistoriesResponse>, 'queryKey'>,
 ) => {
-  return useQuery<T>({
+  return useQuery({
     queryKey: getHistoryQueryKey(request),
     queryFn: () => getHistory(request),
     ...option,
