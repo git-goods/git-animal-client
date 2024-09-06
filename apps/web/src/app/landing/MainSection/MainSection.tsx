@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { Button } from '@gitanimals/ui-panda';
 
 import { getServerAuth } from '@/auth';
@@ -8,10 +9,11 @@ import * as styles from './MainSection.style';
 import MainSlider from './MainSlider';
 
 async function MainSection() {
+  const t = useTranslations('Landing');
   const session = await getServerAuth();
   return (
     <section className={styles.section}>
-      <h1 className={styles.heading}>Have your pet in GITHUB! </h1>
+      <h1 className={styles.heading}>{t('title')}</h1>
       <p className={styles.desc}>
         You can acquire and grow pets through GitHub activities. Choose from over 50 different pets and raise them.
       </p>
