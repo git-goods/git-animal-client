@@ -1,4 +1,4 @@
-export * from './_instance';
+export { setInstanceToken } from './_instance';
 export * from './type';
 export * from './user';
 export * from './auction';
