@@ -3,7 +3,8 @@
   "compilerOptions": {
     "paths": {
       "_panda/*": ["./styled-system/*"]
-    }
+    },
+    "types": ["@pandacss/dev"]
   },
   "include": ["src", "**/*.ts", "**/*.tsx", "styled-system"],
   "exclude": ["node_modules"]

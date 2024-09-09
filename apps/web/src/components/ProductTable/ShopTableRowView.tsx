@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import type { Product } from '@gitanimals/api/src/auction';

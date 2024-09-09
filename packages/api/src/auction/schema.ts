@@ -26,15 +26,7 @@ export const PaginationSchema = z.object({
 export type Pagination = z.infer<typeof PaginationSchema>;
 
 export const HistoryProductSchema = z.object({
-  id: z.string(),
-  sellerId: z.string(),
-  persona: z.object({
-    personaId: z.string(),
-    personaType: z.string(),
-    personaLevel: z.number(),
-  }),
-  price: z.string(),
-  paymentState: z.string(),
+  ...ProductSchema.shape,
   receipt: z.object({
     buyerId: z.string(),
     soldAt: z.string(),
@@ -42,3 +34,9 @@ export const HistoryProductSchema = z.object({
 });
 
 export type HistoryProduct = z.infer<typeof HistoryProductSchema>;
+
+export const OrderTypeSchema = z.union([z.literal('PRICE'), z.literal('CREATED_AT'), z.literal('LEVEL')]);
+export type OrderType = z.infer<typeof OrderTypeSchema>;
+
+export const SortDirectionSchema = z.union([z.literal('ASC'), z.literal('DESC')]);
+export type SortDirection = z.infer<typeof SortDirectionSchema>;

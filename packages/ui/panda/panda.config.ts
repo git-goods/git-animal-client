@@ -1,6 +1,5 @@
 import { defineConfig } from '@pandacss/dev';
 import { tokens, semanticTokens, textStyles } from './src/theme';
-import { utilities } from './src';
 
 export default defineConfig({
   // Whether to use css reset
@@ -21,9 +20,9 @@ export default defineConfig({
     },
   },
 
-  utilities: {
-    extend: utilities,
-  },
+  // utilities: {
+  //   extend: utilities,
+  // },
   outExtension: 'js',
   jsxFramework: 'react',
 
