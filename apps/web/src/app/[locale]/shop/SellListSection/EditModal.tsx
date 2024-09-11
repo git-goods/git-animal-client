@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
+import { css } from '_panda/css';
 import { useQueryClient } from '@tanstack/react-query';
-import styled from 'styled-components';
+import { toast } from 'sonner';
 
 import { useChangeProductPrice, useDeleteProduct } from '@/apis/auctions/useProduct';
 import DottedDoubleBox from '@/components/DottedBox/DottedDoubleBox';
 import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
 import Modal from '@/components/Modal/Modal';
-import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 
 function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: () => void; productId?: string }) {
-  const { showSnackBar } = useSnackBar();
   const queryClient = useQueryClient();
 
   const [price, setPrice] = useState<number>(0);
@@ -42,7 +41,9 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
   const onSave = () => {
     if (!productId) return;
     if (!price) {
-      showSnackBar({ message: '수정할 금액을 입력해주세요' });
+      toast.info('수정할 금액을 입력해주세요', {
+        position: 'top-center',
+      });
       return;
     }
     changePriceMutate({ id: productId, price: String(price) });
@@ -51,19 +52,20 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <DottedThreeBox width={402} height={164} bgColor="rgba(255, 255, 255, 0.7)">
-        <EditModalInner>
-          <InputWrapper>
+        <div>
+          <div className={inputWrapperStyle}>
             <DottedDoubleBox width={358} height={84} bgColor="#fff">
-              <InputLabel>price</InputLabel>
-              <Input
+              <span className={inputLabelStyle}>price</span>
+              <input
+                className={inputStyle}
                 placeholder="Type price..."
                 type="number"
                 value={Boolean(price) ? price : ''}
                 onChange={(e) => setPrice(Number(e.target.value))}
               />
             </DottedDoubleBox>
-          </InputWrapper>
-          <ButtonWrapper>
+          </div>
+          <div className={buttonWrapperStyle}>
             <button onClick={onSave}>
               <DottedDoubleBox width={103} height={36} bgColor="#3791FF">
                 Save
@@ -79,8 +81,8 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
                 Delete
               </DottedDoubleBox>
             </button>
-          </ButtonWrapper>
-        </EditModalInner>
+          </div>
+        </div>
       </DottedThreeBox>
     </Modal>
   );
@@ -88,59 +90,49 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
 
 export default EditModal;
 
-const EditModalInner = styled.div``;
+const inputWrapperStyle = css({
+  position: 'relative',
+  margin: '6px auto 8px',
+  width: 'fit-content',
+});
 
-const InputWrapper = styled.div`
-  position: relative;
-  margin: 6px auto 8px;
-  width: fit-content;
-`;
+const inputLabelStyle = css({
+  position: 'absolute',
+  color: '#b5b5b5',
+  fontSize: '10px',
+  fontStyle: 'normal',
+  fontWeight: 400,
+  lineHeight: '140%' /* 14px */,
+  letterSpacing: '-0.413px',
+  left: '12px',
+  top: '8px',
+});
 
-const InputLabel = styled.span`
-  position: absolute;
-  color: #b5b5b5;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%; /* 14px */
-  letter-spacing: -0.413px;
-  left: 12px;
-  top: 8px;
-`;
-const Input = styled.input`
-  border: none;
-  width: 100%;
-  height: 100%;
-  outline: none;
-  background-color: transparent;
-  text-align: center;
+const inputStyle = css({
+  border: 'none',
+  width: '100%',
+  height: '100%',
+  outline: 'none',
+  backgroundColor: 'transparent',
+  textAlign: 'center',
+  fontSize: '20px',
+  fontStyle: 'normal',
+  fontWeight: 400,
+  lineHeight: '140%' /* 28px */,
+  letterSpacing: '-0.413px',
+  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+    WebkitAppearance: 'none',
+    margin: 0,
+  },
+});
 
-  text-align: center;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%; /* 28px */
-  letter-spacing: -0.413px;
-
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  /* Firefox  */
-  &[type='number'] {
-    -moz-appearance: textfield;
-  }
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 358px;
-  gap: 8px;
-  text-align: center;
-  padding: 0 8px;
-`;
+const buttonWrapperStyle = css({
+  display: 'flex',
+  justifyContent: 'space-between',
+  margin: 0,
+  width: '100%',
+  maxWidth: '358px',
+  gap: '8px',
+  textAlign: 'center',
+  padding: '0 8px',
+});

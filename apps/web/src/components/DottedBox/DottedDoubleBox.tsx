@@ -1,11 +1,12 @@
 import type { PropsWithChildren } from 'react';
+import { css } from '_panda/css';
 
 import type { DottedBoxProps } from './DottedBox';
-import { Container } from './DottedBox.styles';
 
 function DottedDoubleBox({ width, height, children, ...props }: PropsWithChildren<DottedBoxProps>) {
   return (
-    <Container
+    <div
+      className={containerStyle}
       style={{
         width: `${width}px`,
         height: `${height}px`,
@@ -13,9 +14,25 @@ function DottedDoubleBox({ width, height, children, ...props }: PropsWithChildre
     >
       <DottedDoubleBoxBg width={width} height={height} {...props} />
       {children}
-    </Container>
+    </div>
   );
 }
+const containerStyle = css({
+  position: 'relative',
+  display: 'inline-block',
+  overflow: 'hidden',
+  backgroundColor: 'transparent',
+  boxSizing: 'border-box',
+  padding: '8px',
+  zIndex: 0,
+
+  '& > svg': {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: -1,
+  },
+});
 
 function DottedDoubleBoxBg({ width, height, bgColor }: DottedBoxProps) {
   return (

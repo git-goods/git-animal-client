@@ -6,7 +6,7 @@ import { css } from '_panda/css';
 
 import Button from '@/components/Button';
 
-import FarmType from './FarmType.1';
+import FarmType from './FarmType';
 import OneType from './OneType';
 
 function RightSection() {

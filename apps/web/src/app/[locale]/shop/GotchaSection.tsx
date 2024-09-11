@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { css } from '_panda/css';
 import { useQueryClient } from '@tanstack/react-query';
 import Lottie from 'lottie-react';
-import styled from 'styled-components';
 
 import { useGotcha } from '@/apis/gotcha/useGotcha';
 import { USER_QUERY_KEY } from '@/apis/user/useGetUser';
@@ -88,20 +87,6 @@ const pointMessageStyle = css({
     animation: 'bounce 1s',
   },
 });
-
-const LoadingWrapper = styled.div`
-  position: absolute;
-  top: -4px;
-  border-radius: 16px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.2);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
 const loadingWrapperStyle = css({
   position: 'absolute',
