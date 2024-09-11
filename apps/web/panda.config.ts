@@ -37,6 +37,7 @@ export default defineConfig({
             transform: 'translateY(0)',
           },
         },
+
         jump: {
           '0%': {
             transform: 'translateY(0)',
