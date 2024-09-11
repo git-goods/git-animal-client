@@ -3,8 +3,6 @@
 import { useSession } from 'next-auth/react';
 import { setInstanceToken } from '@gitanimals/api';
 
-import { setAPIInstantToken } from '@/apis';
-
 const SessionLoader = ({ children }: { children: React.ReactNode }) => {
   const session = useSession();
 
@@ -13,7 +11,7 @@ const SessionLoader = ({ children }: { children: React.ReactNode }) => {
   }
 
   if (session.status === 'authenticated') {
-    setAPIInstantToken(`Bearer ${session.data.user.accessToken}`);
+    // setAPIInstantToken(`Bearer ${session.data.user.accessToken}`);
     setInstanceToken(`Bearer ${session.data.user.accessToken}`);
   }
 

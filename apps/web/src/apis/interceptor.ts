@@ -1,15 +1,27 @@
+import { getSession, signOut } from 'next-auth/react';
 import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
+import { getServerAuth } from '@/auth';
 import type { ApiErrorScheme } from '@/exceptions/type';
 
-const interceptorRequestFulfilled = (config: InternalAxiosRequestConfig) => {
-  if (typeof window === 'undefined') return config;
+const interceptorRequestFulfilled = async (config: InternalAxiosRequestConfig) => {
+  let session;
+  if (typeof window !== 'undefined') {
+    // session for client component
+    session = await getSession();
+  } else {
+    // session for server component
+    session = await getServerAuth();
+  }
 
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = session?.user?.accessToken;
   if (!config.headers) return config;
-  if (!accessToken) return config;
 
-  config.headers.Authorization = `Bearer ${accessToken}`;
+  if (accessToken) {
+    console.log('accessToken: ', accessToken);
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
 
   return config;
 };
@@ -26,13 +38,13 @@ const interceptorResponseFulfilled = (res: AxiosResponse) => {
 // Response interceptor
 const interceptorResponseRejected = async (error: AxiosError<ApiErrorScheme>) => {
   // console.log('error: ', error.response?.status);
-  // if (error.response?.status === 401) {
-  //   if (typeof window !== 'undefined') {
-  //     signOut();
-  //   } else {
-  //     axios.get('/api/auth/signOut');
-  //   }
-  // }
+  if (error.response?.status === 401) {
+    if (typeof window !== 'undefined') {
+      signOut();
+    } else {
+      axios.get('/api/auth/signOut');
+    }
+  }
 
   // 403 처리
 

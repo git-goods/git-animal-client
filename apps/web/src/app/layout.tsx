@@ -2,11 +2,10 @@ import type { Metadata } from 'next';
 import { setInstanceToken } from '@gitanimals/api';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 
-import { setAPIInstantToken } from '@/apis';
+import { getServerAuth } from '@/auth';
 import ClientProvider from '@/components/ClientProvider';
 import Monitoring from '@/components/Monitoring';
 import { MONITORING_KEY } from '@/constants/monitoring';
-import { getAccessToken } from '@/lib/cookies';
 
 import './globals.css';
 import '@gitanimals/asset-font/product-sans/index.css';
@@ -41,9 +40,12 @@ export const metadata: Metadata = {
 };
 
 const setToken = async () => {
-  const accessToken = getAccessToken();
+  // const accessToken = getAccessToken();
+  const session = await getServerAuth();
+  const accessToken = session?.user?.accessToken;
+
   accessToken && setInstanceToken(`Bearer ${accessToken}`);
-  accessToken && setAPIInstantToken(`Bearer ${accessToken}`);
+  // accessToken && setAPIInstantToken(`Bearer ${accessToken}`);
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
