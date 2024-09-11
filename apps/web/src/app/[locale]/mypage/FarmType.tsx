@@ -3,22 +3,19 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable @next/next/no-img-element */
 import React, { useCallback, useEffect, useState } from 'react';
-import Image from 'next/image';
+import { css, cx } from '_panda/css';
 import { useQueryClient } from '@tanstack/react-query';
-import styled from 'styled-components';
+import { toast } from 'sonner';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
 import { useGetAllPets } from '@/apis/user/useGetAllPets';
 import Button from '@/components/Button';
 import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals';
-import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
 import type { PetInfoSchema } from '@/schema/user';
 import { useLoading } from '@/store/loading';
 import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
-
-import { FarmSection } from './index.styles';
 
 const size = 120;
 
@@ -26,7 +23,6 @@ function FarmType() {
   const queryClient = useQueryClient();
 
   const { name: username } = useClientUser();
-  const { showSnackBar } = useSnackBar();
   const { setLoading } = useLoading();
 
   const { data } = useGetAllPets(username, {
@@ -85,7 +81,10 @@ function FarmType() {
     try {
       await copyClipBoard(getGitanimalsFarmString({ username }));
 
-      showSnackBar({ message: '복사 성공!' });
+      toast.success('복사 성공!', {
+        position: 'top-center',
+        duration: 3000,
+      });
     } catch (error) {}
   };
 
@@ -95,118 +94,126 @@ function FarmType() {
 
   return (
     <>
-      <ChangePet>
+      <section className={cx(farmSectionStyle, changePetStyle)}>
         <h2>Change pet</h2>
-        <AnimalList>
+        <ul className={animalListStyle}>
           {animals.map((animal) => {
             return (
-              <Item
+              <button
+                className={itemStyle}
                 key={animal.key}
-                size={size}
+                // size={size}
                 style={{
                   filter: animal.isSelected ? 'brightness(0.5)' : 'brightness(1)',
+                  width: `${size}px`,
+                  height: `${size}px`,
+                  minWidth: `${size}px`,
                 }}
                 onClick={() => onClick(animal)}
               >
                 <img className="animal" src={animal.image} alt="animal" width={size} height={size} />
-              </Item>
+              </button>
             );
           })}
-        </AnimalList>
-      </ChangePet>
+        </ul>
+      </section>
 
-      <Preview>
+      <section className={cx(farmSectionStyle, previewStyle)}>
         <GitanimalsFarm imageKey={`${selectedAnimals.length}`} sizes={[600, 300]} />
-      </Preview>
+      </section>
 
-      <ButtonWrapper>
+      <div className={buttonWrapperStyle}>
         <Button onClick={onLinkCopy}>Copy Link</Button>
-      </ButtonWrapper>
+      </div>
     </>
   );
 }
 
 export default FarmType;
-const ButtonWrapper = styled.div`
-  margin: 72px auto;
-  width: fit-content;
-`;
 
-const ChangePet = styled(FarmSection)`
-  .pet-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
+const buttonWrapperStyle = css({
+  margin: '72px auto',
+  width: 'fit-content',
+});
 
-  .check-icon {
-    position: absolute;
-    top: 30px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    filter: brightness(1);
-  }
-  button {
-    position: relative;
-    &.selected .pet-image {
-      filter: brightness(0.5);
-    }
-  }
-`;
+const farmSectionStyle = css({
+  marginTop: '42px',
+  paddingLeft: '16px',
 
-const Preview = styled(FarmSection)`
-  width: fit-content;
-  margin: 44px auto 0;
-  padding: 0;
-`;
+  '& > h2': {
+    color: '#fff',
+    fontSize: '16px',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    marginBottom: '30px',
+    lineHeight: 'normal',
+  },
+});
 
-const Item = styled.button<{ size: number }>`
-  position: relative;
-  width: ${({ size }) => size}px;
-  min-width: ${({ size }) => size}px;
-  height: ${({ size }) => size}px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const changePetStyle = css({
+  '& .pet-list': {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '20px',
+  },
 
-  .animal {
-    position: absolute;
-    left: 0;
-    height: 100%;
-    object-fit: contain;
-  }
-`;
+  '& .check-icon': {
+    position: 'absolute',
+    top: '30px',
+    left: 0,
+    right: 0,
+    margin: '0 auto',
+    filter: 'brightness(1)',
+  },
 
-const AnimalList = styled.ul`
-  display: flex;
-  max-width: 100%;
-  width: 1000px;
-  overflow-x: auto;
-  &::-webkit-scrollbar {
-    width: 2px;
-    height: 10px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #2b2b2b8b;
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-  }
-  button {
-    position: relative;
-    z-index: 1;
-  }
-`;
+  '& button': {
+    position: 'relative',
+    '&.selected .pet-image': {
+      filter: 'brightness(0.5)',
+    },
+  },
+});
 
-const SelectedImage = styled(Image)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-`;
-function showSnackBar(arg0: { message: string }) {
-  throw new Error('Function not implemented.');
-}
+const previewStyle = css({
+  width: 'fit-content',
+  margin: '44px auto 0',
+  padding: 0,
+});
+
+const itemStyle = css({
+  position: 'relative',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  '& .animal': {
+    position: 'absolute',
+    left: 0,
+    height: '100%',
+    objectFit: 'contain',
+  },
+});
+
+const animalListStyle = css({
+  display: 'flex',
+  maxWidth: '100%',
+  width: '1000px',
+  overflowX: 'auto',
+
+  '&::-webkit-scrollbar': {
+    width: '2px',
+    height: '10px',
+  },
+
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: '#2b2b2b8b',
+    borderRadius: '10px',
+    backgroundClip: 'padding-box',
+    border: '2px solid transparent',
+  },
+
+  '& button': {
+    position: 'relative',
+    zIndex: 1,
+  },
+});
