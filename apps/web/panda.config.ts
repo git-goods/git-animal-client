@@ -22,6 +22,14 @@ export default defineConfig({
         fadeIn: {
           from: {
             opacity: 0,
+          },
+          to: {
+            opacity: 1,
+          },
+        },
+        fadeInUp: {
+          from: {
+            opacity: 0,
             transform: 'translateY(20px)',
           },
           to: {
@@ -29,6 +37,7 @@ export default defineConfig({
             transform: 'translateY(0)',
           },
         },
+
         jump: {
           '0%': {
             transform: 'translateY(0)',
