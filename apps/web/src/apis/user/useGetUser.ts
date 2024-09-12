@@ -4,11 +4,9 @@
 //       Authorization: token,
 //     },
 //   });
-import type { UserResponse } from '@gitanimals/api';
+import { getUser, type UserResponse } from '@gitanimals/api';
 import type { UseSuspenseQueryOptions } from '@tanstack/react-query';
 import { useSuspenseQuery } from '@tanstack/react-query';
-
-import { get } from '..';
 
 export const USER_QUERY_KEY = 'user';
 
@@ -30,9 +28,9 @@ export const USER_QUERY_KEY = 'user';
 //   }
 // };
 
-const getUser = async () => {
-  return get<UserResponse>(`/users`);
-};
+// const getUser = async () => {
+//   return get<UserResponse>(`/users`);
+// };
 
 export const useGetSuspenseUser = (options?: UseSuspenseQueryOptions<UserResponse>) =>
   useSuspenseQuery<UserResponse>({
