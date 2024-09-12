@@ -12,6 +12,7 @@ const instance = setInterceptors(
 );
 
 export const setInstanceToken = (token: string) => {
+  console.log('run');
   instance.defaults.headers.common['Authorization'] = token;
 };
 

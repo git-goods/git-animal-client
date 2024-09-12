@@ -47,10 +47,9 @@ const setToken = async () => {
   accessToken && setInstanceToken(`Bearer ${accessToken}`);
   // accessToken && setAPIInstantToken(`Bearer ${accessToken}`);
 };
+setToken();
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  setToken();
-
   return (
     <html lang="en">
       <body>
