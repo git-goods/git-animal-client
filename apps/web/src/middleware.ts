@@ -3,6 +3,7 @@ import { withAuth } from 'next-auth/middleware';
 import createMiddleware from 'next-intl/middleware';
 
 import { routing } from './i18n/routing';
+import { getToken } from 'next-auth/jwt';
 
 const publicPages = ['/', '/auth'];
 
@@ -20,7 +21,7 @@ const authMiddleware = withAuth((req) => intlMiddleware(req), {
   },
 });
 
-export default function middleware(req: NextRequest) {
+export default async function middleware(req: NextRequest) {
   const publicPathnameRegex = RegExp(
     `^(/(${routing.locales.join('|')}))?(${publicPages.flatMap((p) => (p === '/' ? ['', '/'] : p)).join('|')})/?$`,
     'i',
@@ -30,7 +31,9 @@ export default function middleware(req: NextRequest) {
   if (isPublicPage) {
     return intlMiddleware(req);
   } else {
-    return (authMiddleware as any)(req);
+    const token = await getToken({ req });
+
+    // return (authMiddleware as any)(req);
   }
 }
 

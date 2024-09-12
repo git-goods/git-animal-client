@@ -1,6 +1,9 @@
 import type { PropsWithChildren } from 'react';
 import { css } from '_panda/css';
 
+/**
+ * @deprecated
+ */
 function Layout({ children }: PropsWithChildren) {
   return <div className={containerStyle}>{children}</div>;
 }

@@ -1,88 +1,78 @@
 /* eslint-disable @next/next/no-img-element */
 
-import Image from 'next/image';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
-import { center } from '_panda/patterns';
-
-import { getServerAuth } from '@/auth';
-import { GITHUB_OAUTH_REQUEST_URL } from '@/constants/oauth';
-import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
-import { checkIdDevAccessPossible } from '@/utils/dev';
-
-import LanguageSelector from './LanguageSelector';
 
 /**
  * @deprecated
  */
 async function Header() {
-  const t = useTranslations('Layout');
-  const session = await getServerAuth();
+  const t = useTranslations();
+  // const session = await getServerAuth();
 
-  const isLogin = Boolean(session);
-  const username = session?.user.name ?? '';
+  // const isLogin = Boolean(session);
+  // const username = session?.user.name ?? '';
 
-  const isDevAccessPossible = checkIdDevAccessPossible(username);
+  // const isDevAccessPossible = checkIdDevAccessPossible(username);
+  return <></>;
+  // return (
+  //   <header className={headerStyle}>
+  //     <div>
+  //       <Link href="/">
+  //         <Image src="/logo.svg" width={137} height={42} alt="logo" />
+  //       </Link>
+  //     </div>
+  //     <div>
+  //       <nav>
+  //         <ul>
+  //           <li>
+  //             <LanguageSelector />
+  //           </li>
+  //           {isLogin && (
+  //             <>
+  //               <li>
+  //                 <Link href="/mypage">{t('mypage')}</Link>
+  //               </li>
+  //               <li>
+  //                 <Link href="/shop">{t('auction')}</Link>
+  //               </li>
+  //             </>
+  //           )}
+  //           {!isLogin && (
+  //             <li>
+  //               <a href={GITHUB_OAUTH_REQUEST_URL}>{t('login')}</a>
+  //             </li>
+  //           )}
+  //           <li>
+  //             <a target="_blank" href={GIT_ANIMALS_MAIN_URL}>
+  //               GITHUB
+  //             </a>
+  //           </li>
+  //           {/* <DevMenu /> */}
+  //           {isDevAccessPossible && (
+  //             <li>
+  //               <Link href="/dev">DEV</Link>
+  //             </li>
+  //           )}
+  //         </ul>
+  //       </nav>
 
-  return (
-    <header className={headerStyle}>
-      <div>
-        <Link href="/">
-          <Image src="/logo.svg" width={137} height={42} alt="logo" />
-        </Link>
-      </div>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <LanguageSelector />
-            </li>
-            {isLogin && (
-              <>
-                <li>
-                  <Link href="/mypage">{t('mypage')}</Link>
-                </li>
-                <li>
-                  <Link href="/shop">{t('auction')}</Link>
-                </li>
-              </>
-            )}
-            {!isLogin && (
-              <li>
-                <a href={GITHUB_OAUTH_REQUEST_URL}>{t('login')}</a>
-              </li>
-            )}
-            <li>
-              <a target="_blank" href={GIT_ANIMALS_MAIN_URL}>
-                GITHUB
-              </a>
-            </li>
-            {/* <DevMenu /> */}
-            {isDevAccessPossible && (
-              <li>
-                <Link href="/dev">DEV</Link>
-              </li>
-            )}
-          </ul>
-        </nav>
-
-        {session && (
-          <a href="/mypage" className={profileStyle}>
-            <>
-              <div className="profile-image">
-                <img src={session.user.image} alt="profile" width={160} height={160} />
-              </div>
-              <button className={center()}>
-                <span className="profile-name">{session.user.name}</span>
-                <Image src="/icon/chervon-right.svg" width={12} height={12} alt="arrow-down" />
-              </button>
-            </>
-          </a>
-        )}
-      </div>
-    </header>
-  );
+  //       {session && (
+  //         <a href="/mypage" className={profileStyle}>
+  //           <>
+  //             <div className="profile-image">
+  //               <img src={session.user.image} alt="profile" width={160} height={160} />
+  //             </div>
+  //             <button className={center()}>
+  //               <span className="profile-name">{session.user.name}</span>
+  //               <Image src="/icon/chervon-right.svg" width={12} height={12} alt="arrow-down" />
+  //             </button>
+  //           </>
+  //         </a>
+  //       )}
+  //     </div>
+  //   </header>
+  // );
 }
 export default Header;
 
