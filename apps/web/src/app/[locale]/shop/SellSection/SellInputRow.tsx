@@ -3,11 +3,11 @@ import type { ChangeEventHandler } from 'react';
 import React, { useState } from 'react';
 import { css, cx } from '_panda/css';
 import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
 import SmallButton from '@/components/Button/SmallButton';
 import { rowStyle } from '@/components/ProductTable/ShopTableRowView';
-import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import type { PetInfoSchema } from '@/schema/user';
 import { getPersonaImage } from '@/utils/image';
@@ -15,7 +15,6 @@ import { getPersonaImage } from '@/utils/image';
 const MAX_PRICE = 100_000_000;
 
 function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona: () => void }) {
-  const { showSnackBar } = useSnackBar();
   const { price, resetPrice, onChangePriceInput } = usePrice();
 
   const queryClient = useQueryClient();
@@ -31,7 +30,7 @@ function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona
       initPersona();
       resetPrice();
 
-      showSnackBar({ message: '판매 등록이 완료되었습니다.' });
+      toast.success('판매 등록이 완료되었습니다.');
     },
   });
 
@@ -42,7 +41,9 @@ function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona
 
       mutate({ personaId: item.id, price });
     } catch (error: unknown) {
-      if (error instanceof Error) showSnackBar({ message: error.message });
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
     }
   };
 
