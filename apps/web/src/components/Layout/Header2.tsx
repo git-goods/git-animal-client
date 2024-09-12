@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
 
@@ -10,10 +11,13 @@ import { GITHUB_OAUTH_REQUEST_URL } from '@/constants/oauth';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
+import LanguageSelector from './LanguageSelector';
+
 /**
  * @deprecated
  */
 async function Header() {
+  const t = useTranslations('Layout');
   const session = await getServerAuth();
 
   const isLogin = Boolean(session);
@@ -31,19 +35,22 @@ async function Header() {
       <div>
         <nav>
           <ul>
+            <li>
+              <LanguageSelector />
+            </li>
             {isLogin && (
               <>
                 <li>
-                  <Link href="/mypage">MYPAGE</Link>
+                  <Link href="/mypage">{t('mypage')}</Link>
                 </li>
                 <li>
-                  <Link href="/shop">SHOP</Link>
+                  <Link href="/shop">{t('auction')}</Link>
                 </li>
               </>
             )}
             {!isLogin && (
               <li>
-                <a href={GITHUB_OAUTH_REQUEST_URL}>Login</a>
+                <a href={GITHUB_OAUTH_REQUEST_URL}>{t('login')}</a>
               </li>
             )}
             <li>

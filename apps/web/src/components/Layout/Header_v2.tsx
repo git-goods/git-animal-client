@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { Button } from '@gitanimals/ui-panda';
@@ -10,9 +11,11 @@ import { checkIdDevAccessPossible } from '@/utils/dev';
 
 import LogoutButton from '../LogoutButton';
 
+import LanguageSelector from './LanguageSelector';
 import LoginBtn from './LoginBtn';
 
 async function Header() {
+  const t = useTranslations('Layout');
   const session = await getServerAuth();
 
   const isLogin = Boolean(session);
@@ -27,13 +30,17 @@ async function Header() {
         </Link>
         <div>
           <ul className={navStyle}>
+            <li>
+              <LanguageSelector />
+            </li>
+
             {isLogin && (
               <>
                 <li>
-                  <Link href="/mypage">MYPAGE</Link>
+                  <Link href="/mypage">{t('mypage')}</Link>
                 </li>
                 <li>
-                  <Link href="/shop">AUCTION</Link>
+                  <Link href="/shop">{t('auction')}</Link>
                 </li>
               </>
             )}
@@ -52,7 +59,7 @@ async function Header() {
             {isLogin ? (
               <li>
                 <LogoutButton>
-                  <Button>Logout</Button>
+                  <Button>{t('logout')}</Button>
                 </LogoutButton>
               </li>
             ) : (
