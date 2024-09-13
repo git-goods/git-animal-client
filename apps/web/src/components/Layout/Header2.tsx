@@ -1,14 +1,14 @@
-'use client';
 /* eslint-disable @next/next/no-img-element */
 
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
+import { center } from '_panda/patterns';
 
+import { getServerAuth } from '@/auth';
 import { GITHUB_OAUTH_REQUEST_URL } from '@/constants/oauth';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { Link } from '@/i18n/routing';
-import { useClientSession } from '@/utils/clientAuth';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
 import LanguageSelector from './LanguageSelector';
@@ -16,13 +16,13 @@ import LanguageSelector from './LanguageSelector';
 /**
  * @deprecated
  */
-function Header() {
-  const t = useTranslations('Layout');
-  // const session = await getServerAuth();
-  const session = useClientSession();
+async function Header() {
+  const t = await getTranslations('Layout');
+  const session = await getServerAuth();
+  // const session = useClientSession();
 
   const isLogin = Boolean(session);
-  const username = session?.data?.user.name ?? '';
+  const username = session?.user.name ?? '';
 
   const isDevAccessPossible = checkIdDevAccessPossible(username);
   return (
@@ -67,7 +67,7 @@ function Header() {
           </ul>
         </nav>
 
-        {/* {session && (
+        {session && (
           <a href="/mypage" className={profileStyle}>
             <>
               <div className="profile-image">
@@ -79,7 +79,7 @@ function Header() {
               </button>
             </>
           </a>
-        )} */}
+        )}
       </div>
     </header>
   );

@@ -1,4 +1,5 @@
 import type { NextRequest } from 'next/server';
+import withAuth from 'next-auth/middleware';
 import createMiddleware from 'next-intl/middleware';
 
 import { routing } from './i18n/routing';
@@ -9,17 +10,27 @@ const intlMiddleware = createMiddleware({
   ...routing,
   // localeDetection: false,
 });
-
+const authMiddleware = withAuth((req) => intlMiddleware(req), {
+  callbacks: {
+    authorized: ({ token }) => token != null,
+  },
+  pages: {
+    signIn: '/',
+  },
+});
 export default async function middleware(req: NextRequest) {
-  // const publicPathnameRegex = RegExp(
-  //   `^(/(${routing.locales.join('|')}))?(${publicPages.flatMap((p) => (p === '/' ? ['', '/'] : p)).join('|')})/?$`,
-  //   'i',
-  // );
-  // const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname);
-  return intlMiddleware(req);
+  const publicPathnameRegex = RegExp(
+    `^(/(${routing.locales.join('|')}))?(${publicPages.flatMap((p) => (p === '/' ? ['', '/'] : p)).join('|')})/?$`,
+    'i',
+  );
+  const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname);
+  // return intlMiddleware(req);
 
-  // if (isPublicPage) {
-  //   return intlMiddleware(req);
+  if (isPublicPage) {
+    return intlMiddleware(req);
+  } else {
+    return (authMiddleware as any)(req);
+  }
   // } else {
   //   try {
   //     const token = await getToken({ req, secret: process.env.JWT_SECRET });

@@ -17,7 +17,6 @@ import LoginBtn from './LoginBtn';
 async function Header() {
   // const locale = await getLocale();
   const t = await getTranslations('Layout');
-
   // const t = useTranslations('Layout');
   const session = await getServerAuth();
 
