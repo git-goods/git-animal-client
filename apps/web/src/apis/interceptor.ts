@@ -1,11 +1,11 @@
 import { getSession, signOut } from 'next-auth/react';
-import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import type { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import axios from 'axios';
 
 import { getServerAuth } from '@/auth';
 import type { ApiErrorScheme } from '@/exceptions/type';
 
-const interceptorRequestFulfilled = async (config: InternalAxiosRequestConfig) => {
+export const interceptorRequestFulfilled = async (config: InternalAxiosRequestConfig) => {
   let session;
   if (typeof window !== 'undefined') {
     // session for client component
@@ -27,7 +27,7 @@ const interceptorRequestFulfilled = async (config: InternalAxiosRequestConfig) =
 };
 
 // Response interceptor
-const interceptorResponseFulfilled = (res: AxiosResponse) => {
+export const interceptorResponseFulfilled = (res: AxiosResponse) => {
   if (200 <= res.status && res.status < 300) {
     return res.data;
   }
@@ -36,7 +36,7 @@ const interceptorResponseFulfilled = (res: AxiosResponse) => {
 };
 
 // Response interceptor
-const interceptorResponseRejected = async (error: AxiosError<ApiErrorScheme>) => {
+export const interceptorResponseRejected = async (error: AxiosError<ApiErrorScheme>) => {
   // console.log('error: ', error.response?.status);
   if (error.response?.status === 401) {
     if (typeof window !== 'undefined') {
@@ -46,14 +46,7 @@ const interceptorResponseRejected = async (error: AxiosError<ApiErrorScheme>) =>
     }
   }
 
-  // 403 처리
+  // TODO: 403 처리
 
   return Promise.reject(error);
-};
-
-export const setInterceptors = (instance: AxiosInstance) => {
-  instance.interceptors.request.use(interceptorRequestFulfilled);
-  instance.interceptors.response.use(interceptorResponseFulfilled, interceptorResponseRejected);
-
-  return instance;
 };
