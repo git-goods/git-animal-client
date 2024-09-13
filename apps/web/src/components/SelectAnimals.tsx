@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styled from 'styled-components';
+import { css } from '_panda/css';
 
 import { NEW_USER_BONUS_PET_LIST } from '@/constants/pet';
 
@@ -17,46 +17,47 @@ interface Props {
 
 function SelectAnimals({ selected, setSelected, size = 196 }: Props) {
   return (
-    <AnimalList>
+    <ul className={animalListStyle}>
       {ANIMAL_LIST.map((animal) => (
         <button key={animal.key} onClick={() => setSelected(animal.key)}>
-          {selected === animal.key && <SelectedImage src="/animals/animal-selected.svg" alt="animal" fill />}
+          {selected === animal.key && (
+            <Image className={selectedImageStyle} src="/animals/animal-selected.svg" alt="animal" fill />
+          )}
           <Image src={animal.image} alt="animal" width={size} height={size} />
         </button>
       ))}
-    </AnimalList>
+    </ul>
   );
 }
 
 export default SelectAnimals;
 
-const AnimalList = styled.ul`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+const animalListStyle = css({
+  display: 'flex',
+  maxWidth: '100%',
+  width: '1000px',
+  overflowX: 'auto',
+  '&::-webkit-scrollbar': {
+    width: '2px',
+    height: '10px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: '#2b2b2b8b',
+    borderRadius: '10px',
+    backgroundClip: 'padding-box',
+    border: '2px solid transparent',
+  },
+  '& button': {
+    position: 'relative',
+    zIndex: 1,
+  },
+});
 
-  &::-webkit-scrollbar {
-    width: 2px;
-    height: 10px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #2b2b2b8b;
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-  }
-
-  button {
-    position: relative;
-    z-index: 1;
-  }
-`;
-
-const SelectedImage = styled(Image)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-`;
+const selectedImageStyle = css({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  zIndex: -1,
+});

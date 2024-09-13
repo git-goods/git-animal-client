@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
-import styled from 'styled-components';
+import { css } from '_panda/css';
 
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
 import type { PetInfoSchema } from '@/schema/user';
@@ -20,64 +20,73 @@ function SelectAnimal({ selected, setSelected, personaList, size = 196 }: Props)
   }));
 
   return (
-    <AnimalList>
+    <ul className={animalListStyle}>
       {animals.map((animal) => (
-        <Item key={animal.key} onClick={() => setSelected(animal)} size={size}>
-          {selected?.type === animal.key && <SelectedImage src="/animals/animal-selected.svg" alt="animal" fill />}
+        <button
+          key={animal.key}
+          onClick={() => setSelected(animal)}
+          className={itemStyle}
+          style={{
+            width: `${size}px`,
+            minWidth: `${size}px`,
+            height: `${size}px`,
+          }}
+        >
+          {selected?.type === animal.key && (
+            <Image className={selectedImageStyle} src="/animals/animal-selected.svg" alt="animal" fill />
+          )}
           <img className="animal" src={animal.image} alt="animal" width={size} height={size} />
-        </Item>
+        </button>
       ))}
-    </AnimalList>
+    </ul>
   );
 }
 
 export default SelectAnimal;
 
-const Item = styled.button<{ size: number }>`
-  position: relative;
-  width: ${({ size }) => size}px;
-  min-width: ${({ size }) => size}px;
-  height: ${({ size }) => size}px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const itemStyle = css({
+  position: 'relative',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
 
-  .animal {
-    position: absolute;
-    left: 0;
-    height: 100%;
-    object-fit: contain;
-  }
-`;
+  '& .animal': {
+    position: 'absolute',
+    left: 0,
+    height: '100%',
+    objectFit: 'contain',
+  },
+});
 
-const AnimalList = styled.ul`
-  display: flex;
-  max-width: 100%;
-  width: 1000px;
-  overflow-x: auto;
+const animalListStyle = css({
+  display: 'flex',
+  maxWidth: '100%',
+  width: '1000px',
+  overflowX: 'auto',
 
-  &::-webkit-scrollbar {
-    width: 2px;
-    height: 10px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #2b2b2b8b;
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-  }
+  '&::-webkit-scrollbar': {
+    width: '2px',
+    height: '10px',
+  },
 
-  button {
-    position: relative;
-    z-index: 1;
-  }
-`;
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: '#2b2b2b8b',
+    borderRadius: '10px',
+    backgroundClip: 'padding-box',
+    border: '2px solid transparent',
+  },
 
-const SelectedImage = styled(Image)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-`;
+  '& button': {
+    position: 'relative',
+    zIndex: 1,
+  },
+});
+
+const selectedImageStyle = css({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  zIndex: -1,
+});

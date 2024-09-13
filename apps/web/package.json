@@ -37,7 +37,6 @@
     "react": "*",
     "react-dom": "*",
     "sonner": "^1.5.0",
-    "styled-components": "^6.1.8",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import styled from 'styled-components';
+import { css } from '_panda/css';
 
 import { useSelectOpenContext, useSelectValueContext } from './Root';
 
@@ -13,50 +13,51 @@ function SelectLabel(props: SelectLabelProps) {
   const { isOpen, setIsOpen } = useSelectOpenContext();
 
   return (
-    <Label $isOpen={isOpen} onClick={() => setIsOpen((prev) => !prev)}>
-      {!selectedValue && <Placeholder>{props.placeholder}</Placeholder>}
+    <button
+      className={labelStyle}
+      style={isOpen ? { border: '1px solid #00894d' } : {}}
+      onClick={() => setIsOpen((prev) => !prev)}
+    >
+      {!selectedValue && <div className={placeholderStyle}>{props.placeholder}</div>}
       {selectedValue &&
         (typeof props.children === 'function' ? props.children({ value: selectedValue }) : props.children)}
       <ArrowIcon />
-    </Label>
+    </button>
   );
 }
 
 export default SelectLabel;
 
-const Label = styled.div<{ $isOpen: boolean }>`
-  display: flex;
-  padding: 14px 14px 14px 20px;
-  align-items: center;
-  gap: 8px;
-  border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background: transparent;
+const labelStyle = css({
+  display: 'flex',
+  padding: '14px 14px 14px 20px',
+  alignItems: 'center',
+  gap: '8px',
+  borderRadius: '8px',
+  border: '1px solid rgba(0, 0, 0, 0.1)',
+  background: 'transparent',
 
-  color: rgba(0, 0, 0, 0.75);
-  /* glyph16 regular */
-  font-family: 'Product Sans';
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 150%; /* 24px */
-  letter-spacing: -0.3px;
+  color: 'rgba(0, 0, 0, 0.75)',
+  fontFamily: 'Product Sans',
+  fontSize: '16px',
+  fontWeight: 400,
+  lineHeight: '150%',
+  letterSpacing: '-0.3px',
 
-  ${({ $isOpen }) => $isOpen && `border: 1px solid #00894d; `}
+  '& .arrow-icon': {
+    position: 'absolute',
+    right: '14px',
+    top: 0,
+    bottom: 0,
+    margin: 'auto',
+    transition: 'transform 0.2s',
+    transform: 'rotate(0deg)',
+  },
+});
 
-  .arrow-icon {
-    position: absolute;
-    right: 14px;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    transition: transform 0.2s;
-    transform: ${({ $isOpen }) => ($isOpen ? 'rotate(180deg)' : 'rotate(0deg)')};
-  }
-`;
-
-const Placeholder = styled.div`
-  color: rgba(0, 0, 0, 0.5);
-`;
+const placeholderStyle = css({
+  color: 'rgba(0, 0, 0, 0.5)',
+});
 
 function ArrowIcon() {
   return (

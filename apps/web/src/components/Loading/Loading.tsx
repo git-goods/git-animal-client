@@ -1,27 +1,25 @@
 import Image from 'next/image';
-import styled from 'styled-components';
+import { css } from '_panda/css';
 
 function Loading() {
   return (
-    <LoadingContainer>
+    <div className={loadingWrapperStyle}>
       <Image src="/icon/loading.svg" width={100} height={100} alt="loading" />
-    </LoadingContainer>
+    </div>
   );
 }
 
 export default Loading;
 
-const LoadingContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.2);
-  pointer-events: none;
-  z-index: 99;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+const loadingWrapperStyle = css({
+  position: 'absolute',
+  top: '-4px',
+  borderRadius: '16px',
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: 'rgba(0, 0, 0, 0.2)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});

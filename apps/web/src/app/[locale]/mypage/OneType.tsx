@@ -1,18 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import { css } from '_panda/css';
+import { toast } from 'sonner';
 
 import { useGetUniqueTypeAllPets } from '@/apis/user/useGetAllPets';
 import Button from '@/components/Button';
 import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
 import SelectAnimal from '@/components/SelectAnimal';
-import { useSnackBar } from '@/components/SnackBar/useSnackBar';
 import type { PetInfoSchema } from '@/schema/user';
 import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
-
-import { FarmSection } from './index.styles';
 
 interface Props {}
 
@@ -22,8 +20,6 @@ function OneType({}: Props) {
   const [error, setError] = useState('');
 
   const { name: username } = useClientUser();
-
-  const { showSnackBar } = useSnackBar();
 
   const { data } = useGetUniqueTypeAllPets(username, {
     enabled: Boolean(username),
@@ -51,91 +47,103 @@ function OneType({}: Props) {
     try {
       await copyClipBoard(getGitanimalsLineString({ username, petId: selected?.id, sizes }));
 
-      showSnackBar({ message: '복사 성공!' });
+      toast.success('복사 성공!', {
+        position: 'top-center',
+        duration: 2000,
+      });
     } catch (error) {}
   };
 
   return (
     <>
-      <FarmSection>
+      <section className={farmSectionStyle}>
         <h2>choose only one pet</h2>
         <SelectAnimal selected={selected} setSelected={setSelected} size={120} personaList={personaList} />
-      </FarmSection>
-      <FarmSection>
+      </section>
+      <section className={farmSectionStyle}>
         <h2>영역을 customize 하세요</h2>
-        <InputWrapper>
+        <div className={inputWrapperStyle}>
           <label htmlFor="width">width</label>
           <input type="number" name="width" id="width" value={sizes[0]} onChange={(e) => onWidthChange(e)} />
 
           <label htmlFor="height">height</label>
           <input type="number" name="height" id="height" value={sizes[1]} onChange={(e) => onHeightChange(e)} />
-        </InputWrapper>
-        {error && <ErrorMsg>{error}</ErrorMsg>}
-        <LineContainer
+        </div>
+        {error && <p className={errorMsgStyle}>{error}</p>}
+        <div
+          className={lineContainerStyle}
           style={{
             width: sizes[0],
             height: sizes[1],
           }}
         >
           <GitanimalsLine sizes={sizes} petId={selected?.id} />
-        </LineContainer>
-      </FarmSection>
-      <ButtonWrapper>
+        </div>
+      </section>
+      <div className={buttonWrapperStyle}>
         <Button onClick={onLinkCopy}>Copy Link</Button>
-      </ButtonWrapper>
+      </div>
     </>
   );
 }
 
 export default OneType;
-const ButtonWrapper = styled.div`
-  margin: 72px auto;
-  width: fit-content;
-`;
-const InputWrapper = styled.div`
-  color: white;
-  display: flex;
-  margin-bottom: 24px;
-  align-items: center;
 
-  gap: 12px;
+const farmSectionStyle = css({
+  marginTop: '42px',
+  paddingLeft: '16px',
 
-  input {
-    width: 100px;
-    height: 30px;
-    border-radius: 4px;
-    border: 1px solid #141414;
-    padding: 0 8px;
-    outline: 1px solid #141414;
-  }
+  '& > h2': {
+    color: '#fff',
+    fontSize: '16px',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    marginBottom: '30px',
+    lineHeight: 'normal',
+  },
+});
+const buttonWrapperStyle = css({
+  margin: '72px auto',
+  width: 'fit-content',
+});
 
-  /* Chrome, Safari, Edge, Opera */
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-  }
-  /* Firefox */
-  input[type='number'] {
-    -moz-appearance: textfield;
-  }
-`;
+const inputWrapperStyle = css({
+  color: 'white',
+  display: 'flex',
+  marginBottom: '24px',
+  alignItems: 'center',
+  gap: '12px',
 
-const LineContainer = styled.div`
-  width: 100%;
-  background: white;
-  height: 100%;
-  transition: all 0.3s;
-  max-width: 1000px;
+  '& input': {
+    width: '100px',
+    height: '30px',
+    borderRadius: '4px',
+    border: '1px solid #141414',
+    padding: '0 8px',
+    outline: '1px solid #141414',
+  },
 
-  margin: 24px auto;
+  '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
+    WebkitAppearance: 'none',
+  },
+});
 
-  img {
-    max-width: 100%;
-  }
-`;
+const lineContainerStyle = css({
+  width: '100%',
+  background: 'white',
+  height: '100%',
+  transition: 'all 0.3s',
+  maxWidth: '1000px',
 
-const ErrorMsg = styled.p`
-  color: white;
-  margin-bottom: 12px;
-  font-size: 14px;
-`;
+  margin: '24px auto',
+
+  '& img': {
+    maxWidth: '100%',
+  },
+});
+
+const errorMsgStyle = css({
+  color: 'white',
+  marginBottom: '12px',
+  fontSize: '14px',
+});
