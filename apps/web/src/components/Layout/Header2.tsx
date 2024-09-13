@@ -11,8 +11,6 @@ import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { Link } from '@/i18n/routing';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
-import LanguageSelector from './LanguageSelector';
-
 /**
  * @deprecated
  */
@@ -34,9 +32,9 @@ async function Header() {
       <div>
         <nav>
           <ul>
-            <li>
+            {/* <li>
               <LanguageSelector />
-            </li>
+            </li> */}
             {isLogin && (
               <>
                 <li>
