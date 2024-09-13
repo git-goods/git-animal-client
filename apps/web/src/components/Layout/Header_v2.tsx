@@ -96,4 +96,5 @@ const navStyle = flex({
   textStyle: 'glyph16.regular',
   gap: '32px',
   alignItems: 'center',
+  textTransform: 'uppercase',
 });

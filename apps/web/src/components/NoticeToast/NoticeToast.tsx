@@ -29,12 +29,14 @@ function NoticeToast() {
 
   const getRenderNoticeList = () => {
     const viewStorageData = window.localStorage.getItem('viewNotice');
+    console.log('viewStorageData: ', viewStorageData);
 
     if (!viewStorageData) {
       return NOTICE_LIST;
     }
 
     const viewList = JSON.parse(viewStorageData);
+    console.log('viewList: ', viewList);
 
     return NOTICE_LIST.filter((notice) => !viewList.includes(generationNoticeKey(notice.key)) && notice.visible);
   };
@@ -69,6 +71,7 @@ function NoticeToast() {
 
   useEffectOnce(() => {
     const renderList = getRenderNoticeList();
+    console.log('renderList: ', renderList);
     renderList.forEach((notice) => renderToast(notice));
   });
 

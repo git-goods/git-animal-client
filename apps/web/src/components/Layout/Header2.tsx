@@ -108,6 +108,7 @@ const headerStyle = css({
   },
   '& nav ul': {
     gap: '20px',
+    textTransform: 'uppercase',
   },
 });
 
