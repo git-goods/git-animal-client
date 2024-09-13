@@ -1,9 +1,9 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { setInstanceToken } from '@gitanimals/api';
+import { setRequestInterceptor } from '@gitanimals/api';
 
-import { setAPIInstantToken } from '@/apis';
+import { interceptorRequestFulfilled } from '@/apis/interceptor';
 
 const SessionLoader = ({ children }: { children: React.ReactNode }) => {
   const session = useSession();
@@ -13,8 +13,7 @@ const SessionLoader = ({ children }: { children: React.ReactNode }) => {
   }
 
   if (session.status === 'authenticated') {
-    setAPIInstantToken(`Bearer ${session.data.user.accessToken}`);
-    setInstanceToken(`Bearer ${session.data.user.accessToken}`);
+    setRequestInterceptor(interceptorRequestFulfilled);
   }
 
   return <>{children}</>;

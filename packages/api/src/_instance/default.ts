@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { setInterceptors } from '../_interceptor';
 
 const API_URL = 'https://api.gitanimals.org';
@@ -11,8 +11,18 @@ const instance = setInterceptors(
   }),
 );
 
-export const setInstanceToken = (token: string) => {
-  instance.defaults.headers.common['Authorization'] = token;
+export const setRequestInterceptor = (
+  fulfilled?: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>,
+  rejected?: (error: AxiosError) => AxiosError | Promise<AxiosError>,
+) => {
+  instance.interceptors.request.use(fulfilled, rejected);
+};
+
+export const setResponseInterceptor = (
+  fulfilled?: (response: AxiosResponse) => AxiosResponse | Promise<AxiosResponse>,
+  rejected?: (error: AxiosError) => AxiosError | Promise<AxiosError>,
+) => {
+  instance.interceptors.response.use(fulfilled, rejected);
 };
 
 export const get = <T>(...args: Parameters<typeof instance.get>) => {
