@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { css } from '_panda/css';
 
 import type { PaginationSchema } from '@/schema/pagination';
 
@@ -12,7 +12,7 @@ function Pagination(props: { currentPage: number; onSetPage: (page: number) => v
   };
 
   return (
-    <PaginationContainer>
+    <div className={paginationContainerStyle}>
       <button disabled={props.prevPage === null} onClick={() => props.onSetPage(props.prevPage || 0)}>
         <svg width="12" height="20" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="8" width="4" height="4" fill="#141414" />
@@ -40,32 +40,30 @@ function Pagination(props: { currentPage: number; onSetPage: (page: number) => v
           <rect width="4" height="4" transform="matrix(-1 0 0 1 4 16)" fill="#141414" />
         </svg>
       </button>
-    </PaginationContainer>
+    </div>
   );
 }
 
 export default Pagination;
 
-const PaginationContainer = styled.div`
-  color: #000;
-  text-align: center;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%; /* 14px */
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  margin-top: 8px;
-
-  button {
-    min-width: 15px;
-    height: 26px;
-    border-radius: 4px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-`;
+const paginationContainerStyle = css({
+  color: '#000',
+  textAlign: 'center',
+  fontSize: '10px',
+  fontStyle: 'normal',
+  fontWeight: 400,
+  lineHeight: '140%' /* 14px */,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '6px',
+  marginTop: '8px',
+  '& button': {
+    minWidth: '15px',
+    height: '26px',
+    borderRadius: '4px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

@@ -17,7 +17,7 @@ export interface ModalProps {
  * @param onClose 모달 닫기
  * @param padding 모달 패딩 값 (default: 20px 24px)
  * @param children 모달 내부 컨텐츠
- *
+ * @deprecated
  */
 function Modal({ isOpen, children, onClose }: PropsWithChildren<ModalProps>) {
   const modalRef = useRef(null);

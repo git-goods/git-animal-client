@@ -1,25 +1,24 @@
-import styled from 'styled-components';
+import { css } from '_panda/css';
 
 function ShopTableBackground({ children }: { children: React.ReactNode }) {
   return (
-    <Bg>
-      <TableStyled>{children}</TableStyled>
-    </Bg>
+    <div className={bgStyle}>
+      <div className={tableStyle}>{children}</div>
+    </div>
   );
 }
 
 export default ShopTableBackground;
 
-const Bg = styled.div`
-  height: 655px;
-  background-image: url('/shop/table-bg.png');
-  background-size: cover;
-`;
+const bgStyle = css({
+  height: '655px',
+  backgroundImage: 'url(/shop/table-bg.png)',
+  backgroundSize: 'cover',
+});
 
-const TableStyled = styled.div`
-  border-collapse: collapse;
-  width: 100%;
-  height: fit-content;
-
-  vertical-align: center;
-`;
+const tableStyle = css({
+  borderCollapse: 'collapse',
+  width: '100%',
+  height: 'fit-content',
+  verticalAlign: 'center',
+});

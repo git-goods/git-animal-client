@@ -1,4 +1,4 @@
-export * from './_instance';
+export { setRequestInterceptor, setResponseInterceptor } from './_instance';
 export * from './type';
 export * from './user';
 export * from './auction';

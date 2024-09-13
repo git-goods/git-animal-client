@@ -1,34 +1,39 @@
-import { type NextRequest, NextResponse } from 'next/server';
-import type { JWT } from 'next-auth/jwt';
-import { getToken } from 'next-auth/jwt';
+import type { NextRequest } from 'next/server';
+import withAuth from 'next-auth/middleware';
+import createMiddleware from 'next-intl/middleware';
 
-const withoutAuthList = ['/', '/auth'];
+import { routing } from './i18n/routing';
 
-const withAuth = (
-  req: NextRequest,
-  token: JWT | null,
-  options?: {
-    redirectUrl?: string;
+const publicPages = ['/', '/auth'];
+
+const intlMiddleware = createMiddleware({
+  ...routing,
+  // localeDetection: false, // NOTE : 옵션 끌지 말지 고민
+});
+const authMiddleware = withAuth((req) => intlMiddleware(req), {
+  callbacks: {
+    authorized: ({ token }) => token != null,
   },
-) => {
-  const url = req.nextUrl.clone();
+  pages: {
+    signIn: '/',
+  },
+});
 
-  if (!token) {
-    url.pathname = options?.redirectUrl ?? '/';
+export default async function middleware(req: NextRequest) {
+  const publicPathnameRegex = RegExp(
+    `^(/(${routing.locales.join('|')}))?(${publicPages.flatMap((p) => (p === '/' ? ['', '/'] : p)).join('|')})/?$`,
+    'i',
+  );
 
-    return NextResponse.redirect(url);
+  const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname);
+
+  if (isPublicPage) {
+    return intlMiddleware(req);
+  } else {
+    return (authMiddleware as any)(req);
   }
-};
-
-export async function middleware(request: NextRequest) {
-  const token = await getToken({ req: request });
-
-  const pathname = request.nextUrl.pathname;
-  const isWithoutAuth = withoutAuthList.includes(pathname);
-
-  if (!isWithoutAuth) return withAuth(request, token);
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$|.*\\.webp$|.*\\.svg$).*)'],
+  matcher: ['/((?!api|_next|.*\\..*).*)'],
 };

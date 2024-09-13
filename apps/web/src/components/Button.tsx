@@ -2,7 +2,7 @@
 
 import type { ComponentProps } from 'react';
 import Link from 'next/link';
-import styled from 'styled-components';
+import { css, cx } from '_panda/css';
 
 type ButtonColorType = 'primary' | 'secondary';
 
@@ -38,66 +38,66 @@ function Button({ href, color = 'primary', ...props }: ButtonProps) {
   if (href) {
     return (
       <Link href={href}>
-        <ButtonStyled {...props} className={'button ' + props.className}>
-          <Bg className="bg" color={COLOR_OBJ[color].bg} />
+        <button {...props} className={cx('button', props.className, buttonStyle)}>
+          <div className={cx('bg', bgStyle)} style={{ background: COLOR_OBJ[color].bg }} />
           <BlackOutline />
           <InnerSvg color={COLOR_OBJ[color].inner} />
           <span>{props.children}</span>
-        </ButtonStyled>
+        </button>
       </Link>
     );
   }
 
   return (
-    <ButtonStyled {...props} className={'button ' + props.className}>
-      <Bg className="bg" color={COLOR_OBJ[color].bg} />
+    <button {...props} className={cx('button', props.className, buttonStyle)}>
+      <div className={cx('bg', bgStyle)} style={{ background: COLOR_OBJ[color].bg }} />
       <BlackOutline />
       <InnerSvg color={COLOR_OBJ[color].inner} />
       <span>{props.children}</span>
-    </ButtonStyled>
+    </button>
   );
 }
 
 export default Button;
 
-const Bg = styled.div<{ color: string }>`
-  background: ${(props) => props.color};
-  margin: 8px;
-  width: calc(100% - 16px);
-  height: calc(100% - 16px);
-  z-index: 0;
-`;
+const bgStyle = css({
+  background: '#ffa109',
+  margin: '8px',
+  width: 'calc(100% - 16px)',
+  height: 'calc(100% - 16px)',
+  zIndex: 0,
+});
 
-const ButtonStyled = styled.button`
-  width: 286px;
-  border: none;
-  position: relative;
-  height: 80px;
-  color: #000;
+const buttonStyle = css({
+  width: '286px',
+  border: 'none',
+  position: 'relative',
+  height: '80px',
+  color: '#000',
+  textAlign: 'center',
+  fontSize: '33px',
+  fontWeight: 400,
+  lineHeight: '140%' /* 46.209px */,
+  letterSpacing: '-0.413px',
 
-  text-align: center;
-  font-size: 33px;
-  font-weight: 400;
-  line-height: 140%; /* 46.209px */
-  letter-spacing: -0.413px;
-  .bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-  }
+  '& .bg': {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 1,
+  },
 
-  span {
-    z-index: 2;
-    position: relative;
-  }
+  '& span': {
+    zIndex: 2,
+    position: 'relative',
+  },
 
-  &:disabled {
+  '&:disabled': {
     // 밝기 어둡게
-    filter: brightness(0.7);
-    cursor: not-allowed;
-  }
-`;
+    filter: 'brightness(0.7)',
+    cursor: 'not-allowed',
+  },
+});
 
 const BlackOutline = () => (
   <div className="bg">

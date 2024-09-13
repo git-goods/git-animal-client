@@ -29,14 +29,16 @@ function NoticeToast() {
 
   const getRenderNoticeList = () => {
     const viewStorageData = window.localStorage.getItem('viewNotice');
+    console.log('viewStorageData: ', viewStorageData);
 
     if (!viewStorageData) {
       return NOTICE_LIST;
     }
 
     const viewList = JSON.parse(viewStorageData);
+    console.log('viewList: ', viewList);
 
-    return NOTICE_LIST.filter((notice) => !viewList.includes(generationNoticeKey(notice.key) && notice.visible));
+    return NOTICE_LIST.filter((notice) => !viewList.includes(generationNoticeKey(notice.key)) && notice.visible);
   };
 
   const renderToast = (notice: (typeof NOTICE_LIST)[number]) => {
@@ -47,6 +49,7 @@ function NoticeToast() {
       id: toastId,
       duration: Infinity,
       className: 'notice-toast',
+      position: 'top-right',
       onDismiss: () => {
         setViewNoticeItem(toastId);
         sendLog({ noticeKey: toastId, type: 'notice' }, 'notice toast dismiss');
@@ -68,6 +71,7 @@ function NoticeToast() {
 
   useEffectOnce(() => {
     const renderList = getRenderNoticeList();
+    console.log('renderList: ', renderList);
     renderList.forEach((notice) => renderToast(notice));
   });
 

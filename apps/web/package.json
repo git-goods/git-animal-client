@@ -31,12 +31,13 @@
     "google-spreadsheet": "^4.1.2",
     "jotai": "^2.8.0",
     "lottie-react": "^2.4.0",
+    "lucide-react": "^0.408.0",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
+    "next-intl": "^3.19.0",
     "react": "*",
     "react-dom": "*",
     "sonner": "^1.5.0",
-    "styled-components": "^6.1.8",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
@@ -57,6 +58,7 @@
     "@tanstack/react-query-devtools": "^5.32.0",
     "@types/google-spreadsheet": "^4.0.0",
     "@types/gtag.js": "^0.0.19",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
