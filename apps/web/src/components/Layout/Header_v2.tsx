@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { Button } from '@gitanimals/ui-panda';
@@ -15,7 +15,10 @@ import LanguageSelector from './LanguageSelector';
 import LoginBtn from './LoginBtn';
 
 async function Header() {
-  const t = useTranslations('Layout');
+  // const locale = await getLocale();
+  const t = await getTranslations('Layout');
+
+  // const t = useTranslations('Layout');
   const session = await getServerAuth();
 
   const isLogin = Boolean(session);

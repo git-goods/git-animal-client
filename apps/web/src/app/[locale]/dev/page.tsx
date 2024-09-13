@@ -1,6 +1,9 @@
 import { css } from '_panda/css';
 import { Box } from '_panda/jsx';
 
+import Header from '@/components/Layout/Header_v2';
+
+// import Header from '@/components/Layout/Header2';
 import DevClient from './Client';
 
 async function DevPage() {
@@ -8,6 +11,7 @@ async function DevPage() {
 
   return (
     <Box p={32}>
+      <Header />
       <h1>server</h1>
 
       {/* <div>

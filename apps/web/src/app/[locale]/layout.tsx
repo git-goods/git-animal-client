@@ -13,6 +13,7 @@ export default async function LocaleLayout({
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
+  console.log('messages: ', messages);
 
   return (
     <html lang={locale}>

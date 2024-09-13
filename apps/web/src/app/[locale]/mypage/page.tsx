@@ -1,24 +1,24 @@
-import React, { Suspense } from 'react';
-import dynamic from 'next/dynamic';
+// import React from 'react';
+// import dynamic from 'next/dynamic';
 import { css } from '_panda/css';
 
-import Header from '@/components/Layout/Header2';
+import Header from '@/components/Layout/Header_v2';
+// import Header from '@/components/Layout/Header2';
 import Layout from '@/components/Layout/Layout';
 
-import RightSection from './RightSection';
-
-const LazyProfileSection = dynamic(() => import('./ProfileSection'), { ssr: false });
+// const LazyProfileSection = dynamic(() => import('./ProfileSection'), { ssr: false });
 
 function Mypage() {
   return (
     <Layout>
       <Header />
-      <main className={mainStyle}>
+      {/* <Header /> */}
+      {/* <main className={mainStyle}>
         <Suspense fallback={<section></section>}>
           <LazyProfileSection />
         </Suspense>
         <RightSection />
-      </main>
+      </main> */}
     </Layout>
   );
 }
