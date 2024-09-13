@@ -1,7 +1,9 @@
-import React, { Suspense } from 'react';
+// import React from 'react';
+import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { css } from '_panda/css';
 
+// import Header from '@/components/Layout/Header_v2';
 import Header from '@/components/Layout/Header2';
 import Layout from '@/components/Layout/Layout';
 
@@ -13,6 +15,7 @@ function Mypage() {
   return (
     <Layout>
       <Header />
+      {/* <Header /> */}
       <main className={mainStyle}>
         <Suspense fallback={<section></section>}>
           <LazyProfileSection />

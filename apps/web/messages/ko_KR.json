@@ -1,9 +1,15 @@
 {
+  "Layout": {
+    "mypage": "MyPage",
+    "auction": "Auction",
+    "login": "Login",
+    "logout": "Logout"
+  },
   "HomePage": {
-    "title": "Hello 하이하이!",
+    "title": "Hello world!",
     "about": "Go to the about page"
   },
   "Landing": {
-    "title": "Have your pet in GITHUB! 한글"
+    "title": "Have your pet in GITHUB! "
   }
 }

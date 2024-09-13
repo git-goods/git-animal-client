@@ -1,4 +1,10 @@
 {
+  "Layout": {
+    "mypage": "MyPage",
+    "auction": "Auction",
+    "login": "Login",
+    "logout": "Logout"
+  },
   "HomePage": {
     "title": "Hello world!",
     "about": "Go to the about page"

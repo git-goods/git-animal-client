@@ -1,26 +1,27 @@
 /* eslint-disable @next/next/no-img-element */
 
 import Image from 'next/image';
-import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
 
 import { getServerAuth } from '@/auth';
 import { GITHUB_OAUTH_REQUEST_URL } from '@/constants/oauth';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
+import { Link } from '@/i18n/routing';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
 /**
  * @deprecated
  */
 async function Header() {
+  const t = await getTranslations('Layout');
   const session = await getServerAuth();
 
   const isLogin = Boolean(session);
   const username = session?.user.name ?? '';
 
   const isDevAccessPossible = checkIdDevAccessPossible(username);
-
   return (
     <header className={headerStyle}>
       <div>
@@ -31,19 +32,22 @@ async function Header() {
       <div>
         <nav>
           <ul>
+            {/* <li>
+              <LanguageSelector />
+            </li> */}
             {isLogin && (
               <>
                 <li>
-                  <Link href="/mypage">MYPAGE</Link>
+                  <Link href="/mypage">{t('mypage')}</Link>
                 </li>
                 <li>
-                  <Link href="/shop">SHOP</Link>
+                  <Link href="/shop">{t('auction')}</Link>
                 </li>
               </>
             )}
             {!isLogin && (
               <li>
-                <a href={GITHUB_OAUTH_REQUEST_URL}>Login</a>
+                <a href={GITHUB_OAUTH_REQUEST_URL}>{t('login')}</a>
               </li>
             )}
             <li>
