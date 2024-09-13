@@ -19,7 +19,6 @@ import LanguageSelector from './LanguageSelector';
 async function Header() {
   const t = await getTranslations('Layout');
   const session = await getServerAuth();
-  // const session = useClientSession();
 
   const isLogin = Boolean(session);
   const username = session?.user.name ?? '';

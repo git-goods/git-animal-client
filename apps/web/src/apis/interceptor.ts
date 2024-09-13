@@ -25,17 +25,6 @@ const interceptorResponseFulfilled = (res: AxiosResponse) => {
 
 // Response interceptor
 const interceptorResponseRejected = async (error: AxiosError<ApiErrorScheme>) => {
-  // console.log('error: ', error.response?.status);
-  // if (error.response?.status === 401) {
-  //   if (typeof window !== 'undefined') {
-  //     signOut();
-  //   } else {
-  //     axios.get('/api/auth/signOut');
-  //   }
-  // }
-
-  // 403 처리
-
   return Promise.reject(error);
 };
 
