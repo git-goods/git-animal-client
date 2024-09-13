@@ -1,5 +1,5 @@
 import { getSession, signOut } from 'next-auth/react';
-import type { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import axios from 'axios';
 
 import { getServerAuth } from '@/auth';
@@ -49,4 +49,10 @@ export const interceptorResponseRejected = async (error: AxiosError<ApiErrorSche
   // TODO: 403 처리
 
   return Promise.reject(error);
+};
+
+export const setInterceptors = (instance: AxiosInstance) => {
+  instance.interceptors.request.use(interceptorRequestFulfilled);
+  instance.interceptors.response.use(interceptorResponseFulfilled, interceptorResponseRejected);
+  return instance;
 };
