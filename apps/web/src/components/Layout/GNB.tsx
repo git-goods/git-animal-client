@@ -13,7 +13,7 @@ import LogoutButton from '../LogoutButton';
 
 import LoginBtn from './LoginBtn';
 
-async function Header() {
+async function GNB() {
   const t = await getTranslations('Layout');
   const session = await getServerAuth();
 
@@ -73,7 +73,7 @@ async function Header() {
     </>
   );
 }
-export default Header;
+export default GNB;
 
 const headerStyle = flex({
   justifyContent: 'space-between',
