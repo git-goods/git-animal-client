@@ -1,14 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
+import { Menu } from 'lucide-react';
 
 import { getServerAuth } from '@/auth';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
-import { LoginOutBtn } from './LoginBtn';
+import { LoginOutBtn } from './LoginOutBtn';
 
 interface NavMenu {
   label: string;
@@ -26,26 +27,29 @@ const LOGIN_NAV_MENU_LIST: NavMenu[] = [
     href: '/shop',
   },
   {
-    label: 'GITHUB',
+    label: 'github',
     href: GIT_ANIMALS_MAIN_URL,
     isExternal: true,
-  },
-  {
-    label: 'DEV',
-    href: '/dev',
   },
 ] as const;
 
 const NON_LOGIN_NAV_MENU_LIST: NavMenu[] = [
   {
-    label: 'GITHUB',
+    label: 'github',
     href: GIT_ANIMALS_MAIN_URL,
     isExternal: true,
   },
 ] as const;
 
 async function GNB() {
-  return <GNBDesktop />;
+  // return <GNBMobile />;
+  // return <GNBDesktop />;
+  return (
+    <>
+      <GNBMobile />
+      <GNBDesktop />
+    </>
+  );
 }
 
 export default GNB;
@@ -75,7 +79,7 @@ async function GNBDesktop() {
 
   return (
     <>
-      <header className={headerStyle}>
+      <header className={cx(headerBaseStyle, headerStyle)}>
         <Link href="/">
           <Image src="/main/gnb_right_logo.svg" width={154} height={42} alt="logo" />
         </Link>
@@ -96,6 +100,61 @@ async function GNBDesktop() {
   );
 }
 
+async function GNBMobile() {
+  return (
+    <>
+      <header className={cx(headerBaseStyle, mobileHeaderStyle)}>
+        <div className={mobileHeaderContentStyle}>
+          <Menu />
+
+          {/* <div>Sing in</div> */}
+          <div className={mobileLogoStyle}>
+            <Image src="/main/gnb_right_logo.svg" alt="gitanimals-logo" width={80} height={22} />
+          </div>
+        </div>
+      </header>
+    </>
+  );
+}
+
+const headerBaseStyle = flex({
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  zIndex: 100,
+  position: 'fixed',
+  padding: '0 20px',
+  top: 0,
+  height: 60,
+  width: '100%',
+  backgroundColor: 'white',
+});
+
+const mobileHeaderStyle = css({
+  width: '100vw',
+  borderBottom: '1px solid',
+  borderColor: 'gray.gray__300',
+
+  display: 'none',
+  _mobile: {
+    display: 'flex',
+  },
+});
+
+const mobileHeaderContentStyle = css({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  position: 'relative',
+  width: 'calc(100vw - 40px)',
+});
+
+const mobileLogoStyle = css({
+  width: '80px',
+  position: 'absolute',
+  left: '50%',
+  transform: 'translateX(-50%)',
+});
+
 async function DevMenu() {
   const session = await getServerAuth();
 
@@ -111,16 +170,12 @@ async function DevMenu() {
 }
 
 const headerStyle = flex({
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  padding: '0 20px',
-  height: 60,
   backgroundColor: 'white',
   boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.1)',
-  zIndex: 100,
-  position: 'fixed',
-  top: 0,
   width: '100%',
+  _mobile: {
+    display: 'none',
+  },
 });
 
 const headerBlockStyle = css({
