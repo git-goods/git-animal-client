@@ -1,5 +1,5 @@
 import { defineSemanticTokens } from '@pandacss/dev';
-import { BLACK, WHITE, BRAND } from '@gitanimals/ui-token';
+import { BLACK, WHITE, BRAND, GRAY } from '@gitanimals/ui-token';
 import { objectKeys } from '@gitanimals/util-typescript';
 
 export const semanticTokens = defineSemanticTokens({
@@ -22,6 +22,13 @@ export const semanticTokens = defineSemanticTokens({
       DEFAULT: { value: WHITE.white },
       ...objectKeys(WHITE).reduce<Record<string, { value: string }>>((acc, key) => {
         acc[key] = { value: WHITE[key] };
+        return acc;
+      }, {}),
+    },
+    gray: {
+      DEFAULT: { value: GRAY.gray_000 },
+      ...objectKeys(GRAY).reduce<Record<string, { value: string }>>((acc, key) => {
+        acc[key] = { value: GRAY[key] };
         return acc;
       }, {}),
     },
