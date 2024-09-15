@@ -1,11 +1,15 @@
-import React from 'react';
+'use client';
 
-import PetGotcha from './PetGotcha';
+import React, { useState } from 'react';
+
+import CardFlipGame from './PetGotcha/OnePet';
 
 function ShopPage() {
+  const [isOpen, setIsOpen] = useState(true);
   return (
     <div>
-      <PetGotcha />
+      {/* <PetGotcha /> */}
+      {isOpen && <CardFlipGame onClose={() => setIsOpen(false)} />}
     </div>
   );
 }

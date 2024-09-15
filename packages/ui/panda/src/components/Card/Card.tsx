@@ -66,6 +66,7 @@ const getTierToCardInfo = (tier: string) => {
 export const container = css({
   position: 'relative',
   height: '100%',
+  width: '100%',
 });
 
 export const bgImage = css({
