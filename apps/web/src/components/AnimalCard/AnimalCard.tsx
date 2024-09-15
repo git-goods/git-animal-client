@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card } from '@gitanimals/ui-panda';
 
 import { getPersonaImage } from '@/utils/image';

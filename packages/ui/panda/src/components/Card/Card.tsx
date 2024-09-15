@@ -1,6 +1,7 @@
 import { cx, css } from '_panda/css';
 import { flex } from '_panda/patterns';
 
+// 아예 외부 경로로 옮겨도 괜찮을것 같다.
 const ANIMAL_CARD_IMAGE_BASE_URL = '/animal-card/';
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
   personaImage: string;
 }
 
-function Card(props: Props) {
+export function Card(props: Props) {
   const { bg, thumbnail } = getTierToCardInfo(props.tier);
 
   return (
@@ -61,7 +62,6 @@ const getTierToCardInfo = (tier: string) => {
       };
   }
 };
-export default Card;
 
 export const container = css({
   position: 'relative',
