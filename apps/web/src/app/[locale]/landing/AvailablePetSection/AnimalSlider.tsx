@@ -17,7 +17,9 @@ function shuffle(array: Animal[]): Animal[] {
 }
 
 function AnimalSlider() {
-  const { data } = useGetAllPersona();
+  const { data } = useGetAllPersona({
+    staleTime: 1000 * 60 * 60 * 24,
+  });
 
   const ANIMAL_LIST = shuffle(data.personas);
 
