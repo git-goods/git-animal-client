@@ -3,14 +3,20 @@ import Image from 'next/image';
 import { css } from '_panda/css';
 import { Button } from '@gitanimals/ui-panda';
 
-function PetGotcha() {
+interface Props {
+  onOpenOnePetGame: () => void;
+}
+
+function PetGotcha({ onOpenOnePetGame }: Props) {
   return (
     <div className={containerStyle}>
       <Image src="/shop/pet-gotcha-bg.webp" alt="pet-gotcha-bg" width={1920} height={1226} className={bgStyle} />
       <h1 className={headingStyle}>Pet Gotcha</h1>
       <p className={descStyle}>Draw a S+ Grade pet for 1,000 points</p>
       <div className={buttonContainerStyle}>
-        <Button size="l">1 Pet / 1,000 P</Button>
+        <Button size="l" onClick={onOpenOnePetGame}>
+          1 Pet / 1,000 P
+        </Button>
         <Button size="l">10 Pets / 10,000 P</Button>
         <Button size="l" variant="secondary">
           Ratio Chart

@@ -3,13 +3,14 @@
 import React, { useState } from 'react';
 
 import CardFlipGame from './PetGotcha/OnePet';
+import { PetGotcha } from './PetGotcha';
 
 function ShopPage() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOnePetGameOpen, setIsOnePetGameOpen] = useState(false);
   return (
     <div>
-      {/* <PetGotcha /> */}
-      {isOpen && <CardFlipGame onClose={() => setIsOpen(false)} />}
+      <PetGotcha onOpenOnePetGame={() => setIsOnePetGameOpen(true)} />
+      {isOnePetGameOpen && <CardFlipGame onClose={() => setIsOnePetGameOpen(false)} />}
     </div>
   );
 }
