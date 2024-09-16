@@ -1,9 +1,10 @@
+'use client';
+
 import { useState } from 'react';
 import type { Product } from '@gitanimals/api';
 
 import { useGetMyProducts } from '@/apis/auctions/useGetMyProduct';
 import Pagination from '@/components/Pagination';
-import ShopTableBackground from '@/components/ProductTable/ShopTableBackground';
 import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import type { ProductType } from '@/schema/action';
@@ -37,7 +38,7 @@ function SellListSection() {
 
   return (
     <div>
-      <ShopTableBackground>
+      <table>
         {data?.products.map((product) => {
           return (
             <ShopTableRowView
@@ -59,7 +60,7 @@ function SellListSection() {
             setEditProductId(undefined);
           }}
         />
-      </ShopTableBackground>
+      </table>
       {data && data.pagination.totalPages > 1 && (
         <Pagination {...data.pagination} currentPage={currentPage} onSetPage={setCurrentPage} />
       )}

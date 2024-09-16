@@ -1,15 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { flex } from '_panda/patterns';
 
 import { useGetHistory } from '@/apis/auctions/useGetHistory';
 import Pagination from '@/components/Pagination';
-import ShopTableBackground from '@/components/ProductTable/ShopTableBackground';
 import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 
-import { OrderTypeSelect, PersonaType, SortDirectionSelect } from './SearchOption';
 import { useSearchOptions } from './useSearchOptions';
 
 const HISTORY_ACTION_OBJ = ACTION_BUTTON_OBJ['SELL_HISTORY'];
@@ -19,7 +16,7 @@ interface ProductTableProps {}
 function HistoryTable({}: ProductTableProps) {
   const [currentPage, setCurrentPage] = useState(0);
 
-  const { searchOptions, onSearchOptionChange } = useSearchOptions();
+  const { searchOptions } = useSearchOptions();
 
   const { data } = useGetHistory({
     pageNumber: currentPage,
@@ -39,19 +36,7 @@ function HistoryTable({}: ProductTableProps) {
 
   return (
     <div>
-      <div className={flex({ justifyContent: 'space-between', alignItems: 'center', mb: '8px' })}>
-        <div className={flex({ gap: '10px', alignItems: 'center' })}>
-          <OrderTypeSelect onSelect={(option) => onSearchOptionChange('orderType', option)} />
-          <SortDirectionSelect onSelect={(option) => onSearchOptionChange('sortDirection', option)} />
-        </div>
-
-        <PersonaType
-          onSelect={(option) => onSearchOptionChange('personaType', option)}
-          selected={searchOptions.personaType}
-        />
-      </div>
-
-      <ShopTableBackground>
+      <table>
         {data?.products.map((product) => {
           return (
             <ShopTableRowView
@@ -65,7 +50,7 @@ function HistoryTable({}: ProductTableProps) {
             />
           );
         })}
-      </ShopTableBackground>
+      </table>
       {data && data.pagination.totalPages > 1 && (
         <Pagination {...data.pagination} currentPage={currentPage} onSetPage={setCurrentPage} />
       )}
