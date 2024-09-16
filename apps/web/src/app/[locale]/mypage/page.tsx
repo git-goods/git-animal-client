@@ -3,8 +3,7 @@ import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { css } from '_panda/css';
 
-// import Header from '@/components/Layout/Header_v2';
-import Header from '@/components/Layout/Header2';
+import Header from '@/components/Layout/Header';
 import Layout from '@/components/Layout/Layout';
 
 import RightSection from './RightSection';

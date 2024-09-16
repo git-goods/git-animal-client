@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { css } from '_panda/css';
 
 import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
-import Header from '@/components/Layout/Header2';
+import Header from '@/components/Layout/Header';
 import Layout from '@/components/Layout/Layout';
 import UserPoint from '@/components/UserPoint';
 
