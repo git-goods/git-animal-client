@@ -1,18 +1,20 @@
 import { cx, css } from '_panda/css';
 import { flex } from '_panda/patterns';
 
-// 아예 외부 경로로 옮겨도 괜찮을것 같다.
+// TODO : 아예 외부 경로로 옮겨도 괜찮을것 같다.
 const ANIMAL_CARD_IMAGE_BASE_URL = '/animal-card/';
 
+type CardTierType = 'EX' | 'S_PLUS' | 'A_PLUS' | 'B_MINUS';
+
 interface Props {
-  tier: 'EX' | 'S_PLUS' | 'A_PLUS' | 'B_MINUS';
+  tier: CardTierType;
   type: string;
   dropRate: string;
   personaImage: string;
 }
 
 export function Card(props: Props) {
-  const { bg, thumbnail } = getTierToCardInfo(props.tier);
+  const { bg, thumbnail } = CARD_INFO[props.tier];
 
   return (
     <div className={cx('animal-card-container', container)}>
@@ -22,45 +24,49 @@ export function Card(props: Props) {
       <div className={thumbnailImage}>
         <img src={ANIMAL_CARD_IMAGE_BASE_URL + thumbnail} alt={props.tier} width={233} height={233} />
       </div>
-      <picture className={thumbnailImage}>
+      <div className={thumbnailImage}>
         <img src={props.personaImage} alt={props.type} width={233} height={233} />
-      </picture>
+      </div>
       <div className={cx('animal-card-info', infoWrapper)}>
-        <p className={cx('animal-card-type', typeText)}>{getAnimalTypeLabel(props.type)}</p>
+        <p className={cx('animal-card-type', typeText)}>{snakeToTitleCase(props.type)}</p>
         <p className={cx('animal-card-rating', ratingText)}>{props.dropRate}</p>
       </div>
     </div>
   );
 }
 
-const getAnimalTypeLabel = (type: string) => {
-  const words = type.split('_');
-  return words.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+/**
+ * 스네이크 케이스 문자열을 타이틀 케이스로 변환합니다.
+ * @param str - 변환할 스네이크 케이스 문자열
+ * @returns 타이틀 케이스로 변환된 문자열
+ * @example
+ * snakeToTitleCase('SUMI_MA') => 'Sumi Ma'
+ */
+export const snakeToTitleCase = (str: string): string => {
+  return str
+    .toLowerCase()
+    .split('_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 };
 
-const getTierToCardInfo = (tier: string) => {
-  switch (tier) {
-    case 'EX':
-      return {
-        bg: 'card-bg-EX.webp',
-        thumbnail: 'card-thumbnail-EX.webp',
-      };
-    case 'S_PLUS':
-      return {
-        bg: 'card-bg-S_PLUS.webp',
-        thumbnail: 'card-thumbnail-S_PLUS.webp',
-      };
-    case 'A_PLUS':
-      return {
-        bg: 'card-bg-A_PLUS.webp',
-        thumbnail: 'card-thumbnail-A_PLUS.webp',
-      };
-    default:
-      return {
-        bg: 'card-bg-B_MINUS.webp',
-        thumbnail: 'card-thumbnail-B_MINUS.webp',
-      };
-  }
+const CARD_INFO: Record<CardTierType, { bg: string; thumbnail: string }> = {
+  EX: {
+    bg: 'card-bg-EX.webp',
+    thumbnail: 'card-thumbnail-EX.webp',
+  },
+  S_PLUS: {
+    bg: 'card-bg-S_PLUS.webp',
+    thumbnail: 'card-thumbnail-S_PLUS.webp',
+  },
+  A_PLUS: {
+    bg: 'card-bg-A_PLUS.webp',
+    thumbnail: 'card-thumbnail-A_PLUS.webp',
+  },
+  B_MINUS: {
+    bg: 'card-bg-B_MINUS.webp',
+    thumbnail: 'card-thumbnail-B_MINUS.webp',
+  },
 };
 
 export const container = css({
