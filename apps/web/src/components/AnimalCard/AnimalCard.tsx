@@ -2,11 +2,10 @@ import React from 'react';
 import Image from 'next/image';
 import { cx } from '_panda/css';
 
+import { getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
-import type { AnimalTierType } from './AnimalCard.constant';
-import { ANIMAL_CARD_IMAGE_BASE_URL, AnimalTier } from './AnimalCard.constant';
-import { ANIMAL_TIER_INFO } from './AnimalCard.constant';
+import { ANIMAL_CARD_IMAGE_BASE_URL } from './AnimalCard.constant';
 import * as styles from './AnimalCard.style';
 
 interface AnimalCardProps {
@@ -37,19 +36,6 @@ function AnimalCard(props: AnimalCardProps) {
 }
 
 export default AnimalCard;
-
-const getAnimalTierInfo = (dropRateNumber: number): AnimalTierType => {
-  if (dropRateNumber <= ANIMAL_TIER_INFO.EX.max) {
-    return AnimalTier.EX;
-  }
-  if (dropRateNumber <= ANIMAL_TIER_INFO.S_PLUS.max) {
-    return AnimalTier.S_PLUS;
-  }
-  if (dropRateNumber <= ANIMAL_TIER_INFO.A_PLUS.max) {
-    return AnimalTier.A_PLUS;
-  }
-  return AnimalTier.B_MINUS;
-};
 
 const getAnimalTypeLabel = (type: string) => {
   const words = type.split('_');

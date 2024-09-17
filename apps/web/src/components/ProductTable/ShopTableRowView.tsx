@@ -5,6 +5,8 @@ import { css } from '_panda/css';
 import type { Product } from '@gitanimals/api/src/auction';
 import { Button } from '@gitanimals/ui-panda';
 
+import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
+import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
 interface Props extends Pick<Product, 'id' | 'persona' | 'price'> {
@@ -14,13 +16,21 @@ interface Props extends Pick<Product, 'id' | 'persona' | 'price'> {
 }
 
 function ShopTableRowView({ onAction, actionLabel, actionColor, ...item }: Props) {
+  const {
+    data: { personas },
+  } = useGetAllPersona();
+
+  const currentPersona = personas.find((persona) => persona.type === item.persona.personaType);
+
+  if (!currentPersona) throw new Error('unexpected persona');
+
   return (
     <div className={rowStyle} key={item.id}>
       <div>
         <Image src={getPersonaImage(item.persona.personaType)} width={60} height={67} alt="animal1" />
       </div>
       <span>{item.persona.personaType}</span>
-      <span>B-</span>
+      <span>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</span>
       <span>{item.persona.personaLevel}</span>
       <span>{item.price}</span>
       <div>

@@ -9,7 +9,9 @@ import { toast } from 'sonner';
 import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
 import { rowStyle } from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
+import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
 import type { PetInfoSchema } from '@/schema/user';
+import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
 import { tableCss, theadCss } from '../table.styles';
@@ -25,6 +27,11 @@ function SellInputRow({ item, initPersona }: Props) {
   const { price, resetPrice, onChangePriceInput } = usePrice();
 
   const queryClient = useQueryClient();
+
+  const {
+    data: { personas },
+  } = useGetAllPersona();
+  const currentPersona = personas.find((persona) => persona.type === item?.type);
 
   const { mutate } = useRegisterProduct({
     onSuccess: () => {
@@ -67,13 +74,13 @@ function SellInputRow({ item, initPersona }: Props) {
       </div>
 
       <div className={cx(rowStyle, 'row')}>
-        {item && (
+        {item && currentPersona && (
           <>
             <div>
               <img src={getPersonaImage(item.type)} alt={item.type} width={60} height={67} />
             </div>
             <div>{item.type}</div>
-            <div>B-</div>
+            <div>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</div>
             <div>{item.level}</div>
             <div>
               <input
