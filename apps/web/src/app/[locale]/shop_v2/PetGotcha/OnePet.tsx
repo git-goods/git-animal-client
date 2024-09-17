@@ -8,10 +8,14 @@ interface Props {
 }
 
 function OnePet({ onClose }: Props) {
+  const onAction = () => {
+    console.log('onAction');
+  };
+
   return (
     <div className={containerStyle}>
       <h2 className={headingStyle}>Choose one card you want!</h2>
-      <CardFlipGame onClose={onClose} />
+      <CardFlipGame onClose={onClose} onAction={onAction} />
     </div>
   );
 }

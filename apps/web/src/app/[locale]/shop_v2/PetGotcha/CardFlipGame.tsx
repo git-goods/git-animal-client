@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { css, cx } from '_panda/css';
-import { Button, Card, CardBack } from '@gitanimals/ui-panda';
+import { Card, CardBack } from '@gitanimals/ui-panda';
 
 import { getPersonaImage } from '@/utils/image';
 
@@ -12,9 +12,10 @@ const dropRate = '100%';
 
 interface CardFlipGameProps {
   onClose: () => void;
+  onAction: () => void;
 }
 
-const CardFlipGame = ({ onClose }: CardFlipGameProps) => {
+const CardFlipGame = ({ onClose, onAction }: CardFlipGameProps) => {
   const [cards, setCards] = useState(Array(5).fill(false));
   const [showButton, setShowButton] = useState(false);
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
@@ -26,11 +27,8 @@ const CardFlipGame = ({ onClose }: CardFlipGameProps) => {
       setCards(newCards);
       setSelectedCard(index);
       setShowButton(true);
+      onAction();
     }
-  };
-
-  const handleFlipAllCards = () => {
-    setCards(Array(5).fill(true));
   };
 
   return (
@@ -46,7 +44,7 @@ const CardFlipGame = ({ onClose }: CardFlipGameProps) => {
                 }),
               )}
             >
-              <div className={cx(cardFaceStyle, cardFrontStyle)}>
+              <div className={cx(cardFaceStyle, !showButton && cardScaleStyle)}>
                 <CardBack tier="S_PLUS" />
               </div>
               <div className={cx(cardFaceStyle, cardBackStyle)}>
@@ -56,7 +54,7 @@ const CardFlipGame = ({ onClose }: CardFlipGameProps) => {
           </button>
         ))}
       </div>
-      {showButton && <Button onClick={onClose}>닫기</Button>}
+      {/* {showButton && <Button onClick={onClose}>닫기</Button>} */}
       {/* {showButton && <Button onClick={handleFlipAllCards}>모든 카드 뒤집기</Button>} */}
     </div>
   );
@@ -100,10 +98,14 @@ const cardFaceStyle = css({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  //   borderRadius: '8px',
 });
 
-const cardFrontStyle = css({});
+const cardScaleStyle = css({
+  transition: 'transform 0.3s',
+  _hover: {
+    transform: 'scale(1.05)',
+  },
+});
 
 const cardBackStyle = css({
   transform: 'rotateY(180deg)',
