@@ -36,9 +36,7 @@ export const buttonStyle = cva({
   },
   variants: {
     variant: {
-      primary: {
-        color: 'white.white',
-      },
+      primary: {},
       secondary: {
         backgroundColor: 'white.white',
         color: 'black.black',

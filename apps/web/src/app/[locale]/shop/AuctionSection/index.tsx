@@ -7,6 +7,7 @@ import SellListSection from '../SellListSection';
 import { SellSection } from '../SellSection';
 import type { TabType } from '../type';
 
+import { Background } from './Background';
 import { DefaultTabRight } from './DefaultTabRight';
 import Tab from './Tab';
 
@@ -37,11 +38,14 @@ export function AuctionSection({ selectedTab }: Props) {
         <Tab selectedTab={selectedTab} rightElement={TAB_RIGHT_ELEMENT[selectedTab]} />
         {SHOP_INNER_MAP[selectedTab]}
       </div>
+
+      <Background />
     </section>
   );
 }
 
 const sectionCss = css({
+  position: 'relative',
   display: 'flex',
   flexDir: 'column',
   alignItems: 'center',
@@ -64,4 +68,5 @@ const divCss = css({
   padding: '40px',
   maxW: '1120px',
   width: '100%',
+  zIndex: 1,
 });
