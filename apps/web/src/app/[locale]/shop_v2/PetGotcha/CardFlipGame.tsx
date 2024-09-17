@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { css, cx } from '_panda/css';
 import { Card, CardBack } from '@gitanimals/ui-panda';
 
+import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
 import { getPersonaImage } from '@/utils/image';
 
 const tier = 'S_PLUS';
@@ -13,23 +14,36 @@ const dropRate = '100%';
 interface CardFlipGameProps {
   onClose: () => void;
   onAction: () => void;
+  getPersona: {
+    type: string;
+    dropRate: string;
+    tier: AnimalTierType;
+  } | null;
 }
 
-const CardFlipGame = ({ onClose, onAction }: CardFlipGameProps) => {
+const CardFlipGame = ({ onClose, onAction, getPersona }: CardFlipGameProps) => {
   const [cards, setCards] = useState(Array(5).fill(false));
   const [showButton, setShowButton] = useState(false);
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
 
   const handleCardClick = (index: number) => {
     if (selectedCard === null) {
-      const newCards = [...cards];
-      newCards[index] = true;
-      setCards(newCards);
+      // const newCards = [...cards];
+      // // newCards[index] = true;
+      // setCards(newCards);
       setSelectedCard(index);
       setShowButton(true);
       onAction();
     }
   };
+
+  useEffect(() => {
+    if (getPersona && selectedCard) {
+      const newCards = [...cards];
+      newCards[selectedCard] = true;
+      setCards(newCards);
+    }
+  }, [getPersona]);
 
   return (
     <div className={containerStyle}>
@@ -48,7 +62,14 @@ const CardFlipGame = ({ onClose, onAction }: CardFlipGameProps) => {
                 <CardBack tier="S_PLUS" />
               </div>
               <div className={cx(cardFaceStyle, cardBackStyle)}>
-                <Card tier={tier} type={type} dropRate={dropRate} personaImage={getPersonaImage(type)} />
+                {getPersona && (
+                  <Card
+                    tier={getPersona?.tier}
+                    type={getPersona?.type}
+                    dropRate={getPersona?.dropRate}
+                    personaImage={getPersonaImage(getPersona?.type)}
+                  />
+                )}
               </div>
             </div>
           </button>
