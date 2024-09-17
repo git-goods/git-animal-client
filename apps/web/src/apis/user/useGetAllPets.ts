@@ -1,5 +1,5 @@
 import type { UseQueryOptions } from '@tanstack/react-query';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 import type { PetInfoSchema } from '@/schema/user';
 import { getUniqueFilterList } from '@/utils/list';
@@ -22,6 +22,13 @@ export const useGetAllPets = (username: string, options?: Omit<UseQueryOptions<U
     queryFn: () => getAllPets(username),
     ...options,
   });
+
+export const useGetSuspenseAllPets = (username: string) => {
+  return useSuspenseQuery({
+    queryKey: getAllPetsQueryKey(username),
+    queryFn: () => getAllPets(username),
+  });
+};
 
 export const useGetUniqueTypeAllPets = (
   username: string,

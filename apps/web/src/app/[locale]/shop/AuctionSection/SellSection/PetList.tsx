@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 import { css, cx } from '_panda/css';
 
 import { useGetAllPets } from '@/apis/user/useGetAllPets';
@@ -7,7 +7,7 @@ import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 interface Props {
-  selectedPersona?: PetInfoSchema;
+  selectedPersona?: PetInfoSchema | null;
   onProductClick: (product: PetInfoSchema) => void;
 }
 
@@ -27,13 +27,7 @@ function PetList(props: Props) {
             key={persona.id}
             onClick={() => props.onProductClick(persona)}
           >
-            <img
-              src={getPersonaImage(persona.type)}
-              width={82}
-              height={82}
-              alt={persona.type}
-              // className={css({ noSelect: 'true' })}
-            />
+            <Image src={getPersonaImage(persona.type)} width={82} height={82} alt={persona.type} />
           </button>
         );
       })}
@@ -46,23 +40,27 @@ export default PetList;
 const listContainerStyle = css({
   display: 'flex',
   flexWrap: 'wrap',
-  maxHeight: '534px',
-  overflowY: 'auto',
+  maxHeight: '600px',
+  overflowY: 'scroll',
+  gap: 4,
 });
 
 const petItemContainerStyle = css({
-  backgroundImage: 'url(/shop/pet-box-bg.svg)',
+  cursor: 'pointer',
   width: '80px',
   height: '80px',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundPosition: 'center',
+  borderRadius: 12,
+  backgroundColor: 'white_10',
+  border: '2px solid transparent',
 
   '&.isSelected': {
-    filter: 'brightness(0.7)',
+    border: '2px solid',
+    borderColor: 'white_50',
+    backgroundColor: 'white_25',
   },
 
-  cursor: 'pointer',
-  transition: 'filter 0.3s',
+  transition: 'border 0.3s, background-color 0.3s',
 });

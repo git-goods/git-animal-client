@@ -1,14 +1,14 @@
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { css } from '_panda/css';
 
 import SellListSection from '../SellListSection';
-import { SellSection } from '../SellSection';
 import type { TabType } from '../type';
 
 import { Background } from './Background';
 import { DefaultTabRight } from './DefaultTabRight';
 import HistoryTable from './HistoryTable';
 import ProductTable from './ProductTable';
+import { SellSection } from './SellSection';
 import Tab from './Tab';
 
 interface Props {
@@ -51,7 +51,7 @@ const sectionCss = css({
   alignItems: 'center',
   padding: '120px 20px 240px',
   width: '100%',
-  minH: '100dvh',
+  minH: '1400px',
   bg: 'linear-gradient(180deg, #000 0%, #004875 38.51%, #005B93 52.46%, #006FB3 73.8%, #0187DB 100%)',
 });
 

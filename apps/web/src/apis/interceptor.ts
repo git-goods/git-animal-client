@@ -19,7 +19,6 @@ export const interceptorRequestFulfilled = async (config: InternalAxiosRequestCo
   if (!config.headers) return config;
 
   if (accessToken) {
-    console.log('accessToken: ', accessToken);
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
 
@@ -37,7 +36,6 @@ export const interceptorResponseFulfilled = (res: AxiosResponse) => {
 
 // Response interceptor
 export const interceptorResponseRejected = async (error: AxiosError<ApiErrorScheme>) => {
-  // console.log('error: ', error.response?.status);
   if (error.response?.status === 401) {
     if (typeof window !== 'undefined') {
       signOut();

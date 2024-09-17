@@ -2,19 +2,26 @@
 import type { ChangeEventHandler } from 'react';
 import React, { useState } from 'react';
 import { css, cx } from '_panda/css';
+import { Button } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
-import SmallButton from '@/components/Button/SmallButton';
 import { rowStyle } from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import type { PetInfoSchema } from '@/schema/user';
 import { getPersonaImage } from '@/utils/image';
 
+import { tableCss, theadCss } from '../table.styles';
+
 const MAX_PRICE = 100_000_000;
 
-function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona: () => void }) {
+interface Props {
+  item: PetInfoSchema | null;
+  initPersona: () => void;
+}
+
+function SellInputRow({ item, initPersona }: Props) {
   const { price, resetPrice, onChangePriceInput } = usePrice();
 
   const queryClient = useQueryClient();
@@ -27,6 +34,7 @@ function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona
       queryClient.invalidateQueries({
         queryKey: ['my', 'products'], //getMyProductsQueryKey(),
       });
+
       initPersona();
       resetPrice();
 
@@ -47,30 +55,40 @@ function SellInputRow({ item, initPersona }: { item?: PetInfoSchema; initPersona
     }
   };
 
-  if (!item) return <div className={containerStyle} />;
-
   return (
-    <div className={containerStyle}>
-      <div className={cx(rowStyle, 'row')} key={item.id}>
-        <div>
-          <img src={getPersonaImage(item.type)} alt={item.type} width={60} height={67} />
-        </div>
-        <div>{item.type}</div>
-        <div>{item.level}</div>
-        <div>
-          <input
-            className={inputStyle}
-            inputMode="numeric"
-            placeholder="Type price..."
-            value={price}
-            onChange={onChangePriceInput}
-          />
-        </div>
-        <div>
-          <SmallButton color={ACTION_BUTTON_OBJ.SELL.color} onClick={onSellClick}>
-            {ACTION_BUTTON_OBJ.SELL.label}
-          </SmallButton>
-        </div>
+    <div className={tableCss}>
+      <div className={theadCss}>
+        <span>Pet</span>
+        <span>Name</span>
+        <span>Grade</span>
+        <span>Level</span>
+        <span>Price</span>
+        <span></span>
+      </div>
+
+      <div className={cx(rowStyle, 'row')}>
+        {item && (
+          <>
+            <div>
+              <img src={getPersonaImage(item.type)} alt={item.type} width={60} height={67} />
+            </div>
+            <div>{item.type}</div>
+            <div>B-</div>
+            <div>{item.level}</div>
+            <div>
+              <input
+                className={inputStyle}
+                inputMode="numeric"
+                placeholder="price you want"
+                value={price}
+                onChange={onChangePriceInput}
+              />
+            </div>
+            <Button variant="secondary" onClick={onSellClick}>
+              {ACTION_BUTTON_OBJ.SELL.label}
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );
@@ -80,11 +98,12 @@ export default SellInputRow;
 
 const containerStyle = css({
   height: '84px',
-  backgroundImage: 'url(/shop/table-bg-row.png)',
-  backgroundSize: 'cover',
+  marginBottom: 32,
 });
 
 const inputStyle = css({
+  textStyle: 'glyph20.regular',
+
   width: '100%',
   height: '100%',
   minHeight: '64px',
@@ -94,9 +113,8 @@ const inputStyle = css({
   outline: 'none',
 
   '&::placeholder': {
-    color: 'gray',
-    fontSize: '20px',
-    fontWeight: 700,
+    textStyle: 'glyph20.regular',
+    color: 'white.white_25',
   },
 
   '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
@@ -106,11 +124,9 @@ const inputStyle = css({
 });
 
 function usePrice() {
-  const INITIAL_VALUE = 0;
+  const [price, setPrice] = useState<number | undefined>();
 
-  const [price, setPrice] = useState(INITIAL_VALUE);
-
-  const resetPrice = () => setPrice(INITIAL_VALUE);
+  const resetPrice = () => setPrice(undefined);
 
   const onChangePriceInput: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.target;

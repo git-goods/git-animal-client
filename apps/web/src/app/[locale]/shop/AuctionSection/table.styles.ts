@@ -1,7 +1,6 @@
 import { css } from '_panda/css';
 
 export const tableCss = css({
-  borderCollapse: 'collapse',
   width: '100%',
   marginBottom: 32,
 });
