@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { css } from '_panda/css';
 import type { Product } from '@gitanimals/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -14,7 +13,9 @@ import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import { useLoading } from '@/store/loading';
 import { useClientUser } from '@/utils/clientAuth';
 
-import { useSearchOptions } from './useSearchOptions';
+import { useSearchOptions } from '../useSearchOptions';
+
+import { tableCss, tbodyCss, theadCss } from './table.styles';
 
 function ProductTable() {
   const { id: myId } = useClientUser();
@@ -43,49 +44,17 @@ function ProductTable() {
           <span></span>
         </div>
 
-        <tbody className={tbodyCss}>
+        <div className={tbodyCss}>
           {data?.products.map((product) => {
             return <ProductTableRow product={product} key={product.id} />;
           })}
-        </tbody>
+        </div>
       </div>
 
       {data && <Pagination {...data.pagination} currentPage={currentPage} onSetPage={setCurrentPage} />}
     </>
   );
 }
-
-const tableCss = css({
-  borderCollapse: 'collapse',
-  width: '100%',
-  marginBottom: 32,
-});
-
-const theadCss = css({
-  display: 'grid',
-  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 4.2fr 1.5fr',
-  gap: 16,
-  padding: '4px 32px',
-  borderRadius: '12px',
-  backgroundColor: 'white_50',
-  alignItems: 'center',
-
-  height: 46,
-  textStyle: 'glyph18.bold',
-  color: 'white_100',
-
-  '& > span:nth-child(1)': {
-    textAlign: 'center',
-  },
-
-  marginBottom: 4,
-});
-
-const tbodyCss = css({
-  display: 'flex',
-  flexDir: 'column',
-  gap: 4,
-});
 
 export default ProductTable;
 

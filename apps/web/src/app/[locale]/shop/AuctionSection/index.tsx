@@ -1,14 +1,14 @@
 import type { ReactNode } from 'react';
 import { css } from '_panda/css';
 
-import HistoryTable from '../HistoryTable';
-import ProductTable from '../ProductTable';
 import SellListSection from '../SellListSection';
 import { SellSection } from '../SellSection';
 import type { TabType } from '../type';
 
 import { Background } from './Background';
 import { DefaultTabRight } from './DefaultTabRight';
+import HistoryTable from './HistoryTable';
+import ProductTable from './ProductTable';
 import Tab from './Tab';
 
 interface Props {
