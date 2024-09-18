@@ -4,19 +4,19 @@ import { memo } from 'react';
 import Image from 'next/image';
 import { css } from '_panda/css';
 import type { Variants } from 'framer-motion';
-import { m } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 export const Background = memo(function Background() {
   return (
     <>
       <div className={floatingBackgroundDivCss}>
-        <m.div className={coinCss} variants={coinVariants} animate="floating">
+        <motion.div className={coinCss} variants={coinVariants} animate="floating">
           <Image width={188} height={191} src="/shop/coin.webp" alt="coin" />
-        </m.div>
+        </motion.div>
 
-        <m.div className={carrotCss} variants={carrotVariants} animate="floating">
+        <motion.div className={carrotCss} variants={carrotVariants} animate="floating">
           <Image width={313} height={316} src="/shop/carrot.webp" alt="carrot" />
-        </m.div>
+        </motion.div>
       </div>
 
       <div className={backgroundDivCss}>
@@ -47,7 +47,6 @@ const coinVariants: Variants = {
   floating: {
     x: [0, -2, 6, 2, 0],
     y: [0, -10, 12, -8, 0],
-    rotate: 0,
     transition: {
       duration: 6,
       repeat: Infinity,
@@ -67,7 +66,6 @@ const carrotVariants: Variants = {
   floating: {
     x: [0, 4, -5, 6, -3, 0],
     y: [0, 6, -12, 2, 8, 0],
-    rotate: 0,
     transition: {
       duration: 7,
       repeat: Infinity,
