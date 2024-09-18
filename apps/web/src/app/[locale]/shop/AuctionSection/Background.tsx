@@ -1,11 +1,12 @@
 'use client';
 
+import { memo } from 'react';
 import Image from 'next/image';
 import { css } from '_panda/css';
 import type { Variants } from 'framer-motion';
 import { m } from 'framer-motion';
 
-export function Background() {
+export const Background = memo(function Background() {
   return (
     <>
       <div className={floatingBackgroundDivCss}>
@@ -24,7 +25,7 @@ export function Background() {
       </div>
     </>
   );
-}
+});
 
 const floatingBackgroundDivCss = css({
   position: 'absolute',
