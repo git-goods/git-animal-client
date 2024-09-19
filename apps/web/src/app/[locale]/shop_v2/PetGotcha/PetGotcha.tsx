@@ -1,20 +1,20 @@
-import React from 'react';
+'use client';
+import { useState } from 'react';
 import Image from 'next/image';
 import { css } from '_panda/css';
 import { Button } from '@gitanimals/ui-panda';
 
-interface Props {
-  onOpenOnePetGame: () => void;
-}
+import CardFlipGame from './CardFlipGame';
 
-function PetGotcha({ onOpenOnePetGame }: Props) {
+function PetGotcha() {
+  const [openModal, setOpenModal] = useState<'one-pet' | 'ten-pet' | 'ratio-chart' | null>(null);
   return (
     <div className={containerStyle}>
       <Image src="/shop/pet-gotcha-bg.webp" alt="pet-gotcha-bg" width={1920} height={1226} className={bgStyle} />
       <h1 className={headingStyle}>Pet Gotcha</h1>
       <p className={descStyle}>Draw a S+ Grade pet for 1,000 points</p>
       <div className={buttonContainerStyle}>
-        <Button size="l" onClick={onOpenOnePetGame}>
+        <Button size="l" onClick={() => setOpenModal('one-pet')}>
           1 Pet / 1,000 P
         </Button>
         <Button size="l">10 Pets / 10,000 P</Button>
@@ -25,6 +25,7 @@ function PetGotcha({ onOpenOnePetGame }: Props) {
       <div className={petContainerStyle}>
         <Image src="/shop/pet-gotcha-image-card.webp" alt="pet-gotcha-pet" width={1120} height={530} />
       </div>
+      {openModal === 'one-pet' && <CardFlipGame onClose={() => setOpenModal(null)} />}
     </div>
   );
 }
