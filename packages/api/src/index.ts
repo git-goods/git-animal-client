@@ -4,3 +4,4 @@ export * from './user';
 export * from './auction';
 export * from './render';
 export * from './identity';
+export * from './gotcha';

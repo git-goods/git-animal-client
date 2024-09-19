@@ -19,7 +19,7 @@ function AnimalCard(props: AnimalCardProps) {
 
 export default AnimalCard;
 
-const getAnimalTierInfo = (dropRateNumber: number): AnimalTierType => {
+export const getAnimalTierInfo = (dropRateNumber: number): AnimalTierType => {
   if (dropRateNumber <= ANIMAL_TIER_INFO.EX.max) {
     return AnimalTier.EX;
   }
