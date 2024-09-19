@@ -5,6 +5,8 @@ import { css } from '_panda/css';
 import { Button } from '@gitanimals/ui-panda';
 
 import CardFlipGame from './CardFlipGame';
+import CardFlipGame from './CardFlipGame';
+import MultiGotcha from './MultiGotcha';
 
 function PetGotcha() {
   const [openModal, setOpenModal] = useState<'one-pet' | 'ten-pet' | 'ratio-chart' | null>(null);
@@ -17,8 +19,10 @@ function PetGotcha() {
         <Button size="l" onClick={() => setOpenModal('one-pet')}>
           1 Pet / 1,000 P
         </Button>
-        <Button size="l">10 Pets / 10,000 P</Button>
-        <Button size="l" variant="secondary">
+        <Button size="l" onClick={() => setOpenModal('ten-pet')}>
+          10 Pets / 10,000 P
+        </Button>
+        <Button size="l" variant="secondary" onClick={() => setOpenModal('ratio-chart')}>
           Ratio Chart
         </Button>
       </div>
@@ -26,6 +30,7 @@ function PetGotcha() {
         <Image src="/shop/pet-gotcha-image-card.webp" alt="pet-gotcha-pet" width={1120} height={530} />
       </div>
       {openModal === 'one-pet' && <CardFlipGame onClose={() => setOpenModal(null)} />}
+      {openModal === 'ten-pet' && <MultiGotcha onClose={() => setOpenModal(null)} />}
     </div>
   );
 }

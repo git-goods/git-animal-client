@@ -29,10 +29,6 @@ const CardFlipGame = ({ onClose }: CardFlipGameProps) => {
     }
   };
 
-  const handleFlipAllCards = () => {
-    setCards(Array(5).fill(true));
-  };
-
   return (
     <div className={containerStyle}>
       <div className={cardContainerStyle}>
