@@ -11,7 +11,6 @@ import RightSection from './RightSection';
 const LazyProfileSection = dynamic(() => import('./ProfileSection'), { ssr: false });
 
 function Mypage() {
-  throw new Error('Error');
   return (
     <Layout>
       <Header />
