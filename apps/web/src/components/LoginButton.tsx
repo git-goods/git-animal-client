@@ -18,14 +18,14 @@ function LoginButton({ children }: PropsWithChildren<LoginButtonProps>) {
   if (session.status !== 'unauthenticated') return <></>;
 
   return (
-    <button onClick={onLogin}>
-      <Button className="desktop" size="l">
+    <div>
+      <Button onClick={onLogin} className="desktop" size="l">
         {children}
       </Button>
-      <Button className="mobile" size="m">
+      <Button onClick={onLogin} className="mobile" size="m">
         {children}
       </Button>
-    </button>
+    </div>
   );
 }
 
