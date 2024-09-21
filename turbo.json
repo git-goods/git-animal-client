@@ -1,5 +1,12 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "NODE_ENV"
+  ],
+  "globalDependencies": [
+    ".env",
+    ".env.*"
+  ],
   "tasks": {
     "prepare": {
       "dependsOn": [
@@ -32,10 +39,11 @@
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": [
+        "NODE_ENV",
+        "SLACK_ERROR_CHANNEL_WEBHOOK_URL"
+      ]
     }
-  },
-  "globalEnv": [
-    "NODE_ENV"
-  ]
+  }
 }
