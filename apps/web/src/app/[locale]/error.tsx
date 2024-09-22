@@ -15,9 +15,13 @@ interface Props {
 
 const GITHUB_ISSUE_URL = 'https://github.com/git-goods/gitanimals/issues';
 
+const NOT_AUTHORIZED_MESSAGE = 'Request failed with status code 401';
+const KNOWN_ERROR_MESSAGES = [NOT_AUTHORIZED_MESSAGE];
+
 const GlobalErrorPage = ({ error, reset }: Props) => {
   useEffect(() => {
     if (isDev) return;
+    if (KNOWN_ERROR_MESSAGES.includes(error.message)) return;
 
     sendMessageToErrorChannel(`<!here>
 🔥 Global Error 발생 🔥
