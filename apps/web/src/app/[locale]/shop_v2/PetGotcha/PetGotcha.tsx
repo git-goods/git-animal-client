@@ -4,10 +4,11 @@ import Image from 'next/image';
 import { css } from '_panda/css';
 import { Button } from '@gitanimals/ui-panda';
 
-import CardFlipGame from './CardFlipGame';
+import OnePet from './OnePet';
 
 function PetGotcha() {
   const [openModal, setOpenModal] = useState<'one-pet' | 'ten-pet' | 'ratio-chart' | null>(null);
+
   return (
     <div className={containerStyle}>
       <Image src="/shop/pet-gotcha-bg.webp" alt="pet-gotcha-bg" width={1920} height={1226} className={bgStyle} />
@@ -25,7 +26,7 @@ function PetGotcha() {
       <div className={petContainerStyle}>
         <Image src="/shop/pet-gotcha-image-card.webp" alt="pet-gotcha-pet" width={1120} height={530} />
       </div>
-      {openModal === 'one-pet' && <CardFlipGame onClose={() => setOpenModal(null)} />}
+      {openModal === 'one-pet' && <OnePet onClose={() => setOpenModal(null)} />}
     </div>
   );
 }
