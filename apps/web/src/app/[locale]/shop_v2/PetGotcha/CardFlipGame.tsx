@@ -7,10 +7,6 @@ import { Card, CardBack } from '@gitanimals/ui-panda';
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
 import { getPersonaImage } from '@/utils/image';
 
-const tier = 'S_PLUS';
-const type = 'MOLE';
-const dropRate = '100%';
-
 interface CardFlipGameProps {
   onClose: () => void;
   onAction: () => void;
@@ -25,6 +21,7 @@ const CardFlipGame = ({ onClose, onAction, getPersona }: CardFlipGameProps) => {
   const [cards, setCards] = useState(Array(5).fill(false));
   const [showButton, setShowButton] = useState(false);
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
+  const [isShaking, setIsShaking] = useState(false);
 
   const handleCardClick = (index: number) => {
     if (selectedCard === null) {
@@ -33,6 +30,7 @@ const CardFlipGame = ({ onClose, onAction, getPersona }: CardFlipGameProps) => {
       // setCards(newCards);
       setSelectedCard(index);
       setShowButton(true);
+      setIsShaking(true);
       onAction();
     }
   };
@@ -42,6 +40,7 @@ const CardFlipGame = ({ onClose, onAction, getPersona }: CardFlipGameProps) => {
       const newCards = [...cards];
       newCards[selectedCard] = true;
       setCards(newCards);
+      setIsShaking(false);
     }
   }, [getPersona]);
 
@@ -55,6 +54,7 @@ const CardFlipGame = ({ onClose, onAction, getPersona }: CardFlipGameProps) => {
                 cardInnerStyle,
                 css({
                   transform: isFlipped ? 'rotateY(180deg)' : 'none',
+                  animation: selectedCard === index && isShaking ? 'move 0.5s' : 'none',
                 }),
               )}
             >
