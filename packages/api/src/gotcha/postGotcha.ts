@@ -22,9 +22,8 @@ export type GotchaResult = z.infer<typeof GotchaResultSchema>;
 export type PostGotchaResponse = z.infer<typeof PostGotchaResponseSchema>;
 export type PostGotchaRequest = z.infer<typeof PostGotchaRequestSchema>;
 
-// 임시로 GotchaResultSchema (version 1)
-export const postGotcha = async (request?: PostGotchaRequest): Promise<GotchaResult> => {
-  return await safePost(GotchaResultSchema)(`/gotchas`, request ? convertCamelObjToKebab(request) : undefined, {
+export const postGotcha = async (request?: PostGotchaRequest): Promise<PostGotchaResponse> => {
+  return await safePost(PostGotchaResponseSchema)(`/gotchas`, request ? convertCamelObjToKebab(request) : undefined, {
     headers: {
       'Api-Version': '2',
     },

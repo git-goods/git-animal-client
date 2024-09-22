@@ -3,5 +3,5 @@
 import { postGotcha } from '@gitanimals/api';
 
 export async function onePetGotcha() {
-  return postGotcha({});
+  return postGotcha({ count: 1 });
 }
