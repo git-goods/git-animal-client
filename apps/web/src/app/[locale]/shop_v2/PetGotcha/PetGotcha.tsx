@@ -1,19 +1,22 @@
 'use client';
+
 import { useState } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { Button } from '@gitanimals/ui-panda';
 
 import OnePet from './OnePet';
 
 export function PetGotcha() {
+  const t = useTranslations('Gotcha');
   const [openModal, setOpenModal] = useState<'one-pet' | 'ten-pet' | 'ratio-chart' | null>(null);
 
   return (
     <div className={containerStyle}>
       <Image src="/shop/pet-gotcha-bg.webp" alt="pet-gotcha-bg" width={1920} height={1226} className={bgStyle} />
       <h1 className={headingStyle}>Pet Gotcha</h1>
-      <p className={descStyle}>Draw a S+ Grade pet for 1,000 points</p>
+      <p className={descStyle}>{t('pet-gotcha-desc')}</p>
       <div className={buttonContainerStyle}>
         <Button size="l" onClick={() => setOpenModal('one-pet')}>
           1 Pet / 1,000 P

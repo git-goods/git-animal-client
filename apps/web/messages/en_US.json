@@ -13,5 +13,10 @@
   },
   "Landing": {
     "title": "Have your pet in GITHUB! "
+  },
+  "Gotcha": {
+    "pet-gotcha-desc": "Draw a S+ Grade pet for 1,000 points",
+    "choose-one-card": "Choose one card you want!",
+    "close-notice": "This will close in {count} seconds."
   }
 }
