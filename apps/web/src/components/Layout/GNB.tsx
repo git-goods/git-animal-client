@@ -3,13 +3,13 @@ import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import { Menu } from 'lucide-react';
 
 import { getServerAuth } from '@/auth';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
 import { LoginOutBtn } from './LoginOutBtn';
+import MobileGNB from './MobileGNB';
 
 interface NavMenu {
   label: string;
@@ -105,7 +105,7 @@ async function GNBMobile() {
     <>
       <header className={cx(headerBaseStyle, mobileHeaderStyle)}>
         <div className={mobileHeaderContentStyle}>
-          <Menu />
+          <MobileGNB />
 
           {/* <div>Sing in</div> */}
           <div className={mobileLogoStyle}>
