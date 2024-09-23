@@ -30,7 +30,7 @@ function HistoryTable() {
     [searchOptions],
   );
 
-// TODO: 개선하기 @sumi-0011 
+  // TODO: 개선하기 @sumi-0011 
   const getHistoryActionLabel = (soldAt: string) => {
     return String(soldAt)?.slice(2, 10).replace(/-/g, '.');
   };

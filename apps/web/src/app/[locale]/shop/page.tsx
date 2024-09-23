@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation';
 import { css } from '_panda/css';
 
 import Header from '@/components/Layout/Header';
-import UserPoint from '@/components/UserPoint';
+
+import { FloatingPointSection } from './FloatingPointSection/FloatingPointSection';
 
 import { AuctionSection } from './AuctionSection';
 import GotchaSection from './GotchaSection';
@@ -27,14 +28,10 @@ function ShopPage({
   return (
     <>
       <Header />
+      <FloatingPointSection />
 
       <main className={mainStyle}>
         <GotchaSection />
-        {/* TODO: 플로팅 포인트 */}
-        <Suspense>
-          my points : <UserPoint />
-        </Suspense>
-
         <AuctionSection selectedTab={searchParamsTab} />
       </main>
     </>
