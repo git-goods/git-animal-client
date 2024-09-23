@@ -12,7 +12,7 @@ import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { Link } from '@/i18n/routing';
 import { useClientSession } from '@/utils/clientAuth';
 
-const MobileGNB = () => {
+export const MobileGNB = () => {
   const session = useClientSession();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -70,7 +70,6 @@ const MobileGNB = () => {
   );
 };
 
-export default MobileGNB;
 function MenuItem({ icon, label, isArrow = true }: { icon: React.ReactNode; label: string; isArrow?: boolean }) {
   return (
     <motion.li className={menuItemStyle}>
@@ -129,6 +128,10 @@ const mobileMenuStyle = css({
   overflowY: 'auto',
   boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
   zIndex: 99,
+
+  _mobile: {
+    display: 'flex',
+  },
 });
 
 const mobileMenuListStyle = css({
