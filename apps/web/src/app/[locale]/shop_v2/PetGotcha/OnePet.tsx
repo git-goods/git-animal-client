@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import { onePetGotcha } from '@/actions/gotcha';
 import { getAnimalTierInfo } from '@/components/AnimalCard/AnimalCard';
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
+import { useTimer } from '@/hooks/useTimer';
 
 import CardFlipGame from './CardFlipGame';
 
@@ -21,6 +22,8 @@ function OnePet({ onClose }: Props) {
     tier: AnimalTierType;
   } | null>(null);
 
+  const { count, isRunning, isFinished, startTimer, resetTimer } = useTimer(3);
+
   const onAction = async () => {
     try {
       const res = await onePetGotcha();
@@ -34,6 +37,7 @@ function OnePet({ onClose }: Props) {
         tier: tier,
       };
       setGetPersona(persona);
+      startTimer();
     } catch (error) {
       // TOdo:
       toast.error('Failed to get persona');
@@ -43,12 +47,11 @@ function OnePet({ onClose }: Props) {
 
   useEffect(() => {
     // 3초 후에 닫기
-    if (getPersona) {
-      setTimeout(() => {
-        onClose();
-      }, 3000);
+    if (isFinished) {
+      onClose();
+      resetTimer();
     }
-  }, [getPersona, onClose]);
+  }, [isFinished, onClose, resetTimer]);
 
   return (
     <article className={modalStyle}>
@@ -57,8 +60,8 @@ function OnePet({ onClose }: Props) {
           <X size={40} color="white" />
         </button>
         <h2 className={headingStyle}>Choose one card you want!</h2>
-        <CardFlipGame onClose={onClose} onAction={onAction} getPersona={getPersona} />
-        {getPersona && <p className={noticeMessageStyle}>3초후에 닫힙니다.</p>}
+        <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} />
+        {isRunning && <p className={noticeMessageStyle}>{count}초후에 닫힙니다.</p>}
       </div>
     </article>
   );

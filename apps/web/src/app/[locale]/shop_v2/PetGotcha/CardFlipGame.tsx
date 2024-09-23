@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { css, cx } from '_panda/css';
 import { Card, CardBack } from '@gitanimals/ui-panda';
 
@@ -8,66 +8,68 @@ import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant
 import { getPersonaImage } from '@/utils/image';
 
 interface CardFlipGameProps {
-  onClose: () => void;
-  onAction: () => void;
   getPersona: {
     type: string;
     dropRate: string;
     tier: AnimalTierType;
   } | null;
+
+  onClose: () => void;
+  onGetPersona: () => void;
 }
 
-const CardFlipGame = ({ onClose, onAction, getPersona }: CardFlipGameProps) => {
+const CardFlipGame = ({ onGetPersona, getPersona }: CardFlipGameProps) => {
   const [cards, setCards] = useState(Array(5).fill(false));
-  const [showButton, setShowButton] = useState(false);
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
-  const [isShaking, setIsShaking] = useState(false);
+
+  const isShaking = selectedCard !== null && getPersona === null; // 카드가 선택되었지만 페르소나가 선택되지 않았을 때
+  const isFlipped = getPersona && selectedCard; // 뽑힌 페르소나가 정해졌을 때
 
   const handleCardClick = (index: number) => {
     if (selectedCard === null) {
-      // const newCards = [...cards];
-      // // newCards[index] = true;
-      // setCards(newCards);
       setSelectedCard(index);
-      setShowButton(true);
-      setIsShaking(true);
-      onAction();
+      onGetPersona();
     }
   };
 
-  useEffect(() => {
-    if (getPersona && selectedCard) {
-      const newCards = [...cards];
-      newCards[selectedCard] = true;
-      setCards(newCards);
-      setIsShaking(false);
+  const onCardFlip = useCallback(() => {
+    if (isFlipped) {
+      setCards((prevCards) => {
+        const newCards = [...prevCards];
+        newCards[selectedCard] = true;
+        return newCards;
+      });
     }
-  }, [getPersona]);
+  }, [isFlipped, selectedCard]);
+
+  useEffect(() => {
+    onCardFlip();
+  }, [onCardFlip]);
 
   return (
     <div className={containerStyle}>
       <div className={cardContainerStyle}>
-        {cards.map((isFlipped, index) => (
+        {cards.map((isCardFlipped, index) => (
           <button key={index} className={cardStyle} onClick={() => handleCardClick(index)}>
             <div
               className={cx(
                 cardInnerStyle,
                 css({
-                  transform: isFlipped ? 'rotateY(180deg)' : 'none',
+                  transform: isCardFlipped ? 'rotateY(180deg)' : 'none',
                   animation: selectedCard === index && isShaking ? 'move 0.5s' : 'none',
                 }),
               )}
             >
-              <div className={cx(cardFaceStyle, !showButton && cardScaleStyle)}>
+              <div className={cx(cardFaceStyle, selectedCard !== null && cardScaleStyle)}>
                 <CardBack tier="S_PLUS" />
               </div>
               <div className={cx(cardFaceStyle, cardBackStyle)}>
                 {getPersona && (
                   <Card
-                    tier={getPersona?.tier}
-                    type={getPersona?.type}
-                    dropRate={getPersona?.dropRate}
-                    personaImage={getPersonaImage(getPersona?.type)}
+                    tier={getPersona.tier}
+                    type={getPersona.type}
+                    dropRate={getPersona.dropRate}
+                    personaImage={getPersonaImage(getPersona.type)}
                   />
                 )}
               </div>
@@ -75,8 +77,6 @@ const CardFlipGame = ({ onClose, onAction, getPersona }: CardFlipGameProps) => {
           </button>
         ))}
       </div>
-      {/* {showButton && <Button onClick={onClose}>닫기</Button>} */}
-      {/* {showButton && <Button onClick={handleFlipAllCards}>모든 카드 뒤집기</Button>} */}
     </div>
   );
 };

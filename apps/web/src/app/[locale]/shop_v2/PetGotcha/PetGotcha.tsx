@@ -6,7 +6,7 @@ import { Button } from '@gitanimals/ui-panda';
 
 import OnePet from './OnePet';
 
-function PetGotcha() {
+export function PetGotcha() {
   const [openModal, setOpenModal] = useState<'one-pet' | 'ten-pet' | 'ratio-chart' | null>(null);
 
   return (
@@ -30,8 +30,6 @@ function PetGotcha() {
     </div>
   );
 }
-
-export default PetGotcha;
 
 const containerStyle = css({
   position: 'relative',

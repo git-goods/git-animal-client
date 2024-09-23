@@ -1,1 +1,1 @@
-export { default as PetGotcha } from './PetGotcha';
+export { PetGotcha } from './PetGotcha';
