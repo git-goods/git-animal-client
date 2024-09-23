@@ -40,13 +40,12 @@ const NON_LOGIN_NAV_MENU_LIST: NavMenu[] = [
     isExternal: true,
   },
 ] as const;
-
 async function GNB() {
   // return <GNBMobile />;
   // return <GNBDesktop />;
   return (
     <>
-      <GNBMobile />
+      <MobileGNB />
       <GNBDesktop />
     </>
   );
@@ -100,22 +99,22 @@ async function GNBDesktop() {
   );
 }
 
-async function GNBMobile() {
-  return (
-    <>
-      <header className={cx(headerBaseStyle, mobileHeaderStyle)}>
-        <div className={mobileHeaderContentStyle}>
-          <MobileGNB />
+// async function GNBMobile() {
+//   return (
+//     <>
+//       <header className={cx(headerBaseStyle, mobileHeaderStyle)}>
+//         <div className={mobileHeaderContentStyle}>
+//           <MobileGNB />
 
-          {/* <div>Sing in</div> */}
-          <div className={mobileLogoStyle}>
-            <Image src="/main/gnb_right_logo.svg" alt="gitanimals-logo" width={80} height={22} />
-          </div>
-        </div>
-      </header>
-    </>
-  );
-}
+//           {/* <div>Sing in</div> */}
+//           <div className={mobileLogoStyle}>
+//             <Image src="/main/gnb_right_logo.svg" alt="gitanimals-logo" width={80} height={22} />
+//           </div>
+//         </div>
+//       </header>
+//     </>
+//   );
+// }
 
 const headerBaseStyle = flex({
   justifyContent: 'space-between',
@@ -127,32 +126,6 @@ const headerBaseStyle = flex({
   height: 60,
   width: '100%',
   backgroundColor: 'white',
-});
-
-const mobileHeaderStyle = css({
-  width: '100vw',
-  borderBottom: '1px solid',
-  borderColor: 'gray.gray__300',
-
-  display: 'none',
-  _mobile: {
-    display: 'flex',
-  },
-});
-
-const mobileHeaderContentStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  position: 'relative',
-  width: 'calc(100vw - 40px)',
-});
-
-const mobileLogoStyle = css({
-  width: '80px',
-  position: 'absolute',
-  left: '50%',
-  transform: 'translateX(-50%)',
 });
 
 async function DevMenu() {
