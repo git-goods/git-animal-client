@@ -11,6 +11,7 @@ const queryClientOption: QueryClientConfig = {
       retry: false,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
+      staleTime: 1000,
     },
   },
 };

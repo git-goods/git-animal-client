@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 
-import Header from '@/components/Layout/Header_v2';
+import Header from '@/components/Layout/Header';
 
 import { ChoosePetSection } from './landing/ChoosePetSection';
 import { Footer } from './landing/Footer';

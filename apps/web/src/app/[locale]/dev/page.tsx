@@ -1,7 +1,7 @@
 import { css } from '_panda/css';
 import { Box } from '_panda/jsx';
 
-import Header from '@/components/Layout/Header_v2';
+import Header from '@/components/Layout/Header';
 
 // import Header from '@/components/Layout/Header2';
 import DevClient from './Client';
