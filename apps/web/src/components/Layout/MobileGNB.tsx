@@ -29,9 +29,9 @@ export const MobileGNB = () => {
             <Menu size={24} color="black" />
           </button>
 
-          <div className={mobileLogoStyle}>
+          <Link href="/" className={mobileLogoStyle}>
             <Image src="/main/gnb_right_logo.svg" alt="gitanimals-logo" width={80} height={22} />
-          </div>
+          </Link>
         </div>
       </header>
 
@@ -135,6 +135,7 @@ const mobileMenuStyle = css({
 });
 
 const mobileMenuListStyle = css({
+  width: '100%',
   '& >  *': {
     width: '100%',
   },
