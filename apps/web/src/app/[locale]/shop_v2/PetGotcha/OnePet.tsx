@@ -5,9 +5,9 @@ import { center } from '_panda/patterns';
 import { X } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { onePetGotcha } from '@/actions/gotcha';
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
 import { useTimer } from '@/hooks/useTimer';
+import { onePetGotcha } from '@/serverAction/gotcha';
 import { getAnimalTierInfo } from '@/utils/animals';
 
 import CardFlipGame from './CardFlipGame';
