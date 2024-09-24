@@ -3,26 +3,27 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import { GithubIcon } from '@gitanimals/ui-icon';
+import { GithubIcon, RadioButtonOff, RadioButtonOn } from '@gitanimals/ui-icon';
 import type { Transition, Variants } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronRight, Globe, LogInIcon, LogOutIcon, Menu, ShoppingCart } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Globe, LogInIcon, LogOutIcon, Menu, ShoppingCart } from 'lucide-react';
 
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
-import { Link } from '@/i18n/routing';
+import type { Locale } from '@/i18n/routing';
+import { Link, usePathname } from '@/i18n/routing';
 import { useClientSession } from '@/utils/clientAuth';
 
 export const MobileGNB = () => {
   const session = useClientSession();
 
   const [isOpen, setIsOpen] = useState(false);
-
+  const [isLanguageSelectorOpen, setIsLanguageSelectorOpen] = useState(true);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <div>
+    <>
       <header className={cx(headerBaseStyle, mobileHeaderStyle)}>
         <div className={mobileHeaderContentStyle}>
           <button onClick={toggleMenu}>
@@ -52,7 +53,7 @@ export const MobileGNB = () => {
               <a href={GIT_ANIMALS_MAIN_URL} target="_blank">
                 <MenuItem icon={<GithubIcon width={22} height={22} color="#6e717a" />} label="Github" />
               </a>
-              <button>
+              <button onClick={() => setIsLanguageSelectorOpen(true)}>
                 <MenuItem icon={<Globe size={20} color="#9295A1" />} label="Language" />
               </button>
               <button>
@@ -66,7 +67,8 @@ export const MobileGNB = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+      {isLanguageSelectorOpen && <LanguageSelector onBack={() => setIsLanguageSelectorOpen(false)} />}
+    </>
   );
 };
 
@@ -81,6 +83,72 @@ function MenuItem({ icon, label, isArrow = true }: { icon: React.ReactNode; labe
     </motion.li>
   );
 }
+
+// TODO : LanguageSelector 공통화
+const LOCALE_MAP: Record<Locale, string> = {
+  en_US: 'English',
+  ko_KR: '한국어',
+};
+
+function LanguageSelector({ onBack }: { onBack: () => void }) {
+  const pathname = usePathname();
+
+  return (
+    <article className={languageSelectorContainerStyle}>
+      <div className={cx(mobileHeaderContentStyle, languageSelectorHeaderStyle)}>
+        <button onClick={onBack}>
+          <ChevronLeft size={24} color="#9295A1" />
+        </button>
+
+        <div className={mobileLogoStyle}>Language</div>
+      </div>
+      <ul className={languageSelectorListStyle}>
+        {Object.keys(LOCALE_MAP).map((lang) => (
+          <Link href={pathname} key={lang} locale={lang as Locale} passHref>
+            <li key={lang}>
+              <div className="label">{LOCALE_MAP[lang as Locale]}</div>
+              <div>{true ? <RadioButtonOn /> : <RadioButtonOff />}</div>
+            </li>
+          </Link>
+        ))}
+      </ul>
+    </article>
+  );
+}
+
+const languageSelectorListStyle = css({
+  width: '100%',
+
+  textStyle: 'glyph16.regular',
+
+  '& li': {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '18px 22px 18px 20px',
+
+    borderBottom: '1px solid',
+    borderColor: 'gray.gray_900',
+    backgroundColor: 'white',
+  },
+});
+
+const languageSelectorContainerStyle = css({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: '#fff',
+  maxHeight: '100vh',
+  overflowY: 'auto',
+  zIndex: 101,
+});
+
+const languageSelectorHeaderStyle = css({
+  padding: '0 16px',
+  textStyle: 'glyph18.regular',
+});
 
 const headerBaseStyle = flex({
   justifyContent: 'space-between',
@@ -108,11 +176,13 @@ const mobileHeaderContentStyle = css({
   alignItems: 'center',
   justifyContent: 'space-between',
   position: 'relative',
-  width: 'calc(100vw - 40px)',
+  width: '100%',
+  height: 44,
 });
 
 const mobileLogoStyle = css({
-  width: '80px',
+  // width: '80px',
+  width: 'fit-content',
   position: 'absolute',
   left: '50%',
   transform: 'translateX(-50%)',
