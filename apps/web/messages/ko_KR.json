@@ -13,5 +13,10 @@
   },
   "Landing": {
     "title": "Have your pet in GITHUB! "
+  },
+  "Gotcha": {
+    "pet-gotcha-desc": "1,000 포인트로 S+ 등급 펫을 뽑으세요!",
+    "choose-one-card": "원하시는 카드 하나를 골라주세요!",
+    "close-notice": "{count}초 후에 닫힙니다."
   }
 }

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
 import { X } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { onePetGotcha } from '@/actions/gotcha';
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
 import { useTimer } from '@/hooks/useTimer';
+import { onePetGotcha } from '@/serverActions/gotcha';
 import { getAnimalTierInfo } from '@/utils/animals';
 
 import CardFlipGame from './CardFlipGame';
@@ -16,6 +17,7 @@ interface Props {
 }
 
 function OnePet({ onClose }: Props) {
+  const t = useTranslations('Gotcha');
   const [getPersona, setGetPersona] = useState<{
     type: string;
     dropRate: string;
@@ -59,9 +61,9 @@ function OnePet({ onClose }: Props) {
         <button className={closeButtonStyle} onClick={onClose}>
           <X size={40} color="white" />
         </button>
-        <h2 className={headingStyle}>Choose one card you want!</h2>
+        <h2 className={headingStyle}>{t('choose-one-card')}</h2>
         <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} />
-        {isRunning && <p className={noticeMessageStyle}>{count}초후에 닫힙니다.</p>}
+        {isRunning && <p className={noticeMessageStyle}>{t('close-notice', { count })}</p>}
       </div>
     </article>
   );
