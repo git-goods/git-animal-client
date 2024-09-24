@@ -1,5 +1,3 @@
-import { useTranslations } from 'next-intl';
-
 import Header from '@/components/Layout/GNB';
 
 import { ChoosePetSection } from './landing/ChoosePetSection';
@@ -10,8 +8,6 @@ import '@egjs/react-flicking/dist/flicking.css';
 import '@egjs/react-flicking/dist/flicking-inline.css';
 
 export default function HomePage() {
-  const t = useTranslations('HomePage');
-
   return (
     <div>
       <Header />

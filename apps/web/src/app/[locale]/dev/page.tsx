@@ -3,12 +3,9 @@ import { Box } from '_panda/jsx';
 
 import Header from '@/components/Layout/GNB';
 
-// import Header from '@/components/Layout/Header2';
 import DevClient from './Client';
 
 async function DevPage() {
-  // const data = await getUser();
-
   return (
     <Box p={32}>
       <Header />
