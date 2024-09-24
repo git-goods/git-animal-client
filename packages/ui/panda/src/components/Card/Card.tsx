@@ -72,6 +72,7 @@ const CARD_INFO: Record<CardTierType, { bg: string; thumbnail: string }> = {
 export const container = css({
   position: 'relative',
   height: '100%',
+  width: '100%',
 });
 
 export const bgImage = css({

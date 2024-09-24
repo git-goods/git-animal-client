@@ -1,75 +1,70 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { css } from '_panda/css';
 import { useQueryClient } from '@tanstack/react-query';
-import Lottie from 'lottie-react';
-
-import { useGotcha } from '@/apis/gotcha/useGotcha';
-import { USER_QUERY_KEY } from '@/apis/user/useGetUser';
-import Congratulations from '@/assets/lottie/congratulations.json';
-import { getPersonaImage } from '@/utils/image';
 
 function GotchaSection() {
   const queryClient = useQueryClient();
   const [gotchaVisible, setGotchaVisible] = useState(false);
   const [isBounce, setIsBounce] = useState(false);
 
-  const { mutate, data, isPending } = useGotcha({
-    onSuccess: () => {
-      setGotchaVisible(true);
-      // TODO : 포인트 내려가는 애니매이션을 ㄴ허어볼까
-      queryClient.invalidateQueries({
-        queryKey: [USER_QUERY_KEY], // TODO: user query key
-      });
+  return <></>;
 
-      const timer = setTimeout(() => {
-        setGotchaVisible(false);
-        clearTimeout(timer);
-      }, 3000);
-    },
-  });
+  // const { mutate, data, isPending } = useGotcha({
+  //   onSuccess: () => {
+  //     setGotchaVisible(true);
+  //     // TODO : 포인트 내려가는 애니매이션을 ㄴ허어볼까
+  //     queryClient.invalidateQueries({
+  //       queryKey: [USER_QUERY_KEY], // TODO: user query key
+  //     });
 
-  const onPress = () => {
-    mutate({});
-  };
+  //     const timer = setTimeout(() => {
+  //       setGotchaVisible(false);
+  //       clearTimeout(timer);
+  //     }, 3000);
+  //   },
+  // });
 
-  return (
-    <div className={containerStyle}>
-      <Image src="/shop/gotcha.svg" width={384} height={80} alt="gotcha" className={gotchaTitleStyle} />
-      <Image src="/shop/gotcha-list.png" width={384} height={620} alt="gotcha list" className="gotcha-list" />
-      <button className={gotchaPressStyle} onClick={onPress}>
-        <Image src="/shop/press.svg" width={384} height={80} alt="press" />
-      </button>
-      <div className={pointMessageStyle}>
-        <Image
-          className={'point-message' + (isBounce ? ' bounce' : '')}
-          src="/shop/gotcha-point-message.svg"
-          width={147}
-          height={112}
-          alt="gotcha point message"
-          onClick={() => setIsBounce(!isBounce)}
-        />
-      </div>
-      {data && gotchaVisible && (
-        <>
-          <div className={lottieWrapperStyle}>
-            <Lottie animationData={Congratulations} loop={false} />;
-          </div>
-          <div className={gotchaItemStyle}>
-            <Image src={getPersonaImage(data.name)} width={180} height={180} alt="persona" className="persona" />
-          </div>
-        </>
-      )}
+  // const onPress = () => {
+  //   mutate({});
+  // };
 
-      {isPending && (
-        <div className={loadingWrapperStyle}>
-          <Image src="/icon/loading.svg" width={100} height={100} alt="loading" />
-        </div>
-      )}
-    </div>
-  );
+  // return (
+  //   <div className={containerStyle}>
+  //     <Image src="/shop/gotcha.svg" width={384} height={80} alt="gotcha" className={gotchaTitleStyle} />
+  //     <Image src="/shop/gotcha-list.png" width={384} height={620} alt="gotcha list" className="gotcha-list" />
+  //     <button className={gotchaPressStyle} onClick={onPress}>
+  //       <Image src="/shop/press.svg" width={384} height={80} alt="press" />
+  //     </button>
+  //     <div className={pointMessageStyle}>
+  //       <Image
+  //         className={'point-message' + (isBounce ? ' bounce' : '')}
+  //         src="/shop/gotcha-point-message.svg"
+  //         width={147}
+  //         height={112}
+  //         alt="gotcha point message"
+  //         onClick={() => setIsBounce(!isBounce)}
+  //       />
+  //     </div>
+  //     {data && gotchaVisible && (
+  //       <>
+  //         <div className={lottieWrapperStyle}>
+  //           <Lottie animationData={Congratulations} loop={false} />;
+  //         </div>
+  //         <div className={gotchaItemStyle}>
+  //           <Image src={getPersonaImage(data.name)} width={180} height={180} alt="persona" className="persona" />
+  //         </div>
+  //       </>
+  //     )}
+
+  //     {isPending && (
+  //       <div className={loadingWrapperStyle}>
+  //         <Image src="/icon/loading.svg" width={100} height={100} alt="loading" />
+  //       </div>
+  //     )}
+  //   </div>
+  // );
 }
 
 export default GotchaSection;
