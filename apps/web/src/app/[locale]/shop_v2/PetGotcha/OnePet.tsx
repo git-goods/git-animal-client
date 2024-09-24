@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
 import { useTimer } from '@/hooks/useTimer';
-import { onePetGotcha } from '@/serverAction/gotcha';
+import { onePetGotcha } from '@/serverActions/gotcha';
 import { getAnimalTierInfo } from '@/utils/animals';
 
 import CardFlipGame from './CardFlipGame';
