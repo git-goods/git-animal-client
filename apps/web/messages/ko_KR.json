@@ -3,7 +3,9 @@
     "mypage": "MyPage",
     "auction": "Auction",
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "github": "Github",
+    "dev": "Dev"
   },
   "HomePage": {
     "title": "Hello world!",
