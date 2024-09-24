@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { flex } from '_panda/patterns';
 import type { Product } from '@gitanimals/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -9,23 +8,20 @@ import { toast } from 'sonner';
 import { getProductsQueryKey, useGetProducts } from '@/apis/auctions/useGetProducts';
 import { useBuyProduct, useDeleteProduct } from '@/apis/auctions/useProduct';
 import Pagination from '@/components/Pagination';
-import ShopTableBackground from '@/components/ProductTable/ShopTableBackground';
 import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import { useLoading } from '@/store/loading';
 import { useClientUser } from '@/utils/clientAuth';
 
-import { OrderTypeSelect, PersonaType, SortDirectionSelect } from './SearchOption';
-import { useSearchOptions } from './useSearchOptions';
+import { useSearchOptions } from '../useSearchOptions';
 
-interface ProductTableProps {}
+import { tableCss, tbodyCss, theadCss } from './table.styles';
 
-function ProductTable({}: ProductTableProps) {
+function ProductTable() {
   const { id: myId } = useClientUser();
-
   const [currentPage, setCurrentPage] = useState(0);
 
-  const { searchOptions, onSearchOptionChange } = useSearchOptions();
+  const { searchOptions } = useSearchOptions();
 
   useEffect(
     function 옵션_변경시_페이지_초기화() {
@@ -37,26 +33,26 @@ function ProductTable({}: ProductTableProps) {
   const { data } = useGetProducts({ pageNumber: currentPage, ...searchOptions }, { enabled: Boolean(myId) });
 
   return (
-    <div>
-      <div className={flex({ justifyContent: 'space-between', alignItems: 'center', mb: '8px' })}>
-        <div className={flex({ gap: '10px', alignItems: 'center' })}>
-          <OrderTypeSelect onSelect={(option) => onSearchOptionChange('orderType', option)} />
-          <SortDirectionSelect onSelect={(option) => onSearchOptionChange('sortDirection', option)} />
+    <>
+      <div className={tableCss}>
+        <div className={theadCss}>
+          <span>Pet</span>
+          <span>Name</span>
+          <span>Grade</span>
+          <span>Level</span>
+          <span>Price</span>
+          <span></span>
         </div>
 
-        <PersonaType
-          onSelect={(option) => onSearchOptionChange('personaType', option)}
-          selected={searchOptions.personaType}
-        />
+        <div className={tbodyCss}>
+          {data?.products.map((product) => {
+            return <ProductTableRow product={product} key={product.id} />;
+          })}
+        </div>
       </div>
 
-      <ShopTableBackground>
-        {data?.products.map((product) => {
-          return <ProductTableRow product={product} key={product.id} />;
-        })}
-      </ShopTableBackground>
       {data && <Pagination {...data.pagination} currentPage={currentPage} onSetPage={setCurrentPage} />}
-    </div>
+    </>
   );
 }
 

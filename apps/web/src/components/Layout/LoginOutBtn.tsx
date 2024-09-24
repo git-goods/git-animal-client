@@ -11,9 +11,9 @@ import { useClientSession } from '@/utils/clientAuth';
 type LoginOutBtnProps = Omit<ComponentProps<typeof Button>, 'children' | 'onClick'>;
 
 export function LoginOutBtn(props: LoginOutBtnProps) {
-  const session = useClientSession();
+  const { status } = useClientSession();
 
-  return session ? <LogoutBtn {...props} /> : <LoginBtn {...props} />;
+  return status === 'authenticated' ? <LogoutBtn {...props} /> : <LoginBtn {...props} />;
 }
 
 export function LoginBtn(props: LoginOutBtnProps) {

@@ -27,10 +27,11 @@ function PersonaType(props: SearchProps) {
   };
 
   return (
-    <DottedThreeBox width={54} height={54} bgColor="white">
+    <>
       <button className={buttonWrapperStyle} onClick={() => setIsOpen(true)}>
-        <SearchIcon />
+        <SearchIcon color="rgba(255, 255, 255, 0.5)" />
       </button>
+
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <DottedThreeBox width={800} height={700} bgColor="#fff">
           <div className={searchPopupStyle}>
@@ -57,15 +58,17 @@ function PersonaType(props: SearchProps) {
           </div>
         </DottedThreeBox>
       </Modal>
-    </DottedThreeBox>
+    </>
   );
 }
 
 export default PersonaType;
 
 const buttonWrapperStyle = center({
-  width: '100%',
-  height: '100%',
+  w: 36,
+  h: 36,
+  backgroundColor: 'white.white_25',
+  borderRadius: 10,
 });
 
 const headingStyle = css({

@@ -108,8 +108,8 @@ export const buttonStyle = cva({
     },
   },
   defaultVariants: {
+    variant: 'primary',
     size: 'm',
     floating: false,
-    variant: 'primary',
   },
 });

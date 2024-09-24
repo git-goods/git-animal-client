@@ -12,7 +12,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 function ShopDropPetPage() {
   const data = useLoaderData<typeof loader>();
-  console.log('data: ', data);
+
   const personas: RenderPersonaItem[] = data.personas;
 
   return (

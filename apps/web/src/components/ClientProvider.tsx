@@ -2,6 +2,7 @@
 
 import { type PropsWithChildren } from 'react';
 import { SessionProvider } from 'next-auth/react';
+import { domMax, LazyMotion } from 'framer-motion';
 
 import QueryClientProvider from '@/apis/QueryClientProvider';
 import Monitoring from '@/components/Monitoring';
@@ -11,10 +12,12 @@ import SessionLoader from './SessionLoader';
 function ClientProvider({ children }: PropsWithChildren) {
   return (
     <QueryClientProvider>
-      <SessionProvider>
-        <Monitoring />
-        <SessionLoader>{children}</SessionLoader>
-      </SessionProvider>
+      <LazyMotion features={domMax}>
+        <SessionProvider>
+          <Monitoring />
+          <SessionLoader>{children}</SessionLoader>
+        </SessionProvider>
+      </LazyMotion>
     </QueryClientProvider>
   );
 }
