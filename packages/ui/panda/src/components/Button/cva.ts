@@ -21,15 +21,6 @@ export const buttonStyle = cva({
     },
   },
   variants: {
-    variant: {
-      primary: {},
-      secondary: {
-        backgroundColor: 'white.white',
-        color: 'black.black',
-        boxShadow:
-          ' 0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px -3px 0px 0px #A1A1B1 inset, 0px 3px 0px 0px #D2DCFE inset',
-      },
-    },
     size: {
       s: {
         padding: '0 24px',
@@ -120,6 +111,5 @@ export const buttonStyle = cva({
     variant: 'primary',
     size: 'm',
     floating: false,
-    variant: 'primary',
   },
 });

@@ -1,11 +1,9 @@
-import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { css } from '_panda/css';
 
-import Header from '@/components/Layout/Header';
+import GNB from '@/components/Layout/GNB';
 
 import { FloatingPointSection } from './FloatingPointSection/FloatingPointSection';
-
 import { AuctionSection } from './AuctionSection';
 import GotchaSection from './GotchaSection';
 import type { TabType } from './type';
@@ -27,7 +25,7 @@ function ShopPage({
 
   return (
     <>
-      <Header />
+      <GNB />
       <FloatingPointSection />
 
       <main className={mainStyle}>
