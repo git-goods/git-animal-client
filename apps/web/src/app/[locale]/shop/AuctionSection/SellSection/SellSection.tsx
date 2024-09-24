@@ -6,15 +6,15 @@ import { css } from '_panda/css';
 import type { PetInfoSchema } from '@/schema/user';
 
 import PetList from './PetList';
-import ShopRow from './SellInputRow';
+import SellInputRow from './SellInputRow';
 
 function SellSection() {
-  const [selectPersona, setSelectPersona] = useState<PetInfoSchema>();
+  const [selectPersona, setSelectPersona] = useState<PetInfoSchema | null>(null);
 
   return (
     <div>
-      <ShopRow item={selectPersona} initPersona={() => setSelectPersona(undefined)} />
-      <h3 className={petHeadingStyle}>Pets</h3>
+      <SellInputRow item={selectPersona} initPersona={() => setSelectPersona(null)} />
+      <h3 className={petHeadingStyle}>My Pets</h3>
       <PetList selectedPersona={selectPersona} onProductClick={setSelectPersona} />
     </div>
   );
@@ -23,6 +23,7 @@ function SellSection() {
 export default SellSection;
 
 const petHeadingStyle = css({
-  marginTop: '12px',
-  marginBottom: '4px',
+  textStyle: 'glyph18.bold',
+  marginBottom: 16,
+  color: 'white.white_100',
 });

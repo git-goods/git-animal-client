@@ -3,8 +3,7 @@ import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { css } from '_panda/css';
 
-// import Header from '@/components/Layout/Header_v2';
-import Header from '@/components/Layout/Header2';
+import GNB from '@/components/Layout/GNB';
 import Layout from '@/components/Layout/Layout';
 
 import RightSection from './RightSection';
@@ -14,8 +13,7 @@ const LazyProfileSection = dynamic(() => import('./ProfileSection'), { ssr: fals
 function Mypage() {
   return (
     <Layout>
-      <Header />
-      {/* <Header /> */}
+      <GNB />
       <main className={mainStyle}>
         <Suspense fallback={<section></section>}>
           <LazyProfileSection />
