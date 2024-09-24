@@ -22,9 +22,6 @@ export function PetGotcha() {
           1 Pet / 1,000 P
         </Button>
         <Button size="l">10 Pets / 10,000 P</Button>
-        <Button size="l" variant="secondary">
-          Ratio Chart
-        </Button>
       </div>
       <div className={petContainerStyle}>
         <Image src="/shop/pet-gotcha-image-card.webp" alt="pet-gotcha-pet" width={1120} height={530} />
