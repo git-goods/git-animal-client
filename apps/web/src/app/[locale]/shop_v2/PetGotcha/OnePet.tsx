@@ -6,9 +6,9 @@ import { X } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { onePetGotcha } from '@/actions/gotcha';
-import { getAnimalTierInfo } from '@/components/AnimalCard/AnimalCard';
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
 import { useTimer } from '@/hooks/useTimer';
+import { getAnimalTierInfo } from '@/utils/animals';
 
 import CardFlipGame from './CardFlipGame';
 
