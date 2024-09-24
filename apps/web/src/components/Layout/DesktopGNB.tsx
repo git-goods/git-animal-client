@@ -2,61 +2,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { css, cx } from '_panda/css';
-import { flex } from '_panda/patterns';
+import { center, flex } from '_panda/patterns';
+import { ChevronRightIcon } from 'lucide-react';
 
 import { getServerAuth } from '@/auth';
-import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
 import { LoginOutBtn } from './LoginOutBtn';
-
-interface NavMenu {
-  label: string;
-  href: string;
-  isExternal?: boolean;
-}
-
-const LOGIN_NAV_MENU_LIST: NavMenu[] = [
-  {
-    label: 'mypage',
-    href: '/mypage',
-  },
-  {
-    label: 'auction',
-    href: '/shop',
-  },
-  {
-    label: 'github',
-    href: GIT_ANIMALS_MAIN_URL,
-    isExternal: true,
-  },
-] as const;
-
-const NON_LOGIN_NAV_MENU_LIST: NavMenu[] = [
-  {
-    label: 'github',
-    href: GIT_ANIMALS_MAIN_URL,
-    isExternal: true,
-  },
-] as const;
-
-const renderNavMenuList = async (list: NavMenu[]) => {
-  const t = await getTranslations('Layout');
-
-  return list.map((item) => {
-    return (
-      <li key={item.label}>
-        {item.isExternal ? (
-          <a target="_blank" href={item.href}>
-            {t(item.label)}
-          </a>
-        ) : (
-          <Link href={item.href}>{t(item.label)}</Link>
-        )}
-      </li>
-    );
-  });
-};
+import type { NavMenu } from './menu.constants';
+import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
 
 export async function DesktopGNB() {
   const session = await getServerAuth();
@@ -69,20 +23,52 @@ export async function DesktopGNB() {
         <Link href="/">
           <Image src="/main/gnb_right_logo.svg" width={154} height={42} alt="logo" />
         </Link>
-        <div>
+        <div className={flex({ alignItems: 'center' })}>
           <ul className={navStyle}>
             {/* TODO : 다국어 지원 추가 */}
             {/* <li>
                   <LanguageSelector />
                 </li> */}
-            {renderNavMenuList(isLogin ? LOGIN_NAV_MENU_LIST : NON_LOGIN_NAV_MENU_LIST)}
+            {isLogin && LOGIN_NAV_MENU_LIST.map((item) => <NavMenuItem key={item.label} item={item} />)}
+            {NON_LOGIN_NAV_MENU_LIST.map((item) => (
+              <NavMenuItem key={item.label} item={item} />
+            ))}
             <DevMenu />
             <LoginOutBtn />
           </ul>
+
+          {session && (
+            <a href="/mypage" className={profileStyle}>
+              <>
+                <div className="profile-image">
+                  <Image src={session.user.image} alt="profile" width={160} height={160} />
+                </div>
+                <button className={center()}>
+                  <span className="profile-name">{session.user.name}</span>
+                  <ChevronRightIcon size={16} color="#000" />
+                </button>
+              </>
+            </a>
+          )}
         </div>
       </header>
       <div className={headerBlockStyle} />
     </>
+  );
+}
+
+async function NavMenuItem({ item }: { item: NavMenu }) {
+  const t = await getTranslations('Layout');
+  return (
+    <li>
+      {item.isExternal ? (
+        <a target="_blank" href={item.href}>
+          {t(item.label)}
+        </a>
+      ) : (
+        <Link href={item.href}>{t(item.label)}</Link>
+      )}
+    </li>
   );
 }
 
@@ -130,4 +116,27 @@ const navStyle = flex({
   gap: '32px',
   alignItems: 'center',
   textTransform: 'uppercase',
+});
+
+const profileStyle = css({
+  padding: '0 33px',
+  display: 'flex',
+  alignItems: 'center',
+  '& .profile-image': {
+    width: '45px',
+    height: '45px',
+    borderRadius: '50%',
+    backgroundColor: '#fff',
+    overflow: 'hidden',
+    '& img': {
+      width: '100%',
+      height: '100%',
+    },
+  },
+  '& .profile-name': {
+    color: 'black.black_75',
+    textStyle: 'glyph16.regular',
+    marginRight: '4px',
+    marginLeft: '12px',
+  },
 });
