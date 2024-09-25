@@ -6,7 +6,8 @@
     "login": "Login",
     "logout": "Logout",
     "github": "Github",
-    "dev": "Dev"
+    "dev": "Dev",
+    "language": "Language"
   },
   "HomePage": {
     "title": "Hello world!",

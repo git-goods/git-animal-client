@@ -67,13 +67,13 @@ export const MobileGNB = () => {
                 </AdaptiveLink>
               ))}
               <button onClick={() => setIsLanguageSelectorOpen(true)}>
-                <MenuItem icon={<Globe size={20} color="#9295A1" />} label="Language" />
+                <MenuItem icon={<Globe size={20} color="#9295A1" />} label={t('language')} />
               </button>
               <button>
                 {isAuth ? (
-                  <MenuItem icon={<LogOutIcon size={20} color="#9295A1" />} label="Logout" />
+                  <MenuItem icon={<LogOutIcon size={20} color="#9295A1" />} label={t('logout')} />
                 ) : (
-                  <MenuItem icon={<LogInIcon size={20} color="#9295A1" />} label="Login" />
+                  <MenuItem icon={<LogInIcon size={20} color="#9295A1" />} label={t('login')} />
                 )}
               </button>
             </ul>

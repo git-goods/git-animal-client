@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { RadioButtonOff, RadioButtonOn } from '@gitanimals/ui-icon';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -83,6 +83,7 @@ const dropdownStyles = css({
 export function MobileLanguageSelector({ onBack }: { onBack: () => void }) {
   const pathname = usePathname();
   const locale = useLocale();
+  const t = useTranslations('Layout');
 
   return (
     <article className={languageSelectorContainerStyle}>
@@ -91,7 +92,7 @@ export function MobileLanguageSelector({ onBack }: { onBack: () => void }) {
           <ChevronLeft size={24} color="#9295A1" />
         </button>
 
-        <div className="center-title">Language</div>
+        <div className="center-title">{t('language')}</div>
       </div>
       <ul className={languageSelectorListStyle}>
         {Object.keys(LOCALE_MAP).map((lang) => (
