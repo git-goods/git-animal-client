@@ -1,23 +1,20 @@
 // import React from 'react';
-import { Suspense } from 'react';
-import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import { css } from '_panda/css';
+import { grid } from '_panda/patterns';
 
 import GNB from '@/components/GNB/GNB';
 
-import RightSection from './RightSection';
-
-const LazyProfileSection = dynamic(() => import('./ProfileSection'), { ssr: false });
+import { ProfileSection } from './ProfileSection';
 
 function Mypage() {
   return (
     <div className={containerStyle}>
       <GNB />
+      <Image src="/mypage/bg-cloud.webp" alt="bg" width={2400} height={1367} className={bgStyle} />
       <main className={mainStyle}>
-        <Suspense fallback={<section></section>}>
-          <LazyProfileSection />
-        </Suspense>
-        <RightSection />
+        <ProfileSection />
+        {/* <RightSection /> */}
       </main>
     </div>
   );
@@ -26,29 +23,26 @@ function Mypage() {
 export default Mypage;
 
 const containerStyle = css({
-  position: 'relative',
-  width: '100%',
-  height: '100%',
   minHeight: '100vh',
-  minWidth: '1400px',
-  backgroundColor: '#297542',
-  '& > img': {
-    zIndex: -1,
-    objectFit: 'cover',
-  },
-  '& > main': {
-    minHeight: '100vh',
-    zIndex: 1,
-  },
+  height: 'fit-content',
+  backgroundColor: '#019C5A',
 });
 
-const mainStyle = css({
-  padding: '170px 0 0',
-  display: 'grid',
-  justifyContent: 'center',
-  gap: '100px',
-  gridTemplateColumns: '230px 1fr',
-  maxWidth: '1200px',
-  width: 'fit-content',
-  margin: '0 auto',
+const bgStyle = css({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: 'calc(100% - 86px)',
+  zIndex: 0,
+  objectFit: 'cover',
+  marginTop: '86px',
+});
+
+const mainStyle = grid({
+  gap: 80,
+  gridTemplateColumns: '222px 1fr',
+  position: 'relative',
+  zIndex: 1,
+  margin: '120px 200px 0',
 });
