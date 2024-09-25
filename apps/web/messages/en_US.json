@@ -2,6 +2,7 @@
   "Layout": {
     "mypage": "MyPage",
     "auction": "Auction",
+    "shop": "Shop",
     "login": "Login",
     "logout": "Logout",
     "github": "Github",

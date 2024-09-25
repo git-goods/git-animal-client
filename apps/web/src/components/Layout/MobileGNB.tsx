@@ -1,23 +1,30 @@
 'use client';
+import type { ReactNode } from 'react';
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { useLocale, useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import { GithubIcon, RadioButtonOff, RadioButtonOn } from '@gitanimals/ui-icon';
+import { RadioButtonOff, RadioButtonOn } from '@gitanimals/ui-icon';
 import type { Transition, Variants } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Globe, LogInIcon, LogOutIcon, Menu, ShoppingCart } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Globe, LogInIcon, LogOutIcon, Menu } from 'lucide-react';
 
-import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import type { Locale } from '@/i18n/routing';
 import { Link, usePathname } from '@/i18n/routing';
 import { useClientSession } from '@/utils/clientAuth';
 
+import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
+
 export const MobileGNB = () => {
-  const session = useClientSession();
+  const t = useTranslations('Layout');
+
+  const { status } = useClientSession();
+  const isAuth = status === 'authenticated';
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isLanguageSelectorOpen, setIsLanguageSelectorOpen] = useState(true);
+  const [isLanguageSelectorOpen, setIsLanguageSelectorOpen] = useState(false);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -47,17 +54,22 @@ export const MobileGNB = () => {
             className={mobileMenuStyle}
           >
             <ul className={mobileMenuListStyle}>
-              <Link href="/shop">
-                <MenuItem icon={<ShoppingCart size={20} color="#9295A1" />} label="Auction" />
-              </Link>
-              <a href={GIT_ANIMALS_MAIN_URL} target="_blank">
-                <MenuItem icon={<GithubIcon width={22} height={22} color="#6e717a" />} label="Github" />
-              </a>
+              {isAuth &&
+                LOGIN_NAV_MENU_LIST.map((menu) => (
+                  <AdaptiveLink href={menu.href} key={menu.label}>
+                    <MenuItem {...menu} label={t(menu.label)} />
+                  </AdaptiveLink>
+                ))}
+              {NON_LOGIN_NAV_MENU_LIST.map((menu) => (
+                <AdaptiveLink href={menu.href} key={menu.label}>
+                  <MenuItem {...menu} label={t(menu.label)} />
+                </AdaptiveLink>
+              ))}
               <button onClick={() => setIsLanguageSelectorOpen(true)}>
                 <MenuItem icon={<Globe size={20} color="#9295A1" />} label="Language" />
               </button>
               <button>
-                {session ? (
+                {isAuth ? (
                   <MenuItem icon={<LogOutIcon size={20} color="#9295A1" />} label="Logout" />
                 ) : (
                   <MenuItem icon={<LogInIcon size={20} color="#9295A1" />} label="Login" />
@@ -72,7 +84,14 @@ export const MobileGNB = () => {
   );
 };
 
-function MenuItem({ icon, label, isArrow = true }: { icon: React.ReactNode; label: string; isArrow?: boolean }) {
+const AdaptiveLink: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => {
+  if (isExternalLink(href)) {
+    return <a href={href}>{children}</a>;
+  }
+  return <Link href={href}>{children}</Link>;
+};
+
+function MenuItem({ icon, label, isArrow = true }: { icon: ReactNode; label: string; isArrow?: boolean }) {
   return (
     <motion.li className={menuItemStyle}>
       <div>
@@ -92,7 +111,7 @@ const LOCALE_MAP: Record<Locale, string> = {
 
 function LanguageSelector({ onBack }: { onBack: () => void }) {
   const pathname = usePathname();
-
+  const locale = useLocale();
   return (
     <article className={languageSelectorContainerStyle}>
       <div className={cx(mobileHeaderContentStyle, languageSelectorHeaderStyle)}>
@@ -104,10 +123,10 @@ function LanguageSelector({ onBack }: { onBack: () => void }) {
       </div>
       <ul className={languageSelectorListStyle}>
         {Object.keys(LOCALE_MAP).map((lang) => (
-          <Link href={pathname} key={lang} locale={lang as Locale} passHref>
+          <Link href={pathname} key={lang} locale={lang as Locale}>
             <li key={lang}>
               <div className="label">{LOCALE_MAP[lang as Locale]}</div>
-              <div>{true ? <RadioButtonOn /> : <RadioButtonOff />}</div>
+              <div>{locale === lang ? <RadioButtonOn /> : <RadioButtonOff />}</div>
             </li>
           </Link>
         ))}
