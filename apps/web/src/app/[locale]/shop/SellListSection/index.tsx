@@ -5,7 +5,7 @@ import type { Product } from '@gitanimals/api';
 
 import { useGetMyProducts } from '@/apis/auctions/useGetMyProduct';
 import Pagination from '@/components/Pagination';
-import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
+import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import type { ProductType } from '@/schema/action';
 import type { PaginationSchema } from '@/schema/pagination';
@@ -31,6 +31,7 @@ function SellListSection() {
           return { ...product, paymentState: 'EDIT' };
         }),
       }),
+      placeholderData: (prevData) => prevData,
     },
   );
 
@@ -51,6 +52,7 @@ function SellListSection() {
         </div>
 
         <div className={tbodyCss}>
+          {!data && Array.from({ length: 8 }).map((_, index) => <ShopTableRowViewSkeleton key={`skeleton-${index}`} />)}
           {data?.products.map((product) => {
             return (
               <ShopTableRowView

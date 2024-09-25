@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useGetHistory } from '@/apis/auctions/useGetHistory';
 import Pagination from '@/components/Pagination';
-import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
+import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 
 import { useSearchOptions } from '../useSearchOptions';
@@ -53,6 +53,7 @@ function HistoryTable() {
         </div>
 
         <div className={tbodyCss}>
+          {!data && Array.from({ length: 8 }).map((_, index) => <ShopTableRowViewSkeleton key={`skeleton-${index}`} />)}
           {data?.products.map((product) => {
             return (
               <ShopTableRowView
