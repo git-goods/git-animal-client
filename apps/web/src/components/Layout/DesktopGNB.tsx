@@ -130,7 +130,7 @@ const navStyle = flex({
 });
 
 const profileStyle = css({
-  padding: '0 33px',
+  pl: '32px',
   display: 'flex',
   alignItems: 'center',
   '& .profile-image': {
