@@ -1,26 +1,26 @@
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
-import { Suspense } from 'react';
+import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { css } from '_panda/css';
+import { flex } from '_panda/patterns';
 
-import { prevTextTokenBlack3 } from '@/styles/prevTextToken';
+import { useGetUser } from '@/apis/user/useGetUser';
+import { addNumberComma } from '@/utils/number';
 
-import PointInfo from './PointInfo';
-
-export default function ProfileSection() {
+export function ProfileSection() {
   const { data } = useSession();
+  const { data: userData } = useGetUser();
 
   return (
     <section>
       <div className={profileImageStyle}>
-        <img src={data?.user.image} alt="profile" width={160} height={160} />
+        <Image src={data?.user.image ?? ''} alt="profile" width={160} height={160} />
       </div>
       <p className={profileNameStyle}>{data?.user.name}</p>
-      <Suspense>
-        <PointInfo />
-      </Suspense>
+      <div className={pointStyle}>
+        <Image src="/mypage/coin.svg" alt="coin" width={24} height={24} /> {addNumberComma(userData?.points ?? 0)}
+      </div>
     </section>
   );
 }
@@ -38,15 +38,14 @@ const profileImageStyle = css({
 });
 
 const profileNameStyle = css({
-  color: '#fff',
+  color: 'white.white',
+  textStyle: 'glyph48.bold',
+  marginTop: '8px',
+  marginBottom: '4px',
+});
 
-  fontSize: '40px',
-  fontStyle: 'normal',
-  fontWeight: 400,
-  lineHeight: '140%' /* 56px */,
-  marginTop: '40px',
-  marginBottom: '30px',
-
-  whiteSpace: 'nowrap',
-  ...prevTextTokenBlack3,
+const pointStyle = flex({
+  color: 'white.white',
+  textStyle: 'glyph24.regular',
+  gap: '6',
 });
