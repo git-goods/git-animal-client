@@ -30,7 +30,13 @@ function ProductTable() {
     [searchOptions],
   );
 
-  const { data } = useGetProducts({ pageNumber: currentPage, ...searchOptions }, { enabled: Boolean(myId) });
+  const { data } = useGetProducts(
+    { pageNumber: currentPage, ...searchOptions },
+    {
+      enabled: Boolean(myId),
+      placeholderData: (prevData) => prevData,
+    },
+  );
 
   return (
     <>

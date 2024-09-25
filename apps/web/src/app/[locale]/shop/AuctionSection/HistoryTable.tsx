@@ -18,10 +18,15 @@ function HistoryTable() {
 
   const { searchOptions } = useSearchOptions();
 
-  const { data } = useGetHistory({
-    pageNumber: currentPage,
-    ...searchOptions,
-  });
+  const { data } = useGetHistory(
+    {
+      pageNumber: currentPage,
+      ...searchOptions,
+    },
+    {
+      placeholderData: (prevData) => prevData,
+    },
+  );
 
   useEffect(
     function 옵션_변경시_페이지_초기화() {
@@ -30,7 +35,7 @@ function HistoryTable() {
     [searchOptions],
   );
 
-  // TODO: 개선하기 @sumi-0011 
+  // TODO: 개선하기 @sumi-0011
   const getHistoryActionLabel = (soldAt: string) => {
     return String(soldAt)?.slice(2, 10).replace(/-/g, '.');
   };
