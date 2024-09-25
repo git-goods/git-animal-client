@@ -1,20 +1,20 @@
 'use client';
+
 import type { ReactNode } from 'react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import { RadioButtonOff, RadioButtonOn } from '@gitanimals/ui-icon';
 import type { Transition, Variants } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Globe, LogInIcon, LogOutIcon, Menu } from 'lucide-react';
+import { ChevronRight, Globe, LogInIcon, LogOutIcon, Menu } from 'lucide-react';
 
 import { AdaptiveLink } from '@/components/AdaptiveLink';
-import type { Locale } from '@/i18n/routing';
-import { Link, usePathname } from '@/i18n/routing';
+import { Link } from '@/i18n/routing';
 import { useClientSession } from '@/utils/clientAuth';
 
+import { MobileLanguageSelector } from './LanguageSelector';
 import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
 
 export const MobileGNB = () => {
@@ -80,7 +80,7 @@ export const MobileGNB = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      {isLanguageSelectorOpen && <LanguageSelector onBack={() => setIsLanguageSelectorOpen(false)} />}
+      {isLanguageSelectorOpen && <MobileLanguageSelector onBack={() => setIsLanguageSelectorOpen(false)} />}
     </>
   );
 };
@@ -97,70 +97,20 @@ function MenuItem({ icon, label, isArrow = true }: { icon: ReactNode; label: str
   );
 }
 
-// TODO : LanguageSelector 공통화
-const LOCALE_MAP: Record<Locale, string> = {
-  en_US: 'English',
-  ko_KR: '한국어',
-};
-
-function LanguageSelector({ onBack }: { onBack: () => void }) {
-  const pathname = usePathname();
-  const locale = useLocale();
-  return (
-    <article className={languageSelectorContainerStyle}>
-      <div className={cx(mobileHeaderContentStyle, languageSelectorHeaderStyle)}>
-        <button onClick={onBack}>
-          <ChevronLeft size={24} color="#9295A1" />
-        </button>
-
-        <div className={mobileLogoStyle}>Language</div>
-      </div>
-      <ul className={languageSelectorListStyle}>
-        {Object.keys(LOCALE_MAP).map((lang) => (
-          <Link href={pathname} key={lang} locale={lang as Locale}>
-            <li key={lang}>
-              <div className="label">{LOCALE_MAP[lang as Locale]}</div>
-              <div>{locale === lang ? <RadioButtonOn /> : <RadioButtonOff />}</div>
-            </li>
-          </Link>
-        ))}
-      </ul>
-    </article>
-  );
-}
-
-const languageSelectorListStyle = css({
+const mobileHeaderContentStyle = css({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  position: 'relative',
   width: '100%',
-
-  textStyle: 'glyph16.regular',
-
-  '& li': {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '18px 22px 18px 20px',
-
-    borderBottom: '1px solid',
-    borderColor: 'gray.gray_900',
-    backgroundColor: 'white',
-  },
+  height: 44,
 });
 
-const languageSelectorContainerStyle = css({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor: '#fff',
-  maxHeight: '100vh',
-  overflowY: 'auto',
-  zIndex: 2002,
-});
-
-const languageSelectorHeaderStyle = css({
-  padding: '0 16px',
-  textStyle: 'glyph18.regular',
+const mobileLogoStyle = css({
+  width: 'fit-content',
+  position: 'absolute',
+  left: '50%',
+  transform: 'translateX(-50%)',
 });
 
 const headerBaseStyle = flex({
@@ -182,23 +132,6 @@ const mobileHeaderStyle = css({
   _mobile: {
     display: 'flex',
   },
-});
-
-const mobileHeaderContentStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  position: 'relative',
-  width: '100%',
-  height: 44,
-});
-
-const mobileLogoStyle = css({
-  // width: '80px',
-  width: 'fit-content',
-  position: 'absolute',
-  left: '50%',
-  transform: 'translateX(-50%)',
 });
 
 const mobileMenuStyle = css({
