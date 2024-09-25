@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 import { getProductsQueryKey, useGetProducts } from '@/apis/auctions/useGetProducts';
 import { useBuyProduct, useDeleteProduct } from '@/apis/auctions/useProduct';
 import Pagination from '@/components/Pagination';
-import ShopTableRowView from '@/components/ProductTable/ShopTableRowView';
+import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import { useLoading } from '@/store/loading';
 import { useClientUser } from '@/utils/clientAuth';
@@ -30,7 +30,13 @@ function ProductTable() {
     [searchOptions],
   );
 
-  const { data } = useGetProducts({ pageNumber: currentPage, ...searchOptions }, { enabled: Boolean(myId) });
+  const { data } = useGetProducts(
+    { pageNumber: currentPage, ...searchOptions },
+    {
+      enabled: Boolean(myId),
+      placeholderData: (prevData) => prevData,
+    },
+  );
 
   return (
     <>
@@ -45,6 +51,7 @@ function ProductTable() {
         </div>
 
         <div className={tbodyCss}>
+          {!data && Array.from({ length: 8 }).map((_, index) => <ShopTableRowViewSkeleton key={`skeleton-${index}`} />)}
           {data?.products.map((product) => {
             return <ProductTableRow product={product} key={product.id} />;
           })}

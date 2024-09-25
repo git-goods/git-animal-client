@@ -90,6 +90,14 @@ export default defineConfig({
             transform: 'translate3d(-100%, 0, 0)',
           },
         },
+        skeletonLoading: {
+          '0%': {
+            backgroundPosition: '200% 0',
+          },
+          '100%': {
+            backgroundPosition: '-200% 0',
+          },
+        },
       },
     },
   },

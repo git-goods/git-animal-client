@@ -1,12 +1,12 @@
+'use client';
+
 import React, { useState } from 'react';
 import { css } from '_panda/css';
+import { Button, Modal } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { useChangeProductPrice, useDeleteProduct } from '@/apis/auctions/useProduct';
-import DottedDoubleBox from '@/components/DottedBox/DottedDoubleBox';
-import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
-import Modal from '@/components/Modal/Modal';
 
 function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: () => void; productId?: string }) {
   const queryClient = useQueryClient();
@@ -51,75 +51,51 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <DottedThreeBox width={402} height={164} bgColor="rgba(255, 255, 255, 0.7)">
-        <div>
-          <div className={inputWrapperStyle}>
-            <DottedDoubleBox width={358} height={84} bgColor="#fff">
-              <span className={inputLabelStyle}>price</span>
-              <input
-                className={inputStyle}
-                placeholder="Type price..."
-                type="number"
-                value={Boolean(price) ? price : ''}
-                onChange={(e) => setPrice(Number(e.target.value))}
-              />
-            </DottedDoubleBox>
-          </div>
-          <div className={buttonWrapperStyle}>
-            <button onClick={onSave}>
-              <DottedDoubleBox width={103} height={36} bgColor="#3791FF">
-                Save
-              </DottedDoubleBox>
-            </button>
-            <button onClick={onClose}>
-              <DottedDoubleBox width={103} height={36} bgColor="#6DB33F">
-                Cancel
-              </DottedDoubleBox>
-            </button>
-            <button onClick={onDelete}>
-              <DottedDoubleBox width={103} height={36} bgColor="#F6869F">
-                Delete
-              </DottedDoubleBox>
-            </button>
-          </div>
-        </div>
-      </DottedThreeBox>
+      <h2 className={titleStyle}>Edit Product</h2>
+      <input
+        className={inputStyle}
+        placeholder="Type price..."
+        type="number"
+        value={Boolean(price) ? price : ''}
+        onChange={(e) => setPrice(Number(e.target.value))}
+      />
+      <div className={buttonWrapperStyle}>
+        <Button onClick={onSave} variant="secondary" size="s">
+          Save
+        </Button>
+        <Button onClick={onDelete} variant="primary" size="s">
+          Delete
+        </Button>
+      </div>
     </Modal>
   );
 }
 
 export default EditModal;
 
-const inputWrapperStyle = css({
-  position: 'relative',
-  margin: '6px auto 8px',
-  width: 'fit-content',
-});
-
-const inputLabelStyle = css({
-  position: 'absolute',
-  color: '#b5b5b5',
-  fontSize: '10px',
-  fontStyle: 'normal',
-  fontWeight: 400,
-  lineHeight: '140%' /* 14px */,
-  letterSpacing: '-0.413px',
-  left: '12px',
-  top: '8px',
+const titleStyle = css({
+  textStyle: 'glyph20.regular',
+  textAlign: 'left',
+  color: 'white.white_100',
+  width: '100%',
 });
 
 const inputStyle = css({
-  border: 'none',
+  display: 'flex',
+  height: '55px',
+  padding: '14px 14px 13px 20px',
+  alignItems: 'flex-start',
+  gap: '8px',
   width: '100%',
-  height: '100%',
   outline: 'none',
-  backgroundColor: 'transparent',
-  textAlign: 'center',
-  fontSize: '20px',
-  fontStyle: 'normal',
-  fontWeight: 400,
-  lineHeight: '140%' /* 28px */,
-  letterSpacing: '-0.413px',
+  borderRadius: '8px',
+  border: '1px solid rgba(255, 255, 255, 0.25)',
+  textStyle: 'glyph16.regular',
+  color: 'white.white_100',
+  '&::placeholder': {
+    textStyle: 'glyph16.regular',
+    color: 'white.white_75',
+  },
   '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
     WebkitAppearance: 'none',
     margin: 0,
@@ -128,11 +104,6 @@ const inputStyle = css({
 
 const buttonWrapperStyle = css({
   display: 'flex',
-  justifyContent: 'space-between',
-  margin: 0,
-  width: '100%',
-  maxWidth: '358px',
+  justifyContent: 'flex-end',
   gap: '8px',
-  textAlign: 'center',
-  padding: '0 8px',
 });

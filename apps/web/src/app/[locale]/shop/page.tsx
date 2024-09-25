@@ -1,11 +1,10 @@
 import { notFound } from 'next/navigation';
-import { css } from '_panda/css';
 
 import GNB from '@/components/Layout/GNB';
 
 import { FloatingPointSection } from './FloatingPointSection/FloatingPointSection';
 import { AuctionSection } from './AuctionSection';
-import GotchaSection from './GotchaSection';
+import { PetGotcha } from './PetGotcha';
 import type { TabType } from './type';
 import { TABS } from './type';
 
@@ -28,8 +27,8 @@ function ShopPage({
       <GNB />
       <FloatingPointSection />
 
-      <main className={mainStyle}>
-        <GotchaSection />
+      <main>
+        <PetGotcha />
         <AuctionSection selectedTab={searchParamsTab} />
       </main>
     </>
@@ -37,13 +36,3 @@ function ShopPage({
 }
 
 export default ShopPage;
-
-const mainStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
-  minHeight: 'calc(100vh - 100px)',
-  backgroundColor: '#297542',
-});
