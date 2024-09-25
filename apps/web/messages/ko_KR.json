@@ -19,7 +19,9 @@
   "Gotcha": {
     "pet-gotcha-desc": "1,000 포인트로 S+ 등급 펫을 뽑으세요!",
     "choose-one-card": "원하시는 카드 하나를 골라주세요!",
-    "close-notice": "{count}초 후에 닫힙니다."
+    "close-notice-message": "초 후에 닫힙니다.",
+    "get-persona-success": "펫을 성공적으로 뽑았습니다!",
+    "get-persona-fail": "펫 뽑기에 실패했습니다."
   },
   "Shop": {
     "no-mobile-support": "현재 모바일은 지원하지 않습니다.<br/> 데스크탑으로 접속해주세요."

@@ -19,7 +19,9 @@
   "Gotcha": {
     "pet-gotcha-desc": "Draw a S+ Grade pet for 1,000 points",
     "choose-one-card": "Choose one card you want!",
-    "close-notice": "This will close in {count} seconds."
+    "close-notice-message": "! This will close.",
+    "get-persona-success": "You have successfully drawn a pet!",
+    "get-persona-fail": "Failed to draw a pet."
   },
   "Shop": {
     "no-mobile-support": "Currently, mobile is not supported.<br/> Please connect to the desktop."
