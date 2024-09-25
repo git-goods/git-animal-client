@@ -5,21 +5,56 @@ import axios from 'axios';
 import { getServerAuth } from '@/auth';
 import type { ApiErrorScheme } from '@/exceptions/type';
 
-export const interceptorRequestFulfilled = async (config: InternalAxiosRequestConfig) => {
-  let session;
-  if (typeof window !== 'undefined') {
-    // session for client component
-    session = await getSession();
-  } else {
-    // session for server component
-    session = await getServerAuth();
+interface CachedSession {
+  accessToken: string;
+  expiresAt: number;
+}
+
+let cachedSession: CachedSession | null = null;
+let sessionPromise: Promise<CachedSession | null> | null = null;
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+const getSessionWithCache = async (): Promise<CachedSession | null> => {
+  if (cachedSession && Date.now() < cachedSession.expiresAt) {
+    return cachedSession;
   }
 
-  const accessToken = session?.user?.accessToken;
+  if (sessionPromise) {
+    return sessionPromise;
+  }
+
+  sessionPromise = (async () => {
+    try {
+      let session;
+      if (typeof window !== 'undefined') {
+        session = await getSession();
+      } else {
+        session = await getServerAuth();
+      }
+
+      if (session?.user?.accessToken) {
+        cachedSession = {
+          accessToken: session.user.accessToken,
+          expiresAt: Date.now() + CACHE_DURATION,
+        };
+        return cachedSession;
+      }
+      return null;
+    } finally {
+      sessionPromise = null;
+    }
+  })();
+
+  return sessionPromise;
+};
+
+export const interceptorRequestFulfilled = async (config: InternalAxiosRequestConfig) => {
+  const session = await getSessionWithCache();
+
   if (!config.headers) return config;
 
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
+  if (session?.accessToken) {
+    config.headers.Authorization = `Bearer ${session.accessToken}`;
   }
 
   return config;
