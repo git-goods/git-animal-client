@@ -24,6 +24,17 @@
     "get-persona-fail": "펫 뽑기에 실패했습니다."
   },
   "Shop": {
-    "no-mobile-support": "현재 모바일은 지원하지 않습니다.<br/> 데스크탑으로 접속해주세요."
+    "no-mobile-support": "현재 모바일은 지원하지 않습니다. 데스크탑으로 접속해주세요.",
+    "buy-product-success": "구매 완료!",
+    "buy-product-fail": "구매에 실패했습니다.",
+    "buy": "구매",
+    "pet": "펫",
+    "name": "이름",
+    "grade": "등급",
+    "level": "레벨",
+    "price": "가격",
+    "date": "날짜",
+    "sell": "판매",
+    "price-you-want": "판매하고 싶은 가격을 입력해주세요. "
   }
 }

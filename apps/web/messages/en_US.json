@@ -24,6 +24,17 @@
     "get-persona-fail": "Failed to draw a pet."
   },
   "Shop": {
-    "no-mobile-support": "Currently, mobile is not supported.<br/> Please connect to the desktop."
+    "no-mobile-support": "Currently, mobile is not supported. Please connect to the desktop.",
+    "buy-product-success": "Purchase complete!",
+    "buy-product-fail": "Failed to purchase.",
+    "buy": "buy",
+    "pet": "Pet",
+    "name": "Name",
+    "grade": "Grade",
+    "level": "Level",
+    "price": "Price",
+    "date": "Date",
+    "sell": "Sell",
+    "price-you-want": "Price you want"
   }
 }

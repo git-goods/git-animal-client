@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { getProductsQueryKey, useGetProducts } from '@/apis/auctions/useGetProducts';
 import { useBuyProduct, useDeleteProduct } from '@/apis/auctions/useProduct';
+import { USER_QUERY_KEY } from '@/apis/user/useGetUser';
 import Pagination from '@/components/Pagination';
 import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
@@ -18,6 +20,7 @@ import { useSearchOptions } from '../useSearchOptions';
 import { tableCss, tbodyCss, theadCss } from './table.styles';
 
 function ProductTable() {
+  const t = useTranslations('Shop');
   const { id: myId } = useClientUser();
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -42,11 +45,11 @@ function ProductTable() {
     <>
       <div className={tableCss}>
         <div className={theadCss}>
-          <span>Pet</span>
-          <span>Name</span>
-          <span>Grade</span>
-          <span>Level</span>
-          <span>Price</span>
+          <span>{t('pet')}</span>
+          <span>{t('name')}</span>
+          <span>{t('grade')}</span>
+          <span>{t('level')}</span>
+          <span>{t('price')}</span>
           <span></span>
         </div>
 
@@ -57,7 +60,6 @@ function ProductTable() {
           })}
         </div>
       </div>
-
       {data && <Pagination {...data.pagination} currentPage={currentPage} onSetPage={setCurrentPage} />}
     </>
   );
@@ -69,21 +71,19 @@ function ProductTableRow({ product }: { product: Product }) {
   const queryClient = useQueryClient();
   const { id: myId } = useClientUser();
   const { setLoading } = useLoading();
+  const t = useTranslations('Shop');
 
   const productStatus = product.sellerId === myId ? 'MY_SELLING' : product.paymentState;
 
   const { mutate: buyProduct } = useBuyProduct({
     onSuccess: () => {
-      toast.success('Purchase complete!', {
-        position: 'top-center',
+      toast.success(t('buy-product-success'), {
         duration: 1000,
       });
       queryClient.invalidateQueries({
         queryKey: getProductsQueryKey(),
       });
-      queryClient.invalidateQueries({
-        queryKey: ['user'], // TODO: user query key
-      });
+      queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
     },
     onSettled: () => {
       setLoading(false);
@@ -126,7 +126,7 @@ function ProductTableRow({ product }: { product: Product }) {
       persona={product.persona}
       price={product.price}
       onAction={onAction}
-      actionLabel={ACTION_BUTTON_OBJ[productStatus].label}
+      actionLabel={t(ACTION_BUTTON_OBJ[productStatus].label)}
       actionColor={ACTION_BUTTON_OBJ[productStatus].color}
     />
   );
