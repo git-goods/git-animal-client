@@ -8,7 +8,7 @@ import { getServerAuth } from '@/auth';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
-import { LoginOutBtn } from './LoginOutBtn';
+import { LoginButton, LogoutButton } from '../AuthButton';
 
 async function Header() {
   const t = await getTranslations('Layout');
@@ -52,9 +52,7 @@ async function Header() {
                 <Link href="/dev">DEV</Link>
               </li>
             )}
-            <li>
-              <LoginOutBtn />
-            </li>
+            <li>{isLogin ? <LogoutButton /> : <LoginButton />}</li>
           </ul>
         </div>
       </header>

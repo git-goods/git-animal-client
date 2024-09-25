@@ -9,7 +9,8 @@ import { getServerAuth } from '@/auth';
 import { AdaptiveLink } from '@/components/AdaptiveLink';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
-import { LoginOutBtn } from './LoginOutBtn';
+import { LoginButton, LogoutButton } from '../AuthButton';
+
 import type { NavMenu } from './menu.constants';
 import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
 
@@ -36,9 +37,7 @@ export async function DesktopGNB() {
               <NavMenuItem key={t(item.label)} item={item} />
             ))}
             <DevMenu />
-            <li>
-              <LoginOutBtn />
-            </li>
+            <li>{isLogin ? <LogoutButton /> : <LoginButton />}</li>
           </ul>
 
           {session && (
