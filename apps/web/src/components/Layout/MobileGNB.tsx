@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
+import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
 import type { Transition, Variants } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -32,13 +32,13 @@ export const MobileGNB = () => {
 
   return (
     <>
-      <header className={cx(headerBaseStyle, mobileHeaderStyle)}>
+      <header className={mobileHeaderStyle}>
         <div className={mobileHeaderContentStyle}>
           <button onClick={toggleMenu}>
             <Menu size={24} color="black" />
           </button>
 
-          <Link href="/" className={mobileLogoStyle}>
+          <Link href="/" className="center-title">
             <Image src="/main/gnb_right_logo.svg" alt="gitanimals-logo" width={80} height={22} />
           </Link>
         </div>
@@ -54,7 +54,7 @@ export const MobileGNB = () => {
             transition={menuTransition}
             className={mobileMenuStyle}
           >
-            <ul className={mobileMenuListStyle}>
+            <ul className="menu-list">
               {isAuth &&
                 LOGIN_NAV_MENU_LIST.map((menu) => (
                   <AdaptiveLink href={menu.href} key={menu.label}>
@@ -104,16 +104,11 @@ const mobileHeaderContentStyle = css({
   position: 'relative',
   width: '100%',
   height: 44,
+  '& .center-title': { width: 'fit-content', position: 'absolute', left: '50%', transform: 'translateX(-50%)' },
 });
 
-const mobileLogoStyle = css({
-  width: 'fit-content',
-  position: 'absolute',
-  left: '50%',
-  transform: 'translateX(-50%)',
-});
-
-const headerBaseStyle = flex({
+const mobileHeaderStyle = css({
+  // common
   justifyContent: 'space-between',
   alignItems: 'center',
   zIndex: 2000,
@@ -121,13 +116,10 @@ const headerBaseStyle = flex({
   padding: '0 20px',
   top: 0,
   height: 60,
-  width: '100%',
   backgroundColor: 'white',
-});
 
-const mobileHeaderStyle = css({
+  // mobile
   width: '100vw',
-
   display: 'none',
   _mobile: {
     display: 'flex',
@@ -148,12 +140,12 @@ const mobileMenuStyle = css({
   _mobile: {
     display: 'flex',
   },
-});
 
-const mobileMenuListStyle = css({
-  width: '100%',
-  '& >  *': {
+  '& .menu-list': {
     width: '100%',
+    '& >  *': {
+      width: '100%',
+    },
   },
 });
 
