@@ -10,6 +10,7 @@ import type { Transition, Variants } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Globe, LogInIcon, LogOutIcon, Menu } from 'lucide-react';
 
+import { AdaptiveLink } from '@/components/AdaptiveLink';
 import type { Locale } from '@/i18n/routing';
 import { Link, usePathname } from '@/i18n/routing';
 import { useClientSession } from '@/utils/clientAuth';
@@ -84,13 +85,6 @@ export const MobileGNB = () => {
   );
 };
 
-const AdaptiveLink: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => {
-  if (isExternalLink(href)) {
-    return <a href={href}>{children}</a>;
-  }
-  return <Link href={href}>{children}</Link>;
-};
-
 function MenuItem({ icon, label, isArrow = true }: { icon: ReactNode; label: string; isArrow?: boolean }) {
   return (
     <motion.li className={menuItemStyle}>
@@ -161,7 +155,7 @@ const languageSelectorContainerStyle = css({
   backgroundColor: '#fff',
   maxHeight: '100vh',
   overflowY: 'auto',
-  zIndex: 101,
+  zIndex: 2002,
 });
 
 const languageSelectorHeaderStyle = css({
@@ -172,7 +166,7 @@ const languageSelectorHeaderStyle = css({
 const headerBaseStyle = flex({
   justifyContent: 'space-between',
   alignItems: 'center',
-  zIndex: 100,
+  zIndex: 2000,
   position: 'fixed',
   padding: '0 20px',
   top: 0,
@@ -216,7 +210,7 @@ const mobileMenuStyle = css({
   maxHeight: 'calc(100vh - 60px)',
   overflowY: 'auto',
   boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-  zIndex: 99,
+  zIndex: 1999,
 
   _mobile: {
     display: 'flex',

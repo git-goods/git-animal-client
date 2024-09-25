@@ -6,6 +6,7 @@ import { center, flex } from '_panda/patterns';
 import { ChevronRightIcon } from 'lucide-react';
 
 import { getServerAuth } from '@/auth';
+import { AdaptiveLink } from '@/components/AdaptiveLink';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
 import { LoginOutBtn } from './LoginOutBtn';
@@ -13,6 +14,7 @@ import type { NavMenu } from './menu.constants';
 import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
 
 export async function DesktopGNB() {
+  const t = await getTranslations('Layout');
   const session = await getServerAuth();
 
   const isLogin = Boolean(session);
@@ -31,10 +33,12 @@ export async function DesktopGNB() {
                 </li> */}
             {isLogin && LOGIN_NAV_MENU_LIST.map((item) => <NavMenuItem key={item.label} item={item} />)}
             {NON_LOGIN_NAV_MENU_LIST.map((item) => (
-              <NavMenuItem key={item.label} item={item} />
+              <NavMenuItem key={t(item.label)} item={item} />
             ))}
             <DevMenu />
-            <LoginOutBtn />
+            <li>
+              <LoginOutBtn />
+            </li>
           </ul>
 
           {session && (
@@ -58,16 +62,9 @@ export async function DesktopGNB() {
 }
 
 async function NavMenuItem({ item }: { item: NavMenu }) {
-  const t = await getTranslations('Layout');
   return (
     <li>
-      {item.isExternal ? (
-        <a target="_blank" href={item.href}>
-          {t(item.label)}
-        </a>
-      ) : (
-        <Link href={item.href}>{t(item.label)}</Link>
-      )}
+      <AdaptiveLink href={item.href}>{item.label}</AdaptiveLink>
     </li>
   );
 }
@@ -75,7 +72,7 @@ async function NavMenuItem({ item }: { item: NavMenu }) {
 const headerBaseStyle = flex({
   justifyContent: 'space-between',
   alignItems: 'center',
-  zIndex: 100,
+  zIndex: 2000,
   position: 'fixed',
   padding: '0 20px',
   top: 0,

@@ -5,6 +5,7 @@
     "login": "Login",
     "logout": "Logout",
     "github": "Github",
+    "shop": "Shop",
     "dev": "Dev"
   },
   "HomePage": {
