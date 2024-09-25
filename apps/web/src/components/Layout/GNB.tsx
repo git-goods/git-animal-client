@@ -1,9 +1,10 @@
 import { DesktopGNB } from './DesktopGNB';
+import { MobileGNB } from './MobileGNB';
 
 async function GNB() {
   return (
     <>
-      {/* <MobileGNB /> */}
+      <MobileGNB />
       <DesktopGNB />
     </>
   );

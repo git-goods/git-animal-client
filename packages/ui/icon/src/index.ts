@@ -4,3 +4,4 @@ export { BehanceIcon } from './icons/BehanceIcon';
 export { XIcon } from './icons/XIcon';
 export { SearchIcon } from './icons/SearchIcon';
 export { CloseIcon } from './icons/CloseIcon';
+export { RadioButtonOn, RadioButtonOff } from './icons/RadioButton';

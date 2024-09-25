@@ -1,11 +1,13 @@
 {
   "Layout": {
-    "mypage": "MyPage",
-    "auction": "Auction",
-    "login": "Login",
-    "logout": "Logout",
+    "mypage": "마이페이지",
+    "auction": "상점",
+    "login": "로그인",
+    "logout": "로그아웃",
     "github": "Github",
-    "dev": "Dev"
+    "shop": "상점",
+    "dev": "Dev",
+    "language": "언어"
   },
   "HomePage": {
     "title": "Hello world!",

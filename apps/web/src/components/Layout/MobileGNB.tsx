@@ -1,37 +1,56 @@
 'use client';
-import React, { useState } from 'react';
+
+import type { ReactNode } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
-import { css, cx } from '_panda/css';
+import { useTranslations } from 'next-intl';
+import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
-import { GithubIcon } from '@gitanimals/ui-icon';
 import type { Transition, Variants } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronRight, Globe, LogInIcon, LogOutIcon, Menu, ShoppingCart } from 'lucide-react';
+import { ChevronRight, Globe, LogInIcon, LogOutIcon, Menu } from 'lucide-react';
 
-import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
+import { AdaptiveLink } from '@/components/AdaptiveLink';
 import { Link } from '@/i18n/routing';
 import { useClientSession } from '@/utils/clientAuth';
 
+import { MobileLanguageSelector } from './LanguageSelector';
+import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
+
 export const MobileGNB = () => {
-  const session = useClientSession();
+  const t = useTranslations('Layout');
+
+  const { status, data } = useClientSession();
+  const isAuth = status === 'authenticated';
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isLanguageSelectorOpen, setIsLanguageSelectorOpen] = useState(false);
+
+  const menuList = isAuth ? [...LOGIN_NAV_MENU_LIST, ...NON_LOGIN_NAV_MENU_LIST] : NON_LOGIN_NAV_MENU_LIST;
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <div>
-      <header className={cx(headerBaseStyle, mobileHeaderStyle)}>
+    <>
+      <header className={mobileHeaderStyle}>
         <div className={mobileHeaderContentStyle}>
           <button onClick={toggleMenu}>
             <Menu size={24} color="black" />
           </button>
 
-          <div className={mobileLogoStyle}>
+          <Link href="/" className="center-title">
             <Image src="/main/gnb_right_logo.svg" alt="gitanimals-logo" width={80} height={22} />
-          </div>
+          </Link>
+
+          {isAuth && (
+            <Link href="/mypage">
+              <div className="profile-image">
+                <Image src={data.user.image} alt="profile" width={28} height={28} />
+              </div>
+            </Link>
+          )}
         </div>
       </header>
 
@@ -45,32 +64,32 @@ export const MobileGNB = () => {
             transition={menuTransition}
             className={mobileMenuStyle}
           >
-            <ul className={mobileMenuListStyle}>
-              <Link href="/shop">
-                <MenuItem icon={<ShoppingCart size={20} color="#9295A1" />} label="Auction" />
-              </Link>
-              <a href={GIT_ANIMALS_MAIN_URL} target="_blank">
-                <MenuItem icon={<GithubIcon width={22} height={22} color="#6e717a" />} label="Github" />
-              </a>
-              <button>
-                <MenuItem icon={<Globe size={20} color="#9295A1" />} label="Language" />
+            <ul className="menu-list">
+              {menuList.map((menu) => (
+                <AdaptiveLink href={menu.href} key={menu.label}>
+                  <MenuItem {...menu} label={t(menu.label)} />
+                </AdaptiveLink>
+              ))}
+              <button onClick={() => setIsLanguageSelectorOpen(true)}>
+                <MenuItem icon={<Globe size={20} color="#9295A1" />} label={t('language')} />
               </button>
               <button>
-                {session ? (
-                  <MenuItem icon={<LogOutIcon size={20} color="#9295A1" />} label="Logout" />
+                {isAuth ? (
+                  <MenuItem icon={<LogOutIcon size={20} color="#9295A1" />} label={t('logout')} />
                 ) : (
-                  <MenuItem icon={<LogInIcon size={20} color="#9295A1" />} label="Login" />
+                  <MenuItem icon={<LogInIcon size={20} color="#9295A1" />} label={t('login')} />
                 )}
               </button>
             </ul>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+      {isLanguageSelectorOpen && <MobileLanguageSelector onBack={() => setIsLanguageSelectorOpen(false)} />}
+    </>
   );
 };
 
-function MenuItem({ icon, label, isArrow = true }: { icon: React.ReactNode; label: string; isArrow?: boolean }) {
+function MenuItem({ icon, label, isArrow = true }: { icon: ReactNode; label: string; isArrow?: boolean }) {
   return (
     <motion.li className={menuItemStyle}>
       <div>
@@ -82,40 +101,39 @@ function MenuItem({ icon, label, isArrow = true }: { icon: React.ReactNode; labe
   );
 }
 
-const headerBaseStyle = flex({
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  zIndex: 100,
-  position: 'fixed',
-  padding: '0 20px',
-  top: 0,
-  height: 60,
-  width: '100%',
-  backgroundColor: 'white',
-});
-
-const mobileHeaderStyle = css({
-  width: '100vw',
-
-  display: 'none',
-  _mobile: {
-    display: 'flex',
-  },
-});
-
 const mobileHeaderContentStyle = css({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   position: 'relative',
-  width: 'calc(100vw - 40px)',
+  width: '100%',
+  height: 44,
+  '& .center-title': { width: 'fit-content', position: 'absolute', left: '50%', transform: 'translateX(-50%)' },
+  '& .profile-image': {
+    width: 28,
+    height: 28,
+    borderRadius: '50%',
+    overflow: 'hidden',
+  },
 });
 
-const mobileLogoStyle = css({
-  width: '80px',
-  position: 'absolute',
-  left: '50%',
-  transform: 'translateX(-50%)',
+const mobileHeaderStyle = css({
+  // common
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  zIndex: 2000,
+  position: 'fixed',
+  padding: '0 20px',
+  top: 0,
+  height: 60,
+  backgroundColor: 'white',
+
+  // mobile
+  width: '100vw',
+  display: 'none',
+  _mobile: {
+    display: 'flex',
+  },
 });
 
 const mobileMenuStyle = css({
@@ -127,16 +145,17 @@ const mobileMenuStyle = css({
   maxHeight: 'calc(100vh - 60px)',
   overflowY: 'auto',
   boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-  zIndex: 99,
+  zIndex: 1999,
 
   _mobile: {
     display: 'flex',
   },
-});
 
-const mobileMenuListStyle = css({
-  '& >  *': {
+  '& .menu-list': {
     width: '100%',
+    '& >  *': {
+      width: '100%',
+    },
   },
 });
 

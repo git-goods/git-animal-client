@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { css } from '_panda/css';
+import { useLocale, useTranslations } from 'next-intl';
+import { css, cx } from '_panda/css';
+import { RadioButtonOff, RadioButtonOn } from '@gitanimals/ui-icon';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Globe } from 'lucide-react';
+import { ChevronLeft, Globe } from 'lucide-react';
 
 import { Link, type Locale, usePathname } from '@/i18n/routing';
 
@@ -12,7 +14,7 @@ const LOCALE_MAP: Record<Locale, string> = {
   ko_KR: '한국어',
 };
 
-const LanguageSelector = () => {
+export const DesktopLanguageSelector = () => {
   const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +36,7 @@ const LanguageSelector = () => {
           >
             {Object.keys(LOCALE_MAP).map((lang) => (
               <Link href={pathname} key={lang} locale={lang as Locale} passHref>
-                <motion.button key={lang} onClick={() => setIsOpen(false)} className={optionStyles}>
+                <motion.button key={lang} onClick={() => setIsOpen(false)} className="option">
                   {LOCALE_MAP[lang as Locale]}
                 </motion.button>
               </Link>
@@ -45,8 +47,6 @@ const LanguageSelector = () => {
     </div>
   );
 };
-
-export default LanguageSelector;
 
 const containerStyles = css({
   position: 'relative',
@@ -65,17 +65,91 @@ const dropdownStyles = css({
   minWidth: 'fit-content',
   width: '100%',
   zIndex: 200,
+
+  '& .option': {
+    w: '100%',
+    textAlign: 'left',
+    px: '16px',
+    py: '8px',
+    transition: 'background-color 0.2s',
+    color: '#000',
+    whiteSpace: 'nowrap',
+    _hover: {
+      textDecoration: 'underline',
+    },
+  },
 });
 
-const optionStyles = css({
-  w: '100%',
-  textAlign: 'left',
-  px: '16px',
-  py: '8px',
-  transition: 'background-color 0.2s',
-  color: '#000',
-  whiteSpace: 'nowrap',
-  _hover: {
-    textDecoration: 'underline',
+export function MobileLanguageSelector({ onBack }: { onBack: () => void }) {
+  const pathname = usePathname();
+  const locale = useLocale();
+  const t = useTranslations('Layout');
+
+  return (
+    <article className={languageSelectorContainerStyle}>
+      <div className={cx(languageSelectorHeaderStyle)}>
+        <button onClick={onBack}>
+          <ChevronLeft size={24} color="#9295A1" />
+        </button>
+
+        <div className="center-title">{t('language')}</div>
+      </div>
+      <ul className={languageSelectorListStyle}>
+        {Object.keys(LOCALE_MAP).map((lang) => (
+          <Link href={pathname} key={lang} locale={lang as Locale}>
+            <li key={lang}>
+              <div className="label">{LOCALE_MAP[lang as Locale]}</div>
+              <div>{locale === lang ? <RadioButtonOn /> : <RadioButtonOff />}</div>
+            </li>
+          </Link>
+        ))}
+      </ul>
+    </article>
+  );
+}
+
+const languageSelectorContainerStyle = css({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: '#fff',
+  maxHeight: '100vh',
+  overflowY: 'auto',
+  zIndex: 2002,
+});
+
+const languageSelectorHeaderStyle = css({
+  padding: '0 16px',
+  textStyle: 'glyph18.regular',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  position: 'relative',
+  width: '100%',
+  height: 44,
+
+  '& .center-title': {
+    width: 'fit-content',
+    position: 'absolute',
+    left: '50%',
+    transform: 'translateX(-50%)',
+  },
+});
+
+const languageSelectorListStyle = css({
+  width: '100%',
+  textStyle: 'glyph16.regular',
+
+  '& li': {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '18px 22px 18px 20px',
+
+    borderBottom: '1px solid',
+    borderColor: 'gray.gray_900',
+    backgroundColor: 'white',
   },
 });
