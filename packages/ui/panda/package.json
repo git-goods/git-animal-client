@@ -8,6 +8,9 @@
     "lint": "eslint . ",
     "generate:component": "turbo gen react-component"
   },
+  "dependencies": {
+    "lucide-react": "^0.408.0"
+  },
   "devDependencies": {
     "@pandacss/dev": "^0.41.0",
     "@gitanimals/eslint-config": "workspace:*",

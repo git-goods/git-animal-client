@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import type { Product } from '@gitanimals/api/src/auction';
 import { Button } from '@gitanimals/ui-panda';
 
@@ -44,6 +44,17 @@ function ShopTableRowView({ onAction, actionLabel, actionColor, ...item }: Props
 
 export default ShopTableRowView;
 
+export function ShopTableRowViewSkeleton() {
+  return <div className={cx(rowStyle, skeletonStyle)} />;
+}
+
+const skeletonStyle = css({
+  background:
+    'linear-gradient(90deg, token(colors.gray.800) 25%, token(colors.gray.600) 50%, token(colors.gray.200) 75%, token(colors.gray.800) 100%)',
+  backgroundSize: '200% 100%',
+  animation: `skeletonLoading 1.5s infinite linear`,
+});
+
 export const rowStyle = css({
   width: '100%',
   height: 80,
@@ -61,6 +72,8 @@ export const rowStyle = css({
 
   '& button': {
     color: 'black.black',
+    width: '100%',
+    paddingX: 6,
   },
 
   '& *': {
