@@ -69,4 +69,5 @@ const divCss = css({
   maxW: '1120px',
   width: '100%',
   zIndex: 1,
+  height: '924px',
 });
