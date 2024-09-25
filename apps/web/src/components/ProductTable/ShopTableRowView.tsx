@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import type { Product } from '@gitanimals/api/src/auction';
 import { Button } from '@gitanimals/ui-panda';
+import { snakeToTitleCase } from '@gitanimals/util-common';
 
 import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
@@ -29,7 +30,7 @@ function ShopTableRowView({ onAction, actionLabel, actionColor, ...item }: Props
       <div>
         <Image src={getPersonaImage(item.persona.personaType)} width={60} height={67} alt="animal1" />
       </div>
-      <span>{item.persona.personaType}</span>
+      <span>{snakeToTitleCase(item.persona.personaType)}</span>
       <span>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</span>
       <span>{item.persona.personaLevel}</span>
       <span>{item.price}</span>

@@ -1,4 +1,7 @@
 import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
+import { css } from '_panda/css';
+import { center } from '_panda/patterns';
 
 import GNB from '@/components/Layout/GNB';
 
@@ -8,7 +11,7 @@ import { PetGotcha } from './PetGotcha';
 import type { TabType } from './type';
 import { TABS } from './type';
 
-function ShopPage({
+async function ShopPage({
   searchParams,
 }: {
   searchParams: {
@@ -16,6 +19,7 @@ function ShopPage({
   };
 }) {
   const searchParamsTab = searchParams.tab ?? 'products';
+  const t = await getTranslations('Shop');
 
   // NOTE: 탭이 없을 때는 기본값으로 products를 사용
   if (!TABS.includes(searchParamsTab)) {
@@ -24,15 +28,42 @@ function ShopPage({
 
   return (
     <>
-      <GNB />
-      <FloatingPointSection />
+      <div className={subStyle}>
+        <GNB />
+        <FloatingPointSection />
 
-      <main>
-        <PetGotcha />
-        <AuctionSection selectedTab={searchParamsTab} />
-      </main>
+        <main>
+          <PetGotcha />
+          <AuctionSection selectedTab={searchParamsTab} />
+        </main>
+      </div>
+      <div className={noticeStyle}>{t('no-mobile-support')}</div>
     </>
   );
 }
 
 export default ShopPage;
+
+const subStyle = css({
+  _mobile: {
+    display: 'none',
+  },
+});
+
+const noticeStyle = center({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  background: '#454545',
+  color: 'white',
+  zIndex: 1000,
+  display: 'none',
+  textStyle: 'glyph24.bold',
+  lineHeight: '1.5',
+  textAlign: 'center',
+  _mobile: {
+    display: 'flex',
+  },
+});

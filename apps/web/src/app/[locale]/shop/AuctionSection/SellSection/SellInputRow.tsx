@@ -1,14 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import type { ChangeEventHandler } from 'react';
 import React, { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { Button } from '@gitanimals/ui-panda';
+import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
 import { rowStyle } from '@/components/ProductTable/ShopTableRowView';
-import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
 import type { PetInfoSchema } from '@/schema/user';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
@@ -24,6 +25,7 @@ interface Props {
 }
 
 function SellInputRow({ item, initPersona }: Props) {
+  const t = useTranslations('Shop');
   const { price, resetPrice, onChangePriceInput } = usePrice();
 
   const queryClient = useQueryClient();
@@ -65,11 +67,11 @@ function SellInputRow({ item, initPersona }: Props) {
   return (
     <div className={tableCss}>
       <div className={theadCss}>
-        <span>Pet</span>
-        <span>Name</span>
-        <span>Grade</span>
-        <span>Level</span>
-        <span>Price</span>
+        <span>{t('pet')}</span>
+        <span>{t('name')}</span>
+        <span>{t('grade')}</span>
+        <span>{t('level')}</span>
+        <span>{t('price')}</span>
         <span></span>
       </div>
 
@@ -79,20 +81,20 @@ function SellInputRow({ item, initPersona }: Props) {
             <div>
               <img src={getPersonaImage(item.type)} alt={item.type} width={60} height={67} />
             </div>
-            <div>{item.type}</div>
+            <div>{snakeToTitleCase(item.type)}</div>
             <div>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</div>
             <div>{item.level}</div>
             <div>
               <input
                 className={inputStyle}
                 inputMode="numeric"
-                placeholder="price you want"
+                placeholder={t('price-you-want')}
                 value={price}
                 onChange={onChangePriceInput}
               />
             </div>
             <Button variant="secondary" onClick={onSellClick}>
-              {ACTION_BUTTON_OBJ.SELL.label}
+              {t('sell')}
             </Button>
           </>
         )}

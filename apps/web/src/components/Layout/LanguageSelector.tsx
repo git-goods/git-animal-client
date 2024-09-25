@@ -22,7 +22,7 @@ export const DesktopLanguageSelector = () => {
   return (
     <div className={containerStyles}>
       <button onClick={() => setIsOpen(!isOpen)}>
-        <Globe size={24} />
+        <Globe size={24} color="#000000BF" />
       </button>
 
       <AnimatePresence>
@@ -55,25 +55,26 @@ const containerStyles = css({
 
 const dropdownStyles = css({
   position: 'absolute',
-  right: '0',
-  left: '0',
+  right: '-40px',
   mt: '4px',
   bg: 'white',
-  boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.1)',
-  borderRadius: '12px',
+  borderRadius: '6px',
   overflow: 'hidden',
-  minWidth: 'fit-content',
+  minWidth: '100px',
   width: '100%',
   zIndex: 200,
+  boxShadow: '0px 3px 5px 2px rgba(0, 0, 0, 0.25)',
+  py: '8px',
 
   '& .option': {
     w: '100%',
-    textAlign: 'left',
+    textAlign: 'center',
     px: '16px',
     py: '8px',
     transition: 'background-color 0.2s',
     color: '#000',
     whiteSpace: 'nowrap',
+    textStyle: 'glyph16.regular',
     _hover: {
       textDecoration: 'underline',
     },

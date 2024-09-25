@@ -19,6 +19,37 @@
   "Gotcha": {
     "pet-gotcha-desc": "1,000 포인트로 S+ 등급 펫을 뽑으세요!",
     "choose-one-card": "원하시는 카드 하나를 골라주세요!",
-    "close-notice": "{count}초 후에 닫힙니다."
+    "close-notice-message": "초 후에 닫힙니다.",
+    "get-persona-success": "펫을 성공적으로 뽑았습니다!",
+    "get-persona-fail": "펫 뽑기에 실패했습니다."
+  },
+  "Shop": {
+    "no-mobile-support": "현재 모바일은 지원하지 않습니다. 데스크탑으로 접속해주세요.",
+    "buy-product-success": "구매 완료!",
+    "buy-product-fail": "구매에 실패했습니다.",
+    "buy": "구매",
+    "pet": "펫",
+    "name": "이름",
+    "grade": "등급",
+    "level": "레벨",
+    "price": "가격",
+    "date": "날짜",
+    "sell": "판매",
+    "price-you-want": "판매하고 싶은 가격을 입력해주세요.",
+    "sell-product-success": "판매 완료!",
+    "sell-product-fail": "판매에 실패했습니다.",
+    "cancel": "취소",
+    "delete": "삭제",
+    "delete-product-success": "판매 취소 완료!",
+    "delete-product-fail": "판매 취소에 실패했습니다.",
+    "edit": "수정"
+  },
+  "NoticeToast": {
+    "go": "GO!",
+    "visit": "Visit!",
+    "star-now": "Star Now!",
+    "visit-shop": "New! 새로운 상점 페이지 방문하기",
+    "github-star": "GitAnimals를 즐기고 계신가요? \n깃허브 스타 부탁드립니다! ⭐",
+    "update-shop-renewal": "Update: 상점 페이지가 리뉴얼되었습니다!\n지금 바로 확인해보세요!"
   }
 }

@@ -3,19 +3,21 @@ import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { css, cx } from '_panda/css';
 import { center, flex } from '_panda/patterns';
+import { GithubIcon } from '@gitanimals/ui-icon';
 import { ChevronRightIcon } from 'lucide-react';
 
 import { getServerAuth } from '@/auth';
 import { AdaptiveLink } from '@/components/AdaptiveLink';
+import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
 import { LoginButton, LogoutButton } from '../AuthButton';
 
+import { DesktopLanguageSelector } from './LanguageSelector';
 import type { NavMenu } from './menu.constants';
 import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
 
 export async function DesktopGNB() {
-  const t = await getTranslations('Layout');
   const session = await getServerAuth();
 
   const isLogin = Boolean(session);
@@ -28,18 +30,13 @@ export async function DesktopGNB() {
         </Link>
         <div className={flex({ alignItems: 'center' })}>
           <ul className={navStyle}>
-            {/* TODO : 다국어 지원 추가 */}
-            {/* <li>
-                  <LanguageSelector />
-                </li> */}
             {isLogin && LOGIN_NAV_MENU_LIST.map((item) => <NavMenuItem key={item.label} item={item} />)}
             {NON_LOGIN_NAV_MENU_LIST.map((item) => (
-              <NavMenuItem key={t(item.label)} item={item} />
+              <NavMenuItem key={item.label} item={item} />
             ))}
             <DevMenu />
             <li>{isLogin ? <LogoutButton /> : <LoginButton />}</li>
           </ul>
-
           {session && (
             <a href="/mypage" className={profileStyle}>
               <>
@@ -53,6 +50,12 @@ export async function DesktopGNB() {
               </>
             </a>
           )}
+          <div className={iconWrapperStyle}>
+            <DesktopLanguageSelector />
+            <a href={GIT_ANIMALS_MAIN_URL} target="_blank">
+              <GithubIcon width={24} height={24} color="#000" fillOpacity={0.75} />
+            </a>
+          </div>
         </div>
       </header>
       <div className={headerBlockStyle} />
@@ -61,9 +64,10 @@ export async function DesktopGNB() {
 }
 
 async function NavMenuItem({ item }: { item: NavMenu }) {
+  const t = await getTranslations('Layout');
   return (
     <li>
-      <AdaptiveLink href={item.href}>{item.label}</AdaptiveLink>
+      <AdaptiveLink href={item.href}>{t(item.label)}</AdaptiveLink>
     </li>
   );
 }
@@ -78,6 +82,17 @@ const headerBaseStyle = flex({
   height: 60,
   width: '100%',
   backgroundColor: 'white',
+});
+
+const iconWrapperStyle = css({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '32px',
+  margin: '0 32px',
+
+  '& > *': {
+    height: '24px',
+  },
 });
 
 async function DevMenu() {
@@ -115,7 +130,7 @@ const navStyle = flex({
 });
 
 const profileStyle = css({
-  padding: '0 33px',
+  pl: '32px',
   display: 'flex',
   alignItems: 'center',
   '& .profile-image': {

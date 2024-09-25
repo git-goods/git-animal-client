@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
 
 import { useGetMyProducts } from '@/apis/auctions/useGetMyProduct';
@@ -17,6 +18,8 @@ import EditModal from './EditModal';
 const SELL_LIST_ACTION_OBJ = ACTION_BUTTON_OBJ['EDIT'];
 
 function SellListSection() {
+  const t = useTranslations('Shop');
+
   const [editProductId, setEditProductId] = useState<string>();
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -43,11 +46,11 @@ function SellListSection() {
     <>
       <div className={tableCss}>
         <div className={theadCss}>
-          <span>Pet</span>
-          <span>Name</span>
-          <span>Grade</span>
-          <span>Level</span>
-          <span>Price</span>
+          <span>{t('pet')}</span>
+          <span>{t('name')}</span>
+          <span>{t('grade')}</span>
+          <span>{t('level')}</span>
+          <span>{t('price')}</span>
           <span></span>
         </div>
 
@@ -61,7 +64,7 @@ function SellListSection() {
                 persona={product.persona}
                 price={product.price}
                 onAction={onEditAction}
-                actionLabel={SELL_LIST_ACTION_OBJ.label}
+                actionLabel={t('edit')}
                 actionColor={SELL_LIST_ACTION_OBJ.color}
               />
             );

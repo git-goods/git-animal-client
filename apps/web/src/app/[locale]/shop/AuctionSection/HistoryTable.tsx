@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { useGetHistory } from '@/apis/auctions/useGetHistory';
 import Pagination from '@/components/Pagination';
@@ -14,6 +15,7 @@ import { tableCss, tbodyCss, theadCss } from './table.styles';
 const HISTORY_ACTION_OBJ = ACTION_BUTTON_OBJ['SELL_HISTORY'];
 
 function HistoryTable() {
+  const t = useTranslations('Shop');
   const [currentPage, setCurrentPage] = useState(0);
 
   const { searchOptions } = useSearchOptions();
@@ -44,12 +46,12 @@ function HistoryTable() {
     <>
       <div className={tableCss}>
         <div className={theadCss}>
-          <span>Pet</span>
-          <span>Name</span>
-          <span>Grade</span>
-          <span>Level</span>
-          <span>Price</span>
-          <span>Date</span>
+          <span>{t('pet')}</span>
+          <span>{t('name')}</span>
+          <span>{t('grade')}</span>
+          <span>{t('level')}</span>
+          <span>{t('price')}</span>
+          <span>{t('date')}</span>
         </div>
 
         <div className={tbodyCss}>

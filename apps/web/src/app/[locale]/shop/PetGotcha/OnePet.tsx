@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
+import { useQueryClient } from '@tanstack/react-query';
 import { X } from 'lucide-react';
 import { toast } from 'sonner';
 
+import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
+import { USER_QUERY_KEY } from '@/apis/user/useGetUser';
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
 import { useTimer } from '@/hooks/useTimer';
 import { onePetGotcha } from '@/serverActions/gotcha';
@@ -17,7 +20,9 @@ interface Props {
 }
 
 function OnePet({ onClose }: Props) {
+  const queryClient = useQueryClient();
   const t = useTranslations('Gotcha');
+
   const [getPersona, setGetPersona] = useState<{
     type: string;
     dropRate: string;
@@ -40,10 +45,20 @@ function OnePet({ onClose }: Props) {
       };
       setGetPersona(persona);
       startTimer();
+
+      queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
+      toast.success(t('get-persona-success'));
     } catch (error) {
+      console.error('ㄷㄷㄷㄷㄷㄷ', error);
       // TOdo:
-      toast.error('Failed to get persona');
+      toast.error(t('get-persona-fail'));
+
       onClose();
+      sendMessageToErrorChannel(`<!here>
+        🔥 펫 뽑기 실패 🔥
+        Error Message: 펫 뽑기 실패
+        \`\`\`
+      `);
     }
   };
 
@@ -63,7 +78,12 @@ function OnePet({ onClose }: Props) {
         </button>
         <h2 className={headingStyle}>{t('choose-one-card')}</h2>
         <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} />
-        {isRunning && <p className={noticeMessageStyle}>{t('close-notice', { count })}</p>}
+        {isRunning && (
+          <p className={noticeMessageStyle}>
+            {count} {t('close-notice-message')}
+          </p>
+        )}
+        {/* {isRunning && <p className={noticeMessageStyle}>{t('close-notice', { count: 3 })}</p>} */}
       </div>
     </article>
   );
