@@ -20,7 +20,7 @@ import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
 export const MobileGNB = () => {
   const t = useTranslations('Layout');
 
-  const { status } = useClientSession();
+  const { status, data } = useClientSession();
   const isAuth = status === 'authenticated';
 
   const [isOpen, setIsOpen] = useState(false);
@@ -41,6 +41,14 @@ export const MobileGNB = () => {
           <Link href="/" className="center-title">
             <Image src="/main/gnb_right_logo.svg" alt="gitanimals-logo" width={80} height={22} />
           </Link>
+
+          {isAuth && (
+            <Link href="/mypage">
+              <div className="profile-image">
+                <Image src={data.user.image} alt="profile" width={28} height={28} />
+              </div>
+            </Link>
+          )}
         </div>
       </header>
 
@@ -105,6 +113,12 @@ const mobileHeaderContentStyle = css({
   width: '100%',
   height: 44,
   '& .center-title': { width: 'fit-content', position: 'absolute', left: '50%', transform: 'translateX(-50%)' },
+  '& .profile-image': {
+    width: 28,
+    height: 28,
+    borderRadius: '50%',
+    overflow: 'hidden',
+  },
 });
 
 const mobileHeaderStyle = css({
