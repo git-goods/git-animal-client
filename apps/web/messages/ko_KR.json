@@ -43,5 +43,13 @@
     "delete-product-success": "판매 취소 완료!",
     "delete-product-fail": "판매 취소에 실패했습니다.",
     "edit": "수정"
+  },
+  "NoticeToast": {
+    "go": "GO!",
+    "visit": "Visit!",
+    "star-now": "Star Now!",
+    "visit-shop": "New! 새로운 상점 페이지 방문하기",
+    "github-star": "GitAnimals를 즐기고 계신가요? \n깃허브 스타 부탁드립니다! ⭐",
+    "update-shop-renewal": "Update: 상점 페이지가 리뉴얼되었습니다!\n지금 바로 확인해보세요!"
   }
 }

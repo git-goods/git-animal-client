@@ -18,7 +18,7 @@ export const useSearchOptions = () => {
 
   const personaType = searchParams.get('personaType') ?? '';
   const orderType: OrderType = (searchParams.get('orderType') ?? 'CREATED_AT') as OrderType;
-  const sortDirection: SortDirection = (searchParams.get('sortDirection') ?? 'ASC') as SortDirection;
+  const sortDirection: SortDirection = (searchParams.get('sortDirection') ?? 'DESC') as SortDirection;
 
   const searchOptions = useMemo<SearchOptions>(
     () => ({

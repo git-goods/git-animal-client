@@ -43,5 +43,13 @@
     "delete-product-success": "Cancellation complete!",
     "delete-product-fail": "Failed to cancellation.",
     "edit": "Edit"
+  },
+  "NoticeToast": {
+    "go": "GO!",
+    "visit": "Visit",
+    "star-now": "Star Now!",
+    "visit-shop": "New! Visit the GitAnimals Shop page",
+    "github-star": "Enjoying GitAnimals?\nGive us a GitHub Star! ⭐",
+    "update-shop-renewal": "Update: The shop page has been renewed. Check it out!"
   }
 }

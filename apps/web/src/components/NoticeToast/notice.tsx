@@ -1,10 +1,10 @@
 export const NOTICE_LIST = [
   {
     key: 'visit-shop',
-    label: `New! Visit the GitAnimals Shop page`,
+    label: 'visit-shop',
     redirect: {
       url: '/shop',
-      label: 'Visit!',
+      label: 'visit',
     },
     isAuth: true,
     closeButton: false,
@@ -12,22 +12,22 @@ export const NOTICE_LIST = [
   },
   {
     key: 'github-star',
-    label: 'Enjoying GitAnimals?\nGive us a GitHub Star! ⭐',
+    label: 'github-star',
     redirect: {
       url: 'https://github.com/git-goods/gitanimals',
       isOutLink: true,
-      label: 'Star Now!',
+      label: 'star-now',
     },
     isAuth: true,
     closeButton: false,
     visible: true,
   },
   {
-    key: 'visit-shop',
-    label: 'Update: Try our new shop sorting options',
+    key: 'update-shop-renewal',
+    label: 'update-shop-renewal',
     redirect: {
       url: '/shop',
-      label: 'Go!',
+      label: 'go',
     },
     isAuth: true,
     closeButton: false,
