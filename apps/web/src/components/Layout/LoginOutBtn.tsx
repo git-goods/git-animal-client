@@ -1,12 +1,12 @@
 'use client';
 
 import type { ComponentProps } from 'react';
-import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@gitanimals/ui-panda';
+import { Button, Button } from '@gitanimals/ui-panda';
 
-import { getGithubOauthUrl } from '@/apis/auth/getGithubOauth';
 import { useClientSession } from '@/utils/clientAuth';
+
+import { login, logout } from '../AuthButton';
 
 type LoginOutBtnProps = Omit<ComponentProps<typeof Button>, 'children' | 'onClick'>;
 
@@ -19,12 +19,8 @@ export function LoginOutBtn(props: LoginOutBtnProps) {
 export function LoginBtn(props: LoginOutBtnProps) {
   const t = useTranslations('Layout');
 
-  const onLogin = async () => {
-    await getGithubOauthUrl();
-  };
-
   return (
-    <Button onClick={onLogin} {...props}>
+    <Button onClick={login} {...props}>
       {t('login')}
     </Button>
   );
@@ -33,12 +29,8 @@ export function LoginBtn(props: LoginOutBtnProps) {
 export function LogoutBtn(props: LoginOutBtnProps) {
   const t = useTranslations('Layout');
 
-  const onLogout = async () => {
-    await signOut();
-  };
-
   return (
-    <Button onClick={onLogout} {...props}>
+    <Button onClick={logout} {...props}>
       {t('logout')}
     </Button>
   );
