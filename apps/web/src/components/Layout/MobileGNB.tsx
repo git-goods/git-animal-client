@@ -8,9 +8,10 @@ import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
 import type { Transition, Variants } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronRight, Globe, LogInIcon, LogOutIcon, Menu } from 'lucide-react';
+import { ChevronRight, Globe, LogOutIcon, Menu } from 'lucide-react';
 
 import { AdaptiveLink } from '@/components/AdaptiveLink';
+import { RenderLoginButton, RenderLogoutButton } from '@/components/AuthButton';
 import { Link } from '@/i18n/routing';
 import { useClientSession } from '@/utils/clientAuth';
 
@@ -73,13 +74,23 @@ export const MobileGNB = () => {
               <button onClick={() => setIsLanguageSelectorOpen(true)}>
                 <MenuItem icon={<Globe size={20} color="#9295A1" />} label={t('language')} />
               </button>
-              <button>
-                {isAuth ? (
-                  <MenuItem icon={<LogOutIcon size={20} color="#9295A1" />} label={t('logout')} />
-                ) : (
-                  <MenuItem icon={<LogInIcon size={20} color="#9295A1" />} label={t('login')} />
-                )}
-              </button>
+              {isAuth ? (
+                <RenderLogoutButton
+                  render={(props) => (
+                    <button onClick={props.onClick}>
+                      <MenuItem icon={<LogOutIcon size={20} color="#9295A1" />} label={props.label} />
+                    </button>
+                  )}
+                />
+              ) : (
+                <RenderLoginButton
+                  render={(props) => (
+                    <button onClick={props.onClick}>
+                      <MenuItem icon={<LogOutIcon size={20} color="#9295A1" />} label={props.label} />
+                    </button>
+                  )}
+                />
+              )}
             </ul>
           </motion.div>
         )}
