@@ -35,6 +35,13 @@
     "price": "Price",
     "date": "Date",
     "sell": "Sell",
-    "price-you-want": "Price you want"
+    "price-you-want": "Price you want",
+    "sell-product-success": "Sell complete!",
+    "sell-product-fail": "Failed to sell.",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "delete-product-success": "Cancellation complete!",
+    "delete-product-fail": "Failed to cancellation.",
+    "edit": "Edit"
   }
 }

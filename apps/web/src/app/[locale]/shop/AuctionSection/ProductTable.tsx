@@ -92,8 +92,7 @@ function ProductTableRow({ product }: { product: Product }) {
 
   const { mutate: deleteProduct } = useDeleteProduct({
     onSuccess: () => {
-      toast.success('Cancellation complete!', {
-        position: 'top-center',
+      toast.success(t('delete-product-success'), {
         duration: 1000,
       });
 
@@ -103,6 +102,11 @@ function ProductTableRow({ product }: { product: Product }) {
     },
     onSettled: () => {
       setLoading(false);
+    },
+    onError: () => {
+      toast.error(t('delete-product-fail'), {
+        duration: 1000,
+      });
     },
   });
 

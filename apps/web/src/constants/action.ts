@@ -12,11 +12,11 @@ export const ACTION_BUTTON_OBJ: Record<
     color: '#00B2FF',
   },
   SOLD_OUT: {
-    label: 'cancel!',
+    label: 'cancel',
     color: '#FF0000',
   },
   MY_SELLING: {
-    label: 'cancel!',
+    label: 'cancel',
     color: '#FF0000',
   },
   SELL: {
