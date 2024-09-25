@@ -26,6 +26,8 @@ export const MobileGNB = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLanguageSelectorOpen, setIsLanguageSelectorOpen] = useState(false);
 
+  const menuList = isAuth ? [...LOGIN_NAV_MENU_LIST, ...NON_LOGIN_NAV_MENU_LIST] : NON_LOGIN_NAV_MENU_LIST;
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -63,13 +65,7 @@ export const MobileGNB = () => {
             className={mobileMenuStyle}
           >
             <ul className="menu-list">
-              {isAuth &&
-                LOGIN_NAV_MENU_LIST.map((menu) => (
-                  <AdaptiveLink href={menu.href} key={menu.label}>
-                    <MenuItem {...menu} label={t(menu.label)} />
-                  </AdaptiveLink>
-                ))}
-              {NON_LOGIN_NAV_MENU_LIST.map((menu) => (
+              {menuList.map((menu) => (
                 <AdaptiveLink href={menu.href} key={menu.label}>
                   <MenuItem {...menu} label={t(menu.label)} />
                 </AdaptiveLink>
