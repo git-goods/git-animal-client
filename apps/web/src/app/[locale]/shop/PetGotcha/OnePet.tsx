@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
+import { postGotcha } from '@gitanimals/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { X } from 'lucide-react';
 import { toast } from 'sonner';
@@ -10,7 +11,6 @@ import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { USER_QUERY_KEY } from '@/apis/user/useGetUser';
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
 import { useTimer } from '@/hooks/useTimer';
-import { onePetGotcha } from '@/serverActions/gotcha';
 import { getAnimalTierInfo } from '@/utils/animals';
 
 import CardFlipGame from './CardFlipGame';
@@ -33,7 +33,7 @@ function OnePet({ onClose }: Props) {
 
   const onAction = async () => {
     try {
-      const res = await onePetGotcha();
+      const res = await postGotcha({ count: 1 });
 
       const resultPersona = res.gotchaResults[0];
       const tier = getAnimalTierInfo(Number(resultPersona.ratio.replace('%', '')));
