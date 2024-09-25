@@ -61,6 +61,8 @@ export const rowStyle = css({
 
   '& button': {
     color: 'black.black',
+    width: '100%',
+    paddingX: 6,
   },
 
   '& *': {
