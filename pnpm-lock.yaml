@@ -422,6 +422,10 @@ importers:
         version: 5.4.5
 
   packages/ui/panda:
+    dependencies:
+      lucide-react:
+        specifier: ^0.408.0
+        version: 0.408.0(react@18.2.0)
     devDependencies:
       '@gitanimals/eslint-config':
         specifier: workspace:*
