@@ -63,6 +63,9 @@
 }
 
 /* toast */
+[data-sonner-toaster] {
+  z-index: 500;
+}
 .toast-title {
   white-space: break-spaces;
 }
