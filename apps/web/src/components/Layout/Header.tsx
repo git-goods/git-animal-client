@@ -3,15 +3,12 @@ import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
-import { Button } from '@gitanimals/ui-panda';
 
 import { getServerAuth } from '@/auth';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
-import LogoutButton from '../LogoutButton';
-
-import LoginBtn from './LoginBtn';
+import { LoginButton, LogoutButton } from '../AuthButton';
 
 async function Header() {
   const t = await getTranslations('Layout');
@@ -55,17 +52,7 @@ async function Header() {
                 <Link href="/dev">DEV</Link>
               </li>
             )}
-            {isLogin ? (
-              <li>
-                <LogoutButton>
-                  <Button>{t('logout')}</Button>
-                </LogoutButton>
-              </li>
-            ) : (
-              <li>
-                <LoginBtn />
-              </li>
-            )}
+            <li>{isLogin ? <LogoutButton /> : <LoginButton />}</li>
           </ul>
         </div>
       </header>

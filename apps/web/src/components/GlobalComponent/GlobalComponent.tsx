@@ -9,7 +9,7 @@ function GlobalComponent() {
     <>
       <FeedBack />
       <Toaster
-        position="top-right"
+        position="top-center"
         toastOptions={{
           style: {
             top: '48px',

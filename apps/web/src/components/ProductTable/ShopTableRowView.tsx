@@ -3,8 +3,11 @@
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import type { Product } from '@gitanimals/api/src/auction';
+import { Button } from '@gitanimals/ui-panda';
+import { snakeToTitleCase } from '@gitanimals/util-common';
 
-import SmallButton from '@/components/Button/SmallButton';
+import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
+import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
 interface Props extends Pick<Product, 'id' | 'persona' | 'price'> {
@@ -14,18 +17,27 @@ interface Props extends Pick<Product, 'id' | 'persona' | 'price'> {
 }
 
 function ShopTableRowView({ onAction, actionLabel, actionColor, ...item }: Props) {
+  const {
+    data: { personas },
+  } = useGetAllPersona();
+
+  const currentPersona = personas.find((persona) => persona.type === item.persona.personaType);
+
+  if (!currentPersona) throw new Error('unexpected persona');
+
   return (
-    <div className={cx(rowStyle, 'row')} key={item.id}>
+    <div className={rowStyle} key={item.id}>
       <div>
         <Image src={getPersonaImage(item.persona.personaType)} width={60} height={67} alt="animal1" />
       </div>
-      <div>{item.persona.personaType}</div>
-      <div>{item.persona.personaLevel}</div>
-      <div>{item.price}</div>
+      <span>{snakeToTitleCase(item.persona.personaType)}</span>
+      <span>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</span>
+      <span>{item.persona.personaLevel}</span>
+      <span>{item.price}</span>
       <div>
-        <SmallButton onClick={() => onAction(item.id)} color={actionColor}>
+        <Button variant="secondary" onClick={() => onAction(item.id)} color={actionColor}>
           {actionLabel}
-        </SmallButton>
+        </Button>
       </div>
     </div>
   );
@@ -33,36 +45,40 @@ function ShopTableRowView({ onAction, actionLabel, actionColor, ...item }: Props
 
 export default ShopTableRowView;
 
+export function ShopTableRowViewSkeleton() {
+  return <div className={cx(rowStyle, skeletonStyle)} />;
+}
+
+const skeletonStyle = css({
+  background:
+    'linear-gradient(90deg, token(colors.gray.800) 25%, token(colors.gray.600) 50%, token(colors.gray.200) 75%, token(colors.gray.800) 100%)',
+  backgroundSize: '200% 100%',
+  animation: `skeletonLoading 1.5s infinite linear`,
+});
+
 export const rowStyle = css({
-  animation: 'fadeIn 0.3s',
+  width: '100%',
+  height: 80,
+  backgroundColor: 'white_10',
+  borderRadius: 12,
 
   display: 'grid',
-  gridTemplateColumns: '82px 214px 181px 360px 122px',
-  verticalAlign: 'center',
-  height: '82px',
+  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 4.2fr 1.5fr',
   alignItems: 'center',
-  '& > div': {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: '20px',
-    paddingRight: '4px',
+  padding: '0 32px',
+  gap: 16,
+
+  textStyle: 'glyph20.regular',
+  color: 'white.white_100',
+
+  '& button': {
+    color: 'black.black',
+    width: '100%',
+    paddingX: 6,
   },
-  '& > div:nth-child(1)': {
-    paddingBottom: 0,
-  },
-  '& > div:nth-child(2), & > div:nth-child(3), & > div:nth-child(4)': {
-    paddingRight: '12px',
-    paddingLeft: '16px',
-    paddingBottom: 0,
-    paddingTop: '4px',
-    justifyContent: 'flex-start',
+
+  '& *': {
     overflow: 'hidden',
-    whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
-    wordBreak: 'break-all',
-    flex: 0,
-    minWidth: 0,
-    maxWidth: '100%',
   },
 });

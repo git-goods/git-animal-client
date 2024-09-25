@@ -82,6 +82,22 @@ export default defineConfig({
             rotate: '-5deg',
           },
         },
+        slide: {
+          '0%': {
+            transform: 'translate3d(0, 0, 0)',
+          },
+          '100%': {
+            transform: 'translate3d(-100%, 0, 0)',
+          },
+        },
+        skeletonLoading: {
+          '0%': {
+            backgroundPosition: '200% 0',
+          },
+          '100%': {
+            backgroundPosition: '-200% 0',
+          },
+        },
       },
     },
   },

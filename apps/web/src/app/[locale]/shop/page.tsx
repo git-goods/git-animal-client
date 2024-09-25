@@ -1,96 +1,69 @@
-import { Suspense } from 'react';
+import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
+import { center } from '_panda/patterns';
 
-import DottedThreeBox from '@/components/DottedBox/DottedThreeBox';
-import Header from '@/components/Layout/Header';
-import Layout from '@/components/Layout/Layout';
-import UserPoint from '@/components/UserPoint';
+import GNB from '@/components/Layout/GNB';
 
-import GotchaSection from './GotchaSection';
-import ShopInner from './ShopInner';
-import Tab from './Tab';
+import { FloatingPointSection } from './FloatingPointSection/FloatingPointSection';
+import { AuctionSection } from './AuctionSection';
+import { PetGotcha } from './PetGotcha';
+import type { TabType } from './type';
+import { TABS } from './type';
 
-function ShopPage({
+async function ShopPage({
   searchParams,
 }: {
   searchParams: {
-    tab: string;
+    tab: TabType | undefined;
   };
 }) {
+  const searchParamsTab = searchParams.tab ?? 'products';
+  const t = await getTranslations('Shop');
+
+  // NOTE: 탭이 없을 때는 기본값으로 products를 사용
+  if (!TABS.includes(searchParamsTab)) {
+    return notFound();
+  }
+
   return (
-    <Layout>
-      <Header />
-      <main className={mainStyle}>
-        <DottedThreeBox width={1412} height={900} bgColor="#FFA109">
-          <div className={shopMainStyle}>
-            <section className={topSectionStyle}>
-              <h1 className={headingStyle}>Git Animals Auction</h1>
-            </section>
-            <section className={tabSectionStyle}>
-              <Tab selectedTab={searchParams.tab} />
-              <Suspense>
-                my points : <UserPoint />
-              </Suspense>
-            </section>
-            <GotchaSection />
-            <ShopInner tab={searchParams.tab ?? 'products'} />
-          </div>
-        </DottedThreeBox>
-      </main>
-    </Layout>
+    <>
+      <div className={subStyle}>
+        <GNB />
+        <FloatingPointSection />
+
+        <main>
+          <PetGotcha />
+          <AuctionSection selectedTab={searchParamsTab} />
+        </main>
+      </div>
+      <div className={noticeStyle}>{t('no-mobile-support')}</div>
+    </>
   );
 }
 
 export default ShopPage;
 
-const mainStyle = css({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '20px',
-  minWidth: 'fit-content',
-  minHeight: 'calc(100vh - 100px)',
-  backgroundColor: '#297542',
-});
-const tabSectionStyle = css({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  fontSize: '24px',
+const subStyle = css({
+  _mobile: {
+    display: 'none',
+  },
 });
 
-const shopMainStyle = css({
-  padding: '40px 20px',
-
-  display: 'grid',
-  gridTemplateColumns: '384px 960px',
-  gridColumnGap: '16px',
-});
-
-// const TopSection = styled.section`
-//   margin-bottom: 30px;
-//   display: flex;
-//   gap: 120px;
-// `;
-
-// const Heading = styled.h1`
-//   font-size: 32px;
-//   font-style: normal;
-//   font-weight: 400;
-//   line-height: 140%; /* 44.8px */
-//   letter-spacing: -0.3px;
-// `;
-
-const topSectionStyle = css({
-  marginBottom: '30px',
-  display: 'flex',
-  gap: '120px',
-});
-
-const headingStyle = css({
-  fontSize: '32px',
-  fontStyle: 'normal',
-  fontWeight: '400',
-  lineHeight: '140%' /* 44.8px */,
-  letterSpacing: '-0.3px',
+const noticeStyle = center({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  background: '#454545',
+  color: 'white',
+  zIndex: 1000,
+  display: 'none',
+  textStyle: 'glyph24.bold',
+  lineHeight: '1.5',
+  textAlign: 'center',
+  _mobile: {
+    display: 'flex',
+  },
 });

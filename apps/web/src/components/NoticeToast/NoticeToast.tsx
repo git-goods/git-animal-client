@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
 import useEffectOnce from '@/hooks/lifeCycle/useEffectOnce';
@@ -15,6 +16,7 @@ const generationNoticeKey = (noticeKey: string) => {
 };
 
 function NoticeToast() {
+  const t = useTranslations('NoticeToast');
   const router = useRouter();
   const { status } = useClientSession();
   const isLogin = status === 'authenticated';
@@ -29,14 +31,12 @@ function NoticeToast() {
 
   const getRenderNoticeList = () => {
     const viewStorageData = window.localStorage.getItem('viewNotice');
-    console.log('viewStorageData: ', viewStorageData);
 
     if (!viewStorageData) {
       return NOTICE_LIST;
     }
 
     const viewList = JSON.parse(viewStorageData);
-    console.log('viewList: ', viewList);
 
     return NOTICE_LIST.filter((notice) => !viewList.includes(generationNoticeKey(notice.key)) && notice.visible);
   };
@@ -45,7 +45,7 @@ function NoticeToast() {
     const toastId = generationNoticeKey(notice.key);
     if (notice?.isAuth && notice.isAuth !== isLogin) return;
 
-    toast(notice.label, {
+    toast(t(notice.label), {
       id: toastId,
       duration: Infinity,
       className: 'notice-toast',
@@ -58,7 +58,7 @@ function NoticeToast() {
       ...notice,
       action: notice.redirect
         ? {
-            label: notice.redirect.label,
+            label: t(notice.redirect.label),
             onClick: () => {
               notice.redirect?.isOutLink ? window.open(notice.redirect.url) : router.push(notice.redirect.url);
               setViewNoticeItem(toastId);
@@ -71,7 +71,7 @@ function NoticeToast() {
 
   useEffectOnce(() => {
     const renderList = getRenderNoticeList();
-    console.log('renderList: ', renderList);
+
     renderList.forEach((notice) => renderToast(notice));
   });
 

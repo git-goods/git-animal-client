@@ -4,10 +4,9 @@ function SortDirectionSelect({ onSelect }: { onSelect: (sortDirection: string) =
   return (
     <SearchOptionSelect
       onSelect={onSelect}
-      size={180}
       options={[
-        { label: 'Ascending', value: 'ASC' },
         { label: 'Descending', value: 'DESC' },
+        { label: 'Ascending', value: 'ASC' },
       ]}
     />
   );

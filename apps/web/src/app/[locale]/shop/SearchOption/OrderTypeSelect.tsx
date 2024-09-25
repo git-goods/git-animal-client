@@ -4,10 +4,9 @@ function OrderTypeSelect({ onSelect }: { onSelect: (orderType: string) => void }
   return (
     <SearchOptionSelect
       onSelect={onSelect}
-      size={128}
       options={[
-        { label: 'Price', value: 'PRICE' },
         { label: 'Date', value: 'CREATED_AT' },
+        { label: 'Price', value: 'PRICE' },
         { label: 'Level', value: 'LEVEL' },
       ]}
     />

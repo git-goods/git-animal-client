@@ -8,19 +8,19 @@ export const ACTION_BUTTON_OBJ: Record<
   }
 > = {
   ON_SALE: {
-    label: 'buy!',
+    label: 'buy',
     color: '#00B2FF',
   },
   SOLD_OUT: {
-    label: 'cancel!',
+    label: 'cancel',
     color: '#FF0000',
   },
   MY_SELLING: {
-    label: 'cancel!',
+    label: 'cancel',
     color: '#FF0000',
   },
   SELL: {
-    label: 'sell!',
+    label: 'sell',
     color: '#00B2FF',
   },
   SELL_HISTORY: {
