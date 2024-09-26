@@ -1,62 +1,58 @@
 'use client';
 
-import React, { useState } from 'react';
-import { css } from '_panda/css';
-import { toast } from 'sonner';
+import React from 'react';
 
-import { useGetUniqueTypeAllPets } from '@/apis/user/useGetAllPets';
-import Button from '@/components/Button';
-import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
-import SelectAnimal from '@/components/SelectAnimal';
-import type { PetInfoSchema } from '@/schema/user';
 import { useClientUser } from '@/utils/clientAuth';
-import { copyClipBoard } from '@/utils/copy';
+
+import PersonaList from './PersonaList';
 
 interface Props {}
 
 function OneType({}: Props) {
-  const [selected, setSelected] = useState<PetInfoSchema>();
-  const [sizes, setSizes] = useState<[number, number]>([600, 120]);
-  const [error, setError] = useState('');
+  const { name } = useClientUser();
+  // const [selected, setSelected] = useState<PetInfoSchema>();
+  // const [sizes, setSizes] = useState<[number, number]>([600, 120]);
+  // const [error, setError] = useState('');
 
-  const { name: username } = useClientUser();
+  // const { name: username } = useClientUser();
 
-  const { data } = useGetUniqueTypeAllPets(username, {
-    enabled: Boolean(username),
-  });
+  // const { data } = useGetUniqueTypeAllPets(username, {
+  //   enabled: Boolean(username),
+  // });
 
-  const personaList = data?.personas || [];
+  // const personaList = data?.personas || [];
 
-  const onWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    setError('');
+  // const onWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = parseInt(e.target.value);
+  //   setError('');
 
-    if (value > 1000) {
-      setError('1000 이상은 설정할 수 없습니다.');
-    }
+  //   if (value > 1000) {
+  //     setError('1000 이상은 설정할 수 없습니다.');
+  //   }
 
-    setSizes([value, sizes[1]]);
-  };
+  //   setSizes([value, sizes[1]]);
+  // };
 
-  const onHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setError('');
-    setSizes([sizes[0], parseInt(e.target.value)]);
-  };
+  // const onHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setError('');
+  //   setSizes([sizes[0], parseInt(e.target.value)]);
+  // };
 
-  const onLinkCopy = async () => {
-    try {
-      await copyClipBoard(getGitanimalsLineString({ username, petId: selected?.id, sizes }));
+  // const onLinkCopy = async () => {
+  //   try {
+  //     await copyClipBoard(getGitanimalsLineString({ username, petId: selected?.id, sizes }));
 
-      toast.success('복사 성공!', {
-        position: 'top-center',
-        duration: 2000,
-      });
-    } catch (error) {}
-  };
+  //     toast.success('복사 성공!', {
+  //       position: 'top-center',
+  //       duration: 2000,
+  //     });
+  //   } catch (error) {}
+  // };
 
   return (
     <>
-      <section className={farmSectionStyle}>
+      {name && <PersonaList name={name} />}
+      {/* <section className={farmSectionStyle}>
         <h2>choose only one pet</h2>
         <SelectAnimal selected={selected} setSelected={setSelected} size={120} personaList={personaList} />
       </section>
@@ -82,68 +78,68 @@ function OneType({}: Props) {
       </section>
       <div className={buttonWrapperStyle}>
         <Button onClick={onLinkCopy}>Copy Link</Button>
-      </div>
+      </div> */}
     </>
   );
 }
 
 export default OneType;
 
-const farmSectionStyle = css({
-  marginTop: '42px',
-  paddingLeft: '16px',
+// const farmSectionStyle = css({
+//   marginTop: '42px',
+//   paddingLeft: '16px',
 
-  '& > h2': {
-    color: '#fff',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 400,
-    marginBottom: '30px',
-    lineHeight: 'normal',
-  },
-});
-const buttonWrapperStyle = css({
-  margin: '72px auto',
-  width: 'fit-content',
-});
+//   '& > h2': {
+//     color: '#fff',
+//     fontSize: '16px',
+//     fontStyle: 'normal',
+//     fontWeight: 400,
+//     marginBottom: '30px',
+//     lineHeight: 'normal',
+//   },
+// });
+// const buttonWrapperStyle = css({
+//   margin: '72px auto',
+//   width: 'fit-content',
+// });
 
-const inputWrapperStyle = css({
-  color: 'white',
-  display: 'flex',
-  marginBottom: '24px',
-  alignItems: 'center',
-  gap: '12px',
+// const inputWrapperStyle = css({
+//   color: 'white',
+//   display: 'flex',
+//   marginBottom: '24px',
+//   alignItems: 'center',
+//   gap: '12px',
 
-  '& input': {
-    width: '100px',
-    height: '30px',
-    borderRadius: '4px',
-    border: '1px solid #141414',
-    padding: '0 8px',
-    outline: '1px solid #141414',
-  },
+//   '& input': {
+//     width: '100px',
+//     height: '30px',
+//     borderRadius: '4px',
+//     border: '1px solid #141414',
+//     padding: '0 8px',
+//     outline: '1px solid #141414',
+//   },
 
-  '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
-    WebkitAppearance: 'none',
-  },
-});
+//   '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
+//     WebkitAppearance: 'none',
+//   },
+// });
 
-const lineContainerStyle = css({
-  width: '100%',
-  background: 'white',
-  height: '100%',
-  transition: 'all 0.3s',
-  maxWidth: '1000px',
+// const lineContainerStyle = css({
+//   width: '100%',
+//   background: 'white',
+//   height: '100%',
+//   transition: 'all 0.3s',
+//   maxWidth: '1000px',
 
-  margin: '24px auto',
+//   margin: '24px auto',
 
-  '& img': {
-    maxWidth: '100%',
-  },
-});
+//   '& img': {
+//     maxWidth: '100%',
+//   },
+// });
 
-const errorMsgStyle = css({
-  color: 'white',
-  marginBottom: '12px',
-  fontSize: '14px',
-});
+// const errorMsgStyle = css({
+//   color: 'white',
+//   marginBottom: '12px',
+//   fontSize: '14px',
+// });

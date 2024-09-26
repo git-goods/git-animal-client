@@ -6,7 +6,7 @@
 //   });
 import { getUser, type UserResponse } from '@gitanimals/api';
 import type { UseQueryOptions, UseSuspenseQueryOptions } from '@tanstack/react-query';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { queryOptions, useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 export const USER_QUERY_KEY = 'user';
 
@@ -24,7 +24,12 @@ export const useGetUser = (options?: UseQueryOptions<UserResponse>) =>
     ...options,
   });
 
-export const useUserQueryOptions = {
+// export const useUserQueryOptions = {
+//   queryKey: [USER_QUERY_KEY],
+//   queryFn: getUser,
+// };
+
+export const useUserQueryOptions = queryOptions({
   queryKey: [USER_QUERY_KEY],
   queryFn: getUser,
-};
+});

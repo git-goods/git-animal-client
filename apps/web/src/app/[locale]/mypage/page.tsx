@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import { flex, grid } from '_panda/patterns';
@@ -6,18 +7,26 @@ import { updateUrlSearchParams } from '@gitanimals/util-common';
 import GNB from '@/components/GNB/GNB';
 import { Link } from '@/i18n/routing';
 
+import OneType from './OneType';
 import { ProfileSection } from './ProfileSection';
+
+type TabType = '1-type' | 'farm-type';
 
 function Mypage({
   searchParams,
 }: {
   searchParams: {
-    type?: 'farm-type' | '1-type';
+    type?: TabType;
   };
 
   pathname: string;
 }) {
   const selectedType = searchParams?.type ?? '1-type';
+
+  const MYPAGE_TAB_INNER_MAP: Record<TabType, ReactNode> = {
+    '1-type': <OneType />,
+    'farm-type': <></>,
+  };
 
   return (
     <div className={containerStyle}>
@@ -34,6 +43,7 @@ function Mypage({
               <button className={cx('tab-item', selectedType === 'farm-type' && 'selected')}>Farm Type</button>
             </Link>
           </div>
+          <div>{MYPAGE_TAB_INNER_MAP[selectedType]}</div>
         </section>
       </main>
     </div>
