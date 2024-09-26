@@ -1,29 +1,42 @@
 'use client';
 
+import { memo } from 'react';
 import Image from 'next/image';
-import { useSession } from 'next-auth/react';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
+import { Skeleton } from '@gitanimals/ui-panda';
+import { wrap } from '@suspensive/react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { useGetUser } from '@/apis/user/useGetUser';
+import { useUserQueryOptions } from '@/apis/user/useGetUser';
 import { addNumberComma } from '@/utils/number';
 
-export function ProfileSection() {
-  const { data } = useSession();
-  const { data: userData } = useGetUser();
+export const ProfileSection = memo(
+  wrap
+    .Suspense({
+      fallback: (
+        <section>
+          <Skeleton width={160} height={160} borderRadius="50%" />
+        </section>
+      ),
+    })
+    .ErrorBoundary({ fallback: <section></section> })
+    .on(function ProfileSection() {
+      const { data } = useSuspenseQuery(useUserQueryOptions);
 
-  return (
-    <section>
-      <div className={profileImageStyle}>
-        <Image src={data?.user.image ?? ''} alt="profile" width={160} height={160} />
-      </div>
-      <p className={profileNameStyle}>{data?.user.name}</p>
-      <div className={pointStyle}>
-        <Image src="/mypage/coin.svg" alt="coin" width={24} height={24} /> {addNumberComma(userData?.points ?? 0)}
-      </div>
-    </section>
-  );
-}
+      return (
+        <section>
+          <div className={profileImageStyle}>
+            <Image src={data.profileImage ?? ''} alt="profile" width={160} height={160} />
+          </div>
+          <p className={profileNameStyle}>{data?.username}</p>
+          <div className={pointStyle}>
+            <Image src="/mypage/coin.svg" alt="coin" width={24} height={24} /> {addNumberComma(data.points ?? 0)}
+          </div>
+        </section>
+      );
+    }),
+);
 
 const profileImageStyle = css({
   width: '160px',

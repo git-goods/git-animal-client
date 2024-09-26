@@ -23,3 +23,8 @@ export const useGetUser = (options?: UseQueryOptions<UserResponse>) =>
     queryFn: getUser,
     ...options,
   });
+
+export const useUserQueryOptions = {
+  queryKey: [USER_QUERY_KEY],
+  queryFn: getUser,
+};
