@@ -1,4 +1,4 @@
-import { cva } from '_panda/css';
+import { cva, RecipeVariantProps } from '_panda/css';
 
 export const bannerStyle = cva({
   base: {
@@ -6,11 +6,9 @@ export const bannerStyle = cva({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '12px 20px',
-    width: '120px',
-    height: '120px',
     borderRadius: 12,
     backgroundColor: 'white.white_10',
+    transition: 'border 0.3s, background-color 0.3s',
   },
   variants: {
     selected: {
@@ -25,10 +23,15 @@ export const bannerStyle = cva({
       small: {
         width: '80px',
         height: '80px',
+        '& img': {
+          width: '100%',
+          height: '100%',
+          objectFit: 'contain',
+        },
       },
       medium: {
-        width: '160px',
-        height: '160px',
+        width: '120px',
+        padding: '12px 20px',
       },
     },
   },
@@ -38,3 +41,5 @@ export const bannerStyle = cva({
     selected: false,
   },
 });
+
+export type BannerStyleProps = RecipeVariantProps<typeof bannerStyle>;

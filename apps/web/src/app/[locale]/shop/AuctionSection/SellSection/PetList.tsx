@@ -25,6 +25,7 @@ function PetList(props: Props) {
         return (
           <button key={persona.id} onClick={() => props.onProductClick(persona)}>
             <Banner
+              size="small"
               selected={props.selectedPersona?.id === persona.id}
               image={<Image src={getPersonaImage(persona.type)} width={82} height={82} alt={persona.type} />}
             />

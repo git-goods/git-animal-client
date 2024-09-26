@@ -1,16 +1,15 @@
 import { ReactNode } from 'react';
-import { bannerStyle } from './cva';
+import { bannerStyle, BannerStyleProps } from './cva';
 import { css } from '_panda/css';
 
-interface Props {
-  selected?: boolean;
+type Props = BannerStyleProps & {
   image: string | ReactNode;
   level: number;
-}
+};
 
-export function LevelBanner({ selected, image, level }: Props) {
+export function LevelBanner({ image, level, ...styleProps }: Props) {
   return (
-    <div className={bannerStyle({ selected })}>
+    <div className={bannerStyle(styleProps)}>
       {typeof image === 'string' ? <img src={image} width={160} height={160} alt={image} /> : image}
       <p className={levelTagStyle}>{level}</p>
     </div>
