@@ -33,7 +33,7 @@ function Mypage({
       <Image src="/mypage/bg-cloud.webp" alt="bg" width={2400} height={1367} className={bgStyle} draggable={false} />
       <main className={mainStyle}>
         <ProfileSection />
-        <section className={css({ width: '100%', maxW: 'min(1080px, calc(100vw - 400px - 222px - 80px ))' })}>
+        <section className={rightSectionStyle}>
           <div className={tabListStyle}>
             <Link href={`/mypage?${updateUrlSearchParams(searchParams, 'type', '1-type')}`}>
               <button className={cx('tab-item', selectedType === '1-type' && 'selected')}>1 Type</button>
@@ -50,6 +50,16 @@ function Mypage({
 }
 
 export default Mypage;
+
+const rightSectionStyle = css({
+  width: '100%',
+  maxW: 'min(1080px, calc(100vw - 400px - 222px - 80px ))',
+  borderRadius: 16,
+  background: 'white.white_10',
+  backdropFilter: 'blur(7px)',
+  minH: '700px',
+  p: 40,
+});
 
 const tabListStyle = flex({
   gap: 12,
