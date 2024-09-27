@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import type { PersonasResponse } from '@gitanimals/api';
@@ -20,20 +21,42 @@ interface Props {
   loadingPersona?: string[];
 }
 
+const containerStyle = css({
+  position: 'relative',
+  '& .heading': {
+    textStyle: 'glyph18.bold',
+    color: 'white',
+    marginBottom: '16px',
+  },
+  '& .extend-button': {
+    position: 'absolute',
+    top: '-16px',
+    right: 0,
+  },
+});
+
+const listStyle = flex({ gap: 4, w: '100%', overflowX: 'auto' });
+
 export const SelectPersonaList = wrap
   .Suspense({
     fallback: (
-      <div className={flex({ gap: 4, h: 80 })}>
-        {Array.from({ length: 4 }).map((_, index) => (
-          <BannerSkeleton key={index} size="small" />
-        ))}
-      </div>
+      <section className={containerStyle}>
+        <h2 className="heading"> </h2>
+        <div className={listStyle}>
+          {Array.from({ length: 6 }).map((_, index) => (
+            <BannerSkeleton key={index} size="small" />
+          ))}
+        </div>
+      </section>
     ),
   })
   .ErrorBoundary({
+    // TODO: 공통 에러 컴포넌트로 대체
     fallback: <div>error</div>,
   })
   .on(function SelectPersonaList({ name, selectPersona, onSelectPersona, initSelectPersona, loadingPersona }: Props) {
+    const t = useTranslations('Mypage');
+
     const { data } = useSuspenseQuery(getAllPetsQueryOptions(name));
 
     const [isExtend, setIsExtend] = useState(false);
@@ -59,9 +82,9 @@ export const SelectPersonaList = wrap
 
     return (
       <section className={containerStyle}>
-        <h2 className="heading">Change pet</h2>
+        <h2 className="heading">{t('change-pet')}</h2>
         <Button className="extend-button" onClick={() => setIsExtend((prev) => !prev)}>
-          {isExtend ? '축소' : '확장'}
+          {isExtend ? t('shrink-button') : t('extend-button')}
         </Button>
         <div className={cx(listStyle, css({ flexWrap: isExtend ? 'wrap' : 'nowrap' }))}>
           {viewList.map((persona) => (
@@ -70,35 +93,15 @@ export const SelectPersonaList = wrap
               onClick={() => onSelectPersona(persona)}
               disabled={loadingPersona?.includes(persona.id)}
             >
-              {/* {loadingPersona?.includes(persona.id) ? (
-                <Skeleton w={80} h={80} color="black" />
-              ) : ( */}
               <Banner
                 loading={loadingPersona?.includes(persona.id)}
                 image={getPersonaImage(persona.type)}
                 size="small"
                 selected={selectPersona.includes(persona.id)}
               />
-              {/* )} */}
             </button>
           ))}
         </div>
       </section>
     );
   });
-
-const containerStyle = css({
-  position: 'relative',
-  '& .heading': {
-    textStyle: 'glyph18.bold',
-    color: 'white',
-    marginBottom: '16px',
-  },
-  '& .extend-button': {
-    position: 'absolute',
-    top: '-16px',
-    right: 0,
-  },
-});
-
-const listStyle = flex({ gap: 4, w: '100%', overflowX: 'auto' });

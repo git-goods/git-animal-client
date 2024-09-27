@@ -57,6 +57,10 @@
     "copy-link-title": "Copy Link",
     "copy-link-success": "Copy success!",
     "line-set-error": "Cannot set more than 1000.",
-    "apply-button": "Apply"
+    "apply-button": "Apply",
+    "customize-size": "Line TypeCustomize Size",
+    "extend-button": "Extend",
+    "shrink-button": "Shrink",
+    "change-pet": "Change pet"
   }
 }

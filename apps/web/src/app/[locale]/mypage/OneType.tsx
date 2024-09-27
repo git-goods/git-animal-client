@@ -40,7 +40,7 @@ export function OneType({}: Props) {
   };
 
   return (
-    <>
+    <section className={sectionStyle}>
       {name && (
         <SelectPersonaList
           name={name}
@@ -50,14 +50,23 @@ export function OneType({}: Props) {
       )}
 
       <SizeInputList onApply={(width, height) => setSizes({ width, height })} />
-      <div className={lineContainerStyle} style={{ width: sizes.width, height: sizes.height }}>
-        <GitanimalsLine sizes={[sizes.width, sizes.height]} petId={selectPersona} />
+      <div>
+        <div className={lineContainerStyle} style={{ width: sizes.width, height: sizes.height }}>
+          <GitanimalsLine sizes={[sizes.width, sizes.height]} petId={selectPersona} />
+        </div>
+        <Button onClick={onLinkCopy} mt={16} size="m">
+          {t('copy-link-title')}
+        </Button>
       </div>
-
-      <Button onClick={onLinkCopy}>{t('copy-link-title')}</Button>
-    </>
+    </section>
   );
 }
+const sectionStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '40px',
+  padding: '40px 0',
+});
 
 const lineContainerStyle = css({
   width: '100%',
@@ -65,7 +74,7 @@ const lineContainerStyle = css({
   height: '100%',
   transition: 'all 0.3s',
   maxWidth: '1000px',
-  margin: '24px auto',
+  borderRadius: '12px',
 
   '& img': {
     maxWidth: '100%',
@@ -79,13 +88,25 @@ function SizeInputList({ onApply }: { onApply: (width: number, height: number) =
   const [height, setHeight] = useState(DEFAULT_SIZE.height);
 
   return (
-    <div className={flex({ gap: 12 })}>
-      <SizeInput value={width} onChange={(e) => setWidth(parseInt(e.target.value))} name="width" />
-      <SizeInput value={height} onChange={(e) => setHeight(parseInt(e.target.value))} name="height" />
-      <Button onClick={() => onApply(width, height)}>{t('apply-button')}</Button>
+    <div className={sizeInputStyle}>
+      <h2 className="heading">{t('customize-size')}</h2>
+      <div className={flex({ gap: 12 })}>
+        <SizeInput value={width} onChange={(e) => setWidth(parseInt(e.target.value))} name="width" />
+        <SizeInput value={height} onChange={(e) => setHeight(parseInt(e.target.value))} name="height" />
+        <Button onClick={() => onApply(width, height)}>{t('apply-button')}</Button>
+      </div>
     </div>
   );
 }
+
+const sizeInputStyle = css({
+  position: 'relative',
+  '& .heading': {
+    textStyle: 'glyph18.bold',
+    color: 'white',
+    marginBottom: '16px',
+  },
+});
 
 function SizeInput(props: { value: number; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; name: string }) {
   const t = useTranslations('Mypage');
@@ -95,6 +116,7 @@ function SizeInput(props: { value: number; onChange: (e: React.ChangeEvent<HTMLI
 
     if (value > 1000) {
       toast.error(t('line-set-error'));
+      return;
     }
 
     props.onChange(e);

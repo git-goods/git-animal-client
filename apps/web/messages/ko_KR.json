@@ -57,6 +57,10 @@
     "copy-link-title": "이미지 복사",
     "copy-link-success": "복사 성공!",
     "line-set-error": "1000 이상은 설정할 수 없습니다.",
-    "apply-button": "적용하기"
+    "apply-button": "적용하기",
+    "customize-size": "Line Type 사이즈 조정",
+    "extend-button": "확장",
+    "shrink-button": "축소",
+    "change-pet": "펫 변경"
   }
 }
