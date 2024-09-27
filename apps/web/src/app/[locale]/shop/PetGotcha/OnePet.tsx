@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
@@ -31,6 +32,8 @@ function OnePet({ onClose }: Props) {
 
   const { count, isRunning, isFinished, startTimer, resetTimer } = useTimer(3);
 
+  const { data } = useSession();
+
   const onAction = async () => {
     try {
       const res = await postGotcha({ count: 1 });
@@ -49,15 +52,13 @@ function OnePet({ onClose }: Props) {
       queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
       toast.success(t('get-persona-success'));
     } catch (error) {
-      console.error('ㄷㄷㄷㄷㄷㄷ', error);
-      // TOdo:
       toast.error(t('get-persona-fail'));
 
       onClose();
       sendMessageToErrorChannel(`<!here>
-        🔥 펫 뽑기 실패 🔥
-        Error Message: 펫 뽑기 실패
-        \`\`\`
+🔥 펫 뽑기 실패 🔥
+Error Message: ${error}
+User: ${data?.user.name}
       `);
     }
   };
