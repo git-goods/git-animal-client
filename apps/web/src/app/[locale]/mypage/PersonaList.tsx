@@ -1,32 +1,68 @@
 'use client';
 
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
+import { css } from '_panda/css';
+import { flex } from '_panda/patterns';
+import Flicking from '@egjs/react-flicking';
+import { Banner } from '@gitanimals/ui-panda';
+import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { getAllPetsQueryOptions } from '@/apis/user/useGetAllPets';
+import { getPersonaImage } from '@/utils/image';
 
-const PersonaList = memo(
+interface Props {
+  name: string;
+  selectPersona: string[];
+  onSelectPersona: (persona: string) => void;
+}
+
+export const SelectPersonaList = memo(
   wrap
-    .Suspense({ fallback: null })
+    .Suspense({
+      fallback: (
+        <div className={flex({ gap: 4, h: 80 })}>
+          {Array.from({ length: 4 }).map((_, index) => (
+            <BannerSkeleton key={index} size="small" />
+          ))}
+        </div>
+      ),
+    })
     .ErrorBoundary({
       fallback: <div>error</div>,
     })
-    .on(function PersonaList({ name }: { name: string }) {
-      //   console.log('name: ', name);
+    .on(function SelectPersonaList({ name, selectPersona, onSelectPersona }: Props) {
       const { data } = useSuspenseQuery(getAllPetsQueryOptions(name));
-      console.log('data: ', data);
 
-      //   useEffect(() => {
-      //     const fetchData = async () => {
-      //       const data = await getAllMyPets(name);
-      //       //   const data = await getAllPets(name);
-      //       console.log('data: ', data);
-      //     };
-      //     fetchData();
-      //   }, [name]);
-      return <>{}</>;
+      const viewList = useMemo(() => {
+        const highestLevelPersonas = data.personas.reduce(
+          (acc, persona) => {
+            if (!acc[persona.type] || acc[persona.type].level < persona.level) {
+              acc[persona.type] = persona;
+            }
+            return acc;
+          },
+          {} as Record<string, (typeof data.personas)[number]>,
+        );
+
+        return Object.values(highestLevelPersonas);
+      }, [data]);
+
+      return (
+        <div>
+          <Flicking align="prev" firstPanelSize="80px" gap={10}>
+            {viewList.map((persona) => (
+              <button key={persona.id} onClick={() => onSelectPersona(persona.id)} className={css({ pl: 4 })}>
+                <Banner
+                  image={getPersonaImage(persona.type)}
+                  size="small"
+                  selected={selectPersona.includes(persona.id)}
+                />
+              </button>
+            ))}
+          </Flicking>
+        </div>
+      );
     }),
 );
-
-export default PersonaList;

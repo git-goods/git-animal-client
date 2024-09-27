@@ -7,6 +7,9 @@ import { GlobalComponent } from '@/components/GlobalComponent';
 import Monitoring from '@/components/Monitoring';
 import { MONITORING_KEY } from '@/constants/monitoring';
 
+import '@egjs/react-flicking/dist/flicking.css';
+import '@egjs/react-flicking/dist/flicking-inline.css';
+
 export default async function LocaleLayout({
   children,
   params: { locale },

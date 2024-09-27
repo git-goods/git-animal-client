@@ -10,6 +10,8 @@ interface Props {}
 
 function OneType({}: Props) {
   const { name } = useClientUser();
+  const [selectPersona, setSelectPersona] = useState<string | null>();
+
   // const [selected, setSelected] = useState<PetInfoSchema>();
   // const [sizes, setSizes] = useState<[number, number]>([600, 120]);
   // const [error, setError] = useState('');
@@ -51,7 +53,13 @@ function OneType({}: Props) {
 
   return (
     <>
-      {name && <PersonaList name={name} />}
+      {name && (
+        <SelectPersonaList
+          name={name}
+          selectPersona={selectPersona ? [selectPersona] : []}
+          onSelectPersona={(persona) => setSelectPersona(persona)}
+        />
+      )}
       {/* <section className={farmSectionStyle}>
         <h2>choose only one pet</h2>
         <SelectAnimal selected={selected} setSelected={setSelected} size={120} personaList={personaList} />
@@ -66,15 +74,7 @@ function OneType({}: Props) {
           <input type="number" name="height" id="height" value={sizes[1]} onChange={(e) => onHeightChange(e)} />
         </div>
         {error && <p className={errorMsgStyle}>{error}</p>}
-        <div
-          className={lineContainerStyle}
-          style={{
-            width: sizes[0],
-            height: sizes[1],
-          }}
-        >
-          <GitanimalsLine sizes={sizes} petId={selected?.id} />
-        </div>
+      
       </section>
       <div className={buttonWrapperStyle}>
         <Button onClick={onLinkCopy}>Copy Link</Button>
@@ -124,19 +124,19 @@ export default OneType;
 //   },
 // });
 
-// const lineContainerStyle = css({
-//   width: '100%',
-//   background: 'white',
-//   height: '100%',
-//   transition: 'all 0.3s',
-//   maxWidth: '1000px',
+const lineContainerStyle = css({
+  width: '100%',
+  background: 'white',
+  height: '100%',
+  transition: 'all 0.3s',
+  maxWidth: '1000px',
 
-//   margin: '24px auto',
+  margin: '24px auto',
 
-//   '& img': {
-//     maxWidth: '100%',
-//   },
-// });
+  '& img': {
+    maxWidth: '100%',
+  },
+});
 
 // const errorMsgStyle = css({
 //   color: 'white',

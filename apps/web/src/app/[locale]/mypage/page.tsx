@@ -31,10 +31,10 @@ function Mypage({
   return (
     <div className={containerStyle}>
       <GNB />
-      <Image src="/mypage/bg-cloud.webp" alt="bg" width={2400} height={1367} className={bgStyle} />
+      <Image src="/mypage/bg-cloud.webp" alt="bg" width={2400} height={1367} className={bgStyle} draggable={false} />
       <main className={mainStyle}>
         <ProfileSection />
-        <section>
+        <section className={css({ width: '100%', maxW: 'min(1080px, calc(100vw - 400px - 222px - 80px ))' })}>
           <div className={tabListStyle}>
             <Link href={`/mypage?${updateUrlSearchParams(searchParams, 'type', '1-type')}`}>
               <button className={cx('tab-item', selectedType === '1-type' && 'selected')}>1 Type</button>
@@ -92,6 +92,7 @@ const bgStyle = css({
   zIndex: 0,
   objectFit: 'cover',
   marginTop: '86px',
+  pointerEvents: 'none',
 });
 
 const mainStyle = grid({

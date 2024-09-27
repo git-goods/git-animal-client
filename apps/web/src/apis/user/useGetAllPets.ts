@@ -52,7 +52,7 @@ export const useGetUniqueTypeAllPets = (
 export const ALL_PETS_QUERY_KEY = [USER_QUERY_KEY, 'all-pet'];
 
 export const getAllPetsQueryOptions = (username: string) =>
-  queryOptions<GetAllMyPetResponse, unknown, string>({
+  queryOptions({
     queryKey: ALL_PETS_QUERY_KEY,
     queryFn: () => getAllPets(username),
   });
