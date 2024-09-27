@@ -50,7 +50,17 @@
     "star-now": "Star Now!",
     "visit-shop": "New! Visit the GitAnimals Shop page",
     "github-star": "Enjoying GitAnimals?\nGive us a GitHub Star! ⭐",
-    "update-shop-renewal": "Update: The shop page has been renewed ✨.\n Check it out!",
+    "update-shop-renewal": "Update: The shop page has been renewed.\n Check it out!",
     "multi-translation": "You can choose English, 한국어! 🌐\nPlease change the language in the top menu."
+  },
+  "Mypage": {
+    "copy-link-title": "Copy Link",
+    "copy-link-success": "Copy success!",
+    "line-set-error": "Cannot set more than 1000.",
+    "apply-button": "Apply",
+    "customize-size": "Line TypeCustomize Size",
+    "extend-button": "Extend",
+    "shrink-button": "Shrink",
+    "change-pet": "Change pet"
   }
 }

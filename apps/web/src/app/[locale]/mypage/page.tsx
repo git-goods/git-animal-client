@@ -1,23 +1,49 @@
-// import React from 'react';
-import { Suspense } from 'react';
-import dynamic from 'next/dynamic';
-import { css } from '_panda/css';
+import type { ReactNode } from 'react';
+import Image from 'next/image';
+import { css, cx } from '_panda/css';
+import { flex, grid } from '_panda/patterns';
+import { updateUrlSearchParams } from '@gitanimals/util-common';
 
 import GNB from '@/components/GNB/GNB';
+import { Link } from '@/i18n/routing';
 
-import RightSection from './RightSection';
+import FarmType from './FarmType';
+import { OneType } from './OneType';
+import { ProfileSection } from './ProfileSection';
 
-const LazyProfileSection = dynamic(() => import('./ProfileSection'), { ssr: false });
+type TabType = '1-type' | 'farm-type';
 
-function Mypage() {
+function Mypage({
+  searchParams,
+}: {
+  searchParams: {
+    type?: TabType;
+  };
+}) {
+  const selectedType = searchParams?.type ?? '1-type';
+
+  const MYPAGE_TAB_INNER_MAP: Record<TabType, ReactNode> = {
+    '1-type': <OneType />,
+    'farm-type': <FarmType />,
+  };
+
   return (
     <div className={containerStyle}>
       <GNB />
+      <Image src="/mypage/bg-cloud.webp" alt="bg" width={2400} height={1367} className={bgStyle} draggable={false} />
       <main className={mainStyle}>
-        <Suspense fallback={<section></section>}>
-          <LazyProfileSection />
-        </Suspense>
-        <RightSection />
+        <ProfileSection />
+        <section className={rightSectionStyle}>
+          <div className={tabListStyle}>
+            <Link href={`/mypage?${updateUrlSearchParams(searchParams, 'type', '1-type')}`}>
+              <button className={cx('tab-item', selectedType === '1-type' && 'selected')}>1 Type</button>
+            </Link>
+            <Link href={`/mypage?${updateUrlSearchParams(searchParams, 'type', 'farm-type')}`}>
+              <button className={cx('tab-item', selectedType === 'farm-type' && 'selected')}>Farm Type</button>
+            </Link>
+          </div>
+          <div>{MYPAGE_TAB_INNER_MAP[selectedType]}</div>
+        </section>
       </main>
     </div>
   );
@@ -25,30 +51,63 @@ function Mypage() {
 
 export default Mypage;
 
-const containerStyle = css({
-  position: 'relative',
+const rightSectionStyle = css({
   width: '100%',
-  height: '100%',
-  minHeight: '100vh',
-  minWidth: '1400px',
-  backgroundColor: '#297542',
-  '& > img': {
-    zIndex: -1,
-    objectFit: 'cover',
-  },
-  '& > main': {
-    minHeight: '100vh',
-    zIndex: 1,
+  maxW: 'min(1080px, calc(100vw - 400px - 222px - 80px ))',
+  borderRadius: 16,
+  background: 'white.white_10',
+  backdropFilter: 'blur(7px)',
+  minH: '700px',
+  p: 40,
+});
+
+const tabListStyle = flex({
+  gap: 12,
+  '& .tab-item': {
+    textStyle: 'glyph28.bold',
+    borderRadius: 12,
+    padding: 12,
+    textAlign: 'center',
+    border: '1.5px solid',
+    height: 58,
+    color: 'white.white_25',
+    backgroundColor: 'white.white_10',
+    borderColor: 'white.white_10',
+    '&.selected': {
+      color: 'white.white_100',
+      backgroundColor: 'white.white_25',
+      borderColor: 'white.white_50',
+    },
+    _hover: {
+      color: 'white.white_75',
+      backgroundColor: 'white.white_25',
+      borderColor: 'white.white_50',
+    },
   },
 });
 
-const mainStyle = css({
-  padding: '170px 0 0',
-  display: 'grid',
-  justifyContent: 'center',
-  gap: '100px',
-  gridTemplateColumns: '230px 1fr',
-  maxWidth: '1200px',
-  width: 'fit-content',
-  margin: '0 auto',
+const containerStyle = css({
+  minHeight: '100vh',
+  height: 'fit-content',
+  backgroundColor: '#019C5A',
+});
+
+const bgStyle = css({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: 'calc(100% - 86px)',
+  zIndex: 0,
+  objectFit: 'cover',
+  marginTop: '86px',
+  pointerEvents: 'none',
+});
+
+const mainStyle = grid({
+  gap: 80,
+  gridTemplateColumns: '222px 1fr',
+  position: 'relative',
+  zIndex: 1,
+  margin: '120px 200px 0',
 });

@@ -5,32 +5,10 @@
 //     },
 //   });
 import { getUser, type UserResponse } from '@gitanimals/api';
-import type { UseSuspenseQueryOptions } from '@tanstack/react-query';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import type { UseQueryOptions, UseSuspenseQueryOptions } from '@tanstack/react-query';
+import { queryOptions, useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 export const USER_QUERY_KEY = 'user';
-
-// const getUser = async () => {
-//   try {
-//     return await packageGetUser();
-//   } catch (error: any) {
-//     // TODO : logout 로직
-//     // interceptor 등 다른곳에서 처리해야하는데, 일단 해당 API는 안부르는 곳이 없으니까 여기서 처리
-//     if (error.response?.status === 401) {
-//       if (typeof window !== 'undefined') {
-//         signOut();
-//       } else {
-//         axios.get('/api/auth/signOut');
-//       }
-//       return null;
-//     }
-//     return error;
-//   }
-// };
-
-// const getUser = async () => {
-//   return get<UserResponse>(`/users`);
-// };
 
 export const useGetSuspenseUser = (options?: UseSuspenseQueryOptions<UserResponse>) =>
   useSuspenseQuery<UserResponse>({
@@ -38,3 +16,20 @@ export const useGetSuspenseUser = (options?: UseSuspenseQueryOptions<UserRespons
     queryFn: getUser,
     ...options,
   });
+
+export const useGetUser = (options?: UseQueryOptions<UserResponse>) =>
+  useQuery<UserResponse>({
+    queryKey: [USER_QUERY_KEY],
+    queryFn: getUser,
+    ...options,
+  });
+
+// export const useUserQueryOptions = {
+//   queryKey: [USER_QUERY_KEY],
+//   queryFn: getUser,
+// };
+
+export const useUserQueryOptions = queryOptions({
+  queryKey: [USER_QUERY_KEY],
+  queryFn: getUser,
+});

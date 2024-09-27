@@ -4,7 +4,7 @@ import { useClientUser } from '@/utils/clientAuth';
 
 interface GitanimalsLineProps {
   sizes?: [number, number];
-  petId?: string;
+  petId?: string | null;
 }
 
 export function GitanimalsLine({ petId, sizes = [600, 120] }: GitanimalsLineProps) {

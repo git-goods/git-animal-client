@@ -1,29 +1,42 @@
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
-import { Suspense } from 'react';
-import { useSession } from 'next-auth/react';
+import { memo } from 'react';
+import Image from 'next/image';
 import { css } from '_panda/css';
+import { flex } from '_panda/patterns';
+import { Skeleton } from '@gitanimals/ui-panda';
+import { wrap } from '@suspensive/react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { prevTextTokenBlack3 } from '@/styles/prevTextToken';
+import { useUserQueryOptions } from '@/apis/user/useGetUser';
+import { addNumberComma } from '@/utils/number';
 
-import PointInfo from './PointInfo';
+export const ProfileSection = memo(
+  wrap
+    .Suspense({
+      fallback: (
+        <section>
+          <Skeleton width={160} height={160} borderRadius="50%" />
+        </section>
+      ),
+    })
+    .ErrorBoundary({ fallback: <section></section> })
+    .on(function ProfileSection() {
+      const { data } = useSuspenseQuery(useUserQueryOptions);
 
-export default function ProfileSection() {
-  const { data } = useSession();
-
-  return (
-    <section>
-      <div className={profileImageStyle}>
-        <img src={data?.user.image} alt="profile" width={160} height={160} />
-      </div>
-      <p className={profileNameStyle}>{data?.user.name}</p>
-      <Suspense>
-        <PointInfo />
-      </Suspense>
-    </section>
-  );
-}
+      return (
+        <section>
+          <div className={profileImageStyle}>
+            <Image src={data.profileImage ?? ''} alt="profile" width={160} height={160} />
+          </div>
+          <p className={profileNameStyle}>{data?.username}</p>
+          <div className={pointStyle}>
+            <Image src="/mypage/coin.svg" alt="coin" width={24} height={24} /> {addNumberComma(data.points ?? 0)}
+          </div>
+        </section>
+      );
+    }),
+);
 
 const profileImageStyle = css({
   width: '160px',
@@ -38,15 +51,14 @@ const profileImageStyle = css({
 });
 
 const profileNameStyle = css({
-  color: '#fff',
+  color: 'white.white',
+  textStyle: 'glyph48.bold',
+  marginTop: '8px',
+  marginBottom: '4px',
+});
 
-  fontSize: '40px',
-  fontStyle: 'normal',
-  fontWeight: 400,
-  lineHeight: '140%' /* 56px */,
-  marginTop: '40px',
-  marginBottom: '30px',
-
-  whiteSpace: 'nowrap',
-  ...prevTextTokenBlack3,
+const pointStyle = flex({
+  color: 'white.white',
+  textStyle: 'glyph24.regular',
+  gap: '6',
 });

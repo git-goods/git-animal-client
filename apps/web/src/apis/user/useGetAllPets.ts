@@ -1,10 +1,13 @@
+import type { GetAllMyPersonasResponse } from '@gitanimals/api';
 import type { UseQueryOptions } from '@tanstack/react-query';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { queryOptions, useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 import type { PetInfoSchema } from '@/schema/user';
 import { getUniqueFilterList } from '@/utils/list';
 
 import { renderGet } from '../render';
+
+import { USER_QUERY_KEY } from './useGetUser';
 
 interface UseGetAllPetsResponse {
   id: string;
@@ -12,7 +15,7 @@ interface UseGetAllPetsResponse {
   personas: PetInfoSchema[];
 }
 
-export const getAllPets = async (username: string) => renderGet<UseGetAllPetsResponse>(`/users/${username}`);
+export const getAllPets = async (username: string) => renderGet<GetAllMyPersonasResponse>(`/users/${username}`);
 
 export const getAllPetsQueryKey = (username?: string) => ['users', 'all-pet', { username }];
 
@@ -44,4 +47,12 @@ export const useGetUniqueTypeAllPets = (
         personas: filteredPersonas,
       };
     },
+  });
+
+export const ALL_PETS_QUERY_KEY = [USER_QUERY_KEY, 'all-pet'];
+
+export const getAllPetsQueryOptions = (username: string) =>
+  queryOptions({
+    queryKey: ALL_PETS_QUERY_KEY,
+    queryFn: () => getAllPets(username),
   });
