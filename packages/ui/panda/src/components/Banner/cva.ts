@@ -9,6 +9,8 @@ export const bannerStyle = cva({
     borderRadius: 12,
     backgroundColor: 'white.white_10',
     transition: 'border 0.3s, background-color 0.3s',
+    position: 'relative',
+    overflow: 'hidden',
   },
   variants: {
     selected: {

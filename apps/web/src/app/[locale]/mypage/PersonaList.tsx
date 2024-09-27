@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import type { PersonasResponse } from '@gitanimals/api';
-import { Banner, Button, Skeleton } from '@gitanimals/ui-panda';
+import { Banner, Button } from '@gitanimals/ui-panda';
 import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -70,15 +70,16 @@ export const SelectPersonaList = wrap
               onClick={() => onSelectPersona(persona)}
               disabled={loadingPersona?.includes(persona.id)}
             >
-              {loadingPersona?.includes(persona.id) ? (
+              {/* {loadingPersona?.includes(persona.id) ? (
                 <Skeleton w={80} h={80} color="black" />
-              ) : (
-                <Banner
-                  image={getPersonaImage(persona.type)}
-                  size="small"
-                  selected={selectPersona.includes(persona.id)}
-                />
-              )}
+              ) : ( */}
+              <Banner
+                loading={loadingPersona?.includes(persona.id)}
+                image={getPersonaImage(persona.type)}
+                size="small"
+                selected={selectPersona.includes(persona.id)}
+              />
+              {/* )} */}
             </button>
           ))}
         </div>
