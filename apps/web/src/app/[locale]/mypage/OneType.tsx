@@ -45,7 +45,7 @@ export function OneType({}: Props) {
         <SelectPersonaList
           name={name}
           selectPersona={selectPersona ? [selectPersona] : []}
-          onSelectPersona={(persona) => setSelectPersona(persona)}
+          onSelectPersona={(persona) => setSelectPersona(persona.id)}
         />
       )}
 

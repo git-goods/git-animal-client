@@ -4,6 +4,7 @@ import React, { memo, useMemo } from 'react';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
 import Flicking from '@egjs/react-flicking';
+import type { PersonasResponse } from '@gitanimals/api';
 import { Banner } from '@gitanimals/ui-panda';
 import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
@@ -15,7 +16,7 @@ import { getPersonaImage } from '@/utils/image';
 interface Props {
   name: string;
   selectPersona: string[];
-  onSelectPersona: (persona: string) => void;
+  onSelectPersona: (persona: PersonasResponse) => void;
 }
 
 export const SelectPersonaList = memo(
@@ -53,7 +54,7 @@ export const SelectPersonaList = memo(
         <div>
           <Flicking align="prev" firstPanelSize="80px" gap={10}>
             {viewList.map((persona) => (
-              <button key={persona.id} onClick={() => onSelectPersona(persona.id)} className={css({ pl: 4 })}>
+              <button key={persona.id} onClick={() => onSelectPersona(persona)} className={css({ pl: 4 })}>
                 <Banner
                   image={getPersonaImage(persona.type)}
                   size="small"
