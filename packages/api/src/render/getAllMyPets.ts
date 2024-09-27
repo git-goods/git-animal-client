@@ -16,7 +16,7 @@ const GetAllPersonasResponseSchema = z.object({
   personas: z.array(PersonaSchema),
 });
 
-export type RenderPersonaItem = z.infer<typeof PersonaSchema>;
+export type PersonasResponse = z.infer<typeof PersonaSchema>;
 
 export type GetAllMyPersonasRequest = z.infer<typeof GetAllPersonasRequestSchema>;
 export type GetAllMyPersonasResponse = z.infer<typeof GetAllPersonasResponseSchema>;

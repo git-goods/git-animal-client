@@ -19,8 +19,6 @@ function Mypage({
   searchParams: {
     type?: TabType;
   };
-
-  pathname: string;
 }) {
   const selectedType = searchParams?.type ?? '1-type';
 

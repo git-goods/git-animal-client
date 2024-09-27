@@ -1,4 +1,4 @@
-import type { GetAllMyPetResponse } from '@gitanimals/api';
+import type { GetAllMyPersonasResponse } from '@gitanimals/api';
 import type { UseQueryOptions } from '@tanstack/react-query';
 import { queryOptions, useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
@@ -15,7 +15,7 @@ interface UseGetAllPetsResponse {
   personas: PetInfoSchema[];
 }
 
-export const getAllPets = async (username: string) => renderGet<GetAllMyPetResponse>(`/users/${username}`);
+export const getAllPets = async (username: string) => renderGet<GetAllMyPersonasResponse>(`/users/${username}`);
 
 export const getAllPetsQueryKey = (username?: string) => ['users', 'all-pet', { username }];
 
