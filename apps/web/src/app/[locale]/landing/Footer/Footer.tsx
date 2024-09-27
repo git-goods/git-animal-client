@@ -31,14 +31,14 @@ export function Footer() {
       role: 'Frontend',
     },
     {
-      nickname: 'yuna',
+      nickname: 'Jiwoo',
       urlType: 'behance',
       image: {
-        src: '/teammate/yuna.webp',
+        src: '/teammate/jiwoo.webp',
         width: 34,
         height: 34,
       },
-      url: 'https://www.behance.net/hyn991022a6be',
+      url: 'https://www.behance.net/sopungcjw42af',
       role: 'Design',
     },
     {

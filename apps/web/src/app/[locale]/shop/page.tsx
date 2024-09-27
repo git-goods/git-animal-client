@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
 
-import GNB from '@/components/Layout/GNB';
+import GNB from '@/components/GNB/GNB';
 
 import { FloatingPointSection } from './FloatingPointSection/FloatingPointSection';
 import { AuctionSection } from './AuctionSection';

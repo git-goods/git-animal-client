@@ -1,7 +1,7 @@
 import { css } from '_panda/css';
 import { Box } from '_panda/jsx';
 
-import GNB from '@/components/Layout/GNB';
+import GNB from '@/components/GNB/GNB';
 
 import DevClient from './Client';
 

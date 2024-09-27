@@ -8,7 +8,7 @@ const publicPages = ['/', '/auth'];
 
 const intlMiddleware = createMiddleware({
   ...routing,
-  // localeDetection: false, // NOTE : 옵션 끌지 말지 고민
+  localeDetection: false,
 });
 const authMiddleware = withAuth((req) => intlMiddleware(req), {
   callbacks: {

@@ -1,4 +1,4 @@
-import GNB from '@/components/Layout/GNB';
+import GNB from '@/components/GNB/GNB';
 
 import { ChoosePetSection } from './landing/ChoosePetSection';
 import { Footer } from './landing/Footer';
