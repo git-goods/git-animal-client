@@ -54,7 +54,7 @@ export function OneType({}: Props) {
         <GitanimalsLine sizes={[sizes.width, sizes.height]} petId={selectPersona} />
       </div>
 
-      <Button onClick={onLinkCopy}>{t('copy-link-success')}</Button>
+      <Button onClick={onLinkCopy}>{t('copy-link-title')}</Button>
     </>
   );
 }

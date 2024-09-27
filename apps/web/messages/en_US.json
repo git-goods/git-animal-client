@@ -54,7 +54,7 @@
     "multi-translation": "You can choose English, 한국어! 🌐\nPlease change the language in the top menu."
   },
   "Mypage": {
-    "copy-link-title": "Copy Image",
+    "copy-link-title": "Copy Link",
     "copy-link-success": "Copy success!",
     "line-set-error": "Cannot set more than 1000.",
     "apply-button": "Apply"

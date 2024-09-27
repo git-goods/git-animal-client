@@ -1,11 +1,10 @@
 'use client';
 
-import React, { memo, useMemo } from 'react';
-import { css } from '_panda/css';
+import React, { useEffect, useMemo, useState } from 'react';
+import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import Flicking from '@egjs/react-flicking';
 import type { PersonasResponse } from '@gitanimals/api';
-import { Banner } from '@gitanimals/ui-panda';
+import { Banner, Button, Skeleton } from '@gitanimals/ui-panda';
 import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -17,53 +16,88 @@ interface Props {
   name: string;
   selectPersona: string[];
   onSelectPersona: (persona: PersonasResponse) => void;
+  initSelectPersona?: (list: string[]) => void;
+  loadingPersona?: string[];
 }
 
-export const SelectPersonaList = memo(
-  wrap
-    .Suspense({
-      fallback: (
-        <div className={flex({ gap: 4, h: 80 })}>
-          {Array.from({ length: 4 }).map((_, index) => (
-            <BannerSkeleton key={index} size="small" />
-          ))}
-        </div>
-      ),
-    })
-    .ErrorBoundary({
-      fallback: <div>error</div>,
-    })
-    .on(function SelectPersonaList({ name, selectPersona, onSelectPersona }: Props) {
-      const { data } = useSuspenseQuery(getAllPetsQueryOptions(name));
+export const SelectPersonaList = wrap
+  .Suspense({
+    fallback: (
+      <div className={flex({ gap: 4, h: 80 })}>
+        {Array.from({ length: 4 }).map((_, index) => (
+          <BannerSkeleton key={index} size="small" />
+        ))}
+      </div>
+    ),
+  })
+  .ErrorBoundary({
+    fallback: <div>error</div>,
+  })
+  .on(function SelectPersonaList({ name, selectPersona, onSelectPersona, initSelectPersona, loadingPersona }: Props) {
+    const { data } = useSuspenseQuery(getAllPetsQueryOptions(name));
 
-      const viewList = useMemo(() => {
-        const highestLevelPersonas = data.personas.reduce(
-          (acc, persona) => {
-            if (!acc[persona.type] || acc[persona.type].level < persona.level) {
-              acc[persona.type] = persona;
-            }
-            return acc;
-          },
-          {} as Record<string, (typeof data.personas)[number]>,
-        );
+    const [isExtend, setIsExtend] = useState(false);
 
-        return Object.values(highestLevelPersonas);
-      }, [data]);
+    useEffect(() => {
+      if (initSelectPersona) {
+        const visiblePersonas = data.personas.filter((persona) => persona.visible);
+        const visiblePersonaIds = visiblePersonas.map((persona) => persona.id);
+        initSelectPersona(visiblePersonaIds);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data]);
 
-      return (
-        <div>
-          <Flicking align="prev" firstPanelSize="80px" gap={10}>
-            {viewList.map((persona) => (
-              <button key={persona.id} onClick={() => onSelectPersona(persona)} className={css({ pl: 4 })}>
+    const viewList = useMemo(() => {
+      const viewListSorted = data.personas.sort((a, b) => {
+        if (a.visible && !b.visible) return -1;
+        if (!a.visible && b.visible) return 1;
+        return parseInt(a.level) - parseInt(b.level);
+      });
+
+      return viewListSorted;
+    }, [data]);
+
+    return (
+      <section className={containerStyle}>
+        <h2 className="heading">Change pet</h2>
+        <Button className="extend-button" onClick={() => setIsExtend((prev) => !prev)}>
+          {isExtend ? '축소' : '확장'}
+        </Button>
+        <div className={cx(listStyle, css({ flexWrap: isExtend ? 'wrap' : 'nowrap' }))}>
+          {viewList.map((persona) => (
+            <button
+              key={`${persona.id}-${persona.visible}`}
+              onClick={() => onSelectPersona(persona)}
+              disabled={loadingPersona?.includes(persona.id)}
+            >
+              {loadingPersona?.includes(persona.id) ? (
+                <Skeleton w={80} h={80} color="black" />
+              ) : (
                 <Banner
                   image={getPersonaImage(persona.type)}
                   size="small"
                   selected={selectPersona.includes(persona.id)}
                 />
-              </button>
-            ))}
-          </Flicking>
+              )}
+            </button>
+          ))}
         </div>
-      );
-    }),
-);
+      </section>
+    );
+  });
+
+const containerStyle = css({
+  position: 'relative',
+  '& .heading': {
+    textStyle: 'glyph18.bold',
+    color: 'white',
+    marginBottom: '16px',
+  },
+  '& .extend-button': {
+    position: 'absolute',
+    top: '-16px',
+    right: 0,
+  },
+});
+
+const listStyle = flex({ gap: 4, w: '100%', overflowX: 'auto' });

@@ -6,11 +6,14 @@ import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import type { PersonasResponse } from '@gitanimals/api';
+import { Button } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
-import { GitanimalsFarm } from '@/components/Gitanimals';
+import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals';
 import { useClientUser } from '@/utils/clientAuth';
+import { copyClipBoard } from '@/utils/copy';
 
 import { SelectPersonaList } from './PersonaList';
 
@@ -22,6 +25,7 @@ function FarmType() {
 
   const { name } = useClientUser();
   const [selectPersona, setSelectPersona] = useState<string[]>([]);
+  const [loadingPersona, setLoadingPersona] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
   const { mutate } = useChangePersonaVisible({
@@ -29,40 +33,71 @@ function FarmType() {
       setLoading(true);
     },
     onSuccess: (res) => {
-      // setAnimals((prev) =>
-      //   prev.map((animal) => {
-      //     if (animal.id === res.id) {
-      //       return {
-      //         ...animal,
-      //         isSelected: res.visible,
-      //       };
-      //     }
-      //     return animal;
-      //   }),
-      // );
+      console.log('res: ', res.visible);
+      // setSelectPersona((prev) => ({
+      //   ...prev,
+      //   [res.id]: res.visible,
+      // }));
+      if (res.visible) {
+        setSelectPersona((prev) => Array.from(new Set([...prev, res.id])));
+      } else {
+        setSelectPersona((prev) => prev.filter((id) => id !== res.id));
+      }
     },
-    onSettled: async () => {
+    onSettled: async (res) => {
       await queryClient.invalidateQueries({
         queryKey: ['users', 'all-pet'],
       });
       setLoading(false);
+      setLoadingPersona((prev) => prev.filter((id) => id !== res?.id));
     },
   });
 
   const onSelectPersona = (persona: PersonasResponse) => {
-    mutate({
-      personaId: persona.id,
-      visible: !persona.visible,
-    });
-    setSelectPersona((prev) => Array.from(new Set([...prev, persona.id])));
+    setLoadingPersona((prev) => [...prev, persona.id]);
+
+    const isVisible = selectPersona.includes(persona.id);
+
+    if (isVisible) {
+      // setSelectPersona((prev) => prev.filter((id) => id !== persona.id));
+      mutate({ personaId: persona.id, visible: false });
+    } else {
+      // setSelectPersona((prev) => Array.from(new Set([...prev, persona.id])));
+      mutate({ personaId: persona.id, visible: true });
+    }
+  };
+
+  const onLinkCopy = async () => {
+    try {
+      await copyClipBoard(
+        getGitanimalsFarmString({
+          username: name,
+        }),
+      );
+
+      toast.success('복사 성공!', { duration: 2000 });
+    } catch (error) {}
   };
 
   return (
     <>
-      {name && <SelectPersonaList name={name} selectPersona={selectPersona} onSelectPersona={onSelectPersona} />}
+      <section className={farmSectionStyle}>
+        {name && (
+          <SelectPersonaList
+            name={name}
+            loadingPersona={loadingPersona}
+            selectPersona={selectPersona}
+            onSelectPersona={onSelectPersona}
+            initSelectPersona={(list) => setSelectPersona(list)}
+          />
+        )}
 
-      <section>
-        <GitanimalsFarm imageKey={`${selectPersona.length}/${loading ? 'loading' : ''}`} sizes={[600, 300]} />
+        <div>
+          <GitanimalsFarm imageKey={`${selectPersona.length}/${loading ? 'loading' : ''}`} sizes={[600, 300]} />
+          <Button onClick={onLinkCopy} mt={16}>
+            {t('copy-link-title')}
+          </Button>
+        </div>
       </section>
     </>
 
@@ -175,23 +210,23 @@ function FarmType() {
 
 export default FarmType;
 
-const buttonWrapperStyle = css({
-  margin: '72px auto',
-  width: 'fit-content',
-});
-
 const farmSectionStyle = css({
-  marginTop: '42px',
-  paddingLeft: '16px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '40px',
+  padding: '40px 0',
 
-  '& > h2': {
-    color: '#fff',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 400,
-    marginBottom: '30px',
-    lineHeight: 'normal',
-  },
+  // marginTop: '42px',
+  // paddingLeft: '16px',
+
+  // '& > h2': {
+  //   color: '#fff',
+  //   fontSize: '16px',
+  //   fontStyle: 'normal',
+  //   fontWeight: 400,
+  //   marginBottom: '30px',
+  //   lineHeight: 'normal',
+  // },
 });
 
 const changePetStyle = css({

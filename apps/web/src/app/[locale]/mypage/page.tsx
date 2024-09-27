@@ -7,6 +7,7 @@ import { updateUrlSearchParams } from '@gitanimals/util-common';
 import GNB from '@/components/GNB/GNB';
 import { Link } from '@/i18n/routing';
 
+import FarmType from './FarmType';
 import { OneType } from './OneType';
 import { ProfileSection } from './ProfileSection';
 
@@ -25,7 +26,7 @@ function Mypage({
 
   const MYPAGE_TAB_INNER_MAP: Record<TabType, ReactNode> = {
     '1-type': <OneType />,
-    'farm-type': <></>,
+    'farm-type': <FarmType />,
   };
 
   return (
