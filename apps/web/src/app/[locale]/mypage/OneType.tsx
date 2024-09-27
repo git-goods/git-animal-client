@@ -1,10 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+import { css } from '_panda/css';
 
+import { GitanimalsLine } from '@/components/Gitanimals';
 import { useClientUser } from '@/utils/clientAuth';
 
-import PersonaList from './PersonaList';
+import { SelectPersonaList } from './PersonaList';
 
 interface Props {}
 
@@ -13,7 +15,7 @@ function OneType({}: Props) {
   const [selectPersona, setSelectPersona] = useState<string | null>();
 
   // const [selected, setSelected] = useState<PetInfoSchema>();
-  // const [sizes, setSizes] = useState<[number, number]>([600, 120]);
+  const [sizes, setSizes] = useState<[number, number]>([600, 120]);
   // const [error, setError] = useState('');
 
   // const { name: username } = useClientUser();
@@ -60,6 +62,17 @@ function OneType({}: Props) {
           onSelectPersona={(persona) => setSelectPersona(persona)}
         />
       )}
+
+      <div
+        className={lineContainerStyle}
+        style={{
+          width: sizes[0],
+          height: sizes[1],
+        }}
+      >
+        <GitanimalsLine sizes={sizes} petId={selectPersona ? selectPersona : undefined} />
+      </div>
+
       {/* <section className={farmSectionStyle}>
         <h2>choose only one pet</h2>
         <SelectAnimal selected={selected} setSelected={setSelected} size={120} personaList={personaList} />
