@@ -51,7 +51,8 @@
     "visit-shop": "New! Visit the GitAnimals Shop page",
     "github-star": "Enjoying GitAnimals?\nGive us a GitHub Star! ⭐",
     "update-shop-renewal": "Update: The shop page has been renewed.\n Check it out!",
-    "multi-translation": "You can choose English, 한국어! 🌐\nPlease change the language in the top menu."
+    "multi-translation": "You can choose English, 한국어! 🌐\nPlease change the language in the top menu.",
+    "update-mypage-renewal": "Update: The MyPage page has been renewed.\n Check it out!"
   },
   "Mypage": {
     "copy-link-title": "Copy Link",
@@ -61,6 +62,7 @@
     "customize-size": "Line TypeCustomize Size",
     "extend-button": "Extend",
     "shrink-button": "Shrink",
-    "change-pet": "Change pet"
+    "change-pet": "Change pet",
+    "no-mobile-support": "Currently, mobile is not supported.\nPlease connect to the desktop."
   }
 }

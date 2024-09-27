@@ -36,12 +36,19 @@ export const NOTICE_LIST = [
   {
     key: 'multi-translation',
     label: 'multi-translation',
-    // redirect: {
-    //   url: '/',
-    //   label: 'go',
-    // },
     isAuth: false,
     closeButton: true,
+    visible: true,
+  },
+  {
+    key: 'update-mypage-renewal',
+    label: 'update-mypage-renewal',
+    redirect: {
+      url: '/mypage',
+      label: 'go',
+    },
+    isAuth: true,
+    closeButton: false,
     visible: true,
   },
 ];
