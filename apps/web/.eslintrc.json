@@ -5,5 +5,18 @@
   "parserOptions": {
     "project": true
   },
+  "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "styled-jsx/css",
+            "message": "Please use panda/css instead."
+          }
+        ]
+      }
+    ]
+  },
   "ignorePatterns": ["node_modules/", "next.config.mjs"]
 }
