@@ -7,7 +7,7 @@ import { updateUrlSearchParams } from '@gitanimals/util-common';
 import GNB from '@/components/GNB/GNB';
 import { Link } from '@/i18n/routing';
 
-import OneType from './OneType';
+import { OneType } from './OneType';
 import { ProfileSection } from './ProfileSection';
 
 type TabType = '1-type' | 'farm-type';

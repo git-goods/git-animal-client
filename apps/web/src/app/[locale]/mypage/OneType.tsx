@@ -1,57 +1,43 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
+import { flex } from '_panda/patterns';
+import { Button, TextField } from '@gitanimals/ui-panda';
+import { toast } from 'sonner';
 
-import { GitanimalsLine } from '@/components/Gitanimals';
+import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
 import { useClientUser } from '@/utils/clientAuth';
+import { copyClipBoard } from '@/utils/copy';
 
 import { SelectPersonaList } from './PersonaList';
 
+const DEFAULT_SIZE = { width: 600, height: 120 };
+
 interface Props {}
 
-function OneType({}: Props) {
+export function OneType({}: Props) {
+  const t = useTranslations('Mypage');
+
   const { name } = useClientUser();
+
   const [selectPersona, setSelectPersona] = useState<string | null>();
+  const [sizes, setSizes] = useState<{ width: number; height: number }>(DEFAULT_SIZE);
 
-  // const [selected, setSelected] = useState<PetInfoSchema>();
-  const [sizes, setSizes] = useState<[number, number]>([600, 120]);
-  // const [error, setError] = useState('');
+  const onLinkCopy = async () => {
+    try {
+      await copyClipBoard(
+        getGitanimalsLineString({
+          username: name,
+          petId: selectPersona ?? undefined,
+          sizes: [sizes.width, sizes.height],
+        }),
+      );
 
-  // const { name: username } = useClientUser();
-
-  // const { data } = useGetUniqueTypeAllPets(username, {
-  //   enabled: Boolean(username),
-  // });
-
-  // const personaList = data?.personas || [];
-
-  // const onWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const value = parseInt(e.target.value);
-  //   setError('');
-
-  //   if (value > 1000) {
-  //     setError('1000 이상은 설정할 수 없습니다.');
-  //   }
-
-  //   setSizes([value, sizes[1]]);
-  // };
-
-  // const onHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setError('');
-  //   setSizes([sizes[0], parseInt(e.target.value)]);
-  // };
-
-  // const onLinkCopy = async () => {
-  //   try {
-  //     await copyClipBoard(getGitanimalsLineString({ username, petId: selected?.id, sizes }));
-
-  //     toast.success('복사 성공!', {
-  //       position: 'top-center',
-  //       duration: 2000,
-  //     });
-  //   } catch (error) {}
-  // };
+      toast.success('복사 성공!', { duration: 2000 });
+    } catch (error) {}
+  };
 
   return (
     <>
@@ -63,79 +49,15 @@ function OneType({}: Props) {
         />
       )}
 
-      <div
-        className={lineContainerStyle}
-        style={{
-          width: sizes[0],
-          height: sizes[1],
-        }}
-      >
-        <GitanimalsLine sizes={sizes} petId={selectPersona ? selectPersona : undefined} />
+      <SizeInputList onApply={(width, height) => setSizes({ width, height })} />
+      <div className={lineContainerStyle} style={{ width: sizes.width, height: sizes.height }}>
+        <GitanimalsLine sizes={[sizes.width, sizes.height]} petId={selectPersona} />
       </div>
 
-      {/* <section className={farmSectionStyle}>
-        <h2>choose only one pet</h2>
-        <SelectAnimal selected={selected} setSelected={setSelected} size={120} personaList={personaList} />
-      </section>
-      <section className={farmSectionStyle}>
-        <h2>영역을 customize 하세요</h2>
-        <div className={inputWrapperStyle}>
-          <label htmlFor="width">width</label>
-          <input type="number" name="width" id="width" value={sizes[0]} onChange={(e) => onWidthChange(e)} />
-
-          <label htmlFor="height">height</label>
-          <input type="number" name="height" id="height" value={sizes[1]} onChange={(e) => onHeightChange(e)} />
-        </div>
-        {error && <p className={errorMsgStyle}>{error}</p>}
-      
-      </section>
-      <div className={buttonWrapperStyle}>
-        <Button onClick={onLinkCopy}>Copy Link</Button>
-      </div> */}
+      <Button onClick={onLinkCopy}>{t('copy-link-success')}</Button>
     </>
   );
 }
-
-export default OneType;
-
-// const farmSectionStyle = css({
-//   marginTop: '42px',
-//   paddingLeft: '16px',
-
-//   '& > h2': {
-//     color: '#fff',
-//     fontSize: '16px',
-//     fontStyle: 'normal',
-//     fontWeight: 400,
-//     marginBottom: '30px',
-//     lineHeight: 'normal',
-//   },
-// });
-// const buttonWrapperStyle = css({
-//   margin: '72px auto',
-//   width: 'fit-content',
-// });
-
-// const inputWrapperStyle = css({
-//   color: 'white',
-//   display: 'flex',
-//   marginBottom: '24px',
-//   alignItems: 'center',
-//   gap: '12px',
-
-//   '& input': {
-//     width: '100px',
-//     height: '30px',
-//     borderRadius: '4px',
-//     border: '1px solid #141414',
-//     padding: '0 8px',
-//     outline: '1px solid #141414',
-//   },
-
-//   '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
-//     WebkitAppearance: 'none',
-//   },
-// });
 
 const lineContainerStyle = css({
   width: '100%',
@@ -143,7 +65,6 @@ const lineContainerStyle = css({
   height: '100%',
   transition: 'all 0.3s',
   maxWidth: '1000px',
-
   margin: '24px auto',
 
   '& img': {
@@ -151,8 +72,33 @@ const lineContainerStyle = css({
   },
 });
 
-// const errorMsgStyle = css({
-//   color: 'white',
-//   marginBottom: '12px',
-//   fontSize: '14px',
-// });
+function SizeInputList({ onApply }: { onApply: (width: number, height: number) => void }) {
+  const t = useTranslations('Mypage');
+
+  const [width, setWidth] = useState(DEFAULT_SIZE.width);
+  const [height, setHeight] = useState(DEFAULT_SIZE.height);
+
+  return (
+    <div className={flex({ gap: 12 })}>
+      <SizeInput value={width} onChange={(e) => setWidth(parseInt(e.target.value))} name="width" />
+      <SizeInput value={height} onChange={(e) => setHeight(parseInt(e.target.value))} name="height" />
+      <Button onClick={() => onApply(width, height)}>{t('apply-button')}</Button>
+    </div>
+  );
+}
+
+function SizeInput(props: { value: number; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; name: string }) {
+  const t = useTranslations('Mypage');
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+
+    if (value > 1000) {
+      toast.error(t('line-set-error'));
+    }
+
+    props.onChange(e);
+  };
+
+  return <TextField type="number" name={props.name} id={props.name} value={props.value} onChange={onChange} />;
+}
