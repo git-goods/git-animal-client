@@ -34,6 +34,7 @@ const loadingStyle = css({
   justifyContent: 'center',
   alignItems: 'center',
   backgroundColor: 'white.white_25',
+  borderColor: 'white.white_50',
 });
 
 const labelStyle = css({

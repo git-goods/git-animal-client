@@ -10,6 +10,7 @@ export const bannerStyle = cva({
     backgroundColor: 'white.white_10',
     transition: 'border 0.3s, background-color 0.3s',
     position: 'relative',
+    borderColor: 'transparent',
     overflow: 'hidden',
   },
   variants: {

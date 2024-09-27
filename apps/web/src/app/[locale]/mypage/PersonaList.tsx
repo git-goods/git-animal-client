@@ -92,6 +92,7 @@ export const SelectPersonaList = wrap
               key={`${persona.id}-${persona.visible}`}
               onClick={() => onSelectPersona(persona)}
               disabled={loadingPersona?.includes(persona.id)}
+              className={css({ outline: 'none' })}
             >
               <Banner
                 loading={loadingPersona?.includes(persona.id)}
