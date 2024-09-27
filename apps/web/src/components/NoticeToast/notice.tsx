@@ -33,4 +33,15 @@ export const NOTICE_LIST = [
     closeButton: false,
     visible: true,
   },
+  {
+    key: 'multi-translation',
+    label: 'multi-translation',
+    // redirect: {
+    //   url: '/',
+    //   label: 'go',
+    // },
+    isAuth: false,
+    closeButton: true,
+    visible: true,
+  },
 ];
