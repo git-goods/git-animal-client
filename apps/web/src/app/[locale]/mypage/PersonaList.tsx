@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import type { PersonasResponse } from '@gitanimals/api';
+import type { Persona } from '@gitanimals/api';
 import { Banner, Button } from '@gitanimals/ui-panda';
 import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
@@ -16,7 +16,7 @@ import { getPersonaImage } from '@/utils/image';
 interface Props {
   name: string;
   selectPersona: string[];
-  onSelectPersona: (persona: PersonasResponse) => void;
+  onSelectPersona: (persona: Persona) => void;
   initSelectPersona?: (list: string[]) => void;
   loadingPersona?: string[];
 }
