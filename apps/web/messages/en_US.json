@@ -16,6 +16,15 @@
   "Landing": {
     "title": "Have your pet in GITHUB! "
   },
+  "Common": {
+    "pet": "Pet",
+    "name": "Name",
+    "grade": "Grade",
+    "level": "Level",
+    "price": "Price",
+    "date": "Date",
+    "sell": "Sell"
+  },
   "Gotcha": {
     "pet-gotcha-desc": "Draw a S+ Grade pet for 1,000 points",
     "choose-one-card": "Choose one card you want!",
