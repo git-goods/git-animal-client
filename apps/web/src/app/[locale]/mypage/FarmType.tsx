@@ -5,7 +5,7 @@
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
-import type { PersonasResponse } from '@gitanimals/api';
+import type { Persona } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -46,7 +46,7 @@ function FarmType() {
     },
   });
 
-  const onSelectPersona = (persona: PersonasResponse) => {
+  const onSelectPersona = (persona: Persona) => {
     setLoadingPersona((prev) => [...prev, persona.id]);
 
     const isVisible = selectPersona.includes(persona.id);

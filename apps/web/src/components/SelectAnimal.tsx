@@ -1,15 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import { css } from '_panda/css';
+import type { Persona } from '@gitanimals/api';
 
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
-import type { PetInfoSchema } from '@/schema/user';
 
 interface Props {
-  selected?: PetInfoSchema;
-  setSelected: (persona: PetInfoSchema) => void;
+  selected?: Persona;
+  setSelected: (persona: Persona) => void;
   size?: number;
-  personaList: PetInfoSchema[];
+  personaList: Persona[];
 }
 
 function SelectAnimal({ selected, setSelected, personaList, size = 196 }: Props) {

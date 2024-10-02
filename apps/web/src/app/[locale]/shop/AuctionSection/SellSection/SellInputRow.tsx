@@ -3,6 +3,7 @@ import type { ChangeEventHandler } from 'react';
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
+import type { Persona } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useQueryClient } from '@tanstack/react-query';
@@ -11,7 +12,6 @@ import { toast } from 'sonner';
 import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
 import { rowStyle } from '@/components/ProductTable/ShopTableRowView';
 import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
-import type { PetInfoSchema } from '@/schema/user';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
@@ -20,7 +20,7 @@ import { tableCss, theadCss } from '../table.styles';
 const MAX_PRICE = 100_000_000;
 
 interface Props {
-  item: PetInfoSchema | null;
+  item: Persona | null;
   initPersona: () => void;
 }
 

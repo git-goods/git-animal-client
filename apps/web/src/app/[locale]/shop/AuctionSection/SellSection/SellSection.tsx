@@ -2,14 +2,13 @@
 
 import React, { useState } from 'react';
 import { css } from '_panda/css';
-
-import type { PetInfoSchema } from '@/schema/user';
+import type { Persona } from '@gitanimals/api';
 
 import PetList from './PetList';
 import SellInputRow from './SellInputRow';
 
 function SellSection() {
-  const [selectPersona, setSelectPersona] = useState<PetInfoSchema | null>(null);
+  const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
 
   return (
     <div>
