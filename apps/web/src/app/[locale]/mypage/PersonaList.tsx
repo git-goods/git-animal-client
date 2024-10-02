@@ -38,6 +38,10 @@ const containerStyle = css({
 const listStyle = flex({ gap: 4, w: '100%', overflowX: 'auto' });
 
 export const SelectPersonaList = wrap
+  .ErrorBoundary({
+    // TODO: 공통 에러 컴포넌트로 대체
+    fallback: <div>error</div>,
+  })
   .Suspense({
     fallback: (
       <section className={containerStyle}>
@@ -50,10 +54,7 @@ export const SelectPersonaList = wrap
       </section>
     ),
   })
-  .ErrorBoundary({
-    // TODO: 공통 에러 컴포넌트로 대체
-    fallback: <div>error</div>,
-  })
+
   .on(function SelectPersonaList({ name, selectPersona, onSelectPersona, initSelectPersona, loadingPersona }: Props) {
     const t = useTranslations('Mypage');
 
