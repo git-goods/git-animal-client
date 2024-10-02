@@ -8,9 +8,9 @@ export const PersonaSchema = z.object({
   dropRate: z.string(),
 });
 
-export const PersonaInfoSchema = z.object({
-  type: z.string(),
-  dropRate: z.string(),
+export const PersonaInfoSchema = PersonaSchema.pick({
+  type: true,
+  dropRate: true,
 });
 
 export type Persona = z.infer<typeof PersonaSchema>;
