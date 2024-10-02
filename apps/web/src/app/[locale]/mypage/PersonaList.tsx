@@ -10,7 +10,7 @@ import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banne
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { getAllPetsQueryOptions } from '@/apis/user/useGetAllPets';
+import { userAllPersonasQueryOptions } from '@/queryFactory/user';
 import { getPersonaImage } from '@/utils/image';
 
 interface Props {
@@ -58,7 +58,7 @@ export const SelectPersonaList = wrap
   .on(function SelectPersonaList({ name, selectPersona, onSelectPersona, initSelectPersona, loadingPersona }: Props) {
     const t = useTranslations('Mypage');
 
-    const { data } = useSuspenseQuery(getAllPetsQueryOptions(name));
+    const { data } = useSuspenseQuery(userAllPersonasQueryOptions(name));
 
     const [isExtend, setIsExtend] = useState(false);
 
