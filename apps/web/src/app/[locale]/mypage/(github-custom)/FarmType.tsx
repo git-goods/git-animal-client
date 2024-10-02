@@ -15,7 +15,7 @@ import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals
 import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
 
-import { SelectPersonaList } from './PersonaList';
+import { SelectPersonaList } from '../PersonaList';
 
 function FarmType() {
   const queryClient = useQueryClient();
