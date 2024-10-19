@@ -6,6 +6,8 @@ import GNB from '@/components/GNB/GNB';
 
 import { Footer } from '../../landing/Footer';
 
+import { KingGhost } from './KingGhost';
+
 function HalloweenEventLayout({ children }: { children: React.ReactNode }) {
   return (
     <div>
@@ -35,6 +37,10 @@ function HalloweenEventLayout({ children }: { children: React.ReactNode }) {
           className={cx(imageStyle, leftImageStyle)}
         />
 
+        <div className={showMobile}>
+          <KingGhost />
+        </div>
+
         {children}
       </div>
       <Footer />
@@ -63,6 +69,9 @@ const imageStyle = css({
   minHeight: 'calc(100vh - 60px)',
   pointerEvents: 'none',
   top: -60,
+  _mobile: {
+    display: 'none',
+  },
 });
 
 const rightImageStyle = css({
@@ -72,4 +81,11 @@ const rightImageStyle = css({
 const leftImageStyle = css({
   position: 'absolute',
   left: 0,
+});
+
+const showMobile = css({
+  display: 'none',
+  _mobile: {
+    display: 'block',
+  },
 });

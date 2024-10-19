@@ -1,10 +1,15 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { css } from '_panda/css';
 import { AnimatePresence, motion } from 'framer-motion';
 
+import AnimalSliderContainerMobile from '../../landing/AvailablePetSection/AnimalSliderContainerMobile';
+
 import { HalloweenCard } from './HalloweenCard';
+
+import '@egjs/react-flicking/dist/flicking.css';
+import '@egjs/react-flicking/dist/flicking-inline.css';
 
 const PERSONA = ['GHOST_KING', 'GHOST', 'SCREAM', 'SCREAM_GHOST', 'SLIME_PUMPKIN_1', 'SLIME_PUMPKIN_2']; //  ''
 
@@ -63,4 +68,29 @@ const slotItemStyle = css({
   position: 'absolute',
   width: '100%',
   height: '100%',
+});
+
+export function MobileCardList() {
+  return (
+    <Suspense fallback={<></>}>
+      <div className={mobileCardListContainer}>
+        <AnimalSliderContainerMobile>
+          {PERSONA.map((type) => {
+            return (
+              <div key={type} className={css({})}>
+                <HalloweenCard key={type} type={type} />
+              </div>
+            );
+            //   return;
+          })}
+        </AnimalSliderContainerMobile>
+      </div>
+    </Suspense>
+  );
+}
+
+const mobileCardListContainer = css({
+  '& .slider-container': {
+    width: '100%',
+  },
 });
