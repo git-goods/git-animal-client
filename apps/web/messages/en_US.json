@@ -64,5 +64,11 @@
     "shrink-button": "Shrink",
     "change-pet": "Change pet",
     "no-mobile-support": "Currently, mobile is not supported.\nPlease connect to the desktop."
+  },
+  "Event": {
+    "Halloween": {
+      "description": "Halloween has come to Gitanimals\nDraw Halloween pet for free!",
+      "draw-button": "Draw!"
+    }
   }
 }

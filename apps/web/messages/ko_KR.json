@@ -64,5 +64,11 @@
     "shrink-button": "축소",
     "change-pet": "펫 변경",
     "no-mobile-support": "현재 모바일은 지원하지 않습니다.\n데스크탑으로 접속해주세요."
+  },
+  "Event": {
+    "Halloween": {
+      "description": "할로윈이 Gitanimals에 찾아왔어요.\n공짜 할로윈 펫을 뽑아보세요!",
+      "draw-button": "할로윈 펫 뽑기!"
+    }
   }
 }

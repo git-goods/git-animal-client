@@ -18,13 +18,13 @@ export function NoRatingCard(props: Props) {
   return (
     <div className={cx('animal-card-container', container)}>
       <div className={bgImage}>
-        <img src={props.bgUrl} alt={props.tier} width={265} height={328} />
+        <img src={props.bgUrl} alt={props.tier} width={265} height={328} draggable={false} />
       </div>
       <div className={thumbnailImage}>
-        <img src={props.thumbnailUrl} alt={props.tier} width={233} height={233} />
+        <img src={props.thumbnailUrl} alt={props.tier} width={233} height={233} draggable={false} />
       </div>
       <div className={thumbnailImage}>
-        <img src={props.personaImage} alt={props.type} width={233} height={233} />
+        <img src={props.personaImage} alt={props.type} width={233} height={233} draggable={false} />
       </div>
       <div className={cx('animal-card-info', infoWrapper)}>
         <p className={cx('animal-card-type', typeText)}>{snakeToTitleCase(props.type)}</p>
