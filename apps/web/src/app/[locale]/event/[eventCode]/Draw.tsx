@@ -17,6 +17,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { toast } from 'sonner';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
+import { login } from '@/components/AuthButton';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 
 import { HalloweenCard } from './HalloweenCard';
@@ -36,6 +37,11 @@ export function Draw() {
   const [drawedPet, setDrawedPet] = useState<string | null>(null);
 
   const onClickDraw = () => {
+    if (!session) {
+      login('/event/HALLOWEEN_2024');
+      return;
+    }
+
     usingCoupon(
       { code: upperCaseEventCode },
       {
@@ -44,7 +50,7 @@ export function Draw() {
         },
         onError: () => {
           toast.error(t('draw-error'));
-          sendMessageToErrorChannel(`이벤트 실패, 이벤트 코드: ${upperCaseEventCode}, 사용자: ${session?.user?.name}`);
+          sendMessageToErrorChannel(`이벤트 실패, 이벤트 코드: ${upperCaseEventCode}, 사용자: ${session.user?.name}`);
         },
       },
     );
@@ -59,7 +65,7 @@ export function Draw() {
   return (
     <>
       <Button disabled={isPending} className={buttonStyle} onClick={onClickDraw}>
-        {t('draw-button')}
+        {session ? t('draw-button') : t('draw-button-not-signed-in')}
       </Button>
 
       <AnimatePresence mode="wait">
