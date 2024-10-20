@@ -1,19 +1,41 @@
 'use client';
 
+import { useEffect } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import Script from 'next/script';
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
+
+import { initAnalytics, trackPageView } from '@/lib/analytics';
 
 const isProd = process.env.NODE_ENV === 'production';
 
 const MONITORING_KEY = {
   GA: isProd ? 'G-RNEDVMFT5X' : 'G-N45935GS2S',
   GTM: 'GTM-T6DQHP7X',
+  MIXPANEL: isProd ? '3e01e631ae4efb8019bbcdf2fb401209' : '',
   JENNIFER: isProd ? 'e9e023ee' : '000000',
 };
 
 function Monitoring() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    initAnalytics();
+  }, []);
+
+  useEffect(() => {
+    const url = pathname + searchParams.toString();
+    trackPageView(url);
+  }, [pathname, searchParams]);
+
   if (!isProd) return <></>;
+
   return (
     <>
+      <GoogleAnalytics gaId={MONITORING_KEY.GA} />
+      <GoogleTagManager gtmId={MONITORING_KEY.GTM} />
+
       <Script
         strategy="afterInteractive"
         src={`https://d-collect.jennifersoft.com/${MONITORING_KEY.JENNIFER}/demian.js`}
