@@ -1,7 +1,8 @@
-import { isProd } from '@/utils/common';
+import { isProd } from './env';
 
 export const MONITORING_KEY = {
-  GA: isProd(process.env.NODE_ENV) ? 'G-RNEDVMFT5X' : 'G-N45935GS2S',
+  GA: isProd ? 'G-RNEDVMFT5X' : 'G-N45935GS2S',
   GTM: 'GTM-T6DQHP7X',
-  JENNIFER: isProd(process.env.NODE_ENV) ? 'e9e023ee' : '000000',
-} as const;
+  MIXPANEL: isProd ? '3e01e631ae4efb8019bbcdf2fb401209' : '',
+  JENNIFER: isProd ? 'e9e023ee' : '000000',
+};

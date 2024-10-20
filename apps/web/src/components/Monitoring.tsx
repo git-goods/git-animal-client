@@ -5,16 +5,9 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import Script from 'next/script';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 
+import { isProd } from '@/constants/env';
+import { MONITORING_KEY } from '@/constants/monitoring';
 import { initAnalytics, trackPageView } from '@/lib/analytics';
-
-const isProd = process.env.NODE_ENV === 'production';
-
-const MONITORING_KEY = {
-  GA: isProd ? 'G-RNEDVMFT5X' : 'G-N45935GS2S',
-  GTM: 'GTM-T6DQHP7X',
-  MIXPANEL: isProd ? '3e01e631ae4efb8019bbcdf2fb401209' : '',
-  JENNIFER: isProd ? 'e9e023ee' : '000000',
-};
 
 function Monitoring() {
   const pathname = usePathname();
