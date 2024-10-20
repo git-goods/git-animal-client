@@ -1,4 +1,4 @@
-import { safeGet } from '../_instance/safe';
+import { safeRenderGet } from '../_instance/safe';
 import { z } from 'zod';
 interface IsPressStarRequest {
   /**
@@ -12,5 +12,5 @@ const IsPressStarResponseSchema = z.object({
 });
 
 export const isPressStar = ({ login }: IsPressStarRequest) => {
-  return safeGet(IsPressStarResponseSchema)(`stargazers/${login}/press`);
+  return safeRenderGet(IsPressStarResponseSchema)(`stargazers/${login}/press`);
 };

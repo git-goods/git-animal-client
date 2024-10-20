@@ -40,7 +40,7 @@
     "@pandacss/dev": "^0.41.0",
     "@remix-run/dev": "^2.10.2",
     "@shadow-panda/preset": "^0.7.1",
-    "@types/react": "^18.2.20",
+    "@types/react": "*",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",

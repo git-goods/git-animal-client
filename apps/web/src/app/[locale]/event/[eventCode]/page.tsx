@@ -1,13 +1,32 @@
 import React from 'react';
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
-import { Button } from '@gitanimals/ui-panda';
+
+import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 
 import { CardList, MobileCardList } from './CardList';
+import { Draw } from './Draw';
 
-async function HalloweenEventPage() {
+interface Params {
+  eventCode: string;
+}
+
+async function HalloweenEventPage({ params }: { params: Params }) {
+  if (!params.eventCode) {
+    notFound();
+  }
+
+  const now = new Date();
+  const isAfterHalloween = now.getMonth() === 10 && now.getDate() > 7;
+  if (isAfterHalloween) {
+    // NOTE: 11월이 되면 그냥 이벤트 종료하는 식으로 하드 코딩
+    sendMessageToErrorChannel('할로윈 기간 지낫음 하드코딩한거 바꾸삼');
+    notFound();
+  }
+
   const t = await getTranslations('Event.Halloween');
 
   return (
@@ -30,7 +49,7 @@ async function HalloweenEventPage() {
         <CardList />
       </div>
 
-      <Button className={buttonStyle}>{t('draw-button')}</Button>
+      <Draw />
     </div>
   );
 }
@@ -89,5 +108,3 @@ const descriptionStyle = css({
     fontSize: 24,
   },
 });
-
-const buttonStyle = css({ width: '230px', height: '76px', margin: '63px auto 0', textStyle: 'glyph28.bold' });

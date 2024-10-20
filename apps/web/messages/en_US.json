@@ -68,7 +68,12 @@
   "Event": {
     "Halloween": {
       "description": "Halloween has come to Gitanimals\nDraw Halloween pet for free!",
-      "draw-button": "Draw!"
+      "draw-button": "Draw!",
+      "draw-error": "Failed to draw.",
+      "result-title": "You've got a...",
+      "result-apply": "Apply it now!",
+      "result-already-star": "Draw more for 👻 already stared user! 👻",
+      "result-star-again": "👻 Star and draw more! 👻"
     }
   }
 }
