@@ -95,12 +95,12 @@ function SelectedPetTable({ currentPersona }: { currentPersona: Persona | null }
   );
 }
 
-export const tableCss = css({
+const tableCss = css({
   width: '100%',
   marginBottom: 32,
 });
 
-export const theadCss = css({
+const theadCss = css({
   display: 'grid',
   gridTemplateColumns: '1fr 2.5fr 1fr 1fr 2.2fr 3.5fr',
   gap: 16,
@@ -147,7 +147,7 @@ const rowStyle = css({
   },
 });
 
-export const tbodyCss = css({
+const tbodyCss = css({
   display: 'flex',
   flexDir: 'column',
   gap: 4,
