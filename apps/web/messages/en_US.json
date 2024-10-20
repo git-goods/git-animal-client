@@ -64,5 +64,18 @@
     "shrink-button": "Shrink",
     "change-pet": "Change pet",
     "no-mobile-support": "Currently, mobile is not supported.\nPlease connect to the desktop."
+  },
+  "Event": {
+    "Halloween": {
+      "description": "Halloween has come to Gitanimals\nDraw Halloween pet for free!",
+      "draw-button": "Draw!",
+      "draw-more-button": "Draw more!",
+      "draw-button-not-signed-in": "Sign in to draw.",
+      "draw-error": "Failed to draw.",
+      "result-title": "You've got a...",
+      "result-apply": "Apply it now!",
+      "result-already-star": "Draw more for 👻 already stared user! 👻",
+      "result-star-again": "👻 Star and draw more! 👻"
+    }
   }
 }

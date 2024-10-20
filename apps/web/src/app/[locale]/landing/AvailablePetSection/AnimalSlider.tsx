@@ -6,6 +6,7 @@ import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
 import * as styles from './AnimalSlider.style';
 import AnimalSliderContainer from './AnimalSliderContainer';
 import AnimalSliderContainerMobile from './AnimalSliderContainerMobile';
+import { cx } from '_panda/css';
 
 interface Animal {
   type: string;
@@ -32,7 +33,7 @@ function AnimalSlider() {
 
   // TODO: 화면 크기가 바뀌면 (breakpoint에 도달하면 slider 다시 렌더링)
   return (
-    <div className={styles.container}>
+    <div className={cx(styles.container)}>
       <div className={styles.showDesktop}>
         <AnimalSliderContainer>
           {animalList.map((animalList: Animal[], idx) => {

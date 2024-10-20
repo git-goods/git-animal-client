@@ -51,7 +51,7 @@ function AnimalSliderContainerMobile({ children }: { children: React.ReactNode }
 
   return (
     <div>
-      <div className={sliderContainer}>
+      <div className={cx(sliderContainer, 'slider-container')}>
         <ArrowButton onClick={moveToPrevPanel} direction="prev" disabled={isFirstPanel} />
         <ArrowButton onClick={moveToNextPanel} direction="next" disabled={isLastPanel} />
         <Flicking ref={flicking} {...sliderOptions}>

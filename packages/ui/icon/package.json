@@ -10,7 +10,7 @@
     "@gitanimals/eslint-config": "workspace:*",
     "@gitanimals/typescript-config": "workspace:*",
     "@types/eslint": "^8.56.5",
-    "@types/react": "^18.2.61",
+    "@types/react": "*",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/parser": "^7.16.1",
     "eslint": "^8.57.0",

@@ -2,6 +2,8 @@
 import React from 'react';
 import { signIn } from 'next-auth/react';
 
+import { LOCAL_STORAGE_KEY } from '@/constants/storage';
+
 function LoginButton({ token }: { token: string }) {
   const ref = React.useRef<HTMLButtonElement>(null);
 
@@ -10,7 +12,9 @@ function LoginButton({ token }: { token: string }) {
       ref.current.click();
       localStorage.setItem('accessToken', token);
     }
-  }, [ref.current]);
+  }, [token]);
+
+  const callbackUrl = localStorage.getItem(LOCAL_STORAGE_KEY.callbackUrl) || '/mypage';
 
   return (
     <div>
@@ -19,7 +23,7 @@ function LoginButton({ token }: { token: string }) {
         onClick={() =>
           signIn('credentials', {
             token: token,
-            callbackUrl: '/mypage',
+            callbackUrl,
           })
         }
       >
