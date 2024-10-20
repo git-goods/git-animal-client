@@ -4,7 +4,7 @@ import type { Persona } from '@gitanimals/api';
 import { Banner } from '@gitanimals/ui-panda';
 import { useQuery } from '@tanstack/react-query';
 
-import { userAllPersonasQueryOptions } from '@/queryFactory/user';
+import { userAllPersonasQueryOptions } from '@/lib/react-query/user';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 

@@ -9,7 +9,7 @@ import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banne
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { userAllPersonasQueryOptions } from '@/queryFactory/user';
+import { userAllPersonasQueryOptions } from '@/lib/react-query/user';
 import { getPersonaImage } from '@/utils/image';
 
 interface Props {
