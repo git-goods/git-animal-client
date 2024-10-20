@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
 
@@ -7,6 +8,18 @@ import GNB from '@/components/GNB/GNB';
 import { Footer } from '../../landing/Footer';
 
 import { KingGhost } from './KingGhost';
+
+export const metadata: Metadata = {
+  openGraph: {
+    type: 'website',
+    url: 'https://www.gitanimals.org/',
+    images: [
+      {
+        url: '/og-image-event.png',
+      },
+    ],
+  },
+};
 
 function HalloweenEventLayout({ children }: { children: React.ReactNode }) {
   return (
