@@ -4,7 +4,7 @@ import createMiddleware from 'next-intl/middleware';
 
 import { routing } from './i18n/routing';
 
-const publicPages = ['/', '/auth'];
+const publicPages = ['/', '/auth', '/event/halloween'];
 
 const intlMiddleware = createMiddleware({
   ...routing,

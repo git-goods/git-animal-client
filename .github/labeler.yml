@@ -22,6 +22,10 @@ labels:
     files:
       - 'packages/ui/*'
 
+  - label: 'area: Lib'
+    files:
+      - 'packages/lib/*'
+
   - label: 'area: Workflow'
     files:
       - .github/workflows/*
