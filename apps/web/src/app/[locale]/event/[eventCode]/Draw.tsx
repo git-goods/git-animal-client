@@ -11,7 +11,7 @@ import { useOutsideClick } from '@gitanimals/react';
 import { couponQueries, renderQueries, useUsingCoupon } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import type { Variants } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
 import { toast } from 'sonner';
@@ -78,12 +78,19 @@ export const Draw = wrap.Suspense().on(() => {
     return t('draw-button');
   })();
 
-  const { data: usedCoupons } = useSuspenseQuery(couponQueries.getUsedCoupons());
-  const isUsedCoupon = usedCoupons.coupons.some((coupon) => coupon.code === upperCaseEventCode);
+  const { data: usedCoupons, isLoading: isLoadingUsedCoupons } = useQuery({
+    ...couponQueries.getUsedCoupons(),
+    enabled: Boolean(session),
+  });
+  const isUsedCoupon = usedCoupons?.coupons.some((coupon) => coupon.code === upperCaseEventCode);
 
   return (
     <>
-      <Button disabled={isPending || isUsedCoupon} className={buttonStyle} onClick={onClickDraw}>
+      <Button
+        disabled={isPending || isLoadingUsedCoupons || isUsedCoupon}
+        className={buttonStyle}
+        onClick={onClickDraw}
+      >
         {drawButtonText}
       </Button>
 
