@@ -7,7 +7,7 @@ export const initAnalytics = () => {
   if (!isProd) return;
   mixpanel.init(MONITORING_KEY.MIXPANEL, {
     debug: process.env.NODE_ENV !== 'production',
-    track_pageview: true,
+    track_pageview: 'url-with-path-and-query-string',
     persistence: 'localStorage',
     ignore_dnt: true,
   });
@@ -31,8 +31,7 @@ export const trackEvent = (eventName: string, properties?: Record<string, any>) 
 // 페이지 뷰 추적을 위한 함수
 export const trackPageView = (url: string) => {
   if (!isProd) return;
-  // Mixpanel 페이지 뷰 추적
-  mixpanel.track('Page View', { url });
+  // Mixpanel은 이미 track_pageview 옵션에 의해 추적됨
 
   // Google Analytics 페이지 뷰 추적
   if (typeof window !== 'undefined' && window.gtag) {
