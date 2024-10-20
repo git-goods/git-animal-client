@@ -69,6 +69,7 @@
     "Halloween": {
       "description": "Halloween has come to Gitanimals\nDraw Halloween pet for free!",
       "draw-button": "Draw!",
+      "draw-more-button": "Draw more!",
       "draw-button-not-signed-in": "Sign in to draw.",
       "draw-error": "Failed to draw.",
       "result-title": "You've got a...",
