@@ -1,0 +1,12 @@
+{
+  "name": "@gitanimals/react-query",
+  "version": "0.0.0",
+  "main": "./src/index.ts",
+  "devDependencies": {
+    "@gitanimals/api": "workspace:*",
+    "@gitanimals/exception": "workspace:*",
+    "@gitanimals/eslint-config": "workspace:*",
+    "@gitanimals/typescript-config": "workspace:*",
+    "@tanstack/react-query": "*"
+  }
+}

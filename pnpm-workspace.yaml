@@ -6,3 +6,4 @@ packages:
   - 'packages/ui/*'
   - 'packages/util/*'
   - 'packages/asset/*'
+  - 'packages/lib/*'
