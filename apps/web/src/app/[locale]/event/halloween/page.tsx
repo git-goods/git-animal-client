@@ -9,6 +9,7 @@ import { CardList, MobileCardList } from './CardList';
 
 async function HalloweenEventPage() {
   const t = await getTranslations('Event.Halloween');
+
   return (
     <div className={containerStyle}>
       <Image
@@ -35,14 +36,16 @@ async function HalloweenEventPage() {
 }
 
 export default HalloweenEventPage;
-export const showDesktop = css({
+
+const showDesktop = css({
   display: 'block',
 
   '@media (max-width: 600px)': {
     display: 'none',
   },
 });
-export const showMobile = css({
+
+const showMobile = css({
   display: 'none',
   '@media (max-width: 600px)': {
     display: 'block',
