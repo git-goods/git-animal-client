@@ -69,6 +69,7 @@
     "Halloween": {
       "description": "할로윈이 Gitanimals에 찾아왔어요.\n공짜 할로윈 펫을 뽑아보세요!",
       "draw-button": "할로윈 펫 뽑기!",
+      "draw-more-button": "또 뽑기!",
       "draw-button-not-signed-in": "로그인 후 뽑기!",
       "draw-error": "할로윈 펫 뽑기에 실패했습니다.",
       "result-title": "뽑은 펫은...",

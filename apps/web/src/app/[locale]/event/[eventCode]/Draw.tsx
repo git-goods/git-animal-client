@@ -2,16 +2,16 @@
 
 import { useRef, useState } from 'react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { CustomException } from '@gitanimals/exception';
 import { useOutsideClick } from '@gitanimals/react';
-import { renderQueries, useUsingCoupon } from '@gitanimals/react-query';
+import { couponQueries, renderQueries, useUsingCoupon } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import type { Variants } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
 import { toast } from 'sonner';
@@ -22,7 +22,9 @@ import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 
 import { HalloweenCard } from './HalloweenCard';
 
-export function Draw() {
+const HALLOWEEN_STAR_BONUS_EVENT_CODE = 'HALLOWEEN_2024_STAR_BONUS';
+
+export const Draw = wrap.Suspense().on(() => {
   const t = useTranslations('Event.Halloween');
 
   const { eventCode } = useParams();
@@ -62,10 +64,34 @@ export function Draw() {
   };
   useOutsideClick(modalRef, onClickOutside);
 
+  const isStarBonusEvent = eventCode === HALLOWEEN_STAR_BONUS_EVENT_CODE;
+
+  const drawButtonText = (() => {
+    if (!session) {
+      return t('draw-button-not-signed-in');
+    }
+
+    if (isStarBonusEvent) {
+      return t('draw-more-button');
+    }
+
+    return t('draw-button');
+  })();
+
+  const { data: usedCoupons, isLoading: isLoadingUsedCoupons } = useQuery({
+    ...couponQueries.getUsedCoupons(),
+    enabled: Boolean(session),
+  });
+  const isUsedCoupon = usedCoupons?.coupons.some((coupon) => coupon.code === upperCaseEventCode);
+
   return (
     <>
-      <Button disabled={isPending} className={buttonStyle} onClick={onClickDraw}>
-        {session ? t('draw-button') : t('draw-button-not-signed-in')}
+      <Button
+        disabled={isPending || isLoadingUsedCoupons || isUsedCoupon}
+        className={buttonStyle}
+        onClick={onClickDraw}
+      >
+        {drawButtonText}
       </Button>
 
       <AnimatePresence mode="wait">
@@ -86,7 +112,7 @@ export function Draw() {
       </AnimatePresence>
     </>
   );
-}
+});
 
 const modalVariants: Variants = {
   initial: { opacity: 0, scale: 0.1 },
@@ -152,10 +178,13 @@ const StarAnchor = wrap
       data: { isPressStar },
     } = useSuspenseQuery(renderQueries.isPressStar({ login: session.user.name }));
 
-    const HALLOWEEN_STAR_BONUS_EVENT_CODE = 'HALLOWEEN_2024_STAR_BONUS';
-
     const { eventCode } = useParams();
     const isStarBonusEvent = eventCode === HALLOWEEN_STAR_BONUS_EVENT_CODE;
+
+    const router = useRouter();
+    const onClickFirstEvent = () => {
+      router.replace(`/event/${HALLOWEEN_STAR_BONUS_EVENT_CODE}`);
+    };
 
     if (isStarBonusEvent) {
       return null;
@@ -171,7 +200,7 @@ const StarAnchor = wrap
 
     return (
       <Button>
-        <a href={GIT_ANIMALS_MAIN_URL} target="_blank">
+        <a href={GIT_ANIMALS_MAIN_URL} target="_blank" onClick={onClickFirstEvent}>
           {t('result-star-again')}
         </a>
       </Button>
