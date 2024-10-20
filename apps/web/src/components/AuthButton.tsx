@@ -6,11 +6,15 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@gitanimals/ui-panda';
 
 import { getGithubOauthUrl } from '@/apis/auth/getGithubOauth';
+import { LOCAL_STORAGE_KEY } from '@/constants/storage';
 
 /**
  * client용 로그인 함수
  */
-export const login = () => getGithubOauthUrl();
+export const login = (callbackUrl: string = '/mypage') => {
+  localStorage.setItem(LOCAL_STORAGE_KEY.callbackUrl, callbackUrl);
+  getGithubOauthUrl();
+};
 
 /**
  * client용 로그아웃 함수
@@ -29,7 +33,7 @@ export function RenderLoginButton({
 }): JSX.Element {
   const t = useTranslations('Layout');
 
-  return render({ label: t('login'), onClick: login });
+  return render({ label: t('login'), onClick: () => login() });
 }
 
 /**
