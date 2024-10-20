@@ -11,8 +11,6 @@ import { KingGhost } from './KingGhost';
 
 export const metadata: Metadata = {
   openGraph: {
-    type: 'website',
-    url: 'https://www.gitanimals.org/',
     images: [
       {
         url: '/og-image-event.png',
