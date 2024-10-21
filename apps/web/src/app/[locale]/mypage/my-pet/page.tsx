@@ -22,6 +22,7 @@ function MypageMyPets() {
 
   return (
     <div>
+    <>
       <SelectedPetTable currentPersona={selectPersona} />
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('pet-list')}</h2>
@@ -34,6 +35,7 @@ function MypageMyPets() {
         />
       </section>
     </div>
+    </>
   );
 }
 

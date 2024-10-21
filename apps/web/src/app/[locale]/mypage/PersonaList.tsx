@@ -27,7 +27,6 @@ const listStyle = flex({
   overflow: 'auto',
   minH: '0',
   height: '100%',
-  maxH: 'min(calc(100vh - 520px), 1000px)',
 });
 
 export const SelectPersonaList = wrap

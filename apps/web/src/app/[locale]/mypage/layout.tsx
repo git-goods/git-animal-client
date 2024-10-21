@@ -59,7 +59,7 @@ const rightSectionStyle = css({
   backdropFilter: 'blur(7px)',
   minHeight: '700px',
   height: 'calc(100vh - 240px)',
-  maxHeight: 'calc(100vh - 240px)',
+  maxHeight: 'min(calc(100vh - 240px), 1000px)',
   overflow: 'hidden',
   p: 40,
 });
