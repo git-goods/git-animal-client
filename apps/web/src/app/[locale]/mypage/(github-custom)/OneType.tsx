@@ -49,12 +49,14 @@ export function OneType({}: Props) {
             {isExtend ? t('shrink-button') : t('extend-button')}
           </Button>
 
-          <SelectPersonaList
-            name={name}
-            selectPersona={selectPersona ? [selectPersona] : []}
-            onSelectPersona={(persona) => setSelectPersona(persona.id)}
-            isExtend={isExtend}
-          />
+          <div className={selectPersonaListStyle}>
+            <SelectPersonaList
+              name={name}
+              selectPersona={selectPersona ? [selectPersona] : []}
+              onSelectPersona={(persona) => setSelectPersona(persona.id)}
+              isExtend={isExtend}
+            />
+          </div>
         </section>
       )}
 
@@ -70,6 +72,11 @@ export function OneType({}: Props) {
     </section>
   );
 }
+
+const selectPersonaListStyle = css({
+  maxH: '400px',
+  overflowY: 'auto',
+});
 
 const selectPetContainerStyle = css({
   position: 'relative',
