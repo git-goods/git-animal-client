@@ -81,7 +81,9 @@
     "change-pet": "펫 변경",
     "no-mobile-support": "현재 모바일은 지원하지 않습니다.\n데스크탑으로 접속해주세요.",
     "pet-list": "펫 목록",
-    "sell-to-other": "Tip. 다른 사용자에게 펫을 팔고싶다면, 경매장을 이용해주세요."
+    "sell-to-other": "Tip. 다른 사용자에게 펫을 팔고싶다면, 경매장을 이용해주세요.",
+    "my-pet": "내 펫",
+    "github-custom": "Github Custom"
   },
   "Event": {
     "Halloween": {

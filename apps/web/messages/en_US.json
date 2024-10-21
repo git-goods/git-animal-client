@@ -79,7 +79,9 @@
     "change-pet": "Change pet",
     "no-mobile-support": "Currently, mobile is not supported.\nPlease connect to the desktop.",
     "pet-list": "Pet list",
-    "sell-to-other": "Tip. If you want to sell your pet to other users, please use the auction."
+    "sell-to-other": "Tip. If you want to sell your pet to other users, please use the auction.",
+    "my-pet": "My pet",
+    "github-custom": "Github Custom"
   },
   "Event": {
     "Halloween": {
