@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { getTranslations } from 'next-intl/server';
 import { css, cx } from '_panda/css';
 import { grid } from '_panda/patterns';
 
@@ -8,8 +7,6 @@ import GNB from '@/components/GNB/GNB';
 import { ProfileSection } from './ProfileSection';
 
 async function MypageLayout({ children }: { children: React.ReactNode }) {
-  const t = await getTranslations('Mypage');
-
   return (
     <>
       <div className={cx(containerStyle)}>
@@ -20,7 +17,6 @@ async function MypageLayout({ children }: { children: React.ReactNode }) {
           <section className={rightSectionStyle}>{children}</section>
         </main>
       </div>
-      {/* <div className={noticeStyle}>{t('no-mobile-support')}</div> */}
     </>
   );
 }
