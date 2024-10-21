@@ -6,3 +6,4 @@ export * from './render';
 export * from './identity';
 export * from './gotcha';
 export * from './coupon';
+export * from './shop';
