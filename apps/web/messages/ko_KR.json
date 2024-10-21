@@ -9,6 +9,18 @@
     "dev": "Dev",
     "language": "언어"
   },
+  "Common": {
+    "pet": "펫",
+    "name": "이름",
+    "grade": "등급",
+    "level": "레벨",
+    "price": "가격",
+    "date": "날짜",
+    "pet-list": "펫 목록",
+    "sell": "판매",
+    "merge": "합치기",
+    "prepare": "준비중"
+  },
   "HomePage": {
     "title": "Hello world!",
     "about": "Go to the about page"
@@ -63,7 +75,8 @@
     "extend-button": "확장",
     "shrink-button": "축소",
     "change-pet": "펫 변경",
-    "no-mobile-support": "현재 모바일은 지원하지 않습니다.\n데스크탑으로 접속해주세요."
+    "no-mobile-support": "현재 모바일은 지원하지 않습니다.\n데스크탑으로 접속해주세요.",
+    "pet-list": "펫 목록"
   },
   "Event": {
     "Halloween": {

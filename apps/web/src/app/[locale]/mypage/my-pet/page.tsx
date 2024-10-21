@@ -16,7 +16,7 @@ import { getPersonaImage } from '@/utils/image';
 import { SelectPersonaList } from '../PersonaList';
 
 function MypageMyPets() {
-  const t = useTranslations('Common');
+  const t = useTranslations('Mypage');
   const { name } = useClientUser();
   const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
 
@@ -24,7 +24,7 @@ function MypageMyPets() {
     <div>
       <SelectedPetTable currentPersona={selectPersona} />
       <section className={selectPetContainerStyle}>
-        <h2 className="heading">{t('change-pet')}</h2>
+        <h2 className="heading">{t('pet-list')}</h2>
 
         <SelectPersonaList
           name={name}
@@ -84,8 +84,9 @@ function SelectedPetTable({ currentPersona }: { currentPersona: Persona | null }
               <Button variant="secondary" onClick={onSellClick}>
                 {t('sell')}
               </Button>
-              <Button variant="secondary" onClick={onMergeClick}>
-                {t('merge')}
+              {/* TODO: 합치기 기능 추가 시*/}
+              <Button variant="secondary" onClick={onMergeClick} disabled>
+                {t('prepare')}
               </Button>
             </div>
           </>

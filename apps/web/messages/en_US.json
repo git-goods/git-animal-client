@@ -23,7 +23,10 @@
     "level": "Level",
     "price": "Price",
     "date": "Date",
-    "sell": "Sell"
+    "sell": "Sell",
+    "pet-list": "Pet list",
+    "merge": "Merge",
+    "prepare": "Prepare"
   },
   "Gotcha": {
     "pet-gotcha-desc": "Draw a S+ Grade pet for 1,000 points",
@@ -72,7 +75,8 @@
     "extend-button": "Extend",
     "shrink-button": "Shrink",
     "change-pet": "Change pet",
-    "no-mobile-support": "Currently, mobile is not supported.\nPlease connect to the desktop."
+    "no-mobile-support": "Currently, mobile is not supported.\nPlease connect to the desktop.",
+    "pet-list": "Pet list"
   },
   "Event": {
     "Halloween": {
