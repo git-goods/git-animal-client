@@ -43,6 +43,11 @@ export default Mypage;
 
 const tabListStyle = flex({
   gap: 12,
+  _mobile: {
+    '& a': {
+      flex: 1,
+    },
+  },
   '& .tab-item': {
     textStyle: 'glyph28.bold',
     borderRadius: 12,
@@ -62,6 +67,14 @@ const tabListStyle = flex({
       color: 'white.white_75',
       backgroundColor: 'white.white_25',
       borderColor: 'white.white_50',
+    },
+    _mobile: {
+      width: '100%',
+      borderRadius: '6px',
+      border: '1px solid',
+      textStyle: 'glyph16.bold',
+      h: 40,
+      p: '8px 16px',
     },
   },
 });
