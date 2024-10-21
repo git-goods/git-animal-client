@@ -44,6 +44,7 @@ const rightSectionStyle = css({
     maxHeight: 'auto',
     height: 'auto',
     overflowY: 'auto',
+    borderRadius: 0,
   },
 });
 

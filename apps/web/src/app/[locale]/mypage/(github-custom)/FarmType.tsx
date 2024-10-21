@@ -116,6 +116,9 @@ export default FarmType;
 const selectPersonaListStyle = css({
   maxH: '400px',
   overflowY: 'auto',
+  _mobile: {
+    maxH: '250px',
+  },
 });
 
 const farmSectionStyle = css({

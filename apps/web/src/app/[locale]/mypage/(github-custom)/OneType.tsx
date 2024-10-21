@@ -73,9 +73,13 @@ export function OneType({}: Props) {
   );
 }
 
+// TODO: 임시 방편
 const selectPersonaListStyle = css({
   maxH: '400px',
   overflowY: 'auto',
+  _mobile: {
+    maxH: '250px',
+  },
 });
 
 const selectPetContainerStyle = css({

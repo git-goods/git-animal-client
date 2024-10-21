@@ -14,11 +14,21 @@ import { useUserQueryOptions } from '@/apis/user/useGetUser';
 import { Link, usePathname } from '@/i18n/routing';
 import { addNumberComma } from '@/utils/number';
 
+const profileSkeletonStyle = css({
+  '& > div': {
+    margin: '32px 20px',
+    _mobile: {
+      width: '48px',
+      height: '48px',
+    },
+  },
+});
+
 export const ProfileSection = memo(
   wrap
     .Suspense({
       fallback: (
-        <section>
+        <section className={profileSkeletonStyle}>
           <Skeleton width={160} height={160} borderRadius="50%" />
         </section>
       ),
