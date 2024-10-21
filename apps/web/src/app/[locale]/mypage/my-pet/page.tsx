@@ -5,10 +5,13 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import type { Persona } from '@gitanimals/api';
+import { dropPet, type Persona } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
+import { userQueryKeys } from '@/lib/react-query/user';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
@@ -21,9 +24,8 @@ function MypageMyPets() {
   const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
 
   return (
-    <div>
     <>
-      <SelectedPetTable currentPersona={selectPersona} />
+      <SelectedPetTable currentPersona={selectPersona} onReset={() => setSelectPersona(null)} />
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('pet-list')}</h2>
 
@@ -34,7 +36,6 @@ function MypageMyPets() {
           isExtend
         />
       </section>
-    </div>
     </>
   );
 }
@@ -43,6 +44,7 @@ export default MypageMyPets;
 
 const selectPetContainerStyle = css({
   position: 'relative',
+  height: 'calc(100% - 202px)',
   '& .heading': {
     textStyle: 'glyph18.bold',
     color: 'white',
@@ -50,11 +52,25 @@ const selectPetContainerStyle = css({
   },
 });
 
-function SelectedPetTable({ currentPersona }: { currentPersona: Persona | null }) {
-  const t = useTranslations('Common');
+function SelectedPetTable({ currentPersona, onReset }: { currentPersona: Persona | null; onReset: () => void }) {
+  const queryClient = useQueryClient();
+  const t = useTranslations('Shop');
 
-  const onSellClick = () => {
-    console.log('sell');
+  const { mutate: dropPetMutation } = useMutation({
+    mutationFn: (personaId: string) => dropPet({ personaId }),
+    onSuccess: (data) => {
+      toast.success((t('pet-sold') as string).replace('[money]', data.givenPoint.toString()));
+      queryClient.invalidateQueries({ queryKey: userQueryKeys.all() });
+      onReset();
+    },
+    onError: () => {
+      toast.error(t('sell-product-fail'));
+    },
+  });
+
+  const onSellClick = async () => {
+    if (!currentPersona) return;
+    dropPetMutation(currentPersona.id);
   };
 
   const onMergeClick = () => {

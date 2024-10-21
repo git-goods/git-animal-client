@@ -54,7 +54,10 @@
     "delete": "삭제",
     "delete-product-success": "판매 취소 완료!",
     "delete-product-fail": "판매 취소에 실패했습니다.",
-    "edit": "수정"
+    "edit": "수정",
+    "pet-sold": "[money]원에 펫 판매 완료!",
+    "sell-error": "판매에 실패했습니다.",
+    "many-error-message": "계속해서 문제가 발생한다면 Github로 문의 부탁드립니다."
   },
   "NoticeToast": {
     "go": "GO!",

@@ -54,7 +54,8 @@
     "delete": "Delete",
     "delete-product-success": "Cancellation complete!",
     "delete-product-fail": "Failed to cancellation.",
-    "edit": "Edit"
+    "edit": "Edit",
+    "pet-sold": "Pet sold successfully for [money]!"
   },
   "NoticeToast": {
     "go": "GO!",

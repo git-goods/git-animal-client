@@ -2,9 +2,9 @@ import z from 'zod';
 import { safePost } from '../_instance/safe';
 
 const DropPetResponseSchema = z.object({
-  id: z.number(),
-  personaId: z.number(),
-  droppedUserId: z.number(),
+  id: z.union([z.number(), z.string()]),
+  personaId: z.union([z.number(), z.string()]),
+  droppedUserId: z.union([z.number(), z.string()]),
   givenPoint: z.number(),
 });
 
