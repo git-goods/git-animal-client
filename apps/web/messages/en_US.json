@@ -55,7 +55,8 @@
     "delete-product-success": "Cancellation complete!",
     "delete-product-fail": "Failed to cancellation.",
     "edit": "Edit",
-    "pet-sold": "Pet sold successfully for [money]!"
+    "pet-sold": "Pet sold successfully for [money]!",
+    "prepare": "Prepare"
   },
   "NoticeToast": {
     "go": "GO!",
@@ -77,7 +78,8 @@
     "shrink-button": "Shrink",
     "change-pet": "Change pet",
     "no-mobile-support": "Currently, mobile is not supported.\nPlease connect to the desktop.",
-    "pet-list": "Pet list"
+    "pet-list": "Pet list",
+    "sell-to-other": "Tip. If you want to sell your pet to other users, please use the auction."
   },
   "Event": {
     "Halloween": {

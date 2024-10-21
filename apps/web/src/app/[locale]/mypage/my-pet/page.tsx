@@ -24,30 +24,47 @@ function MypageMyPets() {
   const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
 
   return (
-    <>
+    <div className={flex({ flexDir: 'column' })}>
       <SelectedPetTable currentPersona={selectPersona} onReset={() => setSelectPersona(null)} />
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('pet-list')}</h2>
 
-        <SelectPersonaList
-          name={name}
-          selectPersona={selectPersona ? [selectPersona.id] : []}
-          onSelectPersona={(persona) => setSelectPersona(persona)}
-          isExtend
-          initSelectPersonas={(list) => {
-            setSelectPersona(list[0]);
-          }}
-        />
+        <div
+          className={css({
+            maxHeight: 'calc(100vh - 542px)',
+            overflow: 'auto',
+          })}
+        >
+          <SelectPersonaList
+            name={name}
+            selectPersona={selectPersona ? [selectPersona.id] : []}
+            onSelectPersona={(persona) => setSelectPersona(persona)}
+            isExtend
+            initSelectPersonas={(list) => {
+              setSelectPersona(list[0]);
+            }}
+          />
+        </div>
       </section>
-    </>
+      <p className={captionMessageStyle}>{t('sell-to-other')}</p>
+    </div>
   );
 }
 
 export default MypageMyPets;
 
+const captionMessageStyle = css({
+  textStyle: 'glyph18.regular',
+  color: 'white_75',
+  marginTop: 16,
+
+  // 안내 멘트 5초 뒤에 등장
+  opacity: 0,
+  animation: `fadeIn 0.5s ease-in-out 5s forwards`,
+});
+
 const selectPetContainerStyle = css({
   position: 'relative',
-  height: 'calc(100% - 202px)',
   '& .heading': {
     textStyle: 'glyph18.bold',
     color: 'white',
@@ -87,7 +104,6 @@ function SelectedPetTable({ currentPersona, onReset }: { currentPersona: Persona
         <span>{t('name')}</span>
         <span>{t('grade')}</span>
         <span>{t('level')}</span>
-        <span>{t('price')}</span>
         <span></span>
       </div>
 
