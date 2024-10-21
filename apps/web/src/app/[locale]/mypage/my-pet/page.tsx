@@ -34,6 +34,9 @@ function MypageMyPets() {
           selectPersona={selectPersona ? [selectPersona.id] : []}
           onSelectPersona={(persona) => setSelectPersona(persona)}
           isExtend
+          initSelectPersonas={(list) => {
+            setSelectPersona(list[0]);
+          }}
         />
       </section>
     </>

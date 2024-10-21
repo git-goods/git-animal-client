@@ -85,7 +85,12 @@ function FarmType() {
               loadingPersona={loadingPersona}
               selectPersona={selectPersona}
               onSelectPersona={onSelectPersona}
-              initSelectPersona={(list) => setSelectPersona(list)}
+              initSelectPersonas={(list) => {
+                // 현재 보여지는 펫들 처음부터 선택
+                const visiblePersonas = list.filter((persona) => persona.visible);
+                const visiblePersonaIds = visiblePersonas.map((persona) => persona.id);
+                setSelectPersona(visiblePersonaIds);
+              }}
               isExtend={isExtend}
             />
           </section>
