@@ -11,7 +11,7 @@ import { useOutsideClick } from '@gitanimals/react';
 import { couponQueries, renderQueries, useUsingCoupon } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import type { Variants } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
 import { toast } from 'sonner';
@@ -19,6 +19,7 @@ import { toast } from 'sonner';
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { login } from '@/components/AuthButton';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
+import { trackEvent } from '@/lib/analytics';
 
 import { HalloweenCard } from './HalloweenCard';
 
@@ -38,9 +39,15 @@ export const Draw = wrap.Suspense().on(() => {
   const { mutate: usingCoupon, isPending } = useUsingCoupon();
   const [drawedPet, setDrawedPet] = useState<string | null>(null);
 
+  const queryClient = useQueryClient();
+
   const onClickDraw = () => {
     if (!session) {
       login('/event/HALLOWEEN_2024');
+      trackEvent(`${upperCaseEventCode}-not-signed-in`, {
+        coupon: upperCaseEventCode,
+      });
+
       return;
     }
 
@@ -48,11 +55,19 @@ export const Draw = wrap.Suspense().on(() => {
       { code: upperCaseEventCode },
       {
         onSuccess: (res) => {
+          trackEvent(`${upperCaseEventCode}-success`, {
+            pet: res.result,
+            coupon: upperCaseEventCode,
+          });
           setDrawedPet(res.result);
+          queryClient.invalidateQueries({ queryKey: couponQueries.getUserCouponsQueryKey });
         },
         onError: () => {
           toast.error(t('draw-error'));
           sendMessageToErrorChannel(`이벤트 실패, 이벤트 코드: ${upperCaseEventCode}, 사용자: ${session.user?.name}`);
+          trackEvent(`${upperCaseEventCode}-error`, {
+            coupon: upperCaseEventCode,
+          });
         },
       },
     );

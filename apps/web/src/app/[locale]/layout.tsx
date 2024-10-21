@@ -1,11 +1,9 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 
 import ClientProvider from '@/components/ClientProvider';
 import { GlobalComponent } from '@/components/GlobalComponent';
 import Monitoring from '@/components/Monitoring';
-import { MONITORING_KEY } from '@/constants/monitoring';
 
 import '@egjs/react-flicking/dist/flicking.css';
 import '@egjs/react-flicking/dist/flicking-inline.css';
@@ -24,8 +22,6 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body>
-        <GoogleAnalytics gaId={MONITORING_KEY.GA} />
-        <GoogleTagManager gtmId={MONITORING_KEY.GTM} />
         <Monitoring />
 
         <ClientProvider>

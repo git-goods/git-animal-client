@@ -17,7 +17,6 @@ interface Props {
   isExtend: boolean;
   selectPersona: string[];
   onSelectPersona: (persona: Persona) => void;
-
   initSelectPersona?: (list: string[]) => void;
   loadingPersona?: string[];
 }

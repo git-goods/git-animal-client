@@ -75,7 +75,12 @@
       "result-title": "뽑은 펫은...",
       "result-apply": "지금 적용하기!",
       "result-already-star": "👻 이미 스타를 누른 유저 👻를 위한 또 뽑기!",
-      "result-star-again": "👻 Star 누르고 또 뽑기! 👻"
+      "result-star-again": "👻 Star 누르고 또 뽑기! 👻",
+      "result-halloween-coupon": "🎃 Halloween이 찾아왔어요! 🎃\n 지금 바로 할로윈 펫 확정 뽑기 쿠폰을 사용해보세요!",
+      "result-halloween-star-bonus-coupon": "🎃 Halloween이 찾아왔어요! 🎃\n Github Star를 누르고 할로윈 보너스 쿠폰을 사용해보세요!",
+      "result-halloween-star-bonus-coupon-already-star": "🎃 Halloween이 찾아왔어요! 🎃\n Github Star를 누른 유저를 위한 할로윈 보너스를 사용해보세요!",
+      "not-login-toast": "🎃 Halloween이 찾아왔어요! 🎃\n로그인 후 할로윈 펫을 뽑아보세요!",
+      "go": "GO!"
     }
   }
 }
