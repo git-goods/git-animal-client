@@ -11,7 +11,7 @@ import { useOutsideClick } from '@gitanimals/react';
 import { couponQueries, renderQueries, useUsingCoupon } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import type { Variants } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
 import { toast } from 'sonner';
@@ -39,6 +39,8 @@ export const Draw = wrap.Suspense().on(() => {
   const { mutate: usingCoupon, isPending } = useUsingCoupon();
   const [drawedPet, setDrawedPet] = useState<string | null>(null);
 
+  const queryClient = useQueryClient();
+
   const onClickDraw = () => {
     if (!session) {
       login('/event/HALLOWEEN_2024');
@@ -58,6 +60,7 @@ export const Draw = wrap.Suspense().on(() => {
             coupon: upperCaseEventCode,
           });
           setDrawedPet(res.result);
+          queryClient.invalidateQueries({ queryKey: couponQueries.getUserCouponsQueryKey });
         },
         onError: () => {
           toast.error(t('draw-error'));
