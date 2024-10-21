@@ -31,14 +31,14 @@ export const NOTICE_LIST = [
     },
     isAuth: true,
     closeButton: false,
-    visible: true,
+    visible: false,
   },
   {
     key: 'multi-translation',
     label: 'multi-translation',
     isAuth: false,
     closeButton: true,
-    visible: true,
+    visible: false,
   },
   {
     key: 'update-mypage-renewal',
@@ -49,6 +49,6 @@ export const NOTICE_LIST = [
     },
     isAuth: true,
     closeButton: false,
-    visible: true,
+    visible: false,
   },
 ];
