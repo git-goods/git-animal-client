@@ -156,7 +156,10 @@ const HalloweenEventToast = wrap
       if (!isUsedHalloweenCoupon && !isHalloweenEventPage) {
         showToast(t('result-halloween-coupon'), `/event/${HALLOWEEN_EVENT_CODE}`);
       }
-      if (isUsedHalloweenCoupon && !isUsedStarBonusCoupon && isPressStar && !isHalloweenStarBonusEventPage) {
+      if (isUsedHalloweenCoupon && !isUsedStarBonusCoupon && !isPressStar && !isHalloweenStarBonusEventPage) {
+        showToast(t('result-halloween-star-bonus-coupon-already-star'), `/event/${HALLOWEEN_STAR_BONUS_EVENT_CODE}`);
+      }
+      if (isUsedHalloweenCoupon && isUsedStarBonusCoupon && !isPressStar && !isHalloweenStarBonusEventPage) {
         showToast(t('result-halloween-star-bonus-coupon'), `/event/${HALLOWEEN_STAR_BONUS_EVENT_CODE}`);
       }
     });
