@@ -75,7 +75,11 @@
       "result-title": "You've got a...",
       "result-apply": "Apply it now!",
       "result-already-star": "Draw more for 👻 already stared user! 👻",
-      "result-star-again": "👻 Star and draw more! 👻"
+      "result-star-again": "👻 Star and draw more! 👻",
+      "result-halloween-coupon": "🎃 It's Halloween! 🎃\nUse your Halloween pet guaranteed draw coupon now!",
+      "result-halloween-star-bonus-coupon": "🎃 It's Halloween! 🎃\nGive us a Github Star and use your Halloween bonus coupon!",
+      "not-login-toast": "🎃 It's Halloween! 🎃\nLogin and draw your Halloween pet!",
+      "go": "GO!"
     }
   }
 }
