@@ -60,6 +60,7 @@ export function OneType({}: Props) {
         </section>
       )}
 
+      {/* TODO: 임시로 모바일에선 input 안보이게 처리 */}
       <SizeInputList onApply={(width, height) => setSizes({ width, height })} />
       <div>
         <div className={lineContainerStyle} style={{ width: sizes.width, height: sizes.height }}>
@@ -101,6 +102,10 @@ const sectionStyle = css({
   flexDirection: 'column',
   gap: '40px',
   padding: '40px 0',
+  _mobile: {
+    gap: 28,
+    padding: '32px 0',
+  },
 });
 
 const lineContainerStyle = css({
@@ -112,6 +117,9 @@ const lineContainerStyle = css({
   borderRadius: '12px',
 
   '& img': {
+    maxWidth: '100%',
+  },
+  _mobile: {
     maxWidth: '100%',
   },
 });
@@ -140,6 +148,10 @@ const sizeInputStyle = css({
     textStyle: 'glyph18.bold',
     color: 'white',
     marginBottom: '16px',
+  },
+
+  _mobile: {
+    display: 'none',
   },
 });
 
