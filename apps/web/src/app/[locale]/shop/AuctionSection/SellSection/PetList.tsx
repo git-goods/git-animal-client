@@ -1,21 +1,22 @@
 import Image from 'next/image';
 import { css } from '_panda/css';
+import type { Persona } from '@gitanimals/api';
 import { Banner } from '@gitanimals/ui-panda';
+import { useQuery } from '@tanstack/react-query';
 
-import { useGetAllPets } from '@/apis/user/useGetAllPets';
-import type { PetInfoSchema } from '@/schema/user';
+import { userAllPersonasQueryOptions } from '@/lib/react-query/user';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 interface Props {
-  selectedPersona?: PetInfoSchema | null;
-  onProductClick: (product: PetInfoSchema) => void;
+  selectedPersona?: Persona | null;
+  onProductClick: (product: Persona) => void;
 }
 
 function PetList(props: Props) {
   const { name: username } = useClientUser();
 
-  const { data } = useGetAllPets(username);
+  const { data } = useQuery(userAllPersonasQueryOptions(username));
 
   const personas = data?.personas || [];
 

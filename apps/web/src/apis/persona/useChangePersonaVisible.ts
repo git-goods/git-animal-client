@@ -1,7 +1,6 @@
+import type { Persona } from '@gitanimals/api';
 import type { UseMutationOptions } from '@tanstack/react-query';
 import { useMutation } from '@tanstack/react-query';
-
-import type { PetInfoSchema } from '@/schema/user';
 
 import { renderPatch } from '../render';
 
@@ -10,7 +9,7 @@ interface ChangePersonaVisibleRequest {
   visible: boolean;
 }
 
-type ChangePersonaVisibleResponse = PetInfoSchema;
+type ChangePersonaVisibleResponse = Persona;
 
 const changePersonaVisible = async (request: ChangePersonaVisibleRequest): Promise<ChangePersonaVisibleResponse> =>
   renderPatch(`/personas`, request);

@@ -4,19 +4,19 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import type { PersonasResponse } from '@gitanimals/api';
+import type { Persona } from '@gitanimals/api';
 import { Banner, Button } from '@gitanimals/ui-panda';
 import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { getAllPetsQueryOptions } from '@/apis/user/useGetAllPets';
+import { userAllPersonasQueryOptions } from '@/lib/react-query/user';
 import { getPersonaImage } from '@/utils/image';
 
 interface Props {
   name: string;
   selectPersona: string[];
-  onSelectPersona: (persona: PersonasResponse) => void;
+  onSelectPersona: (persona: Persona) => void;
   initSelectPersona?: (list: string[]) => void;
   loadingPersona?: string[];
 }
@@ -38,6 +38,10 @@ const containerStyle = css({
 const listStyle = flex({ gap: 4, w: '100%', overflowX: 'auto' });
 
 export const SelectPersonaList = wrap
+  .ErrorBoundary({
+    // TODO: 공통 에러 컴포넌트로 대체
+    fallback: <div>error</div>,
+  })
   .Suspense({
     fallback: (
       <section className={containerStyle}>
@@ -50,14 +54,11 @@ export const SelectPersonaList = wrap
       </section>
     ),
   })
-  .ErrorBoundary({
-    // TODO: 공통 에러 컴포넌트로 대체
-    fallback: <div>error</div>,
-  })
+
   .on(function SelectPersonaList({ name, selectPersona, onSelectPersona, initSelectPersona, loadingPersona }: Props) {
     const t = useTranslations('Mypage');
 
-    const { data } = useSuspenseQuery(getAllPetsQueryOptions(name));
+    const { data } = useSuspenseQuery(userAllPersonasQueryOptions(name));
 
     const [isExtend, setIsExtend] = useState(false);
 
