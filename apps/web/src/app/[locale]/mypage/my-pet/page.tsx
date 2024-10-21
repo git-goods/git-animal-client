@@ -119,7 +119,7 @@ function SelectedPetTable({ currentPersona, onReset }: { currentPersona: Persona
             <div></div>
             <div className={flex({ gap: 8 })}>
               <Button variant="secondary" onClick={onSellClick}>
-                {t('sell')}
+                100P {t('sell')}
               </Button>
               {/* TODO: 합치기 기능 추가 시*/}
               <Button variant="secondary" onClick={onMergeClick} disabled>
