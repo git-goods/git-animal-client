@@ -21,7 +21,14 @@ interface Props {
   loadingPersona?: string[];
 }
 
-const listStyle = flex({ gap: 4, w: '100%', overflowX: 'auto' });
+const listStyle = flex({
+  gap: 4,
+  w: '100%',
+  overflow: 'auto',
+  minH: '0',
+  height: '100%',
+  maxH: 'min(calc(100vh - 520px), 1000px)',
+});
 
 export const SelectPersonaList = wrap
   .ErrorBoundary({

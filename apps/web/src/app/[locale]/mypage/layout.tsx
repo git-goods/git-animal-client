@@ -57,7 +57,10 @@ const rightSectionStyle = css({
   borderRadius: 16,
   background: 'white.white_10',
   backdropFilter: 'blur(7px)',
-  minH: '700px',
+  minHeight: '700px',
+  height: 'calc(100vh - 240px)',
+  maxHeight: 'calc(100vh - 240px)',
+  overflow: 'hidden',
   p: 40,
 });
 
