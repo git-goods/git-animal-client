@@ -38,6 +38,13 @@ const rightSectionStyle = css({
   maxHeight: 'min(calc(100vh - 240px), 1000px)',
   overflow: 'hidden',
   p: 40,
+  _mobile: {
+    background: 'none',
+    p: 0,
+    maxHeight: 'auto',
+    height: 'auto',
+    overflowY: 'auto',
+  },
 });
 
 const containerStyle = css({
@@ -67,5 +74,13 @@ const mainStyle = grid({
 
   '@media (max-width: 1400px)': {
     margin: '120px 100px 0',
+  },
+
+  // TODO : 중간 태블릿 정도도 대응하면 좋을 듯
+
+  _mobile: {
+    gridTemplateColumns: '1fr',
+    margin: '0 16px 0',
+    gap: 0,
   },
 });
