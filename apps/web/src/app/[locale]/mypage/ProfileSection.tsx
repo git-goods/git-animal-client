@@ -14,11 +14,21 @@ import { useUserQueryOptions } from '@/apis/user/useGetUser';
 import { Link, usePathname } from '@/i18n/routing';
 import { addNumberComma } from '@/utils/number';
 
+const profileSkeletonStyle = css({
+  '& > div': {
+    margin: '32px 20px',
+    _mobile: {
+      width: '48px',
+      height: '48px',
+    },
+  },
+});
+
 export const ProfileSection = memo(
   wrap
     .Suspense({
       fallback: (
-        <section>
+        <section className={profileSkeletonStyle}>
           <Skeleton width={160} height={160} borderRadius="50%" />
         </section>
       ),
@@ -33,13 +43,26 @@ export const ProfileSection = memo(
       const isMypagePath = pathname === '/mypage';
       const isMyPetPath = pathname === '/mypage/my-pet';
       return (
-        <section>
+        <section className={profileSectionStyle}>
           <div className={profileImageStyle}>
             <Image src={data.profileImage ?? ''} alt="profile" width={160} height={160} />
           </div>
-          <p className={profileNameStyle}>{data?.username}</p>
-          <div className={pointStyle}>
-            <Image src="/mypage/coin.svg" alt="coin" width={24} height={24} /> {addNumberComma(data.points ?? 0)}
+          <div className={profileTextStyle}>
+            <p className={profileNameStyle}>{data?.username}</p>
+            <div className={pointStyle}>
+              <Image src="/mypage/coin.svg" alt="coin" width={24} height={24} /> {addNumberComma(data.points ?? 0)}
+            </div>
+          </div>
+          <hr className={dividerStyle} />
+          <div className={navStyle}>
+            <Link href="/mypage" className={cx(navItemStyle, pathname === '/mypage' && 'selected')}>
+              <ChevronRight size={20} color={pathname === '/mypage' ? '#FCFD9C' : '#FFFFFF80'} />
+              <span>{t('github-custom')}</span>
+            </Link>
+            <Link href="/mypage/my-pet" className={cx(navItemStyle, pathname === '/mypage/my-pet' && 'selected')}>
+              <ChevronRight size={20} color={pathname === '/mypage/my-pet' ? '#FCFD9C' : '#FFFFFF80'} />
+              <span>{t('my-pet')}</span>
+            </Link>
           </div>
           <hr className={dividerStyle} />
           <div className={navStyle}>
@@ -57,9 +80,22 @@ export const ProfileSection = memo(
     }),
 );
 
+const profileSectionStyle = css({
+  _mobile: {
+    display: 'flex',
+    padding: '32px 20px',
+    gap: '12px',
+    alignItems: 'center',
+  },
+});
+
+const profileTextStyle = css({
+  _mobile: {
+    flex: 1,
+  },
+});
+
 const navStyle = css({
-  textStyle: 'glyph18.regular',
-  color: 'white.white_50',
   display: 'flex',
   flexDirection: 'column',
 });
@@ -69,8 +105,15 @@ const navItemStyle = css({
   display: 'flex',
   alignItems: 'center',
   gap: 4,
+  textStyle: 'glyph18.regular',
+  color: 'white.white_50',
   '&.selected': {
     color: 'brand.canary',
+  },
+  _mobile: {
+    gap: 0,
+    textStyle: 'glyph15.regular',
+    p: 0,
   },
 });
 
@@ -81,6 +124,9 @@ const dividerStyle = css({
   border: 'none',
   marginTop: 48,
   marginBottom: 20,
+  _mobile: {
+    display: 'none',
+  },
 });
 
 const profileImageStyle = css({
@@ -93,6 +139,10 @@ const profileImageStyle = css({
     width: '100%',
     height: '100%',
   },
+  _mobile: {
+    width: '48px',
+    height: '48px',
+  },
 });
 
 const profileNameStyle = css({
@@ -100,10 +150,23 @@ const profileNameStyle = css({
   textStyle: 'glyph48.bold',
   marginTop: '8px',
   marginBottom: '4px',
+  _mobile: {
+    textStyle: 'glyph24.bold',
+    margin: 0,
+    mb: 2,
+  },
 });
 
 const pointStyle = flex({
   color: 'white.white',
   textStyle: 'glyph24.regular',
   gap: '6',
+  alignItems: 'center',
+  _mobile: {
+    textStyle: 'glyph14.regular',
+    '& img': {
+      width: '16px',
+      height: '16px',
+    },
+  },
 });

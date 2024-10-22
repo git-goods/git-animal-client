@@ -1,18 +1,15 @@
 import Image from 'next/image';
-import { getTranslations } from 'next-intl/server';
 import { css, cx } from '_panda/css';
-import { center, grid } from '_panda/patterns';
+import { grid } from '_panda/patterns';
 
 import GNB from '@/components/GNB/GNB';
 
 import { ProfileSection } from './ProfileSection';
 
 async function MypageLayout({ children }: { children: React.ReactNode }) {
-  const t = await getTranslations('Mypage');
-
   return (
     <>
-      <div className={cx(containerStyle, subStyle)}>
+      <div className={cx(containerStyle)}>
         <GNB />
         <Image src="/mypage/bg-cloud.webp" alt="bg" width={2400} height={1367} className={bgStyle} draggable={false} />
         <main className={mainStyle}>
@@ -20,40 +17,15 @@ async function MypageLayout({ children }: { children: React.ReactNode }) {
           <section className={rightSectionStyle}>{children}</section>
         </main>
       </div>
-      <div className={noticeStyle}>{t('no-mobile-support')}</div>
     </>
   );
 }
 
 export default MypageLayout;
 
-const subStyle = css({
-  '@media (max-width: 1100px)': {
-    display: 'none',
-  },
-});
-
-const noticeStyle = center({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  background: '#454545',
-  color: 'white',
-  zIndex: 1000,
-  display: 'none',
-  textStyle: 'glyph24.bold',
-  lineHeight: '1.5',
-  textAlign: 'center',
-  '@media (max-width: 1100px)': {
-    display: 'flex',
-  },
-});
-
 const rightSectionStyle = css({
   width: '100%',
-  maxW: 'min(1080px, calc(100vw - 400px - 222px - 80px ))',
+  maxW: '1080px',
   borderRadius: 16,
   background: 'white.white_10',
   backdropFilter: 'blur(7px)',
@@ -62,6 +34,14 @@ const rightSectionStyle = css({
   maxHeight: 'min(calc(100vh - 240px), 1000px)',
   overflow: 'hidden',
   p: 40,
+  _mobile: {
+    background: 'none',
+    p: 0,
+    maxHeight: 'auto',
+    height: 'auto',
+    overflowY: 'auto',
+    borderRadius: 0,
+  },
 });
 
 const containerStyle = css({
@@ -88,4 +68,16 @@ const mainStyle = grid({
   position: 'relative',
   zIndex: 1,
   margin: '120px 200px 0',
+
+  '@media (max-width: 1400px)': {
+    margin: '120px 100px 0',
+  },
+
+  // TODO : 중간 태블릿 정도도 대응하면 좋을 듯
+
+  _mobile: {
+    gridTemplateColumns: '1fr',
+    margin: '0 16px 0',
+    gap: 0,
+  },
 });

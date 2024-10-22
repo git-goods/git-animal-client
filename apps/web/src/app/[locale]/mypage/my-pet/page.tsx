@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
-import { flex } from '_panda/patterns';
+import { center, flex } from '_panda/patterns';
 import { dropPet, type Persona } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
@@ -24,32 +24,62 @@ function MypageMyPets() {
   const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
 
   return (
-    <div className={flex({ flexDir: 'column' })}>
-      <SelectedPetTable currentPersona={selectPersona} reset={() => setSelectPersona(null)} />
-      <section className={selectPetContainerStyle}>
-        <h2 className="heading">{t('pet-list')}</h2>
+    <>
+      <div className={cx(subStyle, flex({ flexDir: 'column' }))}>
+        <SelectedPetTable currentPersona={selectPersona} reset={() => setSelectPersona(null)} />
+        <section className={selectPetContainerStyle}>
+          <h2 className="heading">{t('pet-list')}</h2>
 
-        <div
-          className={css({
-            maxHeight: 'calc(100vh - 542px)',
-            overflow: 'auto',
-          })}
-        >
-          <SelectPersonaList
-            name={name}
-            selectPersona={selectPersona ? [selectPersona.id] : []}
-            onSelectPersona={(persona) => setSelectPersona(persona)}
-            initSelectPersonas={(list) => setSelectPersona(list[0])}
-            isExtend
-          />
-        </div>
-      </section>
-      <p className={captionMessageStyle}>{t('sell-to-other')}</p>
-    </div>
+          <div
+            className={css({
+              maxHeight: 'calc(100vh - 542px)',
+              overflow: 'auto',
+            })}
+          >
+            <SelectPersonaList
+              name={name}
+              selectPersona={selectPersona ? [selectPersona.id] : []}
+              onSelectPersona={(persona) => setSelectPersona(persona)}
+              isExtend
+              initSelectPersonas={(list) => {
+                setSelectPersona(list[0]);
+              }}
+            />
+          </div>
+        </section>
+        <p className={captionMessageStyle}>{t('sell-to-other')}</p>
+      </div>
+      <div className={noticeStyle}>{t('no-mobile-support')}</div>
+    </>
   );
 }
 
 export default MypageMyPets;
+
+const subStyle = css({
+  _mobile: {
+    display: 'none',
+  },
+});
+
+const noticeStyle = center({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  background: '#019c5a',
+  color: 'white',
+  zIndex: 1000,
+  display: 'none',
+  textStyle: 'glyph24.bold',
+  whiteSpace: 'pre-wrap',
+  lineHeight: '1.5',
+  textAlign: 'center',
+  _mobile: {
+    display: 'flex',
+  },
+});
 
 const captionMessageStyle = css({
   textStyle: 'glyph18.regular',

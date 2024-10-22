@@ -85,14 +85,21 @@ function FarmType() {
             <Button className="extend-button" onClick={() => setIsExtend((prev) => !prev)}>
               {isExtend ? t('shrink-button') : t('extend-button')}
             </Button>
-            <SelectPersonaList
-              name={name}
-              loadingPersona={loadingPersona}
-              selectPersona={selectPersona}
-              onSelectPersona={onSelectPersona}
-              initSelectPersonas={initSelectPersonas}
-              isExtend={isExtend}
-            />
+            <div className={selectPersonaListStyle}>
+              <SelectPersonaList
+                name={name}
+                loadingPersona={loadingPersona}
+                selectPersona={selectPersona}
+                onSelectPersona={onSelectPersona}
+                initSelectPersonas={(list) => {
+                  // 현재 보여지는 펫들 처음부터 선택
+                  const visiblePersonas = list.filter((persona) => persona.visible);
+                  const visiblePersonaIds = visiblePersonas.map((persona) => persona.id);
+                  setSelectPersona(visiblePersonaIds);
+                }}
+                isExtend={isExtend}
+              />
+            </div>
           </section>
         )}
 
@@ -110,6 +117,14 @@ function FarmType() {
 }
 
 export default FarmType;
+
+const selectPersonaListStyle = css({
+  maxH: '400px',
+  overflowY: 'auto',
+  _mobile: {
+    maxH: '250px',
+  },
+});
 
 const farmSectionStyle = css({
   display: 'flex',
