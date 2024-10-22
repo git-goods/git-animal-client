@@ -1,8 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
@@ -19,6 +18,7 @@ import { toast } from 'sonner';
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { login } from '@/components/AuthButton';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
+import { Link, useRouter } from '@/i18n/routing';
 import { trackEvent } from '@/lib/analytics';
 
 import { HalloweenCard } from './HalloweenCard';

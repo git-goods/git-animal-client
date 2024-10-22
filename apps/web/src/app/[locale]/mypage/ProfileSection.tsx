@@ -7,12 +7,12 @@ import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { Skeleton } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { ChevronRight } from 'lucide-react';
 
 import { Link, usePathname } from '@/i18n/routing';
-import { addNumberComma } from '@/utils/number';
 import { useUserQueryOptions } from '@/lib/react-query/user';
+import { addNumberComma } from '@/utils/number';
 
 const profileSkeletonStyle = css({
   '& > div': {
