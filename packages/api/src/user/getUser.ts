@@ -11,9 +11,7 @@ const UserSchema = z.object({
 export type UserResponse = z.infer<typeof UserSchema>;
 
 export const getUser = async () => {
-  const res = await safeGet(UserSchema)(`/users`);
-
-  return res;
+  return safeGet(UserSchema)(`/users`);
 };
 
 export const getUserByToken = async (token: string) => {

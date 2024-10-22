@@ -27,7 +27,7 @@ const interceptorResponseFulfilled = (res: AxiosResponse) => {
 
 // Response interceptor
 const interceptorResponseRejected = (error: AxiosError<ApiErrorScheme>) => {
-  if (error.response?.status === 401) {
+  if (error?.response?.status === 401) {
     // TODO : logout and refresh login
     // TODO : logout 안내
   }

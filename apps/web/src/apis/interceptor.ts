@@ -63,16 +63,19 @@ export const interceptorRequestFulfilled = async (config: InternalAxiosRequestCo
 
 // Response interceptor
 export const interceptorResponseFulfilled = (res: AxiosResponse) => {
-  if (200 <= res.status && res.status < 300) {
-    return res.data;
-  }
+  // console.log('res: ', res);
+  // if (200 <= res.status && res.status < 300) {
+  //   return res.data;
+  // }
 
-  return Promise.reject(res.data);
+  // return Promise.reject(res.data);
+  return res;
 };
 
 // Response interceptor
 export const interceptorResponseRejected = async (error: AxiosError<ApiErrorScheme>) => {
-  if (error.response?.status === 401) {
+  console.log('error: ', error);
+  if (error?.response?.status === 401) {
     if (typeof window !== 'undefined') {
       signOut();
     } else {

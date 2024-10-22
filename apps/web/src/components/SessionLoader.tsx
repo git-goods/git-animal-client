@@ -1,9 +1,13 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { setRequestInterceptor } from '@gitanimals/api';
+import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
 
-import { interceptorRequestFulfilled } from '@/apis/interceptor';
+import {
+  interceptorRequestFulfilled,
+  interceptorResponseFulfilled,
+  interceptorResponseRejected,
+} from '@/apis/interceptor';
 
 const SessionLoader = ({ children }: { children: React.ReactNode }) => {
   const session = useSession();
@@ -14,6 +18,7 @@ const SessionLoader = ({ children }: { children: React.ReactNode }) => {
 
   if (session.status === 'authenticated') {
     setRequestInterceptor(interceptorRequestFulfilled);
+    setResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
   }
 
   return <>{children}</>;

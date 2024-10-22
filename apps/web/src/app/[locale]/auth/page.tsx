@@ -1,7 +1,11 @@
 import { center } from '_panda/patterns';
-import { setRequestInterceptor } from '@gitanimals/api';
+import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
 
-import { interceptorRequestFulfilled } from '@/apis/interceptor';
+import {
+  interceptorRequestFulfilled,
+  interceptorResponseFulfilled,
+  interceptorResponseRejected,
+} from '@/apis/interceptor';
 
 import LoginButton from './LoginButton';
 
@@ -16,6 +20,7 @@ function JWTPage({
   const token = jwtToken.split(' ')[1];
 
   setRequestInterceptor(interceptorRequestFulfilled);
+  setResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
 
   return (
     <div className={loadingContainerStyle}>

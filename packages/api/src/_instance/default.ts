@@ -20,7 +20,7 @@ export const setRequestInterceptor = (
 
 export const setResponseInterceptor = (
   fulfilled?: (response: AxiosResponse) => AxiosResponse | Promise<AxiosResponse>,
-  rejected?: (error: AxiosError) => AxiosError | Promise<AxiosError>,
+  rejected?: (error: AxiosError<any>) => AxiosError<any> | Promise<AxiosError<any>>,
 ) => {
   instance.interceptors.response.use(fulfilled, rejected);
 };

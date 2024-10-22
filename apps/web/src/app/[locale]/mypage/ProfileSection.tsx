@@ -7,12 +7,12 @@ import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { Skeleton } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { ChevronRight } from 'lucide-react';
 
-import { useUserQueryOptions } from '@/apis/user/useGetUser';
 import { Link, usePathname } from '@/i18n/routing';
 import { addNumberComma } from '@/utils/number';
+import { useUserQueryOptions } from '@/lib/react-query/user';
 
 const profileSkeletonStyle = css({
   '& > div': {
@@ -42,6 +42,7 @@ export const ProfileSection = memo(
 
       const isMypagePath = pathname === '/mypage';
       const isMyPetPath = pathname === '/mypage/my-pet';
+
       return (
         <section className={profileSectionStyle}>
           <div className={profileImageStyle}>
