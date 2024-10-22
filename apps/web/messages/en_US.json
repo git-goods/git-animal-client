@@ -16,6 +16,18 @@
   "Landing": {
     "title": "Have your pet in GITHUB! "
   },
+  "Common": {
+    "pet": "Pet",
+    "name": "Name",
+    "grade": "Grade",
+    "level": "Level",
+    "price": "Price",
+    "date": "Date",
+    "sell": "Sell",
+    "pet-list": "Pet list",
+    "merge": "Merge",
+    "prepare": "Prepare"
+  },
   "Gotcha": {
     "pet-gotcha-desc": "Draw a S+ Grade pet for 1,000 points",
     "choose-one-card": "Choose one card you want!",
@@ -42,7 +54,9 @@
     "delete": "Delete",
     "delete-product-success": "Cancellation complete!",
     "delete-product-fail": "Failed to cancellation.",
-    "edit": "Edit"
+    "edit": "Edit",
+    "pet-sold": "Pet sold successfully for [money]!",
+    "prepare": "Prepare"
   },
   "NoticeToast": {
     "go": "GO!",
@@ -63,7 +77,11 @@
     "extend-button": "Extend",
     "shrink-button": "Shrink",
     "change-pet": "Change pet",
-    "no-mobile-support": "Currently, mobile is not supported.\nPlease connect to the desktop."
+    "no-mobile-support": "Currently, mobile is not supported.\nPlease connect to the desktop.",
+    "pet-list": "Pet list",
+    "sell-to-other": "Tip. If you want to sell your pet to other users, please use the auction.",
+    "my-pet": "My pet",
+    "github-custom": "Github Custom"
   },
   "Event": {
     "Halloween": {

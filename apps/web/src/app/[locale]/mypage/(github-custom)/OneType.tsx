@@ -11,7 +11,7 @@ import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals
 import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
 
-import { SelectPersonaList } from './PersonaList';
+import { SelectPersonaList } from '../PersonaList';
 
 const DEFAULT_SIZE = { width: 600, height: 120 };
 
@@ -24,6 +24,7 @@ export function OneType({}: Props) {
 
   const [selectPersona, setSelectPersona] = useState<string | null>();
   const [sizes, setSizes] = useState<{ width: number; height: number }>(DEFAULT_SIZE);
+  const [isExtend, setIsExtend] = useState(false);
 
   const onLinkCopy = async () => {
     try {
@@ -42,13 +43,24 @@ export function OneType({}: Props) {
   return (
     <section className={sectionStyle}>
       {name && (
-        <SelectPersonaList
-          name={name}
-          selectPersona={selectPersona ? [selectPersona] : []}
-          onSelectPersona={(persona) => setSelectPersona(persona.id)}
-        />
+        <section className={selectPetContainerStyle}>
+          <h2 className="heading">{t('change-pet')}</h2>
+          <Button className="extend-button" onClick={() => setIsExtend((prev) => !prev)}>
+            {isExtend ? t('shrink-button') : t('extend-button')}
+          </Button>
+
+          <div className={selectPersonaListStyle}>
+            <SelectPersonaList
+              name={name}
+              selectPersona={selectPersona ? [selectPersona] : []}
+              onSelectPersona={(persona) => setSelectPersona(persona.id)}
+              isExtend={isExtend}
+            />
+          </div>
+        </section>
       )}
 
+      {/* TODO: 임시로 모바일에선 input 안보이게 처리 */}
       <SizeInputList onApply={(width, height) => setSizes({ width, height })} />
       <div>
         <div className={lineContainerStyle} style={{ width: sizes.width, height: sizes.height }}>
@@ -61,11 +73,39 @@ export function OneType({}: Props) {
     </section>
   );
 }
+
+// TODO: 임시 방편
+const selectPersonaListStyle = css({
+  maxH: '400px',
+  overflowY: 'auto',
+  _mobile: {
+    maxH: '250px',
+  },
+});
+
+const selectPetContainerStyle = css({
+  position: 'relative',
+  '& .heading': {
+    textStyle: 'glyph18.bold',
+    color: 'white',
+    marginBottom: '16px',
+  },
+  '& .extend-button': {
+    position: 'absolute',
+    top: '-16px',
+    right: 0,
+  },
+});
+
 const sectionStyle = css({
   display: 'flex',
   flexDirection: 'column',
   gap: '40px',
   padding: '40px 0',
+  _mobile: {
+    gap: 28,
+    padding: '32px 0',
+  },
 });
 
 const lineContainerStyle = css({
@@ -77,6 +117,9 @@ const lineContainerStyle = css({
   borderRadius: '12px',
 
   '& img': {
+    maxWidth: '100%',
+  },
+  _mobile: {
     maxWidth: '100%',
   },
 });
@@ -105,6 +148,10 @@ const sizeInputStyle = css({
     textStyle: 'glyph18.bold',
     color: 'white',
     marginBottom: '16px',
+  },
+
+  _mobile: {
+    display: 'none',
   },
 });
 

@@ -15,7 +15,7 @@ import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals
 import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
 
-import { SelectPersonaList } from './PersonaList';
+import { SelectPersonaList } from '../PersonaList';
 
 function FarmType() {
   const queryClient = useQueryClient();
@@ -25,6 +25,7 @@ function FarmType() {
   const [selectPersona, setSelectPersona] = useState<string[]>([]);
   const [loadingPersona, setLoadingPersona] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [isExtend, setIsExtend] = useState(false);
 
   const { mutate } = useChangePersonaVisible({
     onMutate: () => {
@@ -70,17 +71,36 @@ function FarmType() {
     } catch (error) {}
   };
 
+  const initSelectPersonas = (list: Persona[]) => {
+    const visiblePersonaIds = list.filter((persona) => persona.visible).map((persona) => persona.id);
+    setSelectPersona(visiblePersonaIds);
+  };
+
   return (
     <>
       <section className={farmSectionStyle}>
         {name && (
-          <SelectPersonaList
-            name={name}
-            loadingPersona={loadingPersona}
-            selectPersona={selectPersona}
-            onSelectPersona={onSelectPersona}
-            initSelectPersona={(list) => setSelectPersona(list)}
-          />
+          <section className={selectPetContainerStyle}>
+            <h2 className="heading">{t('change-pet')}</h2>
+            <Button className="extend-button" onClick={() => setIsExtend((prev) => !prev)}>
+              {isExtend ? t('shrink-button') : t('extend-button')}
+            </Button>
+            <div className={selectPersonaListStyle}>
+              <SelectPersonaList
+                name={name}
+                loadingPersona={loadingPersona}
+                selectPersona={selectPersona}
+                onSelectPersona={onSelectPersona}
+                initSelectPersonas={(list) => {
+                  // 현재 보여지는 펫들 처음부터 선택
+                  const visiblePersonas = list.filter((persona) => persona.visible);
+                  const visiblePersonaIds = visiblePersonas.map((persona) => persona.id);
+                  setSelectPersona(visiblePersonaIds);
+                }}
+                isExtend={isExtend}
+              />
+            </div>
+          </section>
         )}
 
         <div>
@@ -98,6 +118,14 @@ function FarmType() {
 
 export default FarmType;
 
+const selectPersonaListStyle = css({
+  maxH: '400px',
+  overflowY: 'auto',
+  _mobile: {
+    maxH: '250px',
+  },
+});
+
 const farmSectionStyle = css({
   display: 'flex',
   flexDirection: 'column',
@@ -106,3 +134,17 @@ const farmSectionStyle = css({
 });
 
 const farmStyle = css({ borderRadius: '12px', overflow: 'hidden', width: 'fit-content' });
+
+const selectPetContainerStyle = css({
+  position: 'relative',
+  '& .heading': {
+    textStyle: 'glyph18.bold',
+    color: 'white',
+    marginBottom: '16px',
+  },
+  '& .extend-button': {
+    position: 'absolute',
+    top: '-16px',
+    right: 0,
+  },
+});
