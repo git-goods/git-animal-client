@@ -77,42 +77,40 @@ function FarmType() {
   };
 
   return (
-    <>
-      <section className={farmSectionStyle}>
-        {name && (
-          <section className={selectPetContainerStyle}>
-            <h2 className="heading">{t('change-pet')}</h2>
-            <Button className="extend-button" onClick={() => setIsExtend((prev) => !prev)}>
-              {isExtend ? t('shrink-button') : t('extend-button')}
-            </Button>
-            <div className={selectPersonaListStyle}>
-              <SelectPersonaList
-                name={name}
-                loadingPersona={loadingPersona}
-                selectPersona={selectPersona}
-                onSelectPersona={onSelectPersona}
-                initSelectPersonas={(list) => {
-                  // 현재 보여지는 펫들 처음부터 선택
-                  const visiblePersonas = list.filter((persona) => persona.visible);
-                  const visiblePersonaIds = visiblePersonas.map((persona) => persona.id);
-                  setSelectPersona(visiblePersonaIds);
-                }}
-                isExtend={isExtend}
-              />
-            </div>
-          </section>
-        )}
-
-        <div>
-          <div className={farmStyle}>
-            <GitanimalsFarm imageKey={`${selectPersona.length}/${loading ? 'loading' : ''}`} sizes={[600, 300]} />
-          </div>
-          <Button onClick={onLinkCopy} mt={16} size="m">
-            {t('copy-link-title')}
+    <div className={farmSectionStyle}>
+      {name && (
+        <section className={selectPetContainerStyle}>
+          <h2 className="heading">{t('change-pet')}</h2>
+          <Button className="extend-button" onClick={() => setIsExtend((prev) => !prev)}>
+            {isExtend ? t('shrink-button') : t('extend-button')}
           </Button>
+          <div className={selectPersonaListStyle}>
+            <SelectPersonaList
+              name={name}
+              loadingPersona={loadingPersona}
+              selectPersona={selectPersona}
+              onSelectPersona={onSelectPersona}
+              initSelectPersonas={(list) => {
+                // 현재 보여지는 펫들 처음부터 선택
+                const visiblePersonas = list.filter((persona) => persona.visible);
+                const visiblePersonaIds = visiblePersonas.map((persona) => persona.id);
+                setSelectPersona(visiblePersonaIds);
+              }}
+              isExtend={isExtend}
+            />
+          </div>
+        </section>
+      )}
+
+      <div>
+        <div className={farmStyle}>
+          <GitanimalsFarm imageKey={`${selectPersona.length}/${loading ? 'loading' : ''}`} sizes={[600, 300]} />
         </div>
-      </section>
-    </>
+        <Button onClick={onLinkCopy} mt={16} size="m">
+          {t('copy-link-title')}
+        </Button>
+      </div>
+    </div>
   );
 }
 

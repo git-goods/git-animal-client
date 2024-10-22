@@ -1,12 +1,11 @@
-import type { ReactNode } from 'react';
-import { cx } from '_panda/css';
-import { flex } from '_panda/patterns';
+import { css, cx } from '_panda/css';
+import { flex, grid } from '_panda/patterns';
+import { ReactNode } from 'react';
+import FarmType from './FarmType';
+import { OneType } from './OneType';
 import { updateUrlSearchParams } from '@gitanimals/util-common';
 
 import { Link } from '@/i18n/routing';
-
-import FarmType from './FarmType';
-import { OneType } from './OneType';
 
 type TabType = '1-type' | 'farm-type';
 
@@ -25,7 +24,7 @@ async function Mypage({
   };
 
   return (
-    <div>
+    <>
       <div className={tabListStyle}>
         <Link href={`/mypage?${updateUrlSearchParams(searchParams, 'type', '1-type')}`}>
           <button className={cx('tab-item', selectedType === '1-type' && 'selected')}>1 Type</button>
@@ -34,12 +33,16 @@ async function Mypage({
           <button className={cx('tab-item', selectedType === 'farm-type' && 'selected')}>Farm Type</button>
         </Link>
       </div>
-      <div>{MYPAGE_TAB_INNER_MAP[selectedType]}</div>
-    </div>
+      <div className={tabItemStyle}>{MYPAGE_TAB_INNER_MAP[selectedType]}</div>
+    </>
   );
 }
-
 export default Mypage;
+
+const tabItemStyle = css({
+  flex: 1,
+  overflow: 'hidden',
+});
 
 const tabListStyle = flex({
   gap: 12,
