@@ -12,6 +12,13 @@ import { Modal } from '@/components/Modal/Modal2';
 import { useProductTypesQueryOptions } from '@/lib/react-query/auction';
 import { getPersonaImage } from '@/utils/image';
 
+const EVENT = {
+  HALLOWEEN: {
+    label: 'Halloween 2024',
+    personaTypeList: ['SLIME_PUMPKIN_1', 'SLIME_PUMPKIN_2', 'GHOST', 'GHOST_KING', 'SCREAM', 'SCREAM_GHOST'],
+  },
+};
+
 interface PersonaSearchProps {
   onSelect: (personaType?: string) => void;
   selected?: string;
@@ -41,6 +48,14 @@ export const PersonaSearch = memo(
 
       const { data } = useSuspenseQuery(useProductTypesQueryOptions);
 
+      const personaTypeList = data?.productTypes.map((type) => type.name);
+      console.log('personaTypeList: ', personaTypeList);
+
+      const eventPersonaTypeList = EVENT.HALLOWEEN.personaTypeList;
+      const filteredPersonaTypeList = data?.productTypes.filter((type) => !eventPersonaTypeList.includes(type.name));
+
+      // const eventPersonaTypeList = personaTypeList.filter((type) => type !== 'event');
+
       const onClick = (personaType: string) => {
         onSelect(personaType);
         setIsOpen(false);
@@ -56,11 +71,30 @@ export const PersonaSearch = memo(
             <div className={containerStyle}>
               <h3 className={headingStyle}>Select Find Persona</h3>
               <div className={contentStyle}>
-                {data?.productTypes.map((type) => (
-                  <button key={type.name} onClick={() => onClick(type.name)}>
-                    <Banner image={getPersonaImage(type.name)} selected={selected === type.name} />
-                  </button>
+                {Object.values(EVENT).map((event) => (
+                  <>
+                    <h4 className={personaListHeadingStyle}>{event.label}</h4>
+                    <div className={personaListStyle}>
+                      {event.personaTypeList.map((type) => (
+                        <button key={type} onClick={() => onClick(type)}>
+                          <Banner image={getPersonaImage(type)} selected={selected === type} />
+                        </button>
+                      ))}
+                    </div>
+                  </>
                 ))}
+                {filteredPersonaTypeList && (
+                  <>
+                    <h4 className={personaListHeadingStyle}>Other</h4>
+                    <div className={personaListStyle}>
+                      {filteredPersonaTypeList.map((type) => (
+                        <button key={type.name} onClick={() => onClick(type.name)}>
+                          <Banner image={getPersonaImage(type.name)} selected={selected === type.name} />
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </Modal>
@@ -97,8 +131,29 @@ const headingStyle = css({
 const contentStyle = css({
   flex: 1,
   overflow: 'auto',
+  gap: '4px',
+  justifyContent: 'center',
+  '&::-webkit-scrollbar': {
+    width: '4px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: 'gray.gray_500',
+    borderRadius: '2px',
+  },
+  '&::-webkit-scrollbar-track': {
+    backgroundColor: 'transparent',
+  },
+});
+
+const personaListHeadingStyle = css({
+  textStyle: 'glyph18.bold',
+  color: 'white',
+  textAlign: 'left',
+  my: 12,
+});
+
+const personaListStyle = css({
   display: 'flex',
   flexWrap: 'wrap',
   gap: '4px',
-  justifyContent: 'center',
 });
