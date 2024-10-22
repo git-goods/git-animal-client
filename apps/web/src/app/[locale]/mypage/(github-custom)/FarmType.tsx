@@ -71,6 +71,11 @@ function FarmType() {
     } catch (error) {}
   };
 
+  const initSelectPersonas = (list: Persona[]) => {
+    const visiblePersonaIds = list.filter((persona) => persona.visible).map((persona) => persona.id);
+    setSelectPersona(visiblePersonaIds);
+  };
+
   return (
     <>
       <section className={farmSectionStyle}>
