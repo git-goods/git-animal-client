@@ -49,25 +49,25 @@ export function OneType({}: Props) {
         </Button>
       </section>
 
-      <div className={isExtend ? flexGrowSectionStyle : ''}>
+      <section className={isExtend ? flexGrowSectionStyle : ''}>
         <SelectPersonaList
           name={name}
           selectPersona={selectPersona ? [selectPersona] : []}
           onSelectPersona={(persona) => setSelectPersona(persona.id)}
           isExtend={isExtend}
         />
-      </div>
+      </section>
 
       {/* TODO: 임시로 모바일에선 input 안보이게 처리 */}
       <SizeInputList onApply={(width, height) => setSizes({ width, height })} />
-      <div>
+      <section>
         <div className={lineContainerStyle} style={{ width: sizes.width, height: sizes.height }}>
           <GitanimalsLine sizes={[sizes.width, sizes.height]} petId={selectPersona} />
         </div>
         <Button onClick={onLinkCopy} mt={16} size="m">
           {t('copy-link-title')}
         </Button>
-      </div>
+      </section>
     </div>
   );
 }

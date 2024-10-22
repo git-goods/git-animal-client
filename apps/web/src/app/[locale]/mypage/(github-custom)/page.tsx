@@ -1,7 +1,7 @@
 import { css, cx } from '_panda/css';
-import { flex, grid } from '_panda/patterns';
+import { flex } from '_panda/patterns';
 import { ReactNode } from 'react';
-import FarmType from './FarmType';
+import { FarmType } from './FarmType';
 import { OneType } from './OneType';
 import { updateUrlSearchParams } from '@gitanimals/util-common';
 

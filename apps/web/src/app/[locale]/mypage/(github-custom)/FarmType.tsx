@@ -17,7 +17,7 @@ import { copyClipBoard } from '@/utils/copy';
 
 import { SelectPersonaList } from '../PersonaList';
 
-function FarmType() {
+export function FarmType() {
   const queryClient = useQueryClient();
   const t = useTranslations('Mypage');
 
@@ -83,7 +83,7 @@ function FarmType() {
         <Button className="extend-button" onClick={() => setIsExtend((prev) => !prev)}>
           {isExtend ? t('shrink-button') : t('extend-button')}
         </Button>
-        <div className={selectPersonaListStyle}>
+        <section className={isExtend ? flexGrowSectionStyle : ''}>
           <SelectPersonaList
             name={name}
             loadingPersona={loadingPersona}
@@ -92,7 +92,7 @@ function FarmType() {
             initSelectPersonas={initSelectPersonas}
             isExtend={isExtend}
           />
-        </div>
+        </section>
       </section>
 
       <div>
@@ -107,16 +107,13 @@ function FarmType() {
   );
 }
 
-export default FarmType;
-
-const selectPersonaListStyle = css({
-  maxH: '400px',
-  overflowY: 'auto',
-  _mobile: {
-    maxH: '250px',
-  },
+const flexGrowSectionStyle = css({
+  flex: '1',
+  minHeight: '0',
+  overflow: 'auto',
+  display: 'flex',
+  flexWrap: 'wrap',
 });
-
 const farmSectionStyle = css({
   display: 'flex',
   flexDirection: 'column',
