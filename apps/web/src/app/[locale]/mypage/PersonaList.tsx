@@ -17,11 +17,17 @@ interface Props {
   isExtend: boolean;
   selectPersona: string[];
   onSelectPersona: (persona: Persona) => void;
-  initSelectPersona?: (list: string[]) => void;
+  initSelectPersonas?: (list: Persona[]) => void;
   loadingPersona?: string[];
 }
 
-const listStyle = flex({ gap: 4, w: '100%', overflowX: 'auto' });
+const listStyle = flex({
+  gap: 4,
+  w: '100%',
+  overflow: 'auto',
+  minH: '0',
+  height: '100%',
+});
 
 export const SelectPersonaList = wrap
   .ErrorBoundary({
@@ -43,16 +49,15 @@ export const SelectPersonaList = wrap
     isExtend,
     selectPersona,
     onSelectPersona,
-    initSelectPersona,
+    initSelectPersonas,
     loadingPersona,
   }: Props) {
     const { data } = useSuspenseQuery(userAllPersonasQueryOptions(name));
 
+    // 초기 선택 로직, 외부에서 초기화 함수 전달
     useEffect(() => {
-      if (initSelectPersona) {
-        const visiblePersonas = data.personas.filter((persona) => persona.visible);
-        const visiblePersonaIds = visiblePersonas.map((persona) => persona.id);
-        initSelectPersona(visiblePersonaIds);
+      if (initSelectPersonas) {
+        initSelectPersonas(data.personas);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);

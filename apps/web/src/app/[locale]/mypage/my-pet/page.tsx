@@ -5,10 +5,13 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import type { Persona } from '@gitanimals/api';
+import { dropPet, type Persona } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
+import { userQueryKeys } from '@/lib/react-query/user';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
@@ -16,28 +19,47 @@ import { getPersonaImage } from '@/utils/image';
 import { SelectPersonaList } from '../PersonaList';
 
 function MypageMyPets() {
-  const t = useTranslations('Common');
+  const t = useTranslations('Mypage');
   const { name } = useClientUser();
   const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
 
   return (
-    <div>
-      <SelectedPetTable currentPersona={selectPersona} />
+    <div className={flex({ flexDir: 'column' })}>
+      <SelectedPetTable currentPersona={selectPersona} reset={() => setSelectPersona(null)} />
       <section className={selectPetContainerStyle}>
-        <h2 className="heading">{t('change-pet')}</h2>
+        <h2 className="heading">{t('pet-list')}</h2>
 
-        <SelectPersonaList
-          name={name}
-          selectPersona={selectPersona ? [selectPersona.id] : []}
-          onSelectPersona={(persona) => setSelectPersona(persona)}
-          isExtend
-        />
+        <div
+          className={css({
+            maxHeight: 'calc(100vh - 542px)',
+            overflow: 'auto',
+          })}
+        >
+          <SelectPersonaList
+            name={name}
+            selectPersona={selectPersona ? [selectPersona.id] : []}
+            onSelectPersona={(persona) => setSelectPersona(persona)}
+            initSelectPersonas={(list) => setSelectPersona(list[0])}
+            isExtend
+          />
+        </div>
       </section>
+      <p className={captionMessageStyle}>{t('sell-to-other')}</p>
     </div>
   );
 }
 
 export default MypageMyPets;
+
+const captionMessageStyle = css({
+  textStyle: 'glyph18.regular',
+  color: 'white_75',
+  marginTop: 16,
+
+  // 안내 멘트 5초 뒤에 등장
+  opacity: 0,
+  animation: `fadeIn 0.5s ease-in-out 5s forwards`,
+});
 
 const selectPetContainerStyle = css({
   position: 'relative',
@@ -48,11 +70,25 @@ const selectPetContainerStyle = css({
   },
 });
 
-function SelectedPetTable({ currentPersona }: { currentPersona: Persona | null }) {
-  const t = useTranslations('Common');
+function SelectedPetTable({ currentPersona, reset }: { currentPersona: Persona | null; reset: () => void }) {
+  const queryClient = useQueryClient();
+  const t = useTranslations('Shop');
 
-  const onSellClick = () => {
-    console.log('sell');
+  const { mutate: dropPetMutation } = useMutation({
+    mutationFn: (personaId: string) => dropPet({ personaId }),
+    onSuccess: (data) => {
+      toast.success((t('pet-sold') as string).replace('[money]', data.givenPoint.toString()));
+      queryClient.invalidateQueries({ queryKey: userQueryKeys.all() });
+      reset();
+    },
+    onError: () => {
+      toast.error(t('sell-product-fail'));
+    },
+  });
+
+  const onSellClick = async () => {
+    if (!currentPersona) return;
+    dropPetMutation(currentPersona.id);
   };
 
   const onMergeClick = () => {
@@ -66,7 +102,6 @@ function SelectedPetTable({ currentPersona }: { currentPersona: Persona | null }
         <span>{t('name')}</span>
         <span>{t('grade')}</span>
         <span>{t('level')}</span>
-        <span>{t('price')}</span>
         <span></span>
       </div>
 
@@ -82,10 +117,11 @@ function SelectedPetTable({ currentPersona }: { currentPersona: Persona | null }
             <div></div>
             <div className={flex({ gap: 8 })}>
               <Button variant="secondary" onClick={onSellClick}>
-                {t('sell')}
+                100P {t('sell')}
               </Button>
-              <Button variant="secondary" onClick={onMergeClick}>
-                {t('merge')}
+              {/* TODO: 합치기 기능 추가 시*/}
+              <Button variant="secondary" onClick={onMergeClick} disabled>
+                {t('prepare')}
               </Button>
             </div>
           </>

@@ -71,6 +71,11 @@ function FarmType() {
     } catch (error) {}
   };
 
+  const initSelectPersonas = (list: Persona[]) => {
+    const visiblePersonaIds = list.filter((persona) => persona.visible).map((persona) => persona.id);
+    setSelectPersona(visiblePersonaIds);
+  };
+
   return (
     <>
       <section className={farmSectionStyle}>
@@ -85,7 +90,7 @@ function FarmType() {
               loadingPersona={loadingPersona}
               selectPersona={selectPersona}
               onSelectPersona={onSelectPersona}
-              initSelectPersona={(list) => setSelectPersona(list)}
+              initSelectPersonas={initSelectPersonas}
               isExtend={isExtend}
             />
           </section>
