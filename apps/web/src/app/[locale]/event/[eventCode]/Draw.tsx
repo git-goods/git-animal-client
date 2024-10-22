@@ -62,9 +62,11 @@ export const Draw = wrap.Suspense().on(() => {
           setDrawedPet(res.result);
           queryClient.invalidateQueries({ queryKey: couponQueries.getUserCouponsQueryKey });
         },
-        onError: () => {
+        onError: (error) => {
           toast.error(t('draw-error'));
-          sendMessageToErrorChannel(`이벤트 실패, 이벤트 코드: ${upperCaseEventCode}, 사용자: ${session.user?.name}`);
+          sendMessageToErrorChannel(
+            `이벤트 실패, 이벤트 코드: ${upperCaseEventCode}, 사용자: ${session.user?.name}\n${error.message} ${error.name}`,
+          );
           trackEvent(`${upperCaseEventCode}-error`, {
             coupon: upperCaseEventCode,
           });
