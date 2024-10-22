@@ -32,7 +32,6 @@ const mainStyle = grid({
   },
 
   // TODO : 중간 태블릿 정도도 대응하면 좋을 듯
-
   _mobile: {
     gridTemplateColumns: '1fr',
     margin: '0 16px 0',

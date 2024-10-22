@@ -40,8 +40,6 @@ export function OneType({}: Props) {
     } catch (error) {}
   };
 
-  if (!name) return null;
-
   return (
     <div className={sectionContianer}>
       <section className={selectPetContainerStyle}>
