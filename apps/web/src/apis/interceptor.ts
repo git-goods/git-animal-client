@@ -1,10 +1,10 @@
 import { getSession, signOut } from 'next-auth/react';
+import { CustomException } from '@gitanimals/exception';
 import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import axios from 'axios';
 
 import { getServerAuth } from '@/auth';
 import type { ApiErrorScheme } from '@/exceptions/type';
-import { CustomException } from '@gitanimals/exception';
 
 interface CachedSession {
   accessToken: string;
@@ -74,7 +74,6 @@ export const interceptorResponseFulfilled = (res: AxiosResponse) => {
 
 // Response interceptor
 export const interceptorResponseRejected = async (error: AxiosError<ApiErrorScheme>) => {
-  console.log('error: ', error);
   if (error?.response?.status === 401) {
     if (typeof window !== 'undefined') {
       signOut();
@@ -91,6 +90,12 @@ export const interceptorResponseRejected = async (error: AxiosError<ApiErrorSche
 
 export const setInterceptors = (instance: AxiosInstance) => {
   instance.interceptors.request.use(interceptorRequestFulfilled);
-  instance.interceptors.response.use(interceptorResponseFulfilled, interceptorResponseRejected);
+  instance.interceptors.response.use((res) => {
+    if (200 <= res.status && res.status < 300) {
+      return res.data;
+    }
+
+    return Promise.reject(res.data);
+  }, interceptorResponseRejected);
   return instance;
 };
