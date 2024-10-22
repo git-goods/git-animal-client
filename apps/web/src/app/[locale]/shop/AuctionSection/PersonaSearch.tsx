@@ -6,7 +6,7 @@ import { center } from '_panda/patterns';
 import { Banner } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { LoaderIcon, SearchIcon } from 'lucide-react';
+import { LoaderIcon, SearchIcon, XIcon } from 'lucide-react';
 
 import { Modal } from '@/components/Modal/Modal2';
 import { useProductTypesQueryOptions } from '@/lib/react-query/auction';
@@ -14,7 +14,7 @@ import { getPersonaImage } from '@/utils/image';
 
 const EVENT = {
   HALLOWEEN: {
-    label: 'Halloween 2024',
+    label: 'Halloween 2024 🎃',
     personaTypeList: ['SLIME_PUMPKIN_1', 'SLIME_PUMPKIN_2', 'GHOST', 'GHOST_KING', 'SCREAM', 'SCREAM_GHOST'],
   },
 };
@@ -37,7 +37,6 @@ export const PersonaSearch = memo(
     .Suspense({
       fallback: (
         <button className={buttonWrapperStyle}>
-          {/* <SearchIcon color="rgba(255, 255, 255, 0.5)" /> */}
           <LoaderIcon />
         </button>
       ),
@@ -48,13 +47,8 @@ export const PersonaSearch = memo(
 
       const { data } = useSuspenseQuery(useProductTypesQueryOptions);
 
-      const personaTypeList = data?.productTypes.map((type) => type.name);
-      console.log('personaTypeList: ', personaTypeList);
-
       const eventPersonaTypeList = EVENT.HALLOWEEN.personaTypeList;
       const filteredPersonaTypeList = data?.productTypes.filter((type) => !eventPersonaTypeList.includes(type.name));
-
-      // const eventPersonaTypeList = personaTypeList.filter((type) => type !== 'event');
 
       const onClick = (personaType: string) => {
         onSelect(personaType);
@@ -70,6 +64,17 @@ export const PersonaSearch = memo(
           <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} onOutsideClick={() => setIsOpen(false)}>
             <div className={containerStyle}>
               <h3 className={headingStyle}>Select Find Persona</h3>
+              <div className={selectedPersonaWrapperStyle}>
+                {selected && (
+                  <div className={selectedPersonaTagStyle}>
+                    <span>Selected Persona</span>
+                    <span>{selected}</span>
+                    <button onClick={() => onSelect('')}>
+                      <XIcon width={20} height={20} color="#ffffff5d" />
+                    </button>
+                  </div>
+                )}
+              </div>
               <div className={contentStyle}>
                 {Object.values(EVENT).map((event) => (
                   <>
@@ -112,20 +117,40 @@ const containerStyle = css({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: 40,
 
   '@media (max-width: 1200px)': {
     padding: 0,
   },
 });
+
 const headingStyle = css({
   textStyle: 'glyph48.bold',
   color: 'white',
   textAlign: 'center',
+  marginBottom: 40,
 
   '@media (max-width: 1200px)': {
     textStyle: 'glyph32.bold',
   },
+});
+
+const selectedPersonaWrapperStyle = css({
+  display: 'flex',
+  justifyContent: 'flex-start',
+  width: '100%',
+  marginBottom: 16,
+});
+
+const selectedPersonaTagStyle = css({
+  textStyle: 'glyph16.bold',
+  color: 'white.white_90',
+  borderRadius: 8,
+  background: 'rgba(255, 255, 255, 0.25)',
+  h: 36,
+  display: 'flex',
+  gap: 2,
+  alignItems: 'center',
+  px: 8,
 });
 
 const contentStyle = css({
