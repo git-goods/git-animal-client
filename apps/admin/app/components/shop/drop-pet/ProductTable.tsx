@@ -18,12 +18,20 @@ import { Checkbox } from '@/components/ui/checkbox';
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
-import { RenderPersonaItem } from '@gitanimals/api';
+import { BuyProductRequest, buyProductWithToken, Persona } from '@gitanimals/api';
 import { Box, Flex } from '_panda/jsx';
-import { useBuyProduct } from '@/hooks/query/action/useBuyProduct';
+import { getToken } from '@/utils/token';
+import { useMutation } from '@tanstack/react-query';
 
 function ProductBuyButton({ productId }: { productId: string }) {
-  const { mutate, isSuccess, isPending } = useBuyProduct();
+  const { mutate, isSuccess, isPending } = useMutation({
+    mutationFn: (request: BuyProductRequest) => {
+      const token = getToken();
+      if (!token) throw new Error('Token not found');
+
+      return buyProductWithToken({ ...request, token });
+    },
+  });
 
   const onClick = async () => {
     mutate({ productId });
@@ -36,7 +44,7 @@ function ProductBuyButton({ productId }: { productId: string }) {
   );
 }
 
-export const columns: ColumnDef<RenderPersonaItem>[] = [
+export const columns: ColumnDef<Persona>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -83,7 +91,7 @@ export const columns: ColumnDef<RenderPersonaItem>[] = [
   },
 ];
 
-function ProductDataTable({ data }: { data: RenderPersonaItem[] }) {
+function ProductDataTable({ data }: { data: Persona[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});

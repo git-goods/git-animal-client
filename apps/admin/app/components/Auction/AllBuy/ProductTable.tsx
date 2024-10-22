@@ -24,14 +24,22 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { STATIC_IMAGE_URL } from '@/constants/outlink';
-import { Product } from '@gitanimals/api';
+import { BuyProductRequest, buyProductWithToken, Product } from '@gitanimals/api';
 import { Box, Flex } from '_panda/jsx';
 import { icon } from '_panda/recipes';
-import { useBuyProduct } from '@/hooks/query/action/useBuyProduct';
+import { getToken } from '@/utils/token';
+import { useMutation } from '@tanstack/react-query';
+import { token } from '_panda/tokens';
 
 function ProductBuyButton({ productId }: { productId: string }) {
-  const { mutate, isSuccess, isPending } = useBuyProduct();
+  const { mutate, isSuccess, isPending } = useMutation({
+    mutationFn: (request: BuyProductRequest) => {
+      const token = getToken();
+      if (!token) throw new Error('Token not found');
 
+      return buyProductWithToken({ ...request, token });
+    },
+  });
   const onClick = async () => {
     mutate({ productId });
   };
