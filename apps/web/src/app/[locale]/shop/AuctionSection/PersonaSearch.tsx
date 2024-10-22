@@ -8,7 +8,7 @@ import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { LoaderIcon, SearchIcon, XIcon } from 'lucide-react';
 
-import { Modal } from '@/components/Modal/Modal2';
+import { Modal } from '@/components/Modal';
 import { useProductTypesQueryOptions } from '@/lib/react-query/auction';
 import { getPersonaImage } from '@/utils/image';
 
