@@ -33,7 +33,10 @@
     "choose-one-card": "Choose one card you want!",
     "close-notice-message": "! This will close.",
     "get-persona-success": "You have successfully drawn a pet!",
-    "get-persona-fail": "Failed to draw a pet."
+    "get-persona-fail": "Failed to draw a pet.",
+    "token-expired": "Token expired. Please sign in again.",
+    "contact-us": "Contact us",
+    "many-error-message": "If you continue to experience problems, please contact us."
   },
   "Shop": {
     "no-mobile-support": "Currently, mobile is not supported. Please connect to the desktop.",

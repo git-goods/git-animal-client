@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import { getServerAuth } from '@/auth';
 import type { ApiErrorScheme } from '@/exceptions/type';
+import { CustomException } from '@gitanimals/exception';
 
 interface CachedSession {
   accessToken: string;
@@ -77,6 +78,7 @@ export const interceptorResponseRejected = async (error: AxiosError<ApiErrorSche
     } else {
       axios.get('/api/auth/signOut');
     }
+    throw new CustomException('TOKEN_EXPIRED', 'token expired and sign out success');
   }
 
   // TODO: 403 처리

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
@@ -15,6 +15,9 @@ import { useTimer } from '@/hooks/useTimer';
 import { getAnimalTierInfo } from '@/utils/animals';
 
 import CardFlipGame from './CardFlipGame';
+import { CustomException } from '@gitanimals/exception';
+
+const GITHUB_ISSUE_URL = 'https://github.com/git-goods/gitanimals/issues';
 
 interface Props {
   onClose: () => void;
@@ -52,13 +55,31 @@ function OnePet({ onClose }: Props) {
       queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
       toast.success(t('get-persona-success'));
     } catch (error) {
-      toast.error(t('get-persona-fail'));
+      toast.error(t('get-persona-fail'), {
+        description:
+          error instanceof CustomException && error.code === 'TOKEN_EXPIRED'
+            ? t('token-expired')
+            : t('many-error-message'),
+        action: {
+          label: t('contact-us'),
+          onClick: () => {
+            window.location.href = GITHUB_ISSUE_URL;
+          },
+        },
+      });
 
       onClose();
+
+      if (error instanceof CustomException && error.code === 'TOKEN_EXPIRED') {
+        signOut();
+        return;
+      }
+
       sendMessageToErrorChannel(`<!here>
 🔥 펫 뽑기 실패 🔥
-Error Message: ${error}
+Error Message: ${error} / ${JSON.stringify(error)}
 User: ${data?.user.name}
+Token: ${data?.user.accessToken}
       `);
     }
   };
