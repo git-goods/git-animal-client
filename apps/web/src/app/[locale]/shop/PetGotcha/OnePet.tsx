@@ -77,9 +77,13 @@ function OnePet({ onClose }: Props) {
 
       sendMessageToErrorChannel(`<!here>
 🔥 펫 뽑기 실패 🔥
-Error Message: ${error} / ${JSON.stringify(error)}
+Error Message: ${error} 
+${JSON.stringify(error, null, 2)}
+
+
 User: ${data?.user.name}
 Token: ${data?.user.accessToken}
+User All: ${JSON.stringify(data?.user, null, 2)}
       `);
     }
   };

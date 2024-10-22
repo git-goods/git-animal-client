@@ -27,5 +27,6 @@ export const postGotcha = async (request?: PostGotchaRequest): Promise<PostGotch
     headers: {
       'Api-Version': '2',
     },
+    timeout: 150000,
   });
 };
