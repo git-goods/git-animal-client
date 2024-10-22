@@ -25,7 +25,7 @@ function MypageMyPets() {
 
   return (
     <div className={flex({ flexDir: 'column' })}>
-      <SelectedPetTable currentPersona={selectPersona} onReset={() => setSelectPersona(null)} />
+      <SelectedPetTable currentPersona={selectPersona} reset={() => setSelectPersona(null)} />
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('pet-list')}</h2>
 
@@ -39,10 +39,8 @@ function MypageMyPets() {
             name={name}
             selectPersona={selectPersona ? [selectPersona.id] : []}
             onSelectPersona={(persona) => setSelectPersona(persona)}
+            initSelectPersonas={(list) => setSelectPersona(list[0])}
             isExtend
-            initSelectPersonas={(list) => {
-              setSelectPersona(list[0]);
-            }}
           />
         </div>
       </section>
@@ -72,7 +70,7 @@ const selectPetContainerStyle = css({
   },
 });
 
-function SelectedPetTable({ currentPersona, onReset }: { currentPersona: Persona | null; onReset: () => void }) {
+function SelectedPetTable({ currentPersona, reset }: { currentPersona: Persona | null; reset: () => void }) {
   const queryClient = useQueryClient();
   const t = useTranslations('Shop');
 
@@ -81,7 +79,7 @@ function SelectedPetTable({ currentPersona, onReset }: { currentPersona: Persona
     onSuccess: (data) => {
       toast.success((t('pet-sold') as string).replace('[money]', data.givenPoint.toString()));
       queryClient.invalidateQueries({ queryKey: userQueryKeys.all() });
-      onReset();
+      reset();
     },
     onError: () => {
       toast.error(t('sell-product-fail'));

@@ -71,6 +71,11 @@ function FarmType() {
     } catch (error) {}
   };
 
+  const initSelectPersonas = (list: Persona[]) => {
+    const visiblePersonaIds = list.filter((persona) => persona.visible).map((persona) => persona.id);
+    setSelectPersona(visiblePersonaIds);
+  };
+
   return (
     <>
       <section className={farmSectionStyle}>
@@ -85,12 +90,7 @@ function FarmType() {
               loadingPersona={loadingPersona}
               selectPersona={selectPersona}
               onSelectPersona={onSelectPersona}
-              initSelectPersonas={(list) => {
-                // 현재 보여지는 펫들 처음부터 선택
-                const visiblePersonas = list.filter((persona) => persona.visible);
-                const visiblePersonaIds = visiblePersonas.map((persona) => persona.id);
-                setSelectPersona(visiblePersonaIds);
-              }}
+              initSelectPersonas={initSelectPersonas}
               isExtend={isExtend}
             />
           </section>

@@ -30,6 +30,8 @@ export const ProfileSection = memo(
 
       const { data } = useSuspenseQuery(useUserQueryOptions);
 
+      const isMypagePath = pathname === '/mypage';
+      const isMyPetPath = pathname === '/mypage/my-pet';
       return (
         <section>
           <div className={profileImageStyle}>
@@ -41,12 +43,12 @@ export const ProfileSection = memo(
           </div>
           <hr className={dividerStyle} />
           <div className={navStyle}>
-            <Link href="/mypage" className={cx(navItemStyle, pathname === '/mypage' && 'selected')}>
-              <ChevronRight size={20} color={pathname === '/mypage' ? '#FCFD9C' : '#FFFFFF80'} />
+            <Link href="/mypage" className={cx(navItemStyle, isMypagePath && 'selected')}>
+              <ChevronRight size={20} color={isMypagePath ? '#FCFD9C' : '#FFFFFF80'} />
               <span>{t('github-custom')}</span>
             </Link>
-            <Link href="/mypage/my-pet" className={cx(navItemStyle, pathname === '/mypage/my-pet' && 'selected')}>
-              <ChevronRight size={20} color={pathname === '/mypage/my-pet' ? '#FCFD9C' : '#FFFFFF80'} />
+            <Link href="/mypage/my-pet" className={cx(navItemStyle, isMyPetPath && 'selected')}>
+              <ChevronRight size={20} color={isMyPetPath ? '#FCFD9C' : '#FFFFFF80'} />
               <span>{t('my-pet')}</span>
             </Link>
           </div>
