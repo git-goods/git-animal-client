@@ -1,6 +1,7 @@
-import type { PropsWithChildren } from 'react';
+import { type PropsWithChildren, useRef } from 'react';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
+import { useBodyLock, useOutsideClick } from '@gitanimals/react';
 import { X } from 'lucide-react';
 
 import Portal from '../Portal';
@@ -8,14 +9,20 @@ import Portal from '../Portal';
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onOutsideClick?: () => void;
 }
 
-export function Modal({ children, isOpen, onClose }: PropsWithChildren<ModalProps>) {
+export function Modal({ children, isOpen, onClose, onOutsideClick }: PropsWithChildren<ModalProps>) {
+  const modalRef = useRef(null);
+
+  useOutsideClick(modalRef, () => onOutsideClick?.(), isOpen);
+  useBodyLock(isOpen);
+
   if (!isOpen) return null;
 
   return (
     <Portal>
-      <article className={modalStyle}>
+      <article className={modalStyle} ref={modalRef}>
         <div className={modalContentStyle}>
           <button className={closeButtonStyle} onClick={onClose}>
             <X size={40} color="#ffffffba" width={40} height={40} />

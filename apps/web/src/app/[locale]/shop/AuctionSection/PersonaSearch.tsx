@@ -52,7 +52,7 @@ export const PersonaSearch = memo(
             <SearchIcon color="rgba(255, 255, 255, 0.5)" width={20} height={20} />
           </button>
 
-          <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+          <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} onOutsideClick={() => setIsOpen(false)}>
             <div className={containerStyle}>
               <h3 className={headingStyle}>Select Find Persona</h3>
               <div className={contentStyle}>
