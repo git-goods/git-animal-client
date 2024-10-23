@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { ErrorPage } from '@/components/Error/ErrorPage';
 import { isDev } from '@/constants/env';
-import { usePathname, useRouter } from '@/i18n/routing';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function NotFound() {
   const pathname = usePathname();
