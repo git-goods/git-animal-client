@@ -14,10 +14,6 @@ export function DefaultTabRight() {
     <div className={divCss}>
       <OrderTypeSelect onSelect={(option) => onSearchOptionChange('orderType', option)} />
       <SortDirectionSelect onSelect={(option) => onSearchOptionChange('sortDirection', option)} />
-      {/* <PersonaType
-        onSelect={(option) => onSearchOptionChange('personaType', option)}
-        selected={searchOptions.personaType}
-      /> */}
       <PersonaSearch
         onSelect={(option) => onSearchOptionChange('personaType', option)}
         selected={searchOptions.personaType}

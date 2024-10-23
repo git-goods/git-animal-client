@@ -8,6 +8,9 @@ import { useEffect } from 'react';
  */
 export function useBodyLock(isLocked: boolean): void {
   useEffect(() => {
+    const originalStyle = window.getComputedStyle(document.body);
+    const originalOverflow = originalStyle.overflow;
+
     if (isLocked) {
       // 현재 스크롤 위치 저장
       const scrollY = window.scrollY;
@@ -20,13 +23,13 @@ export function useBodyLock(isLocked: boolean): void {
     } else {
       // body 스타일 제거
       const scrollY = document.body.style.top;
+      document.body.style.overflow = originalOverflow;
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
-      document.body.style.overflowY = '';
 
       // 스크롤 위치 복원
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      window.scrollTo(0, Number(scrollY.replace('px', '') || '0') * -1);
     }
   }, [isLocked]);
 }

@@ -11,6 +11,7 @@ import { LoaderIcon, SearchIcon, XIcon } from 'lucide-react';
 import { Modal } from '@/components/Modal';
 import { useProductTypesQueryOptions } from '@/lib/react-query/auction';
 import { getPersonaImage } from '@/utils/image';
+import React from 'react';
 
 const EVENT = {
   HALLOWEEN: {
@@ -77,7 +78,7 @@ export const PersonaSearch = memo(
               </div>
               <div className={contentStyle}>
                 {Object.values(EVENT).map((event) => (
-                  <>
+                  <React.Fragment key={event.label}>
                     <h4 className={personaListHeadingStyle}>{event.label}</h4>
                     <div className={personaListStyle}>
                       {event.personaTypeList.map((type) => (
@@ -86,7 +87,7 @@ export const PersonaSearch = memo(
                         </button>
                       ))}
                     </div>
-                  </>
+                  </React.Fragment>
                 ))}
                 {filteredPersonaTypeList && (
                   <>

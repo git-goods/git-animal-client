@@ -22,14 +22,14 @@ export function Modal({ children, isOpen, onClose, onOutsideClick }: PropsWithCh
 
   return (
     <Portal>
-      <article className={modalStyle} ref={modalRef}>
+      <div className={modalStyle} ref={modalRef}>
         <div className={modalContentStyle}>
           <button className={closeButtonStyle} onClick={onClose}>
             <X size={40} color="#ffffffba" width={40} height={40} />
           </button>
           {children}
         </div>
-      </article>
+      </div>
     </Portal>
   );
 }
