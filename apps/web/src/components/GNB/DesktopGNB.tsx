@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { css, cx } from '_panda/css';
 import { center, flex } from '_panda/patterns';
@@ -9,6 +8,7 @@ import { ChevronRightIcon } from 'lucide-react';
 import { getServerAuth } from '@/auth';
 import { AdaptiveLink } from '@/components/AdaptiveLink';
 import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
+import { Link } from '@/i18n/routing';
 import { checkIdDevAccessPossible } from '@/utils/dev';
 
 import { LoginButton, LogoutButton } from '../AuthButton';

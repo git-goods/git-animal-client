@@ -1,20 +1,20 @@
 'use client';
 
 import React, { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
+import { couponQueries, renderQueries } from '@gitanimals/react-query';
+import { wrap } from '@suspensive/react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import useEffectOnce from '@/hooks/lifeCycle/useEffectOnce';
+import { usePathname, useRouter } from '@/i18n/routing';
+import { trackEvent } from '@/lib/analytics';
 import { useClientSession } from '@/utils/clientAuth';
 import { sendLog } from '@/utils/log';
 
 import { NOTICE_LIST } from './notice';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { couponQueries, renderQueries } from '@gitanimals/react-query';
-import { useSession } from 'next-auth/react';
-import { wrap } from '@suspensive/react';
-import { trackEvent } from '@/lib/analytics';
 
 const generationNoticeKey = (noticeKey: string) => {
   return `notice_${noticeKey}`;
