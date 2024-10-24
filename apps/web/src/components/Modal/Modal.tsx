@@ -25,7 +25,7 @@ export function Modal({ children, isOpen, onClose, onOutsideClick }: PropsWithCh
       <div className={modalStyle} ref={modalRef}>
         <div className={modalContentStyle}>
           <button className={closeButtonStyle} onClick={onClose}>
-            <X size={40} color="#ffffffba" width={40} height={40} />
+            <X size={40} color="#ffffff80" width={40} height={40} />
           </button>
           {children}
         </div>

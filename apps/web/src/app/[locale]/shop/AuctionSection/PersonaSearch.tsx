@@ -18,7 +18,7 @@ const EVENT = {
     label: 'Halloween 2024 🎃',
     personaTypeList: ['SLIME_PUMPKIN_1', 'SLIME_PUMPKIN_2', 'GHOST', 'GHOST_KING', 'SCREAM', 'SCREAM_GHOST'],
   },
-} as const;
+};
 
 interface PersonaSearchProps {
   onSelect: (personaType?: string) => void;
@@ -32,82 +32,80 @@ const buttonWrapperStyle = center({
   borderRadius: 10,
 });
 
-export const PersonaSearch = memo(
-  wrap
-    .ErrorBoundary({ fallback: <></> })
-    .Suspense({
-      fallback: (
-        <button className={buttonWrapperStyle}>
-          <LoaderIcon />
+export const PersonaSearch = wrap
+  .ErrorBoundary({ fallback: <></> })
+  .Suspense({
+    fallback: (
+      <button className={buttonWrapperStyle}>
+        <LoaderIcon />
+      </button>
+    ),
+  })
+
+  .on(function PersonaSearch({ onSelect, selected }: PersonaSearchProps) {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const { data } = useSuspenseQuery(useProductTypesQueryOptions);
+
+    const eventPersonaTypeList = EVENT.HALLOWEEN.personaTypeList;
+    const filteredPersonaTypeList = data?.productTypes.filter((type) => !eventPersonaTypeList.includes(type.name));
+
+    const onClick = (personaType: string) => {
+      onSelect(personaType);
+      setIsOpen(false);
+    };
+
+    return (
+      <>
+        <button className={buttonWrapperStyle} onClick={() => setIsOpen(true)}>
+          <SearchIcon color="rgba(255, 255, 255, 0.5)" width={20} height={20} />
         </button>
-      ),
-    })
 
-    .on(function PersonaSearch({ onSelect, selected }: PersonaSearchProps) {
-      const [isOpen, setIsOpen] = useState(false);
-
-      const { data } = useSuspenseQuery(useProductTypesQueryOptions);
-
-      const eventPersonaTypeList = EVENT.HALLOWEEN.personaTypeList;
-      const filteredPersonaTypeList = data?.productTypes.filter((type) => !eventPersonaTypeList.includes(type.name));
-
-      const onClick = (personaType: string) => {
-        onSelect(personaType);
-        setIsOpen(false);
-      };
-
-      return (
-        <>
-          <button className={buttonWrapperStyle} onClick={() => setIsOpen(true)}>
-            <SearchIcon color="rgba(255, 255, 255, 0.5)" width={20} height={20} />
-          </button>
-
-          <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} onOutsideClick={() => setIsOpen(false)}>
-            <div className={containerStyle}>
-              <h3 className={headingStyle}>Select Find Persona</h3>
-              <div className={selectedPersonaWrapperStyle}>
-                {selected && (
-                  <div className={selectedPersonaTagStyle}>
-                    <span>Selected Persona</span>
-                    <span>{selected}</span>
-                    <button onClick={() => onSelect('')}>
-                      <XIcon width={20} height={20} color="#ffffff5d" />
-                    </button>
-                  </div>
-                )}
-              </div>
-              <div className={contentStyle}>
-                {Object.values(EVENT).map((event) => (
-                  <React.Fragment key={event.label}>
-                    <h4 className={personaListHeadingStyle}>{event.label}</h4>
-                    <div className={personaListStyle}>
-                      {event.personaTypeList.map((type) => (
-                        <button key={type} onClick={() => onClick(type)}>
-                          <Banner image={getPersonaImage(type)} selected={selected === type} />
-                        </button>
-                      ))}
-                    </div>
-                  </React.Fragment>
-                ))}
-                {filteredPersonaTypeList && (
-                  <>
-                    <h4 className={personaListHeadingStyle}>Other</h4>
-                    <div className={personaListStyle}>
-                      {filteredPersonaTypeList.map((type) => (
-                        <button key={type.name} onClick={() => onClick(type.name)}>
-                          <Banner image={getPersonaImage(type.name)} selected={selected === type.name} />
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                )}
-              </div>
+        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} onOutsideClick={() => setIsOpen(false)}>
+          <div className={containerStyle}>
+            <h3 className={headingStyle}>Select Find Persona</h3>
+            <div className={selectedPersonaWrapperStyle}>
+              {selected && (
+                <div className={selectedPersonaTagStyle}>
+                  <span>Selected Persona</span>
+                  <span>{selected}</span>
+                  <button onClick={() => onSelect('')}>
+                    <XIcon width={20} height={20} color="#ffffff5d" />
+                  </button>
+                </div>
+              )}
             </div>
-          </Modal>
-        </>
-      );
-    }),
-);
+            <div className={contentStyle}>
+              {Object.values(EVENT).map((event) => (
+                <React.Fragment key={event.label}>
+                  <h4 className={personaListHeadingStyle}>{event.label}</h4>
+                  <div className={personaListStyle}>
+                    {event.personaTypeList.map((type) => (
+                      <button key={type} onClick={() => onClick(type)}>
+                        <Banner image={getPersonaImage(type)} selected={selected === type} />
+                      </button>
+                    ))}
+                  </div>
+                </React.Fragment>
+              ))}
+              {filteredPersonaTypeList && (
+                <>
+                  <h4 className={personaListHeadingStyle}>Other</h4>
+                  <div className={personaListStyle}>
+                    {filteredPersonaTypeList.map((type) => (
+                      <button key={type.name} onClick={() => onClick(type.name)}>
+                        <Banner image={getPersonaImage(type.name)} selected={selected === type.name} />
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </Modal>
+      </>
+    );
+  });
 
 const containerStyle = css({
   width: '100%',
