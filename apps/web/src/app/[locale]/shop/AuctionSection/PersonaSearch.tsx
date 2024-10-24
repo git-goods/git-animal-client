@@ -18,7 +18,7 @@ const EVENT = {
     label: 'Halloween 2024 🎃',
     personaTypeList: ['SLIME_PUMPKIN_1', 'SLIME_PUMPKIN_2', 'GHOST', 'GHOST_KING', 'SCREAM', 'SCREAM_GHOST'],
   },
-};
+} as const;
 
 interface PersonaSearchProps {
   onSelect: (personaType?: string) => void;
