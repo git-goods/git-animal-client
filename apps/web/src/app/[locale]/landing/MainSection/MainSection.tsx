@@ -1,8 +1,8 @@
-import Link from 'next/link';
 import { Button } from '@gitanimals/ui-panda';
 
 import { getServerAuth } from '@/auth';
 import LoginButton from '@/components/LoginButton';
+import { Link } from '@/i18n/routing';
 
 import * as styles from './MainSection.style';
 import MainSlider from './MainSlider';

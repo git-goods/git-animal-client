@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Script from 'next/script';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 
 import { isProd } from '@/constants/env';
 import { MONITORING_KEY } from '@/constants/monitoring';
+import { usePathname } from '@/i18n/routing';
 import { initAnalytics, trackPageView } from '@/lib/analytics';
 
 function Monitoring() {
