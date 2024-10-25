@@ -11,12 +11,12 @@ import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { userQueryKeys } from '@/lib/react-query/user';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 import { SelectPersonaList } from '../PersonaList';
+import { userQueries } from '@gitanimals/react-query';
 
 function MypageMyPets() {
   const t = useTranslations('Mypage');
@@ -108,7 +108,7 @@ function SelectedPetTable({ currentPersona, reset }: { currentPersona: Persona |
     mutationFn: (personaId: string) => dropPet({ personaId }),
     onSuccess: (data) => {
       toast.success((t('pet-sold') as string).replace('[money]', data.givenPoint.toString()));
-      queryClient.invalidateQueries({ queryKey: userQueryKeys.all() });
+      queryClient.invalidateQueries({ queryKey: userQueries.allKey() });
       reset();
     },
     onError: () => {

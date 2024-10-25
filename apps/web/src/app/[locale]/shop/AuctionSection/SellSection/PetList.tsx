@@ -4,9 +4,9 @@ import type { Persona } from '@gitanimals/api';
 import { Banner } from '@gitanimals/ui-panda';
 import { useQuery } from '@tanstack/react-query';
 
-import { userAllPersonasQueryOptions } from '@/lib/react-query/user';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
+import { userQueries } from '@gitanimals/react-query';
 
 interface Props {
   selectedPersona?: Persona | null;
@@ -16,7 +16,7 @@ interface Props {
 function PetList(props: Props) {
   const { name: username } = useClientUser();
 
-  const { data } = useQuery(userAllPersonasQueryOptions(username));
+  const { data } = useQuery(userQueries.allPersonasOptions(username));
 
   const personas = data?.personas || [];
 

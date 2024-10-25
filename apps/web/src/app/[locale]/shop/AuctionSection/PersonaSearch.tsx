@@ -9,9 +9,9 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { LoaderIcon, SearchIcon, XIcon } from 'lucide-react';
 
 import { Modal } from '@/components/Modal';
-import { useProductTypesQueryOptions } from '@/lib/react-query/auction';
 import { getPersonaImage } from '@/utils/image';
 import React from 'react';
+import { auctionQueries } from '@gitanimals/react-query';
 
 const EVENT = {
   HALLOWEEN: {
@@ -45,7 +45,7 @@ export const PersonaSearch = wrap
   .on(function PersonaSearch({ onSelect, selected }: PersonaSearchProps) {
     const [isOpen, setIsOpen] = useState(false);
 
-    const { data } = useSuspenseQuery(useProductTypesQueryOptions);
+    const { data } = useSuspenseQuery(auctionQueries.productTypesOptions());
 
     const eventPersonaTypeList = EVENT.HALLOWEEN.personaTypeList;
     const filteredPersonaTypeList = data?.productTypes.filter((type) => !eventPersonaTypeList.includes(type.name));
