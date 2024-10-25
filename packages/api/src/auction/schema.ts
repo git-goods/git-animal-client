@@ -40,3 +40,10 @@ export type OrderType = z.infer<typeof OrderTypeSchema>;
 
 export const SortDirectionSchema = z.union([z.literal('ASC'), z.literal('DESC')]);
 export type SortDirection = z.infer<typeof SortDirectionSchema>;
+
+export const PaginationRequestSchema = z.object({
+  pageNumber: z.number().optional(),
+  count: z.number().optional(),
+});
+
+export type PaginationRequest = z.infer<typeof PaginationRequestSchema>;

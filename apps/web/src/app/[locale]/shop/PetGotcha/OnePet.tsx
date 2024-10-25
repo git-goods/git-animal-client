@@ -9,13 +9,13 @@ import { X } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
-import { USER_QUERY_KEY } from '@/apis/user/useGetUser';
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
 import { useTimer } from '@/hooks/useTimer';
 import { getAnimalTierInfo } from '@/utils/animals';
 
 import CardFlipGame from './CardFlipGame';
 import { CustomException } from '@gitanimals/exception';
+import { userQueries } from '@gitanimals/react-query';
 
 const GITHUB_ISSUE_URL = 'https://github.com/git-goods/gitanimals/issues';
 
@@ -52,7 +52,7 @@ function OnePet({ onClose }: Props) {
       setGetPersona(persona);
       startTimer();
 
-      queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
+      queryClient.invalidateQueries({ queryKey: userQueries.userKey() });
       toast.success(t('get-persona-success'));
     } catch (error) {
       toast.error(t('get-persona-fail'), {

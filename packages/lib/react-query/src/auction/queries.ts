@@ -1,5 +1,7 @@
 import {
   getHistory,
+  getMyProducts,
+  GetMyProductsRequest,
   GetProductHistoriesRequest,
   getProducts,
   GetProductsRequest,
@@ -31,5 +33,13 @@ export const auctionQueries = {
     queryOptions({
       queryKey: [...auctionQueries.historyKey(), request],
       queryFn: () => getHistory(request),
+    }),
+
+  // user
+  myProductsKey: () => [...auctionQueries.allKey(), 'my-products'],
+  myProductsOptions: (request?: GetMyProductsRequest) =>
+    queryOptions({
+      queryKey: [...auctionQueries.myProductsKey(), request],
+      queryFn: () => getMyProducts(request),
     }),
 };

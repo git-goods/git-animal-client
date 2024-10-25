@@ -7,6 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { useChangeProductPrice, useDeleteProduct } from '@/apis/auctions/useProduct';
+import { auctionQueries } from '@gitanimals/react-query';
 
 function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: () => void; productId?: string }) {
   const queryClient = useQueryClient();
@@ -17,7 +18,7 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
     onSuccess: () => {
       onClose();
       queryClient.invalidateQueries({
-        queryKey: ['my', 'products'], // TODO :getMyProductsQueryKey()로 변경
+        queryKey: auctionQueries.myProductsKey(),
       });
     },
   });
@@ -26,10 +27,11 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
     onSuccess: () => {
       onClose();
       queryClient.invalidateQueries({
-        queryKey: ['my', 'products'], // TODO :getMyProductsQueryKey()로 변경
+        queryKey: auctionQueries.myProductsKey(),
       });
     },
   });
+
   const onDelete = () => {
     if (!productId) return;
     // TODO: loading 추가

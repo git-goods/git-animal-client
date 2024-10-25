@@ -3,12 +3,13 @@ import { queryOptions } from '@tanstack/react-query';
 
 export const userQueries = {
   allKey: () => ['user'],
-  allPersonasKey: () => [...userQueries.allKey(), 'all-persona'],
+  userKey: () => userQueries.allKey(),
   userOptions: () =>
     queryOptions({
-      queryKey: userQueries.allKey(),
+      queryKey: userQueries.userKey(),
       queryFn: getUser,
     }),
+  allPersonasKey: () => [...userQueries.allKey(), 'all-persona'],
   allPersonasOptions: (username: string) =>
     queryOptions({
       queryKey: [...userQueries.allPersonasKey(), username],
