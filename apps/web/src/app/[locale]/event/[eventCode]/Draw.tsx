@@ -60,7 +60,7 @@ export const Draw = wrap.Suspense().on(() => {
             coupon: upperCaseEventCode,
           });
           setDrawedPet(res.result);
-          queryClient.invalidateQueries({ queryKey: couponQueries.getUserCouponsQueryKey });
+          queryClient.invalidateQueries({ queryKey: couponQueries.usedCouponsKey() });
         },
         onError: (error) => {
           toast.error(t('draw-error'));
@@ -96,7 +96,7 @@ export const Draw = wrap.Suspense().on(() => {
   })();
 
   const { data: usedCoupons, isLoading: isLoadingUsedCoupons } = useQuery({
-    ...couponQueries.getUsedCoupons(),
+    ...couponQueries.usedCouponsOptions(),
     enabled: Boolean(session),
   });
   const isUsedCoupon = usedCoupons?.coupons.some((coupon) => coupon.code === upperCaseEventCode);
