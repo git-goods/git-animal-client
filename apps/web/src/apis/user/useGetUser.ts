@@ -1,12 +1,6 @@
-// export const getUserByToken = async (token: string): Promise<UserSchema> =>
-//   get('/users', {
-//     headers: {
-//       Authorization: token,
-//     },
-//   });
 import { getUser, type UserResponse } from '@gitanimals/api';
-import type { UseQueryOptions, UseSuspenseQueryOptions } from '@tanstack/react-query';
-import { queryOptions, useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import type { UseSuspenseQueryOptions } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const USER_QUERY_KEY = 'user';
 
@@ -16,15 +10,3 @@ export const useGetSuspenseUser = (options?: UseSuspenseQueryOptions<UserRespons
     queryFn: getUser,
     ...options,
   });
-
-export const useGetUser = (options?: UseQueryOptions<UserResponse>) =>
-  useQuery<UserResponse>({
-    queryKey: [USER_QUERY_KEY],
-    queryFn: getUser,
-    ...options,
-  });
-
-// export const useUserQueryOptions = {
-//   queryKey: [USER_QUERY_KEY],
-//   queryFn: getUser,
-// };
