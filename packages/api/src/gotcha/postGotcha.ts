@@ -25,7 +25,7 @@ export type PostGotchaRequest = z.infer<typeof PostGotchaRequestSchema>;
 export const postGotcha = async (request?: PostGotchaRequest): Promise<PostGotchaResponse> => {
   return await safePost(PostGotchaResponseSchema)(`/gotchas`, request ? convertCamelObjToKebab(request) : undefined, {
     headers: {
-      'Api-Version': '2',
+      ApiVersion: '2',
     },
     timeout: 150000,
   });

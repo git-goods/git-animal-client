@@ -31,8 +31,8 @@
   "Gotcha": {
     "pet-gotcha-desc": "1,000 포인트로 S+ 등급 펫을 뽑으세요!",
     "choose-one-card": "원하시는 카드 하나를 골라주세요!",
-    "close-notice-message": "초 후에 닫힙니다.",
-    "get-persona-success": "펫을 성공적으로 뽑았습니다!",
+    "close-notice-message": "[count]초 후에 닫힙니다.",
+    "get-persona-success": "펫을 성공적으로 뽑았습니다!.",
     "get-persona-fail": "펫 뽑기에 실패했습니다.",
     "token-expired": "토큰이 만료되었습니다. 다시 로그인해주세요.",
     "contact-us": "문의하기",

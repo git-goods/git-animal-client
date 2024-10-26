@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
+import type { GotchaResult } from '@gitanimals/api';
 import { postGotcha } from '@gitanimals/api';
-import { CustomException } from '@gitanimals/exception';
 import { useQueryClient } from '@tanstack/react-query';
 import { X } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { USER_QUERY_KEY } from '@/apis/user/useGetUser';
-import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
 import { useTimer } from '@/hooks/useTimer';
-import { getAnimalTierInfo } from '@/utils/animals';
 
-import CardFlipGame from './CardFlipGame';
+import { TenCardFlipGame } from './TenCardFlipGame';
 
 const GITHUB_ISSUE_URL = 'https://github.com/git-goods/gitanimals/issues';
 
@@ -23,15 +20,11 @@ interface Props {
   onClose: () => void;
 }
 
-function OnePet({ onClose }: Props) {
+export function TenPet({ onClose }: Props) {
   const queryClient = useQueryClient();
   const t = useTranslations('Gotcha');
 
-  const [getPersona, setGetPersona] = useState<{
-    type: string;
-    dropRate: string;
-    tier: AnimalTierType;
-  } | null>(null);
+  const [getPersona, setGetPersona] = useState<GotchaResult[] | null>(null);
 
   const { count, isRunning, isFinished, startTimer, resetTimer } = useTimer(3);
 
@@ -39,52 +32,51 @@ function OnePet({ onClose }: Props) {
 
   const onAction = async () => {
     try {
-      const res = await postGotcha({ count: 1 });
+      const res = await postGotcha({ count: 10 });
 
-      const resultPersona = res.gotchaResults[0];
-      const tier = getAnimalTierInfo(Number(resultPersona.ratio.replace('%', '')));
-
-      const persona = {
-        type: resultPersona.name,
-        dropRate: resultPersona.ratio,
-        tier: tier,
-      };
-      setGetPersona(persona);
-      startTimer();
+      const resultPersona = res.gotchaResults;
+      setGetPersona(resultPersona);
 
       queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
       toast.success(t('get-persona-success'));
+      startTimer();
     } catch (error) {
-      toast.error(t('get-persona-fail'), {
-        description:
-          error instanceof CustomException && error.code === 'TOKEN_EXPIRED'
-            ? t('token-expired')
-            : t('many-error-message'),
-        action: {
-          label: t('contact-us'),
-          onClick: () => {
-            window.location.href = GITHUB_ISSUE_URL;
-          },
-        },
-      });
+      // 임시 로직
+      setGetPersona(
+        Array(10)
+          .fill(null)
+          .map(() => ({
+            name: 'LITTLE_CHICK',
+            ratio: '0.9',
+          })),
+      );
+      startTimer();
 
-      onClose();
-
-      if (error instanceof CustomException && error.code === 'TOKEN_EXPIRED') {
-        signOut();
-        return;
-      }
-
-      sendMessageToErrorChannel(`<!here>
-🔥 펫 뽑기 실패 🔥
-Error Message: ${error} 
-${JSON.stringify(error, null, 2)}
-
-
-User: ${data?.user.name}
-Token: ${data?.user.accessToken}
-User All: ${JSON.stringify(data?.user, null, 2)}
-      `);
+      //   toast.error(t('get-persona-fail'), {
+      //     description:
+      //       error instanceof CustomException && error.code === 'TOKEN_EXPIRED'
+      //         ? t('token-expired')
+      //         : t('many-error-message'),
+      //     action: {
+      //       label: t('contact-us'),
+      //       onClick: () => {
+      //         window.location.href = GITHUB_ISSUE_URL;
+      //       },
+      //     },
+      //   });
+      //   onClose();
+      //   if (error instanceof CustomException && error.code === 'TOKEN_EXPIRED') {
+      //     signOut();
+      //     return;
+      //   }
+      //   sendMessageToErrorChannel(`<!here>
+      //   🔥 펫 뽑기 실패 🔥
+      //   Error Message: ${error}
+      //   ${JSON.stringify(error, null, 2)}
+      //   User: ${data?.user.name}
+      //   Token: ${data?.user.accessToken}
+      //   User All: ${JSON.stringify(data?.user, null, 2)}
+      //         `);
     }
   };
 
@@ -102,27 +94,29 @@ User All: ${JSON.stringify(data?.user, null, 2)}
         <button className={closeButtonStyle} onClick={onClose}>
           <X size={40} color="white" />
         </button>
-        <h2 className={headingStyle}>{t('choose-one-card')}</h2>
-        <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} />
+        <h2 className={headingStyle}>{getPersona ? t('get-persona-success') : t('choose-one-card')}</h2>
         {isRunning && (
+          <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
+        )}
+        <div className={css({ width: '100%', mt: 60 })}>
+          <TenCardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} />
+        </div>
+        {/* <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} /> */}
+        {/* {isRunning && (
           <p className={noticeMessageStyle}>
             {count} {t('close-notice-message')}
           </p>
-        )}
-        {/* {isRunning && <p className={noticeMessageStyle}>{t('close-notice', { count: 3 })}</p>} */}
+        )} */}
       </div>
     </article>
   );
 }
 
-export default OnePet;
-
 const noticeMessageStyle = css({
-  position: 'absolute',
-  bottom: '100px',
   textStyle: 'glyph28.bold',
   color: 'white',
   textAlign: 'center',
+  mt: 12,
 });
 
 const modalStyle = center({
@@ -157,5 +151,4 @@ const headingStyle = css({
   textStyle: 'glyph48.bold',
   color: 'white',
   textAlign: 'center',
-  marginBottom: '60px',
 });
