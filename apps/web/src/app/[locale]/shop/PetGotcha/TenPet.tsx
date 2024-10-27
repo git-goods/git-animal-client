@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
 import type { GotchaResult } from '@gitanimals/api';
-import { postGotcha } from '@gitanimals/api';
+import { CustomException } from '@gitanimals/exception';
+import { usePostGotcha } from '@gitanimals/react-query';
 import { useQueryClient } from '@tanstack/react-query';
 import { X } from 'lucide-react';
 import { toast } from 'sonner';
 
+import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { USER_QUERY_KEY } from '@/apis/user/useGetUser';
 import { useTimer } from '@/hooks/useTimer';
 
@@ -29,55 +31,49 @@ export function TenPet({ onClose }: Props) {
   const { count, isRunning, isFinished, startTimer, resetTimer } = useTimer(3);
 
   const { data } = useSession();
-
-  const onAction = async () => {
-    try {
-      const res = await postGotcha({ count: 10 });
-
+  const {
+    mutate: postGotcha,
+    isPending,
+    isSuccess,
+  } = usePostGotcha({
+    onSuccess: async (res) => {
       const resultPersona = res.gotchaResults;
       setGetPersona(resultPersona);
 
       queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
-      toast.success(t('get-persona-success'));
       startTimer();
-    } catch (error) {
-      // 임시 로직
-      setGetPersona(
-        Array(10)
-          .fill(null)
-          .map(() => ({
-            name: 'LITTLE_CHICK',
-            ratio: '0.9',
-          })),
-      );
-      startTimer();
+    },
+    onError: (error) => {
+      toast.error(t('get-persona-fail'), {
+        description:
+          error instanceof CustomException && error.code === 'TOKEN_EXPIRED'
+            ? t('token-expired')
+            : t('many-error-message'),
+        action: {
+          label: t('contact-us'),
+          onClick: () => {
+            window.location.href = GITHUB_ISSUE_URL;
+          },
+        },
+      });
+      onClose();
+      if (error instanceof CustomException && error.code === 'TOKEN_EXPIRED') {
+        signOut();
+        return;
+      }
+      sendMessageToErrorChannel(`<!here>
+        🔥 펫 뽑기 실패 🔥
+        Error Message: ${error}
+        ${JSON.stringify(error, null, 2)}
+        User: ${data?.user.name}
+        Token: ${data?.user.accessToken}
+        User All: ${JSON.stringify(data?.user, null, 2)}
+          `);
+    },
+  });
 
-      //   toast.error(t('get-persona-fail'), {
-      //     description:
-      //       error instanceof CustomException && error.code === 'TOKEN_EXPIRED'
-      //         ? t('token-expired')
-      //         : t('many-error-message'),
-      //     action: {
-      //       label: t('contact-us'),
-      //       onClick: () => {
-      //         window.location.href = GITHUB_ISSUE_URL;
-      //       },
-      //     },
-      //   });
-      //   onClose();
-      //   if (error instanceof CustomException && error.code === 'TOKEN_EXPIRED') {
-      //     signOut();
-      //     return;
-      //   }
-      //   sendMessageToErrorChannel(`<!here>
-      //   🔥 펫 뽑기 실패 🔥
-      //   Error Message: ${error}
-      //   ${JSON.stringify(error, null, 2)}
-      //   User: ${data?.user.name}
-      //   Token: ${data?.user.accessToken}
-      //   User All: ${JSON.stringify(data?.user, null, 2)}
-      //         `);
-    }
+  const onAction = async () => {
+    postGotcha({ count: 10 });
   };
 
   useEffect(() => {
@@ -94,19 +90,15 @@ export function TenPet({ onClose }: Props) {
         <button className={closeButtonStyle} onClick={onClose}>
           <X size={40} color="white" />
         </button>
-        <h2 className={headingStyle}>{getPersona ? t('get-persona-success') : t('choose-one-card')}</h2>
+        <h2 className={headingStyle}>
+          {isPending ? t('gotcha-in-progress') : isSuccess ? t('get-persona-success') : t('choose-one-card')}
+        </h2>
         {isRunning && (
           <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
         )}
         <div className={css({ width: '100%', mt: 60 })}>
           <TenCardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} />
         </div>
-        {/* <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} /> */}
-        {/* {isRunning && (
-          <p className={noticeMessageStyle}>
-            {count} {t('close-notice-message')}
-          </p>
-        )} */}
       </div>
     </article>
   );

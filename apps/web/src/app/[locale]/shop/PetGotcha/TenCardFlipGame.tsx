@@ -63,15 +63,6 @@ export const TenCardFlipGame = ({
   const [flippedCards, setFlippedCards] = useState(Array(10).fill(false));
   const [isAnimating, setIsAnimating] = useState(false);
 
-  // 개별 카드 뒤집기
-  const handleCardClick = (index: number) => {
-    if (isAnimating) return;
-
-    const newFlippedCards = [...flippedCards];
-    newFlippedCards[index] = !newFlippedCards[index];
-    setFlippedCards(newFlippedCards);
-  };
-
   // 모든 카드 순차적으로 뒤집기
   const handleFlipAll = async () => {
     if (isAnimating) return;
@@ -149,12 +140,12 @@ const cardGridStyle = css({
 const rowStyle = css({
   display: 'grid',
   gridTemplateRows: '2',
-  gap: '6',
+  gap: '12px',
 });
 
 const cardRowStyle = css({
   display: 'flex',
-  gap: '6',
+  gap: '12px',
   justifyContent: 'center',
 });
 

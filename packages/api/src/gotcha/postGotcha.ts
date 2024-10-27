@@ -23,10 +23,14 @@ export type PostGotchaResponse = z.infer<typeof PostGotchaResponseSchema>;
 export type PostGotchaRequest = z.infer<typeof PostGotchaRequestSchema>;
 
 export const postGotcha = async (request?: PostGotchaRequest): Promise<PostGotchaResponse> => {
-  return await safePost(PostGotchaResponseSchema)(`/gotchas`, request ? convertCamelObjToKebab(request) : undefined, {
-    headers: {
-      ApiVersion: '2',
+  return await safePost(PostGotchaResponseSchema)(
+    `/gotchas?count=${request?.count}`,
+    request ? convertCamelObjToKebab(request) : undefined,
+    {
+      headers: {
+        'Api-Version': '2',
+      },
+      timeout: 150000,
     },
-    timeout: 150000,
-  });
+  );
 };
