@@ -6,7 +6,6 @@ import type { Product } from '@gitanimals/api';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { useBuyProduct, useDeleteProduct } from '@/apis/auctions/useProduct';
 import Pagination from '@/components/Pagination';
 import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
@@ -16,7 +15,7 @@ import { useClientUser } from '@/utils/clientAuth';
 import { useSearchOptions } from '../useSearchOptions';
 
 import { tableCss, tbodyCss, theadCss } from './table.styles';
-import { auctionQueries, userQueries } from '@gitanimals/react-query';
+import { auctionQueries, useBuyProduct, useDeleteProduct, userQueries } from '@gitanimals/react-query';
 
 function ProductTable() {
   const t = useTranslations('Shop');
@@ -112,7 +111,7 @@ function ProductTableRow({ product }: { product: Product }) {
     }
 
     if (product.paymentState === 'ON_SALE') {
-      buyProduct(id);
+      buyProduct({ productId: id });
     }
   };
 

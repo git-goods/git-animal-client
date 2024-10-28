@@ -6,8 +6,7 @@ import { Button, Modal } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { useChangeProductPrice, useDeleteProduct } from '@/apis/auctions/useProduct';
-import { auctionQueries } from '@gitanimals/react-query';
+import { auctionQueries, useChangeProductPrice, useDeleteProduct } from '@gitanimals/react-query';
 
 function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: () => void; productId?: string }) {
   const queryClient = useQueryClient();
