@@ -1,6 +1,3 @@
-// import type { UseQueryOptions } from '@tanstack/react-query';
-// import { useQuery } from '@tanstack/react-query';
-
 import z from 'zod';
 import { PaginationRequestSchema, PaginationSchema, ProductSchema } from './schema';
 import { safeGet } from '../_instance/safe';
