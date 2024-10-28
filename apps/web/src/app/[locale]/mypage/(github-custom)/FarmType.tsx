@@ -8,15 +8,13 @@ import { css } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
-import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals';
 import { useClientUser } from '@/utils/clientAuth';
-import { copyClipBoard } from '@/utils/copy';
 
 import { SelectPersonaList } from '../PersonaList';
 import { userQueries } from '@gitanimals/react-query';
+import { FarmPreview } from './FarmPreview';
 
 function FarmType() {
   const queryClient = useQueryClient();
@@ -58,18 +56,6 @@ function FarmType() {
     }
   };
 
-  const onLinkCopy = async () => {
-    try {
-      await copyClipBoard(
-        getGitanimalsFarmString({
-          username: name,
-        }),
-      );
-
-      toast.success('복사 성공!', { duration: 2000 });
-    } catch (error) {}
-  };
-
   const initSelectPersonas = (list: Persona[]) => {
     const visiblePersonaIds = list.filter((persona) => persona.visible).map((persona) => persona.id);
     setSelectPersona(visiblePersonaIds);
@@ -97,14 +83,7 @@ function FarmType() {
           </section>
         )}
 
-        <div>
-          <div className={farmStyle}>
-            <GitanimalsFarm imageKey={`${selectPersona.length}/${loading ? 'loading' : ''}`} sizes={[600, 300]} />
-          </div>
-          <Button onClick={onLinkCopy} mt={16} size="m">
-            {t('copy-link-title')}
-          </Button>
-        </div>
+        <FarmPreview selectPersona={selectPersona} loading={loading} />
       </section>
     </>
   );
