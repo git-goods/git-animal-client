@@ -16,6 +16,7 @@ import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
 import { tableCss, theadCss } from '../table.styles';
+import { auctionQueries, userQueries } from '@gitanimals/react-query';
 
 const MAX_PRICE = 100_000_000;
 
@@ -37,12 +38,8 @@ function SellInputRow({ item, initPersona }: Props) {
 
   const { mutate } = useRegisterProduct({
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['users', 'all-pet'], // TODO: getAllPetsQueryKey
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['my', 'products'], //getMyProductsQueryKey(),
-      });
+      queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
+      queryClient.invalidateQueries({ queryKey: auctionQueries.myProductsKey() });
 
       initPersona();
       resetPrice();

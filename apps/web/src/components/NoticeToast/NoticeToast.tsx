@@ -145,7 +145,7 @@ const HalloweenEventToast = wrap
     } = useSuspenseQuery(renderQueries.isPressStar({ login: session.user.name }));
 
     const { data: usedCoupons } = useSuspenseQuery({
-      ...couponQueries.getUsedCoupons(),
+      ...couponQueries.usedCouponsOptions(),
     });
     const isUsedHalloweenCoupon = usedCoupons?.coupons.some((coupon) => coupon.code === HALLOWEEN_EVENT_CODE);
     const isUsedStarBonusCoupon = usedCoupons?.coupons.some(

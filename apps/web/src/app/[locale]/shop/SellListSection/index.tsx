@@ -4,16 +4,15 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
 
-import { useGetMyProducts } from '@/apis/auctions/useGetMyProduct';
 import Pagination from '@/components/Pagination';
 import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
-import type { ProductType } from '@/schema/action';
-import type { PaginationSchema } from '@/schema/pagination';
 
 import { tableCss, tbodyCss, theadCss } from '../AuctionSection/table.styles';
 
 import EditModal from './EditModal';
+import { useQuery } from '@tanstack/react-query';
+import { auctionQueries } from '@gitanimals/react-query';
 
 const SELL_LIST_ACTION_OBJ = ACTION_BUTTON_OBJ['EDIT'];
 
@@ -23,20 +22,18 @@ function SellListSection() {
   const [editProductId, setEditProductId] = useState<string>();
   const [currentPage, setCurrentPage] = useState(0);
 
-  const { data } = useGetMyProducts<{ products: ProductType<'EDIT'>[]; pagination: PaginationSchema }>(
-    {
+  const { data } = useQuery({
+    ...auctionQueries.myProductsOptions({
       pageNumber: currentPage,
-    },
-    {
-      select: (data) => ({
-        ...data,
-        products: data.products.map((product) => {
-          return { ...product, paymentState: 'EDIT' };
-        }),
+    }),
+    select: (data) => ({
+      ...data,
+      products: data.products.map((product) => {
+        return { ...product, paymentState: 'EDIT' };
       }),
-      placeholderData: (prevData) => prevData,
-    },
-  );
+    }),
+    placeholderData: (prevData) => prevData,
+  });
 
   const onEditAction = (id: Product['id']) => {
     setEditProductId(id);

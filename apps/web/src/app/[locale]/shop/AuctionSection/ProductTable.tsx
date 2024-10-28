@@ -3,12 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { getProductsQueryKey, useGetProducts } from '@/apis/auctions/useGetProducts';
-import { useBuyProduct, useDeleteProduct } from '@/apis/auctions/useProduct';
-import { USER_QUERY_KEY } from '@/apis/user/useGetUser';
 import Pagination from '@/components/Pagination';
 import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
@@ -18,6 +15,7 @@ import { useClientUser } from '@/utils/clientAuth';
 import { useSearchOptions } from '../useSearchOptions';
 
 import { tableCss, tbodyCss, theadCss } from './table.styles';
+import { auctionQueries, useBuyProduct, useDeleteProduct, userQueries } from '@gitanimals/react-query';
 
 function ProductTable() {
   const t = useTranslations('Shop');
@@ -33,13 +31,11 @@ function ProductTable() {
     [searchOptions],
   );
 
-  const { data } = useGetProducts(
-    { pageNumber: currentPage, ...searchOptions },
-    {
-      enabled: Boolean(myId),
-      placeholderData: (prevData) => prevData,
-    },
-  );
+  const { data } = useQuery({
+    ...auctionQueries.productsOptions({ pageNumber: currentPage, ...searchOptions }),
+    enabled: Boolean(myId),
+    placeholderData: (prevData) => prevData,
+  });
 
   return (
     <>
@@ -80,10 +76,8 @@ function ProductTableRow({ product }: { product: Product }) {
       toast.success(t('buy-product-success'), {
         duration: 1000,
       });
-      queryClient.invalidateQueries({
-        queryKey: getProductsQueryKey(),
-      });
-      queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
+      queryClient.invalidateQueries({ queryKey: auctionQueries.productsKey() });
+      queryClient.invalidateQueries({ queryKey: userQueries.allKey() });
     },
     onSettled: () => {
       setLoading(false);
@@ -96,9 +90,7 @@ function ProductTableRow({ product }: { product: Product }) {
         duration: 1000,
       });
 
-      queryClient.invalidateQueries({
-        queryKey: getProductsQueryKey(),
-      });
+      queryClient.invalidateQueries({ queryKey: auctionQueries.productsKey() });
     },
     onSettled: () => {
       setLoading(false);
@@ -119,7 +111,7 @@ function ProductTableRow({ product }: { product: Product }) {
     }
 
     if (product.paymentState === 'ON_SALE') {
-      buyProduct(id);
+      buyProduct({ productId: id });
     }
   };
 

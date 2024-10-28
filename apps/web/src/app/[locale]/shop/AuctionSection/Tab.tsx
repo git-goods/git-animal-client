@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import React from 'react';
 import { css } from '_panda/css';
 
 import { Link } from '@/i18n/routing';
@@ -11,6 +10,7 @@ interface TabItemType {
   key: string;
   path: string;
 }
+
 const TAB: TabItemType[] = [
   {
     label: 'Products',
