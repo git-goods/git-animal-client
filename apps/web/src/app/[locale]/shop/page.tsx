@@ -2,9 +2,11 @@ import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
+import { ErrorBoundary } from '@suspensive/react';
 
 import GNB from '@/components/GNB/GNB';
 
+import { BackgroundSection } from './BackgroundSection/BackgroundSection';
 import { FloatingPointSection } from './FloatingPointSection/FloatingPointSection';
 import { AuctionSection } from './AuctionSection';
 import { PetGotcha } from './PetGotcha';
@@ -35,6 +37,9 @@ async function ShopPage({
         <main>
           <PetGotcha />
           <AuctionSection selectedTab={searchParamsTab} />
+          <ErrorBoundary fallback={<></>}>
+            <BackgroundSection />
+          </ErrorBoundary>
         </main>
       </div>
       <div className={noticeStyle}>{t('no-mobile-support')}</div>
