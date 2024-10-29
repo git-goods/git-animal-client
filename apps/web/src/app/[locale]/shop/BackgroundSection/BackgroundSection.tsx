@@ -1,17 +1,36 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
-import { shopQueries } from '@gitanimals/react-query';
+import { shopQueries, useBuyBackground } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { toast } from 'sonner';
 
 export const BackgroundSection = wrap
   .ErrorBoundary({ fallback: <></> })
   .Suspense({ fallback: <></> })
   .on(function BackgroundSection() {
+    const t = useTranslations('Shop.Background');
     const { data } = useQuery(shopQueries.backgroundOptions());
-    console.log('data: ', data);
+
+    const { mutate: buyBackground } = useBuyBackground({
+      onSuccess: () => {
+        toast.success(t('buy-success'));
+      },
+      onError: (error) => {
+        if (error instanceof AxiosError) {
+          toast.error(error.response?.data.message);
+        }
+        console.error('error: ', error);
+      },
+    });
+
+    const handleBuyBackground = (type: string) => {
+      buyBackground({ type });
+    };
 
     return (
       <div className={sectionCss}>
@@ -22,7 +41,9 @@ export const BackgroundSection = wrap
               {/* <Image src={item.image} alt={item.type} /> */}
               <div className={cardImageCss}> {item.type}</div>
               <div className={cardPointStyle}>{item.price} P</div>
-              <Button variant="secondary">Buy</Button>
+              <Button variant="secondary" onClick={() => handleBuyBackground(item.type)}>
+                Buy
+              </Button>
             </div>
           ))}
         </div>
