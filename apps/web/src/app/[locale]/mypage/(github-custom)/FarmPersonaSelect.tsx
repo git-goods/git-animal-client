@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Button } from '@gitanimals/ui-panda';
+import { Button, FullModal } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
@@ -21,7 +21,7 @@ export function FarmPersonaSelect({
   const [selectPersona, setSelectPersona] = useState<string[]>([]);
   const [loadingPersona, setLoadingPersona] = useState<string[]>([]);
   const [isExtend, setIsExtend] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(false);
   const { mutate } = useChangePersonaVisible({
     onMutate: () => {
       onChangeStatus('loading');
@@ -62,6 +62,7 @@ export function FarmPersonaSelect({
 
   return (
     <>
+      <button onClick={() => setIsOpen(true)}>open</button>
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('change-pet')}</h2>
         <Button className="extend-button" onClick={() => setIsExtend((prev) => !prev)}>
@@ -77,6 +78,10 @@ export function FarmPersonaSelect({
           isExtend={isExtend}
         />
       </section>
+      <FullModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <FullModal.CloseButton onClose={() => setIsOpen(false)} />
+        <FullModal.Heading>페르소나 선택</FullModal.Heading>
+      </FullModal>
     </>
   );
 }

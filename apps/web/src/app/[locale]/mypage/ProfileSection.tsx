@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
+import { userQueries } from '@gitanimals/react-query';
 import { Skeleton } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -12,7 +13,6 @@ import { ChevronRight } from 'lucide-react';
 
 import { Link, usePathname } from '@/i18n/routing';
 import { addNumberComma } from '@/utils/number';
-import { userQueries } from '@gitanimals/react-query';
 
 const profileSkeletonStyle = css({
   '& > div': {

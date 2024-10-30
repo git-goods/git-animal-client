@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import { css, cx } from '_panda/css';
+import { css } from '_panda/css';
 import { grid } from '_panda/patterns';
 
 import GNB from '@/components/GNB/GNB';
