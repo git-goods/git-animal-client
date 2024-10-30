@@ -6,21 +6,19 @@ import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { center, flex } from '_panda/patterns';
 import { dropPet, type Persona } from '@gitanimals/api';
+import { userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
-import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 import { SelectPersonaList } from '../PersonaList';
-import { userQueries } from '@gitanimals/react-query';
 
 function MypageMyPets() {
   const t = useTranslations('Mypage');
-  const { name } = useClientUser();
   const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
 
   return (
@@ -37,7 +35,6 @@ function MypageMyPets() {
             })}
           >
             <SelectPersonaList
-              name={name}
               selectPersona={selectPersona ? [selectPersona.id] : []}
               onSelectPersona={(persona) => setSelectPersona(persona)}
               isExtend

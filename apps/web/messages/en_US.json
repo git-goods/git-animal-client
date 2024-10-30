@@ -90,7 +90,8 @@
     "pet-list": "Pet list",
     "sell-to-other": "Tip. If you want to sell your pet to other users, please use the auction.",
     "my-pet": "My pet",
-    "github-custom": "Github Custom"
+    "github-custom": "Github Custom",
+    "invalid-size-error": "Invalid size"
   },
   "Event": {
     "Halloween": {
