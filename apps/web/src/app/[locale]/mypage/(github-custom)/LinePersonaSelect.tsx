@@ -7,16 +7,15 @@ import { Button } from '@gitanimals/ui-panda';
 
 import { SelectPersonaList } from '../PersonaList';
 
-export const LinePersonaSelect = ({
-  selectPersona,
-  onChangePersona,
-}: {
+interface Props {
   selectPersona: string | null;
   onChangePersona: (personaId: string) => void;
-}) => {
+}
+
+export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => {
   const t = useTranslations('Mypage');
 
-  const [isExtend, setIsExtend] = useState(false);
+  const [isExtend, setIsExtend] = useState<boolean>(false);
 
   return (
     <>
@@ -50,7 +49,7 @@ const selectPetContainerStyle = css({
   '& .heading': {
     textStyle: 'glyph18.bold',
     color: 'white',
-    marginBottom: '16px',
+    marginBottom: 16,
   },
   '& .extend-button': {
     position: 'absolute',

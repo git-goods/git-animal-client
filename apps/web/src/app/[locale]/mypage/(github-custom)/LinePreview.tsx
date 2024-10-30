@@ -76,8 +76,18 @@ function SizeInputList({ onApply }: { onApply: (width: number, height: number) =
       <h2 className="heading">{t('customize-size')}</h2>
       <div className={flex({ gap: 12 })}>
         <SizeInput value={width} onChange={(e) => setWidth(parseInt(e.target.value))} name="width" />
-        <SizeInput value={height} onChange={(e) => setHeight(parseInt(e.target.value))} name="height" />
-        <Button onClick={() => onApply(width, height)}>{t('apply-button')}</Button>
+        <SizeInput value={height} onChange={(e) => setHeight(parseInt(e.target.value))} name="height" />+{' '}
+        <Button
+          onClick={() => {
+            if (width <= 0 || height <= 0) {
+              toast.error(t('invalid-size-error'));
+              return;
+            }
+            onApply(width, height);
+          }}
+        >
+          {t('apply-button')}
+        </Button>
       </div>
     </div>
   );
@@ -103,6 +113,11 @@ function SizeInput(props: { value: number; onChange: (e: React.ChangeEvent<HTMLI
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
+
+    if (isNaN(value)) {
+      toast.error(t('invalid-size-error'));
+      return;
+    }
 
     if (value > 1000) {
       toast.error(t('line-set-error'));

@@ -86,7 +86,8 @@
     "pet-list": "펫 목록",
     "sell-to-other": "Tip. 다른 사용자에게 펫을 팔고싶다면, 경매장을 이용해주세요.",
     "my-pet": "내 펫",
-    "github-custom": "Github Custom"
+    "github-custom": "Github Custom",
+    "invalid-size-error": "유효하지 않은 사이즈"
   },
   "Event": {
     "Halloween": {
