@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
+import { userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -16,9 +17,8 @@ import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
 
 import { SelectPersonaList } from '../PersonaList';
-import { userQueries } from '@gitanimals/react-query';
 
-function FarmType() {
+export function FarmType() {
   const queryClient = useQueryClient();
   const t = useTranslations('Mypage');
 
@@ -76,55 +76,59 @@ function FarmType() {
   };
 
   return (
-    <>
-      <section className={farmSectionStyle}>
-        {name && (
-          <section className={selectPetContainerStyle}>
-            <h2 className="heading">{t('change-pet')}</h2>
-            <Button className="extend-button" onClick={() => setIsExtend((prev) => !prev)}>
-              {isExtend ? t('shrink-button') : t('extend-button')}
-            </Button>
-            <div className={selectPersonaListStyle}>
-              <SelectPersonaList
-                name={name}
-                loadingPersona={loadingPersona}
-                selectPersona={selectPersona}
-                onSelectPersona={onSelectPersona}
-                initSelectPersonas={initSelectPersonas}
-                isExtend={isExtend}
-              />
-            </div>
-          </section>
-        )}
-
-        <div>
-          <div className={farmStyle}>
-            <GitanimalsFarm imageKey={`${selectPersona.length}/${loading ? 'loading' : ''}`} sizes={[600, 300]} />
-          </div>
-          <Button onClick={onLinkCopy} mt={16} size="m">
-            {t('copy-link-title')}
-          </Button>
-        </div>
+    <div className={farmSectionStyle}>
+      <section className={selectPetContainerStyle}>
+        <h2 className="heading">{t('change-pet')}</h2>
+        <Button className="extend-button" onClick={() => setIsExtend((prev) => !prev)}>
+          {isExtend ? t('shrink-button') : t('extend-button')}
+        </Button>
       </section>
-    </>
+      <section className={isExtend ? flexGrowSectionStyle : ''}>
+        <SelectPersonaList
+          name={name}
+          loadingPersona={loadingPersona}
+          selectPersona={selectPersona}
+          onSelectPersona={onSelectPersona}
+          initSelectPersonas={initSelectPersonas}
+          isExtend={isExtend}
+        />
+      </section>
+
+      <div>
+        <div className={farmStyle}>
+          <GitanimalsFarm imageKey={`${selectPersona.length}/${loading ? 'loading' : ''}`} sizes={[600, 300]} />
+        </div>
+        <Button onClick={onLinkCopy} mt={16} size="m">
+          {t('copy-link-title')}
+        </Button>
+      </div>
+    </div>
   );
 }
 
-export default FarmType;
-
-const selectPersonaListStyle = css({
-  maxH: '400px',
-  overflowY: 'auto',
-  _mobile: {
-    maxH: '250px',
-  },
+const flexGrowSectionStyle = css({
+  flex: '1',
+  minHeight: '0',
+  overflow: 'auto',
+  display: 'flex',
+  flexWrap: 'wrap',
 });
 
 const farmSectionStyle = css({
   display: 'flex',
   flexDirection: 'column',
-  gap: '40px',
-  padding: '40px 0',
+  width: '100%',
+  maxHeight: '100%',
+  py: 40,
+  gap: 24,
+
+  _mobile: {
+    background: 'none',
+    maxHeight: 'auto',
+    height: 'auto',
+    overflowY: 'auto',
+    borderRadius: 0,
+  },
 });
 
 const farmStyle = css({ borderRadius: '12px', overflow: 'hidden', width: 'fit-content' });

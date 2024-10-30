@@ -41,46 +41,59 @@ export function OneType({}: Props) {
   };
 
   return (
-    <section className={sectionStyle}>
-      {name && (
-        <section className={selectPetContainerStyle}>
-          <h2 className="heading">{t('change-pet')}</h2>
-          <Button className="extend-button" onClick={() => setIsExtend((prev) => !prev)}>
-            {isExtend ? t('shrink-button') : t('extend-button')}
-          </Button>
+    <div className={sectionContianer}>
+      <section className={selectPetContainerStyle}>
+        <h2 className="heading">{t('change-pet')}</h2>
+        <Button className="extend-button" onClick={() => setIsExtend((prev) => !prev)}>
+          {isExtend ? t('shrink-button') : t('extend-button')}
+        </Button>
+      </section>
 
-          <div className={selectPersonaListStyle}>
-            <SelectPersonaList
-              name={name}
-              selectPersona={selectPersona ? [selectPersona] : []}
-              onSelectPersona={(persona) => setSelectPersona(persona.id)}
-              isExtend={isExtend}
-            />
-          </div>
-        </section>
-      )}
+      <section className={isExtend ? flexGrowSectionStyle : ''}>
+        <SelectPersonaList
+          name={name}
+          selectPersona={selectPersona ? [selectPersona] : []}
+          onSelectPersona={(persona) => setSelectPersona(persona.id)}
+          isExtend={isExtend}
+        />
+      </section>
 
       {/* TODO: 임시로 모바일에선 input 안보이게 처리 */}
       <SizeInputList onApply={(width, height) => setSizes({ width, height })} />
-      <div>
+      <section>
         <div className={lineContainerStyle} style={{ width: sizes.width, height: sizes.height }}>
           <GitanimalsLine sizes={[sizes.width, sizes.height]} petId={selectPersona} />
         </div>
         <Button onClick={onLinkCopy} mt={16} size="m">
           {t('copy-link-title')}
         </Button>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
 
-// TODO: 임시 방편
-const selectPersonaListStyle = css({
-  maxH: '400px',
-  overflowY: 'auto',
+const sectionContianer = css({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  maxHeight: '100%',
+  py: 40,
+
   _mobile: {
-    maxH: '250px',
+    background: 'none',
+    maxHeight: 'auto',
+    height: 'auto',
+    overflowY: 'auto',
+    borderRadius: 0,
   },
+});
+
+const flexGrowSectionStyle = css({
+  flex: '1',
+  minHeight: '0',
+  overflow: 'auto',
+  display: 'flex',
+  flexWrap: 'wrap',
 });
 
 const selectPetContainerStyle = css({
