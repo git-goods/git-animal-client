@@ -1,8 +1,10 @@
 'use client';
 
-import { memo, useState } from 'react';
+import { useState } from 'react';
+import React from 'react';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
+import { auctionQueries } from '@gitanimals/react-query';
 import { Banner } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -10,8 +12,6 @@ import { LoaderIcon, SearchIcon, XIcon } from 'lucide-react';
 
 import { Modal } from '@/components/Modal';
 import { getPersonaImage } from '@/utils/image';
-import React from 'react';
-import { auctionQueries } from '@gitanimals/react-query';
 
 const EVENT = {
   HALLOWEEN: {
