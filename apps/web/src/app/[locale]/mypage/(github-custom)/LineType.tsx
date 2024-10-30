@@ -11,8 +11,8 @@ export function LineType() {
 
   return (
     <div className={sectionContainer}>
-      <LinePersonaSelect selectPersona={selectPersona} onChangePersona={(personaId) => setSelectPersona(personaId)} />
       <LinePreview selectPersona={selectPersona} />
+      <LinePersonaSelect selectPersona={selectPersona} onChangePersona={(personaId) => setSelectPersona(personaId)} />
     </div>
   );
 }
