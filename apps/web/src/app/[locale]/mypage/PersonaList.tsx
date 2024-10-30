@@ -22,6 +22,7 @@ interface Props {
 export const personaListScrollStyle = css({
   '&::-webkit-scrollbar': {
     height: '4px',
+    width: '4px',
   },
   '&::-webkit-scrollbar-track': {
     backgroundColor: 'white.white_10',
