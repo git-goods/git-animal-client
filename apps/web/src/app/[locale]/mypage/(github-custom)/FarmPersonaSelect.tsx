@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
+import { flex } from '_panda/patterns';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
 import { FullModal } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
+import { ExpandIcon } from 'lucide-react';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
 
-import { SelectPersonaList } from '../PersonaList';
+import { personaListScrollStyle, SelectPersonaList } from '../PersonaList';
 
 export function FarmPersonaSelect({
   onChangeStatus,
@@ -21,6 +23,7 @@ export function FarmPersonaSelect({
   const [selectPersona, setSelectPersona] = useState<string[]>([]);
   const [loadingPersona, setLoadingPersona] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+
   const { mutate } = useChangePersonaVisible({
     onMutate: () => {
       onChangeStatus('loading');
@@ -60,55 +63,76 @@ export function FarmPersonaSelect({
   };
 
   return (
-    <>
-      <button onClick={() => setIsOpen(true)}>open</button>
+    <div>
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('change-pet')}</h2>
+        <button onClick={() => setIsOpen(true)}>
+          <ExpandIcon color="white" size={20} />
+        </button>
       </section>
-      <section className={isExtend ? flexGrowSectionStyle : ''}>
+      <section className={listStyle}>
         <SelectPersonaList
           loadingPersona={loadingPersona}
           selectPersona={selectPersona}
           onSelectPersona={onSelectPersona}
           initSelectPersonas={initSelectPersonas}
-          isExtend={false}
         />
       </section>
       <FullModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <FullModal.CloseButton onClose={() => setIsOpen(false)} />
         <FullModal.Content>
-          <FullModal.Heading>페르소나 선택</FullModal.Heading>
-          <SelectPersonaList
-            loadingPersona={loadingPersona}
-            selectPersona={selectPersona}
-            onSelectPersona={onSelectPersona}
-            initSelectPersonas={initSelectPersonas}
-            isExtend
-          />
+          <FullModal.Heading>{t('farm-type-select-pet')}</FullModal.Heading>
+          <div className={flexOverflowStyle}>
+            <SelectPersonaList
+              loadingPersona={loadingPersona}
+              selectPersona={selectPersona}
+              onSelectPersona={onSelectPersona}
+              initSelectPersonas={initSelectPersonas}
+            />
+          </div>
         </FullModal.Content>
       </FullModal>
-    </>
+    </div>
   );
 }
+const listStyle = cx(
+  flex({
+    gap: 4,
+    w: '100%',
+    h: '100%',
+    minH: '0',
+    overflowX: 'auto',
+    overflowY: 'hidden',
+    display: 'grid',
+    gridTemplateRows: 'repeat(2, 1fr)',
+    gridAutoColumns: 'max-content',
+    gridAutoFlow: 'column',
+  }),
+  personaListScrollStyle,
+);
 
-const flexGrowSectionStyle = css({
-  flex: '1',
-  minHeight: '0',
-  overflow: 'auto',
+const flexOverflowStyle = css({
   display: 'flex',
+  overflowY: 'auto',
+  overflowX: 'hidden',
+  width: '100%',
+  gap: 4,
+  height: '100%',
+  minHeight: '0',
   flexWrap: 'wrap',
+  justifyContent: 'center',
+  maxHeight: 'calc(100% - 100px)',
 });
 
 const selectPetContainerStyle = css({
   position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  marginBottom: '16px',
+
   '& .heading': {
     textStyle: 'glyph18.bold',
     color: 'white',
-    marginBottom: '16px',
-  },
-  '& .extend-button': {
-    position: 'absolute',
-    top: '-16px',
-    right: 0,
   },
 });

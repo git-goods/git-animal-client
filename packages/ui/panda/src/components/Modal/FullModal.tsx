@@ -88,7 +88,6 @@ const headingStyle = css({
   textStyle: 'glyph48.bold',
   color: 'white',
   textAlign: 'center',
-  marginBottom: 40,
 
   '@media (max-width: 1200px)': {
     textStyle: 'glyph32.bold',
@@ -106,6 +105,7 @@ const contentStyle = flex({
   alignItems: 'center',
   gap: '28px',
   color: 'white',
+  height: '100%',
 });
 
 export const FullModal = Object.assign(FullModalRoot, {

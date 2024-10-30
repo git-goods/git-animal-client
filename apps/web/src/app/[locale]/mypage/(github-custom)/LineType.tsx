@@ -23,6 +23,7 @@ const sectionContainer = css({
   width: '100%',
   maxHeight: '100%',
   py: 40,
+  gap: 40,
 
   _mobile: {
     background: 'none',
