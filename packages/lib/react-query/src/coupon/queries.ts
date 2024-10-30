@@ -2,10 +2,11 @@ import { getUsedCoupons } from '@gitanimals/api';
 import { queryOptions } from '@tanstack/react-query';
 
 export const couponQueries = {
-  getUserCouponsQueryKey: ['coupon', 'used'],
-  getUsedCoupons: () =>
+  allKey: () => ['coupon'],
+  usedCouponsKey: () => [...couponQueries.allKey(), 'used'],
+  usedCouponsOptions: () =>
     queryOptions({
-      queryKey: couponQueries.getUserCouponsQueryKey,
+      queryKey: couponQueries.usedCouponsKey(),
       queryFn: () => getUsedCoupons(),
     }),
 };

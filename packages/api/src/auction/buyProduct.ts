@@ -1,5 +1,3 @@
-// https://api.gitanimals.org/auctions/products/{product-id}
-
 import z from 'zod';
 import { HistoryProductSchema } from './schema';
 import { safePost } from '../_instance/safe';

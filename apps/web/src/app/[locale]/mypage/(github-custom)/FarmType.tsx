@@ -16,6 +16,7 @@ import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
 
 import { SelectPersonaList } from '../PersonaList';
+import { userQueries } from '@gitanimals/react-query';
 
 function FarmType() {
   const queryClient = useQueryClient();
@@ -39,9 +40,7 @@ function FarmType() {
       }
     },
     onSettled: async (res) => {
-      await queryClient.invalidateQueries({
-        queryKey: ['users', 'all-pet'],
-      });
+      await queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
       setLoading(false);
       setLoadingPersona((prev) => prev.filter((id) => id !== res?.id));
     },
@@ -91,12 +90,7 @@ function FarmType() {
                 loadingPersona={loadingPersona}
                 selectPersona={selectPersona}
                 onSelectPersona={onSelectPersona}
-                initSelectPersonas={(list) => {
-                  // 현재 보여지는 펫들 처음부터 선택
-                  const visiblePersonas = list.filter((persona) => persona.visible);
-                  const visiblePersonaIds = visiblePersonas.map((persona) => persona.id);
-                  setSelectPersona(visiblePersonaIds);
-                }}
+                initSelectPersonas={initSelectPersonas}
                 isExtend={isExtend}
               />
             </div>
