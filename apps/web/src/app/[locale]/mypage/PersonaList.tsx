@@ -10,10 +10,10 @@ import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banne
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 interface Props {
-  name: string;
   isExtend: boolean;
   selectPersona: string[];
   onSelectPersona: (persona: Persona) => void;
@@ -45,13 +45,13 @@ export const SelectPersonaList = wrap
   })
 
   .on(function SelectPersonaList({
-    name,
     isExtend,
     selectPersona,
     onSelectPersona,
     initSelectPersonas,
     loadingPersona,
   }: Props) {
+    const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
 
     // 초기 선택 로직, 외부에서 초기화 함수 전달
