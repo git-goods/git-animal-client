@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { css } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 
-import { STATIC_IMAGE_URL } from '@/constants/outlink';
+import { getPersonaImage } from '@/utils/image';
 
 interface Props {
   selected?: Persona;
@@ -15,7 +15,7 @@ interface Props {
 function SelectAnimal({ selected, setSelected, personaList, size = 196 }: Props) {
   const animals = personaList.map((persona) => ({
     key: persona.type,
-    image: `${STATIC_IMAGE_URL}/${persona.type}`,
+    image: getPersonaImage(persona.type),
     ...persona,
   }));
 

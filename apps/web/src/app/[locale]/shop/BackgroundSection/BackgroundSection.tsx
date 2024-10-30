@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { useTranslations } from 'next-intl';
@@ -8,6 +9,8 @@ import { wrap } from '@suspensive/react';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
+
+import { getBackgroundImage } from '@/utils/image';
 
 export const BackgroundSection = wrap
   .ErrorBoundary({ fallback: <></> })
@@ -38,8 +41,9 @@ export const BackgroundSection = wrap
         <div className={contentCss}>
           {data?.backgrounds.map((item) => (
             <div className={cardCss} key={item.type}>
-              {/* <Image src={item.image} alt={item.type} /> */}
-              <div className={cardImageCss}> {item.type}</div>
+              <div className={cardImageCss}>
+                <img src={getBackgroundImage(item.type)} alt={item.type} width={550} height={275} />
+              </div>
               <div className={cardPointStyle}>{item.price} P</div>
               <Button variant="secondary" onClick={() => handleBuyBackground(item.type)}>
                 Buy
@@ -87,6 +91,7 @@ const cardImageCss = css({
   width: '100%',
   aspectRatio: '2 / 1',
   bg: 'white',
+  position: 'relative',
 });
 
 const cardPointStyle = css({
