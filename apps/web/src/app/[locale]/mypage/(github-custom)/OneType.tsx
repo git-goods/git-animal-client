@@ -6,20 +6,18 @@ import { css } from '_panda/css';
 import { LinePersonaSelect } from './LinePersonaSelect';
 import { LinePreview } from './LinePreview';
 
-interface Props {}
-
-export function OneType({}: Props) {
+export function LineType() {
   const [selectPersona, setSelectPersona] = useState<string | null>(null);
 
   return (
-    <div className={sectionContianer}>
+    <div className={sectionContainer}>
       <LinePersonaSelect selectPersona={selectPersona} onChangePersona={(personaId) => setSelectPersona(personaId)} />
       <LinePreview selectPersona={selectPersona} />
     </div>
   );
 }
 
-const sectionContianer = css({
+const sectionContainer = css({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',

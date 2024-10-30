@@ -1,13 +1,14 @@
+import type { ReactNode } from 'react';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import { ReactNode } from 'react';
-import { FarmType } from './FarmType';
-import { OneType } from './OneType';
 import { updateUrlSearchParams } from '@gitanimals/util-common';
 
 import { Link } from '@/i18n/routing';
 
-type TabType = '1-type' | 'farm-type';
+import { FarmType } from './FarmType';
+import { LineType } from './OneType';
+
+type TabType = 'line-type' | 'farm-type';
 
 async function Mypage({
   searchParams,
@@ -16,18 +17,18 @@ async function Mypage({
     type?: TabType;
   };
 }) {
-  const selectedType = searchParams?.type ?? '1-type';
+  const selectedType = searchParams?.type ?? 'line-type';
 
   const MYPAGE_TAB_INNER_MAP: Record<TabType, ReactNode> = {
-    '1-type': <OneType />,
+    'line-type': <LineType />,
     'farm-type': <FarmType />,
   };
 
   return (
     <>
       <div className={tabListStyle}>
-        <Link href={`/mypage?${updateUrlSearchParams(searchParams, 'type', '1-type')}`}>
-          <button className={cx('tab-item', selectedType === '1-type' && 'selected')}>1 Type</button>
+        <Link href={`/mypage?${updateUrlSearchParams(searchParams, 'type', 'line-type')}`}>
+          <button className={cx('tab-item', selectedType === 'line-type' && 'selected')}>1 Type</button>
         </Link>
         <Link href={`/mypage?${updateUrlSearchParams(searchParams, 'type', 'farm-type')}`}>
           <button className={cx('tab-item', selectedType === 'farm-type' && 'selected')}>Farm Type</button>
