@@ -120,7 +120,6 @@ const farmSectionStyle = css({
   width: '100%',
   maxHeight: '100%',
   py: 40,
-  gap: 24,
 
   _mobile: {
     background: 'none',
@@ -131,7 +130,7 @@ const farmSectionStyle = css({
   },
 });
 
-const farmStyle = css({ borderRadius: '12px', overflow: 'hidden', width: 'fit-content' });
+const farmStyle = css({ borderRadius: '12px', overflow: 'hidden', width: 'fit-content', mt: 24 });
 
 const selectPetContainerStyle = css({
   position: 'relative',

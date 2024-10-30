@@ -110,17 +110,6 @@ const selectPetContainerStyle = css({
   },
 });
 
-const sectionStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '40px',
-  padding: '40px 0',
-  _mobile: {
-    gap: 28,
-    padding: '32px 0',
-  },
-});
-
 const lineContainerStyle = css({
   width: '100%',
   background: 'white',
@@ -157,6 +146,8 @@ function SizeInputList({ onApply }: { onApply: (width: number, height: number) =
 
 const sizeInputStyle = css({
   position: 'relative',
+  mt: 24,
+
   '& .heading': {
     textStyle: 'glyph18.bold',
     color: 'white',

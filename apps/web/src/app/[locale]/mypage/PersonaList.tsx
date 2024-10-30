@@ -4,13 +4,13 @@ import React, { useEffect, useMemo } from 'react';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import type { Persona } from '@gitanimals/api';
+import { userQueries } from '@gitanimals/react-query';
 import { Banner } from '@gitanimals/ui-panda';
 import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { getPersonaImage } from '@/utils/image';
-import { userQueries } from '@gitanimals/react-query';
 
 interface Props {
   name: string;
