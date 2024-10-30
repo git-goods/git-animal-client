@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
+import { userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -16,7 +17,6 @@ import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
 
 import { SelectPersonaList } from '../PersonaList';
-import { userQueries } from '@gitanimals/react-query';
 
 function FarmType() {
   const queryClient = useQueryClient();
