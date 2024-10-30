@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import { css } from '_panda/css';
-import { FarmPreview } from './FarmPreview';
+
 import { FarmPersonaSelect } from './FarmPersonaSelect';
+import { FarmPreview } from './FarmPreview';
 
 function FarmType() {
   const [selectPersona, setSelectPersona] = useState<string[]>([]);

@@ -23,7 +23,7 @@ const CardFlipGame = ({ onGetPersona, getPersona }: CardFlipGameProps) => {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
 
   const isShaking = selectedCard !== null && getPersona === null; // 카드가 선택되었지만 페르소나가 선택되지 않았을 때
-  const isFlipped = getPersona && selectedCard; // 뽑힌 페르소나가 정해졌을 때
+  const isFlipped = getPersona && selectedCard !== null; // 뽑힌 페르소나가 정해졌을 때
 
   const handleCardClick = (index: number) => {
     if (selectedCard === null) {
