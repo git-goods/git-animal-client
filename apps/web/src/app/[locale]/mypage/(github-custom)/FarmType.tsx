@@ -83,16 +83,16 @@ export function FarmType() {
         <Button className="extend-button" onClick={() => setIsExtend((prev) => !prev)}>
           {isExtend ? t('shrink-button') : t('extend-button')}
         </Button>
-        <section className={isExtend ? flexGrowSectionStyle : ''}>
-          <SelectPersonaList
-            name={name}
-            loadingPersona={loadingPersona}
-            selectPersona={selectPersona}
-            onSelectPersona={onSelectPersona}
-            initSelectPersonas={initSelectPersonas}
-            isExtend={isExtend}
-          />
-        </section>
+      </section>
+      <section className={isExtend ? flexGrowSectionStyle : ''}>
+        <SelectPersonaList
+          name={name}
+          loadingPersona={loadingPersona}
+          selectPersona={selectPersona}
+          onSelectPersona={onSelectPersona}
+          initSelectPersonas={initSelectPersonas}
+          isExtend={isExtend}
+        />
       </section>
 
       <div>
@@ -114,11 +114,22 @@ const flexGrowSectionStyle = css({
   display: 'flex',
   flexWrap: 'wrap',
 });
+
 const farmSectionStyle = css({
   display: 'flex',
   flexDirection: 'column',
-  gap: '40px',
-  padding: '40px 0',
+  width: '100%',
+  maxHeight: '100%',
+  py: 40,
+  gap: 24,
+
+  _mobile: {
+    background: 'none',
+    maxHeight: 'auto',
+    height: 'auto',
+    overflowY: 'auto',
+    borderRadius: 0,
+  },
 });
 
 const farmStyle = css({ borderRadius: '12px', overflow: 'hidden', width: 'fit-content' });
