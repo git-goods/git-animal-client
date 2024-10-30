@@ -3,13 +3,14 @@
 
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
-import { shopQueries, useBuyBackground } from '@gitanimals/react-query';
+import { renderUserQueries, shopQueries, useBuyBackground } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
+import { useClientUser } from '@/utils/clientAuth';
 import { getBackgroundImage } from '@/utils/image';
 
 export const BackgroundSection = wrap
@@ -17,7 +18,9 @@ export const BackgroundSection = wrap
   .Suspense({ fallback: <></> })
   .on(function BackgroundSection() {
     const t = useTranslations('Shop.Background');
+    const { name } = useClientUser();
     const { data } = useQuery(shopQueries.backgroundOptions());
+    const { data: myBackground } = useQuery(renderUserQueries.getMyBackground(name));
 
     const { mutate: buyBackground } = useBuyBackground({
       onSuccess: () => {
@@ -39,17 +42,25 @@ export const BackgroundSection = wrap
       <div className={sectionCss}>
         <h2 className={h2Css}>Background</h2>
         <div className={contentCss}>
-          {data?.backgrounds.map((item) => (
-            <div className={cardCss} key={item.type}>
-              <div className={cardImageCss}>
-                <img src={getBackgroundImage(item.type)} alt={item.type} width={550} height={275} />
+          {data?.backgrounds.map((item) => {
+            const isPurchased = myBackground?.backgrounds.some((bg) => bg.type === item.type);
+
+            if (isPurchased) {
+              return null;
+            }
+
+            return (
+              <div className={cardCss} key={item.type}>
+                <div className={cardImageCss}>
+                  <img src={getBackgroundImage(item.type)} alt={item.type} width={550} height={275} />
+                </div>
+                <div className={cardPointStyle}>{item.price} P</div>
+                <Button variant="secondary" onClick={() => handleBuyBackground(item.type)}>
+                  Buy
+                </Button>
               </div>
-              <div className={cardPointStyle}>{item.price} P</div>
-              <Button variant="secondary" onClick={() => handleBuyBackground(item.type)}>
-                Buy
-              </Button>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     );
