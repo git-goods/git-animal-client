@@ -62,7 +62,9 @@
     "prepare": "Prepare",
     "Background": {
       "buy-success": "Background purchased successfully",
-      "buy-fail": "Failed to purchase background"
+      "buy-fail": "Failed to purchase background",
+      "purchased": "Purchased",
+      "buy": "Buy"
     }
   },
   "NoticeToast": {

@@ -2,7 +2,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { renderUserQueries, shopQueries, useBuyBackground } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
@@ -34,6 +34,16 @@ export const BackgroundSection = wrap
       },
     });
 
+    const backgroundList = data?.backgrounds
+      .map((item) => ({
+        ...item,
+        isPurchased: myBackground?.backgrounds.some((bg) => bg.type === item.type),
+      }))
+      .sort((a, b) => {
+        if (a.isPurchased === b.isPurchased) return 0;
+        return a.isPurchased ? 1 : -1;
+      });
+
     const handleBuyBackground = (type: string) => {
       buyBackground({ type });
     };
@@ -42,25 +52,17 @@ export const BackgroundSection = wrap
       <div className={sectionCss}>
         <h2 className={h2Css}>Background</h2>
         <div className={contentCss}>
-          {data?.backgrounds.map((item) => {
-            const isPurchased = myBackground?.backgrounds.some((bg) => bg.type === item.type);
-
-            if (isPurchased) {
-              return null;
-            }
-
-            return (
-              <div className={cardCss} key={item.type}>
-                <div className={cardImageCss}>
-                  <img src={getBackgroundImage(item.type)} alt={item.type} width={550} height={275} />
-                </div>
-                <div className={cardPointStyle}>{item.price} P</div>
-                <Button variant="secondary" onClick={() => handleBuyBackground(item.type)}>
-                  Buy
-                </Button>
+          {backgroundList?.map((item) => (
+            <div className={cardCss} key={item.type}>
+              <div className={cx(cardImageCss, item.isPurchased && purchasedCardImageCss)}>
+                <img src={getBackgroundImage(item.type)} alt={item.type} width={550} height={275} />
               </div>
-            );
-          })}
+              <div className={cardPointStyle}>{item.price} P</div>
+              <Button variant="secondary" onClick={() => handleBuyBackground(item.type)} disabled={item.isPurchased}>
+                {item.isPurchased ? t('purchased') : t('buy')}
+              </Button>
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -103,6 +105,11 @@ const cardImageCss = css({
   aspectRatio: '2 / 1',
   bg: 'white',
   position: 'relative',
+});
+
+const purchasedCardImageCss = css({
+  filter: 'brightness(0.5)',
+  cursor: 'not-allowed',
 });
 
 const cardPointStyle = css({

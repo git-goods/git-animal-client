@@ -64,7 +64,9 @@
     "prepare": "준비중",
     "Background": {
       "buy-success": "배경 구매 완료!",
-      "buy-fail": "배경 구매에 실패했습니다."
+      "buy-fail": "배경 구매에 실패했습니다.",
+      "purchased": "구매됨",
+      "buy": "구매하기"
     }
   },
   "NoticeToast": {
