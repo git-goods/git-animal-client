@@ -1,9 +1,10 @@
 'use client';
 
 import { useMemo } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import type { OrderType, SortDirection } from '@gitanimals/api';
+
+import { usePathname, useRouter } from '@/i18n/routing';
 
 interface SearchOptions {
   personaType: string;

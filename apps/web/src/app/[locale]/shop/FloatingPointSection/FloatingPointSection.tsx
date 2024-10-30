@@ -5,15 +5,17 @@ import Image from 'next/image';
 import { css } from '_panda/css';
 import { wrap } from '@suspensive/react';
 
-import { useGetSuspenseUser } from '@/apis/user/useGetUser';
 import { addNumberComma } from '@/utils/number';
+import { userQueries } from '@gitanimals/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const FloatingPointSection = memo(
   wrap
     .Suspense({ fallback: null })
     .ErrorBoundary({ fallback: null })
     .on(function FloatingPointSection() {
-      const { data } = useGetSuspenseUser();
+      const { data } = useSuspenseQuery(userQueries.userOptions());
+      // const { data } = useGetSuspenseUser();
 
       return (
         <div className={divCss}>

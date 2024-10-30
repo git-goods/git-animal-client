@@ -1,8 +1,9 @@
 'use client';
 
 import type { ComponentProps } from 'react';
-import Link from 'next/link';
 import { css, cx } from '_panda/css';
+
+import { Link } from '@/i18n/routing';
 
 type ButtonColorType = 'primary' | 'secondary';
 

@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
+import { userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -39,9 +40,7 @@ export function FarmType() {
       }
     },
     onSettled: async (res) => {
-      await queryClient.invalidateQueries({
-        queryKey: ['users', 'all-pet'],
-      });
+      await queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
       setLoading(false);
       setLoadingPersona((prev) => prev.filter((id) => id !== res?.id));
     },

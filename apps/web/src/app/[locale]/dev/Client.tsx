@@ -1,10 +1,10 @@
 'use client';
 
-import Link from 'next/link';
 import { Box } from '_panda/jsx';
 import { flex } from '_panda/patterns';
 import { Button } from '@gitanimals/ui-panda';
 
+import { Link } from '@/i18n/routing';
 import { useClientSession } from '@/utils/clientAuth';
 import { getIsOnLoadSheet, sendLog } from '@/utils/log';
 

@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-import { useGetHistory } from '@/apis/auctions/useGetHistory';
 import Pagination from '@/components/Pagination';
 import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
@@ -11,6 +10,8 @@ import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import { useSearchOptions } from '../useSearchOptions';
 
 import { tableCss, tbodyCss, theadCss } from './table.styles';
+import { useQuery } from '@tanstack/react-query';
+import { auctionQueries } from '@gitanimals/react-query';
 
 const HISTORY_ACTION_OBJ = ACTION_BUTTON_OBJ['SELL_HISTORY'];
 
@@ -20,15 +21,10 @@ function HistoryTable() {
 
   const { searchOptions } = useSearchOptions();
 
-  const { data } = useGetHistory(
-    {
-      pageNumber: currentPage,
-      ...searchOptions,
-    },
-    {
-      placeholderData: (prevData) => prevData,
-    },
-  );
+  const { data } = useQuery({
+    ...auctionQueries.historyOptions({ pageNumber: currentPage, ...searchOptions }),
+    placeholderData: (prevData) => prevData,
+  });
 
   useEffect(
     function 옵션_변경시_페이지_초기화() {

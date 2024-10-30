@@ -1,39 +1,32 @@
-import type { PropsWithChildren } from 'react';
-import { useRef } from 'react';
+import { type PropsWithChildren, useRef } from 'react';
 import { css } from '_panda/css';
-
-import useOutsideClick from '@/hooks/useOutsideClick';
+import { center } from '_panda/patterns';
+import { useBodyLock, useOutsideClick } from '@gitanimals/react';
+import { X } from 'lucide-react';
 
 import Portal from '../Portal';
 
-export interface ModalProps {
+interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onOutsideClick?: () => void;
 }
 
-/**
- * @description Modal 컴포넌트
- * @param isOpen 모달 오픈 여부
- * @param onClose 모달 닫기
- * @param padding 모달 패딩 값 (default: 20px 24px)
- * @param children 모달 내부 컨텐츠
- * @deprecated
- */
-function Modal({ isOpen, children, onClose }: PropsWithChildren<ModalProps>) {
+export function Modal({ children, isOpen, onClose, onOutsideClick }: PropsWithChildren<ModalProps>) {
   const modalRef = useRef(null);
 
-  useOutsideClick({
-    ref: modalRef,
-    handler: () => {
-      onClose();
-    },
-  });
+  useOutsideClick(modalRef, () => onOutsideClick?.(), isOpen);
+  useBodyLock(isOpen);
 
   if (!isOpen) return null;
+
   return (
     <Portal>
-      <div className={modalOverlayStyle}>
-        <div className={modalContentStyle} key="modal" ref={modalRef}>
+      <div className={modalStyle} ref={modalRef}>
+        <div className={modalContentStyle}>
+          <button className={closeButtonStyle} onClick={onClose}>
+            <X size={40} color="#ffffff80" width={40} height={40} />
+          </button>
           {children}
         </div>
       </div>
@@ -41,23 +34,43 @@ function Modal({ isOpen, children, onClose }: PropsWithChildren<ModalProps>) {
   );
 }
 
-const modalOverlayStyle = css({
+const modalStyle = center({
   position: 'fixed',
   top: 0,
   left: 0,
+  right: 0,
+  bottom: 0,
   width: '100vw',
   height: '100vh',
-  background: 'rgba(0, 0, 0, 0.2)',
-  padding: '28px',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: '200', // TODO: zIndex 관리
+  backgroundColor: 'black.black_75',
+  zIndex: 3000,
+  padding: '120px 200px',
+
+  '@media (max-width: 1200px)': {
+    padding: '120px 60px',
+  },
+  _mobile: {
+    p: 0,
+  },
 });
 
-const modalContentStyle = css({
-  borderRadius: '30px',
-  width: 'fit-content',
+const modalContentStyle = center({
+  backgroundColor: 'gray.gray_150',
+  flexDirection: 'column',
+  width: '100%',
+  height: '100%',
+  borderRadius: '20px',
+  position: 'relative',
+  padding: '80px 100px',
+  color: 'white',
+
+  _mobile: {
+    borderRadius: 0,
+  },
 });
 
-export default Modal;
+const closeButtonStyle = css({
+  position: 'absolute',
+  right: '28px',
+  top: '28px',
+});
