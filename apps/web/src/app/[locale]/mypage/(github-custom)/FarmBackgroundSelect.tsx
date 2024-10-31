@@ -2,12 +2,12 @@
 import { useState } from 'react';
 import { css, cx } from '_panda/css';
 import type { Background } from '@gitanimals/api';
-import { renderUserQueries } from '@gitanimals/react-query';
+import { renderUserQueries, useChangeMyBackgroundByToken } from '@gitanimals/react-query';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { customScrollStyle } from '@/styles/scrollStyle';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientSession, useClientUser } from '@/utils/clientAuth';
 import { getBackgroundImage } from '@/utils/image';
 
 export const FarmBackgroundSelect = wrap
@@ -15,13 +15,35 @@ export const FarmBackgroundSelect = wrap
   .Suspense({
     fallback: <></>,
   })
-  .on(function FarmBackgroundSelect() {
+  .on(function FarmBackgroundSelect({
+    onChangeStatus,
+  }: {
+    onChangeStatus: (status: 'loading' | 'success' | 'error') => void;
+  }) {
+    const session = useClientSession();
     const { name } = useClientUser();
+
+    const [selectedBackground, setSelectedBackground] = useState<Background | null>(null);
+
     const {
       data: { backgrounds },
     } = useSuspenseQuery(renderUserQueries.getMyBackground(name));
+    const { mutate: changeMyBackground } = useChangeMyBackgroundByToken(session.data?.user.accessToken ?? '', {
+      onMutate: () => {
+        onChangeStatus('loading');
+      },
+      onSuccess: () => {
+        onChangeStatus('success');
+      },
+      onError: () => {
+        onChangeStatus('error');
+      },
+    }); // TODO: 추후 수정
 
-    const [selectedBackground, setSelectedBackground] = useState<Background | null>(null);
+    const handleChangeBackground = (background: Background) => {
+      changeMyBackground({ type: background.type });
+      setSelectedBackground(background);
+    };
 
     // TODO: 마우스로도 스크롤 움직일 수 있도록 개선 필요
     return (
@@ -32,7 +54,7 @@ export const FarmBackgroundSelect = wrap
               key={background.type}
               {...background}
               isSelected={selectedBackground?.type === background.type}
-              onClick={() => setSelectedBackground(background)}
+              onClick={() => handleChangeBackground(background)}
             />
           ))}
         </div>
