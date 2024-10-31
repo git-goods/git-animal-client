@@ -6,7 +6,7 @@ import { css, cx } from '_panda/css';
 import { renderUserQueries, shopQueries, useBuyBackground } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
@@ -21,7 +21,9 @@ export const BackgroundSection = wrap
   .on(function BackgroundSection() {
     const t = useTranslations('Shop.Background');
     const { name } = useClientUser();
-    const { data: shopBackground } = useQuery(shopQueries.backgroundOptions());
+    const {
+      data: { backgrounds },
+    } = useSuspenseQuery(shopQueries.backgroundOptions());
     const { data: myBackground } = useQuery(renderUserQueries.getMyBackground(name));
 
     const { mutate: buyBackground } = useBuyBackground({
@@ -36,7 +38,7 @@ export const BackgroundSection = wrap
       },
     });
 
-    const backgroundList = (shopBackground?.backgrounds ?? [])
+    const backgroundList = (backgrounds ?? [])
       .map((item) => ({
         ...item,
         isPurchased: myBackground?.backgrounds.some((bg) => bg.type === item.type),
