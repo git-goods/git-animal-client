@@ -14,7 +14,14 @@ import { useClientUser } from '@/utils/clientAuth';
 import { getBackgroundImage } from '@/utils/image';
 
 export const BackgroundSection = wrap
-  .ErrorBoundary({ fallback: <></> })
+  .ErrorBoundary({
+    fallback: (props) => (
+      <div>
+        <h2>An error occurred while loading backgrounds</h2>
+        <p>{props.error.message}</p>
+      </div>
+    ),
+  })
   .Suspense({ fallback: <></> })
   .on(function BackgroundSection() {
     const t = useTranslations('Shop.Background');
@@ -34,7 +41,7 @@ export const BackgroundSection = wrap
       },
     });
 
-    const backgroundList = data?.backgrounds
+    const backgroundList = (data?.backgrounds ?? [])
       .map((item) => ({
         ...item,
         isPurchased: myBackground?.backgrounds.some((bg) => bg.type === item.type),
