@@ -1,11 +1,11 @@
 import z from 'zod';
 import { safeRenderGet } from '../_instance/safe';
-import { BackgroundSchema } from './schema';
+import { RenderBackgroundSchema } from './schema';
 
 const GetMyBackgroundResponseSchema = z.object({
   id: z.string(),
   name: z.string(),
-  backgrounds: z.array(BackgroundSchema),
+  backgrounds: z.array(RenderBackgroundSchema),
 });
 
 export type GetMyBackgroundResponse = z.infer<typeof GetMyBackgroundResponseSchema>;

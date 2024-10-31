@@ -3,6 +3,7 @@
 
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
+import type { Background } from '@gitanimals/api';
 import { renderUserQueries, shopQueries, useBuyBackground } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
@@ -57,20 +58,61 @@ export const BackgroundSection = wrap
         <h2 className={h2Css}>Background</h2>
         <div className={contentCss}>
           {backgroundList?.map((item) => (
-            <div className={cardCss} key={item.type}>
-              <div className={cx(cardImageCss, item.isPurchased && purchasedCardImageCss)}>
-                <img src={getBackgroundImage(item.type)} alt={item.type} width={550} height={275} />
-              </div>
-              <div className={cardPointStyle}>{item.price} P</div>
-              <Button variant="secondary" onClick={() => handleBuyBackground(item.type)} disabled={item.isPurchased}>
-                {item.isPurchased ? t('purchased') : t('buy')}
-              </Button>
-            </div>
+            <BackgroundItem
+              key={item.type}
+              item={item}
+              onBuy={handleBuyBackground}
+              isPurchased={item.isPurchased ?? false}
+            />
           ))}
         </div>
       </div>
     );
   });
+
+const EVENT_BACKGROUND = 'HALLOWEEN_FIELD'; // TODO: 이벤트 배경 타입
+
+function BackgroundItem({
+  item,
+  onBuy,
+  isPurchased,
+}: {
+  item: Background;
+  onBuy: (type: string) => void;
+  isPurchased: boolean;
+}) {
+  const t = useTranslations('Shop.Background');
+
+  const isEvent = item.type === EVENT_BACKGROUND;
+
+  return (
+    <div className={cardCss} key={item.type}>
+      {isEvent && <div className={eventLabelCss}>{t('event-sale')}</div>}
+      <div className={cx(cardImageCss, isPurchased && purchasedCardImageCss)}>
+        <img src={getBackgroundImage(item.type)} alt={item.type} width={550} height={275} />
+      </div>
+      <div className={cardPointStyle}>{item.price} P</div>
+      <Button variant="secondary" onClick={() => onBuy(item.type)} disabled={isPurchased}>
+        {isPurchased ? t('purchased') : t('buy')}
+      </Button>
+    </div>
+  );
+}
+
+const eventLabelCss = css({
+  position: 'absolute',
+  top: 12,
+  left: 12,
+  zIndex: 10,
+  display: 'inline-flex',
+  padding: '6px 12px',
+  alignItems: 'center',
+  gap: '2px',
+  borderRadius: '8px',
+  background: '#FF3030',
+  textStyle: 'glyph18.bold',
+  color: 'white',
+});
 
 const sectionCss = css({
   position: 'relative',
@@ -102,6 +144,7 @@ const cardCss = css({
   flexDir: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  position: 'relative',
 });
 
 const cardImageCss = css({

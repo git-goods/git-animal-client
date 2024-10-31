@@ -64,7 +64,8 @@
       "buy-success": "Background purchased successfully",
       "buy-fail": "Failed to purchase background",
       "purchased": "Purchased",
-      "buy": "Buy"
+      "buy": "Buy",
+      "event-sale": "Event Limited Sale"
     }
   },
   "NoticeToast": {
