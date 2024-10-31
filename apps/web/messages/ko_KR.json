@@ -61,7 +61,13 @@
     "pet-sold": "[money]원에 펫 판매 완료!",
     "sell-error": "판매에 실패했습니다.",
     "many-error-message": "계속해서 문제가 발생한다면 Github로 문의 부탁드립니다.",
-    "prepare": "준비중"
+    "prepare": "준비중",
+    "Background": {
+      "buy-success": "배경 구매 완료!",
+      "buy-fail": "배경 구매에 실패했습니다.",
+      "purchased": "구매 완료",
+      "buy": "구매하기"
+    }
   },
   "NoticeToast": {
     "go": "GO!",

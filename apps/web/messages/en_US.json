@@ -59,7 +59,13 @@
     "delete-product-fail": "Failed to cancellation.",
     "edit": "Edit",
     "pet-sold": "Pet sold successfully for [money]!",
-    "prepare": "Prepare"
+    "prepare": "Prepare",
+    "Background": {
+      "buy-success": "Background purchased successfully",
+      "buy-fail": "Failed to purchase background",
+      "purchased": "Purchased",
+      "buy": "Buy"
+    }
   },
   "NoticeToast": {
     "go": "GO!",

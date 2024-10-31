@@ -5,6 +5,7 @@ import { center } from '_panda/patterns';
 
 import GNB from '@/components/GNB/GNB';
 
+import { BackgroundSection } from './BackgroundSection/BackgroundSection';
 import { FloatingPointSection } from './FloatingPointSection/FloatingPointSection';
 import { AuctionSection } from './AuctionSection';
 import { PetGotcha } from './PetGotcha';
@@ -35,6 +36,7 @@ async function ShopPage({
         <main>
           <PetGotcha />
           <AuctionSection selectedTab={searchParamsTab} />
+          <BackgroundSection />
         </main>
       </div>
       <div className={noticeStyle}>{t('no-mobile-support')}</div>

@@ -4,6 +4,8 @@ import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
 import { postGotcha } from '@gitanimals/api';
+import { CustomException } from '@gitanimals/exception';
+import { userQueries } from '@gitanimals/react-query';
 import { useQueryClient } from '@tanstack/react-query';
 import { X } from 'lucide-react';
 import { toast } from 'sonner';
@@ -14,8 +16,6 @@ import { useTimer } from '@/hooks/useTimer';
 import { getAnimalTierInfo } from '@/utils/animals';
 
 import CardFlipGame from './CardFlipGame';
-import { CustomException } from '@gitanimals/exception';
-import { userQueries } from '@gitanimals/react-query';
 
 const GITHUB_ISSUE_URL = 'https://github.com/git-goods/gitanimals/issues';
 
