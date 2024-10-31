@@ -10,6 +10,7 @@ import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals
 import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
 
+import { FarmBackgroundSelect } from './FarmBackgroundSelect';
 import { FarmPersonaSelect } from './FarmPersonaSelect';
 
 export function FarmType() {
@@ -17,7 +18,7 @@ export function FarmType() {
 
   const { name } = useClientUser();
 
-  const [selectPersonaStatus, setSelectPersonaStatus] = useState<'loading' | 'success' | 'error'>('loading');
+  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
 
   const onLinkCopy = async () => {
     try {
@@ -35,13 +36,14 @@ export function FarmType() {
     <div className={farmSectionStyle}>
       <div>
         <div className={farmStyle}>
-          <GitanimalsFarm imageKey={selectPersonaStatus} sizes={[600, 300]} />
+          <GitanimalsFarm imageKey={status} sizes={[600, 300]} />
         </div>
         <Button onClick={onLinkCopy} mt={16} size="m">
           {t('copy-link-title')}
         </Button>
       </div>
-      <FarmPersonaSelect onChangeStatus={setSelectPersonaStatus} />
+      <FarmPersonaSelect onChangeStatus={setStatus} />
+      <FarmBackgroundSelect onChangeStatus={setStatus} />
     </div>
   );
 }

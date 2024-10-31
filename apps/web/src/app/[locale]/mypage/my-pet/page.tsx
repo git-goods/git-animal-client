@@ -12,10 +12,11 @@ import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
+import { customScrollStyle } from '@/styles/scrollStyle';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
-import { personaListScrollStyle, SelectPersonaList } from '../PersonaList';
+import { SelectPersonaList } from '../PersonaList';
 
 function MypageMyPets() {
   const t = useTranslations('Mypage');
@@ -66,7 +67,7 @@ const listStyle = cx(
     flexWrap: 'wrap',
     justifyContent: 'center',
   }),
-  personaListScrollStyle,
+  customScrollStyle,
 );
 const subStyle = css({
   _mobile: {

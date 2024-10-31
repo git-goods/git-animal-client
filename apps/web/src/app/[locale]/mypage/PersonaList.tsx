@@ -19,21 +19,6 @@ interface Props {
   loadingPersona?: string[];
 }
 
-export const personaListScrollStyle = css({
-  '&::-webkit-scrollbar': {
-    height: '4px',
-    width: '4px',
-  },
-  '&::-webkit-scrollbar-track': {
-    backgroundColor: 'white.white_10',
-    borderRadius: '2px',
-  },
-  '&::-webkit-scrollbar-thumb': {
-    backgroundColor: 'white.white_25',
-    borderRadius: '2px',
-  },
-});
-
 export const SelectPersonaList = wrap
   .ErrorBoundary({
     // TODO: 공통 에러 컴포넌트로 대체

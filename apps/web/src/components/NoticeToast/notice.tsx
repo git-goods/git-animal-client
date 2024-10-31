@@ -51,4 +51,15 @@ export const NOTICE_LIST = [
     closeButton: false,
     visible: false,
   },
+  {
+    key: 'update-background',
+    label: 'update-background',
+    isAuth: true,
+    closeButton: false,
+    visible: true,
+    redirect: {
+      url: '/shop',
+      label: 'go',
+    },
+  },
 ];

@@ -67,7 +67,7 @@
   z-index: 500;
 }
 .toast-title {
-  white-space: break-spaces;
+  white-space: pre;
 }
 .toast-action-button {
   color: #000 !important;
@@ -89,4 +89,6 @@
     0 2px 4px #00000040,
     inset 0 -3px #c8c8c888,
     inset 0 3px #f1f1f1c4 !important;
+  width: fit-content;
+  gap: 12px;
 }

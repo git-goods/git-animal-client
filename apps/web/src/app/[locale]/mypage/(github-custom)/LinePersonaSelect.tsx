@@ -7,7 +7,9 @@ import { flex } from '_panda/patterns';
 import { FullModal } from '@gitanimals/ui-panda';
 import { ExpandIcon } from 'lucide-react';
 
-import { personaListScrollStyle, SelectPersonaList } from '../PersonaList';
+import { customScrollStyle } from '@/styles/scrollStyle';
+
+import { SelectPersonaList } from '../PersonaList';
 
 interface Props {
   selectPersona: string | null;
@@ -75,7 +77,7 @@ const listStyle = cx(
     gridAutoColumns: 'max-content',
     gridAutoFlow: 'column',
   }),
-  personaListScrollStyle,
+  customScrollStyle,
 );
 
 const selectPetContainerStyle = css({
