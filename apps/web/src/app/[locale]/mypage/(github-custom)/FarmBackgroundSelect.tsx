@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
 import { css, cx } from '_panda/css';
-import type { Background } from '@gitanimals/api';
+import type { RenderBackground } from '@gitanimals/api';
 import { renderUserQueries, useChangeMyBackgroundByToken } from '@gitanimals/react-query';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -23,7 +23,7 @@ export const FarmBackgroundSelect = wrap
     const session = useClientSession();
     const { name } = useClientUser();
 
-    const [selectedBackground, setSelectedBackground] = useState<Background | null>(null);
+    const [selectedBackground, setSelectedBackground] = useState<RenderBackground | null>(null);
 
     const {
       data: { backgrounds },
@@ -40,7 +40,7 @@ export const FarmBackgroundSelect = wrap
       },
     }); // TODO: 추후 수정
 
-    const handleChangeBackground = (background: Background) => {
+    const handleChangeBackground = (background: RenderBackground) => {
       changeMyBackground({ type: background.type });
       setSelectedBackground(background);
     };
@@ -62,7 +62,7 @@ export const FarmBackgroundSelect = wrap
     );
   });
 
-interface BackgroundItemProps extends Background {
+interface BackgroundItemProps extends RenderBackground {
   isSelected: boolean;
   onClick: () => void;
 }

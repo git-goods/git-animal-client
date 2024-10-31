@@ -1,8 +1,8 @@
 import z from 'zod';
 import { safeRenderPut } from '../_instance/safe';
-import { BackgroundSchema } from './schema';
+import { RenderBackgroundSchema } from './schema';
 
-const ChangeMyBackgroundRequestSchema = BackgroundSchema;
+const ChangeMyBackgroundRequestSchema = RenderBackgroundSchema;
 const ChangeMyBackgroundResponseSchema = z.any(); // TODO: 준영이와 이야기해서 응답값 정의하기
 
 export type ChangeMyBackgroundRequest = z.infer<typeof ChangeMyBackgroundRequestSchema>;
