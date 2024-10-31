@@ -58,7 +58,7 @@ export const NOTICE_LIST = [
     closeButton: false,
     visible: true,
     redirect: {
-      url: '/shop',
+      url: '/shop#background',
       label: 'go',
     },
   },
