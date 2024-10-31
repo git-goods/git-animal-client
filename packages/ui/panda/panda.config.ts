@@ -19,6 +19,11 @@ export default defineConfig({
       textStyles,
     },
   },
+  conditions: {
+    extend: {
+      mobile: '@media (max-width: 768px)',
+    },
+  },
 
   // utilities: {
   //   extend: utilities,

@@ -15,7 +15,7 @@ import { toast } from 'sonner';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
-import { SelectPersonaList } from '../PersonaList';
+import { personaListScrollStyle, SelectPersonaList } from '../PersonaList';
 
 function MypageMyPets() {
   const t = useTranslations('Mypage');
@@ -29,15 +29,17 @@ function MypageMyPets() {
           <h2 className="heading">{t('pet-list')}</h2>
 
           <div
-            className={css({
-              maxHeight: 'calc(100vh - 542px)',
-              overflow: 'auto',
-            })}
+            className={cx(
+              css({
+                maxHeight: 'calc(100vh - 542px)',
+                overflow: 'auto',
+              }),
+              listStyle,
+            )}
           >
             <SelectPersonaList
               selectPersona={selectPersona ? [selectPersona.id] : []}
               onSelectPersona={(persona) => setSelectPersona(persona)}
-              isExtend
               initSelectPersonas={(list) => {
                 setSelectPersona(list[0]);
               }}
@@ -53,6 +55,19 @@ function MypageMyPets() {
 
 export default MypageMyPets;
 
+const listStyle = cx(
+  flex({
+    gap: 4,
+    w: '100%',
+    h: '100%',
+    minH: '0',
+    overflowY: 'auto',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  }),
+  personaListScrollStyle,
+);
 const subStyle = css({
   _mobile: {
     display: 'none',

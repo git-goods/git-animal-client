@@ -11,8 +11,8 @@ export function LineType() {
 
   return (
     <div className={sectionContainer}>
-      <LinePersonaSelect selectPersona={selectPersona} onChangePersona={(personaId) => setSelectPersona(personaId)} />
       <LinePreview selectPersona={selectPersona} />
+      <LinePersonaSelect selectPersona={selectPersona} onChangePersona={(personaId) => setSelectPersona(personaId)} />
     </div>
   );
 }
@@ -23,6 +23,7 @@ const sectionContainer = css({
   width: '100%',
   maxHeight: '100%',
   py: 40,
+  gap: 40,
 
   _mobile: {
     background: 'none',

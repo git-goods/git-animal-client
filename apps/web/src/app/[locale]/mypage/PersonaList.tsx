@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo } from 'react';
-import { css, cx } from '_panda/css';
-import { flex } from '_panda/patterns';
+import { css } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
 import { Banner } from '@gitanimals/ui-panda';
@@ -14,19 +13,25 @@ import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 interface Props {
-  isExtend: boolean;
   selectPersona: string[];
   onSelectPersona: (persona: Persona) => void;
   initSelectPersonas?: (list: Persona[]) => void;
   loadingPersona?: string[];
 }
 
-const listStyle = flex({
-  gap: 4,
-  w: '100%',
-  overflow: 'auto',
-  minH: '0',
-  height: '100%',
+export const personaListScrollStyle = css({
+  '&::-webkit-scrollbar': {
+    height: '4px',
+    width: '4px',
+  },
+  '&::-webkit-scrollbar-track': {
+    backgroundColor: 'white.white_10',
+    borderRadius: '2px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: 'white.white_25',
+    borderRadius: '2px',
+  },
 });
 
 export const SelectPersonaList = wrap
@@ -36,21 +41,15 @@ export const SelectPersonaList = wrap
   })
   .Suspense({
     fallback: (
-      <div className={listStyle}>
+      <>
         {Array.from({ length: 6 }).map((_, index) => (
           <BannerSkeleton key={index} size="small" />
         ))}
-      </div>
+      </>
     ),
   })
 
-  .on(function SelectPersonaList({
-    isExtend,
-    selectPersona,
-    onSelectPersona,
-    initSelectPersonas,
-    loadingPersona,
-  }: Props) {
+  .on(function SelectPersonaList({ selectPersona, onSelectPersona, initSelectPersonas, loadingPersona }: Props) {
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
 
@@ -73,7 +72,7 @@ export const SelectPersonaList = wrap
     }, [data]);
 
     return (
-      <div className={cx(listStyle, css({ flexWrap: isExtend ? 'wrap' : 'nowrap' }))}>
+      <>
         {viewList.map((persona) => (
           <button
             key={`${persona.id}-${persona.visible}`}
@@ -89,6 +88,6 @@ export const SelectPersonaList = wrap
             />
           </button>
         ))}
-      </div>
+      </>
     );
   });

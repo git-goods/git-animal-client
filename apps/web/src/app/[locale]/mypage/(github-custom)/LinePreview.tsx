@@ -34,7 +34,7 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
   };
 
   return (
-    <>
+    <div className={sectionContainerStyle}>
       {/* TODO: 임시로 모바일에선 input 안보이게 처리 */}
       <SizeInputList onApply={(width, height) => setSizes({ width, height })} />
       <section>
@@ -45,9 +45,15 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
           {t('copy-link-title')}
         </Button>
       </section>
-    </>
+    </div>
   );
 }
+
+const sectionContainerStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 24,
+});
 
 const lineContainerStyle = css({
   width: '100%',
@@ -76,7 +82,7 @@ function SizeInputList({ onApply }: { onApply: (width: number, height: number) =
       <h2 className="heading">{t('customize-size')}</h2>
       <div className={flex({ gap: 12 })}>
         <SizeInput value={width} onChange={(e) => setWidth(parseInt(e.target.value))} name="width" />
-        <SizeInput value={height} onChange={(e) => setHeight(parseInt(e.target.value))} name="height" />+{' '}
+        <SizeInput value={height} onChange={(e) => setHeight(parseInt(e.target.value))} name="height" />
         <Button
           onClick={() => {
             if (width <= 0 || height <= 0) {

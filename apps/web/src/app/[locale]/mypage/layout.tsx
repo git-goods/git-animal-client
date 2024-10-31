@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import { css, cx } from '_panda/css';
+import { css } from '_panda/css';
 import { grid } from '_panda/patterns';
 
 import GNB from '@/components/GNB/GNB';
@@ -25,23 +24,24 @@ const mainStyle = grid({
   gridTemplateColumns: '222px 1fr',
   position: 'relative',
   zIndex: 1,
-  margin: '120px 200px 0',
+  padding: '120px 200px',
 
   '@media (max-width: 1400px)': {
-    margin: '120px 100px 0',
+    padding: '120px 100px',
   },
 
   // TODO : 중간 태블릿 정도도 대응하면 좋을 듯
   _mobile: {
     gridTemplateColumns: '1fr',
-    margin: '0 16px 0',
+    padding: '0 16px 0',
     gap: 0,
   },
 });
 
 const rightSectionStyle = css({
-  height: 'calc(100vh - 240px)',
-  overflow: 'hidden',
+  // height: 'calc(100vh - 240px)',
+  // overflow: 'hidden',
+  overflowX: 'hidden',
   width: '100%',
   borderRadius: 16,
   background: 'white.white_10',

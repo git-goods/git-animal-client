@@ -91,7 +91,9 @@
     "sell-to-other": "Tip. If you want to sell your pet to other users, please use the auction.",
     "my-pet": "My pet",
     "github-custom": "Github Custom",
-    "invalid-size-error": "Invalid size"
+    "invalid-size-error": "Invalid size",
+    "farm-type-select-pet": "Select a pet for Farm Type",
+    "line-type-select-pet": "Select a pet for Line Type"
   },
   "Event": {
     "Halloween": {

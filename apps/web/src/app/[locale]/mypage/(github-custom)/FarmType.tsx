@@ -1,7 +1,5 @@
 'use client';
 
-/* eslint-disable jsx-a11y/img-redundant-alt */
-/* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
@@ -35,7 +33,6 @@ export function FarmType() {
 
   return (
     <div className={farmSectionStyle}>
-      <FarmPersonaSelect onChangeStatus={setSelectPersonaStatus} />
       <div>
         <div className={farmStyle}>
           <GitanimalsFarm imageKey={selectPersonaStatus} sizes={[600, 300]} />
@@ -44,6 +41,7 @@ export function FarmType() {
           {t('copy-link-title')}
         </Button>
       </div>
+      <FarmPersonaSelect onChangeStatus={setSelectPersonaStatus} />
     </div>
   );
 }
@@ -54,6 +52,7 @@ const farmSectionStyle = css({
   width: '100%',
   maxHeight: '100%',
   py: 40,
+  gap: 40,
 
   _mobile: {
     background: 'none',
