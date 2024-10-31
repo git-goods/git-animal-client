@@ -10,6 +10,7 @@ import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals
 import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
 
+import { FarmBackgroundSelect } from './FarmBackgroundSelect';
 import { FarmPersonaSelect } from './FarmPersonaSelect';
 
 export function FarmType() {
@@ -42,6 +43,7 @@ export function FarmType() {
         </Button>
       </div>
       <FarmPersonaSelect onChangeStatus={setSelectPersonaStatus} />
+      <FarmBackgroundSelect />
     </div>
   );
 }

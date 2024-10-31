@@ -9,8 +9,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { ExpandIcon } from 'lucide-react';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
+import { customScrollStyle } from '@/styles/scrollStyle';
 
-import { personaListScrollStyle, SelectPersonaList } from '../PersonaList';
+import { SelectPersonaList } from '../PersonaList';
 
 export function FarmPersonaSelect({
   onChangeStatus,
@@ -108,7 +109,7 @@ const listStyle = cx(
     gridAutoColumns: 'max-content',
     gridAutoFlow: 'column',
   }),
-  personaListScrollStyle,
+  customScrollStyle,
 );
 
 const flexOverflowStyle = css({
