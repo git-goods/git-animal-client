@@ -4,6 +4,7 @@
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import type { Background } from '@gitanimals/api';
+import { useScrollHeading } from '@gitanimals/react';
 import { renderUserQueries, shopQueries, useBuyBackground } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
@@ -20,6 +21,9 @@ export const BackgroundSection = wrap
   })
   .Suspense({ fallback: <></> })
   .on(function BackgroundSection() {
+    // url에 '#background'라는 해쉬값이 있으면 아래 h2 태그로 스크롤되는 이벤트 처리
+    const backgroundRef = useScrollHeading('background');
+
     const t = useTranslations('Shop.Background');
     const { name } = useClientUser();
     const {
@@ -55,7 +59,9 @@ export const BackgroundSection = wrap
 
     return (
       <div className={sectionCss}>
-        <h2 className={h2Css}>Background</h2>
+        <h2 ref={backgroundRef} className={h2Css}>
+          Background
+        </h2>
         <div className={contentCss}>
           {backgroundList?.map((item) => (
             <BackgroundItem
