@@ -65,7 +65,7 @@
     "Background": {
       "buy-success": "배경 구매 완료!",
       "buy-fail": "배경 구매에 실패했습니다.",
-      "purchased": "구매됨",
+      "purchased": "구매 완료",
       "buy": "구매하기"
     }
   },

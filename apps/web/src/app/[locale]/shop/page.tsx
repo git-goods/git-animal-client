@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
-import { ErrorBoundary } from '@suspensive/react';
 
 import GNB from '@/components/GNB/GNB';
 
@@ -37,9 +36,7 @@ async function ShopPage({
         <main>
           <PetGotcha />
           <AuctionSection selectedTab={searchParamsTab} />
-          <ErrorBoundary fallback={<></>}>
-            <BackgroundSection />
-          </ErrorBoundary>
+          <BackgroundSection />
         </main>
       </div>
       <div className={noticeStyle}>{t('no-mobile-support')}</div>

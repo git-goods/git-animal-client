@@ -15,18 +15,13 @@ import { getBackgroundImage } from '@/utils/image';
 
 export const BackgroundSection = wrap
   .ErrorBoundary({
-    fallback: (props) => (
-      <div>
-        <h2>An error occurred while loading backgrounds</h2>
-        <p>{props.error.message}</p>
-      </div>
-    ),
+    fallback: () => <></>,
   })
   .Suspense({ fallback: <></> })
   .on(function BackgroundSection() {
     const t = useTranslations('Shop.Background');
     const { name } = useClientUser();
-    const { data } = useQuery(shopQueries.backgroundOptions());
+    const { data: shopBackground } = useQuery(shopQueries.backgroundOptions());
     const { data: myBackground } = useQuery(renderUserQueries.getMyBackground(name));
 
     const { mutate: buyBackground } = useBuyBackground({
@@ -41,7 +36,7 @@ export const BackgroundSection = wrap
       },
     });
 
-    const backgroundList = (data?.backgrounds ?? [])
+    const backgroundList = (shopBackground?.backgrounds ?? [])
       .map((item) => ({
         ...item,
         isPurchased: myBackground?.backgrounds.some((bg) => bg.type === item.type),
