@@ -3,8 +3,9 @@
 import { useBodyLock } from '@gitanimals/react';
 import { css } from '_panda/css';
 import { XIcon } from 'lucide-react';
-import { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { PropsWithChildren } from 'react';
 import { flex } from '_panda/patterns';
+import { useDialog } from './useDialog';
 
 interface FullModalProps {
   isOpen: boolean;
@@ -12,29 +13,9 @@ interface FullModalProps {
 }
 
 function FullModalRoot({ isOpen, onClose, children }: PropsWithChildren<FullModalProps>) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const { dialogRef } = useDialog({ isOpen, onClose });
 
-  const [isScrollLocked, setIsScrollLocked] = useState(isOpen);
-
-  useBodyLock(isScrollLocked);
-
-  useEffect(() => {
-    if (isOpen) {
-      dialogRef.current?.showModal();
-    } else {
-      dialogRef.current?.close();
-    }
-  }, [isOpen]);
-
-  useEffect(
-    function setOnCloseEventAtDialog() {
-      dialogRef.current?.addEventListener('close', () => {
-        setIsScrollLocked(false);
-        onClose?.();
-      });
-    },
-    [onClose],
-  );
+  useBodyLock(isOpen);
 
   return (
     <dialog className={dialogStyle} ref={dialogRef}>

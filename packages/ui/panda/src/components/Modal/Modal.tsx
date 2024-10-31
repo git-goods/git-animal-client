@@ -4,37 +4,18 @@ import { useBodyLock } from '@gitanimals/react';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { XIcon } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useDialog } from './useDialog';
+import { PropsWithChildren } from 'react';
 
 interface Props {
   isOpen: boolean;
   onClose?: () => void;
-  children: React.ReactNode;
 }
-export function Modal({ isOpen, onClose, children }: Props) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const [isScrollLocked, setIsScrollLocked] = useState(isOpen);
+export function Modal({ isOpen, onClose, children }: PropsWithChildren<Props>) {
+  const { dialogRef } = useDialog({ isOpen, onClose });
 
-  useBodyLock(isScrollLocked);
-
-  useEffect(() => {
-    if (isOpen) {
-      dialogRef.current?.showModal();
-    } else {
-      dialogRef.current?.close();
-    }
-  }, [isOpen]);
-
-  useEffect(
-    function setOnCloseEventAtDialog() {
-      dialogRef.current?.addEventListener('close', () => {
-        setIsScrollLocked(false);
-        onClose?.();
-      });
-    },
-    [onClose],
-  );
+  useBodyLock(isOpen);
 
   return (
     <dialog className={dialogStyle} ref={dialogRef}>
