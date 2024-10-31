@@ -12,6 +12,7 @@ import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
+import { trackEvent } from '@/lib/analytics';
 import { useClientUser } from '@/utils/clientAuth';
 import { getBackgroundImage } from '@/utils/image';
 
@@ -55,6 +56,7 @@ export const BackgroundSection = wrap
 
     const handleBuyBackground = (type: string) => {
       buyBackground({ type });
+      trackEvent('buy-background', { background: type });
     };
 
     return (
