@@ -22,11 +22,9 @@ GitAnimals 펫들을 쉽게 페이지에서 관리하고, 펫을 뽑을 수 있�
 
 <a href="https://github.com/devxb/gitanimals">
   <img
-
     src="https://render.gitanimals.org/lines/sumi-0011"
     width="600"
     height="120"
-
   />
 </a>
   
