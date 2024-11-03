@@ -18,6 +18,8 @@ import { getPersonaImage } from '@/utils/image';
 
 import { SelectPersonaList } from '../PersonaList';
 
+import MergePersona from './MergePersona';
+
 function MypageMyPets() {
   const t = useTranslations('Mypage');
   const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
@@ -170,6 +172,7 @@ function SelectedPetTable({ currentPersona, reset }: { currentPersona: Persona |
           </>
         )}
       </div>
+      <MergePersona />
     </div>
   );
 }
