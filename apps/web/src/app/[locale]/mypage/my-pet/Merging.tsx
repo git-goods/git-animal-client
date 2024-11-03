@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
+import type { PropsWithChildren } from 'react';
 import React, { useState } from 'react';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, AnimatePresence, motion } from 'framer-motion';
 
 const MergeAnimation = () => {
   const [isMerging, setIsMerging] = useState(false);
@@ -53,30 +54,11 @@ const MergeAnimation = () => {
           </motion.div>
 
           {/* First Item Clone */}
-          <AnimatePresence mode="wait">
-            {isMerging && !isLoading && !showResult && (
-              <motion.div
-                className={cloneWrapperStyle}
-                initial={{ opacity: 1, x: 0, rotate: -10, scale: 1 }}
-                animate={{
-                  x: 60,
-                  rotate: 0,
-                  scale: 1.1,
-                  transition: { duration: 0.4, ease: 'easeInOut' },
-                }}
-                exit={{
-                  x: 80,
-                  rotate: -10,
-                  scale: 1,
-                  opacity: 0,
-                }}
-              >
-                <div className={itemStyle}>
-                  <img src="https://placehold.co/96x96" alt="Level 1 Clone" className={imageStyle} />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <CloneItem isVisible={isMerging && !isLoading && !showResult} position="left">
+            <div className={itemStyle}>
+              <img src="https://placehold.co/96x96" alt="Level 1 Clone" className={imageStyle} />
+            </div>
+          </CloneItem>
         </div>
 
         {/* Plus Sign */}
@@ -103,31 +85,11 @@ const MergeAnimation = () => {
           </motion.div>
 
           {/* Second Item Clone */}
-          <AnimatePresence mode="wait">
-            {isMerging && !isLoading && !showResult && (
-              <motion.div
-                className={cloneWrapperStyle}
-                initial={{ opacity: 1, x: 0, rotate: 10, scale: 1 }}
-                animate={{
-                  x: -60,
-                  rotate: 0,
-                  scale: 1.1,
-                  opacity: [1, 0.5],
-                  transition: { duration: 0.4, ease: 'easeInOut' },
-                }}
-                exit={{
-                  x: -80,
-                  rotate: 10,
-                  scale: 1,
-                  opacity: 0,
-                }}
-              >
-                <div className={itemStyle}>
-                  <img src="https://placehold.co/96x96" alt="Level 3 Clone" className={imageStyle} />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <CloneItem isVisible={isMerging && !isLoading && !showResult} position="right">
+            <div className={itemStyle}>
+              <img src="https://placehold.co/96x96" alt="Level 3 Clone" className={imageStyle} />
+            </div>
+          </CloneItem>
         </div>
 
         {/* Arrow */}
@@ -362,3 +324,34 @@ const resetButtonStyle = css({
 });
 
 export default MergeAnimation;
+
+function CloneItem({
+  isVisible,
+  children,
+  position,
+}: PropsWithChildren<{ isVisible: boolean; position: 'left' | 'right' }>) {
+  return (
+    <AnimatePresence mode="wait">
+      {isVisible && (
+        <motion.div
+          className={cloneWrapperStyle}
+          initial={{ opacity: 1, x: 0, rotate: -10, scale: 1 }}
+          animate={{
+            x: position === 'left' ? 60 : -60,
+            rotate: 0,
+            scale: 1.1,
+            transition: { duration: 0.4, ease: 'easeInOut' },
+          }}
+          exit={{
+            x: position === 'left' ? 80 : -80,
+            rotate: position === 'left' ? -10 : 10,
+            scale: 1,
+            opacity: 0,
+          }}
+        >
+          {children}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
