@@ -3,7 +3,7 @@ import type { PropsWithChildren } from 'react';
 import React, { useState } from 'react';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
-import { AnimatePresence, AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const MergeAnimation = () => {
   const [isMerging, setIsMerging] = useState(false);
@@ -41,86 +41,44 @@ const MergeAnimation = () => {
       <div className={itemContainerStyle}>
         {/* First Item */}
         <div className={itemWrapperStyle}>
-          <motion.div
-            className={itemStyle}
-            animate={{
-              opacity: isMerging && !isLoading ? 0.5 : 1,
-              filter: isMerging && !isLoading ? 'grayscale(1)' : 'grayscale(0)',
-            }}
-            transition={{ duration: 0.5 }}
-          >
+          <MergeMaterialItemAnimation isMerged={isMerging && !isLoading}>
             <img src="https://placehold.co/96x96" alt="Level 1 Cat" className={imageStyle} />
             <div className={levelTextStyle}>Level 1</div>
-          </motion.div>
+          </MergeMaterialItemAnimation>
 
           {/* First Item Clone */}
-          <CloneItem isVisible={isMerging && !isLoading && !showResult} position="left">
+          <CloneItemAnimation isVisible={isMerging && !isLoading && !showResult} position="left">
             <div className={itemStyle}>
               <img src="https://placehold.co/96x96" alt="Level 1 Clone" className={imageStyle} />
             </div>
-          </CloneItem>
+          </CloneItemAnimation>
         </div>
 
-        {/* Plus Sign */}
-        <motion.div
-          className={plusSignStyle}
-          animate={{ opacity: isMerging && !isLoading ? 0 : 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          +
-        </motion.div>
+        <div className={plusSignStyle}>+</div>
 
         {/* Second Item */}
         <div className={itemWrapperStyle}>
-          <motion.div
-            className={itemStyle}
-            animate={{
-              opacity: isMerging && !isLoading ? 0.5 : 1,
-              filter: isMerging && !isLoading ? 'grayscale(1)' : 'grayscale(0)',
-            }}
-            transition={{ duration: 0.5 }}
-          >
+          <MergeMaterialItemAnimation isMerged={isMerging && !isLoading}>
             <img src="https://placehold.co/96x96" alt="Level 3 Fish" className={imageStyle} />
             <div className={levelTextStyle}>Level 3</div>
-          </motion.div>
+          </MergeMaterialItemAnimation>
 
           {/* Second Item Clone */}
-          <CloneItem isVisible={isMerging && !isLoading && !showResult} position="right">
+          <CloneItemAnimation isVisible={isMerging && !isLoading && !showResult} position="right">
             <div className={itemStyle}>
               <img src="https://placehold.co/96x96" alt="Level 3 Clone" className={imageStyle} />
             </div>
-          </CloneItem>
+          </CloneItemAnimation>
         </div>
 
         {/* Arrow */}
         <div className={arrowStyle}>=</div>
 
         {/* Result Item */}
-        <motion.div
-          className={resultItemStyle}
-          initial={{ opacity: 0, scale: 0.7 }}
-          animate={{
-            opacity: showResult ? 1 : 0,
-            scale: showResult ? 1 : 0.7,
-          }}
-          transition={{
-            duration: 0.3,
-            ease: 'easeOut',
-          }}
-        >
+        <ResultItemAnimation isVisible={showResult}>
           <img src="https://placehold.co/96x96" alt="Level 4 Result" className={imageStyle} />
           <div className={levelTextStyle}>Level 4</div>
-
-          {/* Result Flash Effect */}
-          {showResult && (
-            <motion.div
-              className={flashEffectStyle}
-              initial={{ opacity: 0.8 }}
-              animate={{ opacity: 0 }}
-              transition={{ duration: 0.6 }}
-            />
-          )}
-        </motion.div>
+        </ResultItemAnimation>
       </div>
 
       {/* Impact Lines */}
@@ -325,7 +283,7 @@ const resetButtonStyle = css({
 
 export default MergeAnimation;
 
-function CloneItem({
+function CloneItemAnimation({
   isVisible,
   children,
   position,
@@ -353,5 +311,51 @@ function CloneItem({
         </motion.div>
       )}
     </AnimatePresence>
+  );
+}
+
+function MergeMaterialItemAnimation({ isMerged }: PropsWithChildren<{ isMerged: boolean }>) {
+  return (
+    <motion.div
+      className={itemStyle}
+      animate={{
+        opacity: isMerged ? 0.5 : 1,
+        filter: isMerged ? 'grayscale(1)' : 'grayscale(0)',
+      }}
+      transition={{ duration: 0.5 }}
+    >
+      <img src="https://placehold.co/96x96" alt="Level 3 Fish" className={imageStyle} />
+      <div className={levelTextStyle}>Level 3</div>
+    </motion.div>
+  );
+}
+
+function ResultItemAnimation({ isVisible }: PropsWithChildren<{ isVisible: boolean }>) {
+  return (
+    <motion.div
+      className={resultItemStyle}
+      initial={{ opacity: 0, scale: 0.7 }}
+      animate={{
+        opacity: isVisible ? 1 : 0,
+        scale: isVisible ? 1 : 0.7,
+      }}
+      transition={{
+        duration: 0.3,
+        ease: 'easeOut',
+      }}
+    >
+      <img src="https://placehold.co/96x96" alt="Level 4 Result" className={imageStyle} />
+      <div className={levelTextStyle}>Level 4</div>
+
+      {/* Result Flash Effect */}
+      {isVisible && (
+        <motion.div
+          className={flashEffectStyle}
+          initial={{ opacity: 0.8 }}
+          animate={{ opacity: 0 }}
+          transition={{ duration: 0.6 }}
+        />
+      )}
+    </motion.div>
   );
 }
