@@ -37,7 +37,8 @@
     "token-expired": "Token expired. Please sign in again.",
     "contact-us": "Contact us",
     "many-error-message": "If you continue to experience problems, please contact us.",
-    "gotcha-in-progress": "Drawing in progress. Please wait a moment."
+    "gotcha-in-progress": "Drawing in progress. Please wait a moment.",
+    "click-card-to-flip": "Click the card to flip!"
   },
   "Shop": {
     "no-mobile-support": "Currently, mobile is not supported. Please connect to the desktop.",

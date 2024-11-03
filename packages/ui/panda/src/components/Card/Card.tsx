@@ -73,6 +73,7 @@ export const container = css({
   position: 'relative',
   height: '100%',
   width: '100%',
+  color: 'black',
 });
 
 export const bgImage = css({
