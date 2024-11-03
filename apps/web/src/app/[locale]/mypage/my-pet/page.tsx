@@ -6,21 +6,20 @@ import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { center, flex } from '_panda/patterns';
 import { dropPet, type Persona } from '@gitanimals/api';
+import { userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
+import { customScrollStyle } from '@/styles/scrollStyle';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
-import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 import { SelectPersonaList } from '../PersonaList';
-import { userQueries } from '@gitanimals/react-query';
 
 function MypageMyPets() {
   const t = useTranslations('Mypage');
-  const { name } = useClientUser();
   const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
 
   return (
@@ -31,16 +30,17 @@ function MypageMyPets() {
           <h2 className="heading">{t('pet-list')}</h2>
 
           <div
-            className={css({
-              maxHeight: 'calc(100vh - 542px)',
-              overflow: 'auto',
-            })}
+            className={cx(
+              css({
+                maxHeight: 'calc(100vh - 542px)',
+                overflow: 'auto',
+              }),
+              listStyle,
+            )}
           >
             <SelectPersonaList
-              name={name}
               selectPersona={selectPersona ? [selectPersona.id] : []}
               onSelectPersona={(persona) => setSelectPersona(persona)}
-              isExtend
               initSelectPersonas={(list) => {
                 setSelectPersona(list[0]);
               }}
@@ -56,6 +56,19 @@ function MypageMyPets() {
 
 export default MypageMyPets;
 
+const listStyle = cx(
+  flex({
+    gap: 4,
+    w: '100%',
+    h: '100%',
+    minH: '0',
+    overflowY: 'auto',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  }),
+  customScrollStyle,
+);
 const subStyle = css({
   _mobile: {
     display: 'none',

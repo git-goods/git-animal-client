@@ -15,3 +15,9 @@ export const PersonaInfoSchema = PersonaSchema.pick({
 
 export type Persona = z.infer<typeof PersonaSchema>;
 export type PersonaInfo = z.infer<typeof PersonaInfoSchema>;
+
+export const RenderBackgroundSchema = z.object({
+  type: z.string(),
+});
+
+export type RenderBackground = z.infer<typeof RenderBackgroundSchema>;

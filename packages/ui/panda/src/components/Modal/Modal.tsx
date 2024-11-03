@@ -1,39 +1,21 @@
 'use client';
 
+import { useBodyLock } from '@gitanimals/react';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { XIcon } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useDialog } from './useDialog';
+import { PropsWithChildren } from 'react';
 
 interface Props {
   isOpen: boolean;
   onClose?: () => void;
-  children: React.ReactNode;
 }
-export function Modal({ isOpen, onClose, children }: Props) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const [isScrollLocked, setIsScrollLocked] = useState(isOpen);
+export function Modal({ isOpen, onClose, children }: PropsWithChildren<Props>) {
+  const { dialogRef } = useDialog({ isOpen, onClose });
 
-  useBodyScrollLock(isScrollLocked);
-
-  useEffect(() => {
-    if (isOpen) {
-      dialogRef.current?.showModal();
-    } else {
-      dialogRef.current?.close();
-    }
-  }, [isOpen]);
-
-  useEffect(
-    function setOnCloseEventAtDialog() {
-      dialogRef.current?.addEventListener('close', () => {
-        setIsScrollLocked(false);
-        onClose?.();
-      });
-    },
-    [onClose],
-  );
+  useBodyLock(isOpen);
 
   return (
     <dialog className={dialogStyle} ref={dialogRef}>
@@ -47,23 +29,6 @@ export function Modal({ isOpen, onClose, children }: Props) {
     </dialog>
   );
 }
-
-// TODO : hooks packages로 옮기기
-const useBodyScrollLock = (isLocked: boolean) => {
-  useEffect(() => {
-    const originalStyle = window.getComputedStyle(document.body).overflow;
-
-    if (isLocked) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = originalStyle;
-    }
-
-    return () => {
-      document.body.style.overflow = originalStyle;
-    };
-  }, [isLocked]);
-};
 
 const dialogStyle = css({
   margin: 'auto',

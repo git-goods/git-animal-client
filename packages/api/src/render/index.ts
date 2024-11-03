@@ -4,3 +4,5 @@ export * from './getTotalPersonaCount';
 export * from './getTotalRenderUserCount';
 export * from './schema';
 export * from './isPressStar';
+export * from './getMyBackground';
+export * from './changeMyBackground';

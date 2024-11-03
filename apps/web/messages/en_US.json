@@ -60,7 +60,14 @@
     "delete-product-fail": "Failed to cancellation.",
     "edit": "Edit",
     "pet-sold": "Pet sold successfully for [money]!",
-    "prepare": "Prepare"
+    "prepare": "Prepare",
+    "Background": {
+      "buy-success": "Background purchased successfully",
+      "buy-fail": "Failed to purchase background",
+      "purchased": "Purchased",
+      "buy": "Buy",
+      "event-sale": "Event Limited Sale"
+    }
   },
   "NoticeToast": {
     "go": "GO!",
@@ -70,7 +77,8 @@
     "github-star": "Enjoying GitAnimals?\nGive us a GitHub Star! ⭐",
     "update-shop-renewal": "Update: The shop page has been renewed.\n Check it out!",
     "multi-translation": "You can choose English, 한국어! 🌐\nPlease change the language in the top menu.",
-    "update-mypage-renewal": "Update: The MyPage page has been renewed.\n Check it out!"
+    "update-mypage-renewal": "Update: The MyPage page has been renewed.\n Check it out!",
+    "update-background": "You can change the background from now on!\n🎃 Halloween Limited 🎃 is on sale. "
   },
   "Mypage": {
     "copy-link-title": "Copy Link",
@@ -85,7 +93,10 @@
     "pet-list": "Pet list",
     "sell-to-other": "Tip. If you want to sell your pet to other users, please use the auction.",
     "my-pet": "My pet",
-    "github-custom": "Github Custom"
+    "github-custom": "Github Custom",
+    "invalid-size-error": "Invalid size",
+    "farm-type-select-pet": "Select a pet for Farm Type",
+    "line-type-select-pet": "Select a pet for Line Type"
   },
   "Event": {
     "Halloween": {
