@@ -12,6 +12,7 @@ import { toast } from 'sonner';
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
 import { useTimer } from '@/hooks/useTimer';
+import { trackEvent } from '@/lib/analytics';
 import { getAnimalTierInfo } from '@/utils/animals';
 
 import CardFlipGame from './CardFlipGame';
@@ -53,7 +54,17 @@ function OnePet({ onClose }: Props) {
 
       queryClient.invalidateQueries({ queryKey: userQueries.userKey() });
       toast.success(t('get-persona-success'));
+
+      trackEvent('gotcha', {
+        type: '1-pet',
+        status: 'success',
+      });
     } catch (error) {
+      trackEvent('gotcha', {
+        type: '1-pet',
+        status: 'error',
+      });
+
       toast.error(t('get-persona-fail'), {
         description:
           error instanceof CustomException && error.code === 'TOKEN_EXPIRED'

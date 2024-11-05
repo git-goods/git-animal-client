@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { useTimer } from '@/hooks/useTimer';
+import { trackEvent } from '@/lib/analytics';
 
 import { TenCardFlipGame } from './TenCardFlipGame';
 
@@ -40,8 +41,18 @@ export function TenPet({ onClose }: Props) {
 
       queryClient.invalidateQueries({ queryKey: userQueries.allKey() });
       startTimer();
+
+      trackEvent('gotcha', {
+        type: '10-pet',
+        status: 'success',
+      });
     },
     onError: (error) => {
+      trackEvent('gotcha', {
+        type: '10-pet',
+        status: 'error',
+      });
+
       toast.error(t('get-persona-fail'), {
         description:
           error instanceof CustomException && error.code === 'TOKEN_EXPIRED'
