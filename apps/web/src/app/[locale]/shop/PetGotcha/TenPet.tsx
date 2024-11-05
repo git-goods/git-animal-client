@@ -93,7 +93,7 @@ Token: ${data?.user.accessToken}
         <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
       )}
       <div className={css({ width: '100%', mt: 60 })}>
-        <TenCardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} />
+        <TenCardFlipGame onGetPersona={onAction} getPersona={getPersona} />
       </div>
     </ScreenModalBase>
   );

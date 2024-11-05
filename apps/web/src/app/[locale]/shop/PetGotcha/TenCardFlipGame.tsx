@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import type { GotchaResult } from '@gitanimals/api';
 import { CardBack } from '@gitanimals/ui-panda';
 import { motion } from 'framer-motion';
@@ -7,56 +7,63 @@ import { motion } from 'framer-motion';
 import { AnimalCard } from '@/components/AnimalCard';
 
 const Card = ({
-  index,
   onClick,
   persona,
   isFlipped,
 }: {
-  index: number;
   onClick: () => void;
   persona: GotchaResult | null;
   isFlipped: boolean;
 }) => {
   return (
-    <div className={cardStyle} onClick={onClick} style={{ perspective: '1000px' }}>
+    <button className={cardStyle} onClick={onClick}>
       <motion.div
         className={cardInnerStyle}
         initial={false}
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ duration: 0.6, ease: 'easeInOut' }}
-        style={{ transformStyle: 'preserve-3d' }}
       >
-        {/* 빨간색 뒷면 */}
-        <div
-          className={cardFaceStyle}
-          style={{
-            backfaceVisibility: 'hidden',
-            transform: 'rotateY(180deg)',
-          }}
-        >
+        <div className={cx(cardFaceStyle, cardBackFaceStyle)}>
           {persona && <AnimalCard type={persona.name} dropRate={persona.ratio} />}
         </div>
-
-        {/* 초록색 앞면 */}
-        <div
-          className={cardFaceStyle}
-          style={{
-            backfaceVisibility: 'hidden',
-          }}
-        >
+        <div className={cx(cardFaceStyle, cardFrontFaceStyle)}>
           <CardBack tier="S_PLUS" />
         </div>
       </motion.div>
-    </div>
+    </button>
   );
 };
 
+const cardStyle = css({
+  position: 'relative',
+  cursor: 'pointer',
+  width: '220px',
+  height: '272px',
+  perspective: '1000px',
+});
+
+const cardInnerStyle = css({
+  width: '100%',
+  height: '100%',
+  position: 'relative',
+  transformStyle: 'preserve-3d',
+});
+
+const cardFaceStyle = css({
+  position: 'absolute',
+  width: '100%',
+  height: '100%',
+  borderRadius: 'xl',
+  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+});
+
+const cardFrontFaceStyle = css({ backfaceVisibility: 'hidden' });
+const cardBackFaceStyle = css({ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' });
+
 export const TenCardFlipGame = ({
-  onClose,
   onGetPersona,
   getPersona,
 }: {
-  onClose: () => void;
   onGetPersona: () => void;
   getPersona: GotchaResult[] | null;
 }) => {
@@ -90,6 +97,7 @@ export const TenCardFlipGame = ({
     if (getPersona) {
       handleFlipAll();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getPersona]);
 
   return (
@@ -101,7 +109,6 @@ export const TenCardFlipGame = ({
               {[0, 1, 2, 3, 4].map((index) => (
                 <Card
                   key={index}
-                  index={index}
                   isFlipped={flippedCards[index]}
                   onClick={() => onCardClick()}
                   persona={getPersona ? getPersona[index] : null}
@@ -113,7 +120,6 @@ export const TenCardFlipGame = ({
               {[5, 6, 7, 8, 9].map((index) => (
                 <Card
                   key={index}
-                  index={index}
                   isFlipped={flippedCards[index]}
                   onClick={() => onCardClick()}
                   persona={getPersona ? getPersona[index] : null}
@@ -147,26 +153,4 @@ const cardRowStyle = css({
   display: 'flex',
   gap: '12px',
   justifyContent: 'center',
-});
-
-const cardStyle = css({
-  position: 'relative',
-  cursor: 'pointer',
-  width: '220px',
-  height: '272px',
-});
-
-const cardInnerStyle = css({
-  width: '100%',
-  height: '100%',
-  position: 'relative',
-  transformStyle: 'preserve-3d',
-});
-
-const cardFaceStyle = css({
-  position: 'absolute',
-  width: '100%',
-  height: '100%',
-  borderRadius: 'xl',
-  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
 });
