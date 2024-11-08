@@ -3,9 +3,10 @@ import type { PropsWithChildren } from 'react';
 import React, { useState } from 'react';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
+import type { Persona } from '@gitanimals/api';
 import { AnimatePresence, motion } from 'framer-motion';
 
-const MergeAnimation = () => {
+const MergeAnimation = ({ materialPersona, targetPersona }: { materialPersona?: Persona; targetPersona?: Persona }) => {
   const [isMerging, setIsMerging] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showResult, setShowResult] = useState(false);
