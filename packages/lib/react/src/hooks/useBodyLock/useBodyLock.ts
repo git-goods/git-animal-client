@@ -8,9 +8,6 @@ import { useEffect } from 'react';
  */
 export function useBodyLock(isLocked: boolean): void {
   useEffect(() => {
-    const originalStyle = window.getComputedStyle(document.body);
-    const originalOverflow = originalStyle.overflow;
-
     if (isLocked) {
       // 현재 스크롤 위치 저장
       const scrollY = window.scrollY;
@@ -18,18 +15,31 @@ export function useBodyLock(isLocked: boolean): void {
       // body에 스타일 적용
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
-      document.body.style.overflowY = 'scroll';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.overflow = 'hidden'; // scroll 대신 hidden 사용
     } else {
-      // body 스타일 제거
-      const scrollY = document.body.style.top;
-      document.body.style.overflow = originalOverflow;
+      // 스크롤 위치 복원을 위해 먼저 저장된 위치 가져오기
+      const scrollY = parseInt(document.body.style.top || '0') * -1;
+
+      // body 스타일 초기화
       document.body.style.position = '';
       document.body.style.top = '';
-      document.body.style.width = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.overflow = '';
 
       // 스크롤 위치 복원
-      window.scrollTo(0, Number(scrollY.replace('px', '') || '0') * -1);
+      window.scrollTo(0, scrollY);
     }
+
+    // cleanup 함수 추가
+    return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.overflow = '';
+    };
   }, [isLocked]);
 }

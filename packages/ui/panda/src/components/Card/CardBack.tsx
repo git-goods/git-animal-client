@@ -10,7 +10,7 @@ export function CardBack(props: Props) {
 
   return (
     <div className={bgStyle}>
-      <img src={ANIMAL_CARD_IMAGE_BASE_URL + bg} alt={props.tier} width={265} height={328} />
+      <img src={ANIMAL_CARD_IMAGE_BASE_URL + bg} alt={props.tier} width={265} height={328} draggable={false} />
     </div>
   );
 }
