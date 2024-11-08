@@ -19,13 +19,13 @@ export function Card(props: Props) {
   return (
     <div className={cx('animal-card-container', container)}>
       <div className={bgImage}>
-        <img src={ANIMAL_CARD_IMAGE_BASE_URL + bg} alt={props.tier} width={265} height={328} />
+        <img src={ANIMAL_CARD_IMAGE_BASE_URL + bg} alt={props.tier} width={265} height={328} draggable={false} />
       </div>
       <div className={thumbnailImage}>
-        <img src={ANIMAL_CARD_IMAGE_BASE_URL + thumbnail} alt={props.tier} width={233} height={233} />
+        <img src={ANIMAL_CARD_IMAGE_BASE_URL + thumbnail} alt={props.tier} width={233} height={233} draggable={false} />
       </div>
       <div className={thumbnailImage}>
-        <img src={props.personaImage} alt={props.type} width={233} height={233} />
+        <img src={props.personaImage} alt={props.type} width={233} height={233} draggable={false} />
       </div>
       <div className={cx('animal-card-info', infoWrapper)}>
         <p className={cx('animal-card-type', typeText)}>{snakeToTitleCase(props.type)}</p>
@@ -73,6 +73,7 @@ export const container = css({
   position: 'relative',
   height: '100%',
   width: '100%',
+  color: 'black',
 });
 
 export const bgImage = css({

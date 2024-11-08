@@ -1,3 +1,6 @@
+'use client';
+
+import { createPortal } from 'react-dom';
 import { Toaster } from 'sonner';
 
 import NoticeToast from '../NoticeToast/NoticeToast';
@@ -5,7 +8,7 @@ import NoticeToast from '../NoticeToast/NoticeToast';
 import FeedBack from './FeedbackForm';
 
 function GlobalComponent() {
-  return (
+  return createPortal(
     <>
       <FeedBack />
       <Toaster
@@ -23,7 +26,8 @@ function GlobalComponent() {
         }}
       />
       <NoticeToast />
-    </>
+    </>,
+    document.body,
   );
 }
 

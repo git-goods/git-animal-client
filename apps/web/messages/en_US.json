@@ -31,12 +31,14 @@
   "Gotcha": {
     "pet-gotcha-desc": "Draw a S+ Grade pet for 1,000 points",
     "choose-one-card": "Choose one card you want!",
-    "close-notice-message": "! This will close.",
+    "close-notice-message": "[count] seconds later, this window will close.",
     "get-persona-success": "You have successfully drawn a pet!",
     "get-persona-fail": "Failed to draw a pet.",
     "token-expired": "Token expired. Please sign in again.",
     "contact-us": "Contact us",
-    "many-error-message": "If you continue to experience problems, please contact us."
+    "many-error-message": "If you continue to experience problems, please contact us.",
+    "gotcha-in-progress": "Drawing in progress. Please wait a moment.",
+    "click-card-to-flip": "Click the card to flip!"
   },
   "Shop": {
     "no-mobile-support": "Currently, mobile is not supported. Please connect to the desktop.",

@@ -7,6 +7,7 @@ import { css } from '_panda/css';
 import { Button } from '@gitanimals/ui-panda';
 
 import OnePet from './OnePet';
+import { TenPet } from './TenPet';
 
 export function PetGotcha() {
   const t = useTranslations('Gotcha');
@@ -21,8 +22,8 @@ export function PetGotcha() {
         <Button size="l" onClick={() => setOpenModal('one-pet')}>
           1 Pet / 1,000 P
         </Button>
-        <Button size="l" disabled>
-          Coming Soon!
+        <Button size="l" onClick={() => setOpenModal('ten-pet')}>
+          10 Pets / 10,000 P
         </Button>
         {/* <Button size="l">10 Pets / 10,000 P</Button> */}
       </div>
@@ -30,6 +31,7 @@ export function PetGotcha() {
         <Image src="/shop/pet-gotcha-image-card.webp" alt="pet-gotcha-pet" width={1120} height={530} />
       </div>
       {openModal === 'one-pet' && <OnePet onClose={() => setOpenModal(null)} />}
+      {openModal === 'ten-pet' && <TenPet onClose={() => setOpenModal(null)} />}
     </div>
   );
 }
