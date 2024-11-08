@@ -1,13 +1,13 @@
 import React from 'react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
 
 import { CardList, MobileCardList } from './CardList';
 import { Draw } from './Draw';
-import { useTranslations } from 'next-intl';
 
 interface Params {
   eventCode: string;
@@ -63,8 +63,8 @@ function EventEndOverlay() {
 
   return (
     <div
-      style={{
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      className={css({
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
         position: 'fixed',
         top: 0,
         left: 0,
@@ -75,7 +75,7 @@ function EventEndOverlay() {
         alignItems: 'center',
         zIndex: 1000,
         overflow: 'hidden',
-      }}
+      })}
     >
       <h1
         className={css({
