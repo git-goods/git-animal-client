@@ -82,11 +82,7 @@ function NoticeToast() {
     renderList.forEach((notice) => renderToast(notice));
   });
 
-  return (
-    <>
-      <HalloweenEventToast />
-    </>
-  );
+  return <>{/* <HalloweenEventToast /> */}</>;
 }
 
 export default NoticeToast;

@@ -100,6 +100,7 @@
     "line-type-select-pet": "Line Type에 사용할 펫을 선택해주세요."
   },
   "Event": {
+    "event-end": "이벤트가 종료되었습니다.",
     "Halloween": {
       "description": "할로윈이 Gitanimals에 찾아왔어요.\n공짜 할로윈 펫을 뽑아보세요!",
       "draw-button": "할로윈 펫 뽑기!",
