@@ -106,6 +106,7 @@
     }
   },
   "Event": {
+    "event-end": "Event has ended.",
     "Halloween": {
       "description": "Halloween has come to Gitanimals\nDraw Halloween pet for free!",
       "draw-button": "Draw!",
