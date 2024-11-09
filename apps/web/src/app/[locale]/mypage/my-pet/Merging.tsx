@@ -6,10 +6,23 @@ import { flex } from '_panda/patterns';
 import type { Persona } from '@gitanimals/api';
 import { AnimatePresence, motion } from 'framer-motion';
 
+import { getPersonaImage } from '@/utils/image';
+
+const mergePersona = ({ targetPersona, materialPersona }: { targetPersona?: Persona; materialPersona?: Persona }) => {
+  if (!targetPersona || !materialPersona) return undefined;
+
+  return {
+    ...targetPersona,
+    level: targetPersona.level + materialPersona.level,
+  };
+};
+
 const MergeAnimation = ({ materialPersona, targetPersona }: { materialPersona?: Persona; targetPersona?: Persona }) => {
   const [isMerging, setIsMerging] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showResult, setShowResult] = useState(false);
+
+  const resultPersona = mergePersona({ targetPersona, materialPersona });
 
   const handleMerge = async () => {
     setIsMerging(true);
@@ -42,72 +55,37 @@ const MergeAnimation = ({ materialPersona, targetPersona }: { materialPersona?: 
       <div className={itemContainerStyle}>
         {/* First Item */}
         <div className={itemWrapperStyle}>
-          <MergeMaterialItemAnimation isMerged={isMerging && !isLoading}>
-            <img src="https://placehold.co/96x96" alt="Level 1 Cat" className={imageStyle} />
-            <div className={levelTextStyle}>Level 1</div>
+          <MergeMaterialItemAnimation
+            isMerged={isMerging && !isLoading}
+            persona={targetPersona}
+            key={targetPersona?.id}
+          >
+            {targetPersona ? <MergeItem persona={targetPersona} /> : <MergeEmptyItem />}
           </MergeMaterialItemAnimation>
 
-          {/* First Item Clone */}
-          <CloneItemAnimation isVisible={isMerging && !isLoading && !showResult} position="left">
-            <div className={itemStyle}>
-              <img src="https://placehold.co/96x96" alt="Level 1 Clone" className={imageStyle} />
-            </div>
-          </CloneItemAnimation>
+          {/* <CloneItemAnimation isVisible={isMerging && !isLoading && !showResult} position="left">
+            {targetPersona ? <MergeItem persona={targetPersona} /> : <MergeEmptyItem />}
+          </CloneItemAnimation> */}
         </div>
 
         <div className={plusSignStyle}>+</div>
 
-        {/* Second Item */}
         <div className={itemWrapperStyle}>
-          <MergeMaterialItemAnimation isMerged={isMerging && !isLoading}>
-            <img src="https://placehold.co/96x96" alt="Level 3 Fish" className={imageStyle} />
-            <div className={levelTextStyle}>Level 3</div>
+          <MergeMaterialItemAnimation
+            isMerged={isMerging && !isLoading}
+            persona={materialPersona}
+            key={materialPersona?.id}
+          >
+            {materialPersona ? <MergeItem persona={materialPersona} /> : <MergeEmptyItem />}
           </MergeMaterialItemAnimation>
-
-          {/* Second Item Clone */}
-          <CloneItemAnimation isVisible={isMerging && !isLoading && !showResult} position="right">
-            <div className={itemStyle}>
-              <img src="https://placehold.co/96x96" alt="Level 3 Clone" className={imageStyle} />
-            </div>
-          </CloneItemAnimation>
         </div>
 
-        {/* Arrow */}
         <div className={arrowStyle}>=</div>
 
-        {/* Result Item */}
-        <ResultItemAnimation isVisible={showResult}>
-          <img src="https://placehold.co/96x96" alt="Level 4 Result" className={imageStyle} />
-          <div className={levelTextStyle}>Level 4</div>
+        <ResultItemAnimation isVisible={Boolean(resultPersona)} key={resultPersona?.id}>
+          {resultPersona ? <MergeItem persona={resultPersona} /> : <MergeEmptyItem />}
         </ResultItemAnimation>
       </div>
-
-      {/* Impact Lines */}
-      {isMerging && !isLoading && (
-        <div className={impactLinesContainerStyle}>
-          {[...Array(8)].map((_, i) => (
-            <motion.div
-              key={`impact-${i}`}
-              className={impactLineStyle}
-              style={{
-                rotate: `${i * 45}deg`,
-                left: '50%',
-                top: '50%',
-              }}
-              initial={{ scaleX: 0, opacity: 0 }}
-              animate={{
-                scaleX: [0, 1, 0],
-                opacity: [0, 0.6, 0],
-              }}
-              transition={{
-                duration: 0.4,
-                delay: 0.4,
-                ease: 'easeOut',
-              }}
-            />
-          ))}
-        </div>
-      )}
 
       {/* Loading Indicator */}
       {isLoading && (
@@ -122,7 +100,7 @@ const MergeAnimation = ({ materialPersona, targetPersona }: { materialPersona?: 
       )}
 
       {/* Buttons */}
-      <motion.button
+      {/* <motion.button
         onClick={handleMerge}
         disabled={isMerging || isLoading}
         className={mergeButtonStyle}
@@ -147,7 +125,7 @@ const MergeAnimation = ({ materialPersona, targetPersona }: { materialPersona?: 
         >
           Reset
         </motion.button>
-      )}
+      )} */}
     </div>
   );
 };
@@ -169,10 +147,9 @@ const itemWrapperStyle = css({
 });
 
 const itemStyle = css({
-  width: '96px',
-  height: '96px',
+  width: '120px',
+  height: '120px',
   backgroundColor: 'gray.700',
-  borderRadius: '8px',
   padding: '8px',
 });
 
@@ -189,8 +166,8 @@ const levelTextStyle = css({
 });
 
 const cloneWrapperStyle = css({
-  width: '96px',
-  height: '96px',
+  width: '120px',
+  height: '120px',
   position: 'absolute',
   top: 0,
   left: 0,
@@ -206,9 +183,9 @@ const arrowStyle = css({
 });
 
 const resultItemStyle = css({
-  width: '96px',
-  height: '96px',
-  backgroundImage: 'linear-gradient(to bottom right, teal.700, blue.700)',
+  width: '120px',
+  height: '120px',
+  // backgroundImage: 'linear-gradient(to bottom right, teal.700, blue.700)',
   borderRadius: '8px',
   padding: '8px',
   position: 'relative',
@@ -219,20 +196,6 @@ const flashEffectStyle = css({
   inset: 0,
   backgroundColor: 'white',
   borderRadius: '8px',
-});
-
-const impactLinesContainerStyle = css({
-  position: 'absolute',
-  left: '50%',
-  top: '50%',
-  transform: 'translate(-50%, -50%)',
-});
-
-const impactLineStyle = css({
-  position: 'absolute',
-  height: '2px',
-  backgroundColor: 'orange.400',
-  transformOrigin: 'left',
 });
 
 const loadingContainerStyle = css({
@@ -315,7 +278,10 @@ function CloneItemAnimation({
   );
 }
 
-function MergeMaterialItemAnimation({ isMerged }: PropsWithChildren<{ isMerged: boolean }>) {
+function MergeMaterialItemAnimation({
+  isMerged,
+  children,
+}: PropsWithChildren<{ isMerged: boolean; persona?: Persona }>) {
   return (
     <motion.div
       className={itemStyle}
@@ -325,30 +291,51 @@ function MergeMaterialItemAnimation({ isMerged }: PropsWithChildren<{ isMerged: 
       }}
       transition={{ duration: 0.5 }}
     >
-      <img src="https://placehold.co/96x96" alt="Level 3 Fish" className={imageStyle} />
-      <div className={levelTextStyle}>Level 3</div>
+      {children}
     </motion.div>
   );
 }
 
-function ResultItemAnimation({ isVisible }: PropsWithChildren<{ isVisible: boolean }>) {
+function MergeEmptyItem() {
+  return (
+    <>
+      <img src="/mypage/merge/merge-empty.svg" alt="empty" className={imageStyle} />
+      <div className={levelTextStyle}>Level ?</div>
+    </>
+  );
+}
+
+function MergeItem({ persona }: PropsWithChildren<{ persona: Persona }>) {
+  return (
+    <>
+      <div className={mergeItemStyle}>
+        <img src={getPersonaImage(persona.type)} alt="Level 3 Fish" className={imageStyle} />
+      </div>
+      <div className={levelTextStyle}>Level {persona.level}</div>
+    </>
+  );
+}
+
+const mergeItemStyle = css({
+  borderRadius: '16px',
+  border: '2px solid rgba(255, 255, 255, 0.25)',
+  background: 'rgba(255, 255, 255, 0.25)',
+});
+
+function ResultItemAnimation({ isVisible, children }: PropsWithChildren<{ isVisible: boolean }>) {
   return (
     <motion.div
       className={resultItemStyle}
-      initial={{ opacity: 0, scale: 0.7 }}
+      initial={{ scale: 1 }}
       animate={{
-        opacity: isVisible ? 1 : 0,
-        scale: isVisible ? 1 : 0.7,
+        scale: isVisible ? [1, 1.2, 1] : 1,
       }}
       transition={{
         duration: 0.3,
         ease: 'easeOut',
       }}
     >
-      <img src="https://placehold.co/96x96" alt="Level 4 Result" className={imageStyle} />
-      <div className={levelTextStyle}>Level 4</div>
-
-      {/* Result Flash Effect */}
+      {children}
       {isVisible && (
         <motion.div
           className={flashEffectStyle}
