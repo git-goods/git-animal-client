@@ -1,5 +1,5 @@
 // maintainer
-export const SERVICE_MAINTAINER = ['sumi-0011', 'hyesungoh', 'git-good-w'];
+export const SERVICE_MAINTAINER = ['sumi-0011', 'hyesungoh', 'git-good-w', 'devxb'];
 
 // issue
 export const GITHUB_ISSUE_TYPE = {
