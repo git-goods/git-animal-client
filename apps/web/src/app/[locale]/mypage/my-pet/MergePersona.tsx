@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import type { Persona } from '@gitanimals/api';
+import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
 import { Banner, Button, FullModalBase } from '@gitanimals/ui-panda';
 import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banner';
@@ -14,9 +14,11 @@ import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientSession, useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
+import { MergeResultModal } from './MergeResult';
 import MergeAnimation from './Merging';
 
 function MergePersona() {
+  const [resultData, setResultData] = useState<MergePersonaLevelResponse | null>(null);
   const [selectPersonaObj, setSelectPersonaObj] = useState<{
     material: Persona | undefined;
     target: Persona | undefined;
@@ -26,13 +28,18 @@ function MergePersona() {
   });
 
   const session = useClientSession();
-  const token = session.data?.user.accessToken;
+  const token = session.data?.user.accessToken as string;
 
-  if (!token) {
-    return null;
-  }
-
-  const { mutate: mergePersonaLevel, isPending: isMerging, isSuccess: isMerged } = useMergePersonaLevelByToken(token);
+  const {
+    mutate: mergePersonaLevel,
+    isPending: isMerging,
+    isSuccess: isMerged,
+  } = useMergePersonaLevelByToken(token, {
+    onSuccess: (data) => {
+      setResultData(data);
+    },
+  });
+  console.log('isMerged: ', isMerged);
   console.log('isMerging: ', isMerging);
   const isMergeDisabled = !selectPersonaObj.material || !selectPersonaObj.target;
 
@@ -44,11 +51,6 @@ function MergePersona() {
     mergePersonaLevel({
       increasePersonaId: selectPersonaObj.target.id,
       deletePersonaId: selectPersonaObj.material.id,
-    });
-
-    console.log('aa ', {
-      increasePersonaId: selectPersonaObj.target.id,
-      decreasePersonaId: selectPersonaObj.material.id,
     });
   };
 
@@ -84,28 +86,35 @@ function MergePersona() {
 
   return (
     <FullModalBase isOpen={true} onClose={() => {}}>
-      <MergeAnimation targetPersona={selectPersonaObj.target} materialPersona={selectPersonaObj.material} />
+      <div>
+        <MergeAnimation targetPersona={selectPersonaObj.target} materialPersona={selectPersonaObj.material} />
 
-      <div
-        className={cx(
-          css({
-            maxHeight: 'calc(100vh - 542px)',
-            overflow: 'auto',
-          }),
-          listStyle,
-        )}
-      >
-        <SelectPersonaList
-          selectPersona={Object.values(selectPersonaObj).map((persona) => persona?.id ?? '')}
-          onSelectPersona={onSelectPersona}
+        <div
+          className={cx(
+            css({
+              maxHeight: 'calc(100vh - 542px)',
+              overflow: 'auto',
+            }),
+            listStyle,
+          )}
+        >
+          <SelectPersonaList
+            selectPersona={Object.values(selectPersonaObj).map((persona) => persona?.id ?? '')}
+            onSelectPersona={onSelectPersona}
+          />
+        </div>
+
+        <div className={css({ display: 'flex', justifyContent: 'center', gap: 12 })}>
+          <Button variant="secondary">Cancel</Button>
+          <Button disabled={isMergeDisabled} onClick={onMergeAction}>
+            Merge
+          </Button>
+        </div>
+        <MergeResultModal
+          isOpen={Boolean(resultData)}
+          onClose={() => setResultData(null)}
+          result={resultData as MergePersonaLevelResponse}
         />
-      </div>
-
-      <div className={css({ display: 'flex', justifyContent: 'center', gap: 12 })}>
-        <Button variant="secondary">Cancel</Button>
-        <Button disabled={isMergeDisabled} onClick={onMergeAction}>
-          Merge
-        </Button>
       </div>
     </FullModalBase>
   );

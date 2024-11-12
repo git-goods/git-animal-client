@@ -6,7 +6,13 @@ const MergePersonaLevelRequestSchema = z.object({
   deletePersonaId: z.string(),
 });
 
-const MergePersonaLevelResponseSchema = z.object({});
+const MergePersonaLevelResponseSchema = z.object({
+  id: z.string(),
+  type: z.string(),
+  level: z.string(),
+  visible: z.boolean(),
+  dropRate: z.string(),
+});
 
 export type MergePersonaLevelRequest = z.infer<typeof MergePersonaLevelRequestSchema>;
 export type MergePersonaLevelResponse = z.infer<typeof MergePersonaLevelResponseSchema>;
