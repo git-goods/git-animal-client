@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable @next/next/no-img-element */
 import type { PropsWithChildren } from 'react';
-import React from 'react';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import type { MergePersonaLevelResponse } from '@gitanimals/api';
 import { snakeToTitleCase } from '@gitanimals/util-common';
@@ -11,21 +11,20 @@ import { X } from 'lucide-react';
 
 import { getPersonaImage } from '@/utils/image';
 
-// 가챠 결과 모달 컴포넌트
-export const MergeResultModal = ({
-  isOpen,
-  onClose,
-  result,
-}: {
+interface MergeResultModalProps {
   isOpen: boolean;
   onClose: () => void;
   result: MergePersonaLevelResponse;
-}) => {
+}
+
+export const MergeResultModal = ({ isOpen, onClose, result }: MergeResultModalProps) => {
+  const t = useTranslations('Mypage.Merge');
+
   if (!isOpen) return null;
 
   return (
     <MotionContainer onClose={onClose}>
-      <h3 className={css({ textStyle: 'glyph24.bold' })}>🎉 합성 결과 🎉</h3>
+      <h3 className={css({ textStyle: 'glyph24.bold' })}>{t('merge-result')}</h3>
       <div className={mergeItemStyle}>
         <img src={getPersonaImage(result.type)} alt={result.type} width={100} height={100} />
       </div>

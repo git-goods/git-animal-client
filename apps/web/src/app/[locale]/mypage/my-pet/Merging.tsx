@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import type { PropsWithChildren } from 'react';
-import React from 'react';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
 import type { Persona } from '@gitanimals/api';
@@ -17,7 +16,13 @@ const mergePersona = ({ targetPersona, materialPersona }: { targetPersona?: Pers
   };
 };
 
-const MergeAnimation = ({ materialPersona, targetPersona }: { materialPersona?: Persona; targetPersona?: Persona }) => {
+export const MergeAnimation = ({
+  materialPersona,
+  targetPersona,
+}: {
+  materialPersona?: Persona;
+  targetPersona?: Persona;
+}) => {
   const resultPersona = mergePersona({ targetPersona, materialPersona });
 
   return (
@@ -82,7 +87,6 @@ const arrowStyle = css({
 const resultItemStyle = css({
   width: '120px',
   height: '120px',
-  // backgroundImage: 'linear-gradient(to bottom right, teal.700, blue.700)',
   borderRadius: '8px',
   padding: '8px',
   position: 'relative',
@@ -94,33 +98,6 @@ const flashEffectStyle = css({
   backgroundColor: 'white',
   borderRadius: '8px',
 });
-
-const loadingContainerStyle = css({
-  position: 'absolute',
-  left: '50%',
-  top: '50%',
-  transform: 'translate(-50%, -50%)',
-});
-
-const spinnerStyle = css({
-  width: '32px',
-  height: '32px',
-  border: '4px solid',
-  borderColor: 'blue.500',
-  borderTopColor: 'transparent',
-  borderRadius: '50%',
-  animation: 'spin 1s linear infinite',
-});
-
-export default MergeAnimation;
-
-function MergeMaterialItemAnimation({ children }: PropsWithChildren<{ persona?: Persona }>) {
-  return (
-    <motion.div className={itemStyle} transition={{ duration: 0.5 }}>
-      {children}
-    </motion.div>
-  );
-}
 
 function MergeEmptyItem() {
   return (

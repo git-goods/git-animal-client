@@ -18,28 +18,25 @@ import { getPersonaImage } from '@/utils/image';
 
 import { SelectPersonaList } from '../PersonaList';
 
-import MergePersona from './MergePersona';
+import { MergePersona } from './MergePersona';
 
 function MypageMyPets() {
   const t = useTranslations('Mypage');
   const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
+  const [isMergeOpen, setIsMergeOpen] = useState(false);
 
   return (
     <>
       <div className={cx(subStyle, flex({ flexDir: 'column' }))}>
-        <SelectedPetTable currentPersona={selectPersona} reset={() => setSelectPersona(null)} />
+        <SelectedPetTable
+          currentPersona={selectPersona}
+          reset={() => setSelectPersona(null)}
+          onMergeClick={() => setIsMergeOpen(true)}
+        />
         <section className={selectPetContainerStyle}>
           <h2 className="heading">{t('pet-list')}</h2>
 
-          <div
-            className={cx(
-              css({
-                maxHeight: 'calc(100vh - 542px)',
-                overflow: 'auto',
-              }),
-              listStyle,
-            )}
-          >
+          <div className={listStyle}>
             <SelectPersonaList
               selectPersona={selectPersona ? [selectPersona.id] : []}
               onSelectPersona={(persona) => setSelectPersona(persona)}
@@ -52,6 +49,7 @@ function MypageMyPets() {
         <p className={captionMessageStyle}>{t('sell-to-other')}</p>
       </div>
       <div className={noticeStyle}>{t('no-mobile-support')}</div>
+      <MergePersona isOpen={isMergeOpen} onClose={() => setIsMergeOpen(false)} />
     </>
   );
 }
@@ -60,6 +58,8 @@ export default MypageMyPets;
 
 const listStyle = cx(
   flex({
+    maxHeight: 'calc(100vh - 542px)',
+    overflow: 'auto',
     gap: 4,
     w: '100%',
     h: '100%',
@@ -115,7 +115,13 @@ const selectPetContainerStyle = css({
   },
 });
 
-function SelectedPetTable({ currentPersona, reset }: { currentPersona: Persona | null; reset: () => void }) {
+interface SelectedPetTableProps {
+  currentPersona: Persona | null;
+  reset: () => void;
+  onMergeClick: () => void;
+}
+
+function SelectedPetTable({ currentPersona, reset, onMergeClick }: SelectedPetTableProps) {
   const queryClient = useQueryClient();
   const t = useTranslations('Shop');
 
@@ -134,10 +140,6 @@ function SelectedPetTable({ currentPersona, reset }: { currentPersona: Persona |
   const onSellClick = async () => {
     if (!currentPersona) return;
     dropPetMutation(currentPersona.id);
-  };
-
-  const onMergeClick = () => {
-    console.log('merge');
   };
 
   return (
@@ -165,14 +167,13 @@ function SelectedPetTable({ currentPersona, reset }: { currentPersona: Persona |
                 100P {t('sell')}
               </Button>
               {/* TODO: 합치기 기능 추가 시*/}
-              <Button variant="secondary" onClick={onMergeClick} disabled>
-                {t('prepare')}
+              <Button variant="secondary" onClick={onMergeClick}>
+                {t('merge')}
               </Button>
             </div>
           </>
         )}
       </div>
-      <MergePersona />
     </div>
   );
 }
@@ -227,10 +228,4 @@ const rowStyle = css({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
-});
-
-const tbodyCss = css({
-  display: 'flex',
-  flexDir: 'column',
-  gap: 4,
 });
