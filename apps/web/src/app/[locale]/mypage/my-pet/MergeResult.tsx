@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable @next/next/no-img-element */
 import type { PropsWithChildren } from 'react';
 import React from 'react';
@@ -53,12 +55,8 @@ const resultTextStyle = css({
 function MotionContainer({ children, onClose }: PropsWithChildren<{ onClose: () => void }>) {
   return (
     <AnimatePresence mode="wait">
-      <motion.div
+      <div
         className={containerStyle}
-        variants={containerVariants}
-        initial="initial"
-        animate="animate"
-        exit="exit"
         onClick={(e) => {
           onClose();
           e.stopPropagation();
@@ -85,7 +83,7 @@ function MotionContainer({ children, onClose }: PropsWithChildren<{ onClose: () 
             </motion.div>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
     </AnimatePresence>
   );
 }
@@ -96,18 +94,15 @@ const containerStyle = css({
   right: 0,
   bottom: 0,
   left: 0,
+  width: '100%',
+  height: '100%',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: 'black.black_50',
   zIndex: 50,
+  cursor: 'pointer',
 });
-
-const containerVariants = {
-  initial: { opacity: 0, y: -20 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -20 },
-};
 
 const containerInnerVariants = {
   initial: { scale: 0, rotate: -180 },

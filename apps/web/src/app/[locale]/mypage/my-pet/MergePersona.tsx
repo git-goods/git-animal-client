@@ -29,19 +29,11 @@ function MergePersona() {
 
   const session = useClientSession();
   const token = session.data?.user.accessToken as string;
-
-  const {
-    mutate: mergePersonaLevel,
-    isPending: isMerging,
-    isSuccess: isMerged,
-  } = useMergePersonaLevelByToken(token, {
-    onSuccess: (data) => {
-      setResultData(data);
-    },
-  });
-  console.log('isMerged: ', isMerged);
-  console.log('isMerging: ', isMerging);
   const isMergeDisabled = !selectPersonaObj.material || !selectPersonaObj.target;
+
+  const { mutate: mergePersonaLevel, isPending: isMerging } = useMergePersonaLevelByToken(token, {
+    onSuccess: (data) => setResultData(data),
+  });
 
   const onMergeAction = () => {
     if (!selectPersonaObj.target?.id || !selectPersonaObj.material?.id) {
@@ -54,73 +46,64 @@ function MergePersona() {
     });
   };
 
-  const onSelectPersona = (persona: Persona) => {
-    if (selectPersonaObj.target?.id === persona.id) {
-      setSelectPersonaObj((prev) => ({
-        ...prev,
-        target: undefined,
-      }));
-      return;
-    }
-
-    if (selectPersonaObj.material?.id === persona.id) {
-      setSelectPersonaObj((prev) => ({
-        ...prev,
-        material: undefined,
-      }));
-      return;
-    }
-
-    if (selectPersonaObj.target) {
-      setSelectPersonaObj((prev) => ({
-        ...prev,
-        material: persona,
-      }));
-    } else {
-      setSelectPersonaObj((prev) => ({
-        ...prev,
-        target: persona,
-      }));
-    }
+  const onSelectPersona = (currentSelectPersona: Persona) => {
+    setSelectPersonaObj(getMergePersona({ ...selectPersonaObj, currentSelectPersona }));
   };
 
   return (
     <FullModalBase isOpen={true} onClose={() => {}}>
-      <div>
-        <MergeAnimation targetPersona={selectPersonaObj.target} materialPersona={selectPersonaObj.material} />
+      <MergeAnimation targetPersona={selectPersonaObj.target} materialPersona={selectPersonaObj.material} />
 
-        <div
-          className={cx(
-            css({
-              maxHeight: 'calc(100vh - 542px)',
-              overflow: 'auto',
-            }),
-            listStyle,
-          )}
-        >
-          <SelectPersonaList
-            selectPersona={Object.values(selectPersonaObj).map((persona) => persona?.id ?? '')}
-            onSelectPersona={onSelectPersona}
-          />
-        </div>
-
-        <div className={css({ display: 'flex', justifyContent: 'center', gap: 12 })}>
-          <Button variant="secondary">Cancel</Button>
-          <Button disabled={isMergeDisabled} onClick={onMergeAction}>
-            Merge
-          </Button>
-        </div>
-        <MergeResultModal
-          isOpen={Boolean(resultData)}
-          onClose={() => setResultData(null)}
-          result={resultData as MergePersonaLevelResponse}
+      <div className={listStyle}>
+        <SelectPersonaList
+          selectPersona={Object.values(selectPersonaObj).map((persona) => persona?.id ?? '')}
+          onSelectPersona={onSelectPersona}
         />
       </div>
+
+      <div className={bottomButtonStyle}>
+        <Button variant="secondary">Cancel</Button>
+        <Button disabled={isMergeDisabled} onClick={onMergeAction}>
+          Merge
+        </Button>
+      </div>
+      <MergeResultModal
+        isOpen={Boolean(resultData)}
+        onClose={() => setResultData(null)}
+        result={resultData as MergePersonaLevelResponse}
+      />
+      {isMerging && <SpinningLoader />}
     </FullModalBase>
   );
 }
 
 export default MergePersona;
+
+const getMergePersona = ({
+  target,
+  material,
+  currentSelectPersona,
+}: {
+  target?: Persona;
+  material?: Persona;
+  currentSelectPersona: Persona;
+}) => {
+  if (currentSelectPersona.id === target?.id) {
+    return { target: undefined, material };
+  }
+
+  if (currentSelectPersona.id === material?.id) {
+    return { target, material: undefined };
+  }
+
+  if (target) {
+    return { target, material: currentSelectPersona };
+  }
+
+  return { target: currentSelectPersona, material };
+};
+
+const bottomButtonStyle = css({ display: 'flex', justifyContent: 'center', gap: 12 });
 
 const listStyle = cx(
   flex({
@@ -132,6 +115,8 @@ const listStyle = cx(
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    maxHeight: 'calc(100vh - 542px)',
+    overflow: 'auto',
   }),
   customScrollStyle,
 );
@@ -167,17 +152,43 @@ const SelectPersonaList = wrap
           <button
             key={`${persona.id}-${persona.visible}`}
             onClick={() => onSelectPersona(persona)}
-            // disabled={loadingPersona?.includes(persona.id)}
             className={css({ outline: 'none' })}
           >
-            <Banner
-              // loading={loadingPersona?.includes(persona.id)}
-              image={getPersonaImage(persona.type)}
-              size="small"
-              selected={selectPersona.includes(persona.id)}
-            />
+            <Banner image={getPersonaImage(persona.type)} size="small" selected={selectPersona.includes(persona.id)} />
           </button>
         ))}
       </>
     );
   });
+
+const SpinningLoader = () => {
+  return (
+    <div className={spinningLoaderContainerStyle}>
+      <div className={spinningLoaderStyle} />
+    </div>
+  );
+};
+
+const spinningLoaderContainerStyle = css({
+  position: 'absolute',
+  top: '0',
+  left: '0',
+  right: '0',
+  bottom: '0',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  zIndex: 100,
+  height: '100%',
+  background: 'rgba(0, 0, 0, 0.5)',
+});
+
+const spinningLoaderStyle = css({
+  width: '64px',
+  height: '64px',
+  border: '4px solid transparent',
+  borderTop: '4px solid #fff',
+  borderRadius: '50%',
+  animation: 'animateSpin 1s linear infinite',
+});

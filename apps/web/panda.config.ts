@@ -98,6 +98,14 @@ export default defineConfig({
             backgroundPosition: '-200% 0',
           },
         },
+        animateSpin: {
+          from: {
+            transform: 'rotate(0deg)',
+          },
+          to: {
+            transform: 'rotate(360deg)',
+          },
+        },
       },
     },
   },

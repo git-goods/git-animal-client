@@ -13,7 +13,7 @@ const mergePersona = ({ targetPersona, materialPersona }: { targetPersona?: Pers
 
   return {
     ...targetPersona,
-    level: targetPersona.level + materialPersona.level,
+    level: String(Number(targetPersona.level) + Number(materialPersona.level)),
   };
 };
 
