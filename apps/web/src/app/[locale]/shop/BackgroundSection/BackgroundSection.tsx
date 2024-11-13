@@ -15,6 +15,7 @@ import { toast } from 'sonner';
 import { trackEvent } from '@/lib/analytics';
 import { useClientUser } from '@/utils/clientAuth';
 import { getBackgroundImage } from '@/utils/image';
+import { addNumberComma } from '@/utils/number';
 
 export const BackgroundSection = wrap
   .ErrorBoundary({
@@ -99,7 +100,7 @@ function BackgroundItem({
       <div className={cx(cardImageCss, isPurchased && purchasedCardImageCss)}>
         <img src={getBackgroundImage(item.type)} alt={item.type} width={550} height={275} />
       </div>
-      <div className={cardPointStyle}>{item.price} P</div>
+      <div className={cardPointStyle}>{addNumberComma(item.price)} P</div>
       <Button variant="secondary" onClick={() => onBuy(item.type)} disabled={isPurchased}>
         {isPurchased ? t('purchased') : t('buy')}
       </Button>

@@ -9,6 +9,7 @@ import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
+import { addNumberComma } from '@/utils/number';
 
 interface Props extends Pick<Product, 'id' | 'persona' | 'price'> {
   onAction: (itemId: Product['id']) => void;
@@ -33,7 +34,7 @@ function ShopTableRowView({ onAction, actionLabel, actionColor, ...item }: Props
       <span>{snakeToTitleCase(item.persona.personaType)}</span>
       <span>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</span>
       <span>{item.persona.personaLevel}</span>
-      <span>{item.price}</span>
+      <span>{addNumberComma(item.price)}</span>
       <div>
         <Button variant="secondary" onClick={() => onAction(item.id)} color={actionColor}>
           {actionLabel}
