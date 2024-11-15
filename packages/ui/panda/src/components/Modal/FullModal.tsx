@@ -95,6 +95,7 @@ export const FullModal = Object.assign(FullModalRoot, {
   Content: FullModalContent,
 });
 
+/** @deprecated */
 export function FullModalBase({ isOpen, onClose, children }: PropsWithChildren<FullModalProps>) {
   return (
     <FullModal isOpen={isOpen} onClose={onClose}>
