@@ -11,7 +11,7 @@ export function LevelBanner({ image, level, ...styleProps }: Props) {
   return (
     <div className={bannerStyle(styleProps)}>
       {typeof image === 'string' ? <img src={image} width={160} height={160} alt={image} /> : image}
-      <p className={levelTagStyle}>{level}</p>
+      <p className={levelTagStyle}>Lv.{level}</p>
     </div>
   );
 }
@@ -24,4 +24,7 @@ const levelTagStyle = css({
   textStyle: 'glyph12.regular',
   fontSize: 10,
   lineHeight: '20px',
+  position: 'absolute',
+  bottom: '3px',
+  right: '3px',
 });

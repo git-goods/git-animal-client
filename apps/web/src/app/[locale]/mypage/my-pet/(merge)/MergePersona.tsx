@@ -6,7 +6,7 @@ import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
-import { Banner, Button, FullModalBase } from '@gitanimals/ui-panda';
+import { Button, FullModalBase, LevelBanner } from '@gitanimals/ui-panda';
 import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -143,7 +143,12 @@ const SelectPersonaList = wrap
             onClick={() => onSelectPersona(persona)}
             className={css({ outline: 'none' })}
           >
-            <Banner image={getPersonaImage(persona.type)} size="small" selected={selectPersona.includes(persona.id)} />
+            <LevelBanner
+              image={getPersonaImage(persona.type)}
+              selected={selectPersona.includes(persona.id)}
+              level={Number(persona.level)}
+              size="small"
+            />
           </button>
         ))}
       </>
