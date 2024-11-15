@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
-import Portal from './Portal';
+import { Portal } from '../portal';
 
 interface Props extends ComponentProps<typeof Portal> {
   /**

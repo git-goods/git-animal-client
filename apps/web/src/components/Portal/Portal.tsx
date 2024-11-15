@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
  * @description react.createPortal을 이용해 document.body에 children을 렌더링합니다
  * @param children
  */
-const Portal = ({ children }: PropsWithChildren) => {
+export const Portal = ({ children }: PropsWithChildren) => {
   const [container, setContainer] = useState<Element | null>(null);
 
   useEffect(() => {
@@ -18,5 +18,3 @@ const Portal = ({ children }: PropsWithChildren) => {
 
   return createPortal(children, container);
 };
-
-export default Portal;

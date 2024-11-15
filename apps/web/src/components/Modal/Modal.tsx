@@ -4,7 +4,7 @@ import { center } from '_panda/patterns';
 import { useBodyLock, useOutsideClick } from '@gitanimals/react';
 import { X } from 'lucide-react';
 
-import Portal from '../Portal2/Portal';
+import { Portal } from '../portal';
 
 interface ModalProps {
   isOpen: boolean;
