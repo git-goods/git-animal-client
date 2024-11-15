@@ -14,6 +14,7 @@ interface ScreenModalProps {
 
 /**
  * 화면 전체를 덮는 모달 컴포넌트
+ * @deprecated
  */
 function ScreenModalRoot({ isOpen, onClose, children }: PropsWithChildren<ScreenModalProps>) {
   const { dialogRef } = useDialog({ isOpen, onClose });

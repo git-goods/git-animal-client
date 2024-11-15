@@ -11,7 +11,7 @@ interface Props {
   isOpen: boolean;
   onClose?: () => void;
 }
-
+/** @deprecated */
 export function Modal({ isOpen, onClose, children }: PropsWithChildren<Props>) {
   const { dialogRef } = useDialog({ isOpen, onClose });
 
