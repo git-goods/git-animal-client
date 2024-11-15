@@ -7,32 +7,31 @@ import { motion } from 'framer-motion';
 
 import { getPersonaImage } from '@/utils/image';
 
-const mergePersona = ({ targetPersona, materialPersona }: { targetPersona?: Persona; materialPersona?: Persona }) => {
+type MergePersonaProps = {
+  targetPersona: Persona | null;
+  materialPersona: Persona | null;
+};
+
+const mergePersona = ({ targetPersona, materialPersona }: MergePersonaProps) => {
   if (!targetPersona || !materialPersona) return undefined;
+
+  const materialLevel = Number(materialPersona.level) > 0 ? Number(materialPersona.level) : 1;
 
   return {
     ...targetPersona,
-    level: String(Number(targetPersona.level) + Number(materialPersona.level)),
+    level: String(Number(targetPersona.level) + materialLevel),
   };
 };
 
-export const MergeAnimation = ({
-  materialPersona,
-  targetPersona,
-}: {
-  materialPersona?: Persona;
-  targetPersona?: Persona;
-}) => {
+export const MergePreview = ({ materialPersona, targetPersona }: MergePersonaProps) => {
   const resultPersona = mergePersona({ targetPersona, materialPersona });
 
   return (
     <div className={containerStyle}>
       <div className={itemContainerStyle}>
-        <div className={itemStyle}>{targetPersona ? <MergeItem persona={targetPersona} /> : <MergeEmptyItem />}</div>
+        {targetPersona ? <MergeItem persona={targetPersona} /> : <MergeEmptyItem />}
         <div className={plusSignStyle}>+</div>
-        <div className={itemStyle}>
-          {materialPersona ? <MergeItem persona={materialPersona} /> : <MergeEmptyItem />}
-        </div>
+        {materialPersona ? <MergeItem persona={materialPersona} /> : <MergeEmptyItem />}
 
         <div className={arrowStyle}>=</div>
         <ResultItemAnimation isVisible={Boolean(resultPersona)} key={resultPersona?.id}>
@@ -47,6 +46,7 @@ const containerStyle = css({
   position: 'relative',
   padding: '32px',
   overflow: 'hidden',
+  minHeight: 'fit-content',
 });
 
 const itemContainerStyle = flex({
@@ -58,7 +58,7 @@ const itemContainerStyle = flex({
 const itemStyle = css({
   position: 'relative',
   width: '120px',
-  height: '120px',
+  // height: '120px',
   backgroundColor: 'gray.700',
   padding: '8px',
 });
@@ -84,14 +84,6 @@ const arrowStyle = css({
   marginX: '16px',
 });
 
-const resultItemStyle = css({
-  width: '120px',
-  height: '120px',
-  borderRadius: '8px',
-  padding: '8px',
-  position: 'relative',
-});
-
 const flashEffectStyle = css({
   position: 'absolute',
   inset: 0,
@@ -101,21 +93,21 @@ const flashEffectStyle = css({
 
 function MergeEmptyItem() {
   return (
-    <>
+    <div className={itemStyle}>
       <img src="/mypage/merge/merge-empty.svg" alt="empty" className={imageStyle} />
       <div className={levelTextStyle}>Level ?</div>
-    </>
+    </div>
   );
 }
 
 function MergeItem({ persona }: PropsWithChildren<{ persona: Persona }>) {
   return (
-    <>
+    <div className={itemStyle}>
       <div className={mergeItemStyle}>
         <img src={getPersonaImage(persona.type)} alt="Level 3 Fish" className={imageStyle} />
       </div>
       <div className={levelTextStyle}>Level {persona.level}</div>
-    </>
+    </div>
   );
 }
 
@@ -128,7 +120,7 @@ const mergeItemStyle = css({
 function ResultItemAnimation({ isVisible, children }: PropsWithChildren<{ isVisible: boolean }>) {
   return (
     <motion.div
-      className={resultItemStyle}
+      className={css({ position: 'relative' })}
       initial={{ scale: 1 }}
       animate={{
         scale: isVisible ? [1, 1.2, 1] : 1,

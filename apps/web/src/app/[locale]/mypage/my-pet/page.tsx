@@ -18,21 +18,16 @@ import { getPersonaImage } from '@/utils/image';
 
 import { SelectPersonaList } from '../PersonaList';
 
-import { MergePersona } from './MergePersona';
+import { MergePersona } from './(merge)';
 
 function MypageMyPets() {
   const t = useTranslations('Mypage');
   const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
-  const [isMergeOpen, setIsMergeOpen] = useState(false);
 
   return (
     <>
       <div className={cx(subStyle, flex({ flexDir: 'column' }))}>
-        <SelectedPetTable
-          currentPersona={selectPersona}
-          reset={() => setSelectPersona(null)}
-          onMergeClick={() => setIsMergeOpen(true)}
-        />
+        <SelectedPetTable currentPersona={selectPersona} reset={() => setSelectPersona(null)} />
         <section className={selectPetContainerStyle}>
           <h2 className="heading">{t('pet-list')}</h2>
 
@@ -49,7 +44,6 @@ function MypageMyPets() {
         <p className={captionMessageStyle}>{t('sell-to-other')}</p>
       </div>
       <div className={noticeStyle}>{t('no-mobile-support')}</div>
-      <MergePersona isOpen={isMergeOpen} onClose={() => setIsMergeOpen(false)} />
     </>
   );
 }
@@ -118,12 +112,12 @@ const selectPetContainerStyle = css({
 interface SelectedPetTableProps {
   currentPersona: Persona | null;
   reset: () => void;
-  onMergeClick: () => void;
 }
 
-function SelectedPetTable({ currentPersona, reset, onMergeClick }: SelectedPetTableProps) {
+function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProps) {
   const queryClient = useQueryClient();
   const t = useTranslations('Shop');
+  const [isMergeOpen, setIsMergeOpen] = useState(false);
 
   const { mutate: dropPetMutation } = useMutation({
     mutationFn: (personaId: string) => dropPet({ personaId }),
@@ -167,13 +161,16 @@ function SelectedPetTable({ currentPersona, reset, onMergeClick }: SelectedPetTa
                 100P {t('sell')}
               </Button>
               {/* TODO: 합치기 기능 추가 시*/}
-              <Button variant="secondary" onClick={onMergeClick}>
+              <Button variant="secondary" onClick={() => setIsMergeOpen(true)}>
                 {t('merge')}
               </Button>
             </div>
           </>
         )}
       </div>
+      {currentPersona && (
+        <MergePersona isOpen={isMergeOpen} onClose={() => setIsMergeOpen(false)} targetPersona={currentPersona} />
+      )}
     </div>
   );
 }

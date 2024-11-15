@@ -54,13 +54,7 @@ const resultTextStyle = css({
 function MotionContainer({ children, onClose }: PropsWithChildren<{ onClose: () => void }>) {
   return (
     <AnimatePresence mode="wait">
-      <div
-        className={containerStyle}
-        onClick={(e) => {
-          onClose();
-          e.stopPropagation();
-        }}
-      >
+      <div className={containerStyle} onClick={() => onClose()}>
         <motion.div
           variants={containerInnerVariants}
           initial="initial"

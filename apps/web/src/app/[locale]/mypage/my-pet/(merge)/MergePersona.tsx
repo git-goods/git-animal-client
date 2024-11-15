@@ -15,58 +15,63 @@ import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientSession, useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
+import { MergePreview } from './MergePreview';
 import { MergeResultModal } from './MergeResult';
-import { MergeAnimation } from './Merging';
-
-const INITIAL_SELECT_PERSONA_OBJ = { material: undefined, target: undefined } as const;
 
 interface MergePersonaProps {
   isOpen: boolean;
   onClose: () => void;
+  targetPersona: Persona;
 }
 
-export function MergePersona({ isOpen, onClose }: MergePersonaProps) {
+export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona }: MergePersonaProps) {
   const queryClient = useQueryClient();
   const t = useTranslations('Mypage.Merge');
+
   const [resultData, setResultData] = useState<MergePersonaLevelResponse | null>(null);
-  const [selectPersonaObj, setSelectPersonaObj] = useState<{ material?: Persona; target?: Persona }>(
-    INITIAL_SELECT_PERSONA_OBJ,
-  );
+
+  const [meterialPersona, setMeterialPersona] = useState<Persona | null>(null);
+  const [targetPersona, setTargetPersona] = useState<Persona>(initTargetPersona);
 
   const session = useClientSession();
   const token = session.data?.user.accessToken as string;
-  const isMergeDisabled = !selectPersonaObj.material || !selectPersonaObj.target;
+  const isMergeDisabled = !meterialPersona || !targetPersona;
 
   const { mutate: mergePersonaLevel, isPending: isMerging } = useMergePersonaLevelByToken(token, {
     onSuccess: (data) => {
-      setSelectPersonaObj((prev) => ({ ...prev, material: undefined, target: data }));
+      setMeterialPersona(null);
       setResultData(data);
+      setTargetPersona(data);
       queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
     },
   });
 
   const onMergeAction = () => {
-    if (!selectPersonaObj.target?.id || !selectPersonaObj.material?.id) {
+    if (!targetPersona?.id || !meterialPersona?.id) {
       return;
     }
 
     mergePersonaLevel({
-      increasePersonaId: selectPersonaObj.target.id,
-      deletePersonaId: selectPersonaObj.material.id,
+      increasePersonaId: targetPersona.id,
+      deletePersonaId: meterialPersona.id,
     });
   };
 
   const onSelectPersona = (currentSelectPersona: Persona) => {
-    setSelectPersonaObj(getMergePersona({ ...selectPersonaObj, currentSelectPersona }));
+    if (currentSelectPersona.id === targetPersona.id) {
+      setMeterialPersona(null);
+    } else {
+      setMeterialPersona(currentSelectPersona);
+    }
   };
 
   return (
     <FullModalBase isOpen={isOpen} onClose={onClose}>
-      <MergeAnimation targetPersona={selectPersonaObj.target} materialPersona={selectPersonaObj.material} />
+      <MergePreview targetPersona={targetPersona} materialPersona={meterialPersona} />
 
       <div className={listStyle}>
         <SelectPersonaList
-          selectPersona={Object.values(selectPersonaObj).map((persona) => persona?.id ?? '')}
+          selectPersona={meterialPersona ? [meterialPersona.id] : []}
           onSelectPersona={onSelectPersona}
         />
       </div>
@@ -86,30 +91,6 @@ export function MergePersona({ isOpen, onClose }: MergePersonaProps) {
     </FullModalBase>
   );
 }
-
-const getMergePersona = ({
-  target,
-  material,
-  currentSelectPersona,
-}: {
-  target?: Persona;
-  material?: Persona;
-  currentSelectPersona: Persona;
-}) => {
-  if (currentSelectPersona.id === target?.id) {
-    return { target: undefined, material };
-  }
-
-  if (currentSelectPersona.id === material?.id) {
-    return { target, material: undefined };
-  }
-
-  if (target) {
-    return { target, material: currentSelectPersona };
-  }
-
-  return { target: currentSelectPersona, material };
-};
 
 const bottomButtonStyle = css({ display: 'flex', justifyContent: 'center', gap: 12 });
 
