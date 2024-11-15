@@ -36,6 +36,7 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
   const session = useClientSession();
   const token = session.data?.user.accessToken as string;
   const isMergeDisabled = !meterialPersona || !targetPersona;
+  const selectPersona = [targetPersona.id, meterialPersona?.id].filter(Boolean) as string[];
 
   const { mutate: mergePersonaLevel, isPending: isMerging } = useMergePersonaLevelByToken(token, {
     onSuccess: (data) => {
@@ -70,10 +71,7 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
       <MergePreview targetPersona={targetPersona} materialPersona={meterialPersona} />
 
       <div className={listStyle}>
-        <SelectPersonaList
-          selectPersona={meterialPersona ? [meterialPersona.id] : []}
-          onSelectPersona={onSelectPersona}
-        />
+        <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
       </div>
 
       <div className={bottomButtonStyle}>
