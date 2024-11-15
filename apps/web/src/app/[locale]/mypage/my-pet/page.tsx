@@ -169,7 +169,12 @@ function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProps) {
         )}
       </div>
       {currentPersona && (
-        <MergePersona isOpen={isMergeOpen} onClose={() => setIsMergeOpen(false)} targetPersona={currentPersona} />
+        <MergePersona
+          key={currentPersona.id}
+          isOpen={isMergeOpen}
+          onClose={() => setIsMergeOpen(false)}
+          targetPersona={currentPersona}
+        />
       )}
     </div>
   );
