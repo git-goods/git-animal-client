@@ -35,5 +35,5 @@ export default defineConfig({
   outdir: 'styled-system',
 
   // delete default presets
-  presets: [],
+  presets: ['@shadow-panda/preset'],
 });
