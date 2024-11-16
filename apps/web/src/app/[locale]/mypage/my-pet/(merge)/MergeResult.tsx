@@ -66,12 +66,7 @@ function MotionContainer({ children, onClose }: PropsWithChildren<{ onClose: () 
             <button onClick={onClose} className={closeButtonStyle}>
               <X size={20} />
             </button>
-            <motion.div
-              variants={contentStranggerVariants}
-              initial="initial"
-              animate="animate"
-              className={contentStyle}
-            >
+            <motion.div variants={contentStaggerVariants} initial="initial" animate="animate" className={contentStyle}>
               {children}
             </motion.div>
           </div>
@@ -137,7 +132,7 @@ const contentStyle = css({
   textAlign: 'center',
 });
 
-const contentStranggerVariants = {
+const contentStaggerVariants = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0, transition: { delay: 0.3 } },
 };
