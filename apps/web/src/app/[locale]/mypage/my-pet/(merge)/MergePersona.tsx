@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
+import type { GetAllMyPersonasResponse, MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
 import { Button, FullModalBase, LevelBanner } from '@gitanimals/ui-panda';
 import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banner';
@@ -39,11 +39,45 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
   const selectPersona = [targetPersona.id, materialPersona?.id].filter(Boolean) as string[];
 
   const { mutate: mergePersonaLevel, isPending: isMerging } = useMergePersonaLevelByToken(token, {
+    onMutate: async (variables) => {
+      const oldData = queryClient.getQueryData<GetAllMyPersonasResponse>(userQueries.allPersonasKey()); // 현재 캐시된 데이터 가져오기
+
+      if (!oldData) {
+        return;
+      }
+      // 새로운 데이터로 가공
+      const newData = { ...oldData }; // 객체 복사
+
+      newData.personas = [...oldData.personas].filter(
+        // 내부 데이터 복사
+        (item) => item.id !== variables.deletePersonaId,
+      );
+
+      queryClient.setQueryData(userQueries.allPersonasKey(), { ...newData });
+
+      return { oldData }; // 다음 context로 넘기기 위해 반환
+    },
+    onError: (err, newData, context: any) => {
+      // 에러 발생시 이전 데이터로 캐시 저장
+      if (context?.oldData) {
+        queryClient.setQueryData(userQueries.allPersonasKey(), context.oldData);
+      }
+    },
+
     onSuccess: (data) => {
       setMaterialPersona(null);
       setResultData(data);
       setTargetPersona(data);
-      queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
+      const prevAllPersonaData = queryClient.getQueryData<GetAllMyPersonasResponse>(userQueries.allPersonasKey()); // 현재 캐시된 데이터 가져오기
+
+      const newPersonas = prevAllPersonaData?.personas.map((item) => {
+        if (item.id === data.id) {
+          return { ...data };
+        }
+        return item;
+      });
+
+      queryClient.setQueryData(userQueries.allPersonasKey(), { ...prevAllPersonaData, personas: newPersonas });
     },
   });
 
@@ -83,6 +117,7 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
         </Button>
       </div>
       <MergeResultModal
+        key={resultData?.id}
         isOpen={Boolean(resultData)}
         onClose={() => setResultData(null)}
         result={resultData as MergePersonaLevelResponse}

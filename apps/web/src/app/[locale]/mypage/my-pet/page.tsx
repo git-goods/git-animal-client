@@ -35,9 +35,6 @@ function MypageMyPets() {
             <SelectPersonaList
               selectPersona={selectPersona ? [selectPersona.id] : []}
               onSelectPersona={(persona) => setSelectPersona(persona)}
-              initSelectPersonas={(list) => {
-                setSelectPersona(list[0]);
-              }}
             />
           </div>
         </section>
