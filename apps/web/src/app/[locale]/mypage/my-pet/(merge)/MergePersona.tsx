@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import type { GetAllMyPersonasResponse, MergePersonaLevelResponse, Persona } from '@gitanimals/api';
+import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
 import { Button, FullModalBase, LevelBanner } from '@gitanimals/ui-panda';
-import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banner';
+import { BannerSkeletonList } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 
@@ -39,45 +39,11 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
   const selectPersona = [targetPersona.id, materialPersona?.id].filter(Boolean) as string[];
 
   const { mutate: mergePersonaLevel, isPending: isMerging } = useMergePersonaLevelByToken(token, {
-    onMutate: async (variables) => {
-      const oldData = queryClient.getQueryData<GetAllMyPersonasResponse>(userQueries.allPersonasKey()); // 현재 캐시된 데이터 가져오기
-
-      if (!oldData) {
-        return;
-      }
-      // 새로운 데이터로 가공
-      const newData = { ...oldData }; // 객체 복사
-
-      newData.personas = [...oldData.personas].filter(
-        // 내부 데이터 복사
-        (item) => item.id !== variables.deletePersonaId,
-      );
-
-      queryClient.setQueryData(userQueries.allPersonasKey(), { ...newData });
-
-      return { oldData }; // 다음 context로 넘기기 위해 반환
-    },
-    onError: (err, newData, context: any) => {
-      // 에러 발생시 이전 데이터로 캐시 저장
-      if (context?.oldData) {
-        queryClient.setQueryData(userQueries.allPersonasKey(), context.oldData);
-      }
-    },
-
     onSuccess: (data) => {
       setMaterialPersona(null);
       setResultData(data);
       setTargetPersona(data);
-      const prevAllPersonaData = queryClient.getQueryData<GetAllMyPersonasResponse>(userQueries.allPersonasKey()); // 현재 캐시된 데이터 가져오기
-
-      const newPersonas = prevAllPersonaData?.personas.map((item) => {
-        if (item.id === data.id) {
-          return { ...data };
-        }
-        return item;
-      });
-
-      queryClient.setQueryData(userQueries.allPersonasKey(), { ...prevAllPersonaData, personas: newPersonas });
+      queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
     },
   });
 
@@ -153,19 +119,8 @@ interface SelectPersonaListProps {
 }
 
 const SelectPersonaList = wrap
-  .ErrorBoundary({
-    // TODO: 공통 에러 컴포넌트로 대체
-    fallback: <div>error</div>,
-  })
-  .Suspense({
-    fallback: (
-      <>
-        {Array.from({ length: 6 }).map((_, index) => (
-          <BannerSkeleton key={index} size="small" />
-        ))}
-      </>
-    ),
-  })
+  .ErrorBoundary({ fallback: <div>error</div> })
+  .Suspense({ fallback: <BannerSkeletonList length={6} size="small" /> })
   .on(function SelectPersonaList({ selectPersona, onSelectPersona }: SelectPersonaListProps) {
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
@@ -173,22 +128,39 @@ const SelectPersonaList = wrap
     return (
       <>
         {data.personas.map((persona) => (
-          <button
-            key={`${persona.id}-${persona.visible}`}
+          <MemoizedPersonaItem
+            key={persona.id}
+            persona={persona}
+            isSelected={selectPersona.includes(persona.id)}
             onClick={() => onSelectPersona(persona)}
-            className={css({ outline: 'none' })}
-          >
-            <LevelBanner
-              image={getPersonaImage(persona.type)}
-              selected={selectPersona.includes(persona.id)}
-              level={Number(persona.level)}
-              size="small"
-            />
-          </button>
+          />
         ))}
       </>
     );
   });
+
+interface PersonaItemProps {
+  persona: Persona;
+  isSelected: boolean;
+  onClick: () => void;
+}
+
+function PersonaItem({ persona, isSelected, onClick }: PersonaItemProps) {
+  return (
+    <button onClick={onClick} className={css({ outline: 'none' })}>
+      <LevelBanner
+        image={getPersonaImage(persona.type)}
+        selected={isSelected}
+        level={Number(persona.level)}
+        size="small"
+      />
+    </button>
+  );
+}
+
+const MemoizedPersonaItem = memo(PersonaItem, (prev, next) => {
+  return prev.isSelected === next.isSelected && prev.persona.level === next.persona.level;
+});
 
 const SpinningLoader = () => {
   return (

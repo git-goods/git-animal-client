@@ -55,24 +55,41 @@ export const SelectPersonaList = wrap
 
       return viewListSorted;
     }, [data]);
-
     return (
       <>
         {viewList.map((persona) => (
-          <button
-            key={`${persona.id}-${persona.visible}`}
+          <MemoizedPersonaItem
+            key={persona.id}
+            persona={persona}
+            isSelected={selectPersona.includes(persona.id)}
             onClick={() => onSelectPersona(persona)}
-            disabled={loadingPersona?.includes(persona.id)}
-            className={css({ outline: 'none' })}
-          >
-            <Banner
-              loading={loadingPersona?.includes(persona.id)}
-              image={getPersonaImage(persona.type)}
-              size="small"
-              selected={selectPersona.includes(persona.id)}
-            />
-          </button>
+            isLoading={loadingPersona?.includes(persona.id) ?? false}
+          />
         ))}
       </>
     );
   });
+
+interface PersonaItemProps {
+  persona: Persona;
+  isSelected: boolean;
+  onClick: () => void;
+  isLoading: boolean;
+}
+
+function PersonaItem({ persona, isSelected, onClick, isLoading }: PersonaItemProps) {
+  return (
+    <button
+      key={`${persona.id}-${persona.visible}`}
+      onClick={onClick}
+      disabled={isLoading}
+      className={css({ outline: 'none' })}
+    >
+      <Banner loading={isLoading} image={getPersonaImage(persona.type)} size="small" selected={isSelected} />
+    </button>
+  );
+}
+
+const MemoizedPersonaItem = React.memo(PersonaItem, (prev, next) => {
+  return prev.isSelected === next.isSelected && prev.persona.level === next.persona.level;
+});
