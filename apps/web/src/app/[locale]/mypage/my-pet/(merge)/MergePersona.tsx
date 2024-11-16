@@ -30,17 +30,17 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
 
   const [resultData, setResultData] = useState<MergePersonaLevelResponse | null>(null);
 
-  const [meterialPersona, setMeterialPersona] = useState<Persona | null>(null);
+  const [materialPersona, setMaterialPersona] = useState<Persona | null>(null);
   const [targetPersona, setTargetPersona] = useState<Persona>(initTargetPersona);
 
   const session = useClientSession();
   const token = session.data?.user.accessToken as string;
-  const isMergeDisabled = !meterialPersona || !targetPersona;
-  const selectPersona = [targetPersona.id, meterialPersona?.id].filter(Boolean) as string[];
+  const isMergeDisabled = !materialPersona || !targetPersona;
+  const selectPersona = [targetPersona.id, materialPersona?.id].filter(Boolean) as string[];
 
   const { mutate: mergePersonaLevel, isPending: isMerging } = useMergePersonaLevelByToken(token, {
     onSuccess: (data) => {
-      setMeterialPersona(null);
+      setMaterialPersona(null);
       setResultData(data);
       setTargetPersona(data);
       queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
@@ -48,34 +48,36 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
   });
 
   const onMergeAction = () => {
-    if (!targetPersona?.id || !meterialPersona?.id) {
+    if (!targetPersona?.id || !materialPersona?.id) {
       return;
     }
 
     mergePersonaLevel({
       increasePersonaId: targetPersona.id,
-      deletePersonaId: meterialPersona.id,
+      deletePersonaId: materialPersona.id,
     });
   };
 
   const onSelectPersona = (currentSelectPersona: Persona) => {
     if (currentSelectPersona.id === targetPersona.id) {
-      setMeterialPersona(null);
+      setMaterialPersona(null);
     } else {
-      setMeterialPersona(currentSelectPersona);
+      setMaterialPersona(currentSelectPersona);
     }
   };
 
   return (
     <FullModalBase isOpen={isOpen} onClose={onClose}>
-      <MergePreview targetPersona={targetPersona} materialPersona={meterialPersona} />
+      <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
 
       <div className={listStyle}>
         <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
       </div>
 
       <div className={bottomButtonStyle}>
-        <Button variant="secondary">{t('cancel')}</Button>
+        <Button variant="secondary" onClick={onClose}>
+          {t('cancel')}
+        </Button>
         <Button disabled={isMergeDisabled} onClick={onMergeAction}>
           {t('merge')}
         </Button>
