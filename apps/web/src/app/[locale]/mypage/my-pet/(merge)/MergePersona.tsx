@@ -71,9 +71,7 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
       <h1 className={headingStyle}>Merge Persona Level</h1>
       <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
 
-      <div className={listStyle}>
-        <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
-      </div>
+      <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
 
       <div className={bottomButtonStyle}>
         <Button variant="secondary" onClick={onClose}>
@@ -103,22 +101,6 @@ const headingStyle = css({
 
 const bottomButtonStyle = css({ display: 'flex', justifyContent: 'center', gap: 12 });
 
-const listStyle = cx(
-  flex({
-    gap: 4,
-    w: '100%',
-    h: '100%',
-    minH: '0',
-    overflowY: 'auto',
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    maxHeight: 'calc(100vh - 542px)',
-    overflow: 'auto',
-  }),
-  customScrollStyle,
-);
-
 interface SelectPersonaListProps {
   selectPersona: string[];
   onSelectPersona: (persona: Persona) => void;
@@ -134,18 +116,49 @@ const SelectPersonaList = wrap
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
 
     return (
-      <>
-        {data.personas.map((persona) => (
-          <MemoizedPersonaItem
-            key={persona.id}
-            persona={persona}
-            isSelected={selectPersona.includes(persona.id)}
-            onClick={() => onSelectPersona(persona)}
-          />
-        ))}
-      </>
+      <section className={listSectionStyle}>
+        <div className={listSectionTitleStyle}>
+          <p>Please choose a pet to use to merge the level. The pet used disappears.</p>
+          <div></div>
+        </div>
+        <div className={listStyle}>
+          {data.personas.map((persona) => (
+            <MemoizedPersonaItem
+              key={persona.id}
+              persona={persona}
+              isSelected={selectPersona.includes(persona.id)}
+              onClick={() => onSelectPersona(persona)}
+            />
+          ))}
+        </div>
+      </section>
     );
   });
+
+const listSectionStyle = css({});
+
+const listSectionTitleStyle = css({
+  textStyle: 'glyph16.regular',
+  color: 'white.white_50',
+  mb: 16,
+  display: 'flex',
+  justifyContent: 'space-between',
+});
+
+const listStyle = cx(
+  flex({
+    gap: 4,
+    w: '100%',
+    h: '100%',
+    minH: '0',
+    overflowY: 'auto',
+    display: 'flex',
+    flexWrap: 'wrap',
+    maxHeight: 'calc(100vh - 542px)',
+    overflow: 'auto',
+  }),
+  customScrollStyle,
+);
 
 interface PersonaItemProps {
   persona: Persona;

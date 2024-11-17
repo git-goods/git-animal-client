@@ -2,7 +2,7 @@
 
 import { css } from '_panda/css';
 
-import { OrderTypeSelect, SortDirectionSelect } from '../SearchOption';
+import { OrderTypeSelect, SortDirectionSelect } from '../../../../components/SelectOption';
 import { useSearchOptions } from '../useSearchOptions';
 
 import { PersonaSearch } from './PersonaSearch';

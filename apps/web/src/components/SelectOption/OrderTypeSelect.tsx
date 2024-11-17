@@ -1,8 +1,8 @@
-import SearchOptionSelect from './SearchOptionSelect';
+import { SelectOption } from '@/components/SelectOption';
 
-function OrderTypeSelect({ onSelect }: { onSelect: (orderType: string) => void }) {
+export function OrderTypeSelect({ onSelect }: { onSelect: (orderType: string) => void }) {
   return (
-    <SearchOptionSelect
+    <SelectOption
       onSelect={onSelect}
       options={[
         { label: 'Date', value: 'CREATED_AT' },
@@ -12,5 +12,3 @@ function OrderTypeSelect({ onSelect }: { onSelect: (orderType: string) => void }
     />
   );
 }
-
-export default OrderTypeSelect;

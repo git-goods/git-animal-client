@@ -1,12 +1,17 @@
 import React from 'react';
 import { center } from '_panda/patterns';
 
-function SearchOptionSelect({
+type SelectOptionItem = {
+  label: string;
+  value: string;
+};
+
+export function SelectOption({
   onSelect,
   options,
 }: {
-  onSelect: (orderType: string) => void;
-  options: { label: string; value: string }[];
+  onSelect: (select: string) => void;
+  options: SelectOptionItem[];
 }) {
   return (
     <select className={selectStyle} onChange={(e) => onSelect(e.target.value)}>
@@ -18,7 +23,6 @@ function SearchOptionSelect({
     </select>
   );
 }
-export default SearchOptionSelect;
 
 const selectStyle = center({
   textStyle: 'glyph16.regular',
