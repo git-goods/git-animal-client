@@ -68,6 +68,7 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
 
   return (
     <FullModalBase isOpen={isOpen} onClose={onClose}>
+      <h1 className={headingStyle}>Merge Persona Level</h1>
       <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
 
       <div className={listStyle}>
@@ -92,6 +93,13 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
     </FullModalBase>
   );
 }
+
+const headingStyle = css({
+  textStyle: 'glyph48.bold',
+  color: 'white.white_100',
+  textAlign: 'center',
+  marginTop: 40,
+});
 
 const bottomButtonStyle = css({ display: 'flex', justifyContent: 'center', gap: 12 });
 

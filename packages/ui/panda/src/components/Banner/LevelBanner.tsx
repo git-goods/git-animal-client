@@ -10,7 +10,7 @@ type Props = BannerStyleProps & {
 export function LevelBanner({ image, level, ...styleProps }: Props) {
   return (
     <div className={bannerStyle(styleProps)}>
-      {typeof image === 'string' ? <img src={image} width={160} height={160} alt={image} /> : image}
+      {typeof image === 'string' ? <img src={image} width={160} height={160} alt={image} draggable={false} /> : image}
       <p className={levelTagStyle}>Lv.{level}</p>
     </div>
   );

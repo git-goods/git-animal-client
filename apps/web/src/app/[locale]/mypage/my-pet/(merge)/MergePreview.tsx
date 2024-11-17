@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import type { PropsWithChildren } from 'react';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import type { Persona } from '@gitanimals/api';
 import { motion } from 'framer-motion';
+import { EqualIcon, PlusIcon } from 'lucide-react';
 
 import { getPersonaImage } from '@/utils/image';
 
@@ -30,10 +31,10 @@ export const MergePreview = ({ materialPersona, targetPersona }: MergePersonaPro
     <div className={containerStyle}>
       <div className={itemContainerStyle}>
         {targetPersona ? <MergeItem persona={targetPersona} /> : <MergeEmptyItem />}
-        <div className={plusSignStyle}>+</div>
+        <PlusIcon width={24} height={24} className={iconStyle} color="#FFFFFFBF" />
         {materialPersona ? <MergeItem persona={materialPersona} /> : <MergeEmptyItem />}
 
-        <div className={arrowStyle}>=</div>
+        <EqualIcon width={24} height={24} className={iconStyle} color="#FFFFFFBF" />
         <ResultItemAnimation isVisible={Boolean(resultPersona)} key={resultPersona?.id}>
           {resultPersona ? <MergeItem persona={resultPersona} /> : <MergeEmptyItem />}
         </ResultItemAnimation>
@@ -52,36 +53,17 @@ const containerStyle = css({
 const itemContainerStyle = flex({
   alignItems: 'center',
   justifyContent: 'center',
-  gap: '16px',
+  gap: 24,
+});
+
+const iconStyle = css({
+  marginBottom: 34,
 });
 
 const itemStyle = css({
   position: 'relative',
-  width: '120px',
-  // height: '120px',
   backgroundColor: 'gray.700',
   padding: '8px',
-});
-
-const imageStyle = css({
-  width: '100%',
-  height: '100%',
-  objectFit: 'contain',
-});
-
-const levelTextStyle = css({
-  textAlign: 'center',
-  marginTop: '8px',
-  fontSize: '14px',
-});
-
-const plusSignStyle = css({
-  fontSize: '24px',
-  fontWeight: 'bold',
-});
-
-const arrowStyle = css({
-  marginX: '16px',
 });
 
 const flashEffectStyle = css({
@@ -95,7 +77,7 @@ function MergeEmptyItem() {
   return (
     <div className={itemStyle}>
       <img src="/mypage/merge/merge-empty.svg" alt="empty" className={imageStyle} />
-      <div className={levelTextStyle}>Level ?</div>
+      <div className={cx(levelTextStyle, levelEmptyTextStyle)}>Level ?</div>
     </div>
   );
 }
@@ -110,6 +92,22 @@ function MergeItem({ persona }: PropsWithChildren<{ persona: Persona }>) {
     </div>
   );
 }
+const imageStyle = css({
+  objectFit: 'contain',
+  width: 120,
+  height: 120,
+});
+
+const levelTextStyle = css({
+  textAlign: 'center',
+  marginTop: '12px',
+  textStyle: 'glyph18.bold',
+  color: 'white.white_100',
+});
+
+const levelEmptyTextStyle = css({
+  color: 'white.white_75',
+});
 
 const mergeItemStyle = css({
   borderRadius: '16px',
