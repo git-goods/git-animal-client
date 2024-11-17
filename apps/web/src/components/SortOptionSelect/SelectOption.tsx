@@ -1,20 +1,20 @@
 import React from 'react';
 import { center } from '_panda/patterns';
 
-type SelectOptionItem = {
+type SelectOptionItem<T> = {
   label: string;
-  value: string;
+  value: T;
 };
 
-export function SelectOption({
+export function SelectOption<T extends string>({
   onSelect,
   options,
 }: {
-  onSelect: (select: string) => void;
-  options: SelectOptionItem[];
+  onSelect: (select: T) => void;
+  options: SelectOptionItem<T>[];
 }) {
   return (
-    <select className={selectStyle} onChange={(e) => onSelect(e.target.value)}>
+    <select className={selectStyle} onChange={(e) => onSelect(e.target.value as T)}>
       {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}

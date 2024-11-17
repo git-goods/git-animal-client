@@ -11,6 +11,12 @@ import { BannerSkeletonList } from '@gitanimals/ui-panda/src/components/Banner/B
 import { wrap } from '@suspensive/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 
+import {
+  OrderTypeSelect,
+  SortDirectionSelect,
+  useOrderTypeSelect,
+  useSortDirectionSelect,
+} from '@/components/SortOptionSelect';
 import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientSession, useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
@@ -115,11 +121,19 @@ const SelectPersonaList = wrap
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
 
+    const { orderType, setOrderType } = useOrderTypeSelect('LEVEL');
+    const { sortDirection, setSortDirection } = useSortDirectionSelect('DESC');
+
+    // TODO: 정렬
+
     return (
       <section className={listSectionStyle}>
         <div className={listSectionTitleStyle}>
           <p>Please choose a pet to use to merge the level. The pet used disappears.</p>
-          <div></div>
+          <div>
+            <OrderTypeSelect onSelect={setOrderType} />
+            <SortDirectionSelect onSelect={setSortDirection} />
+          </div>
         </div>
         <div className={listStyle}>
           {data.personas.map((persona) => (
