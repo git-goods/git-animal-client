@@ -6,7 +6,7 @@ import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
-import { Button, FullModalBase, LevelBanner } from '@gitanimals/ui-panda';
+import { Button, LargeDialog, LevelBanner } from '@gitanimals/ui-panda';
 import { BannerSkeletonList } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -67,8 +67,8 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
   };
 
   return (
-    // <LargeDialog open={isOpen} onOpenChange={onClose}>
-    <FullModalBase isOpen={isOpen} onClose={onClose}>
+    <LargeDialog open={isOpen} onOpenChange={onClose}>
+      {/* <FullModalBase isOpen={isOpen} onClose={onClose}> */}
       <h1 className={headingStyle}>Merge Persona Level</h1>
       <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
 
@@ -89,8 +89,7 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
         result={resultData as MergePersonaLevelResponse}
       />
       {isMerging && <SpinningLoader />}
-    </FullModalBase>
-    // </LargeDialog>
+    </LargeDialog>
   );
   // return (
   // <FullModalBase isOpen={isOpen} onClose={onClose}>

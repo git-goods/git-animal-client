@@ -26,20 +26,21 @@ export function LargeDialog({ children, ...props }: PropsWithChildren & Componen
 }
 
 const largeDialogContentStyle = css({
-  margin: 'auto',
   borderRadius: '16px',
   backgroundColor: 'gray.gray_150',
-  padding: '24px',
+  padding: '60px 40px',
 
-  width: 'calc(100vw - 400px)',
-  height: 'calc(100vh - 240px)',
+  maxWidth: 'calc(100% - 400px)',
+  maxHeight: 'calc(100% - 240px)',
+  width: '100%',
+  height: '100%',
 
   '@media (max-width: 1200px)': {
-    width: 'calc(100vw - 240px)',
-    height: 'calc(100vh - 120px)',
+    maxWidth: 'calc(100vw - 240px)',
+    maxHeight: 'calc(100vh - 120px)',
   },
   _mobile: {
-    width: '100vw',
-    height: '100vh',
+    maxWidth: '100vw',
+    maxHeight: '100vh',
   },
 });
