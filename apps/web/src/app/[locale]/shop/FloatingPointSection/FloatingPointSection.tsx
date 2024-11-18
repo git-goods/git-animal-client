@@ -15,7 +15,6 @@ export const FloatingPointSection = memo(
     .ErrorBoundary({ fallback: null })
     .on(function FloatingPointSection() {
       const { data } = useSuspenseQuery(userQueries.userOptions());
-      // const { data } = useGetSuspenseUser();
 
       return (
         <div className={divCss}>

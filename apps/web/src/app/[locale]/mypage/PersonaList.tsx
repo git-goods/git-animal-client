@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo } from 'react';
+import React, { memo, useEffect, useMemo } from 'react';
 import { css } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
@@ -90,6 +90,4 @@ function PersonaItem({ persona, isSelected, onClick, isLoading }: PersonaItemPro
   );
 }
 
-const MemoizedPersonaItem = React.memo(PersonaItem, (prev, next) => {
-  return prev.isSelected === next.isSelected && prev.persona.level === next.persona.level;
-});
+const MemoizedPersonaItem = memo(PersonaItem);
