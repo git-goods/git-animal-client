@@ -37,11 +37,11 @@ const mainCss = css({
 
 const h1Css = css({
   textStyle: 'glyph40.bold',
-  marginBottom: 12,
+  marginBottom: '12px',
 });
 
 const pCss = css({
-  marginBottom: 32,
+  marginBottom: '32px',
   '& a': {
     textDecoration: 'underline',
     color: 'blue',

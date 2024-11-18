@@ -43,8 +43,8 @@ export default function Example() {
 const listStyle = css({
   display: 'flex',
   flexDirection: 'column',
-  gap: '3',
-  p: '6',
+  gap: '3px',
+  p: '6px',
   md: {
     w: '400px',
   },

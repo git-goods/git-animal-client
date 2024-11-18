@@ -39,8 +39,8 @@ const floatingBackgroundDivCss = css({
 const coinCss = css({
   position: 'absolute',
   width: 'fit-content',
-  top: 860,
-  left: 80,
+  top: '860px',
+  left: '80px',
 });
 
 const coinVariants: Variants = {
@@ -58,8 +58,8 @@ const coinVariants: Variants = {
 const carrotCss = css({
   position: 'absolute',
   width: 'fit-content',
-  top: 300,
-  right: 86,
+  top: '300px',
+  right: '86px',
 });
 
 const carrotVariants: Variants = {
@@ -80,7 +80,7 @@ const backgroundDivCss = css({
   bottom: 0,
   left: 0,
   w: '100%',
-  h: 354,
+  h: '354px',
   overflow: 'hidden',
 
   '& img': {

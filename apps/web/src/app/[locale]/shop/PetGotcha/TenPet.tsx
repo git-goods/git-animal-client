@@ -114,7 +114,7 @@ const noticeMessageStyle = css({
   textStyle: 'glyph28.bold',
   color: 'white',
   textAlign: 'center',
-  mt: 12,
+  mt: '12px',
 });
 
 const headingStyle = css({

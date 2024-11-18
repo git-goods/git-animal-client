@@ -79,7 +79,7 @@ const headerBaseStyle = flex({
   position: 'fixed',
   padding: '0 20px',
   top: 0,
-  height: 60,
+  height: '60px',
   width: '100%',
   backgroundColor: 'white',
 });
@@ -119,7 +119,7 @@ const headerStyle = flex({
 });
 
 const headerBlockStyle = css({
-  height: 60,
+  height: '60px',
 });
 
 const navStyle = flex({

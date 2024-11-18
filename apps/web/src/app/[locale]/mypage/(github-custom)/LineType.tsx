@@ -22,8 +22,8 @@ const sectionContainer = css({
   flexDirection: 'column',
   width: '100%',
   maxHeight: '100%',
-  py: 40,
-  gap: 40,
+  py: '40px',
+  gap: '40px',
 
   _mobile: {
     background: 'none',

@@ -53,11 +53,11 @@ const containerStyle = css({
 const itemContainerStyle = flex({
   alignItems: 'center',
   justifyContent: 'center',
-  gap: 24,
+  gap: '24px',
 });
 
 const iconStyle = css({
-  marginBottom: 34,
+  marginBottom: '34px',
 });
 
 const itemStyle = css({
@@ -94,8 +94,8 @@ function MergeItem({ persona }: PropsWithChildren<{ persona: Persona }>) {
 }
 const imageStyle = css({
   objectFit: 'contain',
-  width: 120,
-  height: 120,
+  width: '120px',
+  height: '120px',
 });
 
 const levelTextStyle = css({

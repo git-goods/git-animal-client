@@ -56,8 +56,8 @@ function ScreenModalCloseButton({ onClose }: { onClose: () => void }) {
 
 const closeButtonStyle = css({
   position: 'absolute',
-  top: 24,
-  right: 24,
+  top: '24px',
+  right: '24px',
 });
 
 function ScreenModalHeading({ children }: { children: React.ReactNode }) {

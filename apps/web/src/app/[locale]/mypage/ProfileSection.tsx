@@ -91,10 +91,10 @@ const navStyle = css({
 });
 
 const navItemStyle = css({
-  padding: 4,
+  padding: '4px',
   display: 'flex',
   alignItems: 'center',
-  gap: 4,
+  gap: '4px',
   textStyle: 'glyph18.regular',
   color: 'white.white_50',
   '&.selected': {
@@ -109,11 +109,11 @@ const navItemStyle = css({
 
 const dividerStyle = css({
   background: 'white.white_25',
-  height: 1,
+  height: '1px',
   margin: 0,
   border: 'none',
-  marginTop: 48,
-  marginBottom: 20,
+  marginTop: '48px',
+  marginBottom: '20px',
   _mobile: {
     display: 'none',
   },

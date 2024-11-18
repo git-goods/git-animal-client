@@ -6,7 +6,7 @@ import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
-import { Button, FullModalBase, LevelBanner } from '@gitanimals/ui-panda';
+import { Button, LargeDialog, LevelBanner } from '@gitanimals/ui-panda';
 import { BannerSkeletonList } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -67,7 +67,7 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
   };
 
   return (
-    <FullModalBase isOpen={isOpen} onClose={onClose}>
+    <LargeDialog open={isOpen} onOpenChange={onClose}>
       <h1 className={headingStyle}>Merge Persona Level</h1>
       <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
 
@@ -88,18 +88,23 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
         result={resultData as MergePersonaLevelResponse}
       />
       {isMerging && <SpinningLoader />}
-    </FullModalBase>
+    </LargeDialog>
   );
+  // return (
+  // <FullModalBase isOpen={isOpen} onClose={onClose}>
+
+  //   </FullModalBase>
+  // );
 }
 
 const headingStyle = css({
   textStyle: 'glyph48.bold',
   color: 'white.white_100',
   textAlign: 'center',
-  marginTop: 40,
+  marginTop: '40px',
 });
 
-const bottomButtonStyle = css({ display: 'flex', justifyContent: 'center', gap: 12 });
+const bottomButtonStyle = css({ display: 'flex', justifyContent: 'center', gap: '12px' });
 
 interface SelectPersonaListProps {
   selectPersona: string[];
@@ -141,14 +146,14 @@ const listSectionStyle = css({});
 const listSectionTitleStyle = css({
   textStyle: 'glyph16.regular',
   color: 'white.white_50',
-  mb: 16,
+  mb: '16px',
   display: 'flex',
   justifyContent: 'space-between',
 });
 
 const listStyle = cx(
   flex({
-    gap: 4,
+    gap: '4px',
     w: '100%',
     h: '100%',
     minH: '0',

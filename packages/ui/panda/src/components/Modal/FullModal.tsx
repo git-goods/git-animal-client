@@ -57,8 +57,8 @@ function FullModalCloseButton({ onClose }: { onClose: () => void }) {
 
 const closeButtonStyle = css({
   position: 'absolute',
-  top: 24,
-  right: 24,
+  top: '24px',
+  right: '24px',
 });
 
 function FullModalHeading({ children }: { children: React.ReactNode }) {

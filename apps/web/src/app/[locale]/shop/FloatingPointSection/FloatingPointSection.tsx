@@ -3,11 +3,11 @@
 import { memo } from 'react';
 import Image from 'next/image';
 import { css } from '_panda/css';
+import { userQueries } from '@gitanimals/react-query';
 import { wrap } from '@suspensive/react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { addNumberComma } from '@/utils/number';
-import { userQueries } from '@gitanimals/react-query';
-import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const FloatingPointSection = memo(
   wrap
@@ -31,8 +31,8 @@ export const FloatingPointSection = memo(
 
 const divCss = css({
   position: 'fixed',
-  top: 88,
-  left: 20,
+  top: '88px',
+  left: '20px',
   w: 'fit-content',
   padding: '12px 16px',
   borderRadius: '12px',
@@ -41,7 +41,7 @@ const divCss = css({
 
   display: 'flex',
   flexDir: 'column',
-  gap: 4,
+  gap: '4px',
   color: 'white_100',
   backdropFilter: 'blur(7px)',
 });
@@ -53,6 +53,6 @@ const titleCss = css({
 const pointCss = css({
   display: 'flex',
   alignItems: 'center',
-  gap: 6,
+  gap: '6px',
   textStyle: 'glyph32.bold',
 });

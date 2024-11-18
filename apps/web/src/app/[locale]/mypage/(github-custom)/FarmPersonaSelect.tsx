@@ -98,7 +98,7 @@ export function FarmPersonaSelect({
 }
 const listStyle = cx(
   flex({
-    gap: 4,
+    gap: '4px',
     w: '100%',
     h: '100%',
     minH: '0',
@@ -117,7 +117,7 @@ const flexOverflowStyle = css({
   overflowY: 'auto',
   overflowX: 'hidden',
   width: '100%',
-  gap: 4,
+  gap: '4px',
   height: '100%',
   minHeight: '0',
   flexWrap: 'wrap',

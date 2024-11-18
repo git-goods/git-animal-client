@@ -52,7 +52,7 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
 const sectionContainerStyle = css({
   display: 'flex',
   flexDirection: 'column',
-  gap: 24,
+  gap: '24px',
 });
 
 const lineContainerStyle = css({
@@ -80,7 +80,7 @@ function SizeInputList({ onApply }: { onApply: (width: number, height: number) =
   return (
     <div className={sizeInputStyle}>
       <h2 className="heading">{t('customize-size')}</h2>
-      <div className={flex({ gap: 12 })}>
+      <div className={flex({ gap: '12px' })}>
         <SizeInput value={width} onChange={(e) => setWidth(parseInt(e.target.value))} name="width" />
         <SizeInput value={height} onChange={(e) => setHeight(parseInt(e.target.value))} name="height" />
         <Button
@@ -101,7 +101,7 @@ function SizeInputList({ onApply }: { onApply: (width: number, height: number) =
 
 const sizeInputStyle = css({
   position: 'relative',
-  mt: 24,
+  mt: '24px',
 
   '& .heading': {
     textStyle: 'glyph18.bold',

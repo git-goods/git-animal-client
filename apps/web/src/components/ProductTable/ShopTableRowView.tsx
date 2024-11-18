@@ -59,15 +59,15 @@ const skeletonStyle = css({
 
 export const rowStyle = css({
   width: '100%',
-  height: 80,
+  height: '80px',
   backgroundColor: 'white_10',
-  borderRadius: 12,
+  borderRadius: '12px',
 
   display: 'grid',
   gridTemplateColumns: '1fr 2.5fr 1fr 1fr 4.2fr 1.5fr',
   alignItems: 'center',
   padding: '0 32px',
-  gap: 16,
+  gap: '16px',
 
   textStyle: 'glyph20.regular',
   color: 'white.white_100',
@@ -75,7 +75,7 @@ export const rowStyle = css({
   '& button': {
     color: 'black.black',
     width: '100%',
-    paddingX: 6,
+    paddingX: '6px',
   },
 
   '& *': {

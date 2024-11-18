@@ -80,7 +80,7 @@ const backgroundListStyle = cx(
     width: 'fit-content',
     display: 'flex',
     flexWrap: 'nowrap',
-    gap: 4,
+    gap: '4px',
   }),
 );
 
@@ -93,8 +93,8 @@ const backgroundContainerStyle = cx(
 
 const backgroundItemStyle = css({
   border: '1px solid transparent',
-  width: 248,
-  borderRadius: 8,
+  width: '248px',
+  borderRadius: '8px',
   overflow: 'hidden',
 });
 

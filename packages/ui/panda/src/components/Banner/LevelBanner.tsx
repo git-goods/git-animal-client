@@ -17,12 +17,12 @@ export function LevelBanner({ image, level, ...styleProps }: Props) {
 }
 
 const levelTagStyle = css({
-  borderRadius: 12,
+  borderRadius: '12px',
   background: 'black.black_25',
   padding: '0 8px',
   color: 'white.white_75',
   textStyle: 'glyph12.regular',
-  fontSize: 10,
+  fontSize: '10px',
   lineHeight: '20px',
   position: 'absolute',
   bottom: '3px',
