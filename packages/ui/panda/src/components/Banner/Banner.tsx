@@ -50,3 +50,13 @@ const labelStyle = css({
 export function BannerSkeleton(props: BannerStyleProps) {
   return <div className={cx(bannerStyle(props), skeletonStyle({ color: 'white' }))} />;
 }
+
+export function BannerSkeletonList({ length, ...props }: BannerStyleProps & { length: number }) {
+  return (
+    <>
+      {Array.from({ length }).map((_, index) => (
+        <BannerSkeleton key={index} {...props} />
+      ))}
+    </>
+  );
+}

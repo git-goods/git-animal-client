@@ -1,12 +1,13 @@
 'use client';
 
+import { cx } from '_panda/css';
+
 import { AnimalCard } from '@/components/AnimalCard';
 import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
 
 import * as styles from './AnimalSlider.style';
 import AnimalSliderContainer from './AnimalSliderContainer';
 import AnimalSliderContainerMobile from './AnimalSliderContainerMobile';
-import { cx } from '_panda/css';
 
 interface Animal {
   type: string;

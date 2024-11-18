@@ -62,6 +62,7 @@
     "edit": "Edit",
     "pet-sold": "Pet sold successfully for [money]!",
     "prepare": "Prepare",
+    "merge": "Merge",
     "Background": {
       "buy-success": "Background purchased successfully",
       "buy-fail": "Failed to purchase background",
@@ -97,7 +98,12 @@
     "github-custom": "Github Custom",
     "invalid-size-error": "Invalid size",
     "farm-type-select-pet": "Select a pet for Farm Type",
-    "line-type-select-pet": "Select a pet for Line Type"
+    "line-type-select-pet": "Select a pet for Line Type",
+    "Merge": {
+      "merge": "Merge",
+      "merge-result": "Merge result",
+      "cancel": "Cancel"
+    }
   },
   "Event": {
     "event-end": "Event has ended.",

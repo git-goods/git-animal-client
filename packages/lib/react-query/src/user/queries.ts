@@ -12,7 +12,7 @@ export const userQueries = {
   allPersonasKey: () => [...userQueries.allKey(), 'all-persona'],
   allPersonasOptions: (username: string) =>
     queryOptions({
-      queryKey: [...userQueries.allPersonasKey(), username],
+      queryKey: userQueries.allPersonasKey(),
       queryFn: () => getAllMyPersonas(username),
     }),
 };
