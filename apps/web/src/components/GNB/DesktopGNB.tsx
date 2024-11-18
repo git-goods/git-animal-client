@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { css, cx } from '_panda/css';
@@ -41,7 +42,7 @@ export async function DesktopGNB() {
             <a href="/mypage" className={profileStyle}>
               <>
                 <div className="profile-image">
-                  <Image src={session.user.image} alt="profile" width={160} height={160} />
+                  <img src={session.user.image} alt="profile" width={160} height={160} />
                 </div>
                 <button className={center()}>
                   <span className="profile-name">{session.user.name}</span>

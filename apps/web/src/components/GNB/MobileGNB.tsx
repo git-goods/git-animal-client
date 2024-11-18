@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import type { ReactNode } from 'react';
@@ -48,7 +49,7 @@ export const MobileGNB = () => {
           {isAuth && (
             <Link href="/mypage">
               <div className="profile-image">
-                <Image src={data.user.image} alt="profile" width={28} height={28} />
+                <img src={data.user.image} alt="profile" width={28} height={28} />
               </div>
             </Link>
           )}

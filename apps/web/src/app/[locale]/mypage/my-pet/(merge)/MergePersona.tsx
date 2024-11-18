@@ -160,7 +160,7 @@ const listStyle = cx(
     overflowY: 'auto',
     display: 'flex',
     flexWrap: 'wrap',
-    maxHeight: 'calc(100vh - 542px)',
+    maxHeight: 'calc(100vh - 780px)',
     overflow: 'auto',
   }),
   customScrollStyle,
