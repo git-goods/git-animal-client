@@ -63,7 +63,6 @@ const listStyle = cx(
     overflowY: 'auto',
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center',
   }),
   customScrollStyle,
 );
@@ -158,7 +157,7 @@ function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProps) {
             <div>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</div>
             <div>{currentPersona.level}</div>
             <div></div>
-            <div className={flex({ gap: 8 })}>
+            <div className={flex({ gap: '8px' })}>
               <Button variant="secondary" onClick={onSellClick}>
                 100P {t('sell')}
               </Button>

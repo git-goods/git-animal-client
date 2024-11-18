@@ -8,5 +8,5 @@ function Main({ children }: PropsWithChildren<{}>) {
 export default Main;
 
 const containerStyle = css({
-  p: 8,
+  p: '8px',
 });

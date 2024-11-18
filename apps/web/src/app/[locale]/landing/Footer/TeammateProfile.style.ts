@@ -13,7 +13,7 @@ export const wrapperCss = css({
 });
 
 export const imageCss = css({
-  marginBottom: 8,
+  marginBottom: '8px',
 
   _mobile: {
     width: '32px',

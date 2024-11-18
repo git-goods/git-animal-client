@@ -6,11 +6,11 @@ export const TextField = (props: ComponentProps<'input'>) => {
 };
 
 const textFieldStyle = css({
-  height: 55,
+  height: '55px',
   padding: '14px 20px',
   alignItems: 'flex-start',
-  gap: 8,
-  borderRadius: 8,
+  gap: '8px',
+  borderRadius: '8px',
   border: '1px solid',
   borderColor: 'white.white_25',
   color: 'white.white_50',
