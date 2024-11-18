@@ -180,9 +180,7 @@ function PersonaItem({ persona, isSelected, onClick }: PersonaItemProps) {
   );
 }
 
-const MemoizedPersonaItem = memo(PersonaItem, (prev, next) => {
-  return prev.isSelected === next.isSelected && prev.persona.level === next.persona.level;
-});
+const MemoizedPersonaItem = memo(PersonaItem);
 
 const SpinningLoader = () => {
   return (
