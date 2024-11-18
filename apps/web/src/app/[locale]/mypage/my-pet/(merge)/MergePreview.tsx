@@ -45,7 +45,7 @@ export const MergePreview = ({ materialPersona, targetPersona }: MergePersonaPro
 
 const containerStyle = css({
   position: 'relative',
-  padding: '32px',
+  padding: '32px 32px 12px',
   overflow: 'hidden',
   minHeight: 'fit-content',
 });

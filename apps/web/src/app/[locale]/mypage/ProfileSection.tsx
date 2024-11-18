@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { memo } from 'react';
@@ -46,7 +47,7 @@ export const ProfileSection = memo(
       return (
         <section className={profileSectionStyle}>
           <div className={profileImageStyle}>
-            <Image src={data.profileImage ?? ''} alt="profile" width={160} height={160} />
+            <img src={data.profileImage ?? ''} alt="profile" width={160} height={160} />
           </div>
           <div className={profileTextStyle}>
             <p className={profileNameStyle}>{data?.username}</p>
