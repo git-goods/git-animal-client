@@ -6,7 +6,7 @@ import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
-import { Button, LargeDialog, LevelBanner } from '@gitanimals/ui-panda';
+import { Button, Dialog, dialogContentCva, LevelBanner } from '@gitanimals/ui-panda';
 import { BannerSkeletonList } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -67,44 +67,37 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
   };
 
   return (
-    <LargeDialog open={isOpen} onOpenChange={onClose}>
-      {/* <FullModalBase isOpen={isOpen} onClose={onClose}> */}
-      <h1 className={headingStyle}>Merge Persona Level</h1>
-      <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <Dialog.Content className={dialogContentCva({ size: 'large' })}>
+        <Dialog.Title className={headingStyle}>Merge Persona Level</Dialog.Title>
+        <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
 
-      <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
+        <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
 
-      <div className={bottomButtonStyle}>
-        <Button variant="secondary" onClick={onClose}>
-          {t('cancel')}
-        </Button>
-        <Button disabled={isMergeDisabled} onClick={onMergeAction}>
-          {t('merge')}
-        </Button>
-      </div>
-      <MergeResultModal
-        key={resultData?.id}
-        isOpen={Boolean(resultData)}
-        onClose={() => setResultData(null)}
-        result={resultData as MergePersonaLevelResponse}
-      />
-      {isMerging && <SpinningLoader />}
-    </LargeDialog>
+        <Dialog.Footer className={footerStyle}>
+          <div className={bottomButtonStyle}>
+            <Button variant="secondary" onClick={onClose}>
+              {t('cancel')}
+            </Button>
+            <Button disabled={isMergeDisabled} onClick={onMergeAction}>
+              {t('merge')}
+            </Button>
+          </div>
+        </Dialog.Footer>
+        <MergeResultModal
+          key={resultData?.id}
+          isOpen={Boolean(resultData)}
+          onClose={() => setResultData(null)}
+          result={resultData as MergePersonaLevelResponse}
+        />
+        {isMerging && <SpinningLoader />}
+      </Dialog.Content>
+    </Dialog>
   );
-  // return (
-  // <FullModalBase isOpen={isOpen} onClose={onClose}>
-
-  //   </FullModalBase>
-  // );
 }
 
-const headingStyle = css({
-  textStyle: 'glyph48.bold',
-  color: 'white.white_100',
-  textAlign: 'center',
-  marginTop: '40px',
-});
-
+const headingStyle = css({ marginTop: '40px' });
+const footerStyle = css({ justifyContent: 'center', height: '40px' });
 const bottomButtonStyle = css({ display: 'flex', justifyContent: 'center', gap: '12px' });
 
 interface SelectPersonaListProps {
@@ -163,6 +156,10 @@ const listStyle = cx(
     flexWrap: 'wrap',
     maxHeight: 'calc(100vh - 780px)',
     overflow: 'auto',
+
+    '@media (max-width: 1200px)': {
+      maxHeight: 'calc(100vh - 600px)',
+    },
   }),
   customScrollStyle,
 );
@@ -175,7 +172,7 @@ interface PersonaItemProps {
 
 function PersonaItem({ persona, isSelected, onClick }: PersonaItemProps) {
   return (
-    <button onClick={onClick} className={css({ outline: 'none' })}>
+    <button onClick={onClick} className={css({ outline: 'none', bg: 'transparent' })}>
       <LevelBanner
         image={getPersonaImage(persona.type)}
         selected={isSelected}

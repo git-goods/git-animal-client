@@ -1,2 +1,2 @@
 export * from './Dialog';
-export * from './LargeDialog';
+export * from './Dialog.styles.ts';
