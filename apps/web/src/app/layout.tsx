@@ -9,6 +9,7 @@ import {
 
 import './globals.css';
 import '@gitanimals/asset-font/product-sans/index.css';
+import 'driver.js/dist/driver.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.gitanimals.org/'),
