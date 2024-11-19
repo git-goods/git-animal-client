@@ -117,11 +117,11 @@ const SelectPersonaList = wrap
     // TODO: 정렬
 
     return (
-      <section className={listSectionStyle}>
+      <section>
         <div className={listSectionTitleStyle}>
           <p>Please choose a pet to use to merge the level. The pet used disappears.</p>
         </div>
-        <div className={listStyle}>
+        <div className={flexOverflowStyle}>
           {data.personas.map((persona) => (
             <MemoizedPersonaItem
               key={persona.id}
@@ -135,8 +135,6 @@ const SelectPersonaList = wrap
     );
   });
 
-const listSectionStyle = css({});
-
 const listSectionTitleStyle = css({
   textStyle: 'glyph16.regular',
   color: 'white.white_50',
@@ -144,6 +142,27 @@ const listSectionTitleStyle = css({
   display: 'flex',
   justifyContent: 'space-between',
 });
+
+const flexOverflowStyle = cx(
+  css({
+    display: 'flex',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    width: '100%',
+    gap: '4px',
+    height: '100%',
+    minHeight: '0',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    maxHeight: 'calc(100% )',
+    marginTop: '40px',
+
+    '@media (max-width: 1200px)': {
+      marginTop: '24px',
+    },
+  }),
+  customScrollStyle,
+);
 
 const listStyle = cx(
   flex({
@@ -154,11 +173,11 @@ const listStyle = cx(
     overflowY: 'auto',
     display: 'flex',
     flexWrap: 'wrap',
-    maxHeight: 'calc(100vh - 780px)',
+    maxHeight: 'calc(100vh - 760px)',
     overflow: 'auto',
 
     '@media (max-width: 1200px)': {
-      maxHeight: 'calc(100vh - 600px)',
+      maxHeight: 'calc(100vh - 560px)',
     },
   }),
   customScrollStyle,

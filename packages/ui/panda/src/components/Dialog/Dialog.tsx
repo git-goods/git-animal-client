@@ -51,7 +51,17 @@ const Title = React.forwardRef<
   </DialogPrimitive.Title>
 ));
 
-const titleStyle = css({ textStyle: 'glyph48.bold', color: 'white.white_100', textAlign: 'center' });
+const titleStyle = css({
+  textStyle: 'glyph48.bold',
+  color: 'white.white_100',
+  textAlign: 'center',
+  '@media (max-width: 1200px)': {
+    textStyle: 'glyph32.bold',
+  },
+  _mobile: {
+    textStyle: 'glyph24.bold',
+  },
+});
 
 Title.displayName = DialogPrimitive.Title.displayName;
 
