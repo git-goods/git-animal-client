@@ -3,7 +3,6 @@
 import { memo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
-import { flex } from '_panda/patterns';
 import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
 import { Button, Dialog, dialogContentCva, LevelBanner } from '@gitanimals/ui-panda';
@@ -117,7 +116,7 @@ const SelectPersonaList = wrap
     // TODO: 정렬
 
     return (
-      <section>
+      <section className={seactionStyle}>
         <div className={listSectionTitleStyle}>
           <p>Please choose a pet to use to merge the level. The pet used disappears.</p>
         </div>
@@ -135,10 +134,18 @@ const SelectPersonaList = wrap
     );
   });
 
+const seactionStyle = css({
+  height: '100%',
+  maxHeight: '100%',
+  minHeight: '0',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '16px',
+});
+
 const listSectionTitleStyle = css({
   textStyle: 'glyph16.regular',
   color: 'white.white_50',
-  mb: '16px',
   display: 'flex',
   justifyContent: 'space-between',
 });
@@ -153,32 +160,7 @@ const flexOverflowStyle = cx(
     height: '100%',
     minHeight: '0',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    maxHeight: 'calc(100% )',
-    marginTop: '40px',
-
-    '@media (max-width: 1200px)': {
-      marginTop: '24px',
-    },
-  }),
-  customScrollStyle,
-);
-
-const listStyle = cx(
-  flex({
-    gap: '4px',
-    w: '100%',
-    h: '100%',
-    minH: '0',
-    overflowY: 'auto',
-    display: 'flex',
-    flexWrap: 'wrap',
-    maxHeight: 'calc(100vh - 760px)',
-    overflow: 'auto',
-
-    '@media (max-width: 1200px)': {
-      maxHeight: 'calc(100vh - 560px)',
-    },
+    maxHeight: 'calc(100% - 24px)',
   }),
   customScrollStyle,
 );
