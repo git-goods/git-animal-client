@@ -39,6 +39,7 @@ const contentStyle = css({
   border: '1px solid',
   borderColor: 'gray.gray_150',
   zIndex: 3001,
+  color: 'white.white_100',
 });
 const closeStyle = css({ background: 'transparent', outline: 'none', padding: '0' });
 

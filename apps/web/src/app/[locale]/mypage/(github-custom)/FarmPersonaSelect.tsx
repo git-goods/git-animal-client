@@ -122,12 +122,8 @@ const flexOverflowStyle = cx(
     minHeight: '0',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    maxHeight: 'calc(100% )',
-    marginTop: '40px',
-
-    '@media (max-width: 1200px)': {
-      marginTop: '24px',
-    },
+    maxHeight: 'calc(100%)',
+    marginTop: '24px',
   }),
   customScrollStyle,
 );

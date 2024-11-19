@@ -144,14 +144,14 @@ const profileNameStyle = css({
   _mobile: {
     textStyle: 'glyph24.bold',
     margin: 0,
-    mb: 2,
+    mb: '2px',
   },
 });
 
 const pointStyle = flex({
   color: 'white.white',
   textStyle: 'glyph24.regular',
-  gap: '6',
+  gap: '6px',
   alignItems: 'center',
   _mobile: {
     textStyle: 'glyph14.regular',

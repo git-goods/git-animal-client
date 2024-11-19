@@ -74,14 +74,12 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
         <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
 
         <Dialog.Footer className={footerStyle}>
-          <div className={bottomButtonStyle}>
-            <Button variant="secondary" onClick={onClose}>
-              {t('cancel')}
-            </Button>
-            <Button disabled={isMergeDisabled} onClick={onMergeAction}>
-              {t('merge')}
-            </Button>
-          </div>
+          <Button variant="secondary" onClick={onClose}>
+            {t('cancel')}
+          </Button>
+          <Button disabled={isMergeDisabled} onClick={onMergeAction}>
+            {t('merge')}
+          </Button>
         </Dialog.Footer>
         <MergeResultModal
           key={resultData?.id}
@@ -96,8 +94,7 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
 }
 
 const headingStyle = css({ marginTop: '40px' });
-const footerStyle = css({ justifyContent: 'center', height: '40px' });
-const bottomButtonStyle = css({ display: 'flex', justifyContent: 'center', gap: '12px' });
+const footerStyle = css({ display: 'flex', justifyContent: 'center', gap: '12px' });
 
 interface SelectPersonaListProps {
   selectPersona: string[];
@@ -112,13 +109,13 @@ const SelectPersonaList = wrap
   .on(function SelectPersonaList({ selectPersona, onSelectPersona }: SelectPersonaListProps) {
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
+    const t = useTranslations('Mypage.Merge');
 
     // TODO: 정렬
-
     return (
-      <section className={seactionStyle}>
+      <section className={sectionStyle}>
         <div className={listSectionTitleStyle}>
-          <p>Please choose a pet to use to merge the level. The pet used disappears.</p>
+          <p>{t('please-choose-pet')}</p>
         </div>
         <div className={flexOverflowStyle}>
           {data.personas.map((persona) => (
@@ -134,7 +131,7 @@ const SelectPersonaList = wrap
     );
   });
 
-const seactionStyle = css({
+const sectionStyle = css({
   height: '100%',
   maxHeight: '100%',
   minHeight: '0',

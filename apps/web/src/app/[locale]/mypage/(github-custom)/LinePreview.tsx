@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
+import { Flex } from '_panda/jsx';
 import { Button, TextField } from '@gitanimals/ui-panda';
 import { toast } from 'sonner';
 
@@ -41,7 +41,7 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
         <div className={lineContainerStyle} style={{ width: sizes.width, height: sizes.height }}>
           <GitanimalsLine sizes={[sizes.width, sizes.height]} petId={selectPersona} />
         </div>
-        <Button onClick={onLinkCopy} mt={16} size="m">
+        <Button onClick={onLinkCopy} mt={4} size="m">
           {t('copy-link-title')}
         </Button>
       </section>
@@ -66,6 +66,7 @@ const lineContainerStyle = css({
   '& img': {
     maxWidth: '100%',
   },
+
   _mobile: {
     maxWidth: '100%',
   },
@@ -80,7 +81,7 @@ function SizeInputList({ onApply }: { onApply: (width: number, height: number) =
   return (
     <div className={sizeInputStyle}>
       <h2 className="heading">{t('customize-size')}</h2>
-      <div className={flex({ gap: '12px' })}>
+      <Flex gap="12px">
         <SizeInput value={width} onChange={(e) => setWidth(parseInt(e.target.value))} name="width" />
         <SizeInput value={height} onChange={(e) => setHeight(parseInt(e.target.value))} name="height" />
         <Button
@@ -94,14 +95,13 @@ function SizeInputList({ onApply }: { onApply: (width: number, height: number) =
         >
           {t('apply-button')}
         </Button>
-      </div>
+      </Flex>
     </div>
   );
 }
 
 const sizeInputStyle = css({
   position: 'relative',
-  mt: '24px',
 
   '& .heading': {
     textStyle: 'glyph18.bold',

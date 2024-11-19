@@ -22,6 +22,7 @@ export const dialogContentCva = cva({
         _mobile: {
           maxWidth: '100vw',
           maxHeight: '100vh',
+          borderRadius: '0px',
         },
       },
     },
