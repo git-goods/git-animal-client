@@ -11,6 +11,8 @@ import { customScrollStyle } from '@/styles/scrollStyle';
 
 import { SelectPersonaList } from '../PersonaList';
 
+import { LINE_TUTORIAL } from './useLineTutorial';
+
 interface Props {
   selectPersona: string | null;
   onChangePersona: (personaId: string) => void;
@@ -22,10 +24,10 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
   const [isExtend, setIsExtend] = useState<boolean>(false);
 
   return (
-    <div>
+    <div className={cx(LINE_TUTORIAL.personaSelect)}>
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('change-pet')}</h2>
-        <button onClick={() => setIsExtend(true)}>
+        <button onClick={() => setIsExtend(true)} className={LINE_TUTORIAL.selectExpand}>
           <ExpandIcon color="white" size={20} />
         </button>
       </section>

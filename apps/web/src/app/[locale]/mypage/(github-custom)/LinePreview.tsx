@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { Button, TextField } from '@gitanimals/ui-panda';
 import { toast } from 'sonner';
@@ -10,6 +10,8 @@ import { toast } from 'sonner';
 import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
 import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
+
+import { LINE_TUTORIAL } from './useLineTutorial';
 
 const DEFAULT_SIZE = { width: 600, height: 120 };
 
@@ -34,14 +36,14 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
   };
 
   return (
-    <div className={sectionContainerStyle}>
+    <div className={cx(LINE_TUTORIAL.preview, sectionContainerStyle)}>
       {/* TODO: 임시로 모바일에선 input 안보이게 처리 */}
       <SizeInputList onApply={(width, height) => setSizes({ width, height })} />
       <section>
         <div className={lineContainerStyle} style={{ width: sizes.width, height: sizes.height }}>
           <GitanimalsLine sizes={[sizes.width, sizes.height]} petId={selectPersona} />
         </div>
-        <Button onClick={onLinkCopy} mt={4} size="m">
+        <Button onClick={onLinkCopy} mt={4} size="m" className={LINE_TUTORIAL.copyButton}>
           {t('copy-link-title')}
         </Button>
       </section>
@@ -79,7 +81,7 @@ function SizeInputList({ onApply }: { onApply: (width: number, height: number) =
   const [height, setHeight] = useState(DEFAULT_SIZE.height);
 
   return (
-    <div className={sizeInputStyle}>
+    <div className={cx(LINE_TUTORIAL.customizeSize, sizeInputStyle)}>
       <h2 className="heading">{t('customize-size')}</h2>
       <Flex gap="12px">
         <SizeInput value={width} onChange={(e) => setWidth(parseInt(e.target.value))} name="width" />
