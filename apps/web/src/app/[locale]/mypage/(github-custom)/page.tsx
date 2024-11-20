@@ -5,6 +5,7 @@ import { updateUrlSearchParams } from '@gitanimals/util-common';
 
 import { Link } from '@/i18n/routing';
 
+import { FarmTutorialProvider } from './FarmTutorial';
 import { FarmType } from './FarmType';
 import { LineType } from './LineType';
 
@@ -21,7 +22,11 @@ async function Mypage({
 
   const MYPAGE_TAB_INNER_MAP: Record<TabType, ReactNode> = {
     'line-type': <LineType />,
-    'farm-type': <FarmType />,
+    'farm-type': (
+      <FarmTutorialProvider>
+        <FarmType />
+      </FarmTutorialProvider>
+    ),
   };
 
   return (

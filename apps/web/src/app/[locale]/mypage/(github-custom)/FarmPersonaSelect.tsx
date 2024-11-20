@@ -13,6 +13,8 @@ import { customScrollStyle } from '@/styles/scrollStyle';
 
 import { SelectPersonaList } from '../PersonaList';
 
+import { useFarmTutorial } from './FarmTutorial';
+
 export function FarmPersonaSelect({
   onChangeStatus,
 }: {
@@ -20,6 +22,7 @@ export function FarmPersonaSelect({
 }) {
   const queryClient = useQueryClient();
   const t = useTranslations('Mypage');
+  const { classes: farmTutorialClasses } = useFarmTutorial();
 
   const [selectPersona, setSelectPersona] = useState<string[]>([]);
   const [loadingPersona, setLoadingPersona] = useState<string[]>([]);
@@ -64,7 +67,7 @@ export function FarmPersonaSelect({
   };
 
   return (
-    <div>
+    <div className={farmTutorialClasses.personaSelect}>
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('change-pet')}</h2>
         <button onClick={() => setIsOpen(true)}>
