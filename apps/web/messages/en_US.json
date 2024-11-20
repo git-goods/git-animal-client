@@ -87,7 +87,7 @@
     "copy-link-success": "Copy success!",
     "line-set-error": "Cannot set more than 1000.",
     "apply-button": "Apply",
-    "customize-size": "Line TypeCustomize Size",
+    "customize-size": "Customize Size",
     "extend-button": "Extend",
     "shrink-button": "Shrink",
     "change-pet": "Change pet",
@@ -102,7 +102,8 @@
     "Merge": {
       "merge": "Merge",
       "merge-result": "Merge result",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "please-choose-pet": "Please choose a pet to use to merge the level. The pet used disappears."
     }
   },
   "Event": {

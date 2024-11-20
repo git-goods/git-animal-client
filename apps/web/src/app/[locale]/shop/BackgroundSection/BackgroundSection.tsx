@@ -110,8 +110,8 @@ function BackgroundItem({
 
 const eventLabelCss = css({
   position: 'absolute',
-  top: 12,
-  left: 12,
+  top: '12px',
+  left: '12px',
   zIndex: 10,
   display: 'inline-flex',
   padding: '6px 12px',
@@ -174,7 +174,7 @@ const cardPointStyle = css({
   border: '1px solid #3FB458',
   background: '#56CA6F',
   mt: '4px',
-  mb: 24,
+  mb: '24px',
   p: '4px 25px',
   w: '100%',
 });

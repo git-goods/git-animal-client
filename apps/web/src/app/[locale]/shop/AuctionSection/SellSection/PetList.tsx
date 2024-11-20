@@ -44,5 +44,5 @@ const listContainerStyle = css({
   flexWrap: 'wrap',
   maxHeight: '582px',
   overflowY: 'scroll',
-  gap: 4,
+  gap: '4px',
 });

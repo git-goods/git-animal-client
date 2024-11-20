@@ -59,7 +59,7 @@ const tabContainerStyle = css({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  marginBottom: 32,
+  marginBottom: '32px',
 });
 
 function TabItem({ isSelected, label, path }: { isSelected?: boolean } & TabItemType) {

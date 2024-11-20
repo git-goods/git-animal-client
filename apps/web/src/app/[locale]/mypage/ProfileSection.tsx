@@ -92,10 +92,10 @@ const navStyle = css({
 });
 
 const navItemStyle = css({
-  padding: 4,
+  padding: '4px',
   display: 'flex',
   alignItems: 'center',
-  gap: 4,
+  gap: '4px',
   textStyle: 'glyph18.regular',
   color: 'white.white_50',
   '&.selected': {
@@ -110,11 +110,11 @@ const navItemStyle = css({
 
 const dividerStyle = css({
   background: 'white.white_25',
-  height: 1,
+  height: '1px',
   margin: 0,
   border: 'none',
-  marginTop: 48,
-  marginBottom: 20,
+  marginTop: '48px',
+  marginBottom: '20px',
   _mobile: {
     display: 'none',
   },
@@ -144,14 +144,14 @@ const profileNameStyle = css({
   _mobile: {
     textStyle: 'glyph24.bold',
     margin: 0,
-    mb: 2,
+    mb: '2px',
   },
 });
 
 const pointStyle = flex({
   color: 'white.white',
   textStyle: 'glyph24.regular',
-  gap: '6',
+  gap: '6px',
   alignItems: 'center',
   _mobile: {
     textStyle: 'glyph14.regular',

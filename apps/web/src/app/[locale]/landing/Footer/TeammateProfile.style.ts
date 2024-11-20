@@ -8,17 +8,17 @@ export const wrapperCss = css({
   _mobile: {
     width: '100%',
     flexDir: 'row',
-    gap: 5,
+    gap: '5px',
   },
 });
 
 export const imageCss = css({
-  marginBottom: 8,
+  marginBottom: '8px',
 
   _mobile: {
-    width: 32,
-    height: 24,
-    marginBottom: 0,
+    width: '32px',
+    height: '24px',
+    marginBottom: '0px',
     objectFit: 'contain',
     objectPosition: 'left 50%',
   },
@@ -32,8 +32,8 @@ export const textWrapperCss = css({
 export const nicknameWrapperCss = css({
   display: 'flex',
   alignItems: 'center',
-  gap: 5,
-  marginBottom: 4,
+  gap: '5px',
+  marginBottom: '4px',
 
   '& span': {
     textStyle: 'glyph18.bold',
@@ -41,7 +41,7 @@ export const nicknameWrapperCss = css({
   },
 
   _mobile: {
-    marginBottom: 1,
+    marginBottom: '1px',
     '& span': {
       textStyle: 'glyph15.bold',
       fontWeight: 'bold',

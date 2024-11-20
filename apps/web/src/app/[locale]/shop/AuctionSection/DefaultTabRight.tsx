@@ -26,5 +26,5 @@ export function DefaultTabRight() {
 const divCss = css({
   display: 'flex',
   alignItems: 'center',
-  gap: 4,
+  gap: '4px',
 });

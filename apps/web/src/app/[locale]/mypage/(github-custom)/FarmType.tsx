@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { Button } from '@gitanimals/ui-panda';
 import { toast } from 'sonner';
 
@@ -12,9 +12,11 @@ import { copyClipBoard } from '@/utils/copy';
 
 import { FarmBackgroundSelect } from './FarmBackgroundSelect';
 import { FarmPersonaSelect } from './FarmPersonaSelect';
+import { useFarmTutorial } from './FarmTutorialProvider';
 
 export function FarmType() {
   const t = useTranslations('Mypage');
+  const { classes: farmTutorialClasses } = useFarmTutorial();
 
   const { name } = useClientUser();
 
@@ -33,12 +35,12 @@ export function FarmType() {
   };
 
   return (
-    <div className={farmSectionStyle}>
+    <div className={cx(farmSectionStyle, farmTutorialClasses.container)}>
       <div>
-        <div className={farmStyle}>
+        <div className={cx(farmStyle, farmTutorialClasses.preview)}>
           <GitanimalsFarm imageKey={status} sizes={[600, 300]} />
         </div>
-        <Button onClick={onLinkCopy} mt={16} size="m">
+        <Button onClick={onLinkCopy} mt={4} size="m" className={farmTutorialClasses.copyButton}>
           {t('copy-link-title')}
         </Button>
       </div>
@@ -53,8 +55,8 @@ const farmSectionStyle = css({
   flexDirection: 'column',
   width: '100%',
   maxHeight: '100%',
-  py: 40,
-  gap: 40,
+  py: '40px',
+  gap: '40px',
 
   _mobile: {
     background: 'none',
@@ -65,4 +67,4 @@ const farmSectionStyle = css({
   },
 });
 
-const farmStyle = css({ borderRadius: '12px', overflow: 'hidden', width: 'fit-content', mt: 24 });
+const farmStyle = css({ borderRadius: '12px', overflow: 'hidden', width: 'fit-content', mt: '24px' });

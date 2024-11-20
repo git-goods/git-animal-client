@@ -23,6 +23,6 @@ export default SellSection;
 
 const petHeadingStyle = css({
   textStyle: 'glyph18.bold',
-  marginBottom: 16,
+  marginBottom: '16px',
   color: 'white.white_100',
 });

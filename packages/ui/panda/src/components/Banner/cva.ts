@@ -6,7 +6,7 @@ export const bannerStyle = cva({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 12,
+    borderRadius: '12px',
     backgroundColor: 'white.white_10',
     transition: 'border 0.3s, background-color 0.3s',
     position: 'relative',

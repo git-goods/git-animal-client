@@ -11,7 +11,7 @@ interface Props {
   isOpen: boolean;
   onClose?: () => void;
 }
-
+/** @deprecated */
 export function Modal({ isOpen, onClose, children }: PropsWithChildren<Props>) {
   const { dialogRef } = useDialog({ isOpen, onClose });
 
@@ -40,8 +40,8 @@ const dialogStyle = css({
 
 const closeButtonStyle = css({
   position: 'absolute',
-  top: 24,
-  right: 24,
+  top: '24px',
+  right: '24px',
 });
 
 const contentStyle = flex({

@@ -1,12 +1,5 @@
 @layer reset, base, tokens, recipes, utilities;
 @layer reset {
-  @font-face {
-    font-family: 'DNFBitBitv2';
-    font-style: normal;
-    font-weight: 700;
-    src: url('//cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf') format('opentype');
-  }
-
   *,
   *::before,
   *::after {
@@ -14,11 +7,6 @@
   }
 
   body {
-    font-family: 'DNFBitBitv2';
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%; /* 107.8px */
-    /* background-color: #2a7442; */
     position: relative;
   }
 
@@ -26,21 +14,8 @@
     cursor: pointer;
     border: transparent;
     background-color: transparent;
-    font-family: 'DNFBitBitv2';
-    line-height: 1.5;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%;
     padding: 0;
-  }
-
-  input {
-    font-family: 'DNFBitBitv2';
-  }
-
-  input::placeholder {
-    color: #b5b5b5;
-    font-family: 'DNFBitBitv2';
+    outline: none;
   }
 
   .mobile {
@@ -91,4 +66,47 @@
     inset 0 3px #f1f1f1c4 !important;
   width: fit-content;
   gap: 12px;
+}
+
+.driver-popover-footer {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.driver-popover-navigation-btns {
+  width: 100%;
+}
+
+.driver-popover-footer button.driver-popover-prev-btn,
+.driver-popover-footer button.driver-popover-next-btn {
+  display: flex;
+  height: 32px;
+  padding: 0 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  color: var(--black, #000);
+  text-align: center;
+  font-family: 'Product Sans';
+  font-size: 14px;
+}
+.driver-popover-footer button.driver-popover-prev-btn {
+  border-radius: 6px;
+  border: 1px solid var(--black, #000);
+  background: var(--white, #fff);
+  box-shadow:
+    0px 4px 4px 0px rgba(0, 0, 0, 0.25),
+    0px -3px 0px 0px #a1a1b1 inset,
+    0px 3px 0px 0px #d2dcfe inset;
+}
+.driver-popover-footer button.driver-popover-next-btn {
+  border-radius: 6px;
+  border: 1px solid var(--black, #000);
+  background: var(--brand-color-canary, #fcfd9c);
+  box-shadow:
+    0px 4px 4px 0px rgba(0, 0, 0, 0.25),
+    0px -3px 0px 0px #c4c382 inset,
+    0px 3px 0px 0px #fdfed2 inset;
 }

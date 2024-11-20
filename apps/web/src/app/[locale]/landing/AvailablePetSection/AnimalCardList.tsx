@@ -67,7 +67,7 @@ function AnimalCardContainer() {
 export default AnimalCardContainer;
 
 const container = grid({
-  gap: 20,
+  gap: '20px',
   justifyContent: 'center',
   gridTemplateColumns: 'repeat(4, 1fr)',
   width: '1120px',

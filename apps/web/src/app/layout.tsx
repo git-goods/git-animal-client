@@ -7,8 +7,9 @@ import {
   interceptorResponseRejected,
 } from '@/apis/interceptor';
 
-import './globals.css';
 import '@gitanimals/asset-font/product-sans/index.css';
+import 'driver.js/dist/driver.css';
+import './globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.gitanimals.org/'),

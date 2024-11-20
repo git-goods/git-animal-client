@@ -119,9 +119,6 @@ const closeButtonStyle = css({
   right: '8px',
   padding: '2px',
   borderRadius: 'full',
-  _hover: {
-    backgroundColor: 'gray.100',
-  },
 });
 
 const contentStyle = css({

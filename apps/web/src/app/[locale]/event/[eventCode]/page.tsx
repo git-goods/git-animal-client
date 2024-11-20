@@ -129,16 +129,16 @@ const logoImageStyle = css({
 });
 
 const descriptionStyle = css({
-  marginTop: 24,
-  fontSize: 28,
-  lineHeight: 1.5,
+  marginTop: '24px',
+  fontSize: '28px',
+  lineHeight: '1.5',
   textAlign: 'center',
   color: '#fff',
-  mb: 40,
+  mb: '40px',
   whiteSpace: 'pre-line',
   fontWeight: 600,
 
   _mobile: {
-    fontSize: 24,
+    fontSize: '24px',
   },
 });

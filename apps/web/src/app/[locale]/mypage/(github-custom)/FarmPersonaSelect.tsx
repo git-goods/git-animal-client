@@ -4,7 +4,7 @@ import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { FullModal } from '@gitanimals/ui-panda';
+import { Dialog, dialogContentCva } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { ExpandIcon } from 'lucide-react';
 
@@ -13,6 +13,8 @@ import { customScrollStyle } from '@/styles/scrollStyle';
 
 import { SelectPersonaList } from '../PersonaList';
 
+import { useFarmTutorial } from './FarmTutorialProvider';
+
 export function FarmPersonaSelect({
   onChangeStatus,
 }: {
@@ -20,6 +22,7 @@ export function FarmPersonaSelect({
 }) {
   const queryClient = useQueryClient();
   const t = useTranslations('Mypage');
+  const { classes: farmTutorialClasses } = useFarmTutorial();
 
   const [selectPersona, setSelectPersona] = useState<string[]>([]);
   const [loadingPersona, setLoadingPersona] = useState<string[]>([]);
@@ -64,7 +67,7 @@ export function FarmPersonaSelect({
   };
 
   return (
-    <div>
+    <div className={farmTutorialClasses.personaSelect}>
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('change-pet')}</h2>
         <button onClick={() => setIsOpen(true)}>
@@ -79,10 +82,9 @@ export function FarmPersonaSelect({
           initSelectPersonas={initSelectPersonas}
         />
       </section>
-      <FullModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <FullModal.CloseButton onClose={() => setIsOpen(false)} />
-        <FullModal.Content>
-          <FullModal.Heading>{t('farm-type-select-pet')}</FullModal.Heading>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <Dialog.Content className={dialogContentCva({ size: 'large' })}>
+          <Dialog.Title>{t('farm-type-select-pet')}</Dialog.Title>
           <div className={flexOverflowStyle}>
             <SelectPersonaList
               loadingPersona={loadingPersona}
@@ -91,14 +93,14 @@ export function FarmPersonaSelect({
               initSelectPersonas={initSelectPersonas}
             />
           </div>
-        </FullModal.Content>
-      </FullModal>
+        </Dialog.Content>
+      </Dialog>
     </div>
   );
 }
 const listStyle = cx(
   flex({
-    gap: 4,
+    gap: '4px',
     w: '100%',
     h: '100%',
     minH: '0',
@@ -112,18 +114,22 @@ const listStyle = cx(
   customScrollStyle,
 );
 
-const flexOverflowStyle = css({
-  display: 'flex',
-  overflowY: 'auto',
-  overflowX: 'hidden',
-  width: '100%',
-  gap: 4,
-  height: '100%',
-  minHeight: '0',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
-  maxHeight: 'calc(100% - 100px)',
-});
+const flexOverflowStyle = cx(
+  css({
+    display: 'flex',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    width: '100%',
+    gap: '4px',
+    height: '100%',
+    minHeight: '0',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    maxHeight: 'calc(100%)',
+    marginTop: '24px',
+  }),
+  customScrollStyle,
+);
 
 const selectPetContainerStyle = css({
   position: 'relative',

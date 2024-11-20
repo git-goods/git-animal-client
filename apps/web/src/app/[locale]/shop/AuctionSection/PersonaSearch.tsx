@@ -26,10 +26,10 @@ interface PersonaSearchProps {
 }
 
 const buttonWrapperStyle = center({
-  w: 36,
-  h: 36,
+  w: '36px',
+  h: '36px',
   backgroundColor: 'white.white_25',
-  borderRadius: 10,
+  borderRadius: '10px',
 });
 
 export const PersonaSearch = wrap
@@ -126,7 +126,7 @@ const headingStyle = css({
   textStyle: 'glyph48.bold',
   color: 'white',
   textAlign: 'center',
-  marginBottom: 40,
+  marginBottom: '40px',
 
   '@media (max-width: 1200px)': {
     textStyle: 'glyph32.bold',
@@ -137,19 +137,19 @@ const selectedPersonaWrapperStyle = css({
   display: 'flex',
   justifyContent: 'flex-start',
   width: '100%',
-  marginBottom: 16,
+  marginBottom: '16px',
 });
 
 const selectedPersonaTagStyle = css({
   textStyle: 'glyph16.bold',
   color: 'white.white_90',
-  borderRadius: 8,
+  borderRadius: '8px',
   background: 'rgba(255, 255, 255, 0.25)',
-  h: 36,
+  h: '36px',
   display: 'flex',
-  gap: 2,
+  gap: '2px',
   alignItems: 'center',
-  px: 8,
+  px: '8px',
 });
 
 const contentStyle = css({
@@ -173,7 +173,7 @@ const personaListHeadingStyle = css({
   textStyle: 'glyph18.bold',
   color: 'white',
   textAlign: 'left',
-  my: 12,
+  my: '12px',
 });
 
 const personaListStyle = css({

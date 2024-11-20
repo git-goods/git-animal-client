@@ -4,12 +4,14 @@ import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import { FullModal } from '@gitanimals/ui-panda';
+import { Dialog, dialogContentCva } from '@gitanimals/ui-panda';
 import { ExpandIcon } from 'lucide-react';
 
 import { customScrollStyle } from '@/styles/scrollStyle';
 
 import { SelectPersonaList } from '../PersonaList';
+
+import { LINE_TUTORIAL } from './useLineTutorial';
 
 interface Props {
   selectPersona: string | null;
@@ -22,10 +24,10 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
   const [isExtend, setIsExtend] = useState<boolean>(false);
 
   return (
-    <div>
+    <div className={cx(LINE_TUTORIAL.personaSelect)}>
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('change-pet')}</h2>
-        <button onClick={() => setIsExtend(true)}>
+        <button onClick={() => setIsExtend(true)} className={LINE_TUTORIAL.selectExpand}>
           <ExpandIcon color="white" size={20} />
         </button>
       </section>
@@ -35,38 +37,41 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
           onSelectPersona={(persona) => onChangePersona(persona.id)}
         />
       </section>
-      <FullModal isOpen={isExtend} onClose={() => setIsExtend(false)}>
-        <FullModal.CloseButton onClose={() => setIsExtend(false)} />
-        <FullModal.Content>
-          <FullModal.Heading>{t('line-type-select-pet')}</FullModal.Heading>
+      <Dialog open={isExtend} onOpenChange={() => setIsExtend(false)}>
+        <Dialog.Content className={dialogContentCva({ size: 'large' })}>
+          <Dialog.Title>{t('line-type-select-pet')}</Dialog.Title>
           <div className={flexOverflowStyle}>
             <SelectPersonaList
               selectPersona={selectPersona ? [selectPersona] : []}
               onSelectPersona={(persona) => onChangePersona(persona.id)}
             />
           </div>
-        </FullModal.Content>
-      </FullModal>
+        </Dialog.Content>
+      </Dialog>
     </div>
   );
 };
 
-const flexOverflowStyle = css({
-  display: 'flex',
-  overflowY: 'auto',
-  overflowX: 'hidden',
-  width: '100%',
-  gap: 4,
-  height: '100%',
-  minHeight: '0',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
-  maxHeight: 'calc(100% - 100px)',
-});
+const flexOverflowStyle = cx(
+  css({
+    display: 'flex',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    width: '100%',
+    gap: '4px',
+    height: '100%',
+    minHeight: '0',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    maxHeight: 'calc(100%)',
+    marginTop: '24px',
+  }),
+  customScrollStyle,
+);
 
 const listStyle = cx(
   flex({
-    gap: 4,
+    gap: '4px',
     w: '100%',
     h: '100%',
     minH: '0',
