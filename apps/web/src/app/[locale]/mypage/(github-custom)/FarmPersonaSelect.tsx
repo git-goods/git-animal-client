@@ -13,7 +13,7 @@ import { customScrollStyle } from '@/styles/scrollStyle';
 
 import { SelectPersonaList } from '../PersonaList';
 
-import { useFarmTutorial } from './FarmTutorial';
+import { useFarmTutorial } from './FarmTutorialProvider';
 
 export function FarmPersonaSelect({
   onChangeStatus,

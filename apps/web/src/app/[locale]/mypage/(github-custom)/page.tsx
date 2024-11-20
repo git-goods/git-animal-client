@@ -5,7 +5,7 @@ import { updateUrlSearchParams } from '@gitanimals/util-common';
 
 import { Link } from '@/i18n/routing';
 
-import { FarmTutorialProvider } from './FarmTutorial';
+import { FarmTutorialProvider } from './FarmTutorialProvider';
 import { FarmType } from './FarmType';
 import { LineType } from './LineType';
 

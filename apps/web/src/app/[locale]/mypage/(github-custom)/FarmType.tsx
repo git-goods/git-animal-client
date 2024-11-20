@@ -12,7 +12,7 @@ import { copyClipBoard } from '@/utils/copy';
 
 import { FarmBackgroundSelect } from './FarmBackgroundSelect';
 import { FarmPersonaSelect } from './FarmPersonaSelect';
-import { useFarmTutorial } from './FarmTutorial';
+import { useFarmTutorial } from './FarmTutorialProvider';
 
 export function FarmType() {
   const t = useTranslations('Mypage');
