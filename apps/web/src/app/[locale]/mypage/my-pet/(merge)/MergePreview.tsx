@@ -62,7 +62,6 @@ const iconStyle = css({
 
 const itemStyle = css({
   position: 'relative',
-  backgroundColor: 'gray.700',
   padding: '8px',
 });
 

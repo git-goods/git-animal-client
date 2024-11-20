@@ -38,7 +38,7 @@ export function FarmType() {
         <div className={farmStyle}>
           <GitanimalsFarm imageKey={status} sizes={[600, 300]} />
         </div>
-        <Button onClick={onLinkCopy} mt={16} size="m">
+        <Button onClick={onLinkCopy} mt={4} size="m">
           {t('copy-link-title')}
         </Button>
       </div>

@@ -31,6 +31,7 @@ export const buttonStyle = cva({
         padding: '0 30px',
         fontSize: '16px',
         minHeight: '40px',
+        height: '40px',
       },
       l: {
         padding: '25px 76px',

@@ -3,10 +3,9 @@
 import { memo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
-import { flex } from '_panda/patterns';
 import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
-import { Button, FullModalBase, LevelBanner } from '@gitanimals/ui-panda';
+import { Button, Dialog, dialogContentCva, LevelBanner } from '@gitanimals/ui-panda';
 import { BannerSkeletonList } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -67,46 +66,35 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
   };
 
   return (
-    // <LargeDialog open={isOpen} onOpenChange={onClose}>
-    <FullModalBase isOpen={isOpen} onClose={onClose}>
-      <h1 className={headingStyle}>Merge Persona Level</h1>
-      <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <Dialog.Content className={dialogContentCva({ size: 'large' })}>
+        <Dialog.Title className={headingStyle}>Merge Persona Level</Dialog.Title>
+        <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
 
-      <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
+        <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
 
-      <div className={bottomButtonStyle}>
-        <Button variant="secondary" onClick={onClose}>
-          {t('cancel')}
-        </Button>
-        <Button disabled={isMergeDisabled} onClick={onMergeAction}>
-          {t('merge')}
-        </Button>
-      </div>
-      <MergeResultModal
-        key={resultData?.id}
-        isOpen={Boolean(resultData)}
-        onClose={() => setResultData(null)}
-        result={resultData as MergePersonaLevelResponse}
-      />
-      {isMerging && <SpinningLoader />}
-    </FullModalBase>
-    // </LargeDialog>
+        <Dialog.Footer className={footerStyle}>
+          <Button variant="secondary" onClick={onClose}>
+            {t('cancel')}
+          </Button>
+          <Button disabled={isMergeDisabled} onClick={onMergeAction}>
+            {t('merge')}
+          </Button>
+        </Dialog.Footer>
+        <MergeResultModal
+          key={resultData?.id}
+          isOpen={Boolean(resultData)}
+          onClose={() => setResultData(null)}
+          result={resultData as MergePersonaLevelResponse}
+        />
+        {isMerging && <SpinningLoader />}
+      </Dialog.Content>
+    </Dialog>
   );
-  // return (
-  // <FullModalBase isOpen={isOpen} onClose={onClose}>
-
-  //   </FullModalBase>
-  // );
 }
 
-const headingStyle = css({
-  textStyle: 'glyph48.bold',
-  color: 'white.white_100',
-  textAlign: 'center',
-  marginTop: '40px',
-});
-
-const bottomButtonStyle = css({ display: 'flex', justifyContent: 'center', gap: '12px' });
+const headingStyle = css({ marginTop: '40px' });
+const footerStyle = css({ display: 'flex', justifyContent: 'center', gap: '12px' });
 
 interface SelectPersonaListProps {
   selectPersona: string[];
@@ -121,15 +109,15 @@ const SelectPersonaList = wrap
   .on(function SelectPersonaList({ selectPersona, onSelectPersona }: SelectPersonaListProps) {
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
+    const t = useTranslations('Mypage.Merge');
 
     // TODO: 정렬
-
     return (
-      <section className={listSectionStyle}>
+      <section className={sectionStyle}>
         <div className={listSectionTitleStyle}>
-          <p>Please choose a pet to use to merge the level. The pet used disappears.</p>
+          <p>{t('please-choose-pet')}</p>
         </div>
-        <div className={listStyle}>
+        <div className={flexOverflowStyle}>
           {data.personas.map((persona) => (
             <MemoizedPersonaItem
               key={persona.id}
@@ -143,27 +131,33 @@ const SelectPersonaList = wrap
     );
   });
 
-const listSectionStyle = css({});
+const sectionStyle = css({
+  height: '100%',
+  maxHeight: '100%',
+  minHeight: '0',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '16px',
+});
 
 const listSectionTitleStyle = css({
   textStyle: 'glyph16.regular',
   color: 'white.white_50',
-  mb: '16px',
   display: 'flex',
   justifyContent: 'space-between',
 });
 
-const listStyle = cx(
-  flex({
-    gap: '4px',
-    w: '100%',
-    h: '100%',
-    minH: '0',
-    overflowY: 'auto',
+const flexOverflowStyle = cx(
+  css({
     display: 'flex',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    width: '100%',
+    gap: '4px',
+    height: '100%',
+    minHeight: '0',
     flexWrap: 'wrap',
-    maxHeight: 'calc(100vh - 780px)',
-    overflow: 'auto',
+    maxHeight: 'calc(100% - 24px)',
   }),
   customScrollStyle,
 );
@@ -176,7 +170,7 @@ interface PersonaItemProps {
 
 function PersonaItem({ persona, isSelected, onClick }: PersonaItemProps) {
   return (
-    <button onClick={onClick} className={css({ outline: 'none' })}>
+    <button onClick={onClick} className={css({ outline: 'none', bg: 'transparent' })}>
       <LevelBanner
         image={getPersonaImage(persona.type)}
         selected={isSelected}
