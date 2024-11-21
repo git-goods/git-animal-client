@@ -6,7 +6,7 @@ import { X } from 'lucide-react';
 import { createStyleContext } from '@shadow-panda/style-context';
 import { styled } from '_panda/jsx';
 import { css, cx } from '_panda/css';
-import { dialog, icon } from '_panda/recipes';
+import { dialog } from '_panda/recipes';
 
 const { withProvider, withContext } = createStyleContext(dialog);
 

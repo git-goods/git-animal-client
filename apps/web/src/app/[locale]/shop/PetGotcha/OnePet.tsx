@@ -5,19 +5,19 @@ import { css } from '_panda/css';
 import { postGotcha } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { userQueries } from '@gitanimals/react-query';
-import { ScreenModalBase } from '@gitanimals/ui-panda';
+import { Dialog, dialogContentCva } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
+import { GITHUB_ISSUE_URL } from '@/constants/outlink';
 import { useTimer } from '@/hooks/useTimer';
 import { trackEvent } from '@/lib/analytics';
 import { getAnimalTierInfo } from '@/utils/animals';
 
 import CardFlipGame from './CardFlipGame';
-
-const GITHUB_ISSUE_URL = 'https://github.com/git-goods/gitanimals/issues';
+import { useCheckEnoughMoney } from './useCheckEnoughMoney';
 
 interface Props {
   onClose: () => void;
@@ -36,9 +36,15 @@ function OnePet({ onClose }: Props) {
   const { count, isRunning, isFinished, startTimer, resetTimer } = useTimer(3);
 
   const { data } = useSession();
+  const { checkEnoughMoney } = useCheckEnoughMoney('one-pet-gotcha');
 
   const onAction = async () => {
     try {
+      if (!checkEnoughMoney()) {
+        toast.error(t('not-enough-points'));
+        return;
+      }
+
       const res = await postGotcha({ count: 1 });
 
       const resultPersona = res.gotchaResults[0];
@@ -107,13 +113,15 @@ Token: ${data?.user.accessToken}
   }, [isFinished, onClose, resetTimer]);
 
   return (
-    <ScreenModalBase isOpen={true} onClose={onClose}>
-      <h2 className={headingStyle}>{t('choose-one-card')}</h2>
-      <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} />
-      {isRunning && (
-        <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
-      )}
-    </ScreenModalBase>
+    <Dialog open={true} onOpenChange={onClose}>
+      <Dialog.Content className={dialogContentCva({ size: 'screen' })}>
+        <Dialog.Title className={headingStyle}>{t('choose-one-card')}</Dialog.Title>
+        <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} />
+        {isRunning && (
+          <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
+        )}
+      </Dialog.Content>
+    </Dialog>
   );
 }
 

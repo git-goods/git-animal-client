@@ -5,17 +5,17 @@ import { css } from '_panda/css';
 import type { GotchaResult } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { usePostGotcha, userQueries } from '@gitanimals/react-query';
-import { ScreenModalBase } from '@gitanimals/ui-panda/src/components/Modal';
+import { Dialog, dialogContentCva } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
+import { GITHUB_ISSUE_URL } from '@/constants/outlink';
 import { useTimer } from '@/hooks/useTimer';
 import { trackEvent } from '@/lib/analytics';
 
 import { TenCardFlipGame } from './TenCardFlipGame';
-
-const GITHUB_ISSUE_URL = 'https://github.com/git-goods/gitanimals/issues';
+import { useCheckEnoughMoney } from './useCheckEnoughMoney';
 
 interface Props {
   onClose: () => void;
@@ -30,6 +30,8 @@ export function TenPet({ onClose }: Props) {
   const { count, isRunning, isFinished, startTimer, resetTimer } = useTimer(3);
 
   const { data } = useSession();
+  const { checkEnoughMoney } = useCheckEnoughMoney('ten-pet-gotcha');
+
   const {
     mutate: postGotcha,
     isPending,
@@ -84,6 +86,12 @@ Token: ${data?.user.accessToken}
   });
 
   const onAction = async () => {
+    if (!checkEnoughMoney()) {
+      toast.error(t('not-enough-points'));
+      return;
+    }
+    if (isPending) return;
+
     postGotcha({ count: 10 });
   };
 
@@ -96,17 +104,19 @@ Token: ${data?.user.accessToken}
   }, [isFinished, onClose, resetTimer]);
 
   return (
-    <ScreenModalBase isOpen={true} onClose={onClose}>
-      <h2 className={headingStyle}>
-        {isPending ? t('gotcha-in-progress') : isSuccess ? t('get-persona-success') : t('click-card-to-flip')}
-      </h2>
-      {isRunning && (
-        <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
-      )}
-      <div className={css({ width: '100%', mt: 60 })}>
-        <TenCardFlipGame onGetPersona={onAction} getPersona={getPersona} />
-      </div>
-    </ScreenModalBase>
+    <Dialog open={true} onOpenChange={onClose}>
+      <Dialog.Content className={dialogContentCva({ size: 'screen' })}>
+        <Dialog.Title>
+          {isPending ? t('gotcha-in-progress') : isSuccess ? t('get-persona-success') : t('click-card-to-flip')}
+        </Dialog.Title>
+        {isRunning && (
+          <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
+        )}
+        <div className={css({ width: '100%', mt: '60px', pointerEvents: isPending ? 'none' : 'auto' })}>
+          <TenCardFlipGame onGetPersona={onAction} getPersona={getPersona} />
+        </div>
+      </Dialog.Content>
+    </Dialog>
   );
 }
 
@@ -115,10 +125,4 @@ const noticeMessageStyle = css({
   color: 'white',
   textAlign: 'center',
   mt: '12px',
-});
-
-const headingStyle = css({
-  textStyle: 'glyph48.bold',
-  color: 'white',
-  textAlign: 'center',
 });

@@ -25,6 +25,25 @@ export const dialogContentCva = cva({
           borderRadius: '0px',
         },
       },
+      screen: {
+        margin: 'auto',
+        borderRadius: '16px',
+        backgroundColor: 'gray.gray_150',
+        padding: '24px',
+        width: '100vw',
+        height: '100vh',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        '@media (min-width: 1920px)': {
+          width: '1400px',
+          height: 'fit-content',
+        },
+      },
     },
   },
 });
