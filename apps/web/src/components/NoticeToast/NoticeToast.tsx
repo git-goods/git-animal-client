@@ -1,16 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useSession } from 'next-auth/react';
+import React from 'react';
 import { useTranslations } from 'next-intl';
-import { couponQueries, renderQueries } from '@gitanimals/react-query';
-import { wrap } from '@suspensive/react';
-import { useSuspenseQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import useEffectOnce from '@/hooks/lifeCycle/useEffectOnce';
-import { usePathname, useRouter } from '@/i18n/routing';
-import { trackEvent } from '@/lib/analytics';
+import { useRouter } from '@/i18n/routing';
 import { useClientSession } from '@/utils/clientAuth';
 import { sendLog } from '@/utils/log';
 
@@ -87,78 +82,78 @@ function NoticeToast() {
 
 export default NoticeToast;
 
-const HALLOWEEN_EVENT_CODE = 'HALLOWEEN_2024';
-const HALLOWEEN_STAR_BONUS_EVENT_CODE = 'HALLOWEEN_2024_STAR_BONUS';
+// const HALLOWEEN_EVENT_CODE = 'HALLOWEEN_2024';
+// const HALLOWEEN_STAR_BONUS_EVENT_CODE = 'HALLOWEEN_2024_STAR_BONUS';
 
-const HalloweenEventToast = wrap
-  .ErrorBoundary({ fallback: null })
-  .Suspense()
-  .on(() => {
-    const pathname = usePathname();
-    const router = useRouter();
-    const { data: session } = useSession();
-    const t = useTranslations('Event.Halloween');
+// const HalloweenEventToast = wrap
+//   .ErrorBoundary({ fallback: null })
+//   .Suspense()
+//   .on(() => {
+//     const pathname = usePathname();
+//     const router = useRouter();
+//     const { data: session } = useSession();
+//     const t = useTranslations('Event.Halloween');
 
-    const [isShowToast, setIsShowToast] = useState(false);
+//     const [isShowToast, setIsShowToast] = useState(false);
 
-    const isHalloweenEventPage = pathname === `/event/${HALLOWEEN_EVENT_CODE}`;
-    const isHalloweenStarBonusEventPage = pathname === `/event/${HALLOWEEN_STAR_BONUS_EVENT_CODE}`;
+//     const isHalloweenEventPage = pathname === `/event/${HALLOWEEN_EVENT_CODE}`;
+//     const isHalloweenStarBonusEventPage = pathname === `/event/${HALLOWEEN_STAR_BONUS_EVENT_CODE}`;
 
-    const showToast = (message: string, pathname: string) => {
-      if (isShowToast) {
-        return;
-      }
-      setIsShowToast(true);
-      toast.info(message, {
-        duration: Infinity,
-        className: 'notice-toast',
-        position: 'top-right',
-        action: {
-          label: t('go'),
-          onClick: () => {
-            trackEvent('halloween-event-toast-click', { pathname });
-            router.push(pathname);
-          },
-        },
-      });
-    };
+//     const showToast = (message: string, pathname: string) => {
+//       if (isShowToast) {
+//         return;
+//       }
+//       setIsShowToast(true);
+//       toast.info(message, {
+//         duration: Infinity,
+//         className: 'notice-toast',
+//         position: 'top-right',
+//         action: {
+//           label: t('go'),
+//           onClick: () => {
+//             trackEvent('halloween-event-toast-click', { pathname });
+//             router.push(pathname);
+//           },
+//         },
+//       });
+//     };
 
-    useEffectOnce(() => {
-      if (isHalloweenEventPage || isHalloweenStarBonusEventPage) {
-        return;
-      }
-      if (!session?.user.name) {
-        showToast(t('not-login-toast'), `/event/${HALLOWEEN_EVENT_CODE}`);
-      }
-    });
+//     useEffectOnce(() => {
+//       if (isHalloweenEventPage || isHalloweenStarBonusEventPage) {
+//         return;
+//       }
+//       if (!session?.user.name) {
+//         showToast(t('not-login-toast'), `/event/${HALLOWEEN_EVENT_CODE}`);
+//       }
+//     });
 
-    if (!session?.user.name) {
-      return null;
-    }
+//     if (!session?.user.name) {
+//       return null;
+//     }
 
-    const {
-      data: { isPressStar },
-    } = useSuspenseQuery(renderQueries.isPressStar({ login: session.user.name }));
+//     const {
+//       data: { isPressStar },
+//     } = useSuspenseQuery(renderQueries.isPressStar({ login: session.user.name }));
 
-    const { data: usedCoupons } = useSuspenseQuery({
-      ...couponQueries.usedCouponsOptions(),
-    });
-    const isUsedHalloweenCoupon = usedCoupons?.coupons.some((coupon) => coupon.code === HALLOWEEN_EVENT_CODE);
-    const isUsedStarBonusCoupon = usedCoupons?.coupons.some(
-      (coupon) => coupon.code === HALLOWEEN_STAR_BONUS_EVENT_CODE,
-    );
+//     const { data: usedCoupons } = useSuspenseQuery({
+//       ...couponQueries.usedCouponsOptions(),
+//     });
+//     const isUsedHalloweenCoupon = usedCoupons?.coupons.some((coupon) => coupon.code === HALLOWEEN_EVENT_CODE);
+//     const isUsedStarBonusCoupon = usedCoupons?.coupons.some(
+//       (coupon) => coupon.code === HALLOWEEN_STAR_BONUS_EVENT_CODE,
+//     );
 
-    useEffectOnce(() => {
-      if (!isUsedHalloweenCoupon && !isHalloweenEventPage) {
-        showToast(t('result-halloween-coupon'), `/event/${HALLOWEEN_EVENT_CODE}`);
-      }
-      if (isUsedHalloweenCoupon && !isUsedStarBonusCoupon && !isPressStar && !isHalloweenStarBonusEventPage) {
-        showToast(t('result-halloween-star-bonus-coupon-already-star'), `/event/${HALLOWEEN_STAR_BONUS_EVENT_CODE}`);
-      }
-      if (isUsedHalloweenCoupon && isUsedStarBonusCoupon && !isPressStar && !isHalloweenStarBonusEventPage) {
-        showToast(t('result-halloween-star-bonus-coupon'), `/event/${HALLOWEEN_STAR_BONUS_EVENT_CODE}`);
-      }
-    });
+//     useEffectOnce(() => {
+//       if (!isUsedHalloweenCoupon && !isHalloweenEventPage) {
+//         showToast(t('result-halloween-coupon'), `/event/${HALLOWEEN_EVENT_CODE}`);
+//       }
+//       if (isUsedHalloweenCoupon && !isUsedStarBonusCoupon && !isPressStar && !isHalloweenStarBonusEventPage) {
+//         showToast(t('result-halloween-star-bonus-coupon-already-star'), `/event/${HALLOWEEN_STAR_BONUS_EVENT_CODE}`);
+//       }
+//       if (isUsedHalloweenCoupon && isUsedStarBonusCoupon && !isPressStar && !isHalloweenStarBonusEventPage) {
+//         showToast(t('result-halloween-star-bonus-coupon'), `/event/${HALLOWEEN_STAR_BONUS_EVENT_CODE}`);
+//       }
+//     });
 
-    return <></>;
-  });
+//     return <></>;
+//   });

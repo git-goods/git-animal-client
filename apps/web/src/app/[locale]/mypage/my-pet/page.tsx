@@ -156,12 +156,10 @@ function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProps) {
             <div>{snakeToTitleCase(currentPersona.type)}</div>
             <div>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</div>
             <div>{currentPersona.level}</div>
-            <div></div>
             <div className={flex({ gap: '8px' })}>
               <Button variant="secondary" onClick={onSellClick}>
                 100P {t('sell')}
               </Button>
-              {/* TODO: 합치기 기능 추가 시*/}
               <Button variant="secondary" onClick={() => setIsMergeOpen(true)}>
                 {t('merge')}
               </Button>
@@ -188,7 +186,7 @@ const tableCss = css({
 
 const theadCss = css({
   display: 'grid',
-  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 2.2fr 3.5fr',
+  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 5.7fr',
   gap: '16px',
   padding: '4px 32px',
   borderRadius: '12px',
@@ -213,7 +211,7 @@ const rowStyle = css({
   borderRadius: '12px',
 
   display: 'grid',
-  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 2.2fr 3.5fr',
+  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 5.7fr',
   alignItems: 'center',
   padding: '0 32px',
   gap: '16px',
