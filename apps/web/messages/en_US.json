@@ -64,6 +64,7 @@
     "pet-sold": "Pet sold successfully for [money]!",
     "prepare": "Prepare",
     "merge": "Merge",
+    "edit-product": "Edit Product",
     "Background": {
       "buy-success": "Background purchased successfully",
       "buy-fail": "Failed to purchase background",

@@ -11,7 +11,20 @@ export const dialogContentCva = cva({
   },
   variants: {
     size: {
-      default: {},
+      default: {
+        display: 'flex',
+        width: '100%',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '28px',
+        color: 'white',
+        '& .dialog-title': {
+          textStyle: 'glyph20.regular',
+          textAlign: 'left',
+          width: '100%',
+        },
+      },
       large: {
         borderRadius: '16px',
         backgroundColor: 'gray.gray_150',
@@ -35,7 +48,7 @@ export const dialogContentCva = cva({
       },
       screen: {
         margin: 'auto',
-        borderRadius: '16px',
+        borderRadius: '0',
         backgroundColor: 'gray.gray_150',
         padding: '24px',
         width: '100vw',
@@ -48,6 +61,7 @@ export const dialogContentCva = cva({
         justifyContent: 'center',
 
         '@media (min-width: 1920px)': {
+          borderRadius: '16px',
           width: '1400px',
           height: 'fit-content',
         },

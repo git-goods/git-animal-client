@@ -66,6 +66,7 @@
     "many-error-message": "계속해서 문제가 발생한다면 Github로 문의 부탁드립니다.",
     "prepare": "준비중",
     "merge": "펫 합치기",
+    "edit-product": "펫 경매 수정",
     "Background": {
       "buy-success": "배경 구매 완료!",
       "buy-fail": "배경 구매에 실패했습니다.",
