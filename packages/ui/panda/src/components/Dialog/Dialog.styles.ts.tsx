@@ -1,9 +1,17 @@
-import { cva } from '_panda/css';
+import { cva, RecipeVariantProps } from '_panda/css';
 
 export const dialogContentCva = cva({
-  base: {},
+  base: {
+    background: 'gray.gray_150',
+    borderRadius: '16px',
+    border: '1px solid',
+    borderColor: 'gray.gray_150',
+    zIndex: 3001,
+    color: 'white.white_100',
+  },
   variants: {
     size: {
+      default: {},
       large: {
         borderRadius: '16px',
         backgroundColor: 'gray.gray_150',
@@ -46,4 +54,9 @@ export const dialogContentCva = cva({
       },
     },
   },
+  defaultVariants: {
+    size: 'default',
+  },
 });
+
+export type DialogContentVariants = RecipeVariantProps<typeof dialogContentCva>;

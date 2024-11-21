@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import { Dialog, dialogContentCva } from '@gitanimals/ui-panda';
+import { Dialog } from '@gitanimals/ui-panda';
 import { ExpandIcon } from 'lucide-react';
 
 import { customScrollStyle } from '@/styles/scrollStyle';
@@ -36,7 +36,7 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
         />
       </section>
       <Dialog open={isExtend} onOpenChange={() => setIsExtend(false)}>
-        <Dialog.Content className={dialogContentCva({ size: 'large' })}>
+        <Dialog.Content size="large">
           <Dialog.Title>{t('line-type-select-pet')}</Dialog.Title>
           <div className={flexOverflowStyle}>
             <SelectPersonaList

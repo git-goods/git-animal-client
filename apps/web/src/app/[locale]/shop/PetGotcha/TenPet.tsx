@@ -5,7 +5,7 @@ import { css } from '_panda/css';
 import type { GotchaResult } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { usePostGotcha, userQueries } from '@gitanimals/react-query';
-import { Dialog, dialogContentCva } from '@gitanimals/ui-panda';
+import { Dialog } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -105,7 +105,7 @@ Token: ${data?.user.accessToken}
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content className={dialogContentCva({ size: 'screen' })}>
+      <Dialog.Content size="screen">
         <Dialog.Title>
           {isPending ? t('gotcha-in-progress') : isSuccess ? t('get-persona-success') : t('click-card-to-flip')}
         </Dialog.Title>

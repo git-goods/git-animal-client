@@ -7,6 +7,7 @@ import { createStyleContext } from '@shadow-panda/style-context';
 import { styled } from '_panda/jsx';
 import { css, cx } from '_panda/css';
 import { dialog } from '_panda/recipes';
+import { dialogContentCva, DialogContentVariants } from './Dialog.styles.ts';
 
 const { withProvider, withContext } = createStyleContext(dialog);
 
@@ -16,11 +17,15 @@ const DialogClose = withContext(styled(DialogPrimitive.Close), 'close');
 
 const Content = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & DialogContentVariants
 >(({ children, ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay className={overlayStyle} />
-    <DialogPrimitive.Content ref={ref} {...props} className={cx(contentStyle, props.className)}>
+    <DialogPrimitive.Content
+      ref={ref}
+      {...props}
+      className={cx(dialogContentCva({ size: props.size ?? 'default' }), props.className)}
+    >
       {children}
       <DialogClose className={closeStyle}>
         <X size={24} color="white" />
@@ -33,14 +38,6 @@ const Content = React.forwardRef<
 Content.displayName = DialogPrimitive.Content.displayName;
 
 const overlayStyle = css({ background: 'black.black_75', zIndex: 3000 });
-const contentStyle = css({
-  background: 'gray.gray_150',
-  borderRadius: '16px',
-  border: '1px solid',
-  borderColor: 'gray.gray_150',
-  zIndex: 3001,
-  color: 'white.white_100',
-});
 const closeStyle = css({ background: 'transparent', outline: 'none', padding: '0' });
 
 const Title = React.forwardRef<

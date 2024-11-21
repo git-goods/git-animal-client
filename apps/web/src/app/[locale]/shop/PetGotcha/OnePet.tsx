@@ -5,7 +5,7 @@ import { css } from '_panda/css';
 import { postGotcha } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { userQueries } from '@gitanimals/react-query';
-import { Dialog, dialogContentCva } from '@gitanimals/ui-panda';
+import { Dialog } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -114,7 +114,7 @@ Token: ${data?.user.accessToken}
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content className={dialogContentCva({ size: 'screen' })}>
+      <Dialog.Content size="screen">
         <Dialog.Title className={headingStyle}>{t('choose-one-card')}</Dialog.Title>
         <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} />
         {isRunning && (

@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
-import { Button, Dialog, dialogContentCva, LevelBanner } from '@gitanimals/ui-panda';
+import { Button, Dialog, LevelBanner } from '@gitanimals/ui-panda';
 import { BannerSkeletonList } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -67,7 +67,7 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content className={dialogContentCva({ size: 'large' })}>
+      <Dialog.Content size="large">
         <Dialog.Title className={headingStyle}>Merge Persona Level</Dialog.Title>
         <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
 
