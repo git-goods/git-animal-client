@@ -14,3 +14,18 @@ export const customScrollStyle = css({
     borderRadius: '2px',
   },
 });
+
+export const customScrollHorizontalStyle = css({
+  '&::-webkit-scrollbar': {
+    height: '10px',
+    width: '4px',
+  },
+  '&::-webkit-scrollbar-track': {
+    backgroundColor: 'white.white_10',
+    borderRadius: '2px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: 'white.white_25',
+    borderRadius: '2px',
+  },
+});
