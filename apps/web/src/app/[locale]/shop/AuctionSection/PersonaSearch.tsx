@@ -5,12 +5,11 @@ import React from 'react';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
 import { auctionQueries } from '@gitanimals/react-query';
-import { Banner } from '@gitanimals/ui-panda';
+import { Banner, Dialog } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { LoaderIcon, SearchIcon, XIcon } from 'lucide-react';
 
-import { Modal } from '@/components/Modal';
 import { getPersonaImage } from '@/utils/image';
 
 const EVENT = {
@@ -61,9 +60,9 @@ export const PersonaSearch = wrap
           <SearchIcon color="rgba(255, 255, 255, 0.5)" width={20} height={20} />
         </button>
 
-        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} onOutsideClick={() => setIsOpen(false)}>
-          <div className={containerStyle}>
-            <h3 className={headingStyle}>Select Find Persona</h3>
+        <Dialog open={isOpen} onOpenChange={() => setIsOpen(false)}>
+          <Dialog.Content size="large" className={containerStyle}>
+            <Dialog.Title>Select Find Persona</Dialog.Title>
             <div className={selectedPersonaWrapperStyle}>
               {selected && (
                 <div className={selectedPersonaTagStyle}>
@@ -101,36 +100,17 @@ export const PersonaSearch = wrap
                 </>
               )}
             </div>
-          </div>
-        </Modal>
+          </Dialog.Content>
+        </Dialog>
       </>
     );
   });
 
 const containerStyle = css({
-  width: '100%',
-  height: '100%',
-  padding: '50px 0',
-  overflow: 'hidden',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-
-  '@media (max-width: 1200px)': {
-    padding: 0,
-  },
-});
-
-const headingStyle = css({
-  textStyle: 'glyph48.bold',
-  color: 'white',
-  textAlign: 'center',
-  marginBottom: '40px',
-
-  '@media (max-width: 1200px)': {
-    textStyle: 'glyph32.bold',
-  },
 });
 
 const selectedPersonaWrapperStyle = css({
