@@ -5,3 +5,4 @@ export * from './Banner';
 export * from './Textfield';
 export * from './Accordion';
 export * from './Dialog';
+export * from './Select';
