@@ -38,7 +38,7 @@ export function FarmType() {
         <div className={farmStyle}>
           <GitanimalsFarm imageKey={status} sizes={[600, 300]} />
         </div>
-        <Button onClick={onLinkCopy} mt={16} size="m">
+        <Button onClick={onLinkCopy} mt={4} size="m">
           {t('copy-link-title')}
         </Button>
       </div>
@@ -53,8 +53,8 @@ const farmSectionStyle = css({
   flexDirection: 'column',
   width: '100%',
   maxHeight: '100%',
-  py: 40,
-  gap: 40,
+  py: '40px',
+  gap: '40px',
 
   _mobile: {
     background: 'none',
@@ -65,4 +65,4 @@ const farmSectionStyle = css({
   },
 });
 
-const farmStyle = css({ borderRadius: '12px', overflow: 'hidden', width: 'fit-content', mt: 24 });
+const farmStyle = css({ borderRadius: '12px', overflow: 'hidden', width: 'fit-content', mt: '24px' });

@@ -46,7 +46,7 @@ const tabItemStyle = css({
 });
 
 const tabListStyle = flex({
-  gap: 12,
+  gap: '12px',
   _mobile: {
     '& a': {
       flex: 1,
@@ -54,11 +54,11 @@ const tabListStyle = flex({
   },
   '& .tab-item': {
     textStyle: 'glyph28.bold',
-    borderRadius: 12,
-    padding: 12,
+    borderRadius: '12px',
+    padding: '12px',
     textAlign: 'center',
     border: '1.5px solid',
-    height: 58,
+    height: '58px',
     color: 'white.white_25',
     backgroundColor: 'white.white_10',
     borderColor: 'white.white_10',
@@ -77,7 +77,7 @@ const tabListStyle = flex({
       borderRadius: '6px',
       border: '1px solid',
       textStyle: 'glyph16.bold',
-      h: 40,
+      h: '40px',
       p: '8px 16px',
     },
   },

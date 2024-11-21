@@ -20,7 +20,7 @@ async function MypageLayout({ children }: { children: React.ReactNode }) {
 export default MypageLayout;
 
 const mainStyle = grid({
-  gap: 80,
+  gap: '80px',
   gridTemplateColumns: '222px 1fr',
   position: 'relative',
   zIndex: 1,
@@ -39,15 +39,13 @@ const mainStyle = grid({
 });
 
 const rightSectionStyle = css({
-  // height: 'calc(100vh - 240px)',
-  // overflow: 'hidden',
   overflowX: 'hidden',
   width: '100%',
-  borderRadius: 16,
+  borderRadius: '16px',
   background: 'white.white_10',
   backdropFilter: 'blur(7px)',
   maxHeight: '1400px',
-  p: 40,
+  p: '40px',
   display: 'flex',
   flexDirection: 'column',
 
@@ -65,16 +63,4 @@ const containerStyle = css({
   minHeight: '100vh',
   height: 'fit-content',
   backgroundColor: '#019C5A',
-});
-
-const bgStyle = css({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: 'calc(100% - 86px)',
-  zIndex: 0,
-  objectFit: 'cover',
-  marginTop: '86px',
-  pointerEvents: 'none',
 });

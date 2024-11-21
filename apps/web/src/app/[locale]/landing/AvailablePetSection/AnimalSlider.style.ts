@@ -35,7 +35,7 @@ export const showMobile = css({
 });
 
 export const cardContainer = grid({
-  gap: 20,
+  gap: '20px',
   justifyContent: 'center',
   gridTemplateColumns: 'repeat(4, 1fr)',
   gridTemplateRows: 'repeat(3, 1fr)',

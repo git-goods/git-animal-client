@@ -1,12 +1,5 @@
 @layer reset, base, tokens, recipes, utilities;
 @layer reset {
-  @font-face {
-    font-family: 'DNFBitBitv2';
-    font-style: normal;
-    font-weight: 700;
-    src: url('//cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf') format('opentype');
-  }
-
   *,
   *::before,
   *::after {
@@ -14,11 +7,6 @@
   }
 
   body {
-    font-family: 'DNFBitBitv2';
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%; /* 107.8px */
-    /* background-color: #2a7442; */
     position: relative;
   }
 
@@ -26,21 +14,8 @@
     cursor: pointer;
     border: transparent;
     background-color: transparent;
-    font-family: 'DNFBitBitv2';
-    line-height: 1.5;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%;
     padding: 0;
-  }
-
-  input {
-    font-family: 'DNFBitBitv2';
-  }
-
-  input::placeholder {
-    color: #b5b5b5;
-    font-family: 'DNFBitBitv2';
+    outline: none;
   }
 
   .mobile {

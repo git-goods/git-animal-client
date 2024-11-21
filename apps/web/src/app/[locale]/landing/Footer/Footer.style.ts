@@ -12,7 +12,7 @@ export const footer = css({
 
   _mobile: {
     padding: '80px 16px',
-    gap: 60,
+    gap: '60px',
   },
 });
 
@@ -24,7 +24,7 @@ export const article = css({
 
   _mobile: {
     flexDir: 'column',
-    gap: 24,
+    gap: '24px',
   },
 });
 
@@ -45,11 +45,11 @@ const defaultContentWrapper: SystemStyleObject = {
 
 export const teamContentWrapper = css(defaultContentWrapper, {
   display: 'flex',
-  gap: 12,
+  gap: '12px',
 
   _mobile: {
     flexDir: 'column',
-    gap: 16,
+    gap: '16px',
   },
 });
 
@@ -61,24 +61,24 @@ export const repoContentWrapper = css(defaultContentWrapper, {
 
 export const repoLi = css({
   display: 'flex',
-  gap: 8,
+  gap: '8px',
 
   _mobile: {
     flexDir: 'column',
-    gap: 1,
+    gap: '1px',
   },
 });
 
 export const repoLiTitle = css({
   display: 'flex',
   alignItems: 'center',
-  gap: 8,
-  width: 226,
+  gap: '8px',
+  width: '226px',
   textStyle: 'glyph18.bold',
 
   _mobile: {
     textStyle: 'glyph15.bold',
-    gap: 17,
+    gap: '17px',
   },
 });
 
@@ -89,6 +89,6 @@ export const repoLiLink = css({
 
   _mobile: {
     textStyle: 'glyph12.regular',
-    marginLeft: 37,
+    marginLeft: '37px',
   },
 });

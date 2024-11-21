@@ -79,7 +79,7 @@ const imageStyle = css({
   zIndex: 1,
   minHeight: 'calc(100vh - 60px)',
   pointerEvents: 'none',
-  top: -60,
+  top: '-60px',
   _mobile: {
     display: 'none',
   },

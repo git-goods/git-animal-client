@@ -89,7 +89,7 @@
     "copy-link-success": "복사 성공!",
     "line-set-error": "1000 이상은 설정할 수 없습니다.",
     "apply-button": "적용하기",
-    "customize-size": "Line Type 사이즈 조정",
+    "customize-size": "Customize Size",
     "extend-button": "확장",
     "shrink-button": "축소",
     "change-pet": "펫 변경",
@@ -104,7 +104,8 @@
     "Merge": {
       "merge": "합치기",
       "merge-result": "합치기 결과",
-      "cancel": "취소"
+      "cancel": "취소",
+      "please-choose-pet": "합치기에 사용할 펫을 선택해주세요. 합친 펫은 사라집니다."
     }
   },
   "Event": {

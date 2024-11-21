@@ -56,14 +56,13 @@ const listStyle = cx(
   flex({
     maxHeight: 'calc(100vh - 542px)',
     overflow: 'auto',
-    gap: 4,
+    gap: '4px',
     w: '100%',
     h: '100%',
     minH: '0',
     overflowY: 'auto',
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center',
   }),
   customScrollStyle,
 );
@@ -95,7 +94,7 @@ const noticeStyle = center({
 const captionMessageStyle = css({
   textStyle: 'glyph18.regular',
   color: 'white_75',
-  marginTop: 16,
+  marginTop: '16px',
 
   // 안내 멘트 5초 뒤에 등장
   opacity: 0,
@@ -157,12 +156,10 @@ function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProps) {
             <div>{snakeToTitleCase(currentPersona.type)}</div>
             <div>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</div>
             <div>{currentPersona.level}</div>
-            <div></div>
-            <div className={flex({ gap: 8 })}>
+            <div className={flex({ gap: '8px' })}>
               <Button variant="secondary" onClick={onSellClick}>
                 100P {t('sell')}
               </Button>
-              {/* TODO: 합치기 기능 추가 시*/}
               <Button variant="secondary" onClick={() => setIsMergeOpen(true)}>
                 {t('merge')}
               </Button>
@@ -184,19 +181,19 @@ function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProps) {
 
 const tableCss = css({
   width: '100%',
-  marginBottom: 32,
+  marginBottom: '32px',
 });
 
 const theadCss = css({
   display: 'grid',
-  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 2.2fr 3.5fr',
-  gap: 16,
+  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 5.7fr',
+  gap: '16px',
   padding: '4px 32px',
   borderRadius: '12px',
   backgroundColor: 'white_50',
   alignItems: 'center',
 
-  height: 46,
+  height: '46px',
   textStyle: 'glyph18.bold',
   color: 'white_100',
 
@@ -204,20 +201,20 @@ const theadCss = css({
     textAlign: 'center',
   },
 
-  marginBottom: 4,
+  marginBottom: '4px',
 });
 
 const rowStyle = css({
   width: '100%',
-  height: 80,
+  height: '80px',
   backgroundColor: 'white_10',
-  borderRadius: 12,
+  borderRadius: '12px',
 
   display: 'grid',
-  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 2.2fr 3.5fr',
+  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 5.7fr',
   alignItems: 'center',
   padding: '0 32px',
-  gap: 16,
+  gap: '16px',
 
   textStyle: 'glyph20.regular',
   color: 'white.white_100',
@@ -225,7 +222,7 @@ const rowStyle = css({
   '& button': {
     color: 'black.black',
     width: '100%',
-    paddingX: 6,
+    paddingX: '6px',
   },
 
   '& *': {

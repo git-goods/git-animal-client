@@ -119,11 +119,11 @@ const mobileHeaderContentStyle = css({
   justifyContent: 'space-between',
   position: 'relative',
   width: '100%',
-  height: 44,
+  height: '44px',
   '& .center-title': { width: 'fit-content', position: 'absolute', left: '50%', transform: 'translateX(-50%)' },
   '& .profile-image': {
-    width: 28,
-    height: 28,
+    width: '28px',
+    height: '28px',
     borderRadius: '50%',
     overflow: 'hidden',
   },
@@ -137,7 +137,7 @@ const mobileHeaderStyle = css({
   position: 'fixed',
   padding: '0 20px',
   top: 0,
-  height: 60,
+  height: '60px',
   backgroundColor: 'white',
 
   // mobile

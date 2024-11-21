@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
+import { auctionQueries, userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useQueryClient } from '@tanstack/react-query';
@@ -16,7 +17,6 @@ import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
 import { tableCss, theadCss } from '../table.styles';
-import { auctionQueries, userQueries } from '@gitanimals/react-query';
 
 const MAX_PRICE = 100_000_000;
 
@@ -101,11 +101,6 @@ function SellInputRow({ item, initPersona }: Props) {
 }
 
 export default SellInputRow;
-
-const containerStyle = css({
-  height: '84px',
-  marginBottom: 32,
-});
 
 const inputStyle = css({
   textStyle: 'glyph20.regular',
