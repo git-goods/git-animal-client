@@ -9,6 +9,7 @@ export const selectTriggerStyle = cva({
     padding: '6px 8px',
     borderRadius: 10,
     backgroundColor: 'white.white_25',
+    borderColor: 'white.white_25',
   },
 
   variants: {
