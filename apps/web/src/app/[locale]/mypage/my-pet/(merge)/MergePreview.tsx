@@ -16,11 +16,14 @@ type MergePersonaProps = {
 const mergePersona = ({ targetPersona, materialPersona }: MergePersonaProps) => {
   if (!targetPersona || !materialPersona) return undefined;
 
-  const materialLevel = Number(materialPersona.level) > 0 ? Number(materialPersona.level) : 1;
+  // 재료 레벨이 1 이하면 1로 처리
+  // 재료 레벨의 /2 만큼 합쳐진다.
+  const plusLevel = Number(materialPersona.level) <= 1 ? 1 : Math.floor(Number(materialPersona.level) / 2);
+  const resultLevel = Number(targetPersona.level) + plusLevel;
 
   return {
     ...targetPersona,
-    level: String(Number(targetPersona.level) + materialLevel),
+    level: String(resultLevel),
   };
 };
 
