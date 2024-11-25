@@ -19,6 +19,7 @@ import { getAnimalTierInfo } from '@/utils/animals';
 import CardFlipGame from './CardFlipGame';
 import { useCheckEnoughMoney } from './useCheckEnoughMoney';
 
+const ONE_PET_POINT = 1000 as const;
 interface Props {
   onClose: () => void;
 }
@@ -36,13 +37,12 @@ function OnePet({ onClose }: Props) {
   const { count, isRunning, isFinished, startTimer, resetTimer } = useTimer(3);
 
   const { data } = useSession();
-  const { checkEnoughMoney } = useCheckEnoughMoney('one-pet-gotcha');
+  const { checkEnoughMoney } = useCheckEnoughMoney({ enoughPoint: ONE_PET_POINT });
 
   const onAction = async () => {
     try {
       if (!checkEnoughMoney()) {
-        toast.error(t('not-enough-points'));
-        return;
+        throw new Error(t('not-enough-points'));
       }
 
       const res = await postGotcha({ count: 1 });
@@ -71,18 +71,21 @@ function OnePet({ onClose }: Props) {
         status: 'error',
       });
 
-      toast.error(t('get-persona-fail'), {
-        description:
-          error instanceof CustomException && error.code === 'TOKEN_EXPIRED'
-            ? t('token-expired')
-            : t('many-error-message'),
-        action: {
-          label: t('contact-us'),
-          onClick: () => {
-            window.location.href = GITHUB_ISSUE_URL;
+      if (error instanceof CustomException) {
+        toast.error(t('get-persona-fail'), {
+          description: error.code === 'TOKEN_EXPIRED' ? t('token-expired') : t('many-error-message'),
+          action: {
+            label: t('contact-us'),
+            onClick: () => {
+              window.location.href = GITHUB_ISSUE_URL;
+            },
           },
-        },
-      });
+        });
+      }
+
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
 
       onClose();
 
@@ -93,11 +96,9 @@ function OnePet({ onClose }: Props) {
 
       sendMessageToErrorChannel(`<!here>
 🔥 펫 뽑기 실패 🔥
-Error Message: ${(error as Error).message}
 \`\`\`
-Error Stack: ${(error as Error).stack}
+Error Message: ${JSON.stringify(error)}
 \`\`\`
-
 User: ${data?.user.name}
 Token: ${data?.user.accessToken} 
       `);
