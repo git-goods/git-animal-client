@@ -17,6 +17,8 @@ import { trackEvent } from '@/lib/analytics';
 import { TenCardFlipGame } from './TenCardFlipGame';
 import { useCheckEnoughMoney } from './useCheckEnoughMoney';
 
+const TEN_PET_POINT = 10000 as const;
+
 interface Props {
   onClose: () => void;
 }
@@ -30,7 +32,7 @@ export function TenPet({ onClose }: Props) {
   const { count, isRunning, isFinished, startTimer, resetTimer } = useTimer(3);
 
   const { data } = useSession();
-  const { checkEnoughMoney } = useCheckEnoughMoney('ten-pet-gotcha');
+  const { checkEnoughMoney } = useCheckEnoughMoney({ enoughPoint: TEN_PET_POINT });
 
   const {
     mutate: postGotcha,
@@ -74,11 +76,9 @@ export function TenPet({ onClose }: Props) {
       }
       sendMessageToErrorChannel(`<!here>
 🔥 펫 뽑기 실패 🔥
-Error Message: ${(error as Error).message}
 \`\`\`
-Error Stack: ${(error as Error).stack}
+Error Message: ${JSON.stringify(error)}
 \`\`\`
-
 User: ${data?.user.name}
 Token: ${data?.user.accessToken} 
       `);
@@ -86,13 +86,19 @@ Token: ${data?.user.accessToken}
   });
 
   const onAction = async () => {
-    if (!checkEnoughMoney()) {
-      toast.error(t('not-enough-points'));
-      return;
-    }
     if (isPending) return;
 
-    postGotcha({ count: 10 });
+    try {
+      if (!checkEnoughMoney()) {
+        throw new Error(t('not-enough-points'));
+      }
+
+      postGotcha({ count: 10 });
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
   };
 
   useEffect(() => {
