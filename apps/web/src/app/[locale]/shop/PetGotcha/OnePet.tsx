@@ -5,20 +5,21 @@ import { css } from '_panda/css';
 import { postGotcha } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { userQueries } from '@gitanimals/react-query';
-import { ScreenModalBase } from '@gitanimals/ui-panda';
+import { Dialog } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
+import { GITHUB_ISSUE_URL } from '@/constants/outlink';
 import { useTimer } from '@/hooks/useTimer';
 import { trackEvent } from '@/lib/analytics';
 import { getAnimalTierInfo } from '@/utils/animals';
 
 import CardFlipGame from './CardFlipGame';
+import { useCheckEnoughMoney } from './useCheckEnoughMoney';
 
-const GITHUB_ISSUE_URL = 'https://github.com/git-goods/gitanimals/issues';
-
+const ONE_PET_POINT = 1000 as const;
 interface Props {
   onClose: () => void;
 }
@@ -36,9 +37,14 @@ function OnePet({ onClose }: Props) {
   const { count, isRunning, isFinished, startTimer, resetTimer } = useTimer(3);
 
   const { data } = useSession();
+  const { checkEnoughMoney } = useCheckEnoughMoney({ enoughPoint: ONE_PET_POINT });
 
   const onAction = async () => {
     try {
+      if (!checkEnoughMoney()) {
+        throw new Error(t('not-enough-points'));
+      }
+
       const res = await postGotcha({ count: 1 });
 
       const resultPersona = res.gotchaResults[0];
@@ -65,18 +71,21 @@ function OnePet({ onClose }: Props) {
         status: 'error',
       });
 
-      toast.error(t('get-persona-fail'), {
-        description:
-          error instanceof CustomException && error.code === 'TOKEN_EXPIRED'
-            ? t('token-expired')
-            : t('many-error-message'),
-        action: {
-          label: t('contact-us'),
-          onClick: () => {
-            window.location.href = GITHUB_ISSUE_URL;
+      if (error instanceof CustomException) {
+        toast.error(t('get-persona-fail'), {
+          description: error.code === 'TOKEN_EXPIRED' ? t('token-expired') : t('many-error-message'),
+          action: {
+            label: t('contact-us'),
+            onClick: () => {
+              window.location.href = GITHUB_ISSUE_URL;
+            },
           },
-        },
-      });
+        });
+      }
+
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
 
       onClose();
 
@@ -87,11 +96,9 @@ function OnePet({ onClose }: Props) {
 
       sendMessageToErrorChannel(`<!here>
 🔥 펫 뽑기 실패 🔥
-Error Message: ${(error as Error).message}
 \`\`\`
-Error Stack: ${(error as Error).stack}
+Error Message: ${JSON.stringify(error)}
 \`\`\`
-
 User: ${data?.user.name}
 Token: ${data?.user.accessToken} 
       `);
@@ -107,13 +114,15 @@ Token: ${data?.user.accessToken}
   }, [isFinished, onClose, resetTimer]);
 
   return (
-    <ScreenModalBase isOpen={true} onClose={onClose}>
-      <h2 className={headingStyle}>{t('choose-one-card')}</h2>
-      <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} />
-      {isRunning && (
-        <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
-      )}
-    </ScreenModalBase>
+    <Dialog open={true} onOpenChange={onClose}>
+      <Dialog.Content size="screen">
+        <Dialog.Title className={headingStyle}>{t('choose-one-card')}</Dialog.Title>
+        <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} />
+        {isRunning && (
+          <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
+        )}
+      </Dialog.Content>
+    </Dialog>
   );
 }
 

@@ -1,14 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { auctionQueries, useChangeProductPrice, useDeleteProduct } from '@gitanimals/react-query';
-import { Button, Modal } from '@gitanimals/ui-panda';
+import { Button, Dialog } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: () => void; productId?: string }) {
   const queryClient = useQueryClient();
+  const t = useTranslations('Shop');
 
   const [price, setPrice] = useState<number>(0);
 
@@ -50,24 +52,26 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <h2 className={titleStyle}>Edit Product</h2>
-      <input
-        className={inputStyle}
-        placeholder="Type price..."
-        type="number"
-        value={Boolean(price) ? price : ''}
-        onChange={(e) => setPrice(Number(e.target.value))}
-      />
-      <div className={buttonWrapperStyle}>
-        <Button onClick={onSave} variant="secondary" size="s">
-          Save
-        </Button>
-        <Button onClick={onDelete} variant="primary" size="s">
-          Delete
-        </Button>
-      </div>
-    </Modal>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <Dialog.Content>
+        <Dialog.Title className={titleStyle}>{t('edit-product')}</Dialog.Title>
+        <input
+          className={inputStyle}
+          placeholder="Type price..."
+          type="number"
+          value={Boolean(price) ? price : ''}
+          onChange={(e) => setPrice(Number(e.target.value))}
+        />
+        <div className={buttonWrapperStyle}>
+          <Button onClick={onSave} variant="secondary" size="m">
+            Save
+          </Button>
+          <Button onClick={onDelete} variant="primary" size="m">
+            Delete
+          </Button>
+        </div>
+      </Dialog.Content>
+    </Dialog>
   );
 }
 
@@ -106,4 +110,5 @@ const buttonWrapperStyle = css({
   display: 'flex',
   justifyContent: 'flex-end',
   gap: '8px',
+  width: '100%',
 });

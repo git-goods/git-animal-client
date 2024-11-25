@@ -38,7 +38,8 @@
     "contact-us": "Contact us",
     "many-error-message": "If you continue to experience problems, please contact us.",
     "gotcha-in-progress": "Drawing in progress. Please wait a moment.",
-    "click-card-to-flip": "Click the card to flip!"
+    "click-card-to-flip": "Click the card to flip!",
+    "not-enough-points": "You don't have enough points to draw a pet."
   },
   "Shop": {
     "no-mobile-support": "Currently, mobile is not supported. Please connect to the desktop.",
@@ -63,6 +64,7 @@
     "pet-sold": "Pet sold successfully for [money]!",
     "prepare": "Prepare",
     "merge": "Merge",
+    "edit-product": "Edit Product",
     "Background": {
       "buy-success": "Background purchased successfully",
       "buy-fail": "Failed to purchase background",

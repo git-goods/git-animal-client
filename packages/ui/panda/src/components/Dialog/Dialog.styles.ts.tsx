@@ -1,9 +1,30 @@
-import { cva } from '_panda/css';
+import { cva, RecipeVariantProps } from '_panda/css';
 
 export const dialogContentCva = cva({
-  base: {},
+  base: {
+    background: 'gray.gray_150',
+    borderRadius: '16px',
+    border: '1px solid',
+    borderColor: 'gray.gray_150',
+    zIndex: 3001,
+    color: 'white.white_100',
+  },
   variants: {
     size: {
+      default: {
+        display: 'flex',
+        width: '100%',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '28px',
+        color: 'white',
+        '& .dialog-title': {
+          textStyle: 'glyph20.regular',
+          textAlign: 'left',
+          width: '100%',
+        },
+      },
       large: {
         borderRadius: '16px',
         backgroundColor: 'gray.gray_150',
@@ -25,6 +46,31 @@ export const dialogContentCva = cva({
           borderRadius: '0px',
         },
       },
+      screen: {
+        margin: 'auto',
+        borderRadius: '0',
+        backgroundColor: 'gray.gray_150',
+        padding: '24px',
+        width: '100vw',
+        height: '100vh',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        '@media (min-width: 1920px)': {
+          borderRadius: '16px',
+          width: '1400px',
+          height: 'fit-content',
+        },
+      },
     },
   },
+  defaultVariants: {
+    size: 'default',
+  },
 });
+
+export type DialogContentVariants = RecipeVariantProps<typeof dialogContentCva>;

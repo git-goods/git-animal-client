@@ -4,7 +4,7 @@ import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Dialog, dialogContentCva } from '@gitanimals/ui-panda';
+import { Dialog } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { ExpandIcon } from 'lucide-react';
 
@@ -80,7 +80,7 @@ export function FarmPersonaSelect({
         />
       </section>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <Dialog.Content className={dialogContentCva({ size: 'large' })}>
+        <Dialog.Content size="large">
           <Dialog.Title>{t('farm-type-select-pet')}</Dialog.Title>
           <div className={flexOverflowStyle}>
             <SelectPersonaList
