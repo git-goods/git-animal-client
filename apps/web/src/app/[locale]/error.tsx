@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from '@/i18n/routing';
 import { signOut } from 'next-auth/react';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { ErrorPage } from '@/components/Error/ErrorPage';
 import { isDev } from '@/constants/env';
+import { useRouter } from '@/i18n/routing';
 
 interface Props {
   error: Error;
