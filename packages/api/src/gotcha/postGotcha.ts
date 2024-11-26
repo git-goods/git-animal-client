@@ -4,7 +4,7 @@ import { convertCamelObjToKebab } from '../utils';
 
 const GotchaResultSchema = z.object({
   name: z.string(),
-  ratio: z.string(),
+  dropRate: z.string(),
 });
 
 const PostGotchaResponseSchema = z.object({
@@ -28,7 +28,7 @@ export const postGotcha = async (request?: PostGotchaRequest): Promise<PostGotch
     request ? convertCamelObjToKebab(request) : undefined,
     {
       headers: {
-        'Api-Version': '2',
+        'Api-Version': '3',
       },
       timeout: 150000,
     },

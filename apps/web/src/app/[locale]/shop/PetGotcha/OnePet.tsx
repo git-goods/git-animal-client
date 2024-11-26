@@ -48,11 +48,11 @@ function OnePet({ onClose }: Props) {
       const res = await postGotcha({ count: 1 });
 
       const resultPersona = res.gotchaResults[0];
-      const tier = getAnimalTierInfo(Number(resultPersona.ratio.replace('%', '')));
+      const tier = getAnimalTierInfo(Number(resultPersona.dropRate.replace('%', '')));
 
       const persona = {
         type: resultPersona.name,
-        dropRate: resultPersona.ratio,
+        dropRate: resultPersona.dropRate,
         tier: tier,
       };
       setGetPersona(persona);
