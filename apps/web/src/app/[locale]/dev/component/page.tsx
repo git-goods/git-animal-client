@@ -1,15 +1,21 @@
-import React from 'react';
-import { css } from '_panda/css/css';
-import { Button } from '@gitanimals/ui-panda';
+'use client';
+
+import { css } from '_panda/css';
+import { Select } from '@gitanimals/ui-panda';
 
 function DevComponentPage() {
   return (
     <div className={containerStyle}>
-      <Button size="s">S size Button</Button>
-      <Button size="m">M size Button</Button>
-      <Button size="l">L size Button</Button>
-      <Button disabled>disabled Button</Button>
-      <Button floating>floating Button</Button>
+      <Select>
+        <Select.Trigger w="180px">
+          <Select.Value placeholder="Theme" />
+        </Select.Trigger>
+        <Select.Content>
+          <Select.Item value="light">Light</Select.Item>
+          <Select.Item value="dark">Dark</Select.Item>
+          <Select.Item value="system">System</Select.Item>
+        </Select.Content>
+      </Select>
     </div>
   );
 }
@@ -17,7 +23,7 @@ function DevComponentPage() {
 export default DevComponentPage;
 
 const containerStyle = css({
-  backgroundColor: '#f0f0f0',
+  backgroundColor: '#2C2929',
   padding: '24px',
   height: '100vh',
 

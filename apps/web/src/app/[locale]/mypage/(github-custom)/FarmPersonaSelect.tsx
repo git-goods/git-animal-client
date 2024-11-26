@@ -9,7 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { ExpandIcon } from 'lucide-react';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
-import { customScrollStyle } from '@/styles/scrollStyle';
+import { customScrollHorizontalStyle, customScrollStyle } from '@/styles/scrollStyle';
 
 import { SelectPersonaList } from '../PersonaList';
 
@@ -125,7 +125,7 @@ const flexOverflowStyle = cx(
     maxHeight: 'calc(100%)',
     marginTop: '24px',
   }),
-  customScrollStyle,
+  customScrollHorizontalStyle,
 );
 
 const selectPetContainerStyle = css({

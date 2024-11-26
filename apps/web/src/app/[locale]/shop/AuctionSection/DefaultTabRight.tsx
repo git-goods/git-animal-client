@@ -1,8 +1,8 @@
 'use client';
 
-import { css } from '_panda/css';
+import { Flex } from '_panda/jsx';
 
-import { OrderTypeSelect, SortDirectionSelect } from '@/components/SortOptionSelect';
+import { OrderTypeSelect, SortDirectionSelect } from '@/components/SortSelect';
 
 import { useSearchOptions } from '../useSearchOptions';
 
@@ -12,19 +12,13 @@ export function DefaultTabRight() {
   const { searchOptions, onSearchOptionChange } = useSearchOptions();
 
   return (
-    <div className={divCss}>
+    <Flex gap="4px" alignItems="center">
       <OrderTypeSelect onSelect={(option) => onSearchOptionChange('orderType', option)} />
       <SortDirectionSelect onSelect={(option) => onSearchOptionChange('sortDirection', option)} />
       <PersonaSearch
         onSelect={(option) => onSearchOptionChange('personaType', option)}
         selected={searchOptions.personaType}
       />
-    </div>
+    </Flex>
   );
 }
-
-const divCss = css({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '4px',
-});
