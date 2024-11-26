@@ -131,6 +131,16 @@ const sectionCss = css({
   padding: '120px 20px',
   width: '100%',
   bg: '#6DE575',
+
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: '-2px',
+    left: '0',
+    right: '0',
+    height: '2px',
+    bg: '#6DE575',
+  },
 });
 
 const h2Css = css({
