@@ -24,7 +24,7 @@ const Card = ({
         transition={{ duration: 0.6, ease: 'easeInOut' }}
       >
         <div className={cx(cardFaceStyle, cardBackFaceStyle)}>
-          {persona && <AnimalCard type={persona.name} dropRate={persona.ratio} />}
+          {persona && <AnimalCard type={persona.name} dropRate={persona.dropRate} />}
         </div>
         <div className={cx(cardFaceStyle, cardFrontFaceStyle)}>
           <CardBack tier="S_PLUS" />
