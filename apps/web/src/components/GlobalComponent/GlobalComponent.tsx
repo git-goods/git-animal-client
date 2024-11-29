@@ -3,9 +3,8 @@
 import { createPortal } from 'react-dom';
 import { Toaster } from 'sonner';
 
-import NoticeToast from '../NoticeToast/NoticeToast';
-
 import FeedBack from './FeedbackForm';
+import { Inbox } from './Inbox';
 
 function GlobalComponent() {
   return createPortal(
@@ -25,7 +24,7 @@ function GlobalComponent() {
           },
         }}
       />
-      <NoticeToast />
+      <Inbox />
     </>,
     document.body,
   );
