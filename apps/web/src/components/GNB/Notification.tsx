@@ -113,7 +113,7 @@ const inboxListStyle = cx(
 const inboxStyle = css({
   display: 'grid',
   gridTemplateColumns: '36px 1fr',
-  padding: '24px 23px 24px 20px',
+  padding: '24px 20px 24px 23px',
   gap: '12px',
   alignItems: 'flex-start',
   color: 'white',
