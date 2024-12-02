@@ -11,6 +11,7 @@ export const InboxSchema = z.object({
   redirectTo: z.string(),
   type: InboxTypeSchema,
   status: InboxStatusSchema,
+  publishedAt: z.any(),
 });
 
 export type Inbox = z.infer<typeof InboxSchema>;

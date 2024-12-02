@@ -17,6 +17,7 @@ import { LoginButton, LogoutButton } from '../AuthButton';
 import { DesktopLanguageSelector } from './LanguageSelector';
 import type { NavMenu } from './menu.constants';
 import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
+import { Notification } from './Notification';
 
 export async function DesktopGNB() {
   const session = await getServerAuth();
@@ -52,6 +53,7 @@ export async function DesktopGNB() {
             </a>
           )}
           <div className={iconWrapperStyle}>
+            <Notification />
             <DesktopLanguageSelector />
             <a href={GIT_ANIMALS_MAIN_URL} target="_blank">
               <GithubIcon width={24} height={24} color="#000" fillOpacity={0.75} />
