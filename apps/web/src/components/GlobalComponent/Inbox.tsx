@@ -1,42 +1,49 @@
 /* eslint-disable @next/next/no-img-element */
+import { memo } from 'react';
 import { css, cx } from '_panda/css';
 import type { Inbox } from '@gitanimals/api';
 import { inboxQueries } from '@gitanimals/react-query';
-import { useQuery } from '@tanstack/react-query';
+import { wrap } from '@suspensive/react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { Link } from '@/i18n/routing';
 
-export function Inbox() {
-  const { data } = useQuery(inboxQueries.getAllUnreadInboxOptions());
-  console.log('data: ', data);
+export const InboxList = memo(
+  wrap
+    .ErrorBoundary({ fallback: <></> })
+    .Suspense({ fallback: <></> })
+    .on(function Inbox() {
+      const { data } = useSuspenseQuery(inboxQueries.getAllUnreadInboxOptions());
+      console.log('data: ', data);
 
-  const dummy = [
-    {
-      id: '1234678128323414',
-      image: 'https://static.gitanimals.org/inbox/images/guild-join.png',
-      title: '길드 가입요청이 왔어요.',
-      body: 'devxb에게 git-goods 길드가입 요청이 왔어요.',
-      redirectTo: '/auctions/',
-      type: 'INBOX', // (INBOX, NOTICE...)
-      status: 'UNREAD', // READ or UNREAD
-    },
-    {
-      id: '1234678323414',
-      image: 'https://static.gitanimals.org/inbox/images/guild-join.png',
-      title: '길드 가입요청이 왔어요.',
-      body: 'devxb에게 git-goods 길드가입 요청이 왔어요.',
-      redirectTo: '/auctions/',
-      type: 'INBOX', // (INBOX, NOTICE...)
-      status: 'UNREAD', // READ or UNREAD
-    },
-  ] as Inbox[];
+      const dummy = [
+        {
+          id: '1234678128323414',
+          image: 'https://static.gitanimals.org/inbox/images/guild-join.png',
+          title: '길드 가입요청이 왔어요.',
+          body: 'devxb에게 git-goods 길드가입 요청이 왔어요.',
+          redirectTo: '/auctions/',
+          type: 'INBOX', // (INBOX, NOTICE...)
+          status: 'UNREAD', // READ or UNREAD
+        },
+        {
+          id: '1234678323414',
+          image: 'https://static.gitanimals.org/inbox/images/guild-join.png',
+          title: '길드 가입요청이 왔어요.',
+          body: 'devxb에게 git-goods 길드가입 요청이 왔어요.',
+          redirectTo: '/auctions/',
+          type: 'INBOX', // (INBOX, NOTICE...)
+          status: 'UNREAD', // READ or UNREAD
+        },
+      ] as Inbox[];
 
-  return (
-    <article>
-      <ul className={inboxListStyle}>{dummy?.map((item) => <InboxItem key={item.id} {...item} />)}</ul>
-    </article>
-  );
-}
+      return (
+        <article>
+          <ul className={inboxListStyle}>{dummy?.map((item) => <InboxItem key={item.id} {...item} />)}</ul>
+        </article>
+      );
+    }),
+);
 
 function InboxItem({ image, title, body, redirectTo, status }: Inbox) {
   return (

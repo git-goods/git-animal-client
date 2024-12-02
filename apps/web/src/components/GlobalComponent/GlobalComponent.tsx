@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import { Toaster } from 'sonner';
 
 import FeedBack from './FeedbackForm';
-import { Inbox } from './Inbox';
+import { InboxList } from './Inbox';
 
 function GlobalComponent() {
   return createPortal(
@@ -24,7 +24,7 @@ function GlobalComponent() {
           },
         }}
       />
-      <Inbox />
+      <InboxList />
     </>,
     document.body,
   );
