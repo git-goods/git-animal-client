@@ -7,7 +7,8 @@
     "github": "Github",
     "shop": "상점",
     "dev": "Dev",
-    "language": "언어"
+    "language": "언어",
+    "notification": "알림"
   },
   "Common": {
     "pet": "펫",

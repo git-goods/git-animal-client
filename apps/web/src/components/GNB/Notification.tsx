@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { center } from '_panda/patterns';
 import type { Inbox } from '@gitanimals/api';
-import { inboxQueries } from '@gitanimals/react-query';
+import { inboxQueries, useReadInbox } from '@gitanimals/react-query';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { BellIcon } from 'lucide-react';
@@ -53,6 +53,7 @@ const countStyle = center({
 
 const InboxList = ({ isOpen, list }: { isOpen: boolean; list: Inbox[] }) => {
   const t = useTranslations('Layout');
+
   return (
     <AnimatePortal isShowing={isOpen}>
       <article className={inboxContainerStyle}>
@@ -63,9 +64,12 @@ const InboxList = ({ isOpen, list }: { isOpen: boolean; list: Inbox[] }) => {
   );
 };
 
-function InboxItem({ image, title, body, redirectTo, status }: Inbox) {
+function InboxItem({ image, title, body, redirectTo, status, id }: Inbox) {
+  const { mutate: readInbox } = useReadInbox();
+  const Comp = redirectTo !== 'NO_REDIRECT' ? Link : 'button';
+
   return (
-    <Link href={redirectTo}>
+    <Comp href={redirectTo} onClick={() => readInbox({ inboxId: id })}>
       <div
         className={cx(inboxStyle, css({ backgroundColor: status === 'UNREAD' ? 'white.white_10' : 'black.black_10' }))}
       >
@@ -76,7 +80,7 @@ function InboxItem({ image, title, body, redirectTo, status }: Inbox) {
           <p className="body">{body}</p>
         </div>
       </div>
-    </Link>
+    </Comp>
   );
 }
 
@@ -94,6 +98,7 @@ const inboxContainerStyle = css({
   background: 'rgba(255, 255, 255, 0.20)',
   boxShadow: '0px 4px 24px 0px rgba(0, 0, 0, 0.25)',
   backdropFilter: 'blur(20px)',
+  textAlign: 'left',
 });
 
 const headingStyle = center({
@@ -139,9 +144,11 @@ const inboxStyle = css({
   },
 
   '& .title': {
+    textAlign: 'left',
     textStyle: 'glyph16.bold',
   },
   '& .body': {
+    textAlign: 'left',
     textStyle: 'glyph15.regular',
     color: 'white.white_90',
   },
