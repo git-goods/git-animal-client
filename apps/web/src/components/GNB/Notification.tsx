@@ -2,6 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { center } from '_panda/patterns';
 import type { Inbox } from '@gitanimals/api';
@@ -51,10 +52,11 @@ const countStyle = center({
 });
 
 const InboxList = ({ isOpen, list }: { isOpen: boolean; list: Inbox[] }) => {
+  const t = useTranslations('Layout');
   return (
     <AnimatePortal isShowing={isOpen}>
       <article className={inboxContainerStyle}>
-        <h3 className={headingStyle}>Notification</h3>
+        <h3 className={headingStyle}>{t('notification')}</h3>
         <ul className={inboxListStyle}>{list?.map((item) => <InboxItem key={item.id} {...item} />)}</ul>
       </article>
     </AnimatePortal>
