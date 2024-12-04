@@ -1,24 +1,27 @@
 'use client';
 
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { css } from '_panda/css';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import AnimalSliderContainerMobile from '../../landing/AvailablePetSection/AnimalSliderContainerMobile';
-
-import { HalloweenCard } from './HalloweenCard';
 
 import '@egjs/react-flicking/dist/flicking.css';
 import '@egjs/react-flicking/dist/flicking-inline.css';
 
 const PERSONA = ['GHOST_KING', 'GHOST', 'SCREAM', 'SCREAM_GHOST', 'SLIME_PUMPKIN_1', 'SLIME_PUMPKIN_2']; //  ''
 
-const cards = PERSONA.map((type, index) => ({
-  key: `${type}-${index}`,
-  Element: <HalloweenCard type={type} key={type} />,
-}));
+interface CardListProps {
+  renderCard: (type: string) => React.ReactNode;
+  persona: string[];
+}
 
-export function CardList() {
+export function CardList({ renderCard, persona }: CardListProps) {
+  const cards = persona.map((type, index) => ({
+    key: `${type}-${index}`,
+    Element: renderCard(type),
+  }));
+
   const [visibleCards, setVisibleCards] = useState(cards.slice(0, 3));
 
   useEffect(() => {
@@ -70,22 +73,17 @@ const slotItemStyle = css({
   height: '100%',
 });
 
-export function MobileCardList() {
+export function MobileCardList({ renderCard, persona }: CardListProps) {
   return (
-    <Suspense fallback={<></>}>
-      <div className={mobileCardListContainer}>
-        <AnimalSliderContainerMobile>
-          {PERSONA.map((type) => {
-            return (
-              <div key={type} className={css({})}>
-                <HalloweenCard key={type} type={type} />
-              </div>
-            );
-            //   return;
-          })}
-        </AnimalSliderContainerMobile>
-      </div>
-    </Suspense>
+    <div className={mobileCardListContainer}>
+      <AnimalSliderContainerMobile>
+        {persona.map((type) => (
+          <div key={type} className={css({})}>
+            {renderCard(type)}
+          </div>
+        ))}
+      </AnimalSliderContainerMobile>
+    </div>
   );
 }
 
