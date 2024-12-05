@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 
-import { ChristmasContent } from '../(chrismas)/Content';
+import { ChristmasContent } from '../(chrismas)';
 import { EventEndOverlay } from '../(common)/EventEndOverlay';
 import { HalloweenContent } from '../(halloween)/Content';
 
@@ -30,14 +30,15 @@ async function EventPage({ params }: { params: Params }) {
     notFound();
   }
 
-  const eventInfo = EVENT_INFO[params.eventCode as EventCode];
+  const { endTime, Content } = EVENT_INFO[params.eventCode as EventCode];
 
   const now = new Date();
-  const isEndEvent = now.getTime() > eventInfo.endTime.getTime();
+  const isEndEvent = now.getTime() > endTime.getTime();
 
   return (
     <>
-      <eventInfo.Content />
+      <Content />
+
       {isEndEvent && <EventEndOverlay />}
     </>
   );

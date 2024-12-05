@@ -6,11 +6,11 @@ import { NoRatingCard } from '@gitanimals/ui-panda';
 
 import { getPersonaImage } from '@/utils/image';
 
-interface HalloweenCardProps {
+interface ChristmasCardProps {
   type: string;
 }
 
-export function HalloweenCard({ type }: HalloweenCardProps) {
+export function ChristmasCard({ type }: ChristmasCardProps) {
   return (
     <div className={containerStyle}>
       <NoRatingCard
