@@ -6,9 +6,9 @@ import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { center } from '_panda/patterns';
 import type { Inbox } from '@gitanimals/api';
-import { inboxQueries } from '@gitanimals/react-query';
+import { inboxQueries, useReadInbox } from '@gitanimals/react-query';
 import { wrap } from '@suspensive/react';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { BellIcon } from 'lucide-react';
 
 import { Link } from '@/i18n/routing';
@@ -23,11 +23,13 @@ export const Notification = wrap
     const [isOpen, setIsOpen] = useState(false);
     const { data } = useSuspenseQuery(inboxQueries.getAllUnreadInboxOptions());
 
+    const inboxCount = data.inboxes.filter((inbox) => inbox.status === 'UNREAD').length;
+
     return (
       <div>
         <button className={notificationStyle} onClick={() => setIsOpen((prev) => !prev)}>
           <BellIcon size={24} />
-          <div className={countStyle}>{data.inboxes.length}</div>
+          {inboxCount > 0 && <div className={countStyle}>{inboxCount}</div>}
         </button>
 
         <InboxList isOpen={isOpen} list={data.inboxes} />
@@ -53,22 +55,31 @@ const countStyle = center({
 
 const InboxList = ({ isOpen, list }: { isOpen: boolean; list: Inbox[] }) => {
   const t = useTranslations('Layout');
+
   return (
     <AnimatePortal isShowing={isOpen}>
       <article className={inboxContainerStyle}>
         <h3 className={headingStyle}>{t('notification')}</h3>
-        <ul className={inboxListStyle}>{list?.map((item) => <InboxItem key={item.id} {...item} />)}</ul>
+        <ul className={inboxListStyle}>{list?.map((item) => <InboxItem key={item.id + item.status} {...item} />)}</ul>
       </article>
     </AnimatePortal>
   );
 };
 
-function InboxItem({ image, title, body, redirectTo, status }: Inbox) {
+function InboxItem({ image, title, body, redirectTo, status, id }: Inbox) {
+  const queryClient = useQueryClient();
+
+  const { mutate: readInbox } = useReadInbox({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: inboxQueries.allKey() });
+    },
+  });
+
+  const Comp = redirectTo !== 'NO_REDIRECT' ? Link : 'button';
+
   return (
-    <Link href={redirectTo}>
-      <div
-        className={cx(inboxStyle, css({ backgroundColor: status === 'UNREAD' ? 'white.white_10' : 'black.black_10' }))}
-      >
+    <Comp href={redirectTo} onClick={() => readInbox({ inboxId: id })}>
+      <div className={cx(inboxStyle, css({ backgroundColor: status === 'UNREAD' ? 'black.black_10' : 'transparent' }))}>
         {status === 'UNREAD' && <div className="unread-indicator" />}
         <img className="image" src={image} alt={title} width={36} height={36} />
         <div>
@@ -76,7 +87,7 @@ function InboxItem({ image, title, body, redirectTo, status }: Inbox) {
           <p className="body">{body}</p>
         </div>
       </div>
-    </Link>
+    </Comp>
   );
 }
 
@@ -94,6 +105,7 @@ const inboxContainerStyle = css({
   background: 'rgba(255, 255, 255, 0.20)',
   boxShadow: '0px 4px 24px 0px rgba(0, 0, 0, 0.25)',
   backdropFilter: 'blur(20px)',
+  textAlign: 'left',
 });
 
 const headingStyle = center({
@@ -101,6 +113,7 @@ const headingStyle = center({
   height: '80px',
   backgroundColor: 'white.white_25',
   color: 'white',
+  flexShrink: 0,
 });
 
 const inboxListStyle = cx(
@@ -120,6 +133,11 @@ const inboxStyle = css({
   alignItems: 'flex-start',
   color: 'white',
   position: 'relative',
+  borderBottom: '1px solid',
+  borderColor: 'white.white_25',
+  '&:last-child': {
+    borderBottom: 'none',
+  },
 
   '& .unread-indicator': {
     width: '5px',
@@ -139,9 +157,11 @@ const inboxStyle = css({
   },
 
   '& .title': {
+    textAlign: 'left',
     textStyle: 'glyph16.bold',
   },
   '& .body': {
+    textAlign: 'left',
     textStyle: 'glyph15.regular',
     color: 'white.white_90',
   },
