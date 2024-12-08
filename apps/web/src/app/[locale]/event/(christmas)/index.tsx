@@ -4,10 +4,21 @@ import { flex } from '_panda/patterns';
 
 import { ChristmasCardList } from './CardList';
 import { ChristmasDraw } from './Draw';
+import { Snowflake } from './Snowflake';
 
 export function ChristmasContent() {
   return (
     <div className={bgContainerStyle}>
+      {[...Array(20)].map((_, i) => (
+        <Snowflake
+          key={i}
+          delay={i * 0.3}
+          left={`${Math.random() * 100}%`}
+          size={10 + Math.random() * 15}
+          duration={8 + Math.random() * 3}
+        />
+      ))}
+
       <Image
         src="/event/christmas/christmas-bg.webp"
         alt="christmas bg"
@@ -86,5 +97,5 @@ const bgContainerStyle = css({
   position: 'relative',
   width: '100%',
   minHeight: 'calc(100vh - 60px)',
-  fontFamily: 'Product Sans',
+  overflow: 'hidden',
 });
