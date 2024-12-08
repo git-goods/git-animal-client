@@ -7,7 +7,8 @@
     "logout": "Logout",
     "github": "Github",
     "dev": "Dev",
-    "language": "Language"
+    "language": "Language",
+    "notification": "Notification"
   },
   "HomePage": {
     "title": "Hello world!",

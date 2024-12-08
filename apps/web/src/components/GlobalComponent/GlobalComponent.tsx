@@ -3,8 +3,6 @@
 import { createPortal } from 'react-dom';
 import { Toaster } from 'sonner';
 
-import NoticeToast from '../NoticeToast/NoticeToast';
-
 import FeedBack from './FeedbackForm';
 
 function GlobalComponent() {
@@ -25,7 +23,6 @@ function GlobalComponent() {
           },
         }}
       />
-      <NoticeToast />
     </>,
     document.body,
   );
