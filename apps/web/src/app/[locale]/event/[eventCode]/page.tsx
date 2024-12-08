@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 
-import { ChristmasContent } from '../(chrismas)';
+import { ChristmasContent } from '../(christmas)';
 import { EventEndOverlay } from '../(common)/EventEndOverlay';
 import { HalloweenContent } from '../(halloween)/Content';
 
@@ -14,7 +14,11 @@ const EVENT_INFO = {
     Content: HalloweenContent,
   },
   CHRISTMAS_2024: {
-    endTime: new Date('2024-12-30'),
+    endTime: new Date('2024-12-31'),
+    Content: ChristmasContent,
+  },
+  CHRISTMAS_2024_STAR_BONUS: {
+    endTime: new Date('2024-12-31'),
     Content: ChristmasContent,
   },
 } as const;

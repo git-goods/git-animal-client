@@ -17,9 +17,9 @@ export function ChristmasCard({ type }: ChristmasCardProps) {
         tier="EX"
         type={type}
         personaImage={getPersonaImage(type)}
-        bgUrl="/event/halloween/card-bg-halloween.webp"
-        thumbnailUrl="/animal-card/card-thumbnail-A_PLUS.webp"
-        rightTextEl={<Image src="/event/halloween/halloween-icon.webp" width={32} height={39} alt="halloween" />}
+        bgUrl="/event/christmas/card-bg-christmas.webp"
+        thumbnailUrl="/event/christmas/unknown-rate.webp"
+        rightTextEl={<Image src="/event/christmas/christmas-icon.webp" width={32} height={39} alt="christmas" />}
       />
     </div>
   );
@@ -27,9 +27,9 @@ export function ChristmasCard({ type }: ChristmasCardProps) {
 
 const containerStyle = css({
   '& .animal-card-type': {
-    color: '#fff',
+    color: '#000',
   },
   '& .animal-card-rating': {
-    color: '#fff',
+    color: '#000',
   },
 });

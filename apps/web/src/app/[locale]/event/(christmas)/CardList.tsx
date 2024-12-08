@@ -6,7 +6,14 @@ import { CardList, MobileCardList } from '../(common)/CardList';
 
 import { ChristmasCard } from './ChristmasCard';
 
-const PERSONA = ['GHOST_KING', 'GHOST', 'SCREAM', 'SCREAM_GHOST', 'SLIME_PUMPKIN_1', 'SLIME_PUMPKIN_2']; //  ''
+const PERSONA = [
+  'SNOWMAN',
+  'DESSERT_FOX_RUDOLPH',
+  'LITTLE_CHICK_SANTA',
+  'RABBIT_BROWN_RUDOLPH',
+  'SNOWMAN_MELT',
+  'HAMSTER_SANTA',
+];
 
 export function ChristmasCardList() {
   return (
