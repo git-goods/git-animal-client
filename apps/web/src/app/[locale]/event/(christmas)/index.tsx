@@ -2,39 +2,56 @@ import Image from 'next/image';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
 
+import { BackgroundSection } from '../(common)/BackgroundSection';
+
 import { ChristmasCardList } from './CardList';
 import { ChristmasDraw } from './Draw';
+import { Snowflake } from './Snowflake';
 
+const bgTypes = ['GRASS_CHRISTMAS_TREE_FIELD', 'SNOW_GRASS_FIELD', 'SNOW_HOUSE_FIELD'];
 export function ChristmasContent() {
   return (
-    <div className={bgContainerStyle}>
-      <Image
-        src="/event/christmas/christmas-bg.webp"
-        alt="christmas bg"
-        layout="fill"
-        objectFit="cover"
-        className={bgImageStyle}
-      />
+    <>
+      <div className={bgContainerStyle}>
+        {[...Array(20)].map((_, i) => (
+          <Snowflake
+            key={i}
+            delay={i * 0.3}
+            left={`${Math.random() * 100}%`}
+            size={10 + Math.random() * 15}
+            duration={8 + Math.random() * 3}
+          />
+        ))}
 
-      <div className={containerStyle}>
         <Image
-          src="/event/christmas/christmas-logo.svg"
-          alt="gitanimals christmas event"
-          width={1357}
-          height={199}
-          objectFit="contain"
-          className={logoImageStyle}
-          draggable={false}
+          src="/event/christmas/christmas-bg.webp"
+          alt="christmas bg"
+          layout="fill"
+          objectFit="cover"
+          className={bgImageStyle}
         />
-        <p className={descriptionStyle}>
-          Christmas has come to Gitanimals
-          <br />
-          Draw Christmas pet for free!
-        </p>
-        <ChristmasCardList />
-        <ChristmasDraw />
+
+        <div className={containerStyle}>
+          <Image
+            src="/event/christmas/christmas-logo.svg"
+            alt="gitanimals christmas event"
+            width={1357}
+            height={199}
+            objectFit="contain"
+            className={logoImageStyle}
+            draggable={false}
+          />
+          <p className={descriptionStyle}>
+            Christmas has come to Gitanimals
+            <br />
+            Draw Christmas pet for free!
+          </p>
+          <ChristmasCardList />
+          <ChristmasDraw />
+        </div>
       </div>
-    </div>
+      <BackgroundSection possibleBgTypes={bgTypes} />
+    </>
   );
 }
 
@@ -86,5 +103,5 @@ const bgContainerStyle = css({
   position: 'relative',
   width: '100%',
   minHeight: 'calc(100vh - 60px)',
-  fontFamily: 'Product Sans',
+  overflow: 'hidden',
 });
