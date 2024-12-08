@@ -5,7 +5,7 @@ export const footer = css({
   display: 'flex',
   flexDir: 'column',
   gap: '120px',
-  bg: 'black.black',
+  // bg: 'black.black',
   width: '100%',
   color: 'white.white',
   padding: '120px 0',

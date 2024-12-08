@@ -14,9 +14,10 @@ export const renderQueries = {
 
 export const renderUserQueries = {
   allKey: ['render', 'user'],
+  backgroundKey: (username: string) => ['render', 'user', 'background', username],
   getMyBackground: (username: string) =>
     queryOptions({
-      queryKey: [renderUserQueries.allKey, 'getMyBackground', username],
+      queryKey: renderUserQueries.backgroundKey(username),
       queryFn: () => getMyBackground(username),
     }),
 };
