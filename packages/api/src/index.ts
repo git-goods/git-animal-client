@@ -7,3 +7,4 @@ export * from './identity';
 export * from './gotcha';
 export * from './coupon';
 export * from './shop';
+export * from './inbox';
