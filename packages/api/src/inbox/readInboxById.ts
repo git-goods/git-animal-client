@@ -8,10 +8,10 @@ const ReadInboxByIdRequestSchema = z.object({
   inboxId: z.string(),
 });
 
-const ReadInboxByIdResponseSchema = z.void();
+const ReadInboxByIdResponseSchema = z.any();
 
 export type ReadInboxByIdRequest = z.infer<typeof ReadInboxByIdRequestSchema>;
 
-export const readInboxById = async (request: ReadInboxByIdRequest): Promise<void> => {
-  return await safeDel(ReadInboxByIdResponseSchema)(`/inboxes/${request.inboxId}`);
+export const readInboxById = (request: ReadInboxByIdRequest): Promise<void> => {
+  return safeDel(ReadInboxByIdResponseSchema)(`/inboxes/${request.inboxId}`);
 };
