@@ -21,30 +21,49 @@ import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
 import { Link, useRouter } from '@/i18n/routing';
 import { trackEvent } from '@/lib/analytics';
 
-import { HalloweenCard } from './HalloweenCard';
+interface DrawProps {
+  renderCard: (type: string) => React.ReactNode;
+  bonusEventCode: string;
+  baseEventCode: string;
+}
 
-const HALLOWEEN_STAR_BONUS_EVENT_CODE = 'HALLOWEEN_2024_STAR_BONUS';
-
-export const Draw = wrap.Suspense().on(() => {
+export const Draw = wrap.Suspense().on(({ renderCard, bonusEventCode, baseEventCode }: DrawProps) => {
+  const queryClient = useQueryClient();
   const t = useTranslations('Event.Halloween');
 
   const { eventCode } = useParams();
+
   if (Array.isArray(eventCode)) {
     throw new CustomException('UNKNOWN_ERROR', 'eventCode is not string');
   }
-  const upperCaseEventCode = eventCode.toUpperCase();
 
   const { data: session } = useSession();
-
   const { mutate: usingCoupon, isPending } = useUsingCoupon();
-  const [drawedPet, setDrawedPet] = useState<string | null>(null);
 
-  const queryClient = useQueryClient();
+  const [drawedPet, setDrawedPet] = useState<string | null>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const isStarBonusEvent = eventCode === bonusEventCode;
+  const upperCaseEventCode = eventCode.toUpperCase();
+
+  const onClickOutside = () => {
+    setDrawedPet(null);
+  };
+
+  useOutsideClick(modalRef, onClickOutside);
+
+  const { data: usedCoupons, isLoading: isLoadingUsedCoupons } = useQuery({
+    ...couponQueries.usedCouponsOptions(),
+    enabled: Boolean(session),
+  });
+
+  const isUsedCoupon = usedCoupons?.coupons.some((coupon) => coupon.code === upperCaseEventCode);
 
   const onClickDraw = () => {
     if (!session) {
-      login('/event/HALLOWEEN_2024');
-      trackEvent(`${upperCaseEventCode}-not-signed-in`, {
+      login(`/event/${baseEventCode}`);
+      trackEvent(baseEventCode, {
+        type: 'not-signed-in',
         coupon: upperCaseEventCode,
       });
 
@@ -55,7 +74,8 @@ export const Draw = wrap.Suspense().on(() => {
       { code: upperCaseEventCode },
       {
         onSuccess: (res) => {
-          trackEvent(`${upperCaseEventCode}-success`, {
+          trackEvent(baseEventCode, {
+            type: 'success',
             pet: res.result,
             coupon: upperCaseEventCode,
           });
@@ -67,21 +87,14 @@ export const Draw = wrap.Suspense().on(() => {
           sendMessageToErrorChannel(
             `이벤트 실패, 이벤트 코드: ${upperCaseEventCode}, 사용자: ${session.user?.name}\n${error.message} ${error.name}`,
           );
-          trackEvent(`${upperCaseEventCode}-error`, {
+          trackEvent(baseEventCode, {
+            type: 'error',
             coupon: upperCaseEventCode,
           });
         },
       },
     );
   };
-
-  const modalRef = useRef<HTMLDivElement>(null);
-  const onClickOutside = () => {
-    setDrawedPet(null);
-  };
-  useOutsideClick(modalRef, onClickOutside);
-
-  const isStarBonusEvent = eventCode === HALLOWEEN_STAR_BONUS_EVENT_CODE;
 
   const drawButtonText = (() => {
     if (!session) {
@@ -94,12 +107,6 @@ export const Draw = wrap.Suspense().on(() => {
 
     return t('draw-button');
   })();
-
-  const { data: usedCoupons, isLoading: isLoadingUsedCoupons } = useQuery({
-    ...couponQueries.usedCouponsOptions(),
-    enabled: Boolean(session),
-  });
-  const isUsedCoupon = usedCoupons?.coupons.some((coupon) => coupon.code === upperCaseEventCode);
 
   return (
     <>
@@ -116,13 +123,13 @@ export const Draw = wrap.Suspense().on(() => {
           <div className={fixedStyle} ref={modalRef}>
             <motion.div className={modalStyle} variants={modalVariants} initial="initial" animate="animate" exit="exit">
               <span className={resultTitleStyle}>{t('result-title')}</span>
-              <HalloweenCard type={drawedPet} />
+              {renderCard(drawedPet)}
 
               <Link href="/mypage" className={resultAnchorStyle}>
                 {t('result-apply')}
               </Link>
 
-              <StarAnchor />
+              <StarAnchor bonusEventCode={bonusEventCode} />
             </motion.div>
           </div>
         )}
@@ -184,9 +191,13 @@ const resultAnchorStyle = css({
 const StarAnchor = wrap
   .ErrorBoundary({ fallback: null })
   .Suspense()
-  .on(() => {
+  .on(({ bonusEventCode }: { bonusEventCode: string }) => {
     const t = useTranslations('Event.Halloween');
+    const router = useRouter();
+
     const { data: session } = useSession();
+    const { eventCode } = useParams();
+
     if (!session?.user.name) {
       throw new CustomException('UNKNOWN_ERROR', 'session.user.name is undefined');
     }
@@ -195,12 +206,10 @@ const StarAnchor = wrap
       data: { isPressStar },
     } = useSuspenseQuery(renderQueries.isPressStar({ login: session.user.name }));
 
-    const { eventCode } = useParams();
-    const isStarBonusEvent = eventCode === HALLOWEEN_STAR_BONUS_EVENT_CODE;
+    const isStarBonusEvent = eventCode === bonusEventCode;
 
-    const router = useRouter();
     const onClickFirstEvent = () => {
-      router.replace(`/event/${HALLOWEEN_STAR_BONUS_EVENT_CODE}`);
+      router.replace(`/event/${bonusEventCode}`);
     };
 
     if (isStarBonusEvent) {
@@ -210,7 +219,7 @@ const StarAnchor = wrap
     if (isPressStar) {
       return (
         <Button>
-          <Link href={`/event/${HALLOWEEN_STAR_BONUS_EVENT_CODE}`}>{t('result-already-star')}</Link>
+          <Link href={`/event/${bonusEventCode}`}>{t('result-already-star')}</Link>
         </Button>
       );
     }

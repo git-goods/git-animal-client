@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+
 import Image from 'next/image';
 import { css } from '_panda/css';
 import { NoRatingCard } from '@gitanimals/ui-panda';
@@ -10,7 +11,6 @@ interface HalloweenCardProps {
 }
 
 export function HalloweenCard({ type }: HalloweenCardProps) {
-  //   const tier = getAnimalTierInfo(Number(props.dropRate.replace('%', '')));
   return (
     <div className={containerStyle}>
       <NoRatingCard
