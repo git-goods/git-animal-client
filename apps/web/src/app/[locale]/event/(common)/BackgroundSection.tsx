@@ -4,11 +4,10 @@
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import type { Background } from '@gitanimals/api';
-import { useScrollHeading } from '@gitanimals/react';
 import { renderUserQueries, shopQueries, useBuyBackground } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
@@ -16,6 +15,8 @@ import { trackEvent } from '@/lib/analytics';
 import { useClientUser } from '@/utils/clientAuth';
 import { getBackgroundImage } from '@/utils/image';
 import { addNumberComma } from '@/utils/number';
+
+import BackgroundSlider from './BackgroundSlider/BackgroundSlider';
 
 interface BackgroundSectionProps {
   possibleBgTypes: string[];
@@ -28,10 +29,8 @@ export const BackgroundSection = wrap
   })
   .Suspense({ fallback: <></> })
   .on(function BackgroundSection({ possibleBgTypes }: BackgroundSectionProps) {
-    // url에 '#background'라는 해쉬값이 있으면 아래 h2 태그로 스크롤되는 이벤트 처리
-    const backgroundRef = useScrollHeading('background');
-
     const t = useTranslations('Shop.Background');
+    const queryClient = useQueryClient();
     const { name } = useClientUser();
     const {
       data: { backgrounds },
@@ -47,6 +46,7 @@ export const BackgroundSection = wrap
     const { mutate: buyBackground } = useBuyBackground({
       onSuccess: () => {
         toast.success(t('buy-success'));
+        queryClient.invalidateQueries({ queryKey: renderUserQueries.backgroundKey(name) });
       },
       onError: (error) => {
         if (error instanceof AxiosError) {
@@ -73,10 +73,8 @@ export const BackgroundSection = wrap
 
     return (
       <div className={sectionCss}>
-        <h2 ref={backgroundRef} className={h2Css}>
-          Background
-        </h2>
-        <div className={contentCss}>
+        <h2 className={h2Css}>Background</h2>
+        <BackgroundSlider>
           {backgroundList?.map((item) => (
             <BackgroundItem
               key={item.type}
@@ -85,12 +83,10 @@ export const BackgroundSection = wrap
               isPurchased={item.isPurchased ?? false}
             />
           ))}
-        </div>
+        </BackgroundSlider>
       </div>
     );
   });
-
-const EVENT_BACKGROUND = 'HALLOWEEN_FIELD'; // TODO: 이벤트 배경 타입
 
 function BackgroundItem({
   item,
@@ -103,11 +99,8 @@ function BackgroundItem({
 }) {
   const t = useTranslations('Shop.Background');
 
-  const isEvent = item.type === EVENT_BACKGROUND;
-
   return (
     <div className={cardCss} key={item.type}>
-      {isEvent && <div className={eventLabelCss}>{t('event-sale')}</div>}
       <div className={cx(cardImageCss, isPurchased && purchasedCardImageCss)}>
         <img src={getBackgroundImage(item.type)} alt={item.type} width={550} height={275} />
       </div>
@@ -124,21 +117,6 @@ function BackgroundItem({
   );
 }
 
-const eventLabelCss = css({
-  position: 'absolute',
-  top: '12px',
-  left: '12px',
-  zIndex: 10,
-  display: 'inline-flex',
-  padding: '6px 12px',
-  alignItems: 'center',
-  gap: '2px',
-  borderRadius: '8px',
-  background: '#FF3030',
-  textStyle: 'glyph18.bold',
-  color: 'white',
-});
-
 const sectionCss = css({
   position: 'relative',
   display: 'flex',
@@ -153,14 +131,11 @@ const h2Css = css({
   textStyle: 'glyph82.bold',
   color: 'black',
   marginBottom: '80px',
-});
 
-const contentCss = css({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: '20px',
-  maxWidth: 'min(1120px, 100%)',
-  width: '100%',
+  _mobile: {
+    textStyle: 'glyph40.bold',
+    marginBottom: '30px',
+  },
 });
 
 const cardCss = css({

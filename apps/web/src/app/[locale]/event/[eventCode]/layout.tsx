@@ -2,8 +2,6 @@ import React from 'react';
 
 import GNB from '@/components/GNB/GNB';
 
-import { Footer } from '../../landing/Footer';
-
 export async function generateMetadata({ params }: { params: { eventCode: string } }) {
   return {
     openGraph: {
@@ -21,7 +19,6 @@ function EventLayout({ children }: { children: React.ReactNode }) {
     <div>
       <GNB />
       {children}
-      <Footer />
     </div>
   );
 }

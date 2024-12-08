@@ -1,3 +1,5 @@
+import { css } from '_panda/css';
+
 import GNB from '@/components/GNB/GNB';
 
 import { ChoosePetSection } from './landing/ChoosePetSection';
@@ -15,7 +17,9 @@ export default function HomePage() {
       <AvailablePetSection />
       <HavePetWaySection />
       <ChoosePetSection />
-      <Footer />
+      <div className={css({ bg: 'black' })}>
+        <Footer />
+      </div>
     </div>
   );
 }
