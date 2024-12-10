@@ -109,7 +109,8 @@
       "merge-result": "합치기 결과",
       "cancel": "취소",
       "please-choose-pet": "합치기에 사용할 펫을 선택해주세요. 합친 펫은 사라집니다."
-    }
+    },
+    "laboratory": "실험실"
   },
   "Event": {
     "event-end": "이벤트가 종료되었습니다.",
@@ -128,6 +129,13 @@
       "result-halloween-star-bonus-coupon-already-star": "🎃 Halloween이 찾아왔어요! 🎃\n Github Star를 누른 유저를 위한 할로윈 보너스를 사용해보세요!",
       "not-login-toast": "🎃 Halloween이 찾아왔어요! 🎃\n로그인 후 할로윈 펫을 뽑아보세요!",
       "go": "GO!"
+    }
+  },
+  "Laboratory": {
+    "property-pet-sell": {
+      "title": "Property Pet Sell",
+      "description": "Sell your pet to other users!",
+      "count": "개"
     }
   }
 }

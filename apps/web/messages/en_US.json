@@ -107,7 +107,8 @@
       "merge-result": "Merge result",
       "cancel": "Cancel",
       "please-choose-pet": "Please choose a pet to use to merge the level. The pet used disappears."
-    }
+    },
+    "laboratory": "Laboratory"
   },
   "Event": {
     "event-end": "Event has ended.",
@@ -126,6 +127,13 @@
       "result-halloween-star-bonus-coupon-already-star": "🎃 It's Halloween! 🎃\nFor users who have given us a Github Star, use your Halloween bonus!",
       "not-login-toast": "🎃 It's Halloween! 🎃\nLogin and draw your Halloween pet!",
       "go": "GO!"
+    }
+  },
+  "Laboratory": {
+    "property-pet-sell": {
+      "title": "Property Pet Sell",
+      "description": "Sell your pet to other users!",
+      "count": "ea"
     }
   }
 }
