@@ -3,11 +3,13 @@
 import { memo } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
+import { dropPets } from '@gitanimals/api/src/shop/dropPet';
 import { userQueries } from '@gitanimals/react-query/src/user';
 import { LevelBanner } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { useDialog } from '@/components/GlobalComponent/useDialog';
 import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
@@ -33,6 +35,8 @@ const PersonaList = wrap
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
 
+    const { showDialog } = useDialog();
+
     const petItemMap = new Map<string, PetItemType>();
 
     data.personas.forEach((persona) => {
@@ -47,10 +51,30 @@ const PersonaList = wrap
       }
     });
 
-    console.log('petItemMap: ', petItemMap);
+    const onPetClick = (ids: string[]) => {
+      showDialog({
+        title: '펫 판매',
+        description: `펫을 판매하시겠습니까? ${ids.length}마리를 판매합니다.`,
+        onConfirm: () => onSell(ids),
+      });
+    };
 
-    const onSell = (ids: string[]) => {
-      console.log('onSell: ', ids);
+    const onSell = async (ids: string[]) => {
+      const res = await dropPets({ personaIds: ids });
+
+      const totalPrice = res.success.reduce((acc, curr) => acc + curr.givenPoint, 0);
+
+      showDialog({
+        title: '펫 판매 완료',
+        description: (
+          <div>
+            <p>
+              {res.success.length}마리 판매 완료, {res.errors.length}마리 판매 실패
+            </p>
+            <p>총 판매 금액: {totalPrice}P</p>
+          </div>
+        ),
+      });
     };
 
     return (
@@ -61,7 +85,7 @@ const PersonaList = wrap
               <MemoizedPersonaItem
                 type={petItem.type}
                 level={petItem.level}
-                onClick={() => onSell(petItem.ids)}
+                onClick={() => onPetClick(petItem.ids)}
                 count={petItem.ids.length}
               />
             </div>
