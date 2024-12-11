@@ -66,12 +66,14 @@
     "prepare": "Prepare",
     "merge": "Merge",
     "edit-product": "Edit Product",
+    "buy-error-not-login": "Please sign in to use this feature.",
     "Background": {
       "buy-success": "Background purchased successfully",
       "buy-fail": "Failed to purchase background",
       "purchased": "Purchased",
       "buy": "Buy",
-      "event-sale": "Event Limited Sale"
+      "event-sale": "Event Limited Sale",
+      "buy-possible-user": "Please sign in to use this feature."
     }
   },
   "NoticeToast": {

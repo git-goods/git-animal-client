@@ -42,6 +42,7 @@ export const BackgroundSection = wrap
       }),
     });
     const { data: myBackground } = useQuery(renderUserQueries.getMyBackground(name));
+    const isLoggedIn = Boolean(name);
 
     const { mutate: buyBackground } = useBuyBackground({
       onSuccess: () => {
@@ -67,6 +68,10 @@ export const BackgroundSection = wrap
       });
 
     const handleBuyBackground = (type: string) => {
+      if (!isLoggedIn) {
+        toast.error(t('buy-possible-user'));
+        return;
+      }
       buyBackground({ type });
       trackEvent('buy-background', { background: type });
     };
@@ -81,6 +86,7 @@ export const BackgroundSection = wrap
               item={item}
               onBuy={handleBuyBackground}
               isPurchased={item.isPurchased ?? false}
+              isLoggedIn={isLoggedIn}
             />
           ))}
         </BackgroundSlider>
@@ -92,10 +98,12 @@ function BackgroundItem({
   item,
   onBuy,
   isPurchased,
+  isLoggedIn,
 }: {
   item: Background;
   onBuy: (type: string) => void;
   isPurchased: boolean;
+  isLoggedIn: boolean;
 }) {
   const t = useTranslations('Shop.Background');
 
@@ -111,7 +119,7 @@ function BackgroundItem({
         disabled={isPurchased}
         className={css({ minWidth: '120px' })}
       >
-        {isPurchased ? t('purchased') : t('buy')}
+        {!isLoggedIn ? t('buy-possible-user') : isPurchased ? t('purchased') : t('buy')}
       </Button>
     </div>
   );

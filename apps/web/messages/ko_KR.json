@@ -73,7 +73,8 @@
       "buy-fail": "배경 구매에 실패했습니다.",
       "purchased": "구매 완료",
       "buy": "구매하기",
-      "event-sale": "이벤트 한정 세일"
+      "event-sale": "이벤트 한정 세일",
+      "buy-possible-user": "로그인 후 이용해주세요."
     }
   },
   "NoticeToast": {
