@@ -10,6 +10,7 @@ import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { useDialog } from '@/components/GlobalComponent/useDialog';
+import { trackEvent } from '@/lib/analytics';
 import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
@@ -49,6 +50,10 @@ const PersonaList = wrap
       const res = await dropPets({ personaIds: ids });
 
       const totalPrice = res.success.reduce((acc, curr) => acc + curr.givenPoint, 0);
+
+      trackEvent('laboratory', {
+        type: '레벨, 타입 같은 펫 한번에 팔기',
+      });
 
       showDialog({
         title: '펫 판매 완료',
