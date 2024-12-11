@@ -1,6 +1,6 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { dropPets } from '@gitanimals/api/src/shop/dropPet';
@@ -37,20 +37,6 @@ const PersonaList = wrap
 
     const { showDialog } = useDialog();
 
-    const petItemMap = new Map<string, PetItemType>();
-
-    data.personas.forEach((persona) => {
-      const level = persona.level;
-      const type = persona.type;
-      const uniqueKey = `${type}-${level}`;
-      const petItem = petItemMap.get(uniqueKey);
-      if (petItem) {
-        petItem.ids.push(persona.id);
-      } else {
-        petItemMap.set(uniqueKey, { ids: [persona.id], type, level });
-      }
-    });
-
     const onPetClick = (ids: string[]) => {
       showDialog({
         title: '펫 판매',
@@ -77,10 +63,29 @@ const PersonaList = wrap
       });
     };
 
+    // 레벨 오름차순 정렬
+    const petList = useMemo(() => {
+      const petItemMap = new Map<string, PetItemType>();
+
+      data.personas.forEach((persona) => {
+        const level = persona.level;
+        const type = persona.type;
+        const uniqueKey = `${type}-${level}`;
+        const petItem = petItemMap.get(uniqueKey);
+        if (petItem) {
+          petItem.ids.push(persona.id);
+        } else {
+          petItemMap.set(uniqueKey, { ids: [persona.id], type, level });
+        }
+      });
+
+      return Array.from(petItemMap.values()).sort((a, b) => Number(a.level) - Number(b.level));
+    }, [data.personas]);
+
     return (
       <section className={sectionStyle}>
         <div className={flexOverflowStyle}>
-          {Array.from(petItemMap.values()).map((petItem) => (
+          {petList.map((petItem) => (
             <div key={petItem.type + petItem.level}>
               <MemoizedPersonaItem
                 type={petItem.type}
