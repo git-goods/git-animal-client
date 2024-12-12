@@ -18,3 +18,23 @@ export type DropPetRequest = z.infer<typeof DropPetRequestSchema>;
 export const dropPet = async ({ personaId }: DropPetRequest): Promise<DropPetResponse> => {
   return safePost(DropPetResponseSchema)(`/shops/drop/${personaId}`);
 };
+
+export const dropPets = async ({ personaIds }: { personaIds: string[] }) => {
+  const results = await Promise.allSettled(personaIds.map((id) => dropPet({ personaId: id })));
+
+  const successResults: DropPetResponse[] = [];
+  const errorResults: any[] = [];
+
+  results.forEach((result) => {
+    if (result.status === 'fulfilled') {
+      successResults.push(result.value);
+    } else {
+      errorResults.push(result.reason);
+    }
+  });
+
+  return {
+    success: successResults,
+    errors: errorResults,
+  };
+};
