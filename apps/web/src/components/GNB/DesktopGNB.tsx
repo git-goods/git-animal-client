@@ -17,7 +17,7 @@ import { LoginButton, LogoutButton } from '../AuthButton';
 import { DesktopLanguageSelector } from './LanguageSelector';
 import type { NavMenu } from './menu.constants';
 import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
-import { Notification } from './Notification';
+import { Notification } from './Inbox/Notification';
 
 export async function DesktopGNB() {
   const session = await getServerAuth();
