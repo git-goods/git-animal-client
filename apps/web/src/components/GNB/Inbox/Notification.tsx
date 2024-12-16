@@ -14,16 +14,23 @@ import { BellIcon } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import { customScrollStyle } from '@/styles/scrollStyle';
 
-import { AnimatePortal } from '../Portal';
+import { AnimatePortal } from '../../Portal';
+
+import { INBOX_NOTICE } from './inbox.contants';
 
 export const Notification = wrap
   .ErrorBoundary({ fallback: <BellIcon size={24} /> })
   .Suspense({ fallback: <BellIcon size={24} /> })
   .on(function Notification() {
+    const t = useTranslations('Inbox');
     const [isOpen, setIsOpen] = useState(false);
     const { data } = useSuspenseQuery(inboxQueries.getAllUnreadInboxOptions());
 
     const inboxCount = data.inboxes.filter((inbox) => inbox.status === 'UNREAD').length;
+    const inboxList = [
+      ...INBOX_NOTICE.map((item) => ({ ...item, title: t(item.title), body: t(item.body) })),
+      ...data.inboxes,
+    ];
 
     return (
       <div>
@@ -32,7 +39,7 @@ export const Notification = wrap
           {inboxCount > 0 && <div className={countStyle}>{inboxCount}</div>}
         </button>
 
-        <InboxList isOpen={isOpen} list={data.inboxes} />
+        <InboxList isOpen={isOpen} list={inboxList} />
       </div>
     );
   });
