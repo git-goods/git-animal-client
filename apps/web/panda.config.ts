@@ -1,4 +1,4 @@
-import { semanticTokens, textStyles, tokens } from '@gitanimals/ui-panda';
+import { keyframes, semanticTokens, textStyles, tokens } from '@gitanimals/ui-panda';
 import { defineConfig } from '@pandacss/dev';
 
 export default defineConfig({
@@ -17,94 +17,37 @@ export default defineConfig({
       tokens,
       semanticTokens,
       textStyles,
-
-      keyframes: {
-        fadeIn: {
-          from: {
-            opacity: 0,
-          },
-          to: {
-            opacity: 1,
-          },
+      keyframes,
+    },
+  },
+  patterns: {
+    extend: {
+      onlyMobile: {
+        description: '모바일에서만 보이는 요소',
+        properties: {
+          display: { type: 'string' },
         },
-        fadeInUp: {
-          from: {
-            opacity: 0,
-            transform: 'translateY(20px)',
-          },
-          to: {
-            opacity: 1,
-            transform: 'translateY(0)',
-          },
+        transform(props) {
+          return {
+            display: props.display ?? 'block',
+            '@media (min-width: 768px)': {
+              display: 'none',
+            },
+          };
         },
-
-        jump: {
-          '0%': {
-            transform: 'translateY(0)',
-          },
-          '50%': {
-            transform: 'translateY(-10px)',
-          },
-          '100%': {
-            transform: 'translateY(0)',
-          },
+      },
+      onlyDesktop: {
+        description: '데스크톱에서만 보이는 요소',
+        properties: {
+          display: { type: 'string' },
         },
-        bounce: {
-          '0%, 20%, 50%, 80%, 100%': {
-            transform: 'translateY(0)',
-          },
-          '40%': {
-            transform: 'translateY(-30px)',
-          },
-          '60%': {
-            transform: 'translateY(-20px)',
-          },
-        },
-        move: {
-          '0%': {
-            rotate: '-2deg',
-          },
-          '50%': {
-            rotate: '2deg',
-          },
-          '100%': {
-            rotate: '-2deg',
-          },
-        },
-        move_5: {
-          '0%': {
-            rotate: '-5deg',
-          },
-          '50%': {
-            rotate: '5deg',
-          },
-          '100%': {
-            rotate: '-5deg',
-          },
-        },
-        slide: {
-          '0%': {
-            transform: 'translate3d(0, 0, 0)',
-          },
-          '100%': {
-            transform: 'translate3d(-100%, 0, 0)',
-          },
-        },
-        skeletonLoading: {
-          '0%': {
-            backgroundPosition: '200% 0',
-          },
-          '100%': {
-            backgroundPosition: '-200% 0',
-          },
-        },
-        animateSpin: {
-          from: {
-            transform: 'rotate(0deg)',
-          },
-          to: {
-            transform: 'rotate(360deg)',
-          },
+        transform(props) {
+          return {
+            display: 'none',
+            '@media (min-width: 768px)': {
+              display: props.display ?? 'block',
+            },
+          };
         },
       },
     },
@@ -114,9 +57,6 @@ export default defineConfig({
       mobile: '@media (max-width: 768px)',
     },
   },
-  // utilities: {
-  //   extend: utilities,
-  // },
   syntax: 'object-literal',
   jsxFramework: 'react',
 
