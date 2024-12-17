@@ -19,21 +19,6 @@ export const container = css({
   },
 });
 
-export const showDesktop = css({
-  display: 'block',
-
-  '@media (max-width: 600px)': {
-    display: 'none',
-  },
-});
-
-export const showMobile = css({
-  display: 'none',
-  '@media (max-width: 600px)': {
-    display: 'block',
-  },
-});
-
 export const cardContainer = grid({
   gap: '20px',
   justifyContent: 'center',

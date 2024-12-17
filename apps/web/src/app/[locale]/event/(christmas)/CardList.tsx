@@ -5,6 +5,7 @@ import { css } from '_panda/css';
 import { CardList, MobileCardList } from '../(common)/CardList';
 
 import { ChristmasCard } from './ChristmasCard';
+import { OnlyDesktop, OnlyMobile } from '_panda/jsx';
 
 const PERSONA = [
   'SNOWMAN',
@@ -18,27 +19,12 @@ const PERSONA = [
 export function ChristmasCardList() {
   return (
     <>
-      <div className={showMobile}>
+      <OnlyMobile>
         <MobileCardList renderCard={(type) => <ChristmasCard type={type} />} persona={PERSONA} />
-      </div>
-      <div className={showDesktop}>
+      </OnlyMobile>
+      <OnlyDesktop>
         <CardList persona={PERSONA} renderCard={(type) => <ChristmasCard type={type} />} />
-      </div>
+      </OnlyDesktop>
     </>
   );
 }
-
-const showDesktop = css({
-  display: 'block',
-
-  '@media (max-width: 600px)': {
-    display: 'none',
-  },
-});
-
-const showMobile = css({
-  display: 'none',
-  '@media (max-width: 600px)': {
-    display: 'block',
-  },
-});

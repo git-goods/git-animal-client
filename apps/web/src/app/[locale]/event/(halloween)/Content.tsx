@@ -6,6 +6,7 @@ import { flex } from '_panda/patterns';
 
 import { HalloweenCardList } from './CardList';
 import { KingGhost } from './KingGhost';
+import { OnlyMobile } from '_panda/jsx';
 
 export async function HalloweenContent() {
   const t = await getTranslations('Event.Halloween');
@@ -35,9 +36,9 @@ export async function HalloweenContent() {
         className={cx(imageStyle, leftImageStyle)}
       />
 
-      <div className={showMobile}>
+      <OnlyMobile>
         <KingGhost />
-      </div>
+      </OnlyMobile>
 
       <div className={containerStyle}>
         <Image
@@ -128,11 +129,4 @@ const rightImageStyle = css({
 const leftImageStyle = css({
   position: 'absolute',
   left: 0,
-});
-
-const showMobile = css({
-  display: 'none',
-  _mobile: {
-    display: 'block',
-  },
 });

@@ -8,6 +8,7 @@ import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
 
 import * as styles from './AnimalSlider.style';
 import AnimalSliderContainerMobile from './AnimalSliderContainerMobile';
+import { OnlyDesktop, OnlyMobile } from '_panda/jsx';
 
 interface Animal {
   type: string;
@@ -35,7 +36,7 @@ function AnimalSlider() {
   // TODO: 화면 크기가 바뀌면 (breakpoint에 도달하면 slider 다시 렌더링)
   return (
     <div className={cx(styles.container)}>
-      <div className={styles.showDesktop}>
+      <OnlyDesktop>
         <PerspectiveCenterSlider>
           {animalList.map((animalList: Animal[], idx) => {
             return (
@@ -49,8 +50,8 @@ function AnimalSlider() {
             );
           })}
         </PerspectiveCenterSlider>
-      </div>
-      <div className={styles.showMobile}>
+      </OnlyDesktop>
+      <OnlyMobile>
         <AnimalSliderContainerMobile>
           {data.personas.map((animalList: Animal, idx) => {
             return (
@@ -60,7 +61,7 @@ function AnimalSlider() {
             );
           })}
         </AnimalSliderContainerMobile>
-      </div>
+      </OnlyMobile>
     </div>
   );
 }

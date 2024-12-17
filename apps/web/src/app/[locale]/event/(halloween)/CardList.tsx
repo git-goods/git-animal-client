@@ -5,33 +5,19 @@ import { css } from '_panda/css';
 import { CardList, MobileCardList } from '../(common)/CardList';
 
 import { HalloweenCard } from './HalloweenCard';
+import { OnlyDesktop, OnlyMobile } from '_panda/jsx';
 
 const PERSONA = ['GHOST_KING', 'GHOST', 'SCREAM', 'SCREAM_GHOST', 'SLIME_PUMPKIN_1', 'SLIME_PUMPKIN_2']; //  ''
 
 export function HalloweenCardList() {
   return (
     <>
-      <div className={showMobile}>
+      <OnlyMobile>
         <MobileCardList renderCard={(type) => <HalloweenCard type={type} />} persona={PERSONA} />
-      </div>
-      <div className={showDesktop}>
+      </OnlyMobile>
+      <OnlyDesktop>
         <CardList persona={PERSONA} renderCard={(type) => <HalloweenCard type={type} />} />
-      </div>
+      </OnlyDesktop>
     </>
   );
 }
-
-const showDesktop = css({
-  display: 'block',
-
-  '@media (max-width: 600px)': {
-    display: 'none',
-  },
-});
-
-const showMobile = css({
-  display: 'none',
-  '@media (max-width: 600px)': {
-    display: 'block',
-  },
-});
