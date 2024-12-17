@@ -1,7 +1,7 @@
 import { Button } from '@gitanimals/ui-panda';
 
 import { getServerAuth } from '@/auth';
-import LoginButton from '@/components/LoginButton';
+import { LoginButton } from '@/components/AuthButton';
 import { Link } from '@/i18n/routing';
 
 import * as styles from './MainSection.style';
@@ -17,7 +17,7 @@ async function MainSection() {
       </p>
       {/* TODO: button 반응형 처리 */}
       {!session ? (
-        <LoginButton>Have Pet</LoginButton>
+        <LoginButton label="Have Pet" />
       ) : (
         <Link href="/mypage">
           <Button className="desktop" size="l">

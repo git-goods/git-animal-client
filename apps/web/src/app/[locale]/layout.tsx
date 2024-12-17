@@ -1,9 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 
-import ClientProvider from '@/components/ClientProvider';
-import { GlobalComponent } from '@/components/GlobalComponent';
-import Monitoring from '@/components/Monitoring';
+import { ClientProvider, GlobalComponent, Monitoring } from '@/components/Global';
 
 import '@egjs/react-flicking/dist/flicking.css';
 import '@egjs/react-flicking/dist/flicking-inline.css';

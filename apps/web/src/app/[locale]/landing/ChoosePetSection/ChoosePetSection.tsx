@@ -1,7 +1,7 @@
 import { Button } from '@gitanimals/ui-panda';
 
 import { getServerAuth } from '@/auth';
-import LoginButton from '@/components/LoginButton';
+import { LoginButton } from '@/components/AuthButton';
 import { Link } from '@/i18n/routing';
 
 import * as styles from './ChoosePetSection.style';
@@ -19,7 +19,7 @@ async function ChoosePetSection() {
         over 50+ different pets and raise them
       </h2>
       {!session ? (
-        <LoginButton>Have Pet</LoginButton>
+        <LoginButton label="Have Pet" />
       ) : (
         <Link href="/mypage">
           <Button className="desktop" size="l">

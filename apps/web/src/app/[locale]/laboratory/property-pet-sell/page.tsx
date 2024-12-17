@@ -9,7 +9,7 @@ import { LevelBanner } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { useDialog } from '@/components/GlobalComponent/useDialog';
+import { useDialog } from '@/components/Global/useDialog';
 import { trackEvent } from '@/lib/analytics';
 import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';

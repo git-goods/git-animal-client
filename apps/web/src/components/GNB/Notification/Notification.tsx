@@ -10,8 +10,8 @@ import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { BellIcon } from 'lucide-react';
 
-import { INBOX_NOTICE } from './contants';
 import { InboxList } from './InboxList';
+import { INBOX_NOTICE } from './notification.contants';
 
 export const Notification = wrap
   .ErrorBoundary({ fallback: <BellIcon size={24} /> })
