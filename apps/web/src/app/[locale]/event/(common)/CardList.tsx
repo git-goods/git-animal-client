@@ -4,12 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { css } from '_panda/css';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import AnimalSliderContainerMobile from '../../landing/AvailablePetSection/AnimalSliderContainerMobile';
+import { PerspectiveCenterSlider } from '@/components/Slider';
 
 import '@egjs/react-flicking/dist/flicking.css';
 import '@egjs/react-flicking/dist/flicking-inline.css';
-
-const PERSONA = ['GHOST_KING', 'GHOST', 'SCREAM', 'SCREAM_GHOST', 'SLIME_PUMPKIN_1', 'SLIME_PUMPKIN_2']; //  ''
 
 interface CardListProps {
   renderCard: (type: string) => React.ReactNode;
@@ -76,13 +74,13 @@ const slotItemStyle = css({
 export function MobileCardList({ renderCard, persona }: CardListProps) {
   return (
     <div className={mobileCardListContainer}>
-      <AnimalSliderContainerMobile>
+      <PerspectiveCenterSlider>
         {persona.map((type) => (
           <div key={type} className={css({})}>
             {renderCard(type)}
           </div>
         ))}
-      </AnimalSliderContainerMobile>
+      </PerspectiveCenterSlider>
     </div>
   );
 }

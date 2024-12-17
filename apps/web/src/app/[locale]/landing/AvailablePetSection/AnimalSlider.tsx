@@ -3,10 +3,10 @@
 import { cx } from '_panda/css';
 
 import { AnimalCard } from '@/components/AnimalCard';
+import { PerspectiveCenterSlider } from '@/components/Slider';
 import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
 
 import * as styles from './AnimalSlider.style';
-import AnimalSliderContainer from './AnimalSliderContainer';
 import AnimalSliderContainerMobile from './AnimalSliderContainerMobile';
 
 interface Animal {
@@ -36,7 +36,7 @@ function AnimalSlider() {
   return (
     <div className={cx(styles.container)}>
       <div className={styles.showDesktop}>
-        <AnimalSliderContainer>
+        <PerspectiveCenterSlider>
           {animalList.map((animalList: Animal[], idx) => {
             return (
               <div key={idx}>
@@ -48,7 +48,7 @@ function AnimalSlider() {
               </div>
             );
           })}
-        </AnimalSliderContainer>
+        </PerspectiveCenterSlider>
       </div>
       <div className={styles.showMobile}>
         <AnimalSliderContainerMobile>

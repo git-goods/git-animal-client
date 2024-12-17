@@ -1,0 +1,1 @@
+export { PerspectiveCenterSlider } from './PerspectiveCenterSlider';
