@@ -14,14 +14,14 @@ import { InboxList } from './InboxList';
 import { INBOX_NOTICE } from './notification.contants';
 
 export const Notification = wrap
-  .ErrorBoundary({ fallback: <BellIcon size={24} /> })
+  .ErrorBoundary({ fallback: <></> })
   .Suspense({ fallback: <BellIcon size={24} /> })
   .on(function Notification() {
     const t = useTranslations('Inbox');
     const [isOpen, setIsOpen] = useState(false);
     const { data } = useSuspenseQuery(inboxQueries.getAllUnreadInboxOptions());
 
-    const inboxCount = data.inboxes.filter((inbox) => inbox.status === 'UNREAD').length;
+    const inboxCount = data.inboxes.filter((inbox) => inbox.status === 'UNREAD').length + INBOX_NOTICE.length;
     const inboxList = [
       ...INBOX_NOTICE.map((item) => ({ ...item, title: t(item.title), body: t(item.body) })),
       ...data.inboxes,

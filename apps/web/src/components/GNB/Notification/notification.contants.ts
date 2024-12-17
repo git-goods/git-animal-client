@@ -18,7 +18,7 @@ export const INBOX_NOTICE: Inbox[] = [
     image: MAIN_IMAGE,
     title: 'event-christmas-title',
     body: 'event-christmas-body',
-    redirectTo: 'https://github.com/git-goods/gitanimals',
+    redirectTo: '/event/CHRISTMAS_2024',
     type: 'NOTICE',
     status: 'UNREAD',
     publishedAt: '',
