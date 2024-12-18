@@ -1,5 +1,5 @@
 import { defineConfig } from '@pandacss/dev';
-import { tokens, semanticTokens, textStyles } from './src/theme';
+import { tokens, semanticTokens, textStyles, media } from './src/theme';
 
 export default defineConfig({
   // Whether to use css reset
@@ -21,7 +21,8 @@ export default defineConfig({
   },
   conditions: {
     extend: {
-      mobile: '@media (max-width: 768px)',
+      mobile: media.mobile,
+      desktop: media.desktop,
     },
   },
 

@@ -2,8 +2,12 @@
   "extends": "@gitanimals/typescript-config/nextjs.json",
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"],
-      "_panda/*": ["./styled-system/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "_panda/*": [
+        "./styled-system/*"
+      ]
     },
     "plugins": [
       {
@@ -13,8 +17,20 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": false,
     "strictNullChecks": true,
-    "types": ["@pandacss/dev"]
+    "types": [
+      "@pandacss/dev"
+    ],
+    "target": "ES2017"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "styled-system", "types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "styled-system",
+    "types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

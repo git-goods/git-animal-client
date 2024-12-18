@@ -1,4 +1,4 @@
-import { keyframes, semanticTokens, textStyles, tokens } from '@gitanimals/ui-panda';
+import { keyframes, media, semanticTokens, textStyles, tokens } from '@gitanimals/ui-panda';
 import { defineConfig } from '@pandacss/dev';
 
 export default defineConfig({
@@ -21,40 +21,12 @@ export default defineConfig({
     },
   },
   patterns: {
-    extend: {
-      onlyMobile: {
-        description: '모바일에서만 보이는 요소',
-        properties: {
-          display: { type: 'string' },
-        },
-        transform(props) {
-          return {
-            display: props.display ?? 'block',
-            '@media (min-width: 768px)': {
-              display: 'none',
-            },
-          };
-        },
-      },
-      onlyDesktop: {
-        description: '데스크톱에서만 보이는 요소',
-        properties: {
-          display: { type: 'string' },
-        },
-        transform(props) {
-          return {
-            display: 'none',
-            '@media (min-width: 768px)': {
-              display: props.display ?? 'block',
-            },
-          };
-        },
-      },
-    },
+    extend: {},
   },
   conditions: {
     extend: {
-      mobile: '@media (max-width: 768px)',
+      mobile: media.mobile,
+      desktop: media.desktop,
     },
   },
   syntax: 'object-literal',
