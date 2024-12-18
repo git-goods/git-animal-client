@@ -2,7 +2,7 @@
 
 import React, { Suspense } from 'react';
 import Image from 'next/image';
-import { Button } from '@gitanimals/ui-panda';
+import { AnchorButton } from '@gitanimals/ui-panda';
 
 import { useGetTotalProductCount } from '@/hooks/query/auction/useGetTotalProductCount';
 import { useGetTotalIdentityUserCount } from '@/hooks/query/identity/useGetTotalIdentityUserCount';
@@ -11,6 +11,9 @@ import { useGetTotalRenderUserCount } from '@/hooks/query/render/useGetTotalRend
 
 import AnimalSlider from './AnimalSlider';
 import * as styles from './AvailablePetSection.style';
+
+const MORE_PET_GITHUB_URL =
+  'https://github.com/git-goods/gitanimals?tab=readme-ov-file#%EB%93%B1%EC%9E%A5-%EA%B0%80%EB%8A%A5%ED%95%9C-%ED%8E%AB%EB%93%A4';
 
 function AvailablePetSection() {
   return (
@@ -51,12 +54,12 @@ function AvailablePetSection() {
         </div>
 
         <div className={styles.buttonWrapper}>
-          <Button size="m" className="mobile">
+          <AnchorButton size="m" className="mobile" target="_blank" href={MORE_PET_GITHUB_URL}>
             Show More Pets
-          </Button>
-          <Button size="l" className="desktop">
+          </AnchorButton>
+          <AnchorButton size="l" className="desktop" target="_blank" href={MORE_PET_GITHUB_URL}>
             Show More Pets
-          </Button>
+          </AnchorButton>
         </div>
       </div>
     </section>
