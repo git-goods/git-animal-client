@@ -4,9 +4,10 @@ import { getTranslations } from 'next-intl/server';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 
+import { MediaQuery } from '@/components/MediaQuery';
+
 import { HalloweenCardList } from './CardList';
 import { KingGhost } from './KingGhost';
-import { OnlyMobile } from '_panda/jsx';
 
 export async function HalloweenContent() {
   const t = await getTranslations('Event.Halloween');
@@ -36,9 +37,7 @@ export async function HalloweenContent() {
         className={cx(imageStyle, leftImageStyle)}
       />
 
-      <OnlyMobile>
-        <KingGhost />
-      </OnlyMobile>
+      <MediaQuery mobile={<KingGhost />} />
 
       <div className={containerStyle}>
         <Image
@@ -53,7 +52,6 @@ export async function HalloweenContent() {
         <h2 className={descriptionStyle}>{t('description')}</h2>
 
         <HalloweenCardList />
-        {/* <HalloweenDraw /> */}
       </div>
     </div>
   );

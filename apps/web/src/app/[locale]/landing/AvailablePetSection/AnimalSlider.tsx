@@ -1,14 +1,14 @@
 'use client';
 
-import { cx } from '_panda/css';
+import { css, cx } from '_panda/css';
 
 import { AnimalCard } from '@/components/AnimalCard';
+import { MediaQuery } from '@/components/MediaQuery';
 import { PerspectiveCenterSlider } from '@/components/Slider';
 import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
 
 import * as styles from './AnimalSlider.style';
 import AnimalSliderContainerMobile from './AnimalSliderContainerMobile';
-import { OnlyDesktop, OnlyMobile } from '_panda/jsx';
 
 interface Animal {
   type: string;
@@ -35,35 +35,55 @@ function AnimalSlider() {
 
   // TODO: 화면 크기가 바뀌면 (breakpoint에 도달하면 slider 다시 렌더링)
   return (
-    <div className={cx(styles.container)}>
-      <OnlyDesktop>
-        <PerspectiveCenterSlider>
-          {animalList.map((animalList: Animal[], idx) => {
-            return (
-              <div key={idx}>
-                <div className={styles.cardContainer}>
-                  {animalList.map((animal: Animal, index: number) => (
-                    <AnimalCard key={index} type={animal.type} dropRate={animal.dropRate} />
-                  ))}
+    <div className={cx(containerStyle)}>
+      <MediaQuery
+        desktop={
+          <PerspectiveCenterSlider>
+            {animalList.map((animalList: Animal[], idx) => {
+              return (
+                <div key={idx}>
+                  <div className={styles.cardContainer}>
+                    {animalList.map((animal: Animal, index: number) => (
+                      <AnimalCard key={index} type={animal.type} dropRate={animal.dropRate} />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </PerspectiveCenterSlider>
-      </OnlyDesktop>
-      <OnlyMobile>
-        <AnimalSliderContainerMobile>
-          {data.personas.map((animalList: Animal, idx) => {
-            return (
-              <div key={idx} className={styles.cardContainerMobile}>
-                <AnimalCard type={animalList.type} dropRate={animalList.dropRate} />
-              </div>
-            );
-          })}
-        </AnimalSliderContainerMobile>
-      </OnlyMobile>
+              );
+            })}
+          </PerspectiveCenterSlider>
+        }
+        mobile={
+          <AnimalSliderContainerMobile>
+            {data.personas.map((animalList: Animal, idx) => {
+              return (
+                <div key={idx} className={styles.cardContainerMobile}>
+                  <AnimalCard type={animalList.type} dropRate={animalList.dropRate} />
+                </div>
+              );
+            })}
+          </AnimalSliderContainerMobile>
+        }
+      />
     </div>
   );
 }
 
 export default AnimalSlider;
+
+const containerStyle = css({
+  width: '1120px',
+  height: '1024px',
+
+  '@media (max-width: 1200px)': {
+    width: '835px',
+  },
+
+  '@media (max-width: 900px)': {
+    width: '530px',
+  },
+  '@media (max-width: 600px)': {
+    width: 'calc(100vw - 40px)',
+    height: '325px',
+    position: 'relative',
+  },
+});

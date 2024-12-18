@@ -1,23 +1,4 @@
-import { css } from '_panda/css';
 import { grid } from '_panda/patterns';
-
-export const container = css({
-  width: '1120px',
-  height: '1024px',
-
-  '@media (max-width: 1200px)': {
-    width: '835px',
-  },
-
-  '@media (max-width: 900px)': {
-    width: '530px',
-  },
-  '@media (max-width: 600px)': {
-    width: 'calc(100vw - 40px)',
-    height: '325px',
-    position: 'relative',
-  },
-});
 
 export const cardContainer = grid({
   gap: '20px',

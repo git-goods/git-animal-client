@@ -1,11 +1,10 @@
 'use client';
 
-import { css } from '_panda/css';
+import { MediaQuery } from '@/components/MediaQuery';
 
 import { CardList, MobileCardList } from '../(common)/CardList';
 
 import { ChristmasCard } from './ChristmasCard';
-import { OnlyDesktop, OnlyMobile } from '_panda/jsx';
 
 const PERSONA = [
   'SNOWMAN',
@@ -18,13 +17,9 @@ const PERSONA = [
 
 export function ChristmasCardList() {
   return (
-    <>
-      <OnlyMobile>
-        <MobileCardList renderCard={(type) => <ChristmasCard type={type} />} persona={PERSONA} />
-      </OnlyMobile>
-      <OnlyDesktop>
-        <CardList persona={PERSONA} renderCard={(type) => <ChristmasCard type={type} />} />
-      </OnlyDesktop>
-    </>
+    <MediaQuery
+      mobile={<MobileCardList renderCard={(type) => <ChristmasCard type={type} />} persona={PERSONA} />}
+      desktop={<CardList persona={PERSONA} renderCard={(type) => <ChristmasCard type={type} />} />}
+    />
   );
 }
