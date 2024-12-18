@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { mediaBreakpoints } from '@gitanimals/ui-panda';
 
 interface MediaQueryProps {
-  mobile: React.ReactNode | null;
-  desktop: React.ReactNode | null;
+  mobile?: React.ReactNode | null;
+  desktop?: React.ReactNode | null;
 }
 
-export function MediaQuery({ mobile, desktop }: MediaQueryProps) {
+export function MediaQuery({ mobile = null, desktop = null }: MediaQueryProps) {
   const isMobile = useMediaQuery(`(max-width: ${mediaBreakpoints.mobile}px)`);
 
   return isMobile ? mobile : desktop;
