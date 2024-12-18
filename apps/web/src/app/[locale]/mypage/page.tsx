@@ -5,8 +5,8 @@ import { updateUrlSearchParams } from '@gitanimals/util-common';
 
 import { Link } from '@/i18n/routing';
 
-import { FarmType } from './FarmType';
-import { LineType } from './LineType';
+import { FarmType } from './(github-custom)/FarmType';
+import { LineType } from './(github-custom)/LineType';
 
 type TabType = 'line-type' | 'farm-type';
 
