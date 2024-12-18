@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
-import { center, flex } from '_panda/patterns';
+import { flex } from '_panda/patterns';
 import { dropPet, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
@@ -25,28 +25,26 @@ function MypageMyPets() {
   const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
 
   return (
-    <>
-      <div className={cx(subStyle, flex({ flexDir: 'column' }))}>
-        <SelectedPetTable currentPersona={selectPersona} reset={() => setSelectPersona(null)} />
-        <section className={selectPetContainerStyle}>
-          <h2 className="heading">{t('pet-list')}</h2>
+    <div className={flex({ flexDir: 'column' })}>
+      <SelectedPetTable currentPersona={selectPersona} reset={() => setSelectPersona(null)} />
+      <section className={selectPetContainerStyle}>
+        <h2 className="heading">{t('pet-list')}</h2>
 
-          <div className={listStyle}>
-            <SelectPersonaList
-              selectPersona={selectPersona ? [selectPersona.id] : []}
-              onSelectPersona={(persona) => setSelectPersona(persona)}
-              initSelectPersonas={(list) => {
-                if (!selectPersona) {
-                  setSelectPersona(list[0]);
-                }
-              }}
-            />
-          </div>
-        </section>
-        <p className={captionMessageStyle}>{t('sell-to-other')}</p>
-      </div>
-      <div className={noticeStyle}>{t('no-mobile-support')}</div>
-    </>
+        <div className={listStyle}>
+          <SelectPersonaList
+            selectPersona={selectPersona ? [selectPersona.id] : []}
+            onSelectPersona={(persona) => setSelectPersona(persona)}
+            initSelectPersonas={(list) => {
+              if (!selectPersona) {
+                setSelectPersona(list[0]);
+              }
+            }}
+          />
+        </div>
+      </section>
+
+      <p className={captionMessageStyle}>{t('sell-to-other')}</p>
+    </div>
   );
 }
 
@@ -66,30 +64,6 @@ const listStyle = cx(
   }),
   customScrollStyle,
 );
-const subStyle = css({
-  _mobile: {
-    display: 'none',
-  },
-});
-
-const noticeStyle = center({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  background: '#019c5a',
-  color: 'white',
-  zIndex: 1000,
-  display: 'none',
-  textStyle: 'glyph24.bold',
-  whiteSpace: 'pre-wrap',
-  lineHeight: '1.5',
-  textAlign: 'center',
-  _mobile: {
-    display: 'flex',
-  },
-});
 
 const captionMessageStyle = css({
   textStyle: 'glyph18.regular',
@@ -103,6 +77,7 @@ const captionMessageStyle = css({
 
 const selectPetContainerStyle = css({
   position: 'relative',
+
   '& .heading': {
     textStyle: 'glyph18.bold',
     color: 'white',
@@ -167,6 +142,7 @@ function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProps) {
           </>
         )}
       </div>
+
       {currentPersona && (
         <MergePersona
           key={currentPersona.id}
@@ -202,6 +178,10 @@ const theadCss = css({
   },
 
   marginBottom: '4px',
+
+  _mobile: {
+    fontSize: '16px',
+  },
 });
 
 const rowStyle = css({
@@ -228,5 +208,9 @@ const rowStyle = css({
   '& *': {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+  },
+
+  _mobile: {
+    fontSize: '16px',
   },
 });
