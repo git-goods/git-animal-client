@@ -66,7 +66,7 @@ export function DialogComponent() {
       await dialog.onConfirm();
       setIsLoading(false);
     }
-    // closeDialog();
+    closeDialog();
   };
 
   return (
