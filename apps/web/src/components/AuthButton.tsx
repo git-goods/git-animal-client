@@ -55,12 +55,12 @@ export function RenderLogoutButton({
  * 로그인 버튼
  * - design system 상의 Button 컴포넌트로 렌더링
  */
-export function LoginButton(props: Omit<ComponentProps<typeof Button>, 'children' | 'onClick'>) {
+export function LoginButton(props: Omit<ComponentProps<typeof Button>, 'children' | 'onClick'> & { label?: string }) {
   return (
     <RenderLoginButton
       render={({ label, onClick }) => (
         <Button onClick={onClick} {...props}>
-          {label}
+          {props.label || label}
         </Button>
       )}
     />

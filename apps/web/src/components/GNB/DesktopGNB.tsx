@@ -14,10 +14,10 @@ import { checkIdDevAccessPossible } from '@/utils/dev';
 
 import { LoginButton, LogoutButton } from '../AuthButton';
 
+import { Notification } from './Notification/Notification';
 import { DesktopLanguageSelector } from './LanguageSelector';
 import type { NavMenu } from './menu.constants';
 import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
-import { Notification } from './Inbox/Notification';
 
 export async function DesktopGNB() {
   const session = await getServerAuth();

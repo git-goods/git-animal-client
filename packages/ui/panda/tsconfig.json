@@ -6,6 +6,6 @@
     },
     "types": ["@pandacss/dev"]
   },
-  "include": ["src", "**/*.ts", "**/*.tsx", "styled-system"],
+  "include": ["src", "**/*.ts", "**/*.tsx", "styled-system", "../../../apps/web/src/components/MediaQuery"],
   "exclude": ["node_modules"]
 }

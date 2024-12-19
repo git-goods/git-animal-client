@@ -5,7 +5,7 @@ import { SessionProvider } from 'next-auth/react';
 import { domMax, LazyMotion } from 'framer-motion';
 
 import QueryClientProvider from '@/apis/QueryClientProvider';
-import Monitoring from '@/components/Monitoring';
+import Monitoring from '@/components/Global/Monitoring';
 
 import SessionLoader from './SessionLoader';
 
