@@ -30,7 +30,7 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
       );
 
       toast.success('복사 성공!', { duration: 2000 });
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -53,6 +53,7 @@ const sectionContainerStyle = css({
   display: 'flex',
   flexDirection: 'column',
   gap: '24px',
+  overflowX: 'scroll',
 });
 
 const lineContainerStyle = css({

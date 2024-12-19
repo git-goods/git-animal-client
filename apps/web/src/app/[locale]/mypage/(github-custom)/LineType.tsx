@@ -24,7 +24,6 @@ const sectionContainer = css({
   maxHeight: '100%',
   py: '40px',
   gap: '40px',
-  overflowX: 'scroll',
 
   _mobile: {
     background: 'none',
