@@ -4,6 +4,8 @@ import { getTranslations } from 'next-intl/server';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 
+import { MediaQuery } from '@/components/MediaQuery';
+
 import { HalloweenCardList } from './CardList';
 import { KingGhost } from './KingGhost';
 
@@ -35,9 +37,7 @@ export async function HalloweenContent() {
         className={cx(imageStyle, leftImageStyle)}
       />
 
-      <div className={showMobile}>
-        <KingGhost />
-      </div>
+      <MediaQuery mobile={<KingGhost />} />
 
       <div className={containerStyle}>
         <Image
@@ -52,7 +52,6 @@ export async function HalloweenContent() {
         <h2 className={descriptionStyle}>{t('description')}</h2>
 
         <HalloweenCardList />
-        {/* <HalloweenDraw /> */}
       </div>
     </div>
   );
@@ -128,11 +127,4 @@ const rightImageStyle = css({
 const leftImageStyle = css({
   position: 'absolute',
   left: 0,
-});
-
-const showMobile = css({
-  display: 'none',
-  _mobile: {
-    display: 'block',
-  },
 });

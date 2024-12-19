@@ -1,6 +1,6 @@
 'use client';
 
-import { css } from '_panda/css';
+import { MediaQuery } from '@/components/MediaQuery';
 
 import { CardList, MobileCardList } from '../(common)/CardList';
 
@@ -17,28 +17,9 @@ const PERSONA = [
 
 export function ChristmasCardList() {
   return (
-    <>
-      <div className={showMobile}>
-        <MobileCardList renderCard={(type) => <ChristmasCard type={type} />} persona={PERSONA} />
-      </div>
-      <div className={showDesktop}>
-        <CardList persona={PERSONA} renderCard={(type) => <ChristmasCard type={type} />} />
-      </div>
-    </>
+    <MediaQuery
+      mobile={<MobileCardList renderCard={(type) => <ChristmasCard type={type} />} persona={PERSONA} />}
+      desktop={<CardList persona={PERSONA} renderCard={(type) => <ChristmasCard type={type} />} />}
+    />
   );
 }
-
-const showDesktop = css({
-  display: 'block',
-
-  '@media (max-width: 600px)': {
-    display: 'none',
-  },
-});
-
-const showMobile = css({
-  display: 'none',
-  '@media (max-width: 600px)': {
-    display: 'block',
-  },
-});

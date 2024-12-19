@@ -1,6 +1,6 @@
 'use client';
 
-import { css } from '_panda/css';
+import { MediaQuery } from '@/components/MediaQuery';
 
 import { CardList, MobileCardList } from '../(common)/CardList';
 
@@ -10,28 +10,9 @@ const PERSONA = ['GHOST_KING', 'GHOST', 'SCREAM', 'SCREAM_GHOST', 'SLIME_PUMPKIN
 
 export function HalloweenCardList() {
   return (
-    <>
-      <div className={showMobile}>
-        <MobileCardList renderCard={(type) => <HalloweenCard type={type} />} persona={PERSONA} />
-      </div>
-      <div className={showDesktop}>
-        <CardList persona={PERSONA} renderCard={(type) => <HalloweenCard type={type} />} />
-      </div>
-    </>
+    <MediaQuery
+      mobile={<MobileCardList renderCard={(type) => <HalloweenCard type={type} />} persona={PERSONA} />}
+      desktop={<CardList persona={PERSONA} renderCard={(type) => <HalloweenCard type={type} />} />}
+    />
   );
 }
-
-const showDesktop = css({
-  display: 'block',
-
-  '@media (max-width: 600px)': {
-    display: 'none',
-  },
-});
-
-const showMobile = css({
-  display: 'none',
-  '@media (max-width: 600px)': {
-    display: 'block',
-  },
-});
