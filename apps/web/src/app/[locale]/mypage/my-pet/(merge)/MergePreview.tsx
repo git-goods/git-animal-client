@@ -48,15 +48,22 @@ export const MergePreview = ({ materialPersona, targetPersona }: MergePersonaPro
 
 const containerStyle = css({
   position: 'relative',
+  display: 'flex',
+  justifyContent: 'center',
   padding: '32px 32px 12px',
   overflow: 'hidden',
   minHeight: 'fit-content',
+
+  _mobile: {
+    padding: 0,
+  },
 });
 
 const itemContainerStyle = flex({
   alignItems: 'center',
-  justifyContent: 'center',
-  gap: '24px',
+  justifyContent: 'space-between',
+  width: '100%',
+  maxWidth: '612px',
 });
 
 const iconStyle = css({
