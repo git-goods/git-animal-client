@@ -7,7 +7,7 @@ import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { dropPet, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Button } from '@gitanimals/ui-panda';
+import { Button, Table } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -113,14 +113,22 @@ function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProps) {
   };
 
   return (
-    <div className={tableCss}>
-      <div className={theadCss}>
-        <span>{t('pet')}</span>
+    <div>
+      <Table.Header>
+        <Table.Row>
+          <Table.Head w="100px">{t('pet')}</Table.Head>
+          <Table.Head>{t('name')}</Table.Head>
+          <Table.Head>{t('grade')}</Table.Head>
+          <Table.Head>{t('level')}</Table.Head>
+        </Table.Row>
+      </Table.Header>
+      {/* <Table.Header>
+        <span>/span>
         <span>{t('name')}</span>
         <span>{t('grade')}</span>
         <span>{t('level')}</span>
         <span></span>
-      </div>
+      </Table.Header> */}
 
       <div className={cx(rowStyle, 'row')}>
         {currentPersona && (

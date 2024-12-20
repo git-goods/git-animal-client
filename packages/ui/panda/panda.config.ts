@@ -17,6 +17,22 @@ export default defineConfig({
       tokens,
       semanticTokens,
       textStyles,
+      recipes: {
+        tableRow: {
+          // 기존 tableRow 레시피를 오버라이드
+          className: 'tableRow',
+          description: 'A table row style',
+          base: {
+            // 기본 스타일 정의
+            display: 'table-row',
+            // 원하는 스타일 추가
+            backgroundColor: 'white',
+          },
+          variants: {
+            // 변형 스타일 정의
+          },
+        },
+      },
     },
   },
   conditions: {

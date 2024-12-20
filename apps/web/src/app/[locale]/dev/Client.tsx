@@ -2,7 +2,7 @@
 
 import { Box } from '_panda/jsx';
 import { flex } from '_panda/patterns';
-import { Button } from '@gitanimals/ui-panda';
+import { Button, Table } from '@gitanimals/ui-panda';
 
 import { Link } from '@/i18n/routing';
 import { useClientSession } from '@/utils/clientAuth';
@@ -13,6 +13,19 @@ function DevClient() {
 
   return (
     <Box>
+      <div style={{ background: 'green' }}>
+        <Table>
+          <Table.Header>
+            <Table.Row>
+              <Table.Head w="100px">pet</Table.Head>
+              <Table.Head>name</Table.Head>
+              <Table.Head>grade</Table.Head>
+              <Table.Head>level</Table.Head>
+            </Table.Row>
+          </Table.Header>
+        </Table>
+      </div>
+
       <ul className={listStyle}>
         <li>client session status : {status}</li>
         <li>
