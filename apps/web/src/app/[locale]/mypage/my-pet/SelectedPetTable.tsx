@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
@@ -8,12 +8,11 @@ import { Flex } from '_panda/jsx';
 import { flex } from '_panda/patterns';
 import { dropPet, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Button, Checkbox, Label } from '@gitanimals/ui-panda';
+import { Button, Checkbox, Dialog, Label } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { useDialog } from '@/components/Global/useDialog';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
@@ -30,13 +29,15 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
   const queryClient = useQueryClient();
   const t = useTranslations('Shop');
   const [isMergeOpen, setIsMergeOpen] = useState(false);
-  const { showDialog } = useDialog();
+  const [sellPersonaId, setSellPersonaId] = useState<string | null>(null);
+  const { setDoNotShowAgain, isChecked: isDoNotShowAgain } = useDoNotShowAgain();
 
   const { mutate: dropPetMutation } = useMutation({
     mutationFn: (personaId: string) => dropPet({ personaId }),
     onSuccess: (data) => {
       toast.success((t('pet-sold') as string).replace('[money]', data.givenPoint.toString()));
       queryClient.invalidateQueries({ queryKey: userQueries.allKey() });
+      setSellPersonaId(null);
       reset();
     },
     onError: () => {
@@ -46,20 +47,19 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
 
   const onSellClick = async () => {
     if (!currentPersona) return;
-    // dropPetMutation(currentPersona.id);
-    showDialog({
-      title: `${currentPersona.type} 판매하기`,
-      description: (
-        <>
-          <p>정말로 판매하시겠습니까?</p>
-          <Flex alignItems="center" gap="2">
-            <Checkbox id="terms" />
-            <Label htmlFor="terms">Accept terms and conditions</Label>
-          </Flex>
-        </>
-      ),
-      onConfirm: () => dropPetMutation(currentPersona.id),
-    });
+    if (isDoNotShowAgain) {
+      dropPetMutation(currentPersona.id);
+    } else {
+      setSellPersonaId(currentPersona.id);
+    }
+  };
+
+  const onSellAction = async (isDoNotShowAgain: boolean) => {
+    if (!sellPersonaId) return;
+    dropPetMutation(sellPersonaId);
+    if (isDoNotShowAgain) {
+      setDoNotShowAgain(true);
+    }
   };
 
   return (
@@ -101,6 +101,11 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
           targetPersona={currentPersona}
         />
       )}
+      <SellConfirmDialog
+        isOpen={Boolean(sellPersonaId)}
+        onConfirm={onSellAction}
+        onClose={() => setSellPersonaId(null)}
+      />
     </div>
   );
 }
@@ -158,4 +163,82 @@ const rowStyle = css({
   _mobile: {
     fontSize: '16px',
   },
+});
+
+const DO_NOT_SHOW_AGAIN_KEY = '@gitanimals/do-not-show-again';
+
+const useDoNotShowAgain = () => {
+  const [isChecked, setIsChecked] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return localStorage.getItem(DO_NOT_SHOW_AGAIN_KEY) === 'true';
+  });
+
+  const setDoNotShowAgain = useCallback((value: boolean) => {
+    setIsChecked(value);
+    if (typeof window === 'undefined') return;
+    localStorage.setItem(DO_NOT_SHOW_AGAIN_KEY, value.toString());
+  }, []);
+
+  return {
+    isChecked,
+    setDoNotShowAgain,
+  };
+};
+
+function SellConfirmDialog({
+  onConfirm,
+  onClose,
+  isOpen,
+}: {
+  onConfirm: (isDoNotShowAgain: boolean) => Promise<void>;
+  onClose: () => void;
+  isOpen: boolean;
+}) {
+  const [isLoading, setIsLoading] = useState(false);
+  const t = useTranslations();
+  const [isDoNotShowAgain, setIsDoNotShowAgain] = useState(false);
+  console.log('isDoNotShowAgain: ', isDoNotShowAgain);
+
+  const confirmDialog = async () => {
+    if (isLoading) return;
+
+    setIsLoading(true);
+    await onConfirm(isDoNotShowAgain);
+    setIsLoading(false);
+
+    onClose();
+  };
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <Dialog.Content>
+        <Dialog.Title>{t('Shop.sell-confirm')}</Dialog.Title>
+        <Dialog.Description className={descriptionStyle}>
+          <p>{t('Shop.sell-confirm-description')}</p>
+        </Dialog.Description>
+        <Flex alignItems="center" justifyContent="space-between" width="100%">
+          <Flex alignItems="center" gap="2">
+            <Checkbox id="do-not-show-again" onClick={() => setIsDoNotShowAgain(!isDoNotShowAgain)} />
+            <Label htmlFor="do-not-show-again" whiteSpace="nowrap">
+              {t('Shop.sell-confirm-checkbox')}
+            </Label>
+          </Flex>
+          <Flex gap="8px" justifyContent="flex-end" width="100%">
+            <Button onClick={onClose} variant="secondary" size="m">
+              {t('Common.close')}
+            </Button>
+            <Button onClick={confirmDialog} variant="primary" size="m" disabled={isLoading}>
+              {isLoading ? t('Common.processing') : t('Common.confirm')}
+            </Button>
+          </Flex>
+        </Flex>
+      </Dialog.Content>
+    </Dialog>
+  );
+}
+
+const descriptionStyle = css({
+  textAlign: 'left',
+  color: 'white.white_75',
+  width: '100%',
 });

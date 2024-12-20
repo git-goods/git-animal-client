@@ -1,6 +1,7 @@
 'use client';
 
 import { type ReactNode, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { Button, Dialog } from '@gitanimals/ui-panda';
@@ -50,7 +51,7 @@ export function useDialog() {
 export function DialogComponent() {
   const [dialog, setDialog] = useAtom(dialogAtom);
   const [isLoading, setIsLoading] = useState(false);
-
+  const t = useTranslations('Common');
   const closeDialog = () => {
     setDialog((prev) => ({
       ...prev,
@@ -79,11 +80,11 @@ export function DialogComponent() {
         <Flex gap="8px" justifyContent="flex-end" width="100%">
           {dialog.onConfirm && (
             <Button onClick={confirmDialog} variant="secondary" size="m" disabled={isLoading}>
-              {isLoading ? '처리중...' : '확인'}
+              {isLoading ? t('processing') : t('confirm')}
             </Button>
           )}
           <Button onClick={closeDialog} variant="primary" size="m">
-            닫기
+            {t('close')}
           </Button>
         </Flex>
       </Dialog.Content>
