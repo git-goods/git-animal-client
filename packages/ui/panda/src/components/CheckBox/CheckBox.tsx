@@ -3,7 +3,7 @@
 import * as React from 'react';
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { Check } from 'lucide-react';
-import { cx } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { styled } from '_panda/jsx';
 import { checkbox, icon } from '_panda/recipes';
 
@@ -14,7 +14,7 @@ const BaseCheckbox = React.forwardRef<
   const styles = checkbox();
 
   return (
-    <CheckboxPrimitive.Root ref={ref} className={cx('peer', styles.root, className)} {...props}>
+    <CheckboxPrimitive.Root ref={ref} className={cx('peer', styles.root, checkboxLightStyle, className)} {...props}>
       <CheckboxPrimitive.Indicator className={styles.indicator}>
         <Check className={icon()} />
       </CheckboxPrimitive.Indicator>
@@ -24,3 +24,12 @@ const BaseCheckbox = React.forwardRef<
 BaseCheckbox.displayName = CheckboxPrimitive.Root.displayName;
 
 export const Checkbox = styled(BaseCheckbox);
+
+const checkboxLightStyle = css({
+  borderColor: '#fafafa',
+
+  '&[data-state="checked"]': {
+    backgroundColor: '#fafafa',
+    color: '#000',
+  },
+});
