@@ -1,6 +1,15 @@
 import { css } from '_panda/css';
 import { Box } from '_panda/jsx';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@gitanimals/ui-panda';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  Table,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@gitanimals/ui-panda';
 
 import GNB from '@/components/GNB/GNB';
 
@@ -11,6 +20,16 @@ async function DevPage() {
     <Box p={32}>
       <GNB />
       <h1>server</h1>
+      <div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Age</TableHead>
+            </TableRow>
+          </TableHeader>
+        </Table>
+      </div>
       <hr className={dividerStyle} />
       <h1>client</h1>
       <DevClient />

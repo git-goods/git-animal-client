@@ -3,3 +3,4 @@ export * from './semanticTokens';
 export * from './textStyles';
 export * from './keyframes';
 export * from './media';
+export * from './recipes';
