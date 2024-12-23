@@ -6,6 +6,8 @@ import {
   AccordionItem,
   AccordionTrigger,
   Table,
+  TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -20,14 +22,22 @@ async function DevPage() {
     <Box p={32}>
       <GNB />
       <h1>server</h1>
-      <div>
+      <div style={{ background: 'green', padding: '16px' }}>
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
               <TableHead>Age</TableHead>
+              <TableHead>Age2</TableHead>
             </TableRow>
           </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell>John</TableCell>
+              <TableCell>25</TableCell>
+              <TableCell>25</TableCell>
+            </TableRow>
+          </TableBody>
         </Table>
       </div>
       <hr className={dividerStyle} />

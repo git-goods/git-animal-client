@@ -170,7 +170,6 @@ const theadCss = css({
   alignItems: 'center',
 
   height: '46px',
-  textStyle: 'glyph18.bold',
   color: 'white_100',
 
   '& > span:nth-child(1)': {
