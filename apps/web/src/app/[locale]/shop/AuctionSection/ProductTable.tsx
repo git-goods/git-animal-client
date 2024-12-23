@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
 import { auctionQueries, useBuyProduct, useDeleteProduct, userQueries } from '@gitanimals/react-query';
+import { Table } from '@gitanimals/ui-panda';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -15,7 +16,7 @@ import { useClientUser } from '@/utils/clientAuth';
 
 import { useSearchOptions } from '../useSearchOptions';
 
-import { tableCss, tbodyCss, theadCss } from './table.styles';
+import { tableCss } from './table.styles';
 
 function ProductTable() {
   const t = useTranslations('Shop');
@@ -39,23 +40,25 @@ function ProductTable() {
 
   return (
     <>
-      <div className={tableCss}>
-        <div className={theadCss}>
-          <span>{t('pet')}</span>
-          <span>{t('name')}</span>
-          <span>{t('grade')}</span>
-          <span>{t('level')}</span>
-          <span>{t('price')}</span>
-          <span></span>
-        </div>
+      <Table className={tableCss}>
+        <Table.Header>
+          <Table.Row>
+            <Table.Head>{t('pet')}</Table.Head>
+            <Table.Head>{t('name')}</Table.Head>
+            <Table.Head>{t('grade')}</Table.Head>
+            <Table.Head>{t('level')}</Table.Head>
+            <Table.Head>{t('price')}</Table.Head>
+            <Table.Head></Table.Head>
+          </Table.Row>
+        </Table.Header>
 
-        <div className={tbodyCss}>
+        <Table.Body>
           {!data && Array.from({ length: 8 }).map((_, index) => <ShopTableRowViewSkeleton key={`skeleton-${index}`} />)}
           {data?.products.map((product) => {
             return <ProductTableRow product={product} key={product.id} />;
           })}
-        </div>
-      </div>
+        </Table.Body>
+      </Table>
       {data && <Pagination {...data.pagination} currentPage={currentPage} onSetPage={setCurrentPage} />}
     </>
   );

@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import type { Product } from '@gitanimals/api/src/auction';
-import { Button } from '@gitanimals/ui-panda';
+import { Button, Table } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 
 import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
@@ -27,20 +27,22 @@ function ShopTableRowView({ onAction, actionLabel, actionColor, ...item }: Props
   if (!currentPersona) throw new Error('unexpected persona');
 
   return (
-    <div className={rowStyle} key={item.id}>
-      <div>
+    <Table.Row className={rowStyle} key={item.id}>
+      <Table.Cell>
         <Image src={getPersonaImage(item.persona.personaType)} width={60} height={67} alt="animal1" />
-      </div>
-      <span>{snakeToTitleCase(item.persona.personaType)}</span>
-      <span>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</span>
-      <span>{item.persona.personaLevel}</span>
-      <span>{addNumberComma(item.price)}</span>
-      <div>
+      </Table.Cell>
+      <Table.Cell>{snakeToTitleCase(item.persona.personaType)}</Table.Cell>
+      <Table.Cell>
+        {ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}
+      </Table.Cell>
+      <Table.Cell>{item.persona.personaLevel}</Table.Cell>
+      <Table.Cell>{addNumberComma(item.price)}</Table.Cell>
+      <Table.Cell>
         <Button variant="secondary" onClick={() => onAction(item.id)} color={actionColor}>
           {actionLabel}
         </Button>
-      </div>
-    </div>
+      </Table.Cell>
+    </Table.Row>
   );
 }
 
@@ -58,26 +60,6 @@ const skeletonStyle = css({
 });
 
 export const rowStyle = css({
-  width: '100%',
-  height: '80px',
-  backgroundColor: 'white_10',
-  borderRadius: '12px',
-
-  display: 'grid',
-  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 4.2fr 1.5fr',
-  alignItems: 'center',
-  padding: '0 32px',
-  gap: '16px',
-
-  textStyle: 'glyph20.regular',
-  color: 'white.white_100',
-
-  '& button': {
-    color: 'black.black',
-    width: '100%',
-    paddingX: '6px',
-  },
-
   '& *': {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
