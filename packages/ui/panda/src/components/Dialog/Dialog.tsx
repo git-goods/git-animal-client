@@ -44,7 +44,6 @@ const Title = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ children, ...props }, ref) => {
-  console.log('props: ', props);
   return (
     <DialogPrimitive.Title ref={ref} {...props} className={cx('dialog-title', titleStyle, props.className)}>
       {children}

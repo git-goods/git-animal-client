@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
+import { auctionQueries } from '@gitanimals/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import Pagination from '@/components/Pagination';
 import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
@@ -11,8 +13,6 @@ import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import { tableCss, tbodyCss, theadCss } from '../AuctionSection/table.styles';
 
 import EditModal from './EditModal';
-import { useQuery } from '@tanstack/react-query';
-import { auctionQueries } from '@gitanimals/react-query';
 
 const SELL_LIST_ACTION_OBJ = ACTION_BUTTON_OBJ['EDIT'];
 

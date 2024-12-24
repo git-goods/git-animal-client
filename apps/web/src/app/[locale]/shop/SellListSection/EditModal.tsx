@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
-import { auctionQueries, useChangeProductPrice, useDeleteProduct } from '@gitanimals/react-query';
+import { auctionQueries, useChangeProductPrice, useDeleteProduct, userQueries } from '@gitanimals/react-query';
 import { Button, Dialog } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -18,7 +18,10 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
     onSuccess: () => {
       onClose();
       queryClient.invalidateQueries({
-        queryKey: auctionQueries.myProductsKey(),
+        queryKey: auctionQueries.allKey(),
+      });
+      queryClient.invalidateQueries({
+        queryKey: userQueries.allPersonasKey(),
       });
     },
   });
@@ -27,7 +30,10 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
     onSuccess: () => {
       onClose();
       queryClient.invalidateQueries({
-        queryKey: auctionQueries.myProductsKey(),
+        queryKey: auctionQueries.allKey(),
+      });
+      queryClient.invalidateQueries({
+        queryKey: userQueries.allPersonasKey(),
       });
     },
   });
