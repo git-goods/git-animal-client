@@ -1,5 +1,5 @@
 import { css } from '_panda/css';
-import { flex, grid } from '_panda/patterns';
+import { flex } from '_panda/patterns';
 
 export const container = flex({
   padding: '120px 0',
@@ -37,22 +37,27 @@ export const heading = css({
   },
 });
 
-export const infoContainer = grid({
-  gap: '120px',
-  padding: '40px 70px',
-  gridTemplateColumns: 'repeat(3, 1fr)',
-  maxWidth: '767px',
+export const infoContainer = flex({
+  gap: '60px',
+  padding: '40px 52px',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  maxWidth: '766px',
+  w: '100%',
   background: 'white_10',
   borderRadius: '16px',
 
   _mobile: {
+    flexDir: 'column',
     maxWidth: 'calc(100% - 40px)',
-    gap: '44px',
+    gap: '12px',
     padding: '24px',
   },
 });
 
 export const infoItem = css({
+  width: 'fit-content',
+
   '& p': {
     _first: {
       textStyle: 'glyph48.bold',
@@ -61,6 +66,7 @@ export const infoItem = css({
         textStyle: 'glyph24.bold',
       },
     },
+
     _last: {
       textStyle: 'glyph18.bold',
       color: 'white_50',
