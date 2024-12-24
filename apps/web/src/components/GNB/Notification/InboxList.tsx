@@ -41,7 +41,7 @@ function InboxItem({ image, title, body, redirectTo, status, id }: Inbox) {
         {status === 'UNREAD' && <div className="unread-indicator" />}
         <img className="image" src={image} alt={title} width={36} height={36} />
         <div>
-          <p className="title">{title}</p>
+          <span className={titleStyle}>{title}</span>
           <p className="body">{body}</p>
         </div>
       </div>
@@ -79,6 +79,10 @@ const inboxListStyle = cx(
     display: 'flex',
     flexDirection: 'column',
     overflow: 'auto',
+    '& > *:not(:last-child)': {
+      borderBottom: '1px solid',
+      borderColor: 'white.white_25',
+    },
   }),
   customScrollStyle,
 );
@@ -123,4 +127,10 @@ const inboxStyle = css({
     textStyle: 'glyph15.regular',
     color: 'white.white_90',
   },
+});
+
+const titleStyle = css({
+  display: 'block',
+  textAlign: 'left',
+  textStyle: 'glyph16.bold',
 });
