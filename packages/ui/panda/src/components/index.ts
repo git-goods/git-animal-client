@@ -6,3 +6,5 @@ export * from './Textfield';
 export * from './Accordion';
 export * from './Dialog';
 export * from './Select';
+export * from './CheckBox';
+export * from './Label';
