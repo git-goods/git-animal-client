@@ -39,7 +39,7 @@ function SellInputRow({ item, initPersona }: Props) {
   const { mutate } = useRegisterProduct({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
-      queryClient.removeQueries({ queryKey: auctionQueries.myProductsKey() });
+      queryClient.invalidateQueries({ queryKey: auctionQueries.myProductsKey() });
 
       initPersona();
       resetPrice();

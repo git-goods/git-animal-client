@@ -20,21 +20,19 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
       queryClient.invalidateQueries({
         queryKey: auctionQueries.allKey(),
       });
-      queryClient.resetQueries({
+      queryClient.invalidateQueries({
         queryKey: userQueries.allPersonasKey(),
       });
-      console.log('delete');
     },
   });
 
   const { mutate: changePriceMutate } = useChangeProductPrice({
     onSuccess: () => {
-      console.log('asdfasdfsadfsf');
       onClose();
       queryClient.invalidateQueries({
         queryKey: auctionQueries.allKey(),
       });
-      queryClient.resetQueries({
+      queryClient.invalidateQueries({
         queryKey: userQueries.allPersonasKey(),
       });
     },
