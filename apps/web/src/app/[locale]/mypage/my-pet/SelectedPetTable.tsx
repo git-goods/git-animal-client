@@ -13,6 +13,7 @@ import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
+import { LOCAL_STORAGE_KEY } from '@/constants/storage';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
@@ -165,7 +166,7 @@ const rowStyle = css({
   },
 });
 
-const DO_NOT_SHOW_AGAIN_KEY = '@gitanimals/do-not-show-again';
+const DO_NOT_SHOW_AGAIN_KEY = LOCAL_STORAGE_KEY.isDoNotShowAgain;
 
 const useDoNotShowAgain = () => {
   const [isChecked, setIsChecked] = useState(() => {
@@ -197,7 +198,6 @@ function SellConfirmDialog({
   const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations();
   const [isDoNotShowAgain, setIsDoNotShowAgain] = useState(false);
-  console.log('isDoNotShowAgain: ', isDoNotShowAgain);
 
   const confirmDialog = async () => {
     if (isLoading) return;
