@@ -28,8 +28,8 @@ function ShopTableRowView({ onAction, actionLabel, actionColor, ...item }: Props
 
   return (
     <Table.Row className={rowStyle} key={item.id}>
-      <Table.Cell>
-        <Image src={getPersonaImage(item.persona.personaType)} width={60} height={67} alt="animal1" />
+      <Table.Cell p="0">
+        <Image src={getPersonaImage(item.persona.personaType)} width={80} height={80} alt="animal1" />
       </Table.Cell>
       <Table.Cell>{snakeToTitleCase(item.persona.personaType)}</Table.Cell>
       <Table.Cell>

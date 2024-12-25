@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { auctionQueries } from '@gitanimals/react-query';
+import { Table } from '@gitanimals/ui-panda';
+import { useQuery } from '@tanstack/react-query';
 
 import Pagination from '@/components/Pagination';
 import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
@@ -9,9 +12,7 @@ import { ACTION_BUTTON_OBJ } from '@/constants/action';
 
 import { useSearchOptions } from '../useSearchOptions';
 
-import { tableCss, tbodyCss, theadCss } from './table.styles';
-import { useQuery } from '@tanstack/react-query';
-import { auctionQueries } from '@gitanimals/react-query';
+import { tableCss } from './table.styles';
 
 const HISTORY_ACTION_OBJ = ACTION_BUTTON_OBJ['SELL_HISTORY'];
 
@@ -40,17 +41,21 @@ function HistoryTable() {
 
   return (
     <>
-      <div className={tableCss}>
-        <div className={theadCss}>
-          <span>{t('pet')}</span>
-          <span>{t('name')}</span>
-          <span>{t('grade')}</span>
-          <span>{t('level')}</span>
-          <span>{t('price')}</span>
-          <span>{t('date')}</span>
-        </div>
+      <Table className={tableCss}>
+        <Table.Header>
+          <Table.Row>
+            <Table.Head width="132px" textAlign="center">
+              {t('pet')}
+            </Table.Head>
+            <Table.Head>{t('name')}</Table.Head>
+            <Table.Head>{t('grade')}</Table.Head>
+            <Table.Head>{t('level')}</Table.Head>
+            <Table.Head width="30%">{t('price')}</Table.Head>
+            <Table.Head width="160px"></Table.Head>
+          </Table.Row>
+        </Table.Header>
 
-        <div className={tbodyCss}>
+        <Table.Body>
           {!data && Array.from({ length: 8 }).map((_, index) => <ShopTableRowViewSkeleton key={`skeleton-${index}`} />)}
           {data?.products.map((product) => {
             return (
@@ -65,8 +70,8 @@ function HistoryTable() {
               />
             );
           })}
-        </div>
-      </div>
+        </Table.Body>
+      </Table>
 
       {data && data.pagination.totalPages > 1 && (
         <Pagination {...data.pagination} currentPage={currentPage} onSetPage={setCurrentPage} />

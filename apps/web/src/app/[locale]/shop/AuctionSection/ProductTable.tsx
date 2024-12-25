@@ -43,12 +43,14 @@ function ProductTable() {
       <Table className={tableCss}>
         <Table.Header>
           <Table.Row>
-            <Table.Head>{t('pet')}</Table.Head>
+            <Table.Head width="132px" textAlign="center">
+              {t('pet')}
+            </Table.Head>
             <Table.Head>{t('name')}</Table.Head>
             <Table.Head>{t('grade')}</Table.Head>
             <Table.Head>{t('level')}</Table.Head>
-            <Table.Head>{t('price')}</Table.Head>
-            <Table.Head></Table.Head>
+            <Table.Head width="30%">{t('price')}</Table.Head>
+            <Table.Head width="100px"></Table.Head>
           </Table.Row>
         </Table.Header>
 
