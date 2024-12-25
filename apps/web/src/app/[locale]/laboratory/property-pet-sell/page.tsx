@@ -1,13 +1,14 @@
 'use client';
 
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
+import { Flex } from '_panda/jsx';
 import { dropPets } from '@gitanimals/api/src/shop/dropPet';
 import { userQueries } from '@gitanimals/react-query/src/user';
-import { LevelBanner } from '@gitanimals/ui-panda';
+import { Button, LevelBanner } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 
 import { useDialog } from '@/components/Global/useDialog';
 import { trackEvent } from '@/lib/analytics';
@@ -33,8 +34,10 @@ const PersonaList = wrap
   .ErrorBoundary({ fallback: <div> </div> })
   .Suspense({ fallback: <></> })
   .on(function PersonaList() {
+    const queryClient = useQueryClient();
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
+    const [sort, setSort] = useState<'level-asc' | 'level-desc' | 'count-asc' | 'count-desc'>('level-asc');
 
     const { showDialog } = useDialog();
 
@@ -54,6 +57,8 @@ const PersonaList = wrap
       trackEvent('laboratory', {
         type: '레벨, 타입 같은 펫 한번에 팔기',
       });
+
+      queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
 
       showDialog({
         title: '펫 판매 완료',
@@ -84,11 +89,40 @@ const PersonaList = wrap
         }
       });
 
-      return Array.from(petItemMap.values()).sort((a, b) => Number(a.level) - Number(b.level));
-    }, [data.personas]);
+      return Array.from(petItemMap.values()).sort((a, b) => {
+        switch (sort) {
+          case 'level-desc':
+            return Number(b.level) - Number(a.level);
+          case 'count-asc':
+            return a.ids.length - b.ids.length;
+          case 'count-desc':
+            return b.ids.length - a.ids.length;
+          case 'level-asc':
+          default:
+            // 레벨이 같으면 개수로 내림차순 정렬
+            const levelDiff = Number(a.level) - Number(b.level);
+            if (levelDiff !== 0) return levelDiff;
+            return b.ids.length - a.ids.length;
+        }
+      });
+    }, [data.personas, sort]);
 
     return (
       <section className={sectionStyle}>
+        <Flex gap="8px">
+          <Button onClick={() => setSort('level-asc')} variant={sort === 'level-asc' ? 'primary' : 'secondary'}>
+            레벨 오름차순
+          </Button>
+          <Button onClick={() => setSort('level-desc')} variant={sort === 'level-desc' ? 'primary' : 'secondary'}>
+            레벨 내림차순
+          </Button>
+          <Button onClick={() => setSort('count-asc')} variant={sort === 'count-asc' ? 'primary' : 'secondary'}>
+            개수 오름차순
+          </Button>
+          <Button onClick={() => setSort('count-desc')} variant={sort === 'count-desc' ? 'primary' : 'secondary'}>
+            개수 내림차순
+          </Button>
+        </Flex>
         <div className={flexOverflowStyle}>
           {petList.map((petItem) => (
             <div key={petItem.type + petItem.level}>

@@ -9,7 +9,6 @@ export default function LaboratoryPage() {
         <h2>레벨, 타입 같은 펫 한번에 팔기</h2>
         <p>펫 레벨, 타입 등 펫 속성을 선택하여 한번에 팔 수 있어요.</p>
       </Card>
-      <Card href="#">Card</Card>
     </div>
   );
 }
