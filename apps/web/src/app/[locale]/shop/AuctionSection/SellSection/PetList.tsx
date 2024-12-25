@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import { css } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
+import { userQueries } from '@gitanimals/react-query';
 import { Banner } from '@gitanimals/ui-panda';
 import { useQuery } from '@tanstack/react-query';
 
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
-import { userQueries } from '@gitanimals/react-query';
 
 interface Props {
   selectedPersona?: Persona | null;
