@@ -61,10 +61,16 @@ const cardStyle = flex({
     textStyle: 'glyph24.bold',
     mt: 3,
     mb: 1,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
   '& .card-body': {
     textStyle: 'glyph12.regular',
     color: 'white.white_75',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
   '& .card-sub-info': {
     display: 'flex',
