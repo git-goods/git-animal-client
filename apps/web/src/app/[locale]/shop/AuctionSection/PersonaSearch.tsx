@@ -13,6 +13,17 @@ import { LoaderIcon, SearchIcon, XIcon } from 'lucide-react';
 import { getPersonaImage } from '@/utils/image';
 
 const EVENT = {
+  CHRISTMAS: {
+    label: 'Christmas 2024 🎄',
+    personaTypeList: [
+      'SNOWMAN',
+      'DESSERT_FOX_RUDOLPH',
+      'LITTLE_CHICK_SANTA',
+      'RABBIT_BROWN_RUDOLPH',
+      'SNOWMAN_MELT',
+      'HAMSTER_SANTA',
+    ],
+  },
   HALLOWEEN: {
     label: 'Halloween 2024 🎃',
     personaTypeList: ['SLIME_PUMPKIN_1', 'SLIME_PUMPKIN_2', 'GHOST', 'GHOST_KING', 'SCREAM', 'SCREAM_GHOST'],
@@ -46,7 +57,7 @@ export const PersonaSearch = wrap
 
     const { data } = useSuspenseQuery(auctionQueries.productTypesOptions());
 
-    const eventPersonaTypeList = EVENT.HALLOWEEN.personaTypeList;
+    const eventPersonaTypeList = Object.values(EVENT).flatMap((event) => event.personaTypeList);
     const filteredPersonaTypeList = data?.productTypes.filter((type) => !eventPersonaTypeList.includes(type.name));
 
     const onClick = (personaType: string) => {
