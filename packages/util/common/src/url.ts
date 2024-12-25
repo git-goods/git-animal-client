@@ -38,3 +38,21 @@ export const updateUrlSearchParams = (searchParams: Record<string, string>, key:
   params.set(key, value ?? '');
   return params.toString();
 };
+
+export const getNewUrl = ({
+  baseUrl,
+  newParams,
+  oldParams = {},
+}: {
+  baseUrl: string;
+  oldParams?: Record<string, unknown>;
+  newParams: Record<string, unknown>;
+}) => {
+  const params = new URLSearchParams();
+
+  for (const [key, value] of Object.entries({ ...oldParams, ...newParams })) {
+    params.append(key, String(value));
+  }
+
+  return `${baseUrl}?${params.toString()}`;
+};

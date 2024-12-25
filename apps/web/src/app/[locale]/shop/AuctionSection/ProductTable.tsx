@@ -7,7 +7,7 @@ import { auctionQueries, useBuyProduct, useDeleteProduct, userQueries } from '@g
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import Pagination from '@/components/Pagination';
+import Pagination from '@/components/Pagination/Pagination';
 import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import { useLoading } from '@/store/loading';
