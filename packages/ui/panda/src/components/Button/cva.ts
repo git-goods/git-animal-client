@@ -88,6 +88,7 @@ export const buttonStyle = cva({
         border: '1px solid #000',
         backgroundColor: '#FFF',
         boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px -3px 0px 0px #A1A1B1 inset, 0px 3px 0px 0px #D2DCFE inset',
+        color: '#000',
 
         _hover: {
           backgroundColor: 'gray.gray_900',

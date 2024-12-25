@@ -2,21 +2,21 @@
 import type { ChangeEventHandler } from 'react';
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
+import { css } from '_panda/css';
+import { Flex } from '_panda/jsx';
 import type { Persona } from '@gitanimals/api';
 import { auctionQueries, userQueries } from '@gitanimals/react-query';
-import { Button } from '@gitanimals/ui-panda';
+import { Button, Table } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
-import { rowStyle } from '@/components/ProductTable/ShopTableRowView';
 import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
-import { tableCss, theadCss } from '../table.styles';
+import { tableCss } from '../table.styles';
 
 const MAX_PRICE = 100_000_000;
 
@@ -62,26 +62,32 @@ function SellInputRow({ item, initPersona }: Props) {
   };
 
   return (
-    <div className={tableCss}>
-      <div className={theadCss}>
-        <span>{t('pet')}</span>
-        <span>{t('name')}</span>
-        <span>{t('grade')}</span>
-        <span>{t('level')}</span>
-        <span>{t('price')}</span>
-        <span></span>
-      </div>
+    <Table className={tableCss}>
+      <Table.Header>
+        <Table.Row>
+          <Table.Head width="132px" textAlign="center">
+            {t('pet')}
+          </Table.Head>
+          <Table.Head>{t('name')}</Table.Head>
+          <Table.Head>{t('grade')}</Table.Head>
+          <Table.Head>{t('level')}</Table.Head>
+          <Table.Head>{t('price')}</Table.Head>
+          <Table.Head width="0"></Table.Head>
+        </Table.Row>
+      </Table.Header>
 
-      <div className={cx(rowStyle, 'row')}>
-        {item && currentPersona && (
-          <>
-            <div>
-              <img src={getPersonaImage(item.type)} alt={item.type} width={60} height={67} />
-            </div>
-            <div>{snakeToTitleCase(item.type)}</div>
-            <div>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</div>
-            <div>{item.level}</div>
-            <div>
+      <Table.Body>
+        {item && currentPersona ? (
+          <Table.Row>
+            <Table.Cell p="0">
+              <img src={getPersonaImage(item.type)} alt={item.type} width={80} height={80} />
+            </Table.Cell>
+            <Table.Cell>{snakeToTitleCase(item.type)}</Table.Cell>
+            <Table.Cell>
+              {ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}
+            </Table.Cell>
+            <Table.Cell>{item.level}</Table.Cell>
+            <Table.Cell>
               <input
                 className={inputStyle}
                 inputMode="numeric"
@@ -89,14 +95,24 @@ function SellInputRow({ item, initPersona }: Props) {
                 value={price}
                 onChange={onChangePriceInput}
               />
-            </div>
-            <Button variant="secondary" onClick={onSellClick}>
-              {t('sell')}
-            </Button>
-          </>
+            </Table.Cell>
+            <Table.Cell>
+              <Button variant="secondary" onClick={onSellClick}>
+                {t('sell')}
+              </Button>
+            </Table.Cell>
+          </Table.Row>
+        ) : (
+          <Table.Row className="empty">
+            <Table.Cell colSpan={6} style={{ borderRadius: '8px' }}>
+              <Flex alignItems="center" justifyContent="center" w="full" h="full">
+                Please select a pet.
+              </Flex>
+            </Table.Cell>
+          </Table.Row>
         )}
-      </div>
-    </div>
+      </Table.Body>
+    </Table>
   );
 }
 

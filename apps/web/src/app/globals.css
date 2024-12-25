@@ -37,6 +37,12 @@
   }
 }
 
+@layer recipes {
+  button {
+    color: #000;
+  }
+}
+
 /* toast */
 [data-sonner-toaster] {
   z-index: 500;

@@ -1,4 +1,4 @@
-import { keyframes, media, semanticTokens, textStyles, tokens } from '@gitanimals/ui-panda';
+import { keyframes, media, recipes, semanticTokens, textStyles, tokens } from '@gitanimals/ui-panda';
 import { defineConfig } from '@pandacss/dev';
 
 export default defineConfig({
@@ -18,6 +18,7 @@ export default defineConfig({
       semanticTokens,
       textStyles,
       keyframes,
+      recipes,
     },
   },
   patterns: {
