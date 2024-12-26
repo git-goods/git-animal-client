@@ -39,7 +39,13 @@ export default async function GuildPage({
         ))}
       </div>
       <PaginationServer {...data.pagination} generateMoveLink={getGuildPageUrl} />
-      <Image src="/guild/init-bg-bottom.png" className={bottomBgStyle} alt="init-bg-bottom" width={3600} height={228} />
+      <Image
+        src="/guild/init-bg-bottom.webp"
+        className={bottomBgStyle}
+        alt="init-bg-bottom"
+        width={3600}
+        height={228}
+      />
     </div>
   );
 }
@@ -57,11 +63,10 @@ const containerStyle = flex({
 const cardListStyle = grid({
   columns: 3,
   gap: '8px',
+  w: 'full',
   _mobile: {
     columns: 1,
   },
-
-  w: 'full',
 });
 
 const bottomBgStyle = css({
