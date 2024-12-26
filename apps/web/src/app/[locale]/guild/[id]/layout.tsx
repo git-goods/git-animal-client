@@ -6,9 +6,9 @@ export default function GuildLayout({ children }: { children: React.ReactNode })
     <>
       {children}
       <div className={bottomBgStyle}>
-        <Image src="/guild/guild-bg-bottom.png" className="bg-bottom" alt="bg-bottom" width={3600} height={228} />
+        <Image src="/guild/guild-bg-bottom.webp" className="bg-bottom" alt="bg-bottom" width={3600} height={228} />
         <Image
-          src="/guild/guild-bg-bottom-house.png"
+          src="/guild/guild-bg-bottom-house.webp"
           className="bg-bottom-house"
           alt="bg-bottom"
           width={257}
