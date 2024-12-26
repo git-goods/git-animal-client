@@ -1,5 +1,6 @@
 import z from 'zod';
-import { PaginationRequestSchema, PaginationSchema, ProductSchema } from './schema';
+import { PaginationSchema } from '../schema';
+import { PaginationRequestSchema, ProductSchema } from './schema';
 import { safeGet } from '../_instance/safe';
 import { convertCamelObjToKebab } from '../utils';
 

@@ -1,7 +1,8 @@
 import z from 'zod';
 import { safeGet } from '../_instance/safe';
-import { ProductSchema, PaginationSchema, OrderTypeSchema, SortDirectionSchema } from './schema';
+import { ProductSchema, OrderTypeSchema, SortDirectionSchema } from './schema';
 import { convertCamelObjToKebab } from '../utils';
+import { PaginationSchema } from '../schema';
 
 const GetProductsSchema = z.object({
   products: z.array(ProductSchema),

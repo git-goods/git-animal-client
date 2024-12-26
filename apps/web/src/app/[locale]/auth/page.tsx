@@ -1,5 +1,6 @@
 import { center } from '_panda/patterns';
 import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
+import { setRenderRequestInterceptor, setRenderResponseInterceptor } from '@gitanimals/api/src/_instance';
 
 import {
   interceptorRequestFulfilled,
@@ -21,6 +22,8 @@ function JWTPage({
 
   setRequestInterceptor(interceptorRequestFulfilled);
   setResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
+  setRenderRequestInterceptor(interceptorRequestFulfilled);
+  setRenderResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
 
   return (
     <div className={loadingContainerStyle}>
