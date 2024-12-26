@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { css } from '_panda/css';
 import { flex, grid } from '_panda/patterns';
 import { generateRandomKey, searchGuild } from '@gitanimals/api';
+import { SearchBar } from '@gitanimals/ui-panda';
 import { getNewUrl } from '@gitanimals/util-common';
 
 import { PaginationServer } from '@/components/Pagination/PaginationServer';
@@ -31,6 +32,7 @@ export default async function GuildPage({
 
   return (
     <div className={containerStyle}>
+      <SearchBar />
       <div className={cardListStyle}>
         {data.guilds.map((guild) => (
           <GuildCard key={guild.id} guild={guild} />
@@ -53,18 +55,18 @@ const containerStyle = flex({
   height: '100%',
   padding: '120px 0',
   flexDirection: 'column',
+  maxWidth: '880px',
+  mx: 'auto',
   gap: 4,
 });
 
 const cardListStyle = grid({
   columns: 3,
   gap: '8px',
+  w: 'full',
   _mobile: {
     columns: 1,
   },
-  maxWidth: '880px',
-  mx: 'auto',
-  w: 'full',
 });
 
 const bottomBgStyle = css({
