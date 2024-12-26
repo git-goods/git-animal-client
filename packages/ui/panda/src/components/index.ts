@@ -8,3 +8,4 @@ export * from './Dialog';
 export * from './Select';
 export * from './CheckBox';
 export * from './Label';
+export * from './SearchBar';
