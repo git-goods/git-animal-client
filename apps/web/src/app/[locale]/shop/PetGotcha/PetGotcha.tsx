@@ -21,9 +21,9 @@ export function PetGotcha() {
       <Image src="/shop/pet-gotcha-bg.webp" alt="pet-gotcha-bg" width={1920} height={1226} className={bgStyle} />
       <h1 className={headingStyle}>Pet Gotcha</h1>
       <p className={descStyle}>{t('pet-gotcha-desc')}</p>
-      <div className={buttonContainerStyle}>
-        <ButtonWrapper onClickOnePet={() => setOpenModal('one-pet')} onClickTenPet={() => setOpenModal('ten-pet')} />
-      </div>
+
+      <ButtonWrapper onClickOnePet={() => setOpenModal('one-pet')} onClickTenPet={() => setOpenModal('ten-pet')} />
+
       <div className={petContainerStyle}>
         <Image src="/shop/pet-gotcha-image-card.webp" alt="pet-gotcha-pet" width={1120} height={530} />
       </div>
@@ -56,14 +56,14 @@ const ButtonWrapper = wrap
     const points = Number(data.points);
 
     return (
-      <>
+      <div className={buttonContainerStyle}>
         <Button size="l" onClick={onClickOnePet} disabled={points < 1_000}>
           1 Pet / 1,000 P
         </Button>
         <Button size="l" onClick={onClickTenPet} disabled={points < 10_000}>
           10 Pets / 10,000 P
         </Button>
-      </>
+      </div>
     );
   });
 
