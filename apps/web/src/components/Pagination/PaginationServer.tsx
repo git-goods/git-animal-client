@@ -13,6 +13,8 @@ export function PaginationServer(props: { generateMoveLink: (props: { page: numb
       .filter((page) => page < props.totalPages);
   };
 
+  if (props.totalPages === 0) return null;
+
   return (
     <div className={paginationContainerStyle}>
       <Link

@@ -5,9 +5,12 @@ import { safeRenderGet } from '../_instance/safe';
 import { convertCamelObjToKebab } from '../utils';
 import { renderGet } from '../_instance';
 
+const FilterSchema = z.enum(['RANDOM', 'PEOPLE_ASC', 'PEOPLE_DESC', 'CONTRIBUTION_ASC', 'CONTRIBUTION_DESC']);
+export type FilterType = z.infer<typeof FilterSchema>;
+
 const SearchGuildRequestSchema = z.object({
   pageNumber: z.number().optional(),
-  filter: z.enum(['RANDOM', 'PEOPLE_ASC', 'PEOPLE_DESC', 'CONTRIBUTION_ASC', 'CONTRIBUTION_DESC']).optional(),
+  filter: FilterSchema.optional(),
   text: z.string().optional(),
   key: z.number(),
 });
@@ -21,6 +24,7 @@ export type SearchGuildRequest = z.infer<typeof SearchGuildRequestSchema>;
 export type SearchGuildResponse = z.infer<typeof SearchGuildResponseSchema>;
 
 export const searchGuild = async (request: SearchGuildRequest): Promise<SearchGuildResponse> => {
+  console.log('request: ', request);
   return renderGet('/guilds/search', {
     params: request ? convertCamelObjToKebab(request) : undefined,
   });

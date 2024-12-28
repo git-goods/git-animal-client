@@ -2,29 +2,35 @@ import Image from 'next/image';
 import { css } from '_panda/css';
 import { Box } from '_panda/jsx';
 import { flex, grid } from '_panda/patterns';
+import type { FilterType } from '@gitanimals/api';
 import { generateRandomKey, searchGuild } from '@gitanimals/api';
-import { Button, SearchBar } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-panda';
 import { getNewUrl } from '@gitanimals/util-common';
 
 import { PaginationServer } from '@/components/Pagination/PaginationServer';
 
 import { GuildCard } from './(list)/GuildCard';
+import { GuildSearch } from './GuildSearch';
 import { SortSelect } from './SortSelect';
 
 const GUILD_PAGE_URL = '/guild';
+
 export default async function GuildPage({
   searchParams,
 }: {
   searchParams: {
     page?: string;
     rd?: string;
+    filter?: FilterType;
+    text?: string;
   };
 }) {
   const randomId = searchParams.rd ? Number(searchParams.rd) : generateRandomKey();
 
   const data = await searchGuild({
     key: randomId,
-    filter: 'RANDOM',
+    filter: searchParams.filter ?? 'RANDOM',
+    text: searchParams.text,
   });
 
   const getGuildPageUrl = (params: Record<string, unknown>) => {
@@ -36,7 +42,7 @@ export default async function GuildPage({
     <div className={containerStyle}>
       <div className={topStyle}>
         <Box flex="1">
-          <SearchBar />
+          <GuildSearch />
         </Box>
         <SortSelect />
         {/* TODO: create guild */}
@@ -45,6 +51,7 @@ export default async function GuildPage({
         </Button>
       </div>
       <div className={cardListStyle}>
+        {data.guilds.length === 0 && <EmptyGuild />}
         {data.guilds.map((guild) => (
           <GuildCard key={guild.id} guild={guild} />
         ))}
@@ -80,12 +87,34 @@ const containerStyle = flex({
 });
 
 const cardListStyle = grid({
+  gridTemplateRows: 'repeat(3, 210px)',
   columns: 3,
   gap: '8px',
   w: 'full',
+  // flex: 1,
   _mobile: {
     columns: 1,
   },
+});
+const cardListEmptyStyle = css({
+  width: '100%',
+  height: '100%',
+  gridColumn: '1 / -1',
+  gridRow: '1 / -1',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius: '16px',
+  background: 'white.white_10',
+  backdropFilter: 'blur(7px)',
+});
+
+const emptyStyle = flex({
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  color: 'white.white_50',
+  textStyle: 'glyph16.regular',
 });
 
 const bottomBgStyle = css({
@@ -97,3 +126,14 @@ const bottomBgStyle = css({
   height: '228px',
   objectFit: 'cover',
 });
+
+function EmptyGuild() {
+  return (
+    <div className={cardListEmptyStyle}>
+      <div className={emptyStyle}>
+        <Image src="/guild/empty-image.webp" alt="empty" width={80} height={80} />
+        <p>Sorry, there is no item</p>
+      </div>
+    </div>
+  );
+}

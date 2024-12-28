@@ -1,18 +1,33 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
+import type { FilterType } from '@gitanimals/api';
 import { ChipCombine } from '@gitanimals/ui-panda';
 
-const options = [{ label: 'Random', value: 'Random' }];
+import { useGetNextUrl } from '@/hooks/useGetNewUrl';
+import { useRouter } from '@/i18n/routing';
 
-type OptionType = (typeof options)[number]['value'];
+const options: { label: string; value: FilterType }[] = [
+  { label: 'Random', value: 'RANDOM' },
+  { label: 'People (asc)', value: 'PEOPLE_ASC' },
+  { label: 'People (desc)', value: 'PEOPLE_DESC' },
+  { label: 'Contribution (asc)', value: 'CONTRIBUTION_ASC' },
+  { label: 'Contribution (desc)', value: 'CONTRIBUTION_DESC' },
+];
 
 export function SortSelect() {
-  const onSelect = (value: OptionType) => {
-    console.log(value);
+  const router = useRouter();
+  const getNextUrl = useGetNextUrl();
+  const searchParams = useSearchParams();
+  const filter = (searchParams.get('filter') as FilterType) ?? 'RANDOM';
+
+  const onSelect = (value: FilterType) => {
+    const nextUrl = getNextUrl({ filter: value });
+    router.replace(nextUrl);
   };
 
   return (
-    <ChipCombine defaultValue={options[0].value} onValueChange={(value) => onSelect(value as OptionType)}>
+    <ChipCombine defaultValue={filter} onValueChange={(value) => onSelect(value as FilterType)}>
       <ChipCombine.Trigger>
         <ChipCombine.Value />
       </ChipCombine.Trigger>
