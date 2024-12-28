@@ -24,7 +24,6 @@ export type SearchGuildRequest = z.infer<typeof SearchGuildRequestSchema>;
 export type SearchGuildResponse = z.infer<typeof SearchGuildResponseSchema>;
 
 export const searchGuild = async (request: SearchGuildRequest): Promise<SearchGuildResponse> => {
-  console.log('request: ', request);
   return renderGet('/guilds/search', {
     params: request ? convertCamelObjToKebab(request) : undefined,
   });

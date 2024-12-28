@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { css } from '_panda/css';
-import { Box } from '_panda/jsx';
 import { flex, grid } from '_panda/patterns';
 import type { FilterType } from '@gitanimals/api';
 import { generateRandomKey, searchGuild } from '@gitanimals/api';
@@ -41,9 +40,8 @@ export default async function GuildPage({
   return (
     <div className={containerStyle}>
       <div className={topStyle}>
-        <Box flex="1">
-          <GuildSearch />
-        </Box>
+        <GuildSearch />
+
         <SortSelect />
         {/* TODO: create guild */}
         <Button minWidth="126px" size="m" px="20px">
