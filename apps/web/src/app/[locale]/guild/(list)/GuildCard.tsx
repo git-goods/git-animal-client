@@ -1,16 +1,22 @@
+'use client';
+
+import { useState } from 'react';
 import Image from 'next/image';
 import { Flex } from '_panda/jsx';
 import { flex } from '_panda/patterns';
 import type { Guild } from '@gitanimals/api';
 import { UsersRoundIcon } from 'lucide-react';
 
+import { GuildDetail } from './GuildDetail';
+
 interface GuildCardProps {
   guild: Guild;
 }
 
 export function GuildCard({ guild }: GuildCardProps) {
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className={cardStyle}>
+    <button type="button" className={cardStyle} onClick={() => setIsOpen(true)}>
       <div className="card-top">
         <Image src={guild.guildIcon} alt={guild.title} width={40} height={40} className="card-guild-icon" />
         <Flex gap="6px" alignItems="center">
@@ -31,7 +37,16 @@ export function GuildCard({ guild }: GuildCardProps) {
           <span>{guild.totalContributions}</span>
         </li>
       </ul>
-    </div>
+      {isOpen && (
+        <GuildDetail
+          guildId={guild.id}
+          onClose={() => {
+            console.log('close');
+            setIsOpen(false);
+          }}
+        />
+      )}
+    </button>
   );
 }
 
@@ -46,6 +61,7 @@ const cardStyle = flex({
   color: 'white',
 
   '& .card-top': {
+    width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
     color: 'white.white_75',
@@ -77,6 +93,8 @@ const cardStyle = flex({
     flexDirection: 'column',
     mt: 4,
     textStyle: 'glyph14.regular',
+    textAlign: 'left',
+    alignItems: 'flex-start',
 
     '& span:first-child': {
       color: 'white.white_50',
