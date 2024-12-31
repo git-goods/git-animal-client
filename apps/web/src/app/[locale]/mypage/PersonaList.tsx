@@ -85,7 +85,12 @@ function PersonaItem({ persona, isSelected, onClick, isLoading }: PersonaItemPro
       disabled={isLoading}
       className={css({ outline: 'none' })}
     >
-      <Banner loading={isLoading} image={getPersonaImage(persona.type)} size="small" selected={isSelected} />
+      <Banner
+        loading={isLoading}
+        image={getPersonaImage(persona.type)}
+        size="small"
+        status={isSelected ? 'selected' : 'default'}
+      />
     </button>
   );
 }
