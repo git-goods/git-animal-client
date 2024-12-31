@@ -65,7 +65,6 @@ export function GuildCard({ guild }: GuildCardProps) {
           guildId={guild.id}
           onClose={() => setIsDetailOpen(false)}
           onJoin={() => {
-            console.log('join');
             setIsDetailOpen(false);
             setIsJoinPetSelectOpen(true);
           }}
@@ -74,7 +73,6 @@ export function GuildCard({ guild }: GuildCardProps) {
       {isJoinPetSelectOpen && (
         <GuildJoinPetSelectDialog
           onSubmit={(selectPersona) => {
-            console.log('submit');
             submitJoinGuild(selectPersona);
             setIsJoinPetSelectOpen(false);
           }}
