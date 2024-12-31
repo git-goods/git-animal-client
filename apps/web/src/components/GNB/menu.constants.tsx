@@ -14,6 +14,11 @@ export const LOGIN_NAV_MENU_LIST: NavMenu[] = [
     href: '/shop',
     icon: <ShoppingCartIcon size={20} color="#9295A1" />,
   },
+  {
+    label: 'guild',
+    href: '/guild',
+    icon: <div></div>,
+  },
 ] as const;
 
 export const NON_LOGIN_NAV_MENU_LIST: NavMenu[] = [] as const;

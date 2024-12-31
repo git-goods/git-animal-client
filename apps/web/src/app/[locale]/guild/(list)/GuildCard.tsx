@@ -4,49 +4,84 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Flex } from '_panda/jsx';
 import { flex } from '_panda/patterns';
-import type { Guild } from '@gitanimals/api';
+import { type Guild } from '@gitanimals/api';
+import { inboxQueries } from '@gitanimals/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { UsersRoundIcon } from 'lucide-react';
 
+import { joinGuildAction } from '@/serverActions/guild';
+
 import { GuildDetail } from './GuildDetail';
+import { GuildJoinPetSelectDialog } from './GuildPetSelectDialog';
 
 interface GuildCardProps {
   guild: Guild;
 }
 
 export function GuildCard({ guild }: GuildCardProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <button type="button" className={cardStyle} onClick={() => setIsOpen(true)}>
-      <div className="card-top">
-        <Image src={guild.guildIcon} alt={guild.title} width={40} height={40} className="card-guild-icon" />
-        <Flex gap="6px" alignItems="center">
-          <UsersRoundIcon size={16} color="#FFFFFF80" />
-          <span>{guild.members.length}/ 15</span>
-        </Flex>
-      </div>
-      <h4 className="card-title">{guild.title}</h4>
-      <p className="card-body">{guild.body}</p>
+  const queryClient = useQueryClient();
+  const [isJoinPetSelectOpen, setIsJoinPetSelectOpen] = useState(false);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
 
-      <ul className="card-sub-info">
-        <li>
-          <span>Leader</span>
-          <span>{guild.leader.name}</span>
-        </li>
-        <li>
-          <span>Contributions</span>
-          <span>{guild.totalContributions}</span>
-        </li>
-      </ul>
-      {isOpen && (
+  const submitJoinGuild = async (selectPersona: string) => {
+    try {
+      await joinGuildAction({
+        guildId: guild.id,
+        personaId: selectPersona,
+      });
+
+      queryClient.invalidateQueries({ queryKey: inboxQueries.allKey() });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <>
+      <button type="button" className={cardStyle} onClick={() => setIsDetailOpen(true)}>
+        <div className="card-top">
+          <Image src={guild.guildIcon} alt={guild.title} width={40} height={40} className="card-guild-icon" />
+          <Flex gap="6px" alignItems="center">
+            <UsersRoundIcon size={16} color="#FFFFFF80" />
+            <span>{guild.members.length}/ 15</span>
+          </Flex>
+        </div>
+        <h4 className="card-title">{guild.title}</h4>
+        <p className="card-body">{guild.body}</p>
+
+        <ul className="card-sub-info">
+          <li>
+            <span>Leader</span>
+            <span>{guild.leader.name}</span>
+          </li>
+          <li>
+            <span>Contributions</span>
+            <span>{guild.totalContributions}</span>
+          </li>
+        </ul>
+      </button>
+      {isDetailOpen && (
         <GuildDetail
           guildId={guild.id}
-          onClose={() => {
-            console.log('close');
-            setIsOpen(false);
+          onClose={() => setIsDetailOpen(false)}
+          onJoin={() => {
+            console.log('join');
+            setIsDetailOpen(false);
+            setIsJoinPetSelectOpen(true);
           }}
         />
       )}
-    </button>
+      {isJoinPetSelectOpen && (
+        <GuildJoinPetSelectDialog
+          onSubmit={(selectPersona) => {
+            console.log('submit');
+            submitJoinGuild(selectPersona);
+            setIsJoinPetSelectOpen(false);
+          }}
+          onClose={() => setIsJoinPetSelectOpen(false)}
+        />
+      )}
+    </>
   );
 }
 
