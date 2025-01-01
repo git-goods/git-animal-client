@@ -92,7 +92,7 @@ export const PersonaSearch = wrap
                   <div className={personaListStyle}>
                     {event.personaTypeList.map((type) => (
                       <button key={type} onClick={() => onClick(type)}>
-                        <Banner image={getPersonaImage(type)} selected={selected === type} />
+                        <Banner image={getPersonaImage(type)} status={selected === type ? 'selected' : 'default'} />
                       </button>
                     ))}
                   </div>
@@ -104,7 +104,10 @@ export const PersonaSearch = wrap
                   <div className={personaListStyle}>
                     {filteredPersonaTypeList.map((type) => (
                       <button key={type.name} onClick={() => onClick(type.name)}>
-                        <Banner image={getPersonaImage(type.name)} selected={selected === type.name} />
+                        <Banner
+                          image={getPersonaImage(type.name)}
+                          status={selected === type.name ? 'selected' : 'default'}
+                        />
                       </button>
                     ))}
                   </div>

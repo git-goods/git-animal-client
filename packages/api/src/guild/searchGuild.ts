@@ -1,7 +1,6 @@
 import z from 'zod';
 import { PaginationSchema } from '../schema';
 import { GuildSchema } from './schema';
-import { safeRenderGet } from '../_instance/safe';
 import { convertCamelObjToKebab } from '../utils';
 import { renderGet } from '../_instance';
 
