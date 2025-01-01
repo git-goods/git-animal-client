@@ -8,7 +8,8 @@
     "shop": "상점",
     "dev": "Dev",
     "language": "언어",
-    "notification": "알림"
+    "notification": "알림",
+    "guild": "길드"
   },
   "Common": {
     "pet": "펫",

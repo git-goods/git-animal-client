@@ -4,9 +4,12 @@ import { GuildSchema } from './schema';
 import { convertCamelObjToKebab } from '../utils';
 import { renderGet } from '../_instance';
 
+const FilterSchema = z.enum(['RANDOM', 'PEOPLE_ASC', 'PEOPLE_DESC', 'CONTRIBUTION_ASC', 'CONTRIBUTION_DESC']);
+export type FilterType = z.infer<typeof FilterSchema>;
+
 const SearchGuildRequestSchema = z.object({
   pageNumber: z.number().optional(),
-  filter: z.enum(['RANDOM', 'PEOPLE_ASC', 'PEOPLE_DESC', 'CONTRIBUTION_ASC', 'CONTRIBUTION_DESC']).optional(),
+  filter: FilterSchema.optional(),
   text: z.string().optional(),
   key: z.number(),
 });
