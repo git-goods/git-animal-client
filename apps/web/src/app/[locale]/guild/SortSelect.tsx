@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import type { FilterType } from '@gitanimals/api';
-import { ChipCombine } from '@gitanimals/ui-panda';
+import { CombineChip } from '@gitanimals/ui-panda';
 
 import { useGetNextUrl } from '@/hooks/useGetNewUrl';
 import { useRouter } from '@/i18n/routing';
@@ -27,17 +27,17 @@ export function SortSelect() {
   };
 
   return (
-    <ChipCombine defaultValue={filter} onValueChange={(value) => onSelect(value as FilterType)}>
-      <ChipCombine.Trigger>
-        <ChipCombine.Value />
-      </ChipCombine.Trigger>
-      <ChipCombine.Content>
+    <CombineChip defaultValue={filter} onValueChange={(value) => onSelect(value as FilterType)}>
+      <CombineChip.Trigger>
+        <CombineChip.Value />
+      </CombineChip.Trigger>
+      <CombineChip.Content>
         {options.map((option) => (
-          <ChipCombine.Item key={option.value} value={option.value}>
+          <CombineChip.Item key={option.value} value={option.value}>
             {option.label}
-          </ChipCombine.Item>
+          </CombineChip.Item>
         ))}
-      </ChipCombine.Content>
-    </ChipCombine>
+      </CombineChip.Content>
+    </CombineChip>
   );
 }
