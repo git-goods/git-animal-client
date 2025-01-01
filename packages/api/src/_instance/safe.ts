@@ -1,6 +1,6 @@
 import { ZodType, z } from 'zod';
 import { del, get, patch, post, put } from './default';
-import { CustomException } from '@gitanimals/exception';
+import { CustomException } from '@gitanimals/exception/src/CustomException';
 import { renderGet, renderDelete, renderPatch, renderPost, renderPut } from './render';
 
 type Method = typeof get | typeof post | typeof put | typeof patch | typeof del;

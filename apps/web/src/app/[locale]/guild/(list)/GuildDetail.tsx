@@ -17,7 +17,7 @@ import { getPersonaImage } from '@/utils/image';
 export const GuildDetail = wrap
   .Suspense({ fallback: null })
   .ErrorBoundary({ fallback: null })
-  .on(({ guildId, onClose }: { guildId: string; onClose: () => void }) => {
+  .on(({ guildId, onClose, onJoin }: { guildId: string; onClose: () => void; onJoin: () => void }) => {
     const { data } = useSuspenseQuery(guildQueries.getGuildByIdOptions(guildId));
 
     return (
@@ -68,7 +68,14 @@ export const GuildDetail = wrap
           <Box aspectRatio="1/0.5" width="100%" bg="white.white_50">
             farm type
           </Box>
-          <Button mx="auto" w="100px">
+          <Button
+            mx="auto"
+            w="100px"
+            onClick={(e) => {
+              e.preventDefault();
+              onJoin();
+            }}
+          >
             Join
           </Button>
         </Dialog.Content>
