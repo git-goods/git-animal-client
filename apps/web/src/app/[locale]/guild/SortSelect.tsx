@@ -1,6 +1,6 @@
 'use client';
 
-import { ChipCombine } from '@gitanimals/ui-panda';
+import { CombineChip } from '@gitanimals/ui-panda';
 
 const options = [{ label: 'Random', value: 'Random' }];
 
@@ -12,17 +12,17 @@ export function SortSelect() {
   };
 
   return (
-    <ChipCombine defaultValue={options[0].value} onValueChange={(value) => onSelect(value as OptionType)}>
-      <ChipCombine.Trigger>
-        <ChipCombine.Value />
-      </ChipCombine.Trigger>
-      <ChipCombine.Content>
+    <CombineChip defaultValue={options[0].value} onValueChange={(value) => onSelect(value as OptionType)}>
+      <CombineChip.Trigger>
+        <CombineChip.Value />
+      </CombineChip.Trigger>
+      <CombineChip.Content>
         {options.map((option) => (
-          <ChipCombine.Item key={option.value} value={option.value}>
+          <CombineChip.Item key={option.value} value={option.value}>
             {option.label}
-          </ChipCombine.Item>
+          </CombineChip.Item>
         ))}
-      </ChipCombine.Content>
-    </ChipCombine>
+      </CombineChip.Content>
+    </CombineChip>
   );
 }

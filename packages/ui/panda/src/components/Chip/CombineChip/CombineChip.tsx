@@ -126,7 +126,7 @@ const ChipLabel = withContext(styled(ChipPrimitive.Label), 'label');
 const ChipItem = withContext(styled(Item), 'item');
 const ChipSeparator = withContext(styled(ChipPrimitive.Separator), 'separator');
 
-export const ChipCombine = Object.assign(ChipRoot, {
+export const CombineChip = Object.assign(ChipRoot, {
   Group: ChipGroup,
   Value: ChipValue,
   Trigger: ChipTrigger,
