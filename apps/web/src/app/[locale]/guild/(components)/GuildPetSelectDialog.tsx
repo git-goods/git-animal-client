@@ -5,7 +5,7 @@ import { memo, useState } from 'react';
 import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Button, Dialog, LevelBanner } from '@gitanimals/ui-panda';
+import { Button, LevelBanner } from '@gitanimals/ui-panda';
 import { BannerSkeletonList } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -29,27 +29,13 @@ export const GuildJoinPetSelectDialog = ({ onSubmit }: { onSubmit: (selectPerson
 
   return (
     <>
-      <div>
-        <Dialog.Title className={dialogTitleStyle}>Choose your pet</Dialog.Title>
-        <p className={dialogDescriptionStyle}>If you choose a pet, it will be shown in the guild image.</p>
-      </div>
       <SelectPersonaList selectPersona={selectPersona ? [selectPersona] : []} onSelectPersona={onSelectPersona} />
-
       <Button mx="auto" w="100px" onClick={onDone} disabled={!selectPersona}>
         Done
       </Button>
     </>
   );
 };
-
-const dialogTitleStyle = css({});
-
-const dialogDescriptionStyle = css({
-  textStyle: 'glyph20.regular',
-  color: 'white.white_50',
-  mt: 3,
-  textAlign: 'center',
-});
 
 interface SelectPersonaListProps {
   selectPersona: string[];

@@ -6,7 +6,7 @@ import { Box, Flex } from '_panda/jsx';
 import { flex } from '_panda/patterns';
 import Flicking from '@egjs/react-flicking';
 import { guildQueries } from '@gitanimals/react-query';
-import { BannerPetSelectMedium, Button } from '@gitanimals/ui-panda';
+import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { UsersRoundIcon } from 'lucide-react';
@@ -16,7 +16,7 @@ import { getPersonaImage } from '@/utils/image';
 export const GuildDetail = wrap
   .Suspense({ fallback: null })
   .ErrorBoundary({ fallback: null })
-  .on(({ guildId, onJoin }: { guildId: string; onJoin: () => void }) => {
+  .on(({ guildId }: { guildId: string }) => {
     const { data } = useSuspenseQuery(guildQueries.getGuildByIdOptions(guildId));
 
     return (
@@ -66,16 +66,6 @@ export const GuildDetail = wrap
         <Box aspectRatio="1/0.5" width="100%" bg="white.white_50">
           farm type
         </Box>
-        <Button
-          mx="auto"
-          w="100px"
-          onClick={(e) => {
-            e.preventDefault();
-            onJoin();
-          }}
-        >
-          Join
-        </Button>
       </>
     );
   });

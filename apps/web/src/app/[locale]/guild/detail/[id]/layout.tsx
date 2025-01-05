@@ -13,10 +13,15 @@ export default function GuildDetailLayout({ children }: { children: ReactNode })
 const layoutStyle = css({
   maxWidth: '1000px',
   margin: '0 auto',
-  padding: '120px',
+  padding: '20px',
+  minHeight: 'calc(100vh - 60px)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 });
 
 const contentStyle = flex({
+  width: '100%',
   flexDirection: 'column',
   bg: 'gray.gray_150',
   padding: '60px 100px',

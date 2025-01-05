@@ -1,34 +1,17 @@
-'use client';
+import { Button } from '@gitanimals/ui-panda';
 
-import { css, cx } from '_panda/css';
-import { Dialog } from '@gitanimals/ui-panda';
-
-import { useRouter } from '@/i18n/routing';
-import { customScrollHorizontalStyle } from '@/styles/scrollStyle';
+import { Link } from '@/i18n/routing';
 
 import { GuildDetail } from '../../../(components)/GuildDetail';
+import GuildModal from '../../GuildModal';
 
-export default function GuildModal({ params }: { params: { id: string } }) {
-  const router = useRouter();
-
-  const onClose = () => {
-    router.back();
-  };
-
+export default function GuildDetailModal({ params }: { params: { id: string } }) {
   return (
-    <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="large" className={dialogContentStyle}>
-        <GuildDetail guildId={params.id} onJoin={() => router.push(`/guild/detail/${params.id}/join`)} />
-      </Dialog.Content>
-    </Dialog>
+    <GuildModal>
+      <GuildDetail guildId={params.id} />
+      <Link href={`/guild/detail/${params.id}/join`} style={{ margin: 'auto' }}>
+        <Button w="100px">Join</Button>
+      </Link>
+    </GuildModal>
   );
 }
-
-const dialogContentStyle = cx(
-  css({
-    height: 'fit-content',
-    gap: 8,
-    overflowY: 'auto',
-  }),
-  customScrollHorizontalStyle,
-);
