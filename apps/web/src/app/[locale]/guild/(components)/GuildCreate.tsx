@@ -1,8 +1,12 @@
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
+import { getGuildIcons } from '@gitanimals/api';
 import { TextArea, TextField } from '@gitanimals/ui-panda';
 
-export default function GuildCreate() {
+export default async function GuildCreate() {
+  const icons = await getGuildIcons();
+  console.log('icons: ', icons);
+
   return (
     <Flex flexDirection="column" gap="24px">
       <div>

@@ -7,7 +7,7 @@ import { Dialog } from '@gitanimals/ui-panda';
 import { useRouter } from '@/i18n/routing';
 import { customScrollHorizontalStyle } from '@/styles/scrollStyle';
 
-export default function GuildModal({ children }: PropsWithChildren) {
+export default function GuildModal({ children, title }: PropsWithChildren<{ title?: string }>) {
   const router = useRouter();
 
   const onClose = () => {
@@ -17,6 +17,7 @@ export default function GuildModal({ children }: PropsWithChildren) {
   return (
     <Dialog open={true} onOpenChange={onClose}>
       <Dialog.Content size="large" className={dialogContentStyle}>
+        {title && <Dialog.Title>{title}</Dialog.Title>}
         {children}
       </Dialog.Content>
     </Dialog>
