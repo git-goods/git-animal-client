@@ -10,17 +10,11 @@ import { BannerSkeletonList } from '@gitanimals/ui-panda/src/components/Banner/B
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { customScrollHorizontalStyle, customScrollStyle } from '@/styles/scrollStyle';
+import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
-export const GuildJoinPetSelectDialog = ({
-  onSubmit,
-  onClose,
-}: {
-  onSubmit: (selectPersona: string) => void;
-  onClose: () => void;
-}) => {
+export const GuildJoinPetSelectDialog = ({ onSubmit }: { onSubmit: (selectPersona: string) => void }) => {
   const [selectPersona, setSelectPersona] = useState<string>();
 
   const onSelectPersona = (currentSelectPersona: Persona) => {
@@ -34,35 +28,21 @@ export const GuildJoinPetSelectDialog = ({
   };
 
   return (
-    <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="large" className={dialogContentStyle}>
-        <div>
-          <Dialog.Title className={dialogTitleStyle}>Choose your pet</Dialog.Title>
-          <p className={dialogDescriptionStyle}>If you choose a pet, it will be shown in the guild image.</p>
-        </div>
-        <SelectPersonaList selectPersona={selectPersona ? [selectPersona] : []} onSelectPersona={onSelectPersona} />
+    <>
+      <div>
+        <Dialog.Title className={dialogTitleStyle}>Choose your pet</Dialog.Title>
+        <p className={dialogDescriptionStyle}>If you choose a pet, it will be shown in the guild image.</p>
+      </div>
+      <SelectPersonaList selectPersona={selectPersona ? [selectPersona] : []} onSelectPersona={onSelectPersona} />
 
-        <Button mx="auto" w="100px" onClick={onDone} disabled={!selectPersona}>
-          Done
-        </Button>
-      </Dialog.Content>
-    </Dialog>
+      <Button mx="auto" w="100px" onClick={onDone} disabled={!selectPersona}>
+        Done
+      </Button>
+    </>
   );
 };
 
-const dialogContentStyle = cx(
-  css({
-    height: 'fit-content',
-    gap: 8,
-    overflowY: 'auto',
-  }),
-  customScrollHorizontalStyle,
-);
-
-const dialogTitleStyle = css({
-  //   textStyle: 'glyph48.bold',
-  //   textAlign: 'center',
-});
+const dialogTitleStyle = css({});
 
 const dialogDescriptionStyle = css({
   textStyle: 'glyph20.regular',

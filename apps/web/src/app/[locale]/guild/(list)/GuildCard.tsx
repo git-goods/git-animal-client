@@ -9,10 +9,10 @@ import { inboxQueries } from '@gitanimals/react-query';
 import { useQueryClient } from '@tanstack/react-query';
 import { UsersRoundIcon } from 'lucide-react';
 
+import { Link } from '@/i18n/routing';
 import { joinGuildAction } from '@/serverActions/guild';
 
-import { GuildDetail } from './GuildDetail';
-import { GuildJoinPetSelectDialog } from './GuildPetSelectDialog';
+import { GuildJoinPetSelectDialog } from '../GuildPetSelectDialog';
 
 interface GuildCardProps {
   guild: Guild;
@@ -21,7 +21,6 @@ interface GuildCardProps {
 export function GuildCard({ guild }: GuildCardProps) {
   const queryClient = useQueryClient();
   const [isJoinPetSelectOpen, setIsJoinPetSelectOpen] = useState(false);
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   const submitJoinGuild = async (selectPersona: string) => {
     try {
@@ -38,7 +37,7 @@ export function GuildCard({ guild }: GuildCardProps) {
 
   return (
     <>
-      <button type="button" className={cardStyle} onClick={() => setIsDetailOpen(true)}>
+      <Link href={`/guild/detail/${guild.id}`} className={cardStyle}>
         <div className="card-top">
           <Image src={guild.guildIcon} alt={guild.title} width={40} height={40} className="card-guild-icon" />
           <Flex gap="6px" alignItems="center">
@@ -59,17 +58,8 @@ export function GuildCard({ guild }: GuildCardProps) {
             <span>{guild.totalContributions}</span>
           </li>
         </ul>
-      </button>
-      {isDetailOpen && (
-        <GuildDetail
-          guildId={guild.id}
-          onClose={() => setIsDetailOpen(false)}
-          onJoin={() => {
-            setIsDetailOpen(false);
-            setIsJoinPetSelectOpen(true);
-          }}
-        />
-      )}
+      </Link>
+
       {isJoinPetSelectOpen && (
         <GuildJoinPetSelectDialog
           onSubmit={(selectPersona) => {
