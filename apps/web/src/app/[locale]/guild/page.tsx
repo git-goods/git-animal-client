@@ -7,6 +7,7 @@ import { Button } from '@gitanimals/ui-panda';
 import { getNewUrl } from '@gitanimals/util-common';
 
 import { PaginationServer } from '@/components/Pagination/PaginationServer';
+import { Link } from '@/i18n/routing';
 
 import { GuildCard } from './(components)/GuildCard';
 import { GuildSearch } from './(components)/GuildSearch';
@@ -43,10 +44,11 @@ export default async function GuildPage({
         <GuildSearch />
 
         <SortSelect />
-        {/* TODO: create guild */}
-        <Button minWidth="126px" size="m" px="20px">
-          Create Guild
-        </Button>
+        <Link href="/guild/create">
+          <Button minWidth="126px" size="m" px="20px">
+            Create Guild
+          </Button>
+        </Link>
       </div>
       <div className={cardListStyle}>
         {data.guilds.length === 0 && <EmptyGuild />}
