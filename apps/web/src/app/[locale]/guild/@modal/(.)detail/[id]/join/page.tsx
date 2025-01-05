@@ -9,7 +9,7 @@ import { useRouter } from '@/i18n/routing';
 import { joinGuildAction } from '@/serverActions/guild';
 import { customScrollHorizontalStyle } from '@/styles/scrollStyle';
 
-import { GuildJoinPetSelectDialog } from '../../../../GuildPetSelectDialog';
+import { GuildJoinPetSelectDialog } from '../../../../(components)/GuildPetSelectDialog';
 
 export default function GuildJoinModal({ params }: { params: { id: string } }) {
   const queryClient = useQueryClient();

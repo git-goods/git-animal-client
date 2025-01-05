@@ -6,7 +6,7 @@ import { Dialog } from '@gitanimals/ui-panda';
 import { useRouter } from '@/i18n/routing';
 import { customScrollHorizontalStyle } from '@/styles/scrollStyle';
 
-import { GuildDetail } from '../../../GuildDetail';
+import { GuildDetail } from '../../../(components)/GuildDetail';
 
 export default function GuildModal({ params }: { params: { id: string } }) {
   const router = useRouter();

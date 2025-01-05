@@ -2,7 +2,7 @@
 
 import { useRouter } from '@/i18n/routing';
 
-import { GuildDetail } from '../../GuildDetail';
+import { GuildDetail } from '../../(components)/GuildDetail';
 
 export default function GuildDetailPage({ params }: { params: { id: string } }) {
   const router = useRouter();
