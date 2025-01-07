@@ -22,7 +22,6 @@ export function FarmPersonaSelect({
   const t = useTranslations('Mypage');
 
   const [selectPersona, setSelectPersona] = useState<string[]>([]);
-  console.log('selectPersona: ', selectPersona);
   const [loadingPersona, setLoadingPersona] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 

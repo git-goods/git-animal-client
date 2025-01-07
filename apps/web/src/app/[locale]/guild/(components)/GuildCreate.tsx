@@ -1,59 +1,66 @@
-/* eslint-disable @next/next/no-img-element */
-import { css } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { getGuildBackgrounds, getGuildIcons } from '@gitanimals/api';
-import { TextArea, TextField } from '@gitanimals/ui-panda';
+'use client';
+import { useState } from 'react';
+import { createGuild } from '@gitanimals/api';
+import { Button } from '@gitanimals/ui-panda';
 
-import { getBackgroundImage } from '@/utils/image';
+import { useRouter } from '@/i18n/routing';
 
-export default async function GuildCreate() {
-  const icons = await getGuildIcons();
-  const backgrounds = await getGuildBackgrounds();
+import { GuildCreateForm } from './GuildCreateForm';
+import { SelectPersonaList } from './SelectPersonaList';
+
+export default function GuildCreate() {
+  const router = useRouter();
+
+  const [step, setStep] = useState<'guild-info' | 'guild-persona'>('guild-info');
+  const [formData, setFormData] = useState({
+    title: '',
+    body: '',
+    icon: '',
+    background: '',
+  });
+  const [selectPersona, setSelectPersona] = useState('');
+
+  const onChange = (key: string, value: string) => {
+    setFormData({ ...formData, [key]: value });
+  };
+
+  const isValid = Object.values(formData).every((value) => value !== '');
+
+  const onSubmit = async () => {
+    try {
+      const res = await createGuild({
+        title: formData.title,
+        body: formData.body,
+        guildIcon: formData.icon,
+        autoJoin: false,
+        farmType: formData.background,
+        personaId: selectPersona,
+      });
+      router.push(`/guild/${res.id}`);
+    } catch (error) {}
+  };
 
   return (
-    <Flex flexDirection="column" gap="24px">
-      <div>
-        <p className={headingStyle}>Guild info</p>
-        <TextField placeholder="Type guild name" className={css({ mb: '6px' })} />
-        <TextArea placeholder="Type guild description" />
-      </div>
-      <div>
-        <p className={headingStyle}>Guild thumbnail</p>
-        <Flex gap="6px">
-          {icons.icons.map((icon) => (
-            <img src={icon} className={itemStyle} width={70} height={70} key={icon} alt={icon} />
-          ))}
-        </Flex>
-      </div>
-      <div>
-        <p className={headingStyle}>Guild background</p>
-        <Flex gap="6px">
-          {backgrounds.backgrounds.map((background) => (
-            <img
-              src={getBackgroundImage(background)}
-              className={itemStyle}
-              width={284}
-              height={124}
-              key={background}
-              alt={background}
-            />
-          ))}
-        </Flex>
-      </div>
-    </Flex>
+    <>
+      {step === 'guild-info' && (
+        <>
+          <GuildCreateForm formData={formData} onDataChange={onChange} />
+          <Button mx="auto" disabled={!isValid} onClick={() => setStep('guild-persona')}>
+            Create / 100,000P
+          </Button>
+        </>
+      )}
+      {step === 'guild-persona' && (
+        <>
+          <SelectPersonaList
+            selectPersona={selectPersona ? [selectPersona] : []}
+            onSelectPersona={(persona) => setSelectPersona(persona.id)}
+          />
+          <Button mx="auto" disabled={!selectPersona} onClick={onSubmit}>
+            Done
+          </Button>
+        </>
+      )}
+    </>
   );
 }
-
-const headingStyle = css({
-  textStyle: 'glyph14.bold',
-  mb: 2,
-});
-
-const itemStyle = css({
-  borderRadius: '8px',
-});
-
-const itemSelectedStyle = css({
-  border: '1.5px solid',
-  borderColor: 'white.white_90',
-});
