@@ -2,11 +2,12 @@ import Image from 'next/image';
 import { css } from '_panda/css';
 import { flex, grid } from '_panda/patterns';
 import type { FilterType } from '@gitanimals/api';
-import { generateRandomKey, searchGuild } from '@gitanimals/api';
+import { generateRandomKey, getAllJoinGuilds, searchGuild } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 import { getNewUrl } from '@gitanimals/util-common';
 
 import { PaginationServer } from '@/components/Pagination/PaginationServer';
+import { redirect } from '@/i18n/routing';
 
 import { GuildCard } from './(components)/GuildCard';
 import { GuildSearch } from './(components)/GuildSearch';
@@ -14,18 +15,28 @@ import { SortSelect } from './(components)/SortSelect';
 
 const GUILD_PAGE_URL = '/guild';
 
-export default async function GuildPage({
-  searchParams,
-}: {
+interface GuildPageProps {
   searchParams: {
     page?: string;
     rd?: string;
     filter?: FilterType;
     text?: string;
   };
-}) {
-  const randomId = searchParams.rd ? Number(searchParams.rd) : generateRandomKey();
+}
 
+export default async function GuildPage({ searchParams }: GuildPageProps) {
+  const allJoinGuilds = await getAllJoinGuilds();
+
+  if (allJoinGuilds.guilds.length === 0) {
+    return <GuildMain searchParams={searchParams} />;
+  }
+
+  const guildId = allJoinGuilds.guilds[0].id;
+  redirect(`/guild/${guildId}`);
+}
+
+async function GuildMain({ searchParams }: GuildPageProps) {
+  const randomId = searchParams.rd ? Number(searchParams.rd) : generateRandomKey();
   const data = await searchGuild({
     key: randomId,
     filter: searchParams.filter ?? 'RANDOM',

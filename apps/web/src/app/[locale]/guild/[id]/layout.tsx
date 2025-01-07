@@ -4,7 +4,7 @@ import { css } from '_panda/css';
 export default function GuildLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      {children}
+      <div className={containerStyle}>{children}</div>
       <div className={bottomBgStyle}>
         <Image src="/guild/guild-bg-bottom.webp" className="bg-bottom" alt="bg-bottom" width={3600} height={228} />
         <Image
@@ -18,6 +18,17 @@ export default function GuildLayout({ children }: { children: React.ReactNode })
     </>
   );
 }
+
+const containerStyle = css({
+  position: 'relative',
+  width: '100%',
+  maxW: '880px',
+  m: 'auto',
+  minH: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+});
 
 const bottomBgStyle = css({
   position: 'absolute',
