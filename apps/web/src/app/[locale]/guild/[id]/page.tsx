@@ -6,6 +6,7 @@ import { getGuildById } from '@gitanimals/api';
 import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
 import { UsersRoundIcon } from 'lucide-react';
 
+import { GitanimalsGuild } from '@/components/Gitanimals';
 import { GuildMemeberSlider } from '@/components/Guild/MemeberSlider';
 import { getPersonaImage } from '@/utils/image';
 
@@ -43,7 +44,7 @@ export default async function GuildPage({ params }: { params: { id: string } }) 
         </div>
       </div>
       <Box aspectRatio="1/0.5" width="100%" bg="white.white_50">
-        farm type
+        <GitanimalsGuild guildId={data.id} />
       </Box>
     </div>
   );

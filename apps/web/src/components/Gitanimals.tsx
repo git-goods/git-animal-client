@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable @next/next/no-img-element */
 
 import { useClientUser } from '@/utils/clientAuth';
@@ -13,7 +15,7 @@ export function GitanimalsLine({ petId, sizes = [600, 120] }: GitanimalsLineProp
   const pet = petId ? `?pet-id=${petId}` : '';
 
   return (
-    <a href="https://github.com/devxb/gitanimals">
+    <a href="https://www.gitanimals.org/">
       <img
         src={`https://render.gitanimals.org/lines/${username}${pet}`}
         width={sizes[0]}
@@ -32,7 +34,7 @@ export const getGitanimalsLineString = ({
   const pet = petId ? `?pet-id=${petId}` : '';
 
   return `
-<a href="https://github.com/devxb/gitanimals">
+<a href="https://www.gitanimals.org/">
   <img
     src="https://render.gitanimals.org/lines/${username}${pet}"
     width="${sizes[0]}"
@@ -56,7 +58,7 @@ interface FarmImageProps extends GitanimalsFarmProps {
 export function GitanimalsFarm({ sizes = [600, 300], imageKey }: FarmImageProps) {
   const { name: username } = useClientUser();
   return (
-    <a href="https://github.com/devxb/gitanimals">
+    <a href="https://www.gitanimals.org/">
       <img
         src={`https://render.gitanimals.org/farms/${username}?${imageKey}`}
         width={sizes[0]}
@@ -75,11 +77,26 @@ interface FarmStringProps extends GitanimalsFarmProps {
 }
 
 export const getGitanimalsFarmString = ({ username, sizes = [600, 300] }: FarmStringProps) => {
-  return `<a href="https://github.com/devxb/gitanimals">
+  return `<a href="https://www.gitanimals.org/">
 <img
   src="https://render.gitanimals.org/farms/${username}"
   width="${sizes[0]}"
   height="${sizes[1]}"
 />
 </a>`;
+};
+
+export function GitanimalsGuild({ guildId }: { guildId: string }) {
+  return <img src={`https://render.gitanimals.org/guilds/${guildId}/draw`} alt="gitanimals" />;
+}
+
+export const getGuildString = ({ guildId, sizes = [600, 300] }: { guildId: string } & GitanimalsFarmProps) => {
+  return `<a href="https://www.gitanimals.org/">
+      <img
+        src="https://render.gitanimals.org/guilds/${guildId}/draw"
+        width="${sizes[0]}"
+        height="${sizes[1]}"
+        alt="gitanimals"
+      />
+    </a>`;
 };
