@@ -3,8 +3,14 @@ import { css } from '_panda/css';
 import { Box, Flex } from '_panda/jsx';
 import { flex } from '_panda/patterns';
 import { getGuildById } from '@gitanimals/api';
-import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
-import { UsersRoundIcon } from 'lucide-react';
+import {
+  BannerPetSelectMedium,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@gitanimals/ui-panda';
+import { CatIcon, EllipsisVerticalIcon, LinkIcon, SettingsIcon, UsersRoundIcon } from 'lucide-react';
 
 import { GitanimalsGuild } from '@/components/Gitanimals';
 import { GuildMemeberSlider } from '@/components/Guild/MemeberSlider';
@@ -19,6 +25,32 @@ export default async function GuildPage({ params }: { params: { id: string } }) 
         <div className={titleStyle}>
           <img src={data.guildIcon} width={40} height={40} alt={data.title} />
           <h2>{data.title}</h2>
+
+          <div>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <EllipsisVerticalIcon size={24} color="#FFFFFFBF" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" sideOffset={10} alignOffset={-4}>
+                <DropdownMenuItem>
+                  <SettingsIcon color="#FFFFFF80" size={18} />
+                  Guild setting
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <CatIcon color="#FFFFFF80" size={18} />
+                  Edit profile pet
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <UsersRoundIcon color="#FFFFFF80" size={18} />
+                  Manage members
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <LinkIcon color="#FFFFFF80" size={18} />
+                  Send invite message
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
         <div className={bodyStyle}>{data.body}</div>
       </div>
@@ -85,6 +117,9 @@ const titleStyle = flex({
   color: 'white.white_100',
   '& img': {
     borderRadius: '8px',
+  },
+  '& h2': {
+    flex: 1,
   },
 });
 
