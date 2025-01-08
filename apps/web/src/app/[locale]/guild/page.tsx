@@ -8,6 +8,7 @@ import { getNewUrl } from '@gitanimals/util-common';
 
 import { PaginationServer } from '@/components/Pagination/PaginationServer';
 import { redirect } from '@/i18n/routing';
+import { Link } from '@/i18n/routing';
 
 import { GuildCard } from './(components)/GuildCard';
 import { GuildSearch } from './(components)/GuildSearch';
@@ -54,10 +55,11 @@ async function GuildMain({ searchParams }: GuildPageProps) {
         <GuildSearch />
 
         <SortSelect />
-        {/* TODO: create guild */}
-        <Button minWidth="126px" size="m" px="20px">
-          Create Guild
-        </Button>
+        <Link href="/guild/create">
+          <Button minWidth="126px" size="m" px="20px">
+            Create Guild
+          </Button>
+        </Link>
       </div>
       <div className={cardListStyle}>
         {data.guilds.length === 0 && <EmptyGuild />}

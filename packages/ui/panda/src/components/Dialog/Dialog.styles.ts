@@ -1,4 +1,4 @@
-import { cva, RecipeVariantProps } from '_panda/css';
+import { css, cva, RecipeVariantProps } from '_panda/css';
 
 export const dialogContentCva = cva({
   base: {
@@ -74,3 +74,15 @@ export const dialogContentCva = cva({
 });
 
 export type DialogContentVariants = RecipeVariantProps<typeof dialogContentCva>;
+
+export const dialogTitleStyle = css({
+  textStyle: 'glyph48.bold',
+  color: 'white.white_100',
+  textAlign: 'center',
+  '@media (max-width: 1200px)': {
+    textStyle: 'glyph32.bold',
+  },
+  _mobile: {
+    textStyle: 'glyph24.bold',
+  },
+});

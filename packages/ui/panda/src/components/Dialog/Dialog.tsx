@@ -7,7 +7,7 @@ import { createStyleContext } from '@shadow-panda/style-context';
 import { styled } from '_panda/jsx';
 import { css, cx } from '_panda/css';
 import { dialog } from '_panda/recipes';
-import { dialogContentCva, DialogContentVariants } from './Dialog.styles.ts';
+import { dialogContentCva, DialogContentVariants, dialogTitleStyle } from './Dialog.styles';
 
 const { withProvider, withContext } = createStyleContext(dialog);
 
@@ -45,22 +45,10 @@ const Title = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ children, ...props }, ref) => {
   return (
-    <DialogPrimitive.Title ref={ref} {...props} className={cx('dialog-title', titleStyle, props.className)}>
+    <DialogPrimitive.Title ref={ref} {...props} className={cx('dialog-title', dialogTitleStyle, props.className)}>
       {children}
     </DialogPrimitive.Title>
   );
-});
-
-const titleStyle = css({
-  textStyle: 'glyph48.bold',
-  color: 'white.white_100',
-  textAlign: 'center',
-  '@media (max-width: 1200px)': {
-    textStyle: 'glyph32.bold',
-  },
-  _mobile: {
-    textStyle: 'glyph24.bold',
-  },
 });
 
 Title.displayName = DialogPrimitive.Title.displayName;
