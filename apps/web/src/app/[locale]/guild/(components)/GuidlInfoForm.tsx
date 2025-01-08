@@ -1,56 +1,44 @@
 /* eslint-disable @next/next/no-img-element */
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
-import { Button, TextField } from '@gitanimals/ui-panda';
+import { getGuildBackgrounds, getGuildIcons } from '@gitanimals/api';
+import { TextArea, TextField } from '@gitanimals/ui-panda';
 
-import { createGuildAction } from '@/serverActions/guild';
+import { getBackgroundImage } from '@/utils/image';
+
+import { SelecableFormItem, SelecableFormItemOption } from './SelecableFormItem';
 
 export interface GuildInfoFormProps {}
 
-export function GuildInfoForm() {
-  //   const { data: icons } = useQuery(guildQueries.getGuildIconsOptions());
-  //   const { data: backgrounds } = useQuery(guildQueries.getGuildBackgroundsOptions());
-
-  const icons = ['icon1', 'icon2', 'icon3'];
+export async function GuildInfoForm(props: GuildInfoFormProps) {
+  const icons = await getGuildIcons();
+  const backgrounds = await getGuildBackgrounds();
 
   return (
-    <form action={createGuildAction}>
-      <Flex flexDirection="column" gap="24px">
-        <div>
-          <p className={headingStyle}>Guild info</p>
-          <TextField
-            name="name"
-            placeholder="Type guild name"
-            className={css({ mb: '6px' })}
-            // onChange={(e) => onDataChange('title', e.target.value)}
-          />
-          {/* <TextArea placeholder="Type guild description" onChange={(e) => onDataChange('body', e.target.value)} /> */}
-        </div>
-        <div>
-          <p className={headingStyle}>Guild thumbnail</p>
+    <Flex flexDirection="column" gap="24px">
+      <div>
+        <p className={headingStyle}>Guild info</p>
+        <TextField name="name" placeholder="Type guild name" className={css({ mb: '6px' })} />
+        <TextArea placeholder="Type guild description" name="description" />
+      </div>
+      <div>
+        <p className={headingStyle}>Guild thumbnail</p>
+        <SelecableFormItem name="icon">
           <Flex gap="6px">
-            {icons?.map((icon) => (
-              //   <button onClick={() => onDataChange('icon', icon)} key={icon}>
-              <img
-                src={icon}
-                className={itemStyle}
-                width={70}
-                height={70}
-                key={icon}
-                alt={icon}
-                // style={{
-                //   border: formData.icon === icon ? '1.5px solid' : 'none',
-                // }}
-              />
-              //   </button>
+            {icons.map((icon) => (
+              <SelecableFormItemOption value={icon} key={icon}>
+                <img src={icon} className={itemStyle} width={70} height={70} alt={icon} />
+              </SelecableFormItemOption>
             ))}
           </Flex>
-        </div>
-        {/* <div>
-          <p className={headingStyle}>Guild background</p>
+        </SelecableFormItem>
+      </div>
+      <div>
+        <p className={headingStyle}>Guild background</p>
+        <SelecableFormItem name="background">
           <Flex gap="6px">
             {backgrounds?.map((background) => (
-              <button onClick={() => onDataChange('background', background)} key={background}>
+              <SelecableFormItemOption value={background} key={background}>
                 <img
                   src={getBackgroundImage(background)}
                   className={itemStyle}
@@ -58,17 +46,13 @@ export function GuildInfoForm() {
                   height={124}
                   key={background}
                   alt={background}
-                  style={{
-                    border: formData.background === background ? '1.5px solid' : 'none',
-                  }}
                 />
-              </button>
+              </SelecableFormItemOption>
             ))}
           </Flex>
-        </div> */}
-        <Button type="submit">Create Guild</Button>
-      </Flex>
-    </form>
+        </SelecableFormItem>
+      </div>
+    </Flex>
   );
 }
 
@@ -80,4 +64,8 @@ const headingStyle = css({
 const itemStyle = css({
   borderColor: 'white.white_90',
   borderRadius: '8px',
+  _groupActive: {
+    border: '1.5px solid',
+    borderColor: 'white.white_90',
+  },
 });
