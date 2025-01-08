@@ -14,6 +14,7 @@ import { CatIcon, EllipsisVerticalIcon, LinkIcon, SettingsIcon, UsersRoundIcon }
 
 import { GitanimalsGuild } from '@/components/Gitanimals';
 import { GuildMemeberSlider } from '@/components/Guild/MemeberSlider';
+import { Link } from '@/i18n/routing';
 import { getPersonaImage } from '@/utils/image';
 
 export default async function GuildPage({ params }: { params: { id: string } }) {
@@ -32,10 +33,12 @@ export default async function GuildPage({ params }: { params: { id: string } }) 
                 <EllipsisVerticalIcon size={24} color="#FFFFFFBF" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" sideOffset={10} alignOffset={-4}>
-                <DropdownMenuItem>
-                  <SettingsIcon color="#FFFFFF80" size={18} />
-                  Guild setting
-                </DropdownMenuItem>
+                <Link href={`/guild/${params.id}/setting`}>
+                  <DropdownMenuItem>
+                    <SettingsIcon color="#FFFFFF80" size={18} />
+                    Guild setting
+                  </DropdownMenuItem>
+                </Link>
                 <DropdownMenuItem>
                   <CatIcon color="#FFFFFF80" size={18} />
                   Edit profile pet

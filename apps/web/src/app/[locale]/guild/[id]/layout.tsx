@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { css } from '_panda/css';
 
-export default function GuildLayout({ children }: { children: React.ReactNode }) {
+export default function GuildLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
   return (
     <>
       <div className={bottomBgStyle}>
@@ -15,6 +15,7 @@ export default function GuildLayout({ children }: { children: React.ReactNode })
         />
       </div>
       <div className={containerStyle}>{children}</div>
+      {modal}
     </>
   );
 }
