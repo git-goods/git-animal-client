@@ -53,13 +53,13 @@ const Title = React.forwardRef<
 
 Title.displayName = DialogPrimitive.Title.displayName;
 
-const DialogRoot = withProvider(styled(DialogPrimitive.Root), 'root');
-const DialogTrigger = withContext(styled(DialogPrimitive.Trigger), 'trigger');
-const DialogContent = withContext(styled(Content), 'content');
-const DialogHeader = withContext(styled('div'), 'header');
-const DialogFooter = withContext(styled('div'), 'footer');
-const DialogTitle = withContext(styled(Title), 'title');
-const DialogDescription = withContext(styled(DialogPrimitive.Description), 'description');
+export const DialogRoot = withProvider(styled(DialogPrimitive.Root), 'root');
+export const DialogTrigger = withContext(styled(DialogPrimitive.Trigger), 'trigger');
+export const DialogContent = withContext(styled(Content), 'content');
+export const DialogHeader = withContext(styled('div'), 'header');
+export const DialogFooter = withContext(styled('div'), 'footer');
+export const DialogTitle = withContext(styled(Title), 'title');
+export const DialogDescription = withContext(styled(DialogPrimitive.Description), 'description');
 
 const Dialog = Object.assign(DialogRoot, {
   Root: DialogRoot,
