@@ -1,4 +1,4 @@
-import { getGuildById, getUser } from '@gitanimals/api';
+import { checkIsLeader } from '@gitanimals/api';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@gitanimals/ui-panda';
 import { CatIcon, EllipsisVerticalIcon, LinkIcon, SettingsIcon, UsersRoundIcon } from 'lucide-react';
 
@@ -9,10 +9,7 @@ import { Link } from '@/i18n/routing';
  * 현재는 모두 길드장만 볼 수 있음
  */
 export async function MoreMenu({ guildId }: { guildId: string }) {
-  const data = await getGuildById({ guildId: guildId });
-  const user = await getUser();
-
-  const isLeader = data.leader.userId === user.id;
+  const isLeader = await checkIsLeader(guildId);
 
   if (!isLeader) return null;
 
