@@ -1,4 +1,5 @@
 import { checkIsLeader, getGuildBackgrounds, getGuildById, getGuildIcons } from '@gitanimals/api';
+import { DialogTitle } from '@gitanimals/ui-panda';
 
 import { redirect } from '@/i18n/routing';
 
@@ -15,5 +16,10 @@ export default async function GuildSettingPage({ params }: { params: { id: strin
     redirect(`/guild/${params.id}`);
   }
 
-  return <GuildSetting icons={icons} backgrounds={backgrounds} guildId={params.id} initialData={data} />;
+  return (
+    <>
+      <DialogTitle>Guild Setting</DialogTitle>
+      <GuildSetting icons={icons} backgrounds={backgrounds} guildId={params.id} initialData={data} />;
+    </>
+  );
 }

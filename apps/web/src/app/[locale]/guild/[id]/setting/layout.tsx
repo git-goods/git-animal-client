@@ -1,7 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
-import { dialogTitleStyle } from '@gitanimals/ui-panda';
 
 export default function GuildCreatePage({ children }: PropsWithChildren) {
   return (
@@ -16,7 +15,6 @@ export default function GuildCreatePage({ children }: PropsWithChildren) {
           color: 'white.white',
         })}
       >
-        <h2 className={dialogTitleStyle}>Guild Setting</h2>
         <Flex flexDirection="column" gap="24px">
           {children}
         </Flex>
