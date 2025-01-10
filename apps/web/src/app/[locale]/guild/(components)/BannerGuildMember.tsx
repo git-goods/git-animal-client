@@ -30,6 +30,8 @@ const bannerStyle = css({
   flexDirection: 'column',
   alignItems: 'center',
   gap: '12px',
+  backgroundColor: 'white.white_10',
+  borderRadius: '8px',
 });
 
 const nameStyle = css({

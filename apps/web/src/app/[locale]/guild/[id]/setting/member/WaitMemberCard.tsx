@@ -1,7 +1,7 @@
 'use client';
 
 import { Flex } from '_panda/jsx';
-import { acceptJoinGuild, type GuildMember } from '@gitanimals/api';
+import { acceptJoinGuild, denyJoinGuild, type GuildMember } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 
 import { getPersonaImage } from '@/utils/image';
@@ -13,6 +13,10 @@ export function WaitMemberCard({ member, guildId }: { member: GuildMember; guild
     await acceptJoinGuild({ guildId: guildId, userId: member.id });
   };
 
+  const denyMember = async () => {
+    await denyJoinGuild({ guildId: guildId, userId: member.id });
+  };
+
   return (
     <BannerGuildMember
       key={member.id}
@@ -20,9 +24,11 @@ export function WaitMemberCard({ member, guildId }: { member: GuildMember; guild
       name={member.name}
       count={member.contributions}
       bottomElement={
-        <Flex>
+        <Flex gap="2">
+          <Button variant="secondary" onClick={denyMember}>
+            Deny
+          </Button>
           <Button onClick={acceptMember}>Accept</Button>
-          {/* <Button formAction={rejectMember}>Reject</Button> */}
         </Flex>
       }
     />
