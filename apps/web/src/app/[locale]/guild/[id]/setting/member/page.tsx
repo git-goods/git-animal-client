@@ -1,12 +1,11 @@
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { getGuildById, kickMemberFromGuild } from '@gitanimals/api';
 import { Button, dialogTitleStyle } from '@gitanimals/ui-panda';
 
 import { getPersonaImage } from '@/utils/image';
 
-import { BannerGuildMember } from '../../../(components)/BannerGuildMember';
-
+import { BannerGuildMember } from './BannerGuildMember';
 import { WaitMemberCard } from './WaitMemberCard';
 
 export default async function GuildMemberSetting({ params }: { params: { id: string } }) {
@@ -21,9 +20,9 @@ export default async function GuildMemberSetting({ params }: { params: { id: str
 
   return (
     <div>
-      <h2 className={dialogTitleStyle}>Manage members</h2>
+      <h2 className={cx(dialogTitleStyle, css({ mb: '40px' }))}>Manage members</h2>
 
-      <h3 className={subHeadingStyle}>Request</h3>
+      <h3 className={cx(subHeadingStyle, css({ mb: '24px' }))}>Request</h3>
       {guild?.waitMembers.length === 0 ? (
         <p className={css({ textAlign: 'center', pt: '40px', color: 'white.white_50' })}>No members</p>
       ) : (

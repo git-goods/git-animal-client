@@ -6,7 +6,7 @@ import { Button } from '@gitanimals/ui-panda';
 
 import { getPersonaImage } from '@/utils/image';
 
-import { BannerGuildMember } from '../../../(components)/BannerGuildMember';
+import { BannerGuildMember } from './BannerGuildMember';
 
 export function WaitMemberCard({ member, guildId }: { member: GuildMember; guildId: string }) {
   const acceptMember = async () => {
