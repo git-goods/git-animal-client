@@ -49,7 +49,7 @@ export const GuildDetail = ({ details }: { guildId: string; details: Guild }) =>
                   key={member.id}
                   name={member.name}
                   count={member.contributions}
-                  image={member.personaId}
+                  image={getPersonaImage(member.personaType)}
                 />
               </div>
             ))}
