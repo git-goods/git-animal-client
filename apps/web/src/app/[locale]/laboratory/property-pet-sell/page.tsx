@@ -48,11 +48,48 @@ const PersonaList = wrap
         onConfirm: () => onSell(ids),
       });
     };
+    const DropPetsResult = ({ success, errors }: { success: { givenPoint: number }[]; errors: unknown[] }) => {
+      const totalPrice = success.reduce((acc, curr) => acc + curr.givenPoint, 0);
+      const hasSuccess = success.length > 0;
+      const hasErrors = errors.length > 0;
+
+      if (hasSuccess && hasErrors) {
+        return (
+          <div>
+            <p>
+              {success.length}마리 판매 완료, {errors.length}마리 판매 실패
+            </p>
+            <p>총 판매 금액: {totalPrice}P</p>
+          </div>
+        );
+      }
+
+      if (hasSuccess) {
+        return (
+          <div>
+            <p>{success.length}마리 판매 완료</p>
+            <p>총 판매 금액: {totalPrice}P</p>
+          </div>
+        );
+      }
+
+      if (hasErrors) {
+        return (
+          <div>
+            <p>{errors.length}마리 판매 실패</p>
+          </div>
+        );
+      }
+
+      return (
+        <div>
+          <p>0마리 판매 완료, 0마리 판매 실패</p>
+        </div>
+      );
+    };
 
     const onSell = async (ids: string[]) => {
       const res = await dropPets({ personaIds: ids });
-
-      const totalPrice = res.success.reduce((acc, curr) => acc + curr.givenPoint, 0);
 
       trackEvent('laboratory', {
         type: '레벨, 타입 같은 펫 한번에 팔기',
@@ -62,14 +99,7 @@ const PersonaList = wrap
 
       showDialog({
         title: '펫 판매 완료',
-        description: (
-          <div>
-            <p>
-              {res.success.length}마리 판매 완료, {res.errors.length}마리 판매 실패
-            </p>
-            <p>총 판매 금액: {totalPrice}P</p>
-          </div>
-        ),
+        description: <DropPetsResult success={res.success} errors={res.errors} />,
       });
     };
 
