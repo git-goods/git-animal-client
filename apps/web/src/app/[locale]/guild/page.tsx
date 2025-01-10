@@ -5,8 +5,10 @@ import type { FilterType } from '@gitanimals/api';
 import { generateRandomKey, getAllJoinGuilds, searchGuild } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 import { getNewUrl } from '@gitanimals/util-common';
+import { ChevronLeftIcon } from 'lucide-react';
 
 import { PaginationServer } from '@/components/Pagination/PaginationServer';
+import { BackTrigger } from '@/components/Trigger';
 import { Link, redirect } from '@/i18n/routing';
 
 import { GuildCard } from './_components/GuildCard';
@@ -21,11 +23,18 @@ interface GuildPageProps {
     rd?: string;
     filter?: FilterType;
     text?: string;
+    search?: string;
   };
 }
 
 export default async function GuildPage({ searchParams }: GuildPageProps) {
+  const isSearchMode = Boolean(searchParams.search);
+
   const allJoinGuilds = await getAllJoinGuilds();
+
+  if (isSearchMode) {
+    return <GuildMain searchParams={searchParams} isSearchMode />;
+  }
 
   if (allJoinGuilds.guilds.length === 0) {
     return <GuildMain searchParams={searchParams} />;
@@ -35,7 +44,17 @@ export default async function GuildPage({ searchParams }: GuildPageProps) {
   redirect(`/guild/${guildId}`);
 }
 
-async function GuildMain({ searchParams }: GuildPageProps) {
+interface GuildMainProps {
+  searchParams: {
+    page?: string;
+    rd?: string;
+    filter?: FilterType;
+    text?: string;
+  };
+  isSearchMode?: boolean;
+}
+
+async function GuildMain({ searchParams, isSearchMode }: GuildMainProps) {
   const randomId = searchParams.rd ? Number(searchParams.rd) : generateRandomKey();
   const data = await searchGuild({
     key: randomId,
@@ -51,6 +70,11 @@ async function GuildMain({ searchParams }: GuildPageProps) {
   return (
     <div className={containerStyle}>
       <div className={topStyle}>
+        {isSearchMode && (
+          <BackTrigger>
+            <ChevronLeftIcon size="28px" color="#FFFFFF80" />
+          </BackTrigger>
+        )}
         <GuildSearch />
 
         <SortSelect />
