@@ -13,6 +13,7 @@ export default function GuildCreatePage({ children }: PropsWithChildren) {
           p: '40px',
           borderRadius: '16px',
           color: 'white.white',
+          w: '100%',
         })}
       >
         <Flex flexDirection="column" gap="24px">

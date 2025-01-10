@@ -1,6 +1,7 @@
+import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { getGuildById } from '@gitanimals/api';
-import { Button, DialogTitle } from '@gitanimals/ui-panda';
+import { Button, dialogTitleStyle } from '@gitanimals/ui-panda';
 
 import { getPersonaImage } from '@/utils/image';
 
@@ -12,18 +13,22 @@ export default async function GuildMemberSetting({ params }: { params: { id: str
 
   return (
     <div>
-      <DialogTitle>Manage members</DialogTitle>
-      <Flex gap="1" flexWrap="wrap">
-        {guild.members.map((member) => (
-          <BannerGuildMember
-            key={member.id}
-            image={getPersonaImage(member.personaType)}
-            name={member.name}
-            count={member.contributions}
-            bottomElement={<Button>Remove</Button>}
-          />
-        ))}
-      </Flex>
+      <h2 className={dialogTitleStyle}>Manage members</h2>
+      {guild?.members.length === 0 ? (
+        <p className={css({ textAlign: 'center', pt: '40px', color: 'white.white_50' })}>No members</p>
+      ) : (
+        <Flex gap="1" flexWrap="wrap">
+          {guild.members.map((member) => (
+            <BannerGuildMember
+              key={member.id}
+              image={getPersonaImage(member.personaType)}
+              name={member.name}
+              count={member.contributions}
+              bottomElement={<Button>Remove</Button>}
+            />
+          ))}
+        </Flex>
+      )}
     </div>
   );
 }
