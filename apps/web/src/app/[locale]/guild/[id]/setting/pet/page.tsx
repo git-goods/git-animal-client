@@ -16,7 +16,6 @@ export default function GuildSettingPetPage() {
   const guildId = id as string;
 
   const onSubmit = async (selectPersona: string) => {
-    // router.push(`/guild/${guildId}/setting/pet`);
     await changeMainPet({
       guildId,
       personaId: selectPersona,
