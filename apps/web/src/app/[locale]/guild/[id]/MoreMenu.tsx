@@ -1,12 +1,15 @@
 'use client';
 
+import { useParams } from 'next/navigation';
+import { leaveGuild } from '@gitanimals/api';
 import { guildQueries } from '@gitanimals/react-query';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { CatIcon, EllipsisVerticalIcon, LinkIcon, LogOutIcon, SettingsIcon, UsersRoundIcon } from 'lucide-react';
 
-import { Link } from '@/i18n/routing';
+import { useDialog } from '@/components/Global/useDialog';
+import { Link, useRouter } from '@/i18n/routing';
 import { useClientUser } from '@/utils/clientAuth';
 
 interface MenuType {
@@ -29,6 +32,8 @@ export const MoreMenu = wrap
     const { id } = useClientUser();
     const { data } = useSuspenseQuery(guildQueries.getGuildByIdOptions(guildId));
     const isLeader = data.leader.userId === id;
+
+    const leaveGuildAction = useLeaveGuild();
 
     const MENU: MenuType[] = [
       {
@@ -60,9 +65,7 @@ export const MoreMenu = wrap
       {
         title: 'Leave guilds',
         icon: LogOutIcon,
-        onClick: () => {
-          console.log('send invite message');
-        },
+        onClick: leaveGuildAction,
         access: ['member'],
       },
     ];
@@ -99,3 +102,29 @@ export const MoreMenu = wrap
       </div>
     );
   });
+
+const useLeaveGuild = () => {
+  const { id: guildId } = useParams();
+  const router = useRouter();
+
+  const { showDialog } = useDialog();
+
+  const action = () => {
+    showDialog({
+      title: 'Are you sure you want to leave the guild?',
+      onConfirm: submitLeaveGuild,
+      confirmText: 'Leave',
+      cancelText: 'Cancel',
+    });
+  };
+
+  const submitLeaveGuild = async () => {
+    if (!guildId) return;
+    if (typeof guildId !== 'string') return;
+
+    await leaveGuild({ guildId });
+    router.push('/guild');
+  };
+
+  return action;
+};

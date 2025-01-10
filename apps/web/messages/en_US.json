@@ -31,7 +31,9 @@
     "prepare": "Prepare",
     "confirm": "Confirm",
     "close": "Close",
-    "processing": "Processing..."
+    "processing": "Processing...",
+    "leave": "Leave",
+    "cancel": "Cancel"
   },
   "Gotcha": {
     "pet-gotcha-desc": "Draw a S+ Grade pet for 1,000 points",

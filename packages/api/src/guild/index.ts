@@ -10,3 +10,4 @@ export * from './updateGuild';
 export * from './kickMemberFromGuild';
 export * from './acceptJoinGuild';
 export * from './denyJoinGuild';
+export * from './leaveGuild';
