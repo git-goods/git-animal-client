@@ -7,3 +7,4 @@ export * from './getGuildIcons';
 export * from './getGuildBackgrounds';
 export * from './createGuild';
 export * from './updateGuild';
+export * from './kickMemberFromGuild';

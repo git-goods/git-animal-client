@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import { signOut } from 'next-auth/react';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { ErrorPage } from '@/components/Error/ErrorPage';
@@ -35,7 +34,7 @@ Error Stack: ${error.stack}
   const router = useRouter();
 
   const onClickRetry = () => {
-    signOut();
+    // signOut();
     reset();
     router.push('/');
   };

@@ -1,6 +1,6 @@
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
-import { getGuildById } from '@gitanimals/api';
+import { getGuildById, kickMemberFromGuild } from '@gitanimals/api';
 import { Button, dialogTitleStyle } from '@gitanimals/ui-panda';
 
 import { getPersonaImage } from '@/utils/image';
@@ -9,7 +9,13 @@ import { BannerGuildMember } from '../../../(components)/BannerGuildMember';
 
 export default async function GuildMemberSetting({ params }: { params: { id: string } }) {
   const guild = await getGuildById({ guildId: params.id });
-  console.log('guild: ', guild);
+
+  const removeMember = async (formData: FormData) => {
+    'use server';
+    const guildId = formData.get('guildId') as string;
+    const userId = formData.get('userId') as string;
+    await kickMemberFromGuild({ guildId, userId });
+  };
 
   return (
     <div>
@@ -19,13 +25,17 @@ export default async function GuildMemberSetting({ params }: { params: { id: str
       ) : (
         <Flex gap="1" flexWrap="wrap">
           {guild.members.map((member) => (
-            <BannerGuildMember
-              key={member.id}
-              image={getPersonaImage(member.personaType)}
-              name={member.name}
-              count={member.contributions}
-              bottomElement={<Button>Remove</Button>}
-            />
+            <form key={member.id} action={removeMember}>
+              <input type="hidden" name="guildId" value={guild.id} />
+              <input type="hidden" name="userId" value={member.id} />
+              <BannerGuildMember
+                key={member.id}
+                image={getPersonaImage(member.personaType)}
+                name={member.name}
+                count={member.contributions}
+                bottomElement={<Button>Remove</Button>}
+              />
+            </form>
           ))}
         </Flex>
       )}
