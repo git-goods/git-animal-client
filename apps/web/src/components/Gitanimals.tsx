@@ -2,6 +2,12 @@
 
 import { useClientUser } from '@/utils/clientAuth';
 
+const GITANIMALS_URL = 'https://www.gitanimals.org/en_US';
+
+const getLink = (props: { username: string; type: 'farm' | 'line' }) => {
+  return `${GITANIMALS_URL}?utm_medium=image&utm_source=${props.username}&utm_content=${props.type}`;
+};
+
 interface GitanimalsLineProps {
   sizes?: [number, number];
   petId?: string | null;
@@ -13,7 +19,7 @@ export function GitanimalsLine({ petId, sizes = [600, 120] }: GitanimalsLineProp
   const pet = petId ? `?pet-id=${petId}` : '';
 
   return (
-    <a href="https://github.com/devxb/gitanimals">
+    <a href={getLink({ username, type: 'line' })}>
       <img
         src={`https://render.gitanimals.org/lines/${username}${pet}`}
         width={sizes[0]}
@@ -32,7 +38,7 @@ export const getGitanimalsLineString = ({
   const pet = petId ? `?pet-id=${petId}` : '';
 
   return `
-<a href="https://github.com/devxb/gitanimals">
+<a href="${getLink({ username, type: 'line' })}">
   <img
     src="https://render.gitanimals.org/lines/${username}${pet}"
     width="${sizes[0]}"
@@ -56,7 +62,7 @@ interface FarmImageProps extends GitanimalsFarmProps {
 export function GitanimalsFarm({ sizes = [600, 300], imageKey }: FarmImageProps) {
   const { name: username } = useClientUser();
   return (
-    <a href="https://github.com/devxb/gitanimals">
+    <a href={getLink({ username, type: 'farm' })}>
       <img
         src={`https://render.gitanimals.org/farms/${username}?${imageKey}`}
         width={sizes[0]}
@@ -75,7 +81,7 @@ interface FarmStringProps extends GitanimalsFarmProps {
 }
 
 export const getGitanimalsFarmString = ({ username, sizes = [600, 300] }: FarmStringProps) => {
-  return `<a href="https://github.com/devxb/gitanimals">
+  return `<a href="${getLink({ username, type: 'farm' })}">
 <img
   src="https://render.gitanimals.org/farms/${username}"
   width="${sizes[0]}"
