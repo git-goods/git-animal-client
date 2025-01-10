@@ -34,9 +34,8 @@ Error Stack: ${error.stack}
   const router = useRouter();
 
   const onClickRetry = () => {
-    // signOut();
     reset();
-    router.push('/');
+    router.refresh();
   };
 
   return (

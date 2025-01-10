@@ -1,7 +1,8 @@
-import { css, cx } from '_panda/css';
+import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { getGuildById } from '@gitanimals/api';
-import { dialogTitleStyle } from '@gitanimals/ui-panda';
+
+import { GuildModalPageTitle } from '../../../_components/GuildModalPageLayout';
 
 import { MemberCard } from './MemberCard';
 import { WaitMemberCard } from './WaitMemberCard';
@@ -11,7 +12,7 @@ export default async function GuildMemberSetting({ params }: { params: { id: str
 
   return (
     <div className={css({ minH: 'calc(100vh - 300px)' })}>
-      <h2 className={cx(dialogTitleStyle, css({ mb: '40px' }))}>Manage members</h2>
+      <GuildModalPageTitle className={css({ mb: '40px' })}>Manage members</GuildModalPageTitle>
 
       {guild?.waitMembers.length === 0 ? null : (
         <>

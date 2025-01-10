@@ -2,16 +2,18 @@
 
 import { css } from '_panda/css';
 import { inboxQueries } from '@gitanimals/react-query';
+import { dialogTitleStyle } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useRouter } from '@/i18n/routing';
 import { joinGuildAction } from '@/serverActions/guild';
 
-import { GuildJoinPetSelectDialog } from '../../../(components)/GuildPetSelectDialog';
+import { GuildJoinPetSelectDialog } from '../../../_components/GuildPetSelectDialog';
 
 export default function GuildJoinPage({ params }: { params: { id: string } }) {
   const queryClient = useQueryClient();
   const router = useRouter();
+
   const submitJoinGuild = async (selectPersona: string) => {
     try {
       await joinGuildAction({
@@ -37,18 +39,6 @@ export default function GuildJoinPage({ params }: { params: { id: string } }) {
     </>
   );
 }
-
-const dialogTitleStyle = css({
-  textStyle: 'glyph48.bold',
-  color: 'white.white_100',
-  textAlign: 'center',
-  '@media (max-width: 1200px)': {
-    textStyle: 'glyph32.bold',
-  },
-  _mobile: {
-    textStyle: 'glyph24.bold',
-  },
-});
 
 const dialogDescriptionStyle = css({
   textStyle: 'glyph20.regular',

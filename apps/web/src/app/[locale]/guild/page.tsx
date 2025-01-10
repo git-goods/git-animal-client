@@ -9,9 +9,9 @@ import { getNewUrl } from '@gitanimals/util-common';
 import { PaginationServer } from '@/components/Pagination/PaginationServer';
 import { Link } from '@/i18n/routing';
 
-import { GuildCard } from './(components)/GuildCard';
-import { GuildSearch } from './(components)/GuildSearch';
-import { SortSelect } from './(components)/SortSelect';
+import { GuildCard } from './_components/GuildCard';
+import { GuildSearch } from './_components/GuildSearch';
+import { SortSelect } from './_components/SortSelect';
 
 const GUILD_PAGE_URL = '/guild';
 
