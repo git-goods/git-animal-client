@@ -10,7 +10,7 @@ export default async function GuildMemberSetting({ params }: { params: { id: str
   const guild = await getGuildById({ guildId: params.id });
 
   return (
-    <div>
+    <div className={css({ minH: 'calc(100vh - 300px)' })}>
       <h2 className={cx(dialogTitleStyle, css({ mb: '40px' }))}>Manage members</h2>
 
       {guild?.waitMembers.length === 0 ? null : (
