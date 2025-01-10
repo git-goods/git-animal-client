@@ -1,12 +1,12 @@
 'use client';
 
-import { memo, useMemo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { dropPets } from '@gitanimals/api/src/shop/dropPet';
 import { userQueries } from '@gitanimals/react-query/src/user';
-import { Button, LevelBanner } from '@gitanimals/ui-panda';
+import { Button, Dialog, LevelBanner } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 
@@ -34,10 +34,12 @@ const PersonaList = wrap
   .ErrorBoundary({ fallback: <div> </div> })
   .Suspense({ fallback: <></> })
   .on(function PersonaList() {
+    const t = useTranslations('Common');
     const queryClient = useQueryClient();
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
     const [sort, setSort] = useState<'level-asc' | 'level-desc' | 'count-asc' | 'count-desc'>('level-asc');
+    const [isSellComplete, setIsSellComplete] = useState<false | React.ReactNode>(false);
 
     const { showDialog } = useDialog();
 
@@ -60,17 +62,14 @@ const PersonaList = wrap
 
       queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
 
-      showDialog({
-        title: '펫 판매 완료',
-        description: (
-          <div>
-            <p>
-              {res.success.length}마리 판매 완료, {res.errors.length}마리 판매 실패
-            </p>
-            <p>총 판매 금액: {totalPrice}P</p>
-          </div>
-        ),
-      });
+      setIsSellComplete(
+        <div>
+          <p>
+            {res.success.length}마리 판매 완료, {res.errors.length === 0 ? '0' : `${res.errors.length}마리 판매 실패`}
+          </p>
+          <p>총 판매 금액: {totalPrice}P</p>
+        </div>,
+      );
     };
 
     // 레벨 오름차순 정렬
@@ -108,34 +107,47 @@ const PersonaList = wrap
     }, [data.personas, sort]);
 
     return (
-      <section className={sectionStyle}>
-        <Flex gap="8px">
-          <Button onClick={() => setSort('level-asc')} variant={sort === 'level-asc' ? 'primary' : 'secondary'}>
-            레벨 오름차순
-          </Button>
-          <Button onClick={() => setSort('level-desc')} variant={sort === 'level-desc' ? 'primary' : 'secondary'}>
-            레벨 내림차순
-          </Button>
-          <Button onClick={() => setSort('count-asc')} variant={sort === 'count-asc' ? 'primary' : 'secondary'}>
-            개수 오름차순
-          </Button>
-          <Button onClick={() => setSort('count-desc')} variant={sort === 'count-desc' ? 'primary' : 'secondary'}>
-            개수 내림차순
-          </Button>
-        </Flex>
-        <div className={flexOverflowStyle}>
-          {petList.map((petItem) => (
-            <div key={petItem.type + petItem.level}>
-              <MemoizedPersonaItem
-                type={petItem.type}
-                level={petItem.level}
-                onClick={() => onPetClick(petItem.ids)}
-                count={petItem.ids.length}
-              />
-            </div>
-          ))}
-        </div>
-      </section>
+      <>
+        <section className={sectionStyle}>
+          <Flex gap="8px">
+            <Button onClick={() => setSort('level-asc')} variant={sort === 'level-asc' ? 'primary' : 'secondary'}>
+              레벨 오름차순
+            </Button>
+            <Button onClick={() => setSort('level-desc')} variant={sort === 'level-desc' ? 'primary' : 'secondary'}>
+              레벨 내림차순
+            </Button>
+            <Button onClick={() => setSort('count-asc')} variant={sort === 'count-asc' ? 'primary' : 'secondary'}>
+              개수 오름차순
+            </Button>
+            <Button onClick={() => setSort('count-desc')} variant={sort === 'count-desc' ? 'primary' : 'secondary'}>
+              개수 내림차순
+            </Button>
+          </Flex>
+          <div className={flexOverflowStyle}>
+            {petList.map((petItem) => (
+              <div key={petItem.type + petItem.level}>
+                <MemoizedPersonaItem
+                  type={petItem.type}
+                  level={petItem.level}
+                  onClick={() => onPetClick(petItem.ids)}
+                  count={petItem.ids.length}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+        <Dialog open={Boolean(isSellComplete)} onOpenChange={() => setIsSellComplete(false)}>
+          <Dialog.Content>
+            <Dialog.Title className={titleStyle}>펫 판매 완료</Dialog.Title>
+            <Dialog.Description className={descriptionStyle}>{isSellComplete}</Dialog.Description>
+            <Flex gap="8px" justifyContent="flex-end" width="100%">
+              <Button onClick={() => setIsSellComplete(false)} variant="primary" size="m">
+                {t('close')}
+              </Button>
+            </Flex>
+          </Dialog.Content>
+        </Dialog>
+      </>
     );
   });
 
@@ -146,6 +158,18 @@ const sectionStyle = css({
   display: 'flex',
   flexDirection: 'column',
   gap: '16px',
+});
+
+const titleStyle = css({
+  textStyle: 'glyph20.regular',
+  textAlign: 'left',
+});
+
+const descriptionStyle = css({
+  textStyle: 'glyph16.regular',
+  textAlign: 'left',
+  color: 'white.white_75',
+  width: '100%',
 });
 
 const flexOverflowStyle = cx(
