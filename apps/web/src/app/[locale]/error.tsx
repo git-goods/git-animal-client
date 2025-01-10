@@ -18,6 +18,8 @@ const NOT_AUTHORIZED_MESSAGE = 'Request failed with status code 401';
 const KNOWN_ERROR_MESSAGES = [NOT_AUTHORIZED_MESSAGE];
 
 const GlobalErrorPage = ({ error, reset }: Props) => {
+  const router = useRouter();
+
   useEffect(() => {
     if (isDev) return;
     if (KNOWN_ERROR_MESSAGES.includes(error.message)) return;
@@ -31,11 +33,14 @@ Error Stack: ${error.stack}
 `);
   }, [error]);
 
-  const router = useRouter();
-
-  const onClickRetry = () => {
-    reset();
-    router.refresh();
+  const onClickRetry = async () => {
+    try {
+      reset();
+      router.refresh();
+      router.push(window.location.pathname);
+    } catch (e) {
+      console.error('Error during reset:', e);
+    }
   };
 
   return (

@@ -11,3 +11,4 @@ export * from './kickMemberFromGuild';
 export * from './acceptJoinGuild';
 export * from './denyJoinGuild';
 export * from './leaveGuild';
+export * from './changeMainPet';
