@@ -5,70 +5,63 @@ import { css, cx } from '_panda/css';
 import { Box, Flex } from '_panda/jsx';
 import { flex } from '_panda/patterns';
 import Flicking from '@egjs/react-flicking';
-import { guildQueries } from '@gitanimals/react-query';
+import type { Guild } from '@gitanimals/api';
 import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
-import { wrap } from '@suspensive/react';
-import { useSuspenseQuery } from '@tanstack/react-query';
 import { UsersRoundIcon } from 'lucide-react';
 
 import { getPersonaImage } from '@/utils/image';
 
-export const GuildDetail = wrap
-  .Suspense({ fallback: null })
-  .ErrorBoundary({ fallback: null })
-  .on(({ guildId }: { guildId: string }) => {
-    const { data } = useSuspenseQuery(guildQueries.getGuildByIdOptions(guildId));
-
-    return (
-      <>
-        <div>
-          <div className={titleStyle}>
-            <img src={data.guildIcon} width={40} height={40} alt={data.title} />
-            <h2>{data.title}</h2>
-          </div>
-          <div className={bodyStyle}>{data.body}</div>
+export const GuildDetail = ({ details }: { guildId: string; details: Guild }) => {
+  return (
+    <>
+      <div>
+        <div className={titleStyle}>
+          <img src={details.guildIcon} width={40} height={40} alt={details.title} />
+          <h2>{details.title}</h2>
         </div>
-        <div className={listStyle}>
-          <div className={leaderStyle}>
-            <p> Leader</p>
-            <BannerPetSelectMedium
-              name={data.leader.name}
-              count={data.leader.contributions}
-              image={getPersonaImage(data.leader.personaType)}
-              status="gradient"
-            />
-          </div>
-          <div className={membersStyle}>
-            <Flex mb="1" justifyContent="space-between">
-              <p>Members</p>
-              <Flex gap="6px" alignItems="center">
-                <UsersRoundIcon size={16} color="#FFFFFF80" />
-                <span>{data.members.length}/ 15</span>
-              </Flex>
+        <div className={bodyStyle}>{details.body}</div>
+      </div>
+      <div className={listStyle}>
+        <div className={leaderStyle}>
+          <p> Leader</p>
+          <BannerPetSelectMedium
+            name={details.leader.name}
+            count={details.leader.contributions}
+            image={getPersonaImage(details.leader.personaType)}
+            status="gradient"
+          />
+        </div>
+        <div className={membersStyle}>
+          <Flex mb="1" justifyContent="space-between">
+            <p>Members</p>
+            <Flex gap="6px" alignItems="center">
+              <UsersRoundIcon size={16} color="#FFFFFF80" />
+              <span>{details.members.length}/ 15</span>
             </Flex>
-            <Flicking moveType="freeScroll" align="prev" bound={true}>
-              {data.members.map((member) => (
-                <div
-                  className={cx('flicking-panel', css({ height: 'fit-content', _first: { ml: 0 }, marginLeft: 1 }))}
+          </Flex>
+          <Flicking moveType="freeScroll" align="prev" bound={true}>
+            {details.members.map((member) => (
+              <div
+                className={cx('flicking-panel', css({ height: 'fit-content', _first: { ml: 0 }, marginLeft: 1 }))}
+                key={member.id}
+              >
+                <BannerPetSelectMedium
                   key={member.id}
-                >
-                  <BannerPetSelectMedium
-                    key={member.id}
-                    name={member.name}
-                    count={member.contributions}
-                    image={member.personaId}
-                  />
-                </div>
-              ))}
-            </Flicking>
-          </div>
+                  name={member.name}
+                  count={member.contributions}
+                  image={getPersonaImage(member.personaType)}
+                />
+              </div>
+            ))}
+          </Flicking>
         </div>
-        <Box aspectRatio="1/0.5" width="100%" bg="white.white_50">
-          farm type
-        </Box>
-      </>
-    );
-  });
+      </div>
+      <Box aspectRatio="1/0.5" width="100%" bg="white.white_50">
+        farm type
+      </Box>
+    </>
+  );
+};
 
 const listStyle = flex({
   gap: 4,
