@@ -8,7 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@/i18n/routing';
 import { joinGuildAction } from '@/serverActions/guild';
 
-import { GuildJoinPetSelectDialog } from '../../../../(components)/GuildPetSelectDialog';
+import { GuildJoinPetSelectDialog } from '../../../../_components/GuildPetSelectDialog';
 import GuildModal from '../../../GuildModal';
 
 export default function GuildJoinModal({ params }: { params: { id: string } }) {

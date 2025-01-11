@@ -2,7 +2,7 @@ import { Button } from '@gitanimals/ui-panda';
 
 import { Link } from '@/i18n/routing';
 
-import { GuildDetail } from '../../../(components)/GuildDetail';
+import { GuildDetail } from '../../../_components/GuildDetail';
 import GuildModal from '../../GuildModal';
 
 export default function GuildDetailModal({ params }: { params: { id: string } }) {

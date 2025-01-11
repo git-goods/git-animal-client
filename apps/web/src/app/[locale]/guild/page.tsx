@@ -7,12 +7,11 @@ import { Button } from '@gitanimals/ui-panda';
 import { getNewUrl } from '@gitanimals/util-common';
 
 import { PaginationServer } from '@/components/Pagination/PaginationServer';
-import { redirect } from '@/i18n/routing';
 import { Link } from '@/i18n/routing';
 
-import { GuildCard } from './(components)/GuildCard';
-import { GuildSearch } from './(components)/GuildSearch';
-import { SortSelect } from './(components)/SortSelect';
+import { GuildCard } from './_components/GuildCard';
+import { GuildSearch } from './_components/GuildSearch';
+import { SortSelect } from './_components/SortSelect';
 
 const GUILD_PAGE_URL = '/guild';
 
@@ -28,12 +27,12 @@ interface GuildPageProps {
 export default async function GuildPage({ searchParams }: GuildPageProps) {
   const allJoinGuilds = await getAllJoinGuilds();
 
-  if (allJoinGuilds.guilds.length === 0) {
-    return <GuildMain searchParams={searchParams} />;
-  }
+  // if (allJoinGuilds.guilds.length === 0) {
+  return <GuildMain searchParams={searchParams} />;
+  // }
 
-  const guildId = allJoinGuilds.guilds[0].id;
-  redirect(`/guild/${guildId}`);
+  // const guildId = allJoinGuilds.guilds[0].id;
+  // redirect(`/guild/${guildId}`);
 }
 
 async function GuildMain({ searchParams }: GuildPageProps) {

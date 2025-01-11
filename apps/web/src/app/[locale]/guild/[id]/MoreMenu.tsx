@@ -30,10 +30,12 @@ export async function MoreMenu({ guildId }: { guildId: string }) {
             <CatIcon color="#FFFFFF80" size={18} />
             Edit profile pet
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <UsersRoundIcon color="#FFFFFF80" size={18} />
-            Manage members
-          </DropdownMenuItem>
+          <Link href={`/guild/${guildId}/setting/member`}>
+            <DropdownMenuItem>
+              <UsersRoundIcon color="#FFFFFF80" size={18} />
+              Manage members
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem>
             <LinkIcon color="#FFFFFF80" size={18} />
             Send invite message

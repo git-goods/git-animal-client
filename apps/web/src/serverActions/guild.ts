@@ -3,7 +3,7 @@
 import type { JoinGuildRequest } from '@gitanimals/api';
 import { joinGuild, updateGuild } from '@gitanimals/api';
 
-import type { FormState } from '@/app/[locale]/guild/(components)/GuidlInfoFormClient';
+import type { FormState } from '@/app/[locale]/guild/_components/GuidlInfoFormClient';
 
 export async function joinGuildAction(request: JoinGuildRequest) {
   return joinGuild(request);

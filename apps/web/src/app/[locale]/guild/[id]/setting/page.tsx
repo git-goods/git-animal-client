@@ -2,6 +2,8 @@ import { checkIsLeader, getGuildBackgrounds, getGuildById, getGuildIcons } from 
 
 import { redirect } from '@/i18n/routing';
 
+import { GuildModalPageTitle } from '../../_components/GuildModalPageLayout';
+
 import { GuildSetting } from './GuildSetting';
 
 export default async function GuildSettingPage({ params }: { params: { id: string } }) {
@@ -15,5 +17,10 @@ export default async function GuildSettingPage({ params }: { params: { id: strin
     redirect(`/guild/${params.id}`);
   }
 
-  return <GuildSetting icons={icons} backgrounds={backgrounds} guildId={params.id} initialData={data} />;
+  return (
+    <>
+      <GuildModalPageTitle>Guild Setting</GuildModalPageTitle>
+      <GuildSetting icons={icons} backgrounds={backgrounds} guildId={params.id} initialData={data} />;
+    </>
+  );
 }
