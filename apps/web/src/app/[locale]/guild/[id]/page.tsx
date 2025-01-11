@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { css } from '_panda/css';
-import { Box, Flex } from '_panda/jsx';
+import { Flex } from '_panda/jsx';
 import { flex } from '_panda/patterns';
 import { getGuildById } from '@gitanimals/api';
 import { BannerPetSelectMedium, Button } from '@gitanimals/ui-panda';
@@ -13,6 +13,7 @@ import { getPersonaImage } from '@/utils/image';
 
 import { GuildSearch } from '../_components/GuildSearch';
 
+import { CopyGuildImgButton } from './CopyGuildImgButton';
 import { GuildSliderContainer } from './GuildSliderContainer';
 import { MoreMenu } from './MoreMenu';
 
@@ -64,14 +65,26 @@ export default async function GuildPage({ params }: { params: { id: string } }) 
               <GuildMemeberSlider members={data.members} />
             </div>
           </div>
-          <Box aspectRatio="1/0.5" width="100%" bg="white.white_50">
+          <div className={guildPreviewStyle}>
             <GitanimalsGuild guildId={data.id} />
-          </Box>
+          </div>
+          <CopyGuildImgButton guildId={data.id} />
         </div>
       </GuildSliderContainer>
     </>
   );
 }
+
+const guildPreviewStyle = css({
+  aspectRatio: '1/0.5',
+  width: '100%',
+  borderRadius: '8px',
+  overflow: 'hidden',
+  '& img': {
+    width: '100%',
+    height: '100%',
+  },
+});
 
 const topStyle = flex({
   gap: 2,

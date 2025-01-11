@@ -30,7 +30,7 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
       );
 
       toast.success('복사 성공!', { duration: 2000 });
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (

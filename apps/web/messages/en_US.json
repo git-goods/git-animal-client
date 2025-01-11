@@ -152,5 +152,9 @@
     "github-star-body": "Give us a GitHub Star! ⭐",
     "event-christmas-title": "Christmas has come to GitAnimals! 🎄",
     "event-christmas-body": "Get your free Christmas pet right now!"
+  },
+  "Preview": {
+    "copy-link-title": "Copy Link",
+    "copy-link-success": "Copy success!"
   }
 }

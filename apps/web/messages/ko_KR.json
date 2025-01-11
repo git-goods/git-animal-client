@@ -154,5 +154,9 @@
     "github-star-body": "깃허브 스타 부탁드립니다! ⭐",
     "event-christmas-title": "GitAnimals에 크리스마스가 찾아왔어요! 🎄",
     "event-christmas-body": "지금 당장 크리스마스 펫을 무료로 받아가세요!"
+  },
+  "Preview": {
+    "copy-link-title": "이미지 복사",
+    "copy-link-success": "복사 성공!"
   }
 }

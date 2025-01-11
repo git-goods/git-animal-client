@@ -2,7 +2,7 @@
 'use client';
 
 import { css, cx } from '_panda/css';
-import { Box, Flex } from '_panda/jsx';
+import { Flex } from '_panda/jsx';
 import { flex } from '_panda/patterns';
 import Flicking from '@egjs/react-flicking';
 import type { Guild } from '@gitanimals/api';
@@ -57,12 +57,22 @@ export const GuildDetail = ({ details }: { guildId: string; details: Guild }) =>
           </Flicking>
         </div>
       </div>
-      <Box aspectRatio="1/0.5" width="100%" bg="white.white_50">
+      <div className={guildPreviewStyle}>
         <GitanimalsGuild guildId={details.id} />
-      </Box>
+      </div>
     </>
   );
 };
+const guildPreviewStyle = css({
+  aspectRatio: '1/0.5',
+  width: '100%',
+  borderRadius: '8px',
+  overflow: 'hidden',
+  '& img': {
+    width: '100%',
+    height: '100%',
+  },
+});
 
 const listStyle = flex({
   gap: 4,

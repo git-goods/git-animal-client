@@ -29,6 +29,7 @@ const containerStyle = css({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
+  paddingY: '120px',
 });
 
 const bottomBgStyle = css({
