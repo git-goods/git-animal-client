@@ -32,7 +32,12 @@ export function GuildInfoFormClient(props: GuildInfoFormProps) {
           className={css({ mb: '6px' })}
           defaultValue={props.initialData?.title}
         />
-        <TextArea placeholder="Type guild description" name="description" defaultValue={props.initialData?.body} />
+        <TextArea
+          placeholder="Type guild description"
+          maxLength={50}
+          name="description"
+          defaultValue={props.initialData?.body}
+        />
       </div>
       <div>
         <p className={headingStyle}>Guild thumbnail</p>
