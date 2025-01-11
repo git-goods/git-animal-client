@@ -1,10 +1,9 @@
+import type { PropsWithChildren } from 'react';
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { dialogTitleStyle } from '@gitanimals/ui-panda';
 
-import GuildCreate from '../(components)/GuildCreate';
-
-export default function GuildCreatePage() {
+export default function GuildCreatePage({ children }: PropsWithChildren) {
   return (
     <div className={css({ minH: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' })}>
       <div
@@ -17,9 +16,9 @@ export default function GuildCreatePage() {
           color: 'white.white',
         })}
       >
-        <h2 className={dialogTitleStyle}>Create Guild</h2>
+        <h2 className={dialogTitleStyle}>Guild Setting</h2>
         <Flex flexDirection="column" gap="24px">
-          <GuildCreate />
+          {children}
         </Flex>
       </div>
     </div>
