@@ -9,6 +9,7 @@ import type { Guild } from '@gitanimals/api';
 import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
 import { UsersRoundIcon } from 'lucide-react';
 
+import { GitanimalsGuild } from '@/components/Gitanimals';
 import { getPersonaImage } from '@/utils/image';
 
 export const GuildDetail = ({ details }: { guildId: string; details: Guild }) => {
@@ -57,7 +58,7 @@ export const GuildDetail = ({ details }: { guildId: string; details: Guild }) =>
         </div>
       </div>
       <Box aspectRatio="1/0.5" width="100%" bg="white.white_50">
-        farm type
+        <GitanimalsGuild guildId={details.id} />
       </Box>
     </>
   );

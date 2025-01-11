@@ -1,4 +1,4 @@
-import { getGuildBackgrounds, getGuildById, getGuildIcons } from '@gitanimals/api';
+import { getAllJoinGuilds, getGuildBackgrounds, getGuildById, getGuildIcons } from '@gitanimals/api';
 import { queryOptions } from '@tanstack/react-query';
 
 export const guildQueries = {
@@ -21,5 +21,11 @@ export const guildQueries = {
     queryOptions({
       queryKey: guildQueries.getGuildBackgrounds(),
       queryFn: () => getGuildBackgrounds(),
+    }),
+  getAllJoinGuilds: () => ['guild', 'all'],
+  getAllJoinGuildsOptions: () =>
+    queryOptions({
+      queryKey: guildQueries.getAllJoinGuilds(),
+      queryFn: () => getAllJoinGuilds(),
     }),
 };
