@@ -1,12 +1,14 @@
 'use client';
 import { useState } from 'react';
+import { Flex } from '_panda/jsx';
 import { createGuild } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 
 import { useRouter } from '@/i18n/routing';
 
+import { SelectPersonaList } from '../../mypage/PersonaList';
+
 import { GuildCreateForm } from './GuildCreateForm';
-import { SelectPersonaList } from './SelectPersonaList';
 
 export default function GuildCreate() {
   const router = useRouter();
@@ -52,10 +54,12 @@ export default function GuildCreate() {
       )}
       {step === 'guild-persona' && (
         <>
-          <SelectPersonaList
-            selectPersona={selectPersona ? [selectPersona] : []}
-            onSelectPersona={(persona) => setSelectPersona(persona.id)}
-          />
+          <Flex flexWrap="wrap" gap="4px">
+            <SelectPersonaList
+              selectPersona={selectPersona ? [selectPersona] : []}
+              onSelectPersona={(persona) => setSelectPersona(persona.id)}
+            />
+          </Flex>
           <Button mx="auto" disabled={!selectPersona} onClick={onSubmit}>
             Done
           </Button>

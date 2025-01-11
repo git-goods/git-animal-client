@@ -5,7 +5,7 @@ import { useState } from 'react';
 import type { Persona } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 
-import { SelectPersonaList } from './SelectPersonaList';
+import { SelectPersonaList } from '../../mypage/PersonaList';
 
 export const GuildJoinPetSelectDialog = ({ onSubmit }: { onSubmit: (selectPersona: string) => void }) => {
   const [selectPersona, setSelectPersona] = useState<string>();
