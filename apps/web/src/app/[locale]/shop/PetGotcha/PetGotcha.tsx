@@ -4,7 +4,10 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
+import { userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
+import { wrap } from '@suspensive/react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import OnePet from './OnePet';
 import { TenPet } from './TenPet';
@@ -18,15 +21,9 @@ export function PetGotcha() {
       <Image src="/shop/pet-gotcha-bg.webp" alt="pet-gotcha-bg" width={1920} height={1226} className={bgStyle} />
       <h1 className={headingStyle}>Pet Gotcha</h1>
       <p className={descStyle}>{t('pet-gotcha-desc')}</p>
-      <div className={buttonContainerStyle}>
-        <Button size="l" onClick={() => setOpenModal('one-pet')}>
-          1 Pet / 1,000 P
-        </Button>
-        <Button size="l" onClick={() => setOpenModal('ten-pet')}>
-          10 Pets / 10,000 P
-        </Button>
-        {/* <Button size="l">10 Pets / 10,000 P</Button> */}
-      </div>
+
+      <ButtonWrapper onClickOnePet={() => setOpenModal('one-pet')} onClickTenPet={() => setOpenModal('ten-pet')} />
+
       <div className={petContainerStyle}>
         <Image src="/shop/pet-gotcha-image-card.webp" alt="pet-gotcha-pet" width={1120} height={530} />
       </div>
@@ -35,6 +32,40 @@ export function PetGotcha() {
     </div>
   );
 }
+
+interface ButtonWrapperProps {
+  onClickOnePet: () => void;
+  onClickTenPet: () => void;
+}
+
+const ButtonWrapper = wrap
+  .Suspense({ fallback: null })
+  .ErrorBoundary({
+    fallback: ({ reset }) => (
+      <div>
+        <span>에러가 발생했어요</span>
+        <Button size="l" onClick={reset}>
+          재시도하기
+        </Button>
+      </div>
+    ),
+  })
+  .on(({ onClickOnePet, onClickTenPet }: ButtonWrapperProps) => {
+    const { data } = useSuspenseQuery(userQueries.userOptions());
+
+    const points = Number(data.points);
+
+    return (
+      <div className={buttonContainerStyle}>
+        <Button size="l" onClick={onClickOnePet} disabled={points < 1_000}>
+          1 Pet / 1,000 P
+        </Button>
+        <Button size="l" onClick={onClickTenPet} disabled={points < 10_000}>
+          10 Pets / 10,000 P
+        </Button>
+      </div>
+    );
+  });
 
 const containerStyle = css({
   position: 'relative',
