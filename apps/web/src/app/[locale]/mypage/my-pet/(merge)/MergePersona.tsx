@@ -173,7 +173,7 @@ function PersonaItem({ persona, isSelected, onClick }: PersonaItemProps) {
     <button onClick={onClick} className={css({ outline: 'none', bg: 'transparent' })}>
       <LevelBanner
         image={getPersonaImage(persona.type)}
-        selected={isSelected}
+        status={isSelected ? 'selected' : 'default'}
         level={Number(persona.level)}
         size="small"
       />

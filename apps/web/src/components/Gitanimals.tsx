@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable @next/next/no-img-element */
 
 import { useClientUser } from '@/utils/clientAuth';
@@ -88,4 +90,19 @@ export const getGitanimalsFarmString = ({ username, sizes = [600, 300] }: FarmSt
   height="${sizes[1]}"
 />
 </a>`;
+};
+
+export function GitanimalsGuild({ guildId }: { guildId: string }) {
+  return <img src={`https://render.gitanimals.org/guilds/${guildId}/draw`} alt="gitanimals" />;
+}
+
+export const getGuildString = ({ guildId, sizes = [600, 300] }: { guildId: string } & GitanimalsFarmProps) => {
+  return `<a href="https://www.gitanimals.org/">
+      <img
+        src="https://render.gitanimals.org/guilds/${guildId}/draw"
+        width="${sizes[0]}"
+        height="${sizes[1]}"
+        alt="gitanimals"
+      />
+    </a>`;
 };

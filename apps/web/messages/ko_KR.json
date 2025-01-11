@@ -8,7 +8,8 @@
     "shop": "상점",
     "dev": "Dev",
     "language": "언어",
-    "notification": "알림"
+    "notification": "알림",
+    "guild": "길드"
   },
   "Common": {
     "pet": "펫",
@@ -23,7 +24,9 @@
     "prepare": "준비중",
     "confirm": "확인",
     "close": "닫기",
-    "processing": "처리중..."
+    "processing": "처리중...",
+    "leave": "나가기",
+    "cancel": "취소"
   },
   "HomePage": {
     "title": "Hello world!",

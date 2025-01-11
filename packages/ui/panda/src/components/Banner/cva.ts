@@ -14,13 +14,17 @@ export const bannerStyle = cva({
     overflow: 'hidden',
   },
   variants: {
-    selected: {
-      true: {
+    status: {
+      selected: {
         border: '2px solid',
         borderColor: 'white.white_50',
         backgroundColor: 'white.white_25',
       },
-      false: {},
+      gradient: {
+        background:
+          'linear-gradient(133deg, rgba(255, 253, 201, 0.40) 2.19%, rgba(150, 230, 216, 0.40) 49.24%, rgba(125, 171, 241, 0.40) 98.21%)',
+      },
+      default: {},
     },
     size: {
       small: {
@@ -41,7 +45,7 @@ export const bannerStyle = cva({
 
   defaultVariants: {
     size: 'medium',
-    selected: false,
+    status: 'default',
   },
 });
 

@@ -12,6 +12,9 @@ interface DialogState {
   title: ReactNode | string;
   description?: ReactNode | string;
   onConfirm?: () => void | Promise<void>;
+
+  cancelText?: string;
+  confirmText?: string;
 }
 
 const dialogAtom = atom<DialogState>({
@@ -78,14 +81,14 @@ export function DialogComponent() {
           <Dialog.Description className={descriptionStyle}>{dialog.description}</Dialog.Description>
         )}
         <Flex gap="8px" justifyContent="flex-end" width="100%">
+          <Button onClick={closeDialog} variant="secondary" size="m">
+            {dialog.cancelText ? t(dialog.cancelText) : t('close')}
+          </Button>
           {dialog.onConfirm && (
-            <Button onClick={confirmDialog} variant="secondary" size="m" disabled={isLoading}>
-              {isLoading ? t('processing') : t('confirm')}
+            <Button onClick={confirmDialog} variant="primary" size="m" disabled={isLoading}>
+              {isLoading ? t('processing') : dialog.confirmText ? t(dialog.confirmText) : t('confirm')}
             </Button>
           )}
-          <Button onClick={closeDialog} variant="primary" size="m">
-            {t('close')}
-          </Button>
         </Flex>
       </Dialog.Content>
     </Dialog>

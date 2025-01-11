@@ -6,7 +6,7 @@ import type { Product } from '@gitanimals/api';
 import { auctionQueries } from '@gitanimals/react-query';
 import { useQuery } from '@tanstack/react-query';
 
-import Pagination from '@/components/Pagination';
+import Pagination from '@/components/Pagination/Pagination';
 import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 

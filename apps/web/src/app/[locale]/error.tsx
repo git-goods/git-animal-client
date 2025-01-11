@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import { signOut } from 'next-auth/react';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { ErrorPage } from '@/components/Error/ErrorPage';
@@ -19,6 +18,8 @@ const NOT_AUTHORIZED_MESSAGE = 'Request failed with status code 401';
 const KNOWN_ERROR_MESSAGES = [NOT_AUTHORIZED_MESSAGE];
 
 const GlobalErrorPage = ({ error, reset }: Props) => {
+  const router = useRouter();
+
   useEffect(() => {
     if (isDev) return;
     if (KNOWN_ERROR_MESSAGES.includes(error.message)) return;
@@ -32,12 +33,14 @@ Error Stack: ${error.stack}
 `);
   }, [error]);
 
-  const router = useRouter();
-
-  const onClickRetry = () => {
-    signOut();
-    reset();
-    router.push('/');
+  const onClickRetry = async () => {
+    try {
+      reset();
+      router.refresh();
+      router.push(window.location.pathname);
+    } catch (e) {
+      console.error('Error during reset:', e);
+    }
   };
 
   return (

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
+import { setRenderRequestInterceptor, setRenderResponseInterceptor } from '@gitanimals/api/src/_instance';
 
 import {
   interceptorRequestFulfilled,
@@ -41,6 +42,8 @@ export const metadata: Metadata = {
 
 setRequestInterceptor(interceptorRequestFulfilled);
 setResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
+setRenderRequestInterceptor(interceptorRequestFulfilled);
+setRenderResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

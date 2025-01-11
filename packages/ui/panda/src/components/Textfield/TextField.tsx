@@ -15,4 +15,5 @@ const textFieldStyle = css({
   borderColor: 'white.white_25',
   color: 'white.white_50',
   textStyle: 'glyph16.regular',
+  width: '100%',
 });

@@ -63,7 +63,6 @@ export const interceptorRequestFulfilled = async (config: InternalAxiosRequestCo
 
 // Response interceptor
 export const interceptorResponseFulfilled = (res: AxiosResponse) => {
-  // console.log('res: ', res);
   // if (200 <= res.status && res.status < 300) {
   //   return res.data;
   // }
