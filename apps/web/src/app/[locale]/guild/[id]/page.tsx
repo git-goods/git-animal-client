@@ -13,6 +13,7 @@ import { getPersonaImage } from '@/utils/image';
 
 import { GuildSearch } from '../_components/GuildSearch';
 
+import { GuildSliderContainer } from './GuildSliderContainer';
 import { MoreMenu } from './MoreMenu';
 
 export default async function GuildPage({ params }: { params: { id: string } }) {
@@ -31,41 +32,43 @@ export default async function GuildPage({ params }: { params: { id: string } }) 
           </Button>
         </Link>
       </div>
-      <div className={containerStyle}>
-        <div>
-          <div className={titleStyle}>
-            <img src={data.guildIcon} width={40} height={40} alt={data.title} />
-            <h2>{data.title}</h2>
+      <GuildSliderContainer guildId={data.id}>
+        <div className={containerStyle}>
+          <div>
+            <div className={titleStyle}>
+              <img src={data.guildIcon} width={40} height={40} alt={data.title} />
+              <h2>{data.title}</h2>
 
-            <MoreMenu guildId={data.id} />
+              <MoreMenu guildId={data.id} />
+            </div>
+            <div className={bodyStyle}>{data.body}</div>
           </div>
-          <div className={bodyStyle}>{data.body}</div>
-        </div>
-        <div className={listStyle}>
-          <div className={leaderStyle}>
-            <p> Leader</p>
-            <BannerPetSelectMedium
-              name={data.leader.name}
-              count={data.leader.contributions}
-              image={getPersonaImage(data.leader.personaType)}
-              status="gradient"
-            />
-          </div>
-          <div className={membersStyle}>
-            <Flex mb="1" justifyContent="space-between">
-              <p>Members</p>
-              <Flex gap="6px" alignItems="center">
-                <UsersRoundIcon size={16} color="#FFFFFF80" />
-                <span>{data.members.length}/ 15</span>
+          <div className={listStyle}>
+            <div className={leaderStyle}>
+              <p> Leader</p>
+              <BannerPetSelectMedium
+                name={data.leader.name}
+                count={data.leader.contributions}
+                image={getPersonaImage(data.leader.personaType)}
+                status="gradient"
+              />
+            </div>
+            <div className={membersStyle}>
+              <Flex mb="1" justifyContent="space-between">
+                <p>Members</p>
+                <Flex gap="6px" alignItems="center">
+                  <UsersRoundIcon size={16} color="#FFFFFF80" />
+                  <span>{data.members.length}/ 15</span>
+                </Flex>
               </Flex>
-            </Flex>
-            <GuildMemeberSlider members={data.members} />
+              <GuildMemeberSlider members={data.members} />
+            </div>
           </div>
+          <Box aspectRatio="1/0.5" width="100%" bg="white.white_50">
+            <GitanimalsGuild guildId={data.id} />
+          </Box>
         </div>
-        <Box aspectRatio="1/0.5" width="100%" bg="white.white_50">
-          <GitanimalsGuild guildId={data.id} />
-        </Box>
-      </div>
+      </GuildSliderContainer>
     </>
   );
 }
