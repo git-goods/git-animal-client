@@ -28,11 +28,7 @@ export function GuildCreateForm({ formData, onDataChange }: GuildCreateFormProps
             className={css({ mb: '6px' })}
             onChange={(e) => onDataChange('title', e.target.value)}
           />
-          <TextArea
-            placeholder="Type guild description"
-            maxLength={50}
-            onChange={(e) => onDataChange('body', e.target.value)}
-          />
+          <TextArea placeholder="Type guild description" onChange={(e) => onDataChange('body', e.target.value)} />
         </div>
         <div>
           <p className={headingStyle}>Guild thumbnail</p>
