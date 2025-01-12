@@ -68,29 +68,31 @@ async function GuildMain({ searchParams, isSearchMode }: GuildMainProps) {
   };
 
   return (
-    <div className={containerStyle}>
-      <div className={topStyle}>
-        {isSearchMode && (
-          <BackTrigger>
-            <ChevronLeftIcon size="28px" color="#FFFFFF80" />
-          </BackTrigger>
-        )}
-        <GuildSearch />
+    <>
+      <div className={containerStyle}>
+        <div className={topStyle}>
+          {isSearchMode && (
+            <BackTrigger>
+              <ChevronLeftIcon size="28px" color="#FFFFFF80" />
+            </BackTrigger>
+          )}
+          <GuildSearch />
 
-        <SortSelect />
-        <Link href="/guild/create">
-          <Button minWidth="126px" size="m" px="20px">
-            Create Guild
-          </Button>
-        </Link>
+          <SortSelect />
+          <Link href="/guild/create">
+            <Button minWidth="126px" size="m" px="20px">
+              Create Guild
+            </Button>
+          </Link>
+        </div>
+        <div className={cardListStyle}>
+          {data.guilds.length === 0 && <EmptyGuild />}
+          {data.guilds.map((guild) => (
+            <GuildCard key={guild.id} guild={guild} />
+          ))}
+        </div>
+        <PaginationServer {...data.pagination} generateMoveLink={getGuildPageUrl} />
       </div>
-      <div className={cardListStyle}>
-        {data.guilds.length === 0 && <EmptyGuild />}
-        {data.guilds.map((guild) => (
-          <GuildCard key={guild.id} guild={guild} />
-        ))}
-      </div>
-      <PaginationServer {...data.pagination} generateMoveLink={getGuildPageUrl} />
       <Image
         src="/guild/init-bg-bottom.webp"
         className={bottomBgStyle}
@@ -98,7 +100,7 @@ async function GuildMain({ searchParams, isSearchMode }: GuildMainProps) {
         width={3600}
         height={228}
       />
-    </div>
+    </>
   );
 }
 
@@ -118,6 +120,8 @@ const containerStyle = flex({
   maxWidth: '880px',
   mx: 'auto',
   gap: 4,
+  position: 'relative',
+  zIndex: 1,
 });
 
 const cardListStyle = grid({
@@ -159,6 +163,7 @@ const bottomBgStyle = css({
   transform: 'translateX(-50%)',
   height: '228px',
   objectFit: 'cover',
+  zIndex: 0,
 });
 
 function EmptyGuild() {

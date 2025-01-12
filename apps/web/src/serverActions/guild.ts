@@ -6,7 +6,15 @@ import { joinGuild, updateGuild } from '@gitanimals/api';
 import type { FormState } from '@/app/[locale]/guild/_components/GuidlInfoFormClient';
 
 export async function joinGuildAction(request: JoinGuildRequest) {
-  return joinGuild(request);
+  try {
+    console.log('request: ', request);
+    const res = await joinGuild(request);
+    console.log('res: ', res);
+    return res;
+  } catch (error) {
+    console.log('error: ', error);
+    throw error;
+  }
 }
 
 // NOTE: 작업 중

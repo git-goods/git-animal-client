@@ -13,6 +13,7 @@ const nextConfig = withNextIntl({
   compiler: {
     styledComponents: true,
   },
+  cache: 'no-store',
   images: {
     remotePatterns: [
       {
