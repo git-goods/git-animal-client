@@ -14,6 +14,7 @@ export default async function GuildSettingPage({ params }: { params: { id: strin
   const data = await getGuildById({ guildId: params.id });
 
   if (!isLeader) {
+    alert('리더가 아닙니다.');
     redirect(`/guild/${params.id}`);
   }
 
