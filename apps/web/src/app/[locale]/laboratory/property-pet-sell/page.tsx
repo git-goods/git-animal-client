@@ -52,22 +52,30 @@ const PersonaList = wrap
     const DropPetsResult = ({ success, errors }: { success: { givenPoint: number }[]; errors: unknown[] }) => {
       const t = useTranslations('Laboratory.property-pet-sell');
 
-      if (success.length === 0 && errors.length === 0) {
+      const successLength = success.length;
+      const errorLength = errors.length;
+
+      const count = t('count');
+      const saleSuccess = t('saleSuccess');
+      const saleFail = t('saleFail');
+      const totalAmount = t('totalAmount');
+
+      if (successLength === 0 && errorLength === 0) {
         return (
           <div>
             <p>
-              0{t('count')} {t('saleSuccess')}, 0{t('count')} {t('saleFail')}
+              0{count} {saleSuccess}, 0{count} {saleFail}
             </p>
           </div>
         );
       }
 
-      if (success.length === 0) {
+      if (successLength === 0) {
         return (
           <div>
             <p>
-              {errors.length}
-              {t('count')} {t('saleFail')}
+              {errorLength}
+              {count} {saleFail}
             </p>
           </div>
         );
@@ -75,15 +83,15 @@ const PersonaList = wrap
 
       const totalPrice = success.reduce((acc, curr) => acc + curr.givenPoint, 0);
 
-      if (errors.length === 0) {
+      if (errorLength === 0) {
         return (
           <div>
             <p>
-              {success.length}
-              {t('count')} {t('saleSuccess')}
+              {successLength}
+              {count} {saleSuccess}
             </p>
             <p>
-              {t('totalAmount')}: {totalPrice}P
+              {totalAmount}: {totalPrice}P
             </p>
           </div>
         );
@@ -92,12 +100,12 @@ const PersonaList = wrap
       return (
         <div>
           <p>
-            {success.length}
-            {t('count')} {t('saleSuccess')}, {errors.length}
-            {t('count')} {t('saleFail')}
+            {successLength}
+            {count} {saleSuccess}, {errorLength}
+            {count} {saleFail}
           </p>
           <p>
-            {t('totalAmount')}: {totalPrice}P
+            {totalAmount}: {totalPrice}P
           </p>
         </div>
       );
