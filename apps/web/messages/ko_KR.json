@@ -141,9 +141,12 @@
   },
   "Laboratory": {
     "property-pet-sell": {
-      "title": "Property Pet Sell",
-      "description": "Sell your pet to other users!",
-      "count": "개"
+      "title": "펫 판매",
+      "description": "보유한 펫을 판매해보세요!",
+      "count": "개",
+      "saleSuccess": "판매 완료",
+      "saleFail": "판매 실패",
+      "totalAmount": "총 판매 금액"
     }
   },
   "Inbox": {

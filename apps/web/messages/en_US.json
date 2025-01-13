@@ -141,7 +141,10 @@
     "property-pet-sell": {
       "title": "Property Pet Sell",
       "description": "Sell your pet to other users!",
-      "count": "ea"
+      "count": "ea",
+      "saleSuccess": "sale success",
+      "saleFail": "sale fail",
+      "totalAmount": "Total Amount"
     }
   },
   "Inbox": {

@@ -48,42 +48,57 @@ const PersonaList = wrap
         onConfirm: () => onSell(ids),
       });
     };
-    const DropPetsResult = ({ success, errors }: { success: { givenPoint: number }[]; errors: unknown[] }) => {
-      const totalPrice = success.reduce((acc, curr) => acc + curr.givenPoint, 0);
-      const hasSuccess = success.length > 0;
-      const hasErrors = errors.length > 0;
 
-      if (hasSuccess && hasErrors) {
+    const DropPetsResult = ({ success, errors }: { success: { givenPoint: number }[]; errors: unknown[] }) => {
+      const t = useTranslations('Laboratory.property-pet-sell');
+
+      if (success.length === 0 && errors.length === 0) {
         return (
           <div>
             <p>
-              {success.length}마리 판매 완료, {errors.length}마리 판매 실패
+              0{t('count')} {t('saleSuccess')}, 0{t('count')} {t('saleFail')}
             </p>
-            <p>총 판매 금액: {totalPrice}P</p>
           </div>
         );
       }
 
-      if (hasSuccess) {
+      if (success.length === 0) {
         return (
           <div>
-            <p>{success.length}마리 판매 완료</p>
-            <p>총 판매 금액: {totalPrice}P</p>
+            <p>
+              {errors.length}
+              {t('count')} {t('saleFail')}
+            </p>
           </div>
         );
       }
 
-      if (hasErrors) {
+      const totalPrice = success.reduce((acc, curr) => acc + curr.givenPoint, 0);
+
+      if (errors.length === 0) {
         return (
           <div>
-            <p>{errors.length}마리 판매 실패</p>
+            <p>
+              {success.length}
+              {t('count')} {t('saleSuccess')}
+            </p>
+            <p>
+              {t('totalAmount')}: {totalPrice}P
+            </p>
           </div>
         );
       }
 
       return (
         <div>
-          <p>0마리 판매 완료, 0마리 판매 실패</p>
+          <p>
+            {success.length}
+            {t('count')} {t('saleSuccess')}, {errors.length}
+            {t('count')} {t('saleFail')}
+          </p>
+          <p>
+            {t('totalAmount')}: {totalPrice}P
+          </p>
         </div>
       );
     };
