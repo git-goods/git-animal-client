@@ -32,30 +32,32 @@ export const GuildDetail = ({ details }: { guildId: string; details: Guild }) =>
             status="gradient"
           />
         </div>
-        <div className={membersStyle}>
-          <Flex mb="1" justifyContent="space-between">
-            <p>Members</p>
-            <Flex gap="6px" alignItems="center">
-              <UsersRoundIcon size={16} color="#FFFFFF80" />
-              <span>{details.members.length}/ 15</span>
+        {details.members.length > 0 && (
+          <div className={membersStyle}>
+            <Flex mb="1" justifyContent="space-between">
+              <p>Members</p>
+              <Flex gap="6px" alignItems="center">
+                <UsersRoundIcon size={16} color="#FFFFFF80" />
+                <span>{details.members.length + 1}/ 15</span>
+              </Flex>
             </Flex>
-          </Flex>
-          <Flicking moveType="freeScroll" align="prev" bound={true}>
-            {details.members.map((member) => (
-              <div
-                className={cx('flicking-panel', css({ height: 'fit-content', _first: { ml: 0 }, marginLeft: 1 }))}
-                key={member.id}
-              >
-                <BannerPetSelectMedium
+            <Flicking moveType="freeScroll" align="prev" bound={true}>
+              {details.members.map((member) => (
+                <div
+                  className={cx('flicking-panel', css({ height: 'fit-content', _first: { ml: 0 }, marginLeft: 1 }))}
                   key={member.id}
-                  name={member.name}
-                  count={member.contributions}
-                  image={getPersonaImage(member.personaType)}
-                />
-              </div>
-            ))}
-          </Flicking>
-        </div>
+                >
+                  <BannerPetSelectMedium
+                    key={member.id}
+                    name={member.name}
+                    count={member.contributions}
+                    image={getPersonaImage(member.personaType)}
+                  />
+                </div>
+              ))}
+            </Flicking>
+          </div>
+        )}
       </div>
       <div className={guildPreviewStyle}>
         <GitanimalsGuild guildId={details.id} />

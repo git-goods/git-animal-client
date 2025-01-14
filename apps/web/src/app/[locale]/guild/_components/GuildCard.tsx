@@ -21,7 +21,7 @@ export function GuildCard({ guild }: GuildCardProps) {
           <Image src={guild.guildIcon} alt={guild.title} width={40} height={40} className="card-guild-icon" />
           <Flex gap="6px" alignItems="center">
             <UsersRoundIcon size={16} color="#FFFFFF80" />
-            <span>{guild.members.length}/ 15</span>
+            <span>{guild.members.length + 1}/ 15</span>
           </Flex>
         </div>
         <h4 className="card-title">{guild.title}</h4>

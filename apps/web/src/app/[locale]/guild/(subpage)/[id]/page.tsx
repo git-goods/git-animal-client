@@ -57,7 +57,7 @@ export default async function GuildPage({ params }: { params: { id: string } }) 
                 <p>Members</p>
                 <Flex gap="6px" alignItems="center">
                   <UsersRoundIcon size={16} color="#FFFFFF80" />
-                  <span>{data.members.length}/ 15</span>
+                  <span>{data.members.length + 1}/ 15</span>
                 </Flex>
               </Flex>
               <GuildMemeberSlider members={data.members} />
