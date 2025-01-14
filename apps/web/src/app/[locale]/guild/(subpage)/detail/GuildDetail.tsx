@@ -1,16 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { css, cx } from '_panda/css';
-import { Flex } from '_panda/jsx';
+import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
-import Flicking from '@egjs/react-flicking';
 import type { Guild } from '@gitanimals/api';
-import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
-import { UsersRoundIcon } from 'lucide-react';
 
 import { GitanimalsGuild } from '@/components/Gitanimals';
-import { getPersonaImage } from '@/utils/image';
+
+import { GuildPeopleList } from '../../_components/GuildPeopleList';
 
 export const GuildDetail = ({ details }: { guildId: string; details: Guild }) => {
   return (
@@ -22,43 +19,7 @@ export const GuildDetail = ({ details }: { guildId: string; details: Guild }) =>
         </div>
         <div className={bodyStyle}>{details.body}</div>
       </div>
-      <div className={listStyle}>
-        <div className={leaderStyle}>
-          <p> Leader</p>
-          <BannerPetSelectMedium
-            name={details.leader.name}
-            count={details.leader.contributions}
-            image={getPersonaImage(details.leader.personaType)}
-            status="gradient"
-          />
-        </div>
-        {details.members.length > 0 && (
-          <div className={membersStyle}>
-            <Flex mb="1" justifyContent="space-between">
-              <p>Members</p>
-              <Flex gap="6px" alignItems="center">
-                <UsersRoundIcon size={16} color="#FFFFFF80" />
-                <span>{details.members.length + 1}/ 15</span>
-              </Flex>
-            </Flex>
-            <Flicking moveType="freeScroll" align="prev" bound={true}>
-              {details.members.map((member) => (
-                <div
-                  className={cx('flicking-panel', css({ height: 'fit-content', _first: { ml: 0 }, marginLeft: 1 }))}
-                  key={member.id}
-                >
-                  <BannerPetSelectMedium
-                    key={member.id}
-                    name={member.name}
-                    count={member.contributions}
-                    image={getPersonaImage(member.personaType)}
-                  />
-                </div>
-              ))}
-            </Flicking>
-          </div>
-        )}
-      </div>
+      <GuildPeopleList members={details.members} leader={details.leader} />
       <div className={guildPreviewStyle}>
         <GitanimalsGuild guildId={details.id} />
       </div>
