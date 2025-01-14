@@ -1,10 +1,9 @@
-'use server';
-
 import type { JoinGuildRequest } from '@gitanimals/api';
 import { joinGuild, updateGuild } from '@gitanimals/api';
 
-import type { FormState } from '@/app/[locale]/guild/_components/GuidlInfoFormClient';
-
+interface FormState {
+  message: string;
+}
 export async function joinGuildAction(request: JoinGuildRequest) {
   try {
     console.log('request: ', request);
@@ -16,22 +15,6 @@ export async function joinGuildAction(request: JoinGuildRequest) {
     throw error;
   }
 }
-
-// NOTE: 작업 중
-export const createGuildAction = async (prevState: FormState, formData: FormData) => {
-  const name = formData.get('name') as string;
-  const description = formData.get('description') as string;
-  const icon = formData.get('icon') as string;
-  const background = formData.get('background') as string;
-
-  if (!name || !description || !icon || !background) {
-    return { message: 'Please fill in all fields', success: false };
-  }
-
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-  console.log('form end');
-  return { message: 'Guild created', success: true };
-};
 
 export const updateGuildAction = async (prevState: FormState, formData: FormData) => {
   const guildId = formData.get('guildId') as string;

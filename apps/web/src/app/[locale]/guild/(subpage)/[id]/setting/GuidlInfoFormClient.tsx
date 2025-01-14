@@ -7,9 +7,8 @@ import { Flex } from '_panda/jsx';
 import type { Guild } from '@gitanimals/api';
 import { Button, TextArea, TextField } from '@gitanimals/ui-panda';
 
+import { SelectableFormItem, SelectableFormItemOption } from '@/app/[locale]/guild/_components/SelecableFormItem';
 import { getBackgroundImage } from '@/utils/image';
-
-import { SelectableFormItem, SelectableFormItemOption } from './SelecableFormItem';
 
 export interface FormState {
   message: string;

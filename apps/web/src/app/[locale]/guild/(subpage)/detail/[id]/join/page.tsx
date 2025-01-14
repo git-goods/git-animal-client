@@ -5,10 +5,9 @@ import { inboxQueries } from '@gitanimals/react-query';
 import { dialogTitleStyle } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 
+import { GuildJoinPetSelectDialog } from '@/app/[locale]/guild/_components/GuildPetSelectDialog';
 import { useRouter } from '@/i18n/routing';
 import { joinGuildAction } from '@/serverActions/guild';
-
-import { GuildJoinPetSelectDialog } from '../../../_components/GuildPetSelectDialog';
 
 export default function GuildJoinPage({ params }: { params: { id: string } }) {
   const queryClient = useQueryClient();

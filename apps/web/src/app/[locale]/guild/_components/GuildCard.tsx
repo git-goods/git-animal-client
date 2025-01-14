@@ -1,41 +1,22 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 import { Flex } from '_panda/jsx';
 import { flex } from '_panda/patterns';
 import { type Guild } from '@gitanimals/api';
-import { inboxQueries } from '@gitanimals/react-query';
-import { useQueryClient } from '@tanstack/react-query';
 import { UsersRoundIcon } from 'lucide-react';
 
+import { ROUTE } from '@/constants/route';
 import { Link } from '@/i18n/routing';
-import { joinGuildAction } from '@/serverActions/guild';
 
 interface GuildCardProps {
   guild: Guild;
 }
 
 export function GuildCard({ guild }: GuildCardProps) {
-  const queryClient = useQueryClient();
-  const [isJoinPetSelectOpen, setIsJoinPetSelectOpen] = useState(false);
-
-  const submitJoinGuild = async (selectPersona: string) => {
-    try {
-      await joinGuildAction({
-        guildId: guild.id,
-        personaId: selectPersona,
-      });
-
-      queryClient.invalidateQueries({ queryKey: inboxQueries.allKey() });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <>
-      <Link href={`/guild/detail/${guild.id}`} className={cardStyle}>
+      <Link href={ROUTE.GUILD.DETAIL(guild.id)} className={cardStyle}>
         <div className="card-top">
           <Image src={guild.guildIcon} alt={guild.title} width={40} height={40} className="card-guild-icon" />
           <Flex gap="6px" alignItems="center">
@@ -57,16 +38,6 @@ export function GuildCard({ guild }: GuildCardProps) {
           </li>
         </ul>
       </Link>
-
-      {/* {isJoinPetSelectOpen && (
-        <GuildJoinPetSelectDialog
-          onSubmit={(selectPersona) => {
-            submitJoinGuild(selectPersona);
-            setIsJoinPetSelectOpen(false);
-          }}
-          onClose={() => setIsJoinPetSelectOpen(false)}
-        />
-      )} */}
     </>
   );
 }

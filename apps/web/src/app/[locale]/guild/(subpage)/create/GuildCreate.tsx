@@ -5,8 +5,9 @@ import { Button } from '@gitanimals/ui-panda';
 
 import { useRouter } from '@/i18n/routing';
 
+import { SelectPersonaList } from '../../_components/SelectPersonaList';
+
 import { GuildCreateForm } from './GuildCreateForm';
-import { SelectPersonaList } from './SelectPersonaList';
 
 export default function GuildCreate() {
   const router = useRouter();

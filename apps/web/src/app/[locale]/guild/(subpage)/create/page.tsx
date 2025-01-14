@@ -1,8 +1,9 @@
 import { Flex } from '_panda/jsx';
 import { dialogTitleStyle } from '@gitanimals/ui-panda';
 
-import GuildCreate from '../_components/GuildCreate';
-import { GuildModalPageLayout } from '../_components/GuildModalPageLayout';
+import { GuildModalPageLayout } from '@/app/[locale]/guild/_components/GuildModalPageLayout';
+
+import GuildCreate from './GuildCreate';
 
 export default function GuildCreatePage() {
   return (

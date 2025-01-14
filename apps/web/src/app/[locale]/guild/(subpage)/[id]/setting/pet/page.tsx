@@ -4,10 +4,9 @@ import { useParams } from 'next/navigation';
 import { css } from '_panda/css';
 import { changeMainPet } from '@gitanimals/api';
 
+import { GuildModalPageTitle } from '@/app/[locale]/guild/_components/GuildModalPageLayout';
+import { GuildJoinPetSelectDialog } from '@/app/[locale]/guild/_components/GuildPetSelectDialog';
 import { useRouter } from '@/i18n/routing';
-
-import { GuildModalPageTitle } from '../../../_components/GuildModalPageLayout';
-import { GuildJoinPetSelectDialog } from '../../../_components/GuildPetSelectDialog';
 
 export default function GuildSettingPetPage() {
   const router = useRouter();

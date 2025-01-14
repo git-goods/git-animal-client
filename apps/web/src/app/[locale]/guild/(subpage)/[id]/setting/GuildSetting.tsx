@@ -6,7 +6,7 @@ import type { Guild } from '@gitanimals/api';
 import { useRouter } from '@/i18n/routing';
 import { updateGuildAction } from '@/serverActions/guild';
 
-import { GuildInfoFormClient, GuildInfoFormSubmitButton } from '../../_components/GuidlInfoFormClient';
+import { GuildInfoFormClient, GuildInfoFormSubmitButton } from './GuidlInfoFormClient';
 
 export interface FormState {
   message: string;

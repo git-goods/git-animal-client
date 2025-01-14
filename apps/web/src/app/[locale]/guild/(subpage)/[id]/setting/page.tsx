@@ -1,8 +1,7 @@
 import { checkIsLeader, getGuildBackgrounds, getGuildById, getGuildIcons } from '@gitanimals/api';
 
+import { PageModalTitle } from '@/components/PageModal';
 import { redirect } from '@/i18n/routing';
-
-import { GuildModalPageTitle } from '../../_components/GuildModalPageLayout';
 
 import { GuildSetting } from './GuildSetting';
 
@@ -20,7 +19,7 @@ export default async function GuildSettingPage({ params }: { params: { id: strin
 
   return (
     <>
-      <GuildModalPageTitle>Guild Setting</GuildModalPageTitle>
+      <PageModalTitle>Guild Setting</PageModalTitle>
       <GuildSetting icons={icons} backgrounds={backgrounds} guildId={params.id} initialData={data} />;
     </>
   );

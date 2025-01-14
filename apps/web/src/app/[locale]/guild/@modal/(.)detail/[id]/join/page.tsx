@@ -2,14 +2,12 @@
 
 import { css } from '_panda/css';
 import { inboxQueries } from '@gitanimals/react-query';
-import { Dialog } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 
+import { GuildJoinPetSelectDialog } from '@/app/[locale]/guild/_components/GuildPetSelectDialog';
+import RouteModal, { RouteModalTitle } from '@/components/RouteModal';
 import { useRouter } from '@/i18n/routing';
 import { joinGuildAction } from '@/serverActions/guild';
-
-import { GuildJoinPetSelectDialog } from '../../../../_components/GuildPetSelectDialog';
-import GuildModal from '../../../GuildModal';
 
 export default function GuildJoinModal({ params }: { params: { id: string } }) {
   const queryClient = useQueryClient();
@@ -30,17 +28,15 @@ export default function GuildJoinModal({ params }: { params: { id: string } }) {
   };
 
   return (
-    <GuildModal>
+    <RouteModal>
       <div>
-        <Dialog.Title className={dialogTitleStyle}>Choose your pet</Dialog.Title>
+        <RouteModalTitle>Choose your pet</RouteModalTitle>
         <p className={dialogDescriptionStyle}>If you choose a pet, it will be shown in the guild image.</p>
       </div>
       <GuildJoinPetSelectDialog onSubmit={submitJoinGuild} />
-    </GuildModal>
+    </RouteModal>
   );
 }
-
-const dialogTitleStyle = css({});
 
 const dialogDescriptionStyle = css({
   textStyle: 'glyph20.regular',

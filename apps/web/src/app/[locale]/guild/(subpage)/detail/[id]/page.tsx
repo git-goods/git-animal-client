@@ -3,7 +3,7 @@ import { Button } from '@gitanimals/ui-panda';
 
 import { Link } from '@/i18n/routing';
 
-import { GuildDetail } from '../../_components/GuildDetail';
+import { GuildDetail } from '../GuildDetail';
 
 export default async function GuildDetailPage({ params }: { params: { id: string } }) {
   const details = await getGuildById({ guildId: params.id });

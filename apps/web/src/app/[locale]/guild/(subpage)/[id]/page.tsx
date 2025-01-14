@@ -11,7 +11,7 @@ import { GuildMemeberSlider } from '@/components/Guild/MemeberSlider';
 import { Link } from '@/i18n/routing';
 import { getPersonaImage } from '@/utils/image';
 
-import { GuildSearch } from '../_components/GuildSearch';
+import { GuildSearch } from '../../_components/GuildSearch';
 
 import { CopyGuildImgButton } from './CopyGuildImgButton';
 import { GuildSliderContainer } from './GuildSliderContainer';

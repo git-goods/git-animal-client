@@ -2,7 +2,7 @@ import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { getGuildById } from '@gitanimals/api';
 
-import { GuildModalPageTitle } from '../../../_components/GuildModalPageLayout';
+import { GuildModalPageTitle } from '@/app/[locale]/guild/_components/GuildModalPageLayout';
 
 import { MemberCard } from './MemberCard';
 import { WaitMemberCard } from './WaitMemberCard';
