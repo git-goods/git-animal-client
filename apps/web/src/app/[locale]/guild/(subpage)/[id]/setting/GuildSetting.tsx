@@ -1,20 +1,14 @@
 'use client';
 
-import { useFormState } from 'react-dom';
-import type { Guild } from '@gitanimals/api';
+import { useState } from 'react';
+import { css } from '_panda/css';
+import { type Guild, updateGuild } from '@gitanimals/api';
+import { Button } from '@gitanimals/ui-panda';
+import console from 'console';
 
 import { useRouter } from '@/i18n/routing';
-import { updateGuildAction } from '@/serverActions/guild';
 
-import { GuildInfoFormClient, GuildInfoFormSubmitButton } from './GuidlInfoFormClient';
-
-export interface FormState {
-  message: string;
-}
-
-const initialState: FormState = {
-  message: '',
-};
+import { GuildInfoFormClient } from './GuidlInfoFormClient';
 
 export function GuildSetting({
   icons,
@@ -28,23 +22,49 @@ export function GuildSetting({
   initialData?: Guild;
 }) {
   const router = useRouter();
+  const [state, setState] = useState<{
+    title: string;
+    body: string;
+    farmType: string;
+    guildIcon: string;
+    autoJoin: boolean;
+  }>({
+    title: '',
+    body: '',
+    farmType: '',
+    guildIcon: '',
+    autoJoin: false,
+  });
+  const [error, setError] = useState('');
 
-  const [state, formAction] = useFormState(async (prevState: FormState, formData: FormData) => {
-    const result = await updateGuildAction(prevState, formData);
+  const onFieldChange = (key: string, value: string) => {
+    setState({ ...state, [key]: value });
+  };
 
-    if (result.success) {
+  const onSubmit = async () => {
+    try {
+      await updateGuild(guildId, state);
+
       router.push(`/guild/${guildId}`);
+    } catch (error) {
+      setError('Failed to update guild');
+      console.error(error);
     }
-
-    return result;
-  }, initialState);
+  };
 
   return (
-    <form action={formAction}>
-      <input type="text" name="guildId" value={guildId} hidden />
-      <GuildInfoFormClient icons={icons} backgrounds={backgrounds} initialData={initialData} />
-      {state?.message && <p aria-live="polite">{state?.message}</p>}
-      <GuildInfoFormSubmitButton>Save</GuildInfoFormSubmitButton>
-    </form>
+    <div>
+      <GuildInfoFormClient
+        icons={icons}
+        backgrounds={backgrounds}
+        initialData={initialData}
+        onFieldChange={onFieldChange}
+        fields={state}
+      />
+      {error && <p aria-live="polite">{error}</p>}
+      <Button className={css({ display: 'block', mt: 10, mx: 'auto' })} onClick={onSubmit}>
+        Save
+      </Button>
+    </div>
   );
 }

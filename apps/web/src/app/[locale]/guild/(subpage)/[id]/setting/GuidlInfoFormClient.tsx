@@ -1,13 +1,11 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
-import { useFormStatus } from 'react-dom';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import type { Guild } from '@gitanimals/api';
-import { Button, TextArea, TextField } from '@gitanimals/ui-panda';
+import { TextArea, TextField } from '@gitanimals/ui-panda';
 
-import { SelectableFormItem, SelectableFormItemOption } from '@/app/[locale]/guild/_components/SelecableFormItem';
 import { getBackgroundImage } from '@/utils/image';
 
 export interface FormState {
@@ -18,6 +16,14 @@ interface GuildInfoFormProps {
   icons: string[];
   backgrounds: string[];
   initialData?: Guild;
+  onFieldChange: (key: string, value: string) => void;
+  fields: {
+    title: string;
+    body: string;
+    guildIcon: string;
+    farmType: string;
+    autoJoin: boolean;
+  };
 }
 
 export function GuildInfoFormClient(props: GuildInfoFormProps) {
@@ -29,60 +35,45 @@ export function GuildInfoFormClient(props: GuildInfoFormProps) {
           name="name"
           placeholder="Type guild name"
           className={css({ mb: '6px' })}
-          defaultValue={props.initialData?.title}
+          value={props.fields.title}
+          onChange={(e) => props.onFieldChange('title', e.target.value)}
         />
-        <TextArea placeholder="Type guild description" name="description" defaultValue={props.initialData?.body} />
+        <TextArea
+          placeholder="Type guild description"
+          name="description"
+          value={props.fields.body}
+          onChange={(e) => props.onFieldChange('body', e.target.value)}
+        />
       </div>
       <div>
         <p className={headingStyle}>Guild thumbnail</p>
-        <SelectableFormItem name="icon" defaultValue={props.initialData?.guildIcon}>
-          <Flex gap="6px">
-            {props.icons.map((icon) => (
-              <SelectableFormItemOption value={icon} key={icon}>
-                {({ isSelected }) => (
-                  <img
-                    src={icon}
-                    className={cx(
-                      itemStyle,
-                      isSelected && css({ border: '1.5px solid', borderColor: 'white.white_90' }),
-                    )}
-                    width={70}
-                    height={70}
-                    alt={icon}
-                  />
-                )}
-              </SelectableFormItemOption>
-            ))}
-          </Flex>
-        </SelectableFormItem>
+        <Flex gap="6px">
+          {props.icons.map((icon) => (
+            <SelectImgButton
+              key={icon}
+              img={icon}
+              onClick={() => props.onFieldChange('guildIcon', icon)}
+              isSelected={props.fields.guildIcon === icon}
+              width={70}
+              height={70}
+            />
+          ))}
+        </Flex>
       </div>
       <div>
         <p className={headingStyle}>Guild background</p>
-        <SelectableFormItem name="background" defaultValue={props.initialData?.farmType}>
-          <Flex gap="6px">
-            {props.backgrounds?.map((background) => (
-              <SelectableFormItemOption value={background} key={background}>
-                {({ isSelected }) => (
-                  <img
-                    src={getBackgroundImage(background)}
-                    className={cx(
-                      itemStyle,
-                      isSelected &&
-                        css({
-                          border: '1.5px solid',
-                          borderColor: 'white.white_90',
-                        }),
-                    )}
-                    width={284}
-                    height={124}
-                    key={background}
-                    alt={background}
-                  />
-                )}
-              </SelectableFormItemOption>
-            ))}
-          </Flex>
-        </SelectableFormItem>
+        <Flex gap="6px">
+          {props.backgrounds?.map((background) => (
+            <SelectImgButton
+              key={background}
+              img={getBackgroundImage(background)}
+              onClick={() => props.onFieldChange('farmType', background)}
+              isSelected={props.fields.farmType === background}
+              width={284}
+              height={124}
+            />
+          ))}
+        </Flex>
       </div>
     </Flex>
   );
@@ -99,12 +90,26 @@ const itemStyle = css({
   border: 'none',
 });
 
-export function GuildInfoFormSubmitButton({ children, disabled }: { children: React.ReactNode; disabled?: boolean }) {
-  const { pending } = useFormStatus();
-
+function SelectImgButton(props: {
+  img: string;
+  onClick: () => void;
+  isSelected: boolean;
+  width: number;
+  height: number;
+}) {
   return (
-    <Button type="submit" className={css({ display: 'block', mt: 10, mx: 'auto' })} disabled={disabled || pending}>
-      {children}
-    </Button>
+    <button onClick={() => props.onClick()} key={props.img}>
+      <img
+        src={props.img}
+        className={cx(
+          itemStyle,
+          props.isSelected && css({ border: '1.5px solid', borderColor: 'white.white_90' }),
+          !props.isSelected && css({}),
+        )}
+        width={props.width}
+        height={props.height}
+        alt={props.img}
+      />
+    </button>
   );
 }
