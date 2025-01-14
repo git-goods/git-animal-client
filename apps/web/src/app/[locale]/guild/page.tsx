@@ -9,13 +9,12 @@ import { ChevronLeftIcon } from 'lucide-react';
 
 import { PaginationServer } from '@/components/Pagination/PaginationServer';
 import { BackTrigger } from '@/components/Trigger';
+import { ROUTE } from '@/constants/route';
 import { Link, redirect } from '@/i18n/routing';
 
 import { GuildCard } from './_components/GuildCard';
 import { GuildSearch } from './_components/GuildSearch';
 import { SortSelect } from './_components/SortSelect';
-
-const GUILD_PAGE_URL = '/guild';
 
 interface GuildPageProps {
   searchParams: {
@@ -41,7 +40,7 @@ export default async function GuildPage({ searchParams }: GuildPageProps) {
   }
 
   const guildId = allJoinGuilds.guilds[0].id;
-  redirect(`/guild/${guildId}`);
+  redirect(ROUTE.GUILD.MAIN(guildId));
 }
 
 interface GuildMainProps {
@@ -64,7 +63,7 @@ async function GuildMain({ searchParams, isSearchMode }: GuildMainProps) {
 
   const getGuildPageUrl = (params: Record<string, unknown>) => {
     const newParams = { ...params, rd: randomId };
-    return getNewUrl({ baseUrl: GUILD_PAGE_URL, newParams, oldParams: searchParams });
+    return getNewUrl({ baseUrl: ROUTE.GUILD.LIST(), newParams, oldParams: searchParams });
   };
 
   return (

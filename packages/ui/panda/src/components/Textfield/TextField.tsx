@@ -13,7 +13,10 @@ const textFieldStyle = css({
   borderRadius: '8px',
   border: '1px solid',
   borderColor: 'white.white_25',
-  color: 'white.white_50',
+  color: 'white',
   textStyle: 'glyph16.regular',
   width: '100%',
+  _placeholder: {
+    color: 'white.white_50',
+  },
 });

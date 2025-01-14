@@ -38,7 +38,7 @@ export function GuildSearch() {
 
       <Box flex="1">
         <SearchBar
-          autoFocus={Boolean(searchParams.get('search'))}
+          placeholder="Search guild"
           defaultValue={text}
           onChange={(e) => setInput(e.target.value)}
           onSubmit={onSubmit}

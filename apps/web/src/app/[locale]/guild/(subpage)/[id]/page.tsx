@@ -1,17 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
-import { flex } from '_panda/patterns';
+import { center, flex } from '_panda/patterns';
 import { getGuildById } from '@gitanimals/api';
 import { BannerPetSelectMedium, Button } from '@gitanimals/ui-panda';
-import { UsersRoundIcon } from 'lucide-react';
+import { SearchIcon, UsersRoundIcon } from 'lucide-react';
 
 import { GitanimalsGuild } from '@/components/Gitanimals';
 import { GuildMemeberSlider } from '@/components/Guild/MemeberSlider';
 import { Link } from '@/i18n/routing';
 import { getPersonaImage } from '@/utils/image';
-
-import { GuildSearch } from '../../_components/GuildSearch';
 
 import { CopyGuildImgButton } from './CopyGuildImgButton';
 import { GuildSliderContainer } from './GuildSliderContainer';
@@ -23,8 +21,8 @@ export default async function GuildPage({ params }: { params: { id: string } }) 
   return (
     <>
       <div className={topStyle}>
-        <Link href="/guild?search=true" style={{ flex: 1 }}>
-          <GuildSearch />
+        <Link href="/guild?search=true" style={{ flex: 1 }} className={buttonWrapperStyle}>
+          <SearchIcon color="rgba(255, 255, 255, 0.5)" width={20} height={20} />
         </Link>
 
         <Link href="/guild/create">
@@ -140,4 +138,10 @@ const bodyStyle = css({
   textStyle: 'glyph16.regular',
   color: 'white.white_75',
   mt: 3,
+});
+const buttonWrapperStyle = center({
+  w: '36px',
+  h: '36px',
+  backgroundColor: 'white.white_25',
+  borderRadius: '10px',
 });

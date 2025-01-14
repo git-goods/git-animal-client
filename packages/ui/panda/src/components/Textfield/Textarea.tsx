@@ -13,4 +13,8 @@ const textAreaStyle = css({
   minHeight: '102px',
   padding: '16px 12px 8px 20px',
   flexShrink: 0,
+  color: 'white',
+  _placeholder: {
+    color: 'white.white_50',
+  },
 });
