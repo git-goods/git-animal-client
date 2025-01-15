@@ -1,0 +1,162 @@
+{
+  "Layout": {
+    "mypage": "マイページ",
+    "auction": "ショップ",
+    "shop": "ショップ",
+    "guild": "ギルド",
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "github": "Github",
+    "dev": "Dev",
+    "language": "言語",
+    "notification": "お知らせ"
+  },
+  "HomePage": {
+    "title": "Hello world!",
+    "about": "Go to the about page"
+  },
+  "Landing": {
+    "title": "Have your pet in GITHUB! "
+  },
+  "Common": {
+    "pet": "ペット",
+    "name": "名前",
+    "grade": "等級",
+    "level": "レベル",
+    "price": "価格",
+    "date": "日付",
+    "sell": "販売",
+    "pet-list": "ペット一覧",
+    "merge": "合体",
+    "prepare": "準備中",
+    "confirm": "確認",
+    "close": "閉じる",
+    "processing": "処理中...",
+    "leave": "退出",
+    "cancel": "キャンセル"
+  },
+  "Gotcha": {
+    "pet-gotcha-desc": "1,000ポイントでS+等級のペットを引きましょう！",
+    "choose-one-card": "お好きなカードを1枚選んでください！",
+    "close-notice-message": "[count]秒後にウィンドウが閉じます。",
+    "get-persona-success": "ペットを獲得しました！",
+    "get-persona-fail": "ペットの獲得に失敗しました。",
+    "token-expired": "トークンの有効期限が切れています。もう一度ログインしてください。",
+    "contact-us": "お問い合わせ",
+    "many-error-message": "問題が続く場合はお問い合わせください。",
+    "gotcha-in-progress": "ペットを引いています。しばらくお待ちください。",
+    "click-card-to-flip": "カードをクリックしてめくってください！",
+    "not-enough-points": "ポイントが不足しています。"
+  },
+  "Shop": {
+    "no-mobile-support": "現在、モバイルには対応しておりません。デスクトップでアクセスしてください。",
+    "buy-product-success": "購入完了！",
+    "buy-product-fail": "購入に失敗しました。",
+    "buy": "購入",
+    "pet": "ペット",
+    "name": "名前",
+    "grade": "等級",
+    "level": "レベル",
+    "price": "価格",
+    "date": "日付",
+    "sell": "販売",
+    "price-you-want": "販売価格を入力してください。",
+    "sell-product-success": "販売完了！",
+    "sell-product-fail": "販売に失敗しました。",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "delete-product-success": "販売キャンセルが完了しました！",
+    "delete-product-fail": "販売キャンセルに失敗しました。",
+    "edit": "修正",
+    "pet-sold": "[money]円でペットを販売しました！",
+    "sell-error": "販売に失敗しました。",
+    "many-error-message": "問題が続く場合は、Githubからお問い合わせください。",
+    "prepare": "準備中",
+    "merge": "ペット合体",
+    "edit-product": "ペットオークション修正",
+    "buy-error-not-login": "ログイン後にご利用ください。",
+    "sell-confirm": "本当に販売しますか？",
+    "sell-confirm-description": "販売後、ペットは消えてしまいます。",
+    "sell-confirm-checkbox": "次回からこのメッセージを表示しない",
+    "Background": {
+      "buy-success": "背景の購入が完了しました！",
+      "buy-fail": "背景の購入に失敗しました。",
+      "purchased": "購入済み",
+      "buy": "購入する",
+      "event-sale": "イベント限定セール",
+      "buy-possible-user": "ログイン後にご利用ください。"
+    }
+  },
+  "NoticeToast": {
+    "go": "GO!",
+    "visit": "Visit!",
+    "star-now": "Star Now!",
+    "visit-shop": "New! リニューアルしたショップページへ",
+    "github-star": "GitAnimalsをお楽しみですか？\nGitHubでスターをお願いします！ ⭐",
+    "update-shop-renewal": "Update: ショップページがリニューアルされました！ ✨\nぜひチェックしてください！",
+    "multi-translation": "English と 한국어 から選択できます！ 🌐\n上部メニューから言語を変更してみてください。",
+    "update-mypage-renewal": "Update: マイページがリニューアルされました！ ✨\nぜひチェックしてください！",
+    "update-background": "Update: 今後は背景を変更できます！\n🎃ハロウィン限定🎃の背景を今すぐ購入してみましょう！"
+  },
+  "Mypage": {
+    "copy-link-title": "画像コピー",
+    "copy-link-success": "コピー成功！",
+    "line-set-error": "1000以上には設定できません。",
+    "apply-button": "適用",
+    "customize-size": "サイズのカスタマイズ",
+    "extend-button": "拡張",
+    "shrink-button": "縮小",
+    "change-pet": "ペット変更",
+    "no-mobile-support": "現在、モバイルには対応しておりません。\nデスクトップでアクセスしてください。",
+    "pet-list": "ペット一覧",
+    "sell-to-other": "Tip. 他のユーザーにペットを売りたい場合はオークションを利用してください。",
+    "my-pet": "私のペット",
+    "github-custom": "Github カスタム",
+    "invalid-size-error": "無効なサイズです",
+    "farm-type-select-pet": "Farmタイプに使用するペットを選択してください。",
+    "line-type-select-pet": "Lineタイプに使用するペットを選択してください。",
+    "Merge": {
+      "merge": "合体",
+      "merge-result": "合体結果",
+      "cancel": "キャンセル",
+      "please-choose-pet": "合体に使用するペットを選択してください。合体に使用したペットは消えます。"
+    },
+    "laboratory": "研究室"
+  },
+  "Event": {
+    "event-end": "イベントが終了しました。",
+    "Halloween": {
+      "description": "GitAnimalsにハロウィンがやってきました。\n無料でハロウィンペットを引きましょう！",
+      "draw-button": "ハロウィンペットを引く！",
+      "draw-more-button": "もう一度引く！",
+      "draw-button-not-signed-in": "ログインしてから引いてください！",
+      "draw-error": "ハロウィンペットの抽選に失敗しました。",
+      "result-title": "今回のペットは…",
+      "result-apply": "今すぐ適用！",
+      "result-already-star": "👻 すでにStarしている方のための追加抽選！ 👻",
+      "result-star-again": "👻 Starしてもう一度引く！ 👻",
+      "result-halloween-coupon": "🎃 ハロウィン到来！ 🎃\nハロウィンペット確定クーポンを今すぐ使ってみましょう！",
+      "result-halloween-star-bonus-coupon": "🎃 ハロウィン到来！ 🎃\nGithubでStarしてハロウィンボーナスクーポンを使いましょう！",
+      "result-halloween-star-bonus-coupon-already-star": "🎃 ハロウィン到来！ 🎃\nすでにStarしている方はハロウィンボーナスを利用できます！",
+      "not-login-toast": "🎃 ハロウィン到来！ 🎃\nログイン後にハロウィンペットを引いてみてください！",
+      "go": "GO!"
+    }
+  },
+  "Laboratory": {
+    "property-pet-sell": {
+      "title": "プロパティ・ペット販売",
+      "description": "ペットを他のユーザーに販売しよう！",
+      "count": "個"
+    }
+  },
+  "Inbox": {
+    "github-star-title": "GitAnimalsをお楽しみですか？",
+    "github-star-body": "GitHubでスターをお願いします！ ⭐",
+    "event-christmas-title": "GitAnimalsにクリスマスがやってきました！ 🎄",
+    "event-christmas-body": "今すぐクリスマスペットを無料でゲットしましょう！"
+  },
+  "Preview": {
+    "copy-link-title": "画像コピー",
+    "copy-link-success": "コピー成功！"
+  }
+}

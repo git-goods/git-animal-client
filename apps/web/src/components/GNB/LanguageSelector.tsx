@@ -12,6 +12,7 @@ import { Link, type Locale, usePathname } from '@/i18n/routing';
 const LOCALE_MAP: Record<Locale, string> = {
   en_US: 'English',
   ko_KR: '한국어',
+  ja_JP: '日本語',
 };
 
 export const DesktopLanguageSelector = () => {
