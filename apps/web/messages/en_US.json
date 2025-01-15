@@ -69,6 +69,8 @@
     "delete-product-fail": "Failed to cancellation.",
     "edit": "Edit",
     "pet-sold": "Pet sold successfully for [money]!",
+    "sell-error": "Failed to sell.",
+    "many-error-message": "If you continue to experience problems, please contact us.",
     "prepare": "Prepare",
     "merge": "Merge",
     "edit-product": "Edit Product",

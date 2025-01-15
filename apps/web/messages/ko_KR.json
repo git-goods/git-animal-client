@@ -2,14 +2,21 @@
   "Layout": {
     "mypage": "마이페이지",
     "auction": "상점",
+    "shop": "상점",
+    "guild": "길드",
     "login": "로그인",
     "logout": "로그아웃",
     "github": "Github",
-    "shop": "상점",
     "dev": "Dev",
     "language": "언어",
-    "notification": "알림",
-    "guild": "길드"
+    "notification": "알림"
+  },
+  "HomePage": {
+    "title": "Hello world!",
+    "about": "Go to the about page"
+  },
+  "Landing": {
+    "title": "Have your pet in GITHUB! "
   },
   "Common": {
     "pet": "펫",
@@ -18,8 +25,8 @@
     "level": "레벨",
     "price": "가격",
     "date": "날짜",
-    "pet-list": "펫 목록",
     "sell": "판매",
+    "pet-list": "펫 목록",
     "merge": "합치기",
     "prepare": "준비중",
     "confirm": "확인",
@@ -27,13 +34,6 @@
     "processing": "처리중...",
     "leave": "나가기",
     "cancel": "취소"
-  },
-  "HomePage": {
-    "title": "Hello world!",
-    "about": "Go to the about page"
-  },
-  "Landing": {
-    "title": "Have your pet in GITHUB! "
   },
   "Gotcha": {
     "pet-gotcha-desc": "1,000 포인트로 S+ 등급 펫을 뽑으세요!",
@@ -74,6 +74,7 @@
     "prepare": "준비중",
     "merge": "펫 합치기",
     "edit-product": "펫 경매 수정",
+    "buy-error-not-login": "로그인 후 이용해주세요.",
     "sell-confirm": "정말로 판매하시겠습니까?",
     "sell-confirm-description": "판매 후 펫은 사라집니다.",
     "sell-confirm-checkbox": "메시지 다시 보지 않기",
@@ -114,7 +115,6 @@
     "invalid-size-error": "유효하지 않은 사이즈",
     "farm-type-select-pet": "Farm Type에 사용할 펫을 선택해주세요.",
     "line-type-select-pet": "Line Type에 사용할 펫을 선택해주세요.",
-
     "Merge": {
       "merge": "합치기",
       "merge-result": "합치기 결과",
