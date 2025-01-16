@@ -25,8 +25,8 @@ GitAnimals 펫들을 쉽게 페이지에서 관리하고, 펫을 뽑을 수 있�
 </a>
 
 ## contribution
-`gitanimals-client`는 외부 인원으로부터 Contribute를 받고 있지 않습니다. 
-기여하고 싶으시면, 작업 이전에 사전에 운영자에게 연락해 주시기 바랍니다
+`gitanimals-client`는 외부 인원으로부터 Contribute를 받고 있지 않습니다.   
+기여하고 싶으시다면, 작업 이전에 사전에 운영자에게 연락해 주시기 바랍니다
 
 
 # Project Detail
