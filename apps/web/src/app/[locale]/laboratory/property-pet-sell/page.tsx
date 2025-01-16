@@ -49,10 +49,70 @@ const PersonaList = wrap
       });
     };
 
+    const DropPetsResult = ({ success, errors }: { success: { givenPoint: number }[]; errors: unknown[] }) => {
+      const t = useTranslations('Laboratory.property-pet-sell');
+
+      const successLength = success.length;
+      const errorLength = errors.length;
+
+      const count = t('count');
+      const saleSuccess = t('saleSuccess');
+      const saleFail = t('saleFail');
+      const totalAmount = t('totalAmount');
+
+      if (successLength === 0 && errorLength === 0) {
+        return (
+          <div>
+            <p>
+              0{count} {saleSuccess}, 0{count} {saleFail}
+            </p>
+          </div>
+        );
+      }
+
+      if (successLength === 0) {
+        return (
+          <div>
+            <p>
+              {errorLength}
+              {count} {saleFail}
+            </p>
+          </div>
+        );
+      }
+
+      const totalPrice = success.reduce((acc, curr) => acc + curr.givenPoint, 0);
+
+      if (errorLength === 0) {
+        return (
+          <div>
+            <p>
+              {successLength}
+              {count} {saleSuccess}
+            </p>
+            <p>
+              {totalAmount}: {totalPrice}P
+            </p>
+          </div>
+        );
+      }
+
+      return (
+        <div>
+          <p>
+            {successLength}
+            {count} {saleSuccess}, {errorLength}
+            {count} {saleFail}
+          </p>
+          <p>
+            {totalAmount}: {totalPrice}P
+          </p>
+        </div>
+      );
+    };
+
     const onSell = async (ids: string[]) => {
       const res = await dropPets({ personaIds: ids });
-
-      const totalPrice = res.success.reduce((acc, curr) => acc + curr.givenPoint, 0);
 
       trackEvent('laboratory', {
         type: '레벨, 타입 같은 펫 한번에 팔기',
@@ -62,14 +122,7 @@ const PersonaList = wrap
 
       showDialog({
         title: '펫 판매 완료',
-        description: (
-          <div>
-            <p>
-              {res.success.length}마리 판매 완료, {res.errors.length}마리 판매 실패
-            </p>
-            <p>총 판매 금액: {totalPrice}P</p>
-          </div>
-        ),
+        description: <DropPetsResult success={res.success} errors={res.errors} />,
       });
     };
 
