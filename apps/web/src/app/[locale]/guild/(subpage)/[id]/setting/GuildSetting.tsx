@@ -4,8 +4,6 @@ import { useState } from 'react';
 import { css } from '_panda/css';
 import { type Guild, updateGuild } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
-import console from 'console';
-
 import { useRouter } from '@/i18n/routing';
 
 import { GuildInfoFormClient } from './GuidlInfoFormClient';
@@ -21,6 +19,7 @@ export function GuildSetting({
   guildId: string;
   initialData?: Guild;
 }) {
+  console.log('initialData: ', initialData);
   const router = useRouter();
   const [state, setState] = useState<{
     title: string;
@@ -29,13 +28,15 @@ export function GuildSetting({
     guildIcon: string;
     autoJoin: boolean;
   }>({
-    title: '',
-    body: '',
-    farmType: '',
-    guildIcon: '',
-    autoJoin: false,
+    title: initialData?.title || '',
+    body: initialData?.body || '',
+    farmType: initialData?.farmType || '',
+    guildIcon: initialData?.guildIcon || '',
+    autoJoin: initialData?.autoJoin || false,
   });
   const [error, setError] = useState('');
+  const [formError, setFormError] = useState<Record<string, string>>({});
+  console.log('formError: ', formError);
 
   const onFieldChange = (key: string, value: string) => {
     setState({ ...state, [key]: value });
@@ -57,12 +58,17 @@ export function GuildSetting({
       <GuildInfoFormClient
         icons={icons}
         backgrounds={backgrounds}
-        initialData={initialData}
         onFieldChange={onFieldChange}
         fields={state}
+        setFormError={setFormError}
+        formError={formError}
       />
       {error && <p aria-live="polite">{error}</p>}
-      <Button className={css({ display: 'block', mt: 10, mx: 'auto' })} onClick={onSubmit}>
+      <Button
+        className={css({ display: 'block', mt: 10, mx: 'auto' })}
+        onClick={onSubmit}
+        disabled={Object.keys(formError).length > 0}
+      >
         Save
       </Button>
     </div>

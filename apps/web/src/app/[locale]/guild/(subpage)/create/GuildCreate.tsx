@@ -8,6 +8,8 @@ import { useRouter } from '@/i18n/routing';
 import { SelectPersonaList } from '../../_components/SelectPersonaList';
 
 import { GuildCreateForm } from './GuildCreateForm';
+import { AxiosError } from 'axios';
+import { toast } from 'sonner';
 
 export default function GuildCreate() {
   const router = useRouter();
@@ -16,14 +18,15 @@ export default function GuildCreate() {
   const [formData, setFormData] = useState({
     title: '',
     body: '',
-    icon: '',
-    background: '',
+    guildIcon: '',
+    farmType: '',
+    autoJoin: false,
   });
   const [error, setError] = useState<{ all?: string; title?: string }>({});
   const [selectPersona, setSelectPersona] = useState('');
 
   const onChange = (key: string, value: string) => {
-    setFormData({ ...formData, [key]: value });
+    setFormData((prev) => ({ ...prev, [key]: value }));
   };
 
   const isValid = Object.values(formData).every((value) => value !== '');
@@ -33,23 +36,27 @@ export default function GuildCreate() {
       const res = await createGuild({
         title: formData.title,
         body: formData.body,
-        guildIcon: formData.icon,
-        autoJoin: false,
-        farmType: formData.background,
+        guildIcon: formData.guildIcon,
+        autoJoin: formData.autoJoin,
+        farmType: formData.farmType,
         personaId: selectPersona,
       });
       router.push(`/guild/${res.id}`);
     } catch (error) {
-      setError({ all: 'fail create guild' });
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message);
+      }
     }
   };
+
+  const isFirstStepValid = !isValid || Object.values(error).some((value) => value !== '');
 
   return (
     <>
       {step === 'guild-info' && (
         <>
           <GuildCreateForm formData={formData} onDataChange={onChange} error={error} setError={setError} />
-          <Button mx="auto" disabled={!isValid} onClick={() => setStep('guild-persona')}>
+          <Button mx="auto" disabled={isFirstStepValid} onClick={() => setStep('guild-persona')}>
             Create / 100,000P
           </Button>
         </>

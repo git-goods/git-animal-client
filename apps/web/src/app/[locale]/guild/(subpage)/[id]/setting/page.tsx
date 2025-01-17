@@ -20,7 +20,7 @@ export default async function GuildSettingPage({ params }: { params: { id: strin
   return (
     <>
       <PageModalTitle>Guild Setting</PageModalTitle>
-      <GuildSetting icons={icons} backgrounds={backgrounds} guildId={params.id} initialData={data} />;
+      <GuildSetting icons={icons} backgrounds={backgrounds} guildId={params.id} initialData={data} />
     </>
   );
 }

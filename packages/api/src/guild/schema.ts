@@ -32,6 +32,7 @@ export const GuildSchema = z.object({
   members: z.array(GuildMemberSchema),
   waitMembers: z.array(GuildMemberSchema),
   createdAt: z.string(),
+  autoJoin: z.any(),
 });
 
 export type Guild = z.infer<typeof GuildSchema>;

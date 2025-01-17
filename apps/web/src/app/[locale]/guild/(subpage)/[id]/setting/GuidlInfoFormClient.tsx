@@ -4,9 +4,12 @@
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import type { Guild } from '@gitanimals/api';
-import { TextArea, TextField } from '@gitanimals/ui-panda';
+import { TextArea, TextField, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@gitanimals/ui-panda';
 
 import { getBackgroundImage } from '@/utils/image';
+import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { InfoIcon } from 'lucide-react';
 
 export interface FormState {
   message: string;
@@ -15,7 +18,6 @@ export interface FormState {
 interface GuildInfoFormProps {
   icons: string[];
   backgrounds: string[];
-  initialData?: Guild;
   onFieldChange: (key: string, value: string) => void;
   fields: {
     title: string;
@@ -24,58 +26,95 @@ interface GuildInfoFormProps {
     farmType: string;
     autoJoin: boolean;
   };
+  setFormError?: (error: Record<string, string>) => void;
+  formError?: Record<string, string>;
 }
 
-export function GuildInfoFormClient(props: GuildInfoFormProps) {
+export function GuildInfoFormClient({ setFormError, formError, ...props }: GuildInfoFormProps) {
+  const t = useTranslations();
+  // const [formError, setFormError] = useState<Record<string, string>>({});
+
   return (
-    <Flex flexDirection="column" gap="24px">
-      <div>
-        <p className={headingStyle}>Guild info</p>
-        <TextField
-          name="name"
-          placeholder="Type guild name"
-          className={css({ mb: '6px' })}
-          value={props.fields.title}
-          onChange={(e) => props.onFieldChange('title', e.target.value)}
-        />
-        <TextArea
-          placeholder="Type guild description"
-          name="description"
-          value={props.fields.body}
-          onChange={(e) => props.onFieldChange('body', e.target.value)}
-        />
-      </div>
-      <div>
-        <p className={headingStyle}>Guild thumbnail</p>
-        <Flex gap="6px">
-          {props.icons.map((icon) => (
-            <SelectImgButton
-              key={icon}
-              img={icon}
-              onClick={() => props.onFieldChange('guildIcon', icon)}
-              isSelected={props.fields.guildIcon === icon}
-              width={70}
-              height={70}
+    <>
+      <Flex flexDirection="column" gap="24px">
+        <div>
+          <p className={headingStyle}>Guild info</p>
+          <div className={css({ position: 'relative' })}>
+            <TextField
+              placeholder="Type guild name"
+              value={props.fields.title}
+              onChange={(e) => {
+                setFormError?.({ title: '' });
+                const value = e.target.value
+                  .replace(/[^a-zA-Z-]/g, '')
+                  .replace(/-+/g, '-')
+                  .replace(/^-|-$/g, '');
+                if (value !== e.target.value) {
+                  setFormError?.({ title: t('Guild.invalid-guild-name') });
+                  console.log('setFormError: ', setFormError);
+                }
+                props.onFieldChange('title', e.target.value);
+              }}
+              error={formError?.title}
             />
-          ))}
-        </Flex>
-      </div>
-      <div>
-        <p className={headingStyle}>Guild background</p>
-        <Flex gap="6px">
-          {props.backgrounds?.map((background) => (
-            <SelectImgButton
-              key={background}
-              img={getBackgroundImage(background)}
-              onClick={() => props.onFieldChange('farmType', background)}
-              isSelected={props.fields.farmType === background}
-              width={284}
-              height={124}
-            />
-          ))}
-        </Flex>
-      </div>
-    </Flex>
+            <div className={tooltipStyle}>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <InfoIcon size={20} color="#FFFFFF80" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <li>Only english & hyphen</li>
+                    <li>50 characters</li>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          </div>
+          <TextArea
+            placeholder="Type guild description"
+            value={props.fields.body}
+            onChange={(e) => props.onFieldChange('body', e.target.value)}
+            className={css({ mt: '6px' })}
+          />
+        </div>
+        <div>
+          <p className={headingStyle}>Guild thumbnail</p>
+          <Flex gap="6px">
+            {props.icons?.map((icon) => (
+              <button
+                onClick={() => props.onFieldChange('guildIcon', icon)}
+                key={icon}
+                className={props.fields.guildIcon === icon ? selectedStyle : unselectedStyle}
+              >
+                <img src={icon} className={itemStyle} width={70} height={70} key={icon} alt={icon} />
+              </button>
+            ))}
+          </Flex>
+        </div>
+        <div>
+          <p className={headingStyle}>Guild background</p>
+          <Flex gap="6px">
+            {props.backgrounds?.map((background) => (
+              <button
+                onClick={() => props.onFieldChange('background', background)}
+                key={background}
+                className={props.fields.farmType === background ? selectedStyle : unselectedStyle}
+              >
+                <img
+                  src={getBackgroundImage(background)}
+                  className={itemStyle}
+                  width={284}
+                  height={124}
+                  key={background}
+                  alt={background}
+                />
+              </button>
+            ))}
+          </Flex>
+        </div>
+      </Flex>
+    </>
   );
 }
 
@@ -90,26 +129,22 @@ const itemStyle = css({
   border: 'none',
 });
 
-function SelectImgButton(props: {
-  img: string;
-  onClick: () => void;
-  isSelected: boolean;
-  width: number;
-  height: number;
-}) {
-  return (
-    <button onClick={() => props.onClick()} key={props.img}>
-      <img
-        src={props.img}
-        className={cx(
-          itemStyle,
-          props.isSelected && css({ border: '1.5px solid', borderColor: 'white.white_90' }),
-          !props.isSelected && css({}),
-        )}
-        width={props.width}
-        height={props.height}
-        alt={props.img}
-      />
-    </button>
-  );
-}
+const tooltipStyle = css({
+  position: 'absolute',
+  top: '18px',
+  right: '14px  ',
+  height: 'fit-content',
+});
+
+const selectedStyle = css({
+  border: '1.5px solid',
+  borderRadius: '8px',
+  opacity: 1,
+});
+
+const unselectedStyle = css({
+  border: 'none',
+  borderRadius: '8px',
+  opacity: 0.4,
+  transition: 'opacity 0.1s ease-in-out',
+});
