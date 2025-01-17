@@ -2,20 +2,26 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { guildQueries } from '@gitanimals/react-query';
-import { TextArea, TextField } from '@gitanimals/ui-panda';
+import { TextArea, TextField, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@gitanimals/ui-panda';
 import { useQuery } from '@tanstack/react-query';
+import { InfoIcon } from 'lucide-react';
 
 import { getBackgroundImage } from '@/utils/image';
 
 export interface GuildCreateFormProps {
   formData: Record<string, string>;
   onDataChange: (key: string, value: string) => void;
+  error: Record<string, string>;
+  setError: (error: Record<string, string>) => void;
 }
 
-export function GuildCreateForm({ formData, onDataChange }: GuildCreateFormProps) {
+export function GuildCreateForm({ formData, onDataChange, error, setError }: GuildCreateFormProps) {
+  const t = useTranslations();
+
   const { data: icons } = useQuery(guildQueries.getGuildIconsOptions());
   const { data: backgrounds } = useQuery(guildQueries.getGuildBackgroundsOptions());
 
@@ -34,12 +40,42 @@ export function GuildCreateForm({ formData, onDataChange }: GuildCreateFormProps
       <Flex flexDirection="column" gap="24px">
         <div>
           <p className={headingStyle}>Guild info</p>
-          <TextField
-            placeholder="Type guild name"
-            className={css({ mb: '6px' })}
-            onChange={(e) => onDataChange('title', e.target.value)}
+          <div className={css({ position: 'relative' })}>
+            <TextField
+              placeholder="Type guild name"
+              onChange={(e) => {
+                //
+                const value = e.target.value
+                  .replace(/[^a-zA-Z0-9-]/g, '')
+                  .replace(/-+/g, '-')
+                  .replace(/^-|-$/g, '');
+                if (value !== e.target.value) {
+                  setError({ title: t('Guild.invalid-guild-name') });
+                  return;
+                }
+                onDataChange('title', e.target.value);
+              }}
+              error={error.title}
+            />
+            <div className={tooltipStyle}>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <InfoIcon size={20} color="#FFFFFF80" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <li>Only english & hyphen</li>
+                    <li>50 characters</li>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          </div>
+          <TextArea
+            placeholder="Type guild description"
+            onChange={(e) => onDataChange('body', e.target.value)}
+            className={css({ mt: '6px' })}
           />
-          <TextArea placeholder="Type guild description" onChange={(e) => onDataChange('body', e.target.value)} />
         </div>
         <div>
           <p className={headingStyle}>Guild thumbnail</p>
@@ -102,4 +138,13 @@ const headingStyle = css({
 const itemStyle = css({
   borderColor: 'white.white_90',
   borderRadius: '8px',
+});
+
+const tooltipStyle = css({
+  position: 'absolute',
+  top: 0,
+  right: '14px  ',
+  bottom: 0,
+  margin: 'auto',
+  height: 'fit-content',
 });

@@ -14,6 +14,7 @@ const textAreaStyle = css({
   padding: '16px 12px 8px 20px',
   flexShrink: 0,
   color: 'white',
+  resize: 'none',
   _placeholder: {
     color: 'white.white_50',
   },

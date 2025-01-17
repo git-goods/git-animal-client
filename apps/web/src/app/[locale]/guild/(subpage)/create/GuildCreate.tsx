@@ -19,6 +19,7 @@ export default function GuildCreate() {
     icon: '',
     background: '',
   });
+  const [error, setError] = useState<{ all?: string; title?: string }>({});
   const [selectPersona, setSelectPersona] = useState('');
 
   const onChange = (key: string, value: string) => {
@@ -38,14 +39,16 @@ export default function GuildCreate() {
         personaId: selectPersona,
       });
       router.push(`/guild/${res.id}`);
-    } catch (error) {}
+    } catch (error) {
+      setError({ all: 'fail create guild' });
+    }
   };
 
   return (
     <>
       {step === 'guild-info' && (
         <>
-          <GuildCreateForm formData={formData} onDataChange={onChange} />
+          <GuildCreateForm formData={formData} onDataChange={onChange} error={error} setError={setError} />
           <Button mx="auto" disabled={!isValid} onClick={() => setStep('guild-persona')}>
             Create / 100,000P
           </Button>

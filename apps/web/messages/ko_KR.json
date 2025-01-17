@@ -160,6 +160,7 @@
     "copy-link-success": "복사 성공!"
   },
   "Guild": {
-    "join-request-success": "성공적으로 길드 가입 요청을 보냈습니다."
+    "join-request-success": "성공적으로 길드 가입 요청을 보냈습니다.",
+    "invalid-guild-name": "길드 이름은 영문자, 숫자, -만 포함할 수 있으며, -으로 시작하거나 끝날 수 없습니다."
   }
 }
