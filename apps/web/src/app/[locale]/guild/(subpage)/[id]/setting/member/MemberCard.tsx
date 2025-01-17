@@ -25,7 +25,11 @@ export function MemberCard({ member, guildId }: { member: GuildMember; guildId: 
       image={getPersonaImage(member.personaType)}
       name={member.name}
       count={member.contributions}
-      bottomElement={<Button onClick={kickMember}>Remove</Button>}
+      bottomElement={
+        <Button variant="secondary" onClick={kickMember} width="90px">
+          Kick
+        </Button>
+      }
     />
   );
 }

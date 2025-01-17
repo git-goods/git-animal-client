@@ -16,9 +16,11 @@ export function BannerGuildMember({
 }) {
   return (
     <div className={bannerStyle}>
-      <img src={image} alt={name} width={80} height={80} />
-      <p className={nameStyle}>{name}</p>
-      <p className={countStyle}>{count}</p>
+      <div>
+        <img src={image} alt={name} width={80} height={80} />
+        <p className={nameStyle}>{name}</p>
+        <p className={countStyle}>{count}</p>
+      </div>
       <Flex gap="2">{bottomElement}</Flex>
     </div>
   );
@@ -29,9 +31,10 @@ const bannerStyle = css({
   padding: '8px 16px 16px 16px',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: '12px',
   backgroundColor: 'white.white_10',
   borderRadius: '8px',
+  textAlign: 'center',
+  gap: '12px',
 });
 
 const nameStyle = css({
