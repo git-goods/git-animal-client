@@ -10,6 +10,7 @@ import { GitanimalsGuild } from '@/components/Gitanimals';
 import { GuildPeopleList } from '../../_components/GuildPeopleList';
 
 export const GuildDetail = ({ details }: { guildId: string; details: Guild }) => {
+  console.log('details: ', details);
   return (
     <>
       <div>

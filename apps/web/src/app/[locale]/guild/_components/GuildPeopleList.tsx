@@ -4,13 +4,13 @@ import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { flex } from '_panda/patterns';
 import Flicking from '@egjs/react-flicking';
-import type { GuildMember } from '@gitanimals/api';
+import type { GuildLeader, GuildMember } from '@gitanimals/api';
 import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
 import { UsersRoundIcon } from 'lucide-react';
 
 import { getPersonaImage } from '@/utils/image';
 
-export function GuildPeopleList({ members, leader }: { members: GuildMember[]; leader: GuildMember }) {
+export function GuildPeopleList({ members, leader }: { members: GuildMember[]; leader: GuildLeader }) {
   return (
     <div className={listStyle}>
       <div className={leaderStyle}>

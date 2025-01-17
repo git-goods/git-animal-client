@@ -21,7 +21,7 @@ export default async function GuildPage({ params }: { params: { id: string } }) 
   return (
     <>
       <div className={topStyle}>
-        <Link href="/guild?search=true" style={{ flex: 1 }} className={buttonWrapperStyle}>
+        <Link href="/guild?search=true" className={buttonWrapperStyle}>
           <SearchIcon color="rgba(255, 255, 255, 0.5)" width={20} height={20} />
         </Link>
 
@@ -87,6 +87,8 @@ const guildPreviewStyle = css({
 const topStyle = flex({
   gap: 2,
   alignItems: 'center',
+  justifyContent: 'flex-end',
+
   '& > *': {
     height: '40px',
   },
@@ -140,8 +142,8 @@ const bodyStyle = css({
   mt: 3,
 });
 const buttonWrapperStyle = center({
-  w: '36px',
-  h: '36px',
+  w: '40px',
+  h: '40px',
   backgroundColor: 'white.white_25',
   borderRadius: '10px',
 });

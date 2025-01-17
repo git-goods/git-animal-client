@@ -27,6 +27,10 @@ interface GuildPageProps {
 }
 
 export default async function GuildPage({ searchParams }: GuildPageProps) {
+  return <GuildInner searchParams={searchParams} />;
+}
+
+export async function GuildInner({ searchParams }: GuildPageProps) {
   const isSearchMode = Boolean(searchParams.search);
 
   const allJoinGuilds = await getAllJoinGuilds();
@@ -121,14 +125,14 @@ const containerStyle = flex({
   gap: 4,
   position: 'relative',
   zIndex: 1,
+  minH: 'fit-content',
 });
 
 const cardListStyle = grid({
-  gridTemplateRows: 'repeat(3, 210px)',
+  // gridTemplateRows: 'repeat(3, 210px)',
   columns: 3,
   gap: '8px',
   w: 'full',
-  // flex: 1,
   _mobile: {
     columns: 1,
   },

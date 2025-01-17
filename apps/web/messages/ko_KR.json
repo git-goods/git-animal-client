@@ -158,5 +158,8 @@
   "Preview": {
     "copy-link-title": "이미지 복사",
     "copy-link-success": "복사 성공!"
+  },
+  "Guild": {
+    "join-request-success": "성공적으로 길드 가입 요청을 보냈습니다."
   }
 }
