@@ -27,6 +27,16 @@ export const GLYPH = {
     },
   },
 
+  glyph36: {
+    bold: {
+      fontFamily: 'Product Sans',
+      fontSize: '36px',
+      fontWeight: '700',
+      lineHeight: '120%',
+      letterSpacing: '-0.3px',
+    },
+  },
+
   glyph32: {
     bold: {
       fontFamily: 'Product Sans',
