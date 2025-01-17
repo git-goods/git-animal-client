@@ -1,6 +1,7 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
+import { useEffect } from 'react';
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { guildQueries } from '@gitanimals/react-query';
@@ -18,6 +19,16 @@ export function GuildCreateForm({ formData, onDataChange }: GuildCreateFormProps
   const { data: icons } = useQuery(guildQueries.getGuildIconsOptions());
   const { data: backgrounds } = useQuery(guildQueries.getGuildBackgroundsOptions());
 
+  useEffect(() => {
+    if (icons && icons.length > 0 && !formData.icon) {
+      onDataChange('icon', icons[0]);
+    }
+    if (backgrounds && backgrounds.length > 0 && !formData.background) {
+      onDataChange('background', backgrounds[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [icons, backgrounds]);
+
   return (
     <>
       <Flex flexDirection="column" gap="24px">
@@ -34,18 +45,12 @@ export function GuildCreateForm({ formData, onDataChange }: GuildCreateFormProps
           <p className={headingStyle}>Guild thumbnail</p>
           <Flex gap="6px">
             {icons?.map((icon) => (
-              <button onClick={() => onDataChange('icon', icon)} key={icon}>
-                <img
-                  src={icon}
-                  className={itemStyle}
-                  width={70}
-                  height={70}
-                  key={icon}
-                  alt={icon}
-                  style={{
-                    border: formData.icon === icon ? '1.5px solid' : 'none',
-                  }}
-                />
+              <button
+                onClick={() => onDataChange('icon', icon)}
+                key={icon}
+                className={formData.icon === icon ? selectedStyle : unselectedStyle}
+              >
+                <img src={icon} className={itemStyle} width={70} height={70} key={icon} alt={icon} />
               </button>
             ))}
           </Flex>
@@ -54,7 +59,11 @@ export function GuildCreateForm({ formData, onDataChange }: GuildCreateFormProps
           <p className={headingStyle}>Guild background</p>
           <Flex gap="6px">
             {backgrounds?.map((background) => (
-              <button onClick={() => onDataChange('background', background)} key={background}>
+              <button
+                onClick={() => onDataChange('background', background)}
+                key={background}
+                className={formData.background === background ? selectedStyle : unselectedStyle}
+              >
                 <img
                   src={getBackgroundImage(background)}
                   className={itemStyle}
@@ -62,9 +71,6 @@ export function GuildCreateForm({ formData, onDataChange }: GuildCreateFormProps
                   height={124}
                   key={background}
                   alt={background}
-                  style={{
-                    border: formData.background === background ? '1.5px solid' : 'none',
-                  }}
                 />
               </button>
             ))}
@@ -74,6 +80,19 @@ export function GuildCreateForm({ formData, onDataChange }: GuildCreateFormProps
     </>
   );
 }
+
+const selectedStyle = css({
+  border: '1.5px solid',
+  borderRadius: '8px',
+  opacity: 1,
+});
+
+const unselectedStyle = css({
+  border: 'none',
+  borderRadius: '8px',
+  opacity: 0.4,
+  transition: 'opacity 0.1s ease-in-out',
+});
 
 const headingStyle = css({
   textStyle: 'glyph14.bold',
