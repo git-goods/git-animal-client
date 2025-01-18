@@ -1,5 +1,3 @@
-'use client';
-
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { createStyleContext } from '@shadow-panda/style-context';
 import { styled } from '_panda/jsx';
