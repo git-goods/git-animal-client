@@ -8,3 +8,5 @@ const GUILD = {
 export const ROUTE = {
   GUILD,
 };
+
+export const ORIGIN_URL = 'https://www.gitanimals.org/en_US';

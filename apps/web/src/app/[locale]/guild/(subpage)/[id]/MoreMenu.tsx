@@ -7,10 +7,13 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { CatIcon, EllipsisVerticalIcon, LinkIcon, LogOutIcon, SettingsIcon, UsersRoundIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { useDialog } from '@/components/Global/useDialog';
+import { ORIGIN_URL, ROUTE } from '@/constants/route';
 import { Link, useRouter } from '@/i18n/routing';
 import { useClientUser } from '@/utils/clientAuth';
+import { copyClipBoard } from '@/utils/copy';
 
 interface MenuType {
   title: string;
@@ -58,7 +61,8 @@ export const MoreMenu = wrap
         title: 'Send invite message',
         icon: LinkIcon,
         onClick: () => {
-          console.log('send invite message');
+          copyClipBoard(ORIGIN_URL + ROUTE.GUILD.DETAIL(guildId));
+          toast.success('Invite message copied to clipboard');
         },
         access: ['leader', 'member'],
       },
