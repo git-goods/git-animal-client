@@ -2,7 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { TextArea, TextField, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@gitanimals/ui-panda';
 import { InfoIcon } from 'lucide-react';
@@ -16,7 +16,7 @@ export interface FormState {
 interface GuildInfoFormProps {
   icons: string[];
   backgrounds: string[];
-  onFieldChange: (key: string, value: string) => void;
+  onFieldChange: (key: string, value: string | boolean) => void;
   fields: {
     title: string;
     body: string;
@@ -29,8 +29,8 @@ interface GuildInfoFormProps {
 }
 
 export function GuildInfoFormClient({ setFormError, formError, ...props }: GuildInfoFormProps) {
+  console.log('props: ', props.fields.autoJoin);
   const t = useTranslations();
-  // const [formError, setFormError] = useState<Record<string, string>>({});
 
   return (
     <>
@@ -75,6 +75,32 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
             onChange={(e) => props.onFieldChange('body', e.target.value)}
             className={css({ mt: '6px' })}
           />
+        </div>
+        <div className={joinSettingStyle}>
+          <div>
+            <p className={headingStyle}>Guild join setting</p>
+            <p>You can configure the settings for guild joining requests.</p>
+          </div>
+          <div>
+            <button
+              className={cx(
+                joinSettingButtonStyle,
+                !props.fields.autoJoin ? joinSettingButtonSelectedStyle : joinSettingButtonNotSelectedStyle,
+              )}
+              onClick={() => props.onFieldChange('autoJoin', false)}
+            >
+              Approval Required
+            </button>
+            <button
+              className={cx(
+                joinSettingButtonStyle,
+                props.fields.autoJoin ? joinSettingButtonSelectedStyle : joinSettingButtonNotSelectedStyle,
+              )}
+              onClick={() => props.onFieldChange('autoJoin', true)}
+            >
+              Auto Join
+            </button>
+          </div>
         </div>
         <div>
           <p className={headingStyle}>Guild thumbnail</p>
@@ -145,4 +171,34 @@ const unselectedStyle = css({
   borderRadius: '8px',
   opacity: 0.4,
   transition: 'opacity 0.1s ease-in-out',
+});
+
+const joinSettingStyle = css({
+  display: 'flex',
+  gap: '10px',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+});
+
+const joinSettingButtonStyle = css({
+  border: '1px solid',
+  borderRadius: '6px',
+  padding: '8px 16px',
+  textStyle: 'glyph14.regular',
+  transition: 'all 0.1s ease-in-out',
+  _last: {
+    ml: 1,
+  },
+});
+
+const joinSettingButtonNotSelectedStyle = css({
+  background: 'white.white_10',
+  borderColor: 'white.white_10',
+  color: 'white.white_25',
+});
+
+const joinSettingButtonSelectedStyle = css({
+  background: 'white.white_25',
+  borderColor: 'white.white_50',
+  color: 'white',
 });

@@ -2,13 +2,10 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useEffect } from 'react';
-import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
 import { guildQueries } from '@gitanimals/react-query';
 import { useQuery } from '@tanstack/react-query';
 
 import { GuildInfoFormClient } from '../[id]/setting/GuidlInfoFormClient';
-import { icons } from 'lucide-react';
 
 export interface GuildCreateFormProps {
   formData: {
@@ -18,14 +15,12 @@ export interface GuildCreateFormProps {
     farmType: string;
     autoJoin: boolean;
   };
-  onDataChange: (key: string, value: string) => void;
+  onDataChange: (key: string, value: string | boolean) => void;
   error: Record<string, string>;
   setError: (error: Record<string, string>) => void;
 }
 
 export function GuildCreateForm({ formData, onDataChange, error, setError }: GuildCreateFormProps) {
-  const t = useTranslations();
-
   const { data: icons } = useQuery(guildQueries.getGuildIconsOptions());
   const { data: backgrounds } = useQuery(guildQueries.getGuildBackgroundsOptions());
 

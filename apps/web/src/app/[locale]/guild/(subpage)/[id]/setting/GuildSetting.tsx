@@ -37,7 +37,7 @@ export function GuildSetting({
   const [error, setError] = useState('');
   const [formError, setFormError] = useState<Record<string, string>>({});
 
-  const onFieldChange = (key: string, value: string) => {
+  const onFieldChange = (key: string, value: string | boolean) => {
     setState({ ...state, [key]: value });
   };
 

@@ -20,12 +20,12 @@ export default function GuildCreate() {
     body: '',
     guildIcon: '',
     farmType: '',
-    autoJoin: false,
+    autoJoin: true,
   });
   const [error, setError] = useState<{ all?: string; title?: string }>({});
   const [selectPersona, setSelectPersona] = useState('');
 
-  const onChange = (key: string, value: string) => {
+  const onChange = (key: string, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
   };
 

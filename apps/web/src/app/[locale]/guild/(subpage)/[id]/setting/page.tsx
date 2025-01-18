@@ -11,6 +11,7 @@ export default async function GuildSettingPage({ params }: { params: { id: strin
   const icons = await getGuildIcons();
   const backgrounds = await getGuildBackgrounds();
   const data = await getGuildById({ guildId: params.id });
+  console.log('data: ', data);
 
   if (!isLeader) {
     alert('리더가 아닙니다.');
