@@ -1,15 +1,13 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
-import { css, cx } from '_panda/css';
+import { useTranslations } from 'next-intl';
+import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
-import type { Guild } from '@gitanimals/api';
 import { TextArea, TextField, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@gitanimals/ui-panda';
+import { InfoIcon } from 'lucide-react';
 
 import { getBackgroundImage } from '@/utils/image';
-import { useState } from 'react';
-import { useTranslations } from 'next-intl';
-import { InfoIcon } from 'lucide-react';
 
 export interface FormState {
   message: string;
@@ -97,7 +95,7 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
           <Flex gap="6px">
             {props.backgrounds?.map((background) => (
               <button
-                onClick={() => props.onFieldChange('background', background)}
+                onClick={() => props.onFieldChange('farmType', background)}
                 key={background}
                 className={props.fields.farmType === background ? selectedStyle : unselectedStyle}
               >

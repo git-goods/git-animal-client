@@ -2,14 +2,14 @@
 import { useState } from 'react';
 import { createGuild } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
+import { AxiosError } from 'axios';
+import { toast } from 'sonner';
 
 import { useRouter } from '@/i18n/routing';
 
 import { SelectPersonaList } from '../../_components/SelectPersonaList';
 
 import { GuildCreateForm } from './GuildCreateForm';
-import { AxiosError } from 'axios';
-import { toast } from 'sonner';
 
 export default function GuildCreate() {
   const router = useRouter();
