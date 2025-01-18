@@ -29,7 +29,6 @@ interface GuildInfoFormProps {
 }
 
 export function GuildInfoFormClient({ setFormError, formError, ...props }: GuildInfoFormProps) {
-  console.log('props: ', props.fields.autoJoin);
   const t = useTranslations();
 
   return (
