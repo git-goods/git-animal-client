@@ -30,7 +30,7 @@ export default async function GuildPage({ searchParams }: GuildPageProps) {
   return <GuildInner searchParams={searchParams} />;
 }
 
-export async function GuildInner({ searchParams }: GuildPageProps) {
+async function GuildInner({ searchParams }: GuildPageProps) {
   const isSearchMode = Boolean(searchParams.search);
 
   const allJoinGuilds = await getAllJoinGuilds();
