@@ -19,6 +19,7 @@ const containerStyle = css({
   height: 'calc(100vh - 60px)',
   overflow: 'hidden',
   position: 'relative',
+  px: 5,
 
   _mobile: {
     minHeight: '100vh ',

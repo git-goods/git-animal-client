@@ -86,6 +86,7 @@ function SizeInputList({ onApply }: { onApply: (width: number, height: number) =
         <SizeInput value={width} onChange={(e) => setWidth(parseInt(e.target.value))} name="width" />
         <SizeInput value={height} onChange={(e) => setHeight(parseInt(e.target.value))} name="height" />
         <Button
+          style={{ minWidth: 'fit-content' }}
           onClick={() => {
             if (width <= 0 || height <= 0) {
               toast.error(t('invalid-size-error'));

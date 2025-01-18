@@ -7,7 +7,6 @@ export const bannerStyle = cva({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: '12px',
-    backgroundColor: 'white.white_10',
     transition: 'border 0.3s, background-color 0.3s',
     position: 'relative',
     borderColor: 'transparent',
@@ -24,7 +23,9 @@ export const bannerStyle = cva({
         background:
           'linear-gradient(133deg, rgba(255, 253, 201, 0.40) 2.19%, rgba(150, 230, 216, 0.40) 49.24%, rgba(125, 171, 241, 0.40) 98.21%)',
       },
-      default: {},
+      default: {
+        backgroundColor: 'white.white_10',
+      },
     },
     size: {
       small: {

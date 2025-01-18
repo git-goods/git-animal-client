@@ -5,6 +5,8 @@ import Flicking from '@egjs/react-flicking';
 import type { GuildMember } from '@gitanimals/api';
 import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
 
+import { getPersonaImage } from '@/utils/image';
+
 export function GuildMemeberSlider({ members }: { members: GuildMember[] }) {
   return (
     <Flicking moveType="freeScroll" align="prev" bound={true}>
@@ -17,7 +19,7 @@ export function GuildMemeberSlider({ members }: { members: GuildMember[] }) {
             key={member.id}
             name={member.name}
             count={member.contributions}
-            image={member.personaId}
+            image={getPersonaImage(member.personaType)}
           />
         </div>
       ))}

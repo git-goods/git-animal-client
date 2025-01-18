@@ -9,13 +9,12 @@ import { ChevronLeftIcon } from 'lucide-react';
 
 import { PaginationServer } from '@/components/Pagination/PaginationServer';
 import { BackTrigger } from '@/components/Trigger';
+import { ROUTE } from '@/constants/route';
 import { Link, redirect } from '@/i18n/routing';
 
 import { GuildCard } from './_components/GuildCard';
 import { GuildSearch } from './_components/GuildSearch';
 import { SortSelect } from './_components/SortSelect';
-
-const GUILD_PAGE_URL = '/guild';
 
 interface GuildPageProps {
   searchParams: {
@@ -28,6 +27,10 @@ interface GuildPageProps {
 }
 
 export default async function GuildPage({ searchParams }: GuildPageProps) {
+  return <GuildInner searchParams={searchParams} />;
+}
+
+export async function GuildInner({ searchParams }: GuildPageProps) {
   const isSearchMode = Boolean(searchParams.search);
 
   const allJoinGuilds = await getAllJoinGuilds();
@@ -41,7 +44,7 @@ export default async function GuildPage({ searchParams }: GuildPageProps) {
   }
 
   const guildId = allJoinGuilds.guilds[0].id;
-  redirect(`/guild/${guildId}`);
+  redirect(ROUTE.GUILD.MAIN(guildId));
 }
 
 interface GuildMainProps {
@@ -64,7 +67,7 @@ async function GuildMain({ searchParams, isSearchMode }: GuildMainProps) {
 
   const getGuildPageUrl = (params: Record<string, unknown>) => {
     const newParams = { ...params, rd: randomId };
-    return getNewUrl({ baseUrl: GUILD_PAGE_URL, newParams, oldParams: searchParams });
+    return getNewUrl({ baseUrl: ROUTE.GUILD.LIST(), newParams, oldParams: searchParams });
   };
 
   return (
@@ -122,14 +125,14 @@ const containerStyle = flex({
   gap: 4,
   position: 'relative',
   zIndex: 1,
+  minH: 'fit-content',
 });
 
 const cardListStyle = grid({
-  gridTemplateRows: 'repeat(3, 210px)',
+  // gridTemplateRows: 'repeat(3, 210px)',
   columns: 3,
   gap: '8px',
   w: 'full',
-  // flex: 1,
   _mobile: {
     columns: 1,
   },

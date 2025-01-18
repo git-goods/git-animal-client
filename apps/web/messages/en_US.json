@@ -159,5 +159,9 @@
   "Preview": {
     "copy-link-title": "Copy Link",
     "copy-link-success": "Copy success!"
+  },
+  "Guild": {
+    "join-request-success": "Successfully sent a guild join request.",
+    "invalid-guild-name": "Guild name may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen."
   }
 }
