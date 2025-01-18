@@ -8,6 +8,7 @@ import type { GuildLeader, GuildMember } from '@gitanimals/api';
 import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
 import { UsersRoundIcon } from 'lucide-react';
 
+import { USER_GITHUB_URL } from '@/constants/route';
 import { getPersonaImage } from '@/utils/image';
 
 export function GuildPeopleList({ members, leader }: { members: GuildMember[]; leader: GuildLeader }) {
@@ -15,12 +16,14 @@ export function GuildPeopleList({ members, leader }: { members: GuildMember[]; l
     <div className={listStyle}>
       <div className={leaderStyle}>
         <p> Leader</p>
-        <BannerPetSelectMedium
-          name={leader.name}
-          count={leader.contributions}
-          image={getPersonaImage(leader.personaType)}
-          status="gradient"
-        />
+        <a href={USER_GITHUB_URL(leader.name)} target="_blank">
+          <BannerPetSelectMedium
+            name={leader.name}
+            count={leader.contributions}
+            image={getPersonaImage(leader.personaType)}
+            status="gradient"
+          />
+        </a>
       </div>
       {members.length > 0 && (
         <div className={membersStyle}>
@@ -37,12 +40,14 @@ export function GuildPeopleList({ members, leader }: { members: GuildMember[]; l
                 className={cx('flicking-panel', css({ height: 'fit-content', _first: { ml: 0 }, marginLeft: 1 }))}
                 key={member.id}
               >
-                <BannerPetSelectMedium
-                  key={member.id}
-                  name={member.name}
-                  count={member.contributions}
-                  image={getPersonaImage(member.personaType)}
-                />
+                <a href={USER_GITHUB_URL(member.name)} target="_blank">
+                  <BannerPetSelectMedium
+                    key={member.id}
+                    name={member.name}
+                    count={member.contributions}
+                    image={getPersonaImage(member.personaType)}
+                  />
+                </a>
               </div>
             ))}
           </Flicking>

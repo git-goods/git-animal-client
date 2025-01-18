@@ -1,15 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import { css } from '_panda/css';
-import { Flex } from '_panda/jsx';
 import { center, flex } from '_panda/patterns';
 import { getGuildById } from '@gitanimals/api';
-import { BannerPetSelectMedium, Button } from '@gitanimals/ui-panda';
-import { SearchIcon, UsersRoundIcon } from 'lucide-react';
+import { Button } from '@gitanimals/ui-panda';
+import { SearchIcon } from 'lucide-react';
 
 import { GitanimalsGuild } from '@/components/Gitanimals';
-import { GuildMemeberSlider } from '@/components/Guild/MemeberSlider';
 import { Link } from '@/i18n/routing';
-import { getPersonaImage } from '@/utils/image';
+
+import { GuildPeopleList } from '../../_components/GuildPeopleList';
 
 import { CopyGuildImgButton } from './CopyGuildImgButton';
 import { GuildSliderContainer } from './GuildSliderContainer';
@@ -42,27 +41,8 @@ export default async function GuildPage({ params }: { params: { id: string } }) 
             </div>
             <div className={bodyStyle}>{data.body}</div>
           </div>
-          <div className={listStyle}>
-            <div className={leaderStyle}>
-              <p> Leader</p>
-              <BannerPetSelectMedium
-                name={data.leader.name}
-                count={data.leader.contributions}
-                image={getPersonaImage(data.leader.personaType)}
-                status="gradient"
-              />
-            </div>
-            <div className={membersStyle}>
-              <Flex mb="1" justifyContent="space-between">
-                <p>Members</p>
-                <Flex gap="6px" alignItems="center">
-                  <UsersRoundIcon size={16} color="#FFFFFF80" />
-                  <span>{data.members.length + 1}/ 15</span>
-                </Flex>
-              </Flex>
-              <GuildMemeberSlider members={data.members} />
-            </div>
-          </div>
+          <GuildPeopleList members={data.members} leader={data.leader} />
+
           <div className={guildPreviewStyle}>
             <GitanimalsGuild guildId={data.id} />
           </div>
