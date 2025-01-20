@@ -6,9 +6,11 @@ import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { ErrorPage } from '@/components/Error/ErrorPage';
 import { isDev } from '@/constants/env';
 import { usePathname, useRouter } from 'next/navigation';
+import { useClientUser } from '@/utils/clientAuth';
 
 export default function NotFound() {
   const pathname = usePathname();
+  const user = useClientUser();
 
   useEffect(() => {
     if (isDev) return;
@@ -16,6 +18,7 @@ export default function NotFound() {
     sendMessageToErrorChannel(`<!here>
 🌌 Not Found 🌌
 Path: ${pathname}
+User: ${user.name}
 `);
   }, [pathname]);
 

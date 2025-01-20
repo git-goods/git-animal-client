@@ -57,7 +57,10 @@ export default function GuildCreate() {
         <>
           <GuildCreateForm formData={formData} onDataChange={onChange} error={error} setError={setError} />
           <Button mx="auto" disabled={isFirstStepValid} onClick={() => setStep('guild-persona')}>
-            Create / 100,000P
+            Create / 3,000P
+            <span style={{ textDecoration: 'line-through', fontSize: '12px', color: '#9295A1', marginLeft: '4px' }}>
+              30,000P
+            </span>
           </Button>
         </>
       )}
