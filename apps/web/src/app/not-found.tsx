@@ -18,7 +18,7 @@ export default function NotFound() {
     sendMessageToErrorChannel(`<!here>
 🌌 Not Found 🌌
 Path: ${pathname}
-User: ${user.name}
+User: ${user?.name ?? 'NOT LOGGED IN'}
 `);
   }, [pathname]);
 

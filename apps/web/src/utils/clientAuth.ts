@@ -16,5 +16,5 @@ export const useClientSession = () => {
 
 export const useClientUser = () => {
   const session = useSession();
-  return session.data?.user ?? initUser;
+  return session?.data?.user ?? initUser;
 };
