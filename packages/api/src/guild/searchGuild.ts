@@ -23,11 +23,7 @@ export type SearchGuildRequest = z.infer<typeof SearchGuildRequestSchema>;
 export type SearchGuildResponse = z.infer<typeof SearchGuildResponseSchema>;
 
 export const searchGuild = async (request: SearchGuildRequest): Promise<SearchGuildResponse> => {
-  return renderGet('/guilds/search', {
+  return renderGet<SearchGuildResponse>('/guilds/search', {
     params: request ? convertCamelObjToKebab(request) : undefined,
   });
-};
-
-export const generateRandomKey = () => {
-  return Math.floor(Math.random() * 1000000);
 };

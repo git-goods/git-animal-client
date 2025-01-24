@@ -19,7 +19,6 @@ export function PaginationServer(props: { generateMoveLink: (props: { page: numb
     <div className={paginationContainerStyle}>
       <Link
         href={props.generateMoveLink({ page: props.prevPage ?? 0 })}
-        //  disabled={props.prevPage === null}
         style={{
           pointerEvents: props.prevPage === null ? 'none' : 'auto',
           cursor: props.prevPage === null ? 'not-allowed' : 'pointer',
@@ -28,15 +27,17 @@ export function PaginationServer(props: { generateMoveLink: (props: { page: numb
         <ChevronLeft color="#B5B8C0" />
       </Link>
 
-      {getPaginationGroup().map((i) => (
-        <Link
-          href={props.generateMoveLink({ page: i + 1 })}
-          key={i}
-          className={props.currentPage === i ? selectedCss : nonSelectedCss}
-        >
-          {i + 1}
-        </Link>
-      ))}
+      {getPaginationGroup().map((i) => {
+        return (
+          <Link
+            href={props.generateMoveLink({ page: i })}
+            key={i}
+            className={props.currentPage === i ? selectedCss : nonSelectedCss}
+          >
+            {i + 1}
+          </Link>
+        );
+      })}
 
       <Link
         href={props.generateMoveLink({ page: props.nextPage ?? 0 })}

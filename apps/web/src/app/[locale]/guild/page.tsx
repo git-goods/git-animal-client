@@ -63,6 +63,7 @@ async function GuildMain({ searchParams, isSearchMode }: GuildMainProps) {
     key: randomId,
     filter: searchParams.filter ?? 'RANDOM',
     text: searchParams.text,
+    pageNumber: searchParams.page ? Number(searchParams.page) : undefined,
   });
 
   const getGuildPageUrl = (params: Record<string, unknown>) => {
@@ -94,7 +95,12 @@ async function GuildMain({ searchParams, isSearchMode }: GuildMainProps) {
             <GuildCard key={guild.id} guild={guild} />
           ))}
         </div>
-        <PaginationServer {...data.pagination} generateMoveLink={getGuildPageUrl} />
+        <PaginationServer
+          {...data.pagination}
+          generateMoveLink={getGuildPageUrl}
+          currentPage={searchParams.page ? Number(searchParams.page) : 0}
+          key={data.pagination.currentPage}
+        />
       </div>
       <Image
         src="/guild/init-bg-bottom.webp"
