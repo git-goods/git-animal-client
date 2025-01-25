@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { auctionQueries } from '@gitanimals/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import Pagination from '@/components/Pagination/Pagination';
 import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
@@ -10,8 +12,6 @@ import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import { useSearchOptions } from '../useSearchOptions';
 
 import { tableCss, tbodyCss, theadCss } from './table.styles';
-import { useQuery } from '@tanstack/react-query';
-import { auctionQueries } from '@gitanimals/react-query';
 
 const HISTORY_ACTION_OBJ = ACTION_BUTTON_OBJ['SELL_HISTORY'];
 

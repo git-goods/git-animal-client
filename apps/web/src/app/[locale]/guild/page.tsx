@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { css } from '_panda/css';
 import { flex, grid } from '_panda/patterns';
 import type { FilterType } from '@gitanimals/api';
-import { generateRandomKey, getAllJoinGuilds, searchGuild } from '@gitanimals/api';
+import { getAllJoinGuilds, searchGuild } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 import { getNewUrl } from '@gitanimals/util-common';
 import { ChevronLeftIcon } from 'lucide-react';
@@ -185,3 +185,7 @@ function EmptyGuild() {
     </div>
   );
 }
+
+const generateRandomKey = (): number => {
+  return Number(Math.random().toString(36).slice(2));
+};

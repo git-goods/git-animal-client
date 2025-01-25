@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { ErrorPage } from '@/components/Error/ErrorPage';
 import { isDev } from '@/constants/env';
-import { usePathname, useRouter } from 'next/navigation';
 import { useClientUser } from '@/utils/clientAuth';
 
 export default function NotFound() {
