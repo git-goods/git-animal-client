@@ -1,11 +1,12 @@
-import Image from 'next/image';
-import { css } from '_panda/css';
-import { flex, grid } from '_panda/patterns';
+/* eslint-disable simple-import-sort/imports */
 import type { FilterType } from '@gitanimals/api';
 import { getAllJoinGuilds, searchGuild } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 import { getNewUrl } from '@gitanimals/util-common';
+import { css } from '_panda/css';
+import { flex, grid } from '_panda/patterns';
 import { ChevronLeftIcon } from 'lucide-react';
+import Image from 'next/image';
 
 import { PaginationServer } from '@/components/Pagination/PaginationServer';
 import { BackTrigger } from '@/components/Trigger';
@@ -58,13 +59,15 @@ interface GuildMainProps {
 }
 
 async function GuildMain({ searchParams, isSearchMode }: GuildMainProps) {
-  const randomId = searchParams.rd ? Number(searchParams.rd) : generateRandomKey();
+  const randomId = searchParams?.rd ? Number(searchParams.rd) : generateRandomKey();
   const data = await searchGuild({
     key: randomId,
     filter: searchParams.filter ?? 'RANDOM',
-    text: searchParams.text,
-    pageNumber: searchParams.page ? Number(searchParams.page) : undefined,
+    text: searchParams?.text,
+    pageNumber: searchParams?.page ? Number(searchParams.page) : undefined,
   });
+
+  console.log('a', data);
 
   const getGuildPageUrl = (params: Record<string, unknown>) => {
     const newParams = { ...params, rd: randomId };
@@ -187,5 +190,5 @@ function EmptyGuild() {
 }
 
 const generateRandomKey = (): number => {
-  return Number(Math.random().toString(36).slice(2));
+  return Math.floor(Math.random() * 100);
 };
