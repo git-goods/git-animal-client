@@ -143,7 +143,7 @@ const cardListStyle = grid({
   gap: '8px',
   w: 'full',
   _mobile: {
-    columns: 1,
+    gridTemplateColumns: '1fr',
   },
 });
 const cardListEmptyStyle = css({

@@ -22,6 +22,7 @@ const containerStyle = css({
   px: 5,
 
   _mobile: {
-    minHeight: '100vh ',
+    minHeight: '100vh',
+    height: '100%',
   },
 });
