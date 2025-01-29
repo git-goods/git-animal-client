@@ -13,6 +13,16 @@ export const INBOX_NOTICE: Inbox[] = [
     status: 'UNREAD',
     publishedAt: '',
   },
+  {
+    id: '3',
+    image: MAIN_IMAGE,
+    title: 'open-guild-title',
+    body: 'open-guild-body',
+    redirectTo: '/guild',
+    type: 'NOTICE',
+    status: 'UNREAD',
+    publishedAt: '',
+  },
   // {
   //   id: '2',
   //   image: MAIN_IMAGE,
