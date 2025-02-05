@@ -15,9 +15,16 @@
   },
   "devDependencies": {
     "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "prettier": "*",
     "turbo": "^2.0.4",
     "typescript": "*"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --cache --fix",
+      "prettier --cache --write"
+    ]
   },
   "resolutions": {
     "typescript": "^5.4.5",

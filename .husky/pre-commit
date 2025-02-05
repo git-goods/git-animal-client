@@ -1,1 +1,2 @@
-turbo type-check
+pnpm dlx turbo type-check
+pnpm dlx turbo lint-staged
