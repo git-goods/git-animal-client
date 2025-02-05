@@ -1,13 +1,13 @@
-import { notFound } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
 import { center } from '_panda/patterns';
+import { getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 
 import GNB from '@/components/GNB/GNB';
 
+import { AuctionSection } from './AuctionSection';
 import { BackgroundSection } from './BackgroundSection/BackgroundSection';
 import { FloatingPointSection } from './FloatingPointSection/FloatingPointSection';
-import { AuctionSection } from './AuctionSection';
 import { PetGotcha } from './PetGotcha';
 import type { TabType } from './type';
 import { TABS } from './type';
@@ -39,18 +39,14 @@ async function ShopPage({
           <BackgroundSection />
         </main>
       </div>
-      <div className={noticeStyle}>{t('no-mobile-support')}</div>
+      {/* <div className={noticeStyle}>{t('no-mobile-support')}</div> */}
     </>
   );
 }
 
 export default ShopPage;
 
-const subStyle = css({
-  _mobile: {
-    display: 'none',
-  },
-});
+const subStyle = css({});
 
 const noticeStyle = center({
   position: 'fixed',
