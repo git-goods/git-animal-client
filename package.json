@@ -10,9 +10,11 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "web": "pnpm -F @gitanimals/web",
-    "admin": "pnpm -F @gitanimals/admin"
+    "admin": "pnpm -F @gitanimals/admin",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.0.11",
     "prettier": "*",
     "turbo": "^2.0.4",
     "typescript": "*"
