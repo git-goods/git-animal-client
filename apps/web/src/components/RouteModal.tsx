@@ -52,6 +52,9 @@ const dialogContentStyle = cx(
     height: 'fit-content',
     gap: 8,
     overflowY: 'auto',
+    _mobile: {
+      height: '100vh',
+    },
   }),
   customScrollHorizontalStyle,
 );

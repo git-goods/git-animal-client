@@ -65,6 +65,9 @@ const listStyle = flex({
   overflowX: 'hidden',
   minH: '180px',
   color: 'white.white_100',
+  _mobile: {
+    maxW: 'calc(100vw - 40px)',
+  },
 });
 
 const leaderStyle = css({
