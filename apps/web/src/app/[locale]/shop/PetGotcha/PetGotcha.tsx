@@ -10,6 +10,10 @@ import { userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { css } from '_panda/css';
+import { useTranslations } from 'next-intl';
+import Image from 'next/image';
+import { useState } from 'react';
 
 import { getResponsiveImage } from '@/utils/image';
 

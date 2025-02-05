@@ -1,11 +1,11 @@
 'use client';
 
-import { memo } from 'react';
-import Image from 'next/image';
-import { css } from '_panda/css';
 import { userQueries } from '@gitanimals/react-query';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { css } from '_panda/css';
+import Image from 'next/image';
+import { memo } from 'react';
 
 import { addNumberComma } from '@/utils/number';
 
