@@ -37,7 +37,7 @@ export function GuildPeopleList({ members, leader }: { members: GuildMember[]; l
               <span>{members.length + 1}/ 15</span>
             </Flex>
           </Flex>
-          <Flicking moveType={isMobile ? 'snap' : 'freeScroll'} align="prev" bound={true}>
+          <Flicking moveType="freeScroll" align="prev" bound={true}>
             {members.map((member) => (
               <div
                 className={cx('flicking-panel', css({ height: 'fit-content', _first: { ml: 0 }, marginLeft: 1 }))}

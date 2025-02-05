@@ -36,6 +36,7 @@ export const MobileGNB = () => {
 
   return (
     <>
+      <div className={css({ h: '60px' })} />
       <header className={mobileHeaderStyle}>
         <div className={mobileHeaderContentStyle}>
           <button onClick={toggleMenu}>
