@@ -134,7 +134,7 @@ const mobileHeaderStyle = css({
   // common
   justifyContent: 'space-between',
   alignItems: 'center',
-  zIndex: 2000,
+  zIndex: 'header',
   position: 'fixed',
   padding: '0 20px',
   top: 0,
@@ -158,7 +158,7 @@ const mobileMenuStyle = css({
   maxHeight: 'calc(100vh - 60px)',
   overflowY: 'auto',
   boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-  zIndex: 1999,
+  zIndex: 'drawer',
 
   _mobile: {
     display: 'flex',

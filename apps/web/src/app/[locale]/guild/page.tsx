@@ -133,7 +133,7 @@ const containerStyle = flex({
   mx: 'auto',
   gap: 4,
   position: 'relative',
-  zIndex: 1,
+  zIndex: 'base',
   minH: 'fit-content',
 });
 
@@ -175,7 +175,7 @@ const bottomBgStyle = css({
   transform: 'translateX(-50%)',
   height: '228px',
   objectFit: 'cover',
-  zIndex: 0,
+  zIndex: 'base',
 });
 
 function EmptyGuild() {

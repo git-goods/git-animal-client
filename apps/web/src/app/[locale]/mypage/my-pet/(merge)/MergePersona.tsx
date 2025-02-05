@@ -203,7 +203,7 @@ const spinningLoaderContainerStyle = css({
   justifyContent: 'center',
   alignItems: 'center',
   width: '100%',
-  zIndex: 100,
+  zIndex: 'floating',
   height: '100%',
   background: 'rgba(0, 0, 0, 0.5)',
 });
