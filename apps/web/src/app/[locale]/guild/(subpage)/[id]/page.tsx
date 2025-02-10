@@ -34,7 +34,7 @@ export default async function GuildPage({ params }: { params: { id: string } }) 
         <div className={containerStyle}>
           <div>
             <div className={titleStyle}>
-              <img src={data.guildIcon} width={40} height={40} alt={data.title} />
+              <img src={data.guildIcon} width={40} height={40} alt={data.title} draggable={false} />
               <h2>{data.title}</h2>
 
               <MoreMenu guildId={data.id} />

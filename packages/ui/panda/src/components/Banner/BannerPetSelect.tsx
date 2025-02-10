@@ -11,7 +11,7 @@ interface BannerPetSelectMediumProps {
 export function BannerPetSelectMedium({ name, count, image, status = 'default' }: BannerPetSelectMediumProps) {
   return (
     <div className={bannerStyle({ size: 'medium', status })}>
-      <img src={image} alt={name} width={80} height={80} />
+      <img src={image} alt={name} width={80} height={80} draggable={false} />
       <p className={nameStyle}>{name}</p>
       <p className={countStyle}>{count}</p>
     </div>

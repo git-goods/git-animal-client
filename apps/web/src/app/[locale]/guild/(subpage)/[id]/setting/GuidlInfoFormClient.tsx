@@ -103,7 +103,7 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
         </div>
         <div>
           <p className={headingStyle}>Guild thumbnail</p>
-          <Flex gap="6px">
+          <Flex gap="6px" className={css({ _mobile: { flexWrap: 'wrap' } })}>
             {props.icons?.map((icon) => (
               <button
                 onClick={() => props.onFieldChange('guildIcon', icon)}
@@ -117,7 +117,7 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
         </div>
         <div>
           <p className={headingStyle}>Guild background</p>
-          <Flex gap="6px">
+          <Flex gap="6px" className={css({ _mobile: { flexWrap: 'wrap' } })}>
             {props.backgrounds?.map((background) => (
               <button
                 onClick={() => props.onFieldChange('farmType', background)}

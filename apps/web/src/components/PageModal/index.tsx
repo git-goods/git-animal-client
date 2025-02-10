@@ -19,6 +19,11 @@ export function PageModalLayout({ children }: PropsWithChildren) {
           color: 'white.white',
           w: '100%',
           position: 'relative',
+          _mobile: {
+            minHeight: 'calc(100vh - var(--mobile-header-height))',
+            borderRadius: 0,
+            p: 5,
+          },
         })}
       >
         <BackTrigger className={css({ position: 'absolute', top: '16px', right: '16px' })}>

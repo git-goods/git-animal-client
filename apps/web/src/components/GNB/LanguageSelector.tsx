@@ -62,7 +62,7 @@ const dropdownStyles = css({
   overflow: 'hidden',
   minWidth: '100px',
   width: '100%',
-  zIndex: 200,
+  zIndex: 'dropdown',
   boxShadow: '0px 3px 5px 2px rgba(0, 0, 0, 0.25)',
   py: '8px',
 
@@ -118,7 +118,7 @@ const languageSelectorContainerStyle = css({
   backgroundColor: '#fff',
   maxHeight: '100vh',
   overflowY: 'auto',
-  zIndex: 2002,
+  zIndex: 'drawer',
 });
 
 const languageSelectorHeaderStyle = css({

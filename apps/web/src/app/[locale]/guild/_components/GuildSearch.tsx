@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { css } from '_panda/css';
 import { Box } from '_panda/jsx';
 import { SearchBar } from '@gitanimals/ui-panda';
 import { ChevronLeftIcon } from 'lucide-react';
@@ -42,6 +43,11 @@ export function GuildSearch() {
           defaultValue={text}
           onChange={(e) => setInput(e.target.value)}
           onSubmit={onSubmit}
+          className={css({
+            _mobile: {
+              width: 'calc(100vw - 72px)',
+            },
+          })}
         />
       </Box>
     </>

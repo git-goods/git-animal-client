@@ -37,6 +37,12 @@
   }
 }
 
+@layer base {
+  :root {
+    --mobile-header-height: 60px;
+  }
+}
+
 /* toast */
 [data-sonner-toaster] {
   z-index: 500;

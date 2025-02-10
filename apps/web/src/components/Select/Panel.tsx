@@ -17,7 +17,7 @@ const panelStyle = css({
   border: '1px solid rgba(0, 0, 0, 0.1)',
   background: 'var(--gray-color-gray-05, #fbfbfb)',
   boxShadow: '0px 2px 4px 0px rgba(51, 50, 54, 0.06)',
-  zIndex: 1,
+  zIndex: 'floating',
   position: 'absolute',
   top: '100%',
   left: 0,

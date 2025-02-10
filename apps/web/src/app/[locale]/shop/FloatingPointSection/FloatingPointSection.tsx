@@ -36,7 +36,7 @@ const divCss = css({
   padding: '12px 16px',
   borderRadius: '12px',
   backgroundColor: 'black.black_25',
-  zIndex: '1000',
+  zIndex: 'modal',
 
   display: 'flex',
   flexDir: 'column',

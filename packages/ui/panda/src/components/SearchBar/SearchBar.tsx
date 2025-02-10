@@ -1,6 +1,6 @@
 'use client';
 
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { SearchIcon } from 'lucide-react';
 import { ComponentProps } from 'react';
@@ -10,8 +10,8 @@ export function SearchBar({ onSubmit, onKeyDown, ...props }: ComponentProps<'inp
     <div className={containerStyle}>
       <input
         type="text"
-        className={inputStyle}
         {...props}
+        className={cx(inputStyle, props.className)}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             onSubmit?.();

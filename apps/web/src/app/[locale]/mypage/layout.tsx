@@ -61,7 +61,7 @@ const mainStyle = grid({
   gap: '80px',
   gridTemplateColumns: '222px 1fr',
   position: 'relative',
-  zIndex: 1,
+  zIndex: 'floating',
   padding: '120px 200px',
 
   '@media (max-width: 1400px)': {

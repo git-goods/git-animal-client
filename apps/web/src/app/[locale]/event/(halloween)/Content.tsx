@@ -62,7 +62,7 @@ const containerStyle = flex({
   width: '100%',
   height: '100%',
   paddingTop: 211,
-  zIndex: 2,
+  zIndex: 'floating',
   flexDirection: 'column',
   _mobile: {
     paddingTop: 180,
@@ -111,7 +111,7 @@ const imageStyle = css({
   height: '100%',
   position: 'absolute',
   objectFit: 'contain',
-  zIndex: 1,
+  zIndex: 'base',
   minHeight: 'calc(100vh - 60px)',
   pointerEvents: 'none',
   top: '-60px',

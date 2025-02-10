@@ -21,7 +21,7 @@ function CheckTime() {
         left: 0,
         right: 0,
         bottom: 0,
-        zIndex: 10000,
+        zIndex: 'loading',
         background: '#00894D',
       })}
     >

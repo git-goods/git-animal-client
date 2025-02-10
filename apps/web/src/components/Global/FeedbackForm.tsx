@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { useState } from 'react';
@@ -88,7 +89,7 @@ function FeedBack() {
         <div className={containerStyle}>
           <section className={headingStyle}>
             <h2>Feedback</h2>
-            <Image src="/feedback/feedback-profile.png" alt="feedback" width={67.5} height={67} />
+            <img src="/feedback/feedback-profile.png" alt="feedback" width={67.5} height={67} />
             <p>
               Hello!! I’m Gitanimals Developer. Please leave any improvements, and it will be register GitHub issue.
             </p>
@@ -182,8 +183,8 @@ const openIconStyle = css({
   right: '4px',
   height: '121px',
   width: '110px',
-  zIndex: '100',
-  '@media screen and (max-width: 768px)': {
+  zIndex: 'floating',
+  _mobile: {
     scale: '0.7',
     right: '-12px',
     bottom: '-12px',
@@ -199,14 +200,15 @@ const containerStyle = css({
   width: '406px',
   boxShadow: '0px 4px 24px 0px rgba(0, 0, 0, 0.25)',
   backgroundColor: '#fff',
-  zIndex: 100,
-  '@media screen and (max-width: 768px)': {
+  zIndex: 'drawer',
+  animation: 'fadeInUp 0.3s ease-in-out',
+  _mobile: {
     width: '100%',
     bottom: '0',
     right: '0',
     left: '0',
+    gap: 0,
   },
-  animation: 'fadeInUp 0.3s ease-in-out',
 });
 
 const issueOptionColorStyle = css({
@@ -249,4 +251,7 @@ const formStyle = css({
   display: 'flex',
   flexDirection: 'column',
   gap: '24px',
+  _mobile: {
+    gap: 3,
+  },
 });

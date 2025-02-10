@@ -78,7 +78,7 @@ async function NavMenuItem({ item }: { item: NavMenu }) {
 const headerBaseStyle = flex({
   justifyContent: 'space-between',
   alignItems: 'center',
-  zIndex: 2000,
+  zIndex: 'header',
   position: 'fixed',
   padding: '0 20px',
   top: 0,

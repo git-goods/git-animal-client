@@ -36,6 +36,7 @@ const labelStyle = css({
   borderRadius: '8px',
   border: '1px solid rgba(0, 0, 0, 0.1)',
   background: 'transparent',
+  width: '100%',
 
   color: 'rgba(0, 0, 0, 0.75)',
   fontFamily: 'Product Sans',

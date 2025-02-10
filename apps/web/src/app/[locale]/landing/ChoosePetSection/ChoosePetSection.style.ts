@@ -20,7 +20,7 @@ export const bg = css({
   bottom: 0,
   right: 0,
   left: 0,
-  zIndex: -1,
+  zIndex: 'hide',
   '& img': {
     width: '100%',
     height: '100%',

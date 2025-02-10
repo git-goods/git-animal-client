@@ -51,6 +51,9 @@ const cardStyle = flex({
   backgroundColor: 'white_10',
   backdropFilter: 'blur(7px)',
   color: 'white',
+  _mobile: {
+    width: 'calc(100vw - 40px)',
+  },
 
   '& .card-top': {
     width: '100%',

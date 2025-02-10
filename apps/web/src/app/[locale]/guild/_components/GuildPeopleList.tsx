@@ -5,6 +5,7 @@ import { Flex } from '_panda/jsx';
 import { flex } from '_panda/patterns';
 import Flicking from '@egjs/react-flicking';
 import type { GuildLeader, GuildMember } from '@gitanimals/api';
+import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
 import { UsersRoundIcon } from 'lucide-react';
 
@@ -12,11 +13,13 @@ import { USER_GITHUB_URL } from '@/constants/route';
 import { getPersonaImage } from '@/utils/image';
 
 export function GuildPeopleList({ members, leader }: { members: GuildMember[]; leader: GuildLeader }) {
+  const isMobile = useIsMobile();
+
   return (
     <div className={listStyle}>
       <div className={leaderStyle}>
         <p> Leader</p>
-        <a href={USER_GITHUB_URL(leader.name)} target="_blank">
+        <a href={USER_GITHUB_URL(leader.name)} target="_blank" draggable={false}>
           <BannerPetSelectMedium
             name={leader.name}
             count={leader.contributions}
@@ -40,7 +43,7 @@ export function GuildPeopleList({ members, leader }: { members: GuildMember[]; l
                 className={cx('flicking-panel', css({ height: 'fit-content', _first: { ml: 0 }, marginLeft: 1 }))}
                 key={member.id}
               >
-                <a href={USER_GITHUB_URL(member.name)} target="_blank">
+                <a href={USER_GITHUB_URL(member.name)} target="_blank" draggable={false}>
                   <BannerPetSelectMedium
                     key={member.id}
                     name={member.name}
@@ -62,6 +65,9 @@ const listStyle = flex({
   overflowX: 'hidden',
   minH: '180px',
   color: 'white.white_100',
+  _mobile: {
+    maxW: 'calc(100vw - 40px)',
+  },
 });
 
 const leaderStyle = css({
