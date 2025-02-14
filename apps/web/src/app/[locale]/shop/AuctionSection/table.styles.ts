@@ -23,6 +23,10 @@ export const theadCss = css({
   },
 
   marginBottom: '4px',
+
+  _mobile: {
+    display: 'none',
+  },
 });
 
 export const tbodyCss = css({

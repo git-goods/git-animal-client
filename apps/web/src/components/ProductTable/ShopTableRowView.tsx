@@ -1,15 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import type { Product } from '@gitanimals/api/src/auction';
-import { Button } from '@gitanimals/ui-panda';
-import { snakeToTitleCase } from '@gitanimals/util-common';
 
+import ShopTableRowMobileView from '@/components/ProductTable/ShopTableRowMobileView';
+import ShopTableRowPcView from '@/components/ProductTable/ShopTableRowPcView';
 import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
-import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
-import { getPersonaImage } from '@/utils/image';
-import { addNumberComma } from '@/utils/number';
 
 interface Props extends Pick<Product, 'id' | 'persona' | 'price'> {
   onAction: (itemId: Product['id']) => void;
@@ -17,28 +13,22 @@ interface Props extends Pick<Product, 'id' | 'persona' | 'price'> {
   actionColor: string;
 }
 
-function ShopTableRowView({ onAction, actionLabel, actionColor, ...item }: Props) {
+function ShopTableRowView(props: Props) {
   const {
     data: { personas },
   } = useGetAllPersona();
 
-  const currentPersona = personas.find((persona) => persona.type === item.persona.personaType);
+  const currentPersona = personas.find((persona) => persona.type === props.persona.personaType);
 
   if (!currentPersona) throw new Error('unexpected persona');
 
   return (
-    <div className={rowStyle} key={item.id}>
-      <div>
-        <Image src={getPersonaImage(item.persona.personaType)} width={60} height={67} alt="animal1" />
+    <div className={rowWrapperStyle} key={props.id}>
+      <div className={pcRowStyle}>
+        <ShopTableRowPcView dropRate={currentPersona.dropRate} {...props} />
       </div>
-      <span>{snakeToTitleCase(item.persona.personaType)}</span>
-      <span>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</span>
-      <span>{item.persona.personaLevel}</span>
-      <span>{addNumberComma(item.price)}</span>
-      <div>
-        <Button variant="secondary" onClick={() => onAction(item.id)} color={actionColor}>
-          {actionLabel}
-        </Button>
+      <div className={mobileRowStyle}>
+        <ShopTableRowMobileView dropRate={currentPersona.dropRate} {...props} />
       </div>
     </div>
   );
@@ -47,7 +37,7 @@ function ShopTableRowView({ onAction, actionLabel, actionColor, ...item }: Props
 export default ShopTableRowView;
 
 export function ShopTableRowViewSkeleton() {
-  return <div className={cx(rowStyle, skeletonStyle)} />;
+  return <div className={cx(rowWrapperStyle, skeletonStyle)} />;
 }
 
 const skeletonStyle = css({
@@ -57,29 +47,34 @@ const skeletonStyle = css({
   animation: `skeletonLoading 1.5s infinite linear`,
 });
 
-export const rowStyle = css({
+export const rowWrapperStyle = css({
   width: '100%',
   height: '80px',
-  backgroundColor: 'white_10',
+  backgroundColor: 'white.white_10',
   borderRadius: '12px',
 
-  display: 'grid',
-  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 4.2fr 1.5fr',
-  alignItems: 'center',
-  padding: '0 32px',
-  gap: '16px',
-
-  textStyle: 'glyph20.regular',
-  color: 'white.white_100',
-
-  '& button': {
-    color: 'black.black',
-    width: '100%',
-    paddingX: '6px',
+  _mobile: {
+    height: '64px',
+    borderRadius: '6px',
   },
+});
 
-  '& *': {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
+export const pcRowStyle = css({
+  display: 'block',
+  width: '100%',
+  height: '100%',
+
+  _mobile: {
+    display: 'none',
+  },
+});
+
+export const mobileRowStyle = css({
+  display: 'none',
+  width: '100%',
+  height: '100%',
+
+  _mobile: {
+    display: 'block',
   },
 });
