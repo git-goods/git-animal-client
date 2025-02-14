@@ -26,8 +26,8 @@ export function AuctionSection({ selectedTab }: Props) {
   const TAB_RIGHT_ELEMENT: Record<TabType, ReactNode> = {
     products: <DefaultTabRight />,
     history: <DefaultTabRight />,
-    sell: null,
-    sellList: null,
+    sell: <div />,
+    sellList: <div />,
   };
 
   return (
@@ -53,12 +53,21 @@ const sectionCss = css({
   width: '100%',
   minH: '1400px',
   bg: 'linear-gradient(180deg, #000 0%, #004875 38.51%, #005B93 52.46%, #006FB3 73.8%, #0187DB 100%)',
+
+  _mobile: {
+    paddingBlock: '80px',
+  },
 });
 
 const h2Css = css({
   textStyle: 'glyph82.bold',
   color: 'white',
   marginBottom: '80px',
+
+  _mobile: {
+    textStyle: 'glyph40.bold',
+    marginBottom: '0',
+  },
 });
 
 const divCss = css({
@@ -70,4 +79,9 @@ const divCss = css({
   width: '100%',
   zIndex: 1,
   height: '924px',
+
+  _mobile: {
+    paddingInline: '0',
+    background: 'none',
+  },
 });

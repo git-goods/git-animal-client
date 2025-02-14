@@ -28,7 +28,7 @@ const TAB: TabItemType[] = [
     path: '/shop?tab=sell',
   },
   {
-    label: 'Sell list',
+    label: 'Sell List',
     key: 'sellList',
     path: '/shop?tab=sellList',
   },
@@ -42,7 +42,7 @@ interface Props {
 function Tab({ selectedTab, rightElement }: Props) {
   return (
     <div className={tabContainerStyle}>
-      <div>
+      <div className={tabStyle}>
         {TAB.map((item) => (
           <TabItem isSelected={item.key === selectedTab} {...item} key={item.key} />
         ))}
@@ -60,6 +60,22 @@ const tabContainerStyle = css({
   alignItems: 'center',
   justifyContent: 'space-between',
   marginBottom: '32px',
+
+  _mobile: {
+    flexDirection: 'column',
+    gap: '32px',
+    marginBottom: '12px',
+  },
+});
+
+const tabStyle = css({
+  flexShrink: '0',
+
+  _mobile: {
+    padding: '4px',
+    backgroundColor: 'black.black_10',
+    borderRadius: '999px',
+  },
 });
 
 function TabItem({ isSelected, label, path }: { isSelected?: boolean } & TabItemType) {
@@ -74,10 +90,21 @@ const defaultLinkCss = css.raw({
   padding: '4px 10px',
   textStyle: 'glyph24.bold',
   fontFeatureSettings: 'liga off, clig off',
+
+  _mobile: {
+    display: 'inline-block',
+    padding: '4px 12px',
+    borderRadius: '999px',
+    textStyle: 'glyph16.bold',
+  },
 });
 
 const selectedLinkCss = css(defaultLinkCss, {
-  color: 'white',
+  color: 'white.white_75',
+
+  _mobile: {
+    backgroundColor: 'white.white_10',
+  },
 });
 
 const nonSelectedLinkCss = css(defaultLinkCss, {
