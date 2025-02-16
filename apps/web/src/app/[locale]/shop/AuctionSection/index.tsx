@@ -53,12 +53,22 @@ const sectionCss = css({
   width: '100%',
   minH: '1400px',
   bg: 'linear-gradient(180deg, #000 0%, #004875 38.51%, #005B93 52.46%, #006FB3 73.8%, #0187DB 100%)',
+
+  _mobile: {
+    padding: '40px 16px 80px',
+    minH: 'auto',
+  },
 });
 
 const h2Css = css({
   textStyle: 'glyph82.bold',
   color: 'white',
   marginBottom: '80px',
+
+  _mobile: {
+    textStyle: 'glyph48.bold',
+    marginBottom: '40px',
+  },
 });
 
 const divCss = css({
@@ -70,4 +80,10 @@ const divCss = css({
   width: '100%',
   zIndex: 1,
   height: '924px',
+
+  _mobile: {
+    height: 'auto',
+    background: 'none',
+    padding: '0',
+  },
 });
