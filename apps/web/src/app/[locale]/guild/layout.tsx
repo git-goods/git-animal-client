@@ -22,6 +22,8 @@ const containerStyle = css({
   px: 5,
 
   _mobile: {
-    minHeight: '100vh ',
+    minHeight: 'calc(100vh - var(--mobile-header-height))',
+    height: '100%',
+    p: 0,
   },
 });

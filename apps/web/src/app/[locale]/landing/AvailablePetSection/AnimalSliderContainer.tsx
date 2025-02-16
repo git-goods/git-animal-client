@@ -53,7 +53,7 @@ const sliderArrowStyle = css({
   top: '0',
   bottom: 0,
   margin: 'auto',
-  zIndex: 100,
+  zIndex: 'floating',
 
   '&.flicking-arrow-disabled': {
     transform: 'translateX(36px)',
