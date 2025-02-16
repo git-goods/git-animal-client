@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { css } from '_panda/css';
+import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries } from '@gitanimals/react-query';
 import { useQuery } from '@tanstack/react-query';
 
 import Pagination from '@/components/Pagination/Pagination';
+import { ShopTableMobileRow } from '@/components/ProductTable/ShopTableMobileRow';
 import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 
@@ -17,6 +20,7 @@ const HISTORY_ACTION_OBJ = ACTION_BUTTON_OBJ['SELL_HISTORY'];
 
 function HistoryTable() {
   const t = useTranslations('Shop');
+  const isMobile = useIsMobile();
   const [currentPage, setCurrentPage] = useState(0);
 
   const { searchOptions } = useSearchOptions();
@@ -53,7 +57,17 @@ function HistoryTable() {
         <div className={tbodyCss}>
           {!data && Array.from({ length: 8 }).map((_, index) => <ShopTableRowViewSkeleton key={`skeleton-${index}`} />)}
           {data?.products.map((product) => {
-            return (
+            return isMobile ? (
+              <ShopTableMobileRow
+                key={product.id}
+                product={product}
+                rightElement={
+                  <span className={css({ textStyle: 'glyph15.regular', color: 'white.white' })}>
+                    {getHistoryActionLabel(product?.receipt.soldAt)}
+                  </span>
+                }
+              />
+            ) : (
               <ShopTableRowView
                 key={product.id}
                 id={product.id}
