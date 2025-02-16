@@ -17,6 +17,8 @@ import { useClientUser } from '@/utils/clientAuth';
 import { getBackgroundImage } from '@/utils/image';
 import { addNumberComma } from '@/utils/number';
 
+import BackgroundSlider from '../../event/(common)/BackgroundSlider/BackgroundSlider';
+
 export const BackgroundSection = wrap
   .ErrorBoundary({
     fallback: () => <></>,
@@ -65,7 +67,7 @@ export const BackgroundSection = wrap
         <h2 ref={backgroundRef} className={h2Css}>
           Background
         </h2>
-        <div className={contentCss}>
+        <BackgroundSlider>
           {backgroundList?.map((item) => (
             <BackgroundItem
               key={item.type}
@@ -74,7 +76,7 @@ export const BackgroundSection = wrap
               isPurchased={item.isPurchased ?? false}
             />
           ))}
-        </div>
+        </BackgroundSlider>
       </div>
     );
   });
@@ -141,20 +143,21 @@ const sectionCss = css({
     height: '2px',
     bg: '#6DE575',
   },
+
+  _mobile: {
+    padding: '40px 16px',
+  },
 });
 
 const h2Css = css({
   textStyle: 'glyph82.bold',
   color: 'black',
   marginBottom: '80px',
-});
 
-const contentCss = css({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: '20px',
-  maxWidth: 'min(1120px, 100%)',
-  width: '100%',
+  _mobile: {
+    marginBottom: '40px',
+    textStyle: 'glyph40.bold',
+  },
 });
 
 const cardCss = css({
