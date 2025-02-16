@@ -60,7 +60,9 @@ function HistoryTable() {
             return isMobile ? (
               <ShopTableMobileRow
                 key={product.id}
-                product={product}
+                personaType={product.persona.personaType}
+                personaLevel={product.persona.personaLevel}
+                price={product.price}
                 rightElement={
                   <span className={css({ textStyle: 'glyph15.regular', color: 'white.white' })}>
                     {getHistoryActionLabel(product?.receipt.soldAt)}

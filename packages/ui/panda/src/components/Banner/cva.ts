@@ -36,6 +36,12 @@ export const bannerStyle = cva({
           height: '100%',
           objectFit: 'contain',
         },
+
+        _mobile: {
+          width: '52px',
+          height: '52px',
+          borderRadius: '5px',
+        },
       },
       medium: {
         width: '120px',

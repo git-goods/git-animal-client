@@ -61,7 +61,9 @@ function SellListSection() {
             return isMobile ? (
               <ShopTableMobileRow
                 key={product.id}
-                product={product}
+                personaType={product.persona.personaType}
+                personaLevel={product.persona.personaLevel}
+                price={product.price}
                 rightElement={
                   <Button
                     size="s"

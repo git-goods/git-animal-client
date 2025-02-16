@@ -123,7 +123,9 @@ function ProductTableRow({ product }: { product: Product }) {
   if (isMobile) {
     return (
       <ShopTableMobileRow
-        product={product}
+        personaType={product.persona.personaType}
+        personaLevel={product.persona.personaLevel}
+        price={product.price}
         rightElement={
           <Button
             variant="secondary"

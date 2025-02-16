@@ -11,11 +11,13 @@ import { addNumberComma } from '@/utils/number';
 
 interface Props {
   rightElement: React.ReactNode;
-  product: Product;
+  personaType: Product['persona']['personaType'];
+  personaLevel?: Product['persona']['personaLevel'];
+  price?: Product['price'];
 }
 
-export function ShopTableMobileRow({ product, rightElement }: Props) {
-  const dropRate = useGetPersonaDropRate(product.persona.personaType);
+export function ShopTableMobileRow({ personaType, personaLevel, price, rightElement }: Props) {
+  const dropRate = useGetPersonaDropRate(personaType);
 
   return (
     <Flex
@@ -28,11 +30,11 @@ export function ShopTableMobileRow({ product, rightElement }: Props) {
       })}
     >
       <div>
-        <img src={getPersonaImage(product.persona.personaType)} width={60} height={67} alt="animal1" />
+        <img src={getPersonaImage(personaType)} width={60} height={67} alt="animal1" />
       </div>
       <Box flex="1">
         <span className={css({ textStyle: 'glyph15.regular', color: 'white.white' })}>
-          {snakeToTitleCase(product.persona.personaType)}
+          {snakeToTitleCase(personaType)}
         </span>
         <div
           className={css({
@@ -44,10 +46,18 @@ export function ShopTableMobileRow({ product, rightElement }: Props) {
           })}
         >
           <span>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(dropRate.replace('%', '')))]}</span>
-          <span>/</span>
-          <span>Lv.{product.persona.personaLevel}</span>
-          <span>/</span>
-          <span>{addNumberComma(product.price)}P</span>
+          {personaLevel && (
+            <>
+              <span>/</span>
+              <span>Lv.{personaLevel}</span>
+            </>
+          )}
+          {price && (
+            <>
+              <span>/</span>
+              <span>{addNumberComma(price)}P</span>
+            </>
+          )}
         </div>
       </Box>
       <div>{rightElement}</div>
