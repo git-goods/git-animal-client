@@ -84,6 +84,7 @@ const divCss = css({
   _mobile: {
     height: 'auto',
     background: 'none',
+    backdropFilter: 'none',
     padding: '0',
   },
 });
