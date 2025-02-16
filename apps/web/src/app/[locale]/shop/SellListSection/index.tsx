@@ -3,10 +3,13 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
+import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries } from '@gitanimals/react-query';
+import { Button } from '@gitanimals/ui-panda';
 import { useQuery } from '@tanstack/react-query';
 
 import Pagination from '@/components/Pagination/Pagination';
+import { ShopTableMobileRow } from '@/components/ProductTable/ShopTableMobileRow';
 import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 
@@ -18,6 +21,7 @@ const SELL_LIST_ACTION_OBJ = ACTION_BUTTON_OBJ['EDIT'];
 
 function SellListSection() {
   const t = useTranslations('Shop');
+  const isMobile = useIsMobile();
 
   const [editProductId, setEditProductId] = useState<string>();
   const [currentPage, setCurrentPage] = useState(0);
@@ -29,7 +33,7 @@ function SellListSection() {
     select: (data) => ({
       ...data,
       products: data.products.map((product) => {
-        return { ...product, paymentState: 'EDIT' };
+        return { ...product };
       }),
     }),
     placeholderData: (prevData) => prevData,
@@ -54,7 +58,22 @@ function SellListSection() {
         <div className={tbodyCss}>
           {!data && Array.from({ length: 8 }).map((_, index) => <ShopTableRowViewSkeleton key={`skeleton-${index}`} />)}
           {data?.products.map((product) => {
-            return (
+            return isMobile ? (
+              <ShopTableMobileRow
+                key={product.id}
+                product={product}
+                rightElement={
+                  <Button
+                    size="s"
+                    variant="secondary"
+                    onClick={() => onEditAction(product.id)}
+                    color={SELL_LIST_ACTION_OBJ.color}
+                  >
+                    {t('edit')}
+                  </Button>
+                }
+              />
+            ) : (
               <ShopTableRowView
                 key={product.id}
                 id={product.id}
