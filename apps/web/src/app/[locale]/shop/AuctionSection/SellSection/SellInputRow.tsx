@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
+import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries, userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
@@ -11,6 +12,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
+import { ShopTableMobileRow } from '@/components/ProductTable/ShopTableMobileRow';
 import { rowStyle } from '@/components/ProductTable/ShopTableRowView';
 import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
@@ -27,6 +29,7 @@ interface Props {
 
 function SellInputRow({ item, initPersona }: Props) {
   const t = useTranslations('Shop');
+  const isMobile = useIsMobile();
   const { price, resetPrice, onChangePriceInput } = usePrice();
 
   const queryClient = useQueryClient();
@@ -60,6 +63,21 @@ function SellInputRow({ item, initPersona }: Props) {
       }
     }
   };
+
+  if (isMobile) {
+    if (!item) return null;
+    return (
+      <ShopTableMobileRow
+        personaType={item.type}
+        personaLevel={Number(item.level)}
+        rightElement={
+          <Button variant="secondary" size="s" onClick={onSellClick}>
+            {t('sell')}
+          </Button>
+        }
+      />
+    );
+  }
 
   return (
     <div className={tableCss}>

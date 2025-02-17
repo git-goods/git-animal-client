@@ -2,14 +2,16 @@
 
 import { useState } from 'react';
 import React from 'react';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { center } from '_panda/patterns';
+import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries } from '@gitanimals/react-query';
 import { Banner, Dialog } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { LoaderIcon, SearchIcon, XIcon } from 'lucide-react';
 
+import { customScrollStyle } from '@/styles/scrollStyle';
 import { getPersonaImage } from '@/utils/image';
 
 const EVENT = {
@@ -54,6 +56,7 @@ export const PersonaSearch = wrap
 
   .on(function PersonaSearch({ onSelect, selected }: PersonaSearchProps) {
     const [isOpen, setIsOpen] = useState(false);
+    const isMobile = useIsMobile();
 
     const { data } = useSuspenseQuery(auctionQueries.productTypesOptions());
 
@@ -92,7 +95,11 @@ export const PersonaSearch = wrap
                   <div className={personaListStyle}>
                     {event.personaTypeList.map((type) => (
                       <button key={type} onClick={() => onClick(type)}>
-                        <Banner image={getPersonaImage(type)} status={selected === type ? 'selected' : 'default'} />
+                        <Banner
+                          size={isMobile ? 'small' : 'medium'}
+                          image={getPersonaImage(type)}
+                          status={selected === type ? 'selected' : 'default'}
+                        />
                       </button>
                     ))}
                   </div>
@@ -105,6 +112,7 @@ export const PersonaSearch = wrap
                     {filteredPersonaTypeList.map((type) => (
                       <button key={type.name} onClick={() => onClick(type.name)}>
                         <Banner
+                          size={isMobile ? 'small' : 'medium'}
                           image={getPersonaImage(type.name)}
                           status={selected === type.name ? 'selected' : 'default'}
                         />
@@ -132,6 +140,11 @@ const selectedPersonaWrapperStyle = css({
   justifyContent: 'flex-start',
   width: '100%',
   marginBottom: '16px',
+
+  _mobile: {
+    mb: 0,
+    margin: '24px 0',
+  },
 });
 
 const selectedPersonaTagStyle = css({
@@ -144,30 +157,34 @@ const selectedPersonaTagStyle = css({
   gap: '2px',
   alignItems: 'center',
   px: '8px',
+
+  _mobile: {
+    textStyle: 'glyph12.regular',
+    color: 'white.white_50',
+    h: '30px',
+    px: '12px',
+  },
 });
 
-const contentStyle = css({
-  flex: 1,
-  overflow: 'auto',
-  gap: '4px',
-  justifyContent: 'center',
-  '&::-webkit-scrollbar': {
-    width: '4px',
-  },
-  '&::-webkit-scrollbar-thumb': {
-    backgroundColor: 'gray.gray_500',
-    borderRadius: '2px',
-  },
-  '&::-webkit-scrollbar-track': {
-    backgroundColor: 'transparent',
-  },
-});
+const contentStyle = cx(
+  css({
+    flex: 1,
+    overflow: 'auto',
+    gap: '4px',
+    justifyContent: 'center',
+  }),
+  customScrollStyle,
+);
 
 const personaListHeadingStyle = css({
   textStyle: 'glyph18.bold',
   color: 'white',
   textAlign: 'left',
   my: '12px',
+
+  _mobile: {
+    textStyle: 'glyph16.bold',
+  },
 });
 
 const personaListStyle = css({
