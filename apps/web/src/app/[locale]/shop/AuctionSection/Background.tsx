@@ -33,7 +33,7 @@ const floatingBackgroundDivCss = css({
   left: 0,
   width: '100%',
   height: '100%',
-  zIndex: 0,
+  zIndex: 'base',
 });
 
 const coinCss = css({
@@ -76,7 +76,7 @@ const carrotVariants: Variants = {
 
 const backgroundDivCss = css({
   position: 'absolute',
-  zIndex: 0,
+  zIndex: 'base',
   bottom: 0,
   left: 0,
   w: '100%',

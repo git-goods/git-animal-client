@@ -78,7 +78,7 @@ const divCss = css({
   padding: '40px',
   maxW: '1120px',
   width: '100%',
-  zIndex: 1,
+  zIndex: 'floating',
   height: '924px',
 
   _mobile: {

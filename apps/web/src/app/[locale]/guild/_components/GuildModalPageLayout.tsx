@@ -19,6 +19,10 @@ export function GuildModalPageLayout({ children }: PropsWithChildren) {
           color: 'white.white',
           w: '100%',
           position: 'relative',
+          _mobile: {
+            p: 5,
+            borderRadius: 0,
+          },
         })}
       >
         <BackTrigger className={css({ position: 'absolute', top: '16px', right: '16px' })}>

@@ -81,7 +81,7 @@ export const BackgroundSection = wrap
     );
   });
 
-const EVENT_BACKGROUND = 'HALLOWEEN_FIELD'; // TODO: 이벤트 배경 타입
+const EVENT_BACKGROUND = ''; // TODO: 이벤트 배경 타입
 
 function BackgroundItem({
   item,
@@ -114,7 +114,7 @@ const eventLabelCss = css({
   position: 'absolute',
   top: '12px',
   left: '12px',
-  zIndex: 10,
+  zIndex: 'floating',
   display: 'inline-flex',
   padding: '6px 12px',
   alignItems: 'center',

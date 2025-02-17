@@ -56,7 +56,7 @@ const noticeStyle = center({
   height: '100%',
   background: '#454545',
   color: 'white',
-  zIndex: 1000,
+  zIndex: 'modal',
   display: 'none',
   textStyle: 'glyph24.bold',
   lineHeight: '1.5',

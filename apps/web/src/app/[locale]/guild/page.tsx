@@ -16,6 +16,7 @@ import { Link, redirect } from '@/i18n/routing';
 import { GuildCard } from './_components/GuildCard';
 import { GuildSearch } from './_components/GuildSearch';
 import { SortSelect } from './_components/SortSelect';
+import { Box } from '_panda/jsx';
 
 interface GuildPageProps {
   searchParams: {
@@ -78,12 +79,14 @@ async function GuildMain({ searchParams, isSearchMode }: GuildMainProps) {
     <>
       <div className={containerStyle}>
         <div className={topStyle}>
-          {isSearchMode && (
-            <BackTrigger>
-              <ChevronLeftIcon size="28px" color="#FFFFFF80" />
-            </BackTrigger>
-          )}
-          <GuildSearch />
+          <Box flex="1">
+            {isSearchMode && (
+              <BackTrigger>
+                <ChevronLeftIcon size="28px" color="#FFFFFF80" />
+              </BackTrigger>
+            )}
+            <GuildSearch />
+          </Box>
 
           <SortSelect />
           <Link href="/guild/create">
@@ -121,6 +124,13 @@ const topStyle = flex({
   alignItems: 'center',
   '& > *': {
     height: '40px',
+    display: 'flex',
+    gap: 2,
+    alignItems: 'center',
+  },
+  _mobile: {
+    flexWrap: 'wrap-reverse',
+    justifyContent: 'flex-end',
   },
 });
 
@@ -133,8 +143,13 @@ const containerStyle = flex({
   mx: 'auto',
   gap: 4,
   position: 'relative',
-  zIndex: 1,
   minH: 'fit-content',
+  zIndex: 'floating',
+
+  _mobile: {
+    paddingX: 5,
+    py: 8,
+  },
 });
 
 const cardListStyle = grid({
@@ -143,7 +158,7 @@ const cardListStyle = grid({
   gap: '8px',
   w: 'full',
   _mobile: {
-    columns: 1,
+    gridTemplateColumns: '1fr',
   },
 });
 const cardListEmptyStyle = css({
@@ -175,7 +190,7 @@ const bottomBgStyle = css({
   transform: 'translateX(-50%)',
   height: '228px',
   objectFit: 'cover',
-  zIndex: 0,
+  zIndex: 'base',
 });
 
 function EmptyGuild() {

@@ -46,6 +46,7 @@ export const bannerStyle = cva({
       medium: {
         width: '120px',
         padding: '12px 20px',
+        height: '149px',
       },
     },
   },

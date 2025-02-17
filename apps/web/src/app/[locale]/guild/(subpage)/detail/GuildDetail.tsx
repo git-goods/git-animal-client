@@ -10,7 +10,6 @@ import { GitanimalsGuild } from '@/components/Gitanimals';
 import { GuildPeopleList } from '../../_components/GuildPeopleList';
 
 export const GuildDetail = ({ details }: { guildId: string; details: Guild }) => {
-  console.log('details: ', details);
   return (
     <>
       <div>
@@ -36,24 +35,6 @@ const guildPreviewStyle = css({
     width: '100%',
     height: '100%',
   },
-});
-
-const listStyle = flex({
-  gap: 4,
-  overflowX: 'hidden',
-  minH: '180px',
-  color: 'white.white_100',
-});
-
-const leaderStyle = css({
-  '& > p': {
-    mb: 1,
-  },
-});
-
-const membersStyle = css({
-  overflow: 'hidden',
-  flex: 1,
 });
 
 const titleStyle = flex({

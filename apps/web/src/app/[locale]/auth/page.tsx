@@ -44,7 +44,7 @@ const loadingContainerStyle = center({
   right: 0,
   bottom: 0,
   backgroundColor: 'rgba(255, 255, 255, 0.8)',
-  zIndex: 9999,
+  zIndex: 'loading',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
