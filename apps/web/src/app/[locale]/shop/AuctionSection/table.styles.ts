@@ -23,10 +23,18 @@ export const theadCss = css({
   },
 
   marginBottom: '4px',
+
+  _mobile: {
+    display: 'none',
+  },
 });
 
 export const tbodyCss = css({
   display: 'flex',
   flexDir: 'column',
   gap: '4px',
+
+  _mobile: {
+    minH: '480px',
+  },
 });

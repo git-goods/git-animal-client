@@ -1,13 +1,17 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
+import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries, useBuyProduct, useDeleteProduct, userQueries } from '@gitanimals/react-query';
+import { Button } from '@gitanimals/ui-panda';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import Pagination from '@/components/Pagination/Pagination';
+import { ShopTableMobileRow } from '@/components/ProductTable/ShopTableMobileRow';
 import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
 import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import { useLoading } from '@/store/loading';
@@ -65,6 +69,7 @@ export default ProductTable;
 
 function ProductTableRow({ product }: { product: Product }) {
   const queryClient = useQueryClient();
+  const isMobile = useIsMobile();
   const { id: myId } = useClientUser();
   const { setLoading } = useLoading();
   const t = useTranslations('Shop');
@@ -114,6 +119,26 @@ function ProductTableRow({ product }: { product: Product }) {
       buyProduct({ productId: id });
     }
   };
+
+  if (isMobile) {
+    return (
+      <ShopTableMobileRow
+        personaType={product.persona.personaType}
+        personaLevel={product.persona.personaLevel}
+        price={product.price}
+        rightElement={
+          <Button
+            variant="secondary"
+            size="s"
+            onClick={() => onAction(product.id)}
+            color={ACTION_BUTTON_OBJ[productStatus].color}
+          >
+            {t(ACTION_BUTTON_OBJ[productStatus].label)}
+          </Button>
+        }
+      />
+    );
+  }
 
   return (
     <ShopTableRowView
