@@ -39,18 +39,14 @@ async function ShopPage({
           <BackgroundSection />
         </main>
       </div>
-      <div className={noticeStyle}>{t('no-mobile-support')}</div>
+      {/* <div className={noticeStyle}>{t('no-mobile-support')}</div> */}
     </>
   );
 }
 
 export default ShopPage;
 
-const subStyle = css({
-  _mobile: {
-    display: 'none',
-  },
-});
+const subStyle = css({});
 
 const noticeStyle = center({
   position: 'fixed',
