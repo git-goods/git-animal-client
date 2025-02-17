@@ -86,5 +86,6 @@ const divCss = css({
     background: 'none',
     backdropFilter: 'none',
     padding: '0',
+    paddingBottom: '12px',
   },
 });
