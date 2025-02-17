@@ -3,6 +3,10 @@ import { css } from '_panda/css';
 export const tableCss = css({
   width: '100%',
   marginBottom: '32px',
+
+  _mobile: {
+    marginBottom: '12px',
+  },
 });
 
 export const theadCss = css({
