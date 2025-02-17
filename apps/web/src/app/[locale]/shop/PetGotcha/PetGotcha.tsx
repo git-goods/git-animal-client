@@ -1,5 +1,6 @@
 'use client';
 
+import type { ComponentPropsWithoutRef } from 'react';
 import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
@@ -10,8 +11,6 @@ import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { getResponsiveImage } from '@/utils/image';
-
 import OnePet from './OnePet';
 import { TenPet } from './TenPet';
 
@@ -19,12 +18,15 @@ export function PetGotcha() {
   const t = useTranslations('Gotcha');
   const [openModal, setOpenModal] = useState<'one-pet' | 'ten-pet' | 'ratio-chart' | null>(null);
 
-  const isMobile = useIsMobile();
-  const bgSrc = getResponsiveImage('/shop/pet-gotcha-bg', isMobile);
-
   return (
     <div className={containerStyle}>
-      <Image src={bgSrc} alt="pet-gotcha-bg" width={1920} height={1226} className={bgStyle} />
+      <ResponsiveImage
+        src="/shop/pet-gotcha-bg"
+        alt="pet-gotcha-bg"
+        width={{ mobile: 375, desktop: 1920 }}
+        height={{ mobile: 621, desktop: 1226 }}
+        className={bgStyle}
+      />
       <h1 className={headingStyle}>Pet Gotcha</h1>
       <p className={descStyle}>{t('pet-gotcha-desc')}</p>
 
@@ -36,6 +38,28 @@ export function PetGotcha() {
       {openModal === 'one-pet' && <OnePet onClose={() => setOpenModal(null)} />}
       {openModal === 'ten-pet' && <TenPet onClose={() => setOpenModal(null)} />}
     </div>
+  );
+}
+
+function ResponsiveImage({
+  width,
+  height,
+  src,
+  alt,
+  ...props
+}: Omit<ComponentPropsWithoutRef<typeof Image>, 'width' | 'height'> & {
+  width: { mobile: number; desktop: number };
+  height: { mobile: number; desktop: number };
+}) {
+  const isMobile = useIsMobile();
+  return (
+    <Image
+      src={isMobile ? `${src}-m.webp` : `${src}.webp`}
+      width={width[isMobile ? 'mobile' : 'desktop']}
+      height={height[isMobile ? 'mobile' : 'desktop']}
+      alt={alt}
+      {...props}
+    />
   );
 }
 
