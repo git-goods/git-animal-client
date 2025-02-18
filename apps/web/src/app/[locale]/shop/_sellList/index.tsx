@@ -10,8 +10,8 @@ import { useQuery } from '@tanstack/react-query';
 import { MediaQuery } from '@/components/MediaQuery';
 import Pagination from '@/components/Pagination/Pagination';
 
+import { tableCss, tbodyCss, theadCss } from '../_auction/table.styles';
 import { ShopTableDesktopRow, ShopTableMobileRow, ShopTableRowViewSkeleton } from '../_common/ShopTableMobileRow';
-import { tableCss, tbodyCss, theadCss } from '../AuctionSection/table.styles';
 
 import EditModal from './EditModal';
 

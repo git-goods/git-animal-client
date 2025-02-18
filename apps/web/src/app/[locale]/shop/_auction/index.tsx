@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
 import { css } from '_panda/css';
 
-import SellListSection from '../SellListSection';
+import SellListSection from '../_sellList';
 import type { TabType } from '../type';
 
 import { Background } from './Background';
