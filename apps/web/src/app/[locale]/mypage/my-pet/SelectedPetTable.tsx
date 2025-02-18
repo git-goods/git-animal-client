@@ -17,8 +17,6 @@ import { LOCAL_STORAGE_KEY } from '@/constants/storage';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
-import { tableCss } from '../../shop/_auction/table.styles';
-
 import { MergePersona } from './(merge)';
 
 interface SelectedPetTableProps {
@@ -110,6 +108,11 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
     </div>
   );
 }
+
+const tableCss = css({
+  width: '100%',
+  marginBottom: '32px',
+});
 
 const theadCss = css({
   display: 'grid',
