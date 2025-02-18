@@ -75,9 +75,7 @@ function HistoryTable() {
                 id={product.id}
                 persona={product.persona}
                 price={product.price}
-                onAction={() => null}
-                actionLabel={getHistoryActionLabel(product?.receipt.soldAt)}
-                actionColor={HISTORY_ACTION_OBJ.color}
+                rightElement={getHistoryActionLabel(product?.receipt.soldAt)}
               />
             );
           })}

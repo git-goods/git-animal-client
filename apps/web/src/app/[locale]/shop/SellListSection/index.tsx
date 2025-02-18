@@ -81,9 +81,12 @@ function SellListSection() {
                 id={product.id}
                 persona={product.persona}
                 price={product.price}
-                onAction={onEditAction}
-                actionLabel={t('edit')}
-                actionColor={SELL_LIST_ACTION_OBJ.color}
+                rightElement={
+                  <Button variant="secondary" onClick={() => onEditAction(product.id)}>
+                    {' '}
+                    {t('edit')}
+                  </Button>
+                }
               />
             );
           })}

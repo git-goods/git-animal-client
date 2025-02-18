@@ -127,13 +127,8 @@ function ProductTableRow({ product }: { product: Product }) {
         personaLevel={product.persona.personaLevel}
         price={product.price}
         rightElement={
-          <Button
-            variant="secondary"
-            size="s"
-            onClick={() => onAction(product.id)}
-            color={ACTION_BUTTON_OBJ[productStatus].color}
-          >
-            {t(ACTION_BUTTON_OBJ[productStatus].label)}
+          <Button variant="secondary" size="s" onClick={() => onAction(product.id)}>
+            {t(productStatus === 'MY_SELLING' ? 'cancel' : 'buy')}
           </Button>
         }
       />
@@ -146,9 +141,11 @@ function ProductTableRow({ product }: { product: Product }) {
       id={product.id}
       persona={product.persona}
       price={product.price}
-      onAction={onAction}
-      actionLabel={t(ACTION_BUTTON_OBJ[productStatus].label)}
-      actionColor={ACTION_BUTTON_OBJ[productStatus].color}
+      rightElement={
+        <Button variant="secondary" onClick={() => onAction(product.id)} color={ACTION_BUTTON_OBJ[productStatus].color}>
+          {t(ACTION_BUTTON_OBJ[productStatus].label)}
+        </Button>
+      }
     />
   );
 }
