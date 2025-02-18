@@ -3,12 +3,12 @@ import { css } from '_panda/css';
 
 import type { TabType } from '../type';
 
-import SellListSection from './SellSection/SellListSection';
+import SellSection from './SellSection/SellSection';
 import { Background } from './Background';
 import { DefaultTabRight } from './DefaultTabRight';
 import HistoryTable from './HistoryTable';
+import SellListSection from './MySellList';
 import ProductTable from './ProductTable';
-import { SellSection } from './SellSection';
 import Tab from './Tab';
 
 interface Props {
