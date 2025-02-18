@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
+import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { useQuery } from '@tanstack/react-query';
@@ -17,12 +18,12 @@ import { tableCss, tbodyCss, theadCss } from './table.styles';
 
 function SellListSection() {
   const t = useTranslations('Shop');
-
+  const isMobile = useIsMobile();
   const [editProductId, setEditProductId] = useState<string>();
   const [currentPage, setCurrentPage] = useState(0);
 
   const { data } = useQuery({
-    ...auctionQueries.myProductsOptions({ pageNumber: currentPage }),
+    ...auctionQueries.myProductsOptions({ pageNumber: currentPage, count: isMobile ? 6 : 10 }),
     placeholderData: (prevData) => prevData,
   });
 

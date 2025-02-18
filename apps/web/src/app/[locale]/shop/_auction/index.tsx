@@ -56,7 +56,7 @@ const sectionCss = css({
 
   _mobile: {
     padding: '40px 16px 80px',
-    minH: 'auto',
+    minH: '552px',
   },
 });
 

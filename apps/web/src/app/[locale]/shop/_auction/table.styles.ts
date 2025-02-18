@@ -39,6 +39,6 @@ export const tbodyCss = css({
   gap: '4px',
 
   _mobile: {
-    minH: '480px',
+    minH: '428px',
   },
 });

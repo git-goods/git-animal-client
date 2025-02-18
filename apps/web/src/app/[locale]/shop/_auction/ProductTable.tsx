@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
+import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries, useBuyProduct, useDeleteProduct, userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -25,6 +26,7 @@ function ProductTable() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const { searchOptions } = useSearchOptions();
+  const isMobile = useIsMobile();
 
   useEffect(
     function 옵션_변경시_페이지_초기화() {
@@ -34,7 +36,7 @@ function ProductTable() {
   );
 
   const { data } = useQuery({
-    ...auctionQueries.productsOptions({ pageNumber: currentPage, ...searchOptions }),
+    ...auctionQueries.productsOptions({ pageNumber: currentPage, ...searchOptions, count: isMobile ? 6 : 10 }),
     enabled: Boolean(myId),
     placeholderData: (prevData) => prevData,
   });

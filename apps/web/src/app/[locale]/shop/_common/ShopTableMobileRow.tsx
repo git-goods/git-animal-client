@@ -123,4 +123,7 @@ const contentStyle = css({
   alignItems: 'center',
   color: 'white.white_50',
   textStyle: 'glyph14regular',
+  bg: 'white.white_10',
+  borderRadius: '6px',
+  padding: '4px 16px 4px 8px',
 });

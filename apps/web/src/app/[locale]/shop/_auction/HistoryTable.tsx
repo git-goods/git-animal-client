@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
+import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries } from '@gitanimals/react-query';
 import { useQuery } from '@tanstack/react-query';
 
@@ -19,9 +20,10 @@ function HistoryTable() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const { searchOptions } = useSearchOptions();
+  const isMobile = useIsMobile();
 
   const { data } = useQuery({
-    ...auctionQueries.historyOptions({ pageNumber: currentPage, ...searchOptions }),
+    ...auctionQueries.historyOptions({ pageNumber: currentPage, ...searchOptions, count: isMobile ? 6 : 10 }),
     placeholderData: (prevData) => prevData,
   });
 

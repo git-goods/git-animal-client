@@ -11,19 +11,12 @@ import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { getResponsiveImage } from '@/utils/image';
-
-import { getResponsiveImage } from '@/utils/image';
-
 import OnePet from './OnePet';
 import { TenPet } from './TenPet';
 
 export function PetGotcha() {
   const t = useTranslations('Gotcha');
   const [openModal, setOpenModal] = useState<'one-pet' | 'ten-pet' | 'ratio-chart' | null>(null);
-
-  const isMobile = useIsMobile();
-  const bgSrc = getResponsiveImage('/shop/pet-gotcha-bg', isMobile);
 
   return (
     <div className={containerStyle}>
