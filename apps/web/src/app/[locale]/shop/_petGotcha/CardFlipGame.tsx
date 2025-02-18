@@ -88,11 +88,22 @@ const containerStyle = css({
   flexDirection: 'column',
   alignItems: 'center',
   gap: '1rem',
+
+  _mobile: {
+    width: '100%',
+  },
 });
 
 const cardContainerStyle = css({
   display: 'flex',
   gap: '1rem',
+
+  _mobile: {
+    flexWrap: 'wrap',
+    width: '100%',
+    justifyContent: 'center',
+    gap: '8px',
+  },
 });
 
 const cardStyle = css({
@@ -100,6 +111,12 @@ const cardStyle = css({
   height: '272px',
   perspective: '1000px',
   cursor: 'pointer',
+
+  _mobile: {
+    width: '30%',
+    height: 'auto',
+    aspectRatio: '109/135',
+  },
 });
 
 const cardInnerStyle = css({
