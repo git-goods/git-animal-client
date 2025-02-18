@@ -3,24 +3,19 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
-import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries } from '@gitanimals/react-query';
 import { useQuery } from '@tanstack/react-query';
 
+import { MediaQuery } from '@/components/MediaQuery';
 import Pagination from '@/components/Pagination/Pagination';
-import { ShopTableMobileRow } from '@/components/ProductTable/ShopTableMobileRow';
-import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
-import { ACTION_BUTTON_OBJ } from '@/constants/action';
 
+import { ShopTableDesktopRow, ShopTableMobileRow, ShopTableRowViewSkeleton } from '../_common/ShopTableMobileRow';
 import { useSearchOptions } from '../useSearchOptions';
 
 import { tableCss, tbodyCss, theadCss } from './table.styles';
 
-const HISTORY_ACTION_OBJ = ACTION_BUTTON_OBJ['SELL_HISTORY'];
-
 function HistoryTable() {
   const t = useTranslations('Shop');
-  const isMobile = useIsMobile();
   const [currentPage, setCurrentPage] = useState(0);
 
   const { searchOptions } = useSearchOptions();
@@ -56,29 +51,32 @@ function HistoryTable() {
 
         <div className={tbodyCss}>
           {!data && Array.from({ length: 8 }).map((_, index) => <ShopTableRowViewSkeleton key={`skeleton-${index}`} />)}
-          {data?.products.map((product) => {
-            return isMobile ? (
-              <ShopTableMobileRow
-                key={product.id}
-                personaType={product.persona.personaType}
-                personaLevel={product.persona.personaLevel}
-                price={product.price}
-                rightElement={
-                  <span className={css({ textStyle: 'glyph15.regular', color: 'white.white' })}>
-                    {getHistoryActionLabel(product?.receipt.soldAt)}
-                  </span>
-                }
-              />
-            ) : (
-              <ShopTableRowView
-                key={product.id}
-                id={product.id}
-                persona={product.persona}
-                price={product.price}
-                rightElement={getHistoryActionLabel(product?.receipt.soldAt)}
-              />
-            );
-          })}
+          {data?.products.map((product) => (
+            <MediaQuery
+              key={product.id}
+              mobile={
+                <ShopTableMobileRow
+                  key={product.id}
+                  personaType={product.persona.personaType}
+                  personaLevel={product.persona.personaLevel}
+                  price={product.price}
+                  rightElement={
+                    <span className={css({ textStyle: 'glyph15.regular', color: 'white.white' })}>
+                      {getHistoryActionLabel(product?.receipt.soldAt)}
+                    </span>
+                  }
+                />
+              }
+              desktop={
+                <ShopTableDesktopRow
+                  personaType={product.persona.personaType}
+                  personaLevel={product.persona.personaLevel}
+                  price={product.price}
+                  rightElement={getHistoryActionLabel(product?.receipt.soldAt)}
+                />
+              }
+            />
+          ))}
         </div>
       </div>
 
