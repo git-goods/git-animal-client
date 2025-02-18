@@ -37,14 +37,13 @@ const Card = ({
 const cardStyle = css({
   position: 'relative',
   cursor: 'pointer',
-  width: '220px',
-  height: '272px',
+  width: '20%',
   perspective: '1000px',
+  aspectRatio: '109/135',
+  height: 'auto',
 
   _mobile: {
     width: '30%',
-    height: 'auto',
-    aspectRatio: '109/135',
   },
 });
 
