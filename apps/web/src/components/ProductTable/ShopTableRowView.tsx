@@ -1,30 +1,22 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import type { Product } from '@gitanimals/api/src/auction';
-import { Button } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 
-import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
-import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
+import { useGetPersonaTier } from '@/hooks/persona/useGetPersonaDropRate';
+import { ANIMAL_TIER_TEXT_MAP } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 import { addNumberComma } from '@/utils/number';
 
 interface Props extends Pick<Product, 'id' | 'persona' | 'price'> {
-  onAction: (itemId: Product['id']) => void;
-  actionLabel: string;
-  actionColor: string;
+  rightElement: ReactNode;
 }
 
-function ShopTableRowView({ onAction, actionLabel, actionColor, ...item }: Props) {
-  const {
-    data: { personas },
-  } = useGetAllPersona();
-
-  const currentPersona = personas.find((persona) => persona.type === item.persona.personaType);
-
-  if (!currentPersona) throw new Error('unexpected persona');
+function ShopTableRowView({ rightElement, ...item }: Props) {
+  const tier = useGetPersonaTier(item.persona.personaType);
 
   return (
     <div className={rowStyle} key={item.id}>
@@ -32,14 +24,10 @@ function ShopTableRowView({ onAction, actionLabel, actionColor, ...item }: Props
         <Image src={getPersonaImage(item.persona.personaType)} width={60} height={67} alt="animal1" />
       </div>
       <span>{snakeToTitleCase(item.persona.personaType)}</span>
-      <span>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</span>
+      <span>{ANIMAL_TIER_TEXT_MAP[tier]}</span>
       <span>{item.persona.personaLevel}</span>
       <span>{addNumberComma(item.price)}</span>
-      <div>
-        <Button variant="secondary" onClick={() => onAction(item.id)} color={actionColor}>
-          {actionLabel}
-        </Button>
-      </div>
+      <div>{rightElement}</div>
     </div>
   );
 }
