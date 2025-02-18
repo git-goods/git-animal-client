@@ -10,10 +10,10 @@ import { useQuery } from '@tanstack/react-query';
 import { MediaQuery } from '@/components/MediaQuery';
 import Pagination from '@/components/Pagination/Pagination';
 
-import { ShopTableDesktopRow, ShopTableMobileRow, ShopTableRowViewSkeleton } from '../../_common/ShopTableMobileRow';
-import { tableCss, tbodyCss, theadCss } from '../table.styles';
+import { ShopTableDesktopRow, ShopTableMobileRow, ShopTableRowViewSkeleton } from '../_common/ShopTableMobileRow';
 
-import EditModal from './EditModal';
+import EditModal from './SellSection/EditModal';
+import { tableCss, tbodyCss, theadCss } from './table.styles';
 
 function SellListSection() {
   const t = useTranslations('Shop');
