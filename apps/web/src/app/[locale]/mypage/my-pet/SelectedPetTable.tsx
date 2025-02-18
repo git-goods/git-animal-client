@@ -17,7 +17,7 @@ import { LOCAL_STORAGE_KEY } from '@/constants/storage';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
-import { tableCss } from '../../shop/AuctionSection/table.styles';
+import { tableCss } from '../../shop/_auction/table.styles';
 
 import { MergePersona } from './(merge)';
 
