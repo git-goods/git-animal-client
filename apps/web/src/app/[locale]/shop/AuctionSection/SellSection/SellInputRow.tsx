@@ -12,12 +12,11 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
-import { ShopTableMobileRow } from '@/components/ProductTable/ShopTableMobileRow';
-import { rowStyle } from '@/components/ProductTable/ShopTableRowView';
 import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
+import { rowStyle, ShopTableMobileRow } from '../../_common/ShopTableMobileRow';
 import { tableCss, theadCss } from '../table.styles';
 
 const MAX_PRICE = 100_000_000;

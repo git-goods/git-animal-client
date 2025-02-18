@@ -4,19 +4,17 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
-import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries, useBuyProduct, useDeleteProduct, userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
+import { MediaQuery } from '@/components/MediaQuery';
 import Pagination from '@/components/Pagination/Pagination';
-import { ShopTableMobileRow } from '@/components/ProductTable/ShopTableMobileRow';
-import ShopTableRowView, { ShopTableRowViewSkeleton } from '@/components/ProductTable/ShopTableRowView';
-import { ACTION_BUTTON_OBJ } from '@/constants/action';
 import { useLoading } from '@/store/loading';
 import { useClientUser } from '@/utils/clientAuth';
 
+import { ShopTableDesktopRow, ShopTableMobileRow, ShopTableRowViewSkeleton } from '../_common/ShopTableMobileRow';
 import { useSearchOptions } from '../useSearchOptions';
 
 import { tableCss, tbodyCss, theadCss } from './table.styles';
@@ -69,7 +67,6 @@ export default ProductTable;
 
 function ProductTableRow({ product }: { product: Product }) {
   const queryClient = useQueryClient();
-  const isMobile = useIsMobile();
   const { id: myId } = useClientUser();
   const { setLoading } = useLoading();
   const t = useTranslations('Shop');
@@ -120,31 +117,31 @@ function ProductTableRow({ product }: { product: Product }) {
     }
   };
 
-  if (isMobile) {
-    return (
-      <ShopTableMobileRow
-        personaType={product.persona.personaType}
-        personaLevel={product.persona.personaLevel}
-        price={product.price}
-        rightElement={
-          <Button variant="secondary" size="s" onClick={() => onAction(product.id)}>
-            {t(productStatus === 'MY_SELLING' ? 'cancel' : 'buy')}
-          </Button>
-        }
-      />
-    );
-  }
-
   return (
-    <ShopTableRowView
-      key={product.id}
-      id={product.id}
-      persona={product.persona}
-      price={product.price}
-      rightElement={
-        <Button variant="secondary" onClick={() => onAction(product.id)} color={ACTION_BUTTON_OBJ[productStatus].color}>
-          {t(ACTION_BUTTON_OBJ[productStatus].label)}
-        </Button>
+    <MediaQuery
+      mobile={
+        <ShopTableMobileRow
+          personaType={product.persona.personaType}
+          personaLevel={product.persona.personaLevel}
+          price={product.price}
+          rightElement={
+            <Button variant="secondary" size="s" onClick={() => onAction(product.id)}>
+              {t(productStatus === 'MY_SELLING' ? 'cancel' : 'buy')}
+            </Button>
+          }
+        />
+      }
+      desktop={
+        <ShopTableDesktopRow
+          personaType={product.persona.personaType}
+          personaLevel={product.persona.personaLevel}
+          price={product.price}
+          rightElement={
+            <Button variant="secondary" onClick={() => onAction(product.id)}>
+              {t(productStatus === 'MY_SELLING' ? 'cancel' : 'buy')}
+            </Button>
+          }
+        />
       }
     />
   );
