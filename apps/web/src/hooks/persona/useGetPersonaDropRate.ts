@@ -1,3 +1,5 @@
+import { getAnimalTierInfo } from '@/utils/animals';
+
 import { useGetAllPersona } from '../query/render/useGetAllPersona';
 
 /**
@@ -12,5 +14,12 @@ export const useGetPersonaDropRate = (personaType: string) => {
   } = useGetAllPersona();
   const currentPersona = personas.find((persona) => persona.type === personaType);
   if (!currentPersona) throw new Error('unexpected persona');
+
   return currentPersona.dropRate;
+};
+
+export const useGetPersonaTier = (personaType: string) => {
+  const dropRate = useGetPersonaDropRate(personaType);
+  const tier = getAnimalTierInfo(Number(dropRate.replace('%', '')));
+  return tier;
 };

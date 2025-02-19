@@ -1,14 +1,14 @@
 import { type ReactNode } from 'react';
 import { css } from '_panda/css';
 
-import SellListSection from '../SellListSection';
 import type { TabType } from '../type';
 
+import SellSection from './SellSection/SellSection';
 import { Background } from './Background';
 import { DefaultTabRight } from './DefaultTabRight';
 import HistoryTable from './HistoryTable';
+import SellListSection from './MySellList';
 import ProductTable from './ProductTable';
-import { SellSection } from './SellSection';
 import Tab from './Tab';
 
 interface Props {
@@ -56,7 +56,7 @@ const sectionCss = css({
 
   _mobile: {
     padding: '40px 16px 80px',
-    minH: 'auto',
+    minH: '552px',
   },
 });
 

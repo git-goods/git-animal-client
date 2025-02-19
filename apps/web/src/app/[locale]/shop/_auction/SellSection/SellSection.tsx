@@ -12,7 +12,7 @@ function SellSection() {
 
   return (
     <div className={containerStyle}>
-      <SellInputRow item={selectPersona} initPersona={() => setSelectPersona(null)} />
+      {selectPersona && <SellInputRow item={selectPersona} initPersona={() => setSelectPersona(null)} />}
       <h3 className={petHeadingStyle}>My Pets</h3>
       <PetList selectedPersona={selectPersona} onProductClick={setSelectPersona} />
     </div>
