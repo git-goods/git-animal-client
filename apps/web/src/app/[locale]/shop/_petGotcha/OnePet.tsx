@@ -141,4 +141,9 @@ const headingStyle = css({
   color: 'white',
   textAlign: 'center',
   marginBottom: '60px',
+
+  _mobile: {
+    textStyle: 'glyph28.bold',
+    marginBottom: '40px',
+  },
 });

@@ -24,6 +24,10 @@ export const dialogContentCva = cva({
           textAlign: 'left',
           width: '100%',
         },
+
+        _mobile: {
+          maxWidth: 'calc(100vw - 48px)',
+        },
       },
       large: {
         borderRadius: '16px',

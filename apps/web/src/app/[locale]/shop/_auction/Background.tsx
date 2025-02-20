@@ -6,23 +6,39 @@ import { css } from '_panda/css';
 import type { Variants } from 'framer-motion';
 import { motion } from 'framer-motion';
 
+import { MediaQuery } from '@/components/MediaQuery';
+
 export const Background = memo(function Background() {
   return (
     <>
-      <div className={floatingBackgroundDivCss}>
-        <motion.div className={coinCss} variants={coinVariants} animate="floating">
-          <Image width={188} height={191} src="/shop/coin.webp" alt="coin" />
-        </motion.div>
+      <MediaQuery
+        desktop={
+          <div className={floatingBackgroundDivCss}>
+            <motion.div className={coinCss} variants={coinVariants} animate="floating">
+              <Image width={188} height={191} src="/shop/coin.webp" alt="coin" />
+            </motion.div>
 
-        <motion.div className={carrotCss} variants={carrotVariants} animate="floating">
-          <Image width={313} height={316} src="/shop/carrot.webp" alt="carrot" />
-        </motion.div>
-      </div>
+            <motion.div className={carrotCss} variants={carrotVariants} animate="floating">
+              <Image width={313} height={316} src="/shop/carrot.webp" alt="carrot" />
+            </motion.div>
+          </div>
+        }
+      />
 
-      <div className={backgroundDivCss}>
-        <Image width={2802} height={354} src="/shop/land.webp" alt="land" />
-        <Image width={2802} height={354} src="/shop/land.webp" alt="land" />
-      </div>
+      <MediaQuery
+        desktop={
+          <div className={backgroundDivCss}>
+            <Image width={2802} height={354} src="/shop/land.webp" alt="land" />
+            <Image width={2802} height={354} src="/shop/land.webp" alt="land" />
+          </div>
+        }
+        mobile={
+          <div className={backgroundDivCss}>
+            <Image width={750} height={140} src="/shop/land-m.webp" alt="land" />
+            <Image width={750} height={140} src="/shop/land-m.webp" alt="land" />
+          </div>
+        }
+      />
     </>
   );
 });
@@ -83,10 +99,20 @@ const backgroundDivCss = css({
   h: '354px',
   overflow: 'hidden',
 
+  _mobile: {
+    h: '70px',
+  },
+
   '& img': {
     position: 'absolute',
     maxWidth: 'unset',
     height: '100%',
+    objectFit: 'contain',
+
+    _mobile: {
+      width: 'auto',
+      height: '70px',
+    },
   },
 
   '& img:first-of-type': {
@@ -94,7 +120,7 @@ const backgroundDivCss = css({
   },
 
   '& img:last-of-type': {
-    left: 2800, // NOTE: 2px은 깨지는 부분이 존재해 당김
+    left: '454px', // NOTE: 2px은 깨지는 부분이 존재해 당김
     animation: `slide 60s linear infinite`,
   },
 });

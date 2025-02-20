@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
+import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries, userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
@@ -11,30 +12,28 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
-import { rowStyle } from '@/components/ProductTable/ShopTableRowView';
-import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
-import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
+import { useGetPersonaTier } from '@/hooks/persona/useGetPersonaDropRate';
+import { ANIMAL_TIER_TEXT_MAP } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
+import { rowStyle, ShopTableMobileRow } from '../../_common/ShopTableMobileRow';
 import { tableCss, theadCss } from '../table.styles';
 
 const MAX_PRICE = 100_000_000;
 
 interface Props {
-  item: Persona | null;
+  item: Persona;
   initPersona: () => void;
 }
 
 function SellInputRow({ item, initPersona }: Props) {
   const t = useTranslations('Shop');
+  const isMobile = useIsMobile();
   const { price, resetPrice, onChangePriceInput } = usePrice();
 
   const queryClient = useQueryClient();
 
-  const {
-    data: { personas },
-  } = useGetAllPersona();
-  const currentPersona = personas.find((persona) => persona.type === item?.type);
+  const personaTier = useGetPersonaTier(item.type);
 
   const { mutate } = useRegisterProduct({
     onSuccess: () => {
@@ -61,6 +60,20 @@ function SellInputRow({ item, initPersona }: Props) {
     }
   };
 
+  if (isMobile) {
+    return (
+      <ShopTableMobileRow
+        personaType={item.type}
+        personaLevel={Number(item.level)}
+        rightElement={
+          <Button variant="secondary" size="s" onClick={onSellClick}>
+            {t('sell')}
+          </Button>
+        }
+      />
+    );
+  }
+
   return (
     <div className={tableCss}>
       <div className={theadCss}>
@@ -73,13 +86,13 @@ function SellInputRow({ item, initPersona }: Props) {
       </div>
 
       <div className={cx(rowStyle, 'row')}>
-        {item && currentPersona && (
+        {item && personaTier && (
           <>
             <div>
               <img src={getPersonaImage(item.type)} alt={item.type} width={60} height={67} />
             </div>
             <div>{snakeToTitleCase(item.type)}</div>
-            <div>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</div>
+            <div>{ANIMAL_TIER_TEXT_MAP[personaTier]}</div>
             <div>{item.level}</div>
             <div>
               <input

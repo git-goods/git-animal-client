@@ -129,7 +129,7 @@ const languageSelectorHeaderStyle = css({
   justifyContent: 'space-between',
   position: 'relative',
   width: '100%',
-  height: 44,
+  height: '44px',
 
   '& .center-title': {
     width: 'fit-content',

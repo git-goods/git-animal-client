@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import type { GotchaResult } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { usePostGotcha, userQueries } from '@gitanimals/react-query';
@@ -111,14 +111,14 @@ Token: ${data?.user.accessToken}
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="screen">
+      <Dialog.Content size="screen" className={dialogContentStyle}>
         <Dialog.Title>
           {isPending ? t('gotcha-in-progress') : isSuccess ? t('get-persona-success') : t('click-card-to-flip')}
         </Dialog.Title>
         {isRunning && (
           <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
         )}
-        <div className={css({ width: '100%', mt: '60px', pointerEvents: isPending ? 'none' : 'auto' })}>
+        <div className={cx(gameContainerStyle, isPending && css({ pointerEvents: 'none' }))}>
           <TenCardFlipGame onGetPersona={onAction} getPersona={getPersona} />
         </div>
       </Dialog.Content>
@@ -126,9 +126,29 @@ Token: ${data?.user.accessToken}
   );
 }
 
+const dialogContentStyle = css({
+  _mobile: {
+    gap: '12px',
+  },
+});
+
 const noticeMessageStyle = css({
   textStyle: 'glyph28.bold',
   color: 'white',
   textAlign: 'center',
   mt: '12px',
+
+  _mobile: {
+    fontSize: '12px',
+    mt: '0px',
+  },
+});
+
+const gameContainerStyle = css({
+  width: '100%',
+  mt: '60px',
+
+  _mobile: {
+    mt: '28px',
+  },
 });

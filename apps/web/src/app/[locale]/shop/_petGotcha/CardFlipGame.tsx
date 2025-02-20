@@ -88,18 +88,31 @@ const containerStyle = css({
   flexDirection: 'column',
   alignItems: 'center',
   gap: '1rem',
+  width: '100%',
 });
 
 const cardContainerStyle = css({
   display: 'flex',
   gap: '1rem',
+  width: '100%',
+
+  _mobile: {
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: '8px',
+  },
 });
 
 const cardStyle = css({
-  width: '220px',
-  height: '272px',
+  width: '20%',
   perspective: '1000px',
   cursor: 'pointer',
+  height: 'auto',
+  aspectRatio: '109/135',
+
+  _mobile: {
+    width: '30%',
+  },
 });
 
 const cardInnerStyle = css({
