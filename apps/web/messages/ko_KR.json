@@ -77,6 +77,7 @@
     "sell-confirm": "정말로 판매하시겠습니까?",
     "sell-confirm-description": "판매 후 펫은 사라집니다.",
     "sell-confirm-checkbox": "메시지 다시 보지 않기",
+    "sell-price-modal-title": "판매하고 싶은 가격을 입력해주세요.",
     "Background": {
       "buy-success": "배경 구매 완료!",
       "buy-fail": "배경 구매에 실패했습니다.",
