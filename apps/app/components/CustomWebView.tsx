@@ -4,6 +4,7 @@ import { WebView } from 'react-native-webview';
 import Constants from 'expo-constants';
 import { useEffect } from 'react';
 import { WebViewNavigation } from 'react-native-webview';
+import { handleGithubLogin } from '../utils/github';
 
 interface CustomWebViewProps {
   url: string;
@@ -41,7 +42,7 @@ const INJECTED_JAVASCRIPT = `
 true;
 `;
 
-export default function CustomWebView({ url }: CustomWebViewProps) {
+const CustomWebView: React.FC<CustomWebViewProps> = ({ url }) => {
   const webViewRef = useRef<WebView>(null);
   const [loading, setLoading] = useState(true);
   const [canGoBack, setCanGoBack] = useState(false);
@@ -72,16 +73,62 @@ export default function CustomWebView({ url }: CustomWebViewProps) {
     return true;
   };
 
-  const onMessage = (event: any) => {
+  const onMessage = async (event: any) => {
     try {
       const { type, data } = JSON.parse(event.nativeEvent.data);
       if (type === 'navigation') {
         setCanGoBack(data.canGoBack);
+      } else if (type === 'GITHUB_LOGIN') {
+        await handleGithubLogin();
       }
     } catch (error) {
       console.log('Failed to parse webview message', error);
     }
   };
+
+  const loginInjectedJavaScript = `
+    (function() {
+      // GitHub 로그인 버튼을 찾기 위한 선택자들을 추가
+      const selectors = [
+        '[data-testid="github-login-button"]',
+        '[data-testid="login-button"]',
+        'button:contains("GitHub")',
+        'a:contains("GitHub")'
+      ];
+
+      function addLoginHandler(element) {
+        element.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.ReactNativeWebView.postMessage(JSON.stringify({
+            type: 'GITHUB_LOGIN'
+          }));
+        });
+      }
+
+      // 모든 선택자를 시도
+      selectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(addLoginHandler);
+      });
+
+      // 동적으로 추가되는 버튼을 위한 MutationObserver
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.addedNodes.length) {
+            selectors.forEach(selector => {
+              const elements = document.querySelectorAll(selector);
+              elements.forEach(addLoginHandler);
+            });
+          }
+        });
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    })();
+  `;
 
   return (
     <View style={styles.container}>
@@ -92,7 +139,7 @@ export default function CustomWebView({ url }: CustomWebViewProps) {
         onLoadEnd={() => setLoading(false)}
         onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
         onMessage={onMessage}
-        injectedJavaScript={INJECTED_JAVASCRIPT}
+        injectedJavaScript={INJECTED_JAVASCRIPT + loginInjectedJavaScript}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         startInLoadingState={true}
@@ -105,7 +152,7 @@ export default function CustomWebView({ url }: CustomWebViewProps) {
       {loading && <View style={styles.loadingView} />}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -126,3 +173,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
+export default CustomWebView;
