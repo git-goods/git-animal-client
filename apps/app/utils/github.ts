@@ -14,42 +14,35 @@ export const checkGithubAppInstalled = async () => {
 
 export const getGithubOauthUrl = async () => {
   try {
-    // 먼저 내부 API를 호출하여 OAuth URL을 가져옵니다
-    // const internalResponse = await fetch('https://www.gitanimals.org/api/oauth');
-    // console.log('internalResponse: ', internalResponse);
+    const redirectUrl = 'gitanimals://auth';
+    console.log('Redirect URL:', redirectUrl);
 
-    // if (!internalResponse.ok) {
-    //   throw new Error(`Internal API error! status: ${internalResponse.status}`);
-    // }
+    console.log('Sending request with headers:', {
+      'Redirect-When-Success': 'APP',
+      'X-Mobile-Redirect': redirectUrl,
+    });
 
-    // const internalData = await internalResponse.json();
-    // console.log('Internal API response:', internalData);
-
-    // 직접 백엔드 API를 호출합니다
     const response = await fetch('https://api.gitanimals.org/logins/oauth/github', {
       headers: {
-        Platform: 'WEB',
-        'Redirect-When-Success': 'LOCAL',
-        // 'Content-Type': 'application/json',
-        // Accept: 'application/json',
+        'Redirect-When-Success': 'APP',
+        'X-Mobile-Redirect': redirectUrl,
       },
     });
 
-    console.log('response: ', response.ok);
+    console.log('Response:', {
+      ok: response.ok,
+      status: response.status,
+      headers: Object.fromEntries(response.headers.entries()),
+      url: response.url,
+    });
 
     if (!response.ok) {
-      console.error('Response status:', response.status);
-      console.error('Response headers:', response.headers);
-      const text = await response.text();
-      console.log('Response text:', text);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    // const data = await response.json();
-    console.log('response: ', response);
-    console.log('response.url: ', response.url);
-
     const url = response.url;
+    console.log('OAuth URL:', url);
+
     if (!url) {
       throw new Error('OAuth URL이 없습니다');
     }
@@ -60,43 +53,89 @@ export const getGithubOauthUrl = async () => {
   }
 };
 
-export const handleGithubLogin = async () => {
+export const handleGithubLogin = async (): Promise<string | undefined> => {
   try {
-    const hasGithubApp = await checkGithubAppInstalled();
     const oauthUrl = await getGithubOauthUrl();
+    console.log('Opening OAuth URL:', oauthUrl);
 
-    console.log('oauthUrl: ', oauthUrl);
+    await WebBrowser.warmUpAsync();
+    console.log('WebBrowser warmed up');
 
-    if (hasGithubApp) {
-      await Linking.openURL(oauthUrl);
-    } else {
-      // 콜백 URL을 명시적으로 설정
-      const callbackUrl = Linking.createURL('auth/callback');
-      console.log('Callback URL:', callbackUrl);
+    return new Promise((resolve, reject) => {
+      console.log('Setting up URL listener');
 
-      const result = await WebBrowser.openAuthSessionAsync(oauthUrl, callbackUrl, {
+      const subscription = Linking.addEventListener('url', ({ url }) => {
+        console.log('Received URL in listener:', url);
+        console.log('URL includes "auth":', url.includes('auth'));
+
+        if (url.includes('auth')) {
+          console.log('Auth URL detected, cleaning up...');
+          subscription.remove();
+          WebBrowser.coolDownAsync();
+          resolve('success');
+        }
+      });
+
+      const redirectUrl = 'gitanimals://auth';
+      console.log('Opening auth session with:', {
+        oauthUrl,
+        redirectUrl,
+      });
+
+      WebBrowser.openAuthSessionAsync(oauthUrl, redirectUrl, {
         showInRecents: true,
         showTitle: true,
         enableDefaultShareMenuItem: false,
-        // prefersEphemeralWebBrowserSession: true,
-      });
+        preferEphemeralSession: false,
+      })
+        .then((result) => {
+          console.log('result: ', result);
+          console.log('WebBrowser result:', {
+            type: result.type,
+            fullResult: JSON.stringify(result, null, 2),
+          });
+          subscription.remove();
+          WebBrowser.coolDownAsync();
 
-      console.log('WebBrowser result:', result);
+          if (result.type === 'success') {
+            console.log('Auth successful, checking URL parameters...');
+            try {
+              const url = new URL(result.url || '');
+              console.log('Success URL parsed:', {
+                pathname: url.pathname,
+                search: url.search,
+                hash: url.hash,
+                params: Object.fromEntries(url.searchParams.entries()),
+              });
+            } catch (e) {
+              console.log('Could not parse success URL:', e);
+            }
+            resolve('success');
+          } else if (result.type === 'cancel') {
+            console.log('Auth was cancelled by user');
+            reject(new Error('인증이 취소되었습니다'));
+          } else {
+            console.log('Auth failed with type:', result.type);
+            reject(new Error('인증에 실패했습니다'));
+          }
+        })
+        .catch((error) => {
+          console.error('WebBrowser error:', error);
+          subscription.remove();
+          WebBrowser.coolDownAsync();
+          reject(error);
+        });
 
-      if (result.type === 'success' && result.url) {
-        console.log('Success URL:', result.url);
-        const url = new URL(result.url);
-        const token = url.searchParams.get('token');
-        if (token) {
-          await SecureStore.setItemAsync('auth_token', token);
-          return token;
-        }
-      } else {
-        throw new Error('인증이 취소되었거나 실패했습니다');
-      }
-    }
+      setTimeout(() => {
+        console.log('Login timeout reached');
+        subscription.remove();
+        WebBrowser.coolDownAsync();
+        reject(new Error('로그인 시간이 초과되었습니다'));
+      }, 300000);
+    });
   } catch (error) {
     console.error('Login failed:', error);
+    await WebBrowser.coolDownAsync();
     if (error instanceof Error) {
       throw new Error(`로그인 실패: ${error.message}`);
     }
