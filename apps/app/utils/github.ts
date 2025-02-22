@@ -88,7 +88,7 @@ export const handleGithubLogin = async (): Promise<string | undefined> => {
         enableDefaultShareMenuItem: false,
         preferEphemeralSession: false,
       })
-        .then((result) => {
+        .then(async (result) => {
           console.log('result: ', result);
           console.log('WebBrowser result:', {
             type: result.type,
@@ -107,6 +107,9 @@ export const handleGithubLogin = async (): Promise<string | undefined> => {
                 hash: url.hash,
                 params: Object.fromEntries(url.searchParams.entries()),
               });
+              const params = Object.fromEntries(url.searchParams.entries());
+
+              await SecureStore.setItemAsync('auth_token', params.jwt || '');
             } catch (e) {
               console.log('Could not parse success URL:', e);
             }

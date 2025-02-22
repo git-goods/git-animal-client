@@ -7,13 +7,15 @@ export default function DebugPath() {
   const segments = useSegments();
   const url = Linking.createURL(pathname);
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Current Path: {pathname}</Text>
-      <Text style={styles.text}>Segments: {segments.join(' / ')}</Text>
-      <Text style={styles.text}>Full URL: {url}</Text>
-    </View>
-  );
+  return null;
+
+  // return (
+  //   <View style={styles.container}>
+  //     <Text style={styles.text}>Current Path: {pathname}</Text>
+  //     <Text style={styles.text}>Segments: {segments.join(' / ')}</Text>
+  //     <Text style={styles.text}>Full URL: {url}</Text>
+  //   </View>
+  // );
 }
 
 const styles = StyleSheet.create({

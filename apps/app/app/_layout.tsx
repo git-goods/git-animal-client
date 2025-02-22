@@ -40,8 +40,13 @@ export default function RootLayout() {
     <View style={{ flex: 1 }}>
       <DebugPath />
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} redirect={!isAuthenticated} />
+        <Stack
+          initialRouteName={isAuthenticated ? '(tabs)' : 'auth/login'}
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen
             name="auth/login"
             options={{

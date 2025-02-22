@@ -135,7 +135,7 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url }) => {
       <WebView
         ref={webViewRef}
         source={{ uri: url }}
-        style={styles.webview}
+        style={{ flex: 1, marginTop: -1 }}
         onLoadEnd={() => setLoading(false)}
         onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
         onMessage={onMessage}
@@ -157,7 +157,7 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Constants.statusBarHeight,
+    // marginTop: Constants.statusBarHeight,
   },
   webview: {
     flex: 1,
