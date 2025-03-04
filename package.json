@@ -8,12 +8,23 @@
     "dev:web": "turbo dev --filter=@gitanimals/web",
     "dev:admin": "turbo dev --filter=@gitanimals/admin",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "web": "pnpm -F @gitanimals/web",
+    "admin": "pnpm -F @gitanimals/admin",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "prettier": "*",
     "turbo": "^2.0.4",
     "typescript": "*"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --cache --fix",
+      "prettier --cache --write"
+    ]
   },
   "resolutions": {
     "typescript": "^5.4.5",
