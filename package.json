@@ -21,7 +21,7 @@
     "typescript": "*"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
+    "{apps,packages}/**/src/**/*.{js,jsx,ts,tsx}": [
       "eslint --cache --fix",
       "prettier --cache --write"
     ]
