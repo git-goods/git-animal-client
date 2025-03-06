@@ -59,7 +59,7 @@ const inboxContainerStyle = css({
   maxHeight: '600px',
   overflow: 'hidden',
   borderRadius: '8px',
-  zIndex: 2000,
+  zIndex: 'popover',
   background: 'rgba(255, 255, 255, 0.20)',
   boxShadow: '0px 4px 24px 0px rgba(0, 0, 0, 0.25)',
   backdropFilter: 'blur(20px)',

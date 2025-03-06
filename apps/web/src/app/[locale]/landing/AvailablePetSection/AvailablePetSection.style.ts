@@ -18,7 +18,7 @@ export const container = flex({
 
 export const content = flex({
   position: 'relative',
-  zIndex: 1,
+  zIndex: 'floating',
   flexDirection: 'column',
   gap: '60px',
   alignItems: 'center',

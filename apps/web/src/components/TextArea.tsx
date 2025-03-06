@@ -82,7 +82,7 @@ const containerStyle = css({
   position: 'relative',
   border: '1px solid rgba(0, 0, 0, 0.1)',
   borderRadius: '8px',
-  padding: '16px 20px 26px',
+  // padding: '16px 20px 26px',
   '&:focus-within': {
     border: '1px solid #00894d',
     '& strong': {

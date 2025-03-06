@@ -92,6 +92,12 @@ export const thumbnailImage = css({
   right: '16px',
 
   zIndex: 1,
+
+  _mobile: {
+    top: '6.5px',
+    left: '6.5px',
+    right: '6.5px',
+  },
 });
 
 export const infoWrapper = flex({
@@ -101,6 +107,13 @@ export const infoWrapper = flex({
   right: '20px',
   justifyContent: 'space-between',
   gap: '8px',
+
+  _mobile: {
+    bottom: '8px',
+    left: '8px',
+    right: '8px',
+    gap: '4px',
+  },
 });
 
 export const typeText = css({
@@ -109,9 +122,19 @@ export const typeText = css({
   textOverflow: 'ellipsis',
   overflow: 'hidden',
   lineHeight: '40px',
+
+  _mobile: {
+    fontSize: '10px',
+    lineHeight: '12px',
+  },
 });
 
 export const ratingText = css({
   textStyle: 'glyph22.regular',
   lineHeight: '40px',
+
+  _mobile: {
+    fontSize: '9px',
+    lineHeight: '12px',
+  },
 });

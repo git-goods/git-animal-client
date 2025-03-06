@@ -1,9 +1,11 @@
 'use client';
 
+import type { ComponentPropsWithoutRef } from 'react';
 import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
+import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
@@ -18,7 +20,13 @@ export function PetGotcha() {
 
   return (
     <div className={containerStyle}>
-      <Image src="/shop/pet-gotcha-bg.webp" alt="pet-gotcha-bg" width={1920} height={1226} className={bgStyle} />
+      <ResponsiveImage
+        src="/shop/pet-gotcha-bg"
+        alt="pet-gotcha-bg"
+        width={{ mobile: 375, desktop: 1920 }}
+        height={{ mobile: 621, desktop: 1226 }}
+        className={bgStyle}
+      />
       <h1 className={headingStyle}>Pet Gotcha</h1>
       <p className={descStyle}>{t('pet-gotcha-desc')}</p>
 
@@ -30,6 +38,28 @@ export function PetGotcha() {
       {openModal === 'one-pet' && <OnePet onClose={() => setOpenModal(null)} />}
       {openModal === 'ten-pet' && <TenPet onClose={() => setOpenModal(null)} />}
     </div>
+  );
+}
+
+function ResponsiveImage({
+  width,
+  height,
+  src,
+  alt,
+  ...props
+}: Omit<ComponentPropsWithoutRef<typeof Image>, 'width' | 'height'> & {
+  width: { mobile: number; desktop: number };
+  height: { mobile: number; desktop: number };
+}) {
+  const isMobile = useIsMobile();
+  return (
+    <Image
+      src={isMobile ? `${src}-m.webp` : `${src}.webp`}
+      width={width[isMobile ? 'mobile' : 'desktop']}
+      height={height[isMobile ? 'mobile' : 'desktop']}
+      alt={alt}
+      {...props}
+    />
   );
 }
 
@@ -52,15 +82,17 @@ const ButtonWrapper = wrap
   })
   .on(({ onClickOnePet, onClickTenPet }: ButtonWrapperProps) => {
     const { data } = useSuspenseQuery(userQueries.userOptions());
+    const isMobile = useIsMobile();
+    const buttonSize = isMobile ? 's' : 'l';
 
     const points = Number(data.points);
 
     return (
       <div className={buttonContainerStyle}>
-        <Button size="l" onClick={onClickOnePet} disabled={points < 1_000}>
+        <Button size={buttonSize} onClick={onClickOnePet} disabled={points < 1_000}>
           1 Pet / 1,000 P
         </Button>
-        <Button size="l" onClick={onClickTenPet} disabled={points < 10_000}>
+        <Button size={buttonSize} onClick={onClickTenPet} disabled={points < 10_000}>
           10 Pets / 10,000 P
         </Button>
       </div>
@@ -74,6 +106,10 @@ const containerStyle = css({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+
+  _mobile: {
+    padding: '100px 0',
+  },
 });
 
 const bgStyle = css({
@@ -82,25 +118,40 @@ const bgStyle = css({
   left: 0,
   width: '100%',
   height: '100%',
-  zIndex: -1,
+  zIndex: 'hide',
   objectFit: 'cover',
 });
 
 const headingStyle = css({
   textStyle: 'glyph82.bold',
   color: 'white',
+
+  _mobile: {
+    textStyle: 'glyph40.bold',
+  },
 });
 
 const descStyle = css({
   textStyle: 'glyph24.regular',
   color: 'white',
   marginTop: '16px',
+
+  _mobile: {
+    marginTop: '8px',
+    textStyle: 'glyph16.regular',
+  },
 });
 
 const buttonContainerStyle = css({
   display: 'flex',
   gap: '16px',
   marginTop: '80px',
+
+  _mobile: {
+    gap: '8px',
+    paddingInline: '16px',
+    marginTop: '20px',
+  },
 });
 
 const petContainerStyle = css({
@@ -109,5 +160,11 @@ const petContainerStyle = css({
   '& img': {
     objectFit: 'contain',
     margin: '0 auto',
+  },
+
+  _mobile: {
+    width: '100%',
+    paddingInline: '16px',
+    marginTop: '80px',
   },
 });

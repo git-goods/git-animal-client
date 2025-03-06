@@ -30,6 +30,12 @@ const containerStyle = css({
   flexDirection: 'column',
   justifyContent: 'center',
   paddingY: '120px',
+  _mobile: {
+    paddingY: '0',
+    minHeight: 'fit-content',
+    height: 'calc(100vh - var(--mobile-header-height))',
+    padding: 4,
+  },
 });
 
 const bottomBgStyle = css({

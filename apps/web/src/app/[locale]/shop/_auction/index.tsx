@@ -1,14 +1,14 @@
 import { type ReactNode } from 'react';
 import { css } from '_panda/css';
 
-import SellListSection from '../SellListSection';
 import type { TabType } from '../type';
 
+import SellSection from './SellSection/SellSection';
 import { Background } from './Background';
 import { DefaultTabRight } from './DefaultTabRight';
 import HistoryTable from './HistoryTable';
+import SellListSection from './MySellList';
 import ProductTable from './ProductTable';
-import { SellSection } from './SellSection';
 import Tab from './Tab';
 
 interface Props {
@@ -53,12 +53,22 @@ const sectionCss = css({
   width: '100%',
   minH: '1400px',
   bg: 'linear-gradient(180deg, #000 0%, #004875 38.51%, #005B93 52.46%, #006FB3 73.8%, #0187DB 100%)',
+
+  _mobile: {
+    padding: '40px 16px 80px',
+    minH: '552px',
+  },
 });
 
 const h2Css = css({
   textStyle: 'glyph82.bold',
   color: 'white',
   marginBottom: '80px',
+
+  _mobile: {
+    textStyle: 'glyph48.bold',
+    marginBottom: '40px',
+  },
 });
 
 const divCss = css({
@@ -68,6 +78,15 @@ const divCss = css({
   padding: '40px',
   maxW: '1120px',
   width: '100%',
-  zIndex: 1,
-  height: '924px',
+  zIndex: 'floating',
+  minH: '924px',
+  height: 'auto',
+
+  _mobile: {
+    height: 'auto',
+    background: 'none',
+    backdropFilter: 'none',
+    padding: '0',
+    paddingBottom: '12px',
+  },
 });

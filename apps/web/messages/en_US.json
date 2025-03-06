@@ -76,6 +76,7 @@
     "sell-confirm": "Are you sure you want to sell?",
     "sell-confirm-description": "After selling, the pet will disappear.",
     "sell-confirm-checkbox": "Do not show this message again",
+    "sell-price-modal-title": "Enter the price you want to sell",
     "Background": {
       "buy-success": "Background purchased successfully",
       "buy-fail": "Failed to purchase background",
@@ -154,7 +155,9 @@
     "github-star-title": "Enjoying GitAnimals?",
     "github-star-body": "Give us a GitHub Star! ⭐",
     "event-christmas-title": "Christmas has come to GitAnimals! 🎄",
-    "event-christmas-body": "Get your free Christmas pet right now!"
+    "event-christmas-body": "Get your free Christmas pet right now!",
+    "open-guild-title": "New 'Guild' feature is now open!",
+    "open-guild-body": "Create a guild and grow together with your friends!"
   },
   "Preview": {
     "copy-link-title": "Copy Link",
