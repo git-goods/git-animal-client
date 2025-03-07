@@ -1,14 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { css } from '_panda/css';
 
 import QuizTypeCard from '@/app/[locale]/quiz/_quizOrSolve/QuizTypeCard';
+import SolveQuizConfirmDialog from '@/app/[locale]/quiz/_quizOrSolve/SolveQuizConfirmDialog';
 
 const QUIZ_REGISTER_POINT = 5000;
 const QUIZ_SOLVE_MAXIMUM_POINT = 32000;
 
 const SelectQuizType = () => {
+  const [isSolveQuizConfirmDialogOpen, setIsSolveQuizConfirmDialogOpen] = useState(false);
+
   return (
     <div className={containerStyle}>
       <QuizTypeCard
@@ -23,7 +26,12 @@ const SelectQuizType = () => {
         description={`Solve random quiz and get up to ${QUIZ_SOLVE_MAXIMUM_POINT}P! You can only try once a day.`}
         image="/quiz/quiz-coin.webp"
         point={`Up to ${QUIZ_SOLVE_MAXIMUM_POINT}P`}
-        onClick={() => {}}
+        onClick={() => setIsSolveQuizConfirmDialogOpen(true)}
+      />
+      <SolveQuizConfirmDialog
+        isOpen={isSolveQuizConfirmDialogOpen}
+        onConfirm={() => {}}
+        onClose={() => setIsSolveQuizConfirmDialogOpen(false)}
       />
     </div>
   );
