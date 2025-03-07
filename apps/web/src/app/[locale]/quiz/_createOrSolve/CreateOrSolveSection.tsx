@@ -2,9 +2,9 @@ import { css } from '_panda/css';
 
 import { Background } from '@/app/[locale]/quiz/_common/BackGround';
 import { MobileLayout } from '@/app/[locale]/quiz/_common/MobileLayout';
-import SelectQuizType from '@/app/[locale]/quiz/_quizOrSolve/SelectQuizType';
+import SelectQuizType from '@/app/[locale]/quiz/_createOrSolve/SelectQuizType';
 
-const QuizOrSolveSection = () => {
+const CreateOrSolveSection = () => {
   return (
     <MobileLayout>
       <Background />
@@ -17,7 +17,7 @@ const QuizOrSolveSection = () => {
   );
 };
 
-export default QuizOrSolveSection;
+export default CreateOrSolveSection;
 
 const containerStyle = css({
   display: 'flex',

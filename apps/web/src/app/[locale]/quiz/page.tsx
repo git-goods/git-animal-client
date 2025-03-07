@@ -1,4 +1,4 @@
-import QuizOrSolveSection from '@/app/[locale]/quiz/_quizOrSolve/QuizOrSolveSection';
+import CreateOrSolveSection from '@/app/[locale]/quiz/_createOrSolve/CreateOrSolveSection';
 import GNB from '@/components/GNB/GNB';
 
 async function QuizPage() {
@@ -6,7 +6,7 @@ async function QuizPage() {
     <div>
       <GNB />
       <main>
-        <QuizOrSolveSection />
+        <CreateOrSolveSection />
       </main>
     </div>
   );
