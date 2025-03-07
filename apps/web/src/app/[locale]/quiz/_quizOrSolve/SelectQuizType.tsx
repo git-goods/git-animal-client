@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { css } from '_panda/css';
 
 import QuizTypeCard from '@/app/[locale]/quiz/_quizOrSolve/QuizTypeCard';
@@ -10,6 +11,7 @@ const QUIZ_REGISTER_POINT = 5000;
 const QUIZ_SOLVE_MAXIMUM_POINT = 32000;
 
 const SelectQuizType = () => {
+  const router = useRouter();
   const [isSolveQuizConfirmDialogOpen, setIsSolveQuizConfirmDialogOpen] = useState(false);
 
   return (
@@ -19,7 +21,9 @@ const SelectQuizType = () => {
         description={`Create an O/X quiz and get ${QUIZ_REGISTER_POINT}P!`}
         image="/quiz/quiz-cat.webp"
         point={`${QUIZ_REGISTER_POINT}P`}
-        onClick={() => {}}
+        onClick={() => {
+          router.push('/quiz/create');
+        }}
       />
       <QuizTypeCard
         title="Solve quiz"

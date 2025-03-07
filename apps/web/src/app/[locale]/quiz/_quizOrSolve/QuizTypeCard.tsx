@@ -14,7 +14,7 @@ interface QuizTypeCardProps {
 const QuizTypeCard = ({ title, description, image, point, onClick }: QuizTypeCardProps) => {
   return (
     <button className={cardStyle} onClick={onClick}>
-      <Image src={image} alt={title} width={100} height={100} />
+      <Image className={imageStyle} src={image} alt={title} width={100} height={100} />
       <Flex direction="column" gap="4px">
         <h4 className={titleStyle}>{title}</h4>
         <p className={descriptionStyle}>{description}</p>
@@ -35,6 +35,10 @@ const cardStyle = css({
   padding: '40px 24px',
   backgroundColor: 'white.white_25',
   borderRadius: '10px',
+});
+
+const imageStyle = css({
+  flexShrink: 0,
 });
 
 const titleStyle = css({
