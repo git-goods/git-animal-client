@@ -8,7 +8,6 @@ import { Button } from '@gitanimals/ui-panda';
 import { ChevronLeft } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { MobileLayout } from '@/app/[locale]/quiz/_common/MobileLayout';
 import QuizField from '@/app/[locale]/quiz/create/QuizField';
 import QuizRadio from '@/app/[locale]/quiz/create/QuizRadioButton';
 import QuizTextArea from '@/app/[locale]/quiz/create/QuizTextArea';
@@ -51,71 +50,69 @@ const CreateQuizSection = () => {
   };
 
   return (
-    <MobileLayout>
-      <div className={containerStyle}>
-        <div className={headingStyle}>
-          <h1 className={titleStyle}>
-            <Link href="/quiz">
-              <ChevronLeft className={headingPrevButtonStyle} size={24} color="white" />
-            </Link>
-            Create Quiz
-          </h1>
-        </div>
-        <form className={contentStyle}>
-          <QuizField
-            title="Difficulty Level"
-            content={
-              <QuizRadio.Group>
-                {difficultyRadioItemProps.map((item) => (
-                  <QuizRadio.Button key={item.value} selected={item.selected} onClick={item.onSelect}>
-                    {item.label}
-                  </QuizRadio.Button>
-                ))}
-              </QuizRadio.Group>
-            }
-          />
-          <QuizField
-            title="Category"
-            content={
-              <QuizRadio.Group>
-                {categoryRadioItemProps.map((item) => (
-                  <QuizRadio.Button key={item.value} selected={item.selected} onClick={item.onSelect}>
-                    {item.label}
-                  </QuizRadio.Button>
-                ))}
-              </QuizRadio.Group>
-            }
-          />
-          <QuizField
-            title="Quiz Contents"
-            description=""
-            content={
-              <QuizTextArea
-                value={quizContents}
-                placeholder="Write down the contents of the quiz...."
-                onChange={handleChangeQuizContents}
-              />
-            }
-          />
-          <QuizField
-            title="Answer"
-            description="Choose the correct answer for the quiz."
-            content={
-              <QuizRadio.Group>
-                {correctAnswerRadioItemProps.map((item) => (
-                  <QuizRadio.Button key={item.value} selected={item.selected} onClick={item.onSelect}>
-                    {item.label}
-                  </QuizRadio.Button>
-                ))}
-              </QuizRadio.Group>
-            }
-          />
-          <Button className={buttonStyle} disabled={!enabledToCreate} onClick={handleCreateQuiz}>
-            Create
-          </Button>
-        </form>
+    <div className={containerStyle}>
+      <div className={headingStyle}>
+        <h1 className={titleStyle}>
+          <Link href="/quiz">
+            <ChevronLeft className={headingPrevButtonStyle} size={24} color="white" />
+          </Link>
+          Create Quiz
+        </h1>
       </div>
-    </MobileLayout>
+      <form className={contentStyle}>
+        <QuizField
+          title="Difficulty Level"
+          content={
+            <QuizRadio.Group>
+              {difficultyRadioItemProps.map((item) => (
+                <QuizRadio.Button key={item.value} selected={item.selected} onClick={item.onSelect}>
+                  {item.label}
+                </QuizRadio.Button>
+              ))}
+            </QuizRadio.Group>
+          }
+        />
+        <QuizField
+          title="Category"
+          content={
+            <QuizRadio.Group>
+              {categoryRadioItemProps.map((item) => (
+                <QuizRadio.Button key={item.value} selected={item.selected} onClick={item.onSelect}>
+                  {item.label}
+                </QuizRadio.Button>
+              ))}
+            </QuizRadio.Group>
+          }
+        />
+        <QuizField
+          title="Quiz Contents"
+          description=""
+          content={
+            <QuizTextArea
+              value={quizContents}
+              placeholder="Write down the contents of the quiz...."
+              onChange={handleChangeQuizContents}
+            />
+          }
+        />
+        <QuizField
+          title="Answer"
+          description="Choose the correct answer for the quiz."
+          content={
+            <QuizRadio.Group>
+              {correctAnswerRadioItemProps.map((item) => (
+                <QuizRadio.Button key={item.value} selected={item.selected} onClick={item.onSelect}>
+                  {item.label}
+                </QuizRadio.Button>
+              ))}
+            </QuizRadio.Group>
+          }
+        />
+        <Button className={buttonStyle} disabled={!enabledToCreate} onClick={handleCreateQuiz}>
+          Create
+        </Button>
+      </form>
+    </div>
   );
 };
 

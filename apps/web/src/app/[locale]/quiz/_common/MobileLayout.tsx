@@ -15,7 +15,7 @@ const layoutStyle = css({
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  width: '100vw',
+  width: '100%',
   height: 'calc(100vh - var(--mobile-header-height))',
   backgroundColor: 'black',
   zIndex: 0,
