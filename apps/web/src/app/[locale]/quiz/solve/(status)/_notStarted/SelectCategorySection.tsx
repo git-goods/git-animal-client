@@ -6,7 +6,7 @@ import { Button } from '@gitanimals/ui-panda';
 
 import QuizRadio from '@/app/[locale]/quiz/create/QuizRadioButton';
 import useRadioGroup from '@/app/[locale]/quiz/create/useRadioGroup';
-import { SOLVE_QUIZ_STATUS } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
+import { QUIZ_STATUS } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
 import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/SolveQuizContext';
 
 const SelectCategorySection = () => {
@@ -20,7 +20,7 @@ const SelectCategorySection = () => {
   const { setStatus } = useSolveQuizContext();
 
   const handleStart = () => {
-    setStatus(SOLVE_QUIZ_STATUS.SOLVING);
+    setStatus(QUIZ_STATUS.SOLVING);
   };
 
   return (

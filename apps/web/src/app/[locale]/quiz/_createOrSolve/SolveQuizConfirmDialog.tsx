@@ -24,7 +24,7 @@ const SolveQuizConfirmDialog = ({ onConfirm, onClose, isOpen }: SolveQuizConfirm
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content>
+      <Dialog.Content isShowClose={false}>
         <Dialog.Title>Solve today quiz?</Dialog.Title>
         <Flex alignItems="center" gap="8px" width="100%">
           <Button className={buttonStyle} onClick={onClose} variant="secondary" size="m">

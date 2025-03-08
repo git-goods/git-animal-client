@@ -3,16 +3,20 @@
 import type { PropsWithChildren } from 'react';
 import { createContext, useContext, useState } from 'react';
 
-import { SOLVE_QUIZ_STATUS, type SolveQuizStatus } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
+import { QUIZ_STATUS, type QuizStatus } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
 
 interface SolveQuizContextProps {
-  status: SolveQuizStatus;
-  setStatus: (value: SolveQuizStatus) => void;
+  status: QuizStatus;
+  setStatus: (value: QuizStatus) => void;
+  stage: number;
+  setStage: (value: number) => void;
 }
 
 const SolveQuizContext = createContext<SolveQuizContextProps>({
-  status: SOLVE_QUIZ_STATUS.SOLVING,
+  status: QUIZ_STATUS.NOT_STARTED,
   setStatus: () => {},
+  stage: 1,
+  setStage: () => {},
 });
 
 export const useSolveQuizContext = () => {
@@ -24,7 +28,10 @@ export const useSolveQuizContext = () => {
 };
 
 export const SolveQuizProvider = ({ children }: PropsWithChildren) => {
-  const [status, setStatus] = useState<SolveQuizStatus>(SOLVE_QUIZ_STATUS.SOLVING);
+  const [status, setStatus] = useState<QuizStatus>(QUIZ_STATUS.NOT_STARTED);
+  const [stage, setStage] = useState<number>(1);
 
-  return <SolveQuizContext.Provider value={{ status, setStatus }}>{children}</SolveQuizContext.Provider>;
+  return (
+    <SolveQuizContext.Provider value={{ status, setStatus, stage, setStage }}>{children}</SolveQuizContext.Provider>
+  );
 };

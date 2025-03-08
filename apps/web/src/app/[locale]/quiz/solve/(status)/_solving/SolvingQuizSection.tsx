@@ -1,24 +1,43 @@
-import React, { useState } from 'react';
+'use client';
+
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 
 import { Background } from '@/app/[locale]/quiz/_common/BackGround';
 import QuizProgressBar from '@/app/[locale]/quiz/solve/(status)/_solving/QuizProgressBar';
+import CorrectConfirmDialog from '@/app/[locale]/quiz/solve/(status)/_success/CorrectConfirmDialog';
 import { customScrollStyle } from '@/styles/scrollStyle';
+import { QUIZ_ANSWER, QUIZ_POINT_MAP, QUIZ_TOTAL_STAGE } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
+import FailAlertDialog from '@/app/[locale]/quiz/solve/(status)/_fail/FailAlertDialog';
+import CompleteAlertDialog from '@/app/[locale]/quiz/solve/(status)/_done/CompleteAlertDialog';
+import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/SolveQuizContext';
+import useQuizDialogStatus from '@/app/[locale]/quiz/solve/(status)/_solving/useQuizDialogStatus';
+import useQuizAction from '@/app/[locale]/quiz/solve/(status)/_solving/useQuizAction';
 
-const TOTAL_STAGE = 5;
-const SolvingSection = () => {
-  const [stage, setStage] = useState<number>(1);
-  const difficulty = 'Easy';
-  const content =
-    'Q. Example of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz Content?';
+// 임시 데이터
+const difficulty = 'Easy';
+const content =
+  'Q. Example of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz Content?';
+
+const SolvingQuizSection = () => {
+  const { stage } = useSolveQuizContext();
+  const currentPoint = QUIZ_POINT_MAP[stage - 1];
+
+  const quizDialog = useQuizDialogStatus();
+  const quizAction = useQuizAction({
+    quizDialog,
+  });
+
+  const { correctDialog, failDialog, completeDialog } = quizDialog;
+  const { submit, terminateQuiz, moveToNextStage, moveToQuizMain } = quizAction;
+
   return (
     <>
       <Background />
       <div className={containerStyle}>
         <p className={titleStyle}>
-          Quiz {stage}/{TOTAL_STAGE}
+          Quiz {stage}/{QUIZ_TOTAL_STAGE}
         </p>
         <span className={difficultyStyle}>{difficulty} Level</span>
         <p className={cx(contentStyle, customScrollStyle)}>{content}</p>
@@ -26,20 +45,29 @@ const SolvingSection = () => {
           <p className={noticeStyle}>Choose the correct answer!</p>
           <QuizProgressBar progress={30} />
           <Flex gap="8px" marginTop="24px">
-            <button className={oxButtonStyle} title="O">
+            <button className={oxButtonStyle} title="O" onClick={() => submit(QUIZ_ANSWER.YES)}>
               <Image src="/quiz/ox_o.webp" alt="O" width={60} height={60} />
             </button>
-            <button className={oxButtonStyle} title="X">
+            <button className={oxButtonStyle} title="X" onClick={() => submit(QUIZ_ANSWER.NO)}>
               <Image src="/quiz/ox_x.webp" alt="X" width={60} height={60} />
             </button>
           </Flex>
         </div>
       </div>
+      <CorrectConfirmDialog
+        isOpen={correctDialog.isOpen}
+        onClose={correctDialog.close}
+        onStop={terminateQuiz}
+        onConfirm={moveToNextStage}
+        currentPoint={currentPoint}
+      />
+      <FailAlertDialog isOpen={failDialog.isOpen} onClose={moveToQuizMain} />
+      <CompleteAlertDialog isOpen={completeDialog.isOpen} onClose={terminateQuiz} completePoint={currentPoint} />
     </>
   );
 };
 
-export default SolvingSection;
+export default SolvingQuizSection;
 
 const containerStyle = css({
   display: 'flex',

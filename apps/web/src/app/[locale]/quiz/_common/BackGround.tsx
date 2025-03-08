@@ -8,7 +8,7 @@ export const Background = memo(function Background({ widthBottom }: { widthBotto
   const imageSrc = widthBottom ? '/quiz/quiz-bg.webp' : '/quiz/quiz-bg-raw.webp';
   return (
     <div className={backgroundStyle}>
-      <Image className={imageStyle} src={imageSrc} alt="background" layout="fill" />
+      <Image className={imageStyle} src={imageSrc} alt="background" layout="fill" draggable={false} />
     </div>
   );
 });

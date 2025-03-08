@@ -3,8 +3,8 @@
 import React from 'react';
 
 import SelectCategorySection from '@/app/[locale]/quiz/solve/(status)/_notStarted/SelectCategorySection';
-import SolvingSection from '@/app/[locale]/quiz/solve/(status)/_solving/SolvingSection';
-import { SOLVE_QUIZ_STATUS } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
+import SolvingQuizSection from '@/app/[locale]/quiz/solve/(status)/_solving/SolvingQuizSection';
+import { QUIZ_STATUS } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
 import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/SolveQuizContext';
 
 const SolveQuizSection = () => {
@@ -14,12 +14,12 @@ const SolveQuizSection = () => {
   // TODO:: UI 작업을 위한 임시 status
   const { status } = useSolveQuizContext();
 
-  if (status === SOLVE_QUIZ_STATUS.NOT_STARTED) {
+  if (status === QUIZ_STATUS.NOT_STARTED) {
     return <SelectCategorySection />;
   }
 
-  if (status === SOLVE_QUIZ_STATUS.SOLVING) {
-    return <SolvingSection />;
+  if (status === QUIZ_STATUS.SOLVING) {
+    return <SolvingQuizSection />;
   }
 
   return null;
