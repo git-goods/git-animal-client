@@ -20,12 +20,6 @@
     "turbo": "^2.0.4",
     "typescript": "*"
   },
-  "lint-staged": {
-    "{apps,packages}/**/src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --cache --fix",
-      "prettier --cache --write"
-    ]
-  },
   "resolutions": {
     "typescript": "^5.4.5",
     "react": "^18",
