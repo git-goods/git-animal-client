@@ -36,8 +36,10 @@ const CorrectConfirmDialog = ({ currentPoint, onConfirm, onStop, onClose, isOpen
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content className={contentStyle} isShowClose={false}>
         <Flex flexDirection="column" alignItems="center" gap="12px" width="100%">
-          <h2 className={titleStyle}>Correct!</h2>
-          <p className={descriptionStyle}>Challenge the next quiz and get double points.</p>
+          <Dialog.Title className={titleStyle}>Correct!</Dialog.Title>
+          <Dialog.Description className={descriptionStyle}>
+            Challenge the next quiz and get double points.
+          </Dialog.Description>
         </Flex>
         <Image
           className={imageStyle}
@@ -75,10 +77,10 @@ const contentStyle = css({
 });
 
 const titleStyle = css({
-  textStyle: 'glyph24.bold',
+  textStyle: 'glyph24.bold !important',
   fontFamily: 'Product Sans',
   fontWeight: 700,
-  textAlign: 'center',
+  textAlign: 'center !important',
 });
 
 const descriptionStyle = css({
@@ -86,6 +88,7 @@ const descriptionStyle = css({
   fontFamily: 'Product Sans',
   fontWeight: 400,
   textAlign: 'center',
+  color: 'white.white_75',
   wordBreak: 'keep-all',
 });
 

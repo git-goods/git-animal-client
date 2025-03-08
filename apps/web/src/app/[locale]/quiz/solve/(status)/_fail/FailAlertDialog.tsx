@@ -24,8 +24,10 @@ const FailAlertDialog = ({ onClose, isOpen }: FailAlertDialogProps) => {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content className={contentStyle} isShowClose={false}>
         <Flex flexDirection="column" alignItems="center" gap="12px" width="100%">
-          <h2 className={titleStyle}>Wrong answer..</h2>
-          <p className={descriptionStyle}>You can't get points because the challenge failed.</p>
+          <Dialog.Title className={titleStyle}>Wrong answer..</Dialog.Title>
+          <Dialog.Description className={descriptionStyle}>
+            You can't get points because the challenge failed.
+          </Dialog.Description>
         </Flex>
         <div className={imageContainerStyle}>
           <Image src="/quiz/cursor-unchoiced.webp" alt="quiz-failed" width={100} height={100} draggable={false} />
@@ -55,10 +57,10 @@ const contentStyle = css({
 });
 
 const titleStyle = css({
-  textStyle: 'glyph24.bold',
+  textStyle: 'glyph24.bold !important',
   fontFamily: 'Product Sans',
   fontWeight: 700,
-  textAlign: 'center',
+  textAlign: 'center !important',
 });
 
 const descriptionStyle = css({
@@ -66,6 +68,7 @@ const descriptionStyle = css({
   fontFamily: 'Product Sans',
   fontWeight: 400,
   textAlign: 'center',
+  color: 'white.white_75',
   wordBreak: 'keep-all',
 });
 

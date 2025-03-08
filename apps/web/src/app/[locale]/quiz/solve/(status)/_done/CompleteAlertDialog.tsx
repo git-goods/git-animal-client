@@ -25,8 +25,10 @@ const CompleteAlertDialog = ({ completePoint, onClose, isOpen }: CompleteAlertDi
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content className={contentStyle} isShowClose={false}>
         <Flex flexDirection="column" alignItems="center" gap="12px" width="100%">
-          <h2 className={titleStyle}>Champion of the quiz!</h2>
-          <p className={descriptionStyle}>Finished the final quiz and got {completePoint}P.</p>
+          <Dialog.Title className={titleStyle}>Champion of the quiz!</Dialog.Title>
+          <Dialog.Description className={descriptionStyle}>
+            Finished the final quiz and got {completePoint}P.
+          </Dialog.Description>
         </Flex>
         <div className={imageContainerStyle}>
           <Image src="/quiz/quiz-double-coin.webp" alt="quiz-complete" width={204} height={184} draggable={false} />
@@ -56,10 +58,10 @@ const contentStyle = css({
 });
 
 const titleStyle = css({
-  textStyle: 'glyph24.bold',
+  textStyle: 'glyph24.bold !important',
   fontFamily: 'Product Sans',
   fontWeight: 700,
-  textAlign: 'center',
+  textAlign: 'center !important',
 });
 
 const descriptionStyle = css({
@@ -67,6 +69,7 @@ const descriptionStyle = css({
   fontFamily: 'Product Sans',
   fontWeight: 400,
   textAlign: 'center',
+  color: 'white.white_75',
   wordBreak: 'keep-all',
 });
 
