@@ -11,7 +11,7 @@ interface SolveQuizContextProps {
 }
 
 const SolveQuizContext = createContext<SolveQuizContextProps>({
-  status: SOLVE_QUIZ_STATUS.NOT_STARTED,
+  status: SOLVE_QUIZ_STATUS.SOLVING,
   setStatus: () => {},
 });
 
@@ -24,7 +24,7 @@ export const useSolveQuizContext = () => {
 };
 
 export const SolveQuizProvider = ({ children }: PropsWithChildren) => {
-  const [status, setStatus] = useState<SolveQuizStatus>(SOLVE_QUIZ_STATUS.NOT_STARTED);
+  const [status, setStatus] = useState<SolveQuizStatus>(SOLVE_QUIZ_STATUS.SOLVING);
 
   return <SolveQuizContext.Provider value={{ status, setStatus }}>{children}</SolveQuizContext.Provider>;
 };
