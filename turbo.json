@@ -24,7 +24,7 @@
       "dependsOn": ["^type-check"]
     },
     "lint-staged": {
-      "dependsOn": ["^lint-staged"]
+      "outputs": []
     }
   }
 }

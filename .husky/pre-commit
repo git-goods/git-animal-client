@@ -1,2 +1,2 @@
 pnpm dlx turbo type-check
-pnpm dlx turbo lint-staged
+pnpm dlx lint-staged
