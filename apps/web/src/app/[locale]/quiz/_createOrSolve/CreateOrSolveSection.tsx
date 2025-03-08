@@ -7,7 +7,7 @@ import SelectQuizType from '@/app/[locale]/quiz/_createOrSolve/SelectQuizType';
 const CreateOrSolveSection = () => {
   return (
     <MobileLayout>
-      <Background />
+      <Background widthBottom />
       <div className={containerStyle}>
         <h1 className={titleStyle}>Quiz</h1>
         <h2 className={descriptionStyle}>Create a quiz or solve it to earn points!</h2>
