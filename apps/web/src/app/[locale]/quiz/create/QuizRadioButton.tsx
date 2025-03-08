@@ -5,14 +5,13 @@ import React from 'react';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 
-interface QuizRadioButtonProps {
+interface QuizRadioButtonProps extends ComponentProps<'button'> {
   selected?: boolean;
-  onClick?: () => void;
 }
 
-const QuizRadioButton = ({ selected, onClick, children }: PropsWithChildren<QuizRadioButtonProps>) => {
+const QuizRadioButton = ({ selected, children, className, ...props }: PropsWithChildren<QuizRadioButtonProps>) => {
   return (
-    <button type="button" className={cx(radioButtonStyle, selected && 'selected')} onClick={onClick}>
+    <button type="button" className={cx(className, radioButtonStyle, selected && 'selected')} {...props}>
       {children}
     </button>
   );
@@ -26,7 +25,7 @@ const radioButtonStyle = css({
   height: '40px',
   color: 'white.white_25',
   background: 'white.white_10',
-  border: '1px solid',
+  border: '1px solid transparent',
   borderRadius: '6px',
   outline: 'none',
   padding: '8px 16px',

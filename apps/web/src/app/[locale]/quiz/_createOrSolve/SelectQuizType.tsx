@@ -34,7 +34,7 @@ const SelectQuizType = () => {
       />
       <SolveQuizConfirmDialog
         isOpen={isSolveQuizConfirmDialogOpen}
-        onConfirm={() => {}}
+        onConfirm={() => router.push('/quiz/solve')}
         onClose={() => setIsSolveQuizConfirmDialogOpen(false)}
       />
     </div>
