@@ -7,6 +7,13 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin();
 
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  disable: process.env.NODE_ENV === 'development' || process.env.DISABLE_PWA === 'true',
+  register: true,
+  skipWaiting: true,
+});
+
 const nextConfig = withNextIntl({
   transpilePackages: ['@gitanimals/ui-panda'],
   reactStrictMode: true,
@@ -32,5 +39,5 @@ const nextConfig = withNextIntl({
   },
 });
 
-export default nextConfig;
+export default withPWA(nextConfig);
 // export default withBundleAnalyzer(nextConfig);

@@ -46,7 +46,8 @@
     "react": "*",
     "react-dom": "*",
     "sonner": "^1.5.0",
-    "zustand": "^4.5.2"
+    "zustand": "^4.5.2",
+    "next-pwa": "^5.6.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.3.3",
