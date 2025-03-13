@@ -38,6 +38,29 @@ export const metadata: Metadata = {
     description: '깃허브 활동으로 펫을 키우세요!',
     siteName: 'GitAnimals',
   },
+  manifest: '/manifest.json',
+  themeColor: '#000000',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'GitAnimals',
+  },
+  icons: {
+    apple: [{ url: '/icons/apple-touch-icon.png' }],
+    shortcut: ['/icons/favicon.ico'],
+    other: [
+      {
+        rel: 'apple-touch-startup-image',
+        url: '/splash.png',
+      },
+    ],
+  },
 };
 
 setRequestInterceptor(interceptorRequestFulfilled);
