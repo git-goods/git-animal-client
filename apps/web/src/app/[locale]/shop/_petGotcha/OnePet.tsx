@@ -11,12 +11,12 @@ import { toast } from 'sonner';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
+import { CardDrawingGame } from '@/components/CardGame/FanDrawingGame/FanDrawingGame';
 import { GITHUB_ISSUE_URL } from '@/constants/outlink';
 import { useTimer } from '@/hooks/useTimer';
 import { trackEvent } from '@/lib/analytics';
 import { getAnimalTierInfo } from '@/utils/animals';
 
-import CardFlipGame from './CardFlipGame';
 import { useCheckEnoughMoney } from './useCheckEnoughMoney';
 
 const ONE_PET_POINT = 1000 as const;
@@ -117,7 +117,10 @@ Token: ${data?.user.accessToken}
     <Dialog open={true} onOpenChange={onClose}>
       <Dialog.Content size="screen">
         <Dialog.Title className={headingStyle}>{t('choose-one-card')}</Dialog.Title>
-        <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} />
+
+        <CardDrawingGame />
+
+        {/* <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} /> */}
         {isRunning && (
           <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
         )}
