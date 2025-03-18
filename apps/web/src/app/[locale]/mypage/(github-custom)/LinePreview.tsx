@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { Button, TextField } from '@gitanimals/ui-panda';
 import { toast } from 'sonner';
 
 import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
+import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
 
@@ -34,7 +35,7 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
   };
 
   return (
-    <div className={sectionContainerStyle}>
+    <div className={cx(customScrollStyle, sectionContainerStyle)}>
       {/* TODO: 임시로 모바일에선 input 안보이게 처리 */}
       <SizeInputList onApply={(width, height) => setSizes({ width, height })} />
       <section>
@@ -53,7 +54,9 @@ const sectionContainerStyle = css({
   display: 'flex',
   flexDirection: 'column',
   gap: '24px',
-  overflowX: 'scroll',
+  overflowX: 'auto',
+  height: 'fit-content',
+  minHeight: 'fit-content',
 });
 
 const lineContainerStyle = css({
