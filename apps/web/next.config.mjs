@@ -22,6 +22,7 @@ const nextConfig = withNextIntl({
     styledComponents: true,
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
