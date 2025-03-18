@@ -1,6 +1,16 @@
+import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
 
 import { Link } from '@/i18n/routing';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('page');
+
+  return {
+    title: t('laboratory'),
+  };
+}
 
 export default function LaboratoryPage() {
   return (
