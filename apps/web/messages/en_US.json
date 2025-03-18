@@ -1,4 +1,11 @@
 {
+  "page": {
+    "main": "Main",
+    "shop": "Shop",
+    "guild": "Guild",
+    "mypage": "MyPage",
+    "laboratory": "Laboratory"
+  },
   "Layout": {
     "mypage": "MyPage",
     "auction": "Auction",

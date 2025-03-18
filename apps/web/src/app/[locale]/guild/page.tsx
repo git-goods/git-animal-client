@@ -17,6 +17,8 @@ import { GuildCard } from './_components/GuildCard';
 import { GuildSearch } from './_components/GuildSearch';
 import { SortSelect } from './_components/SortSelect';
 import { Box } from '_panda/jsx';
+import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
 interface GuildPageProps {
   searchParams: {
@@ -25,6 +27,14 @@ interface GuildPageProps {
     filter?: FilterType;
     text?: string;
     search?: string;
+  };
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('page');
+
+  return {
+    title: t('guild'),
   };
 }
 

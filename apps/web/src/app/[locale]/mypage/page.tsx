@@ -1,4 +1,6 @@
 import type { ReactNode } from 'react';
+import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { updateUrlSearchParams } from '@gitanimals/util-common';
@@ -9,6 +11,14 @@ import { FarmType } from './(github-custom)/FarmType';
 import { LineType } from './(github-custom)/LineType';
 
 type TabType = 'line-type' | 'farm-type';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('page');
+
+  return {
+    title: t('mypage'),
+  };
+}
 
 async function Mypage({
   searchParams,

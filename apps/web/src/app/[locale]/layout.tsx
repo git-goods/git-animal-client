@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 
@@ -5,6 +6,13 @@ import { ClientProvider, GlobalComponent, Monitoring } from '@/components/Global
 
 import '@egjs/react-flicking/dist/flicking.css';
 import '@egjs/react-flicking/dist/flicking-inline.css';
+
+export const metadata: Metadata = {
+  title: {
+    template: '%s | GitAnimals',
+    default: 'GitAnimals',
+  },
+};
 
 export default async function LocaleLayout({
   children,
