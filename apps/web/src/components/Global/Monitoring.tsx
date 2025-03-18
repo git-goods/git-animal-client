@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Script from 'next/script';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
+import { Analytics } from '@vercel/analytics/react';
 
 import { isProd } from '@/constants/env';
 import { MONITORING_KEY } from '@/constants/monitoring';
@@ -29,6 +30,7 @@ function Monitoring() {
     <>
       <GoogleAnalytics gaId={MONITORING_KEY.GA} />
       <GoogleTagManager gtmId={MONITORING_KEY.GTM} />
+      <Analytics />
 
       <Script
         strategy="afterInteractive"

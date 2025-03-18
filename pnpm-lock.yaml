@@ -201,6 +201,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.32.0
         version: 5.45.0(react@18.2.0)
+      '@vercel/analytics':
+        specifier: ^1.5.0
+        version: 1.5.0(@remix-run/react@2.10.3(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(next@14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react@18.2.0)
       axios:
         specifier: ^1.6.8
         version: 1.7.2
@@ -4083,6 +4086,32 @@ packages:
 
   '@vanilla-extract/private@1.0.5':
     resolution: {integrity: sha512-6YXeOEKYTA3UV+RC8DeAjFk+/okoNz/h88R+McnzA2zpaVqTR/Ep+vszkWYlGBcMNO7vEkqbq5nT/JMMvhi+tw==}
+
+  '@vercel/analytics@1.5.0':
+    resolution: {integrity: sha512-MYsBzfPki4gthY5HnYN7jgInhAZ7Ac1cYDoRWFomwGHWEX7odTEzbtg9kf/QSo7XEsEAqlQugA6gJ2WS2DEa3g==}
+    peerDependencies:
+      '@remix-run/react': ^2
+      '@sveltejs/kit': ^1 || ^2
+      next: 14.2.3
+      react: ^18
+      svelte: '>= 4'
+      vue: ^3
+      vue-router: ^4
+    peerDependenciesMeta:
+      '@remix-run/react':
+        optional: true
+      '@sveltejs/kit':
+        optional: true
+      next:
+        optional: true
+      react:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+      vue-router:
+        optional: true
 
   '@vercel/style-guide@5.2.0':
     resolution: {integrity: sha512-fNSKEaZvSkiBoF6XEefs8CcgAV9K9e+MbcsDZjUsktHycKdA0jvjAzQi1W/FzLS+Nr5zZ6oejCwq/97dHUKe0g==}
@@ -14065,6 +14094,12 @@ snapshots:
       - terser
 
   '@vanilla-extract/private@1.0.5': {}
+
+  '@vercel/analytics@1.5.0(@remix-run/react@2.10.3(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(next@14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react@18.2.0)':
+    optionalDependencies:
+      '@remix-run/react': 2.10.3(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5)
+      next: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      react: 18.2.0
 
   '@vercel/style-guide@5.2.0(@next/eslint-plugin-next@14.2.3)(eslint@8.57.0)(prettier@3.2.5)(typescript@5.4.5)':
     dependencies:
