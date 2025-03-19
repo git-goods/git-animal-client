@@ -4,7 +4,8 @@ import { getMessages } from 'next-intl/server';
 
 import { ClientProvider, GlobalComponent, Monitoring } from '@/components/Global';
 import { config } from '@/constants/config';
-import { type Locale, LOCALES } from '@/constants/locale';
+import type { Locale } from '@/i18n/routing';
+import { LOCALES } from '@/i18n/routing';
 
 import '@egjs/react-flicking/dist/flicking.css';
 import '@egjs/react-flicking/dist/flicking-inline.css';
