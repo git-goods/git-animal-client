@@ -42,7 +42,7 @@ export default Mypage;
 
 const tabItemStyle = css({
   flex: 1,
-  overflow: 'hidden',
+  // overflow: 'hidden',
 });
 
 const tabListStyle = flex({
