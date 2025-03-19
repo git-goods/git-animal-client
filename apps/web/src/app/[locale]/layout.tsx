@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 
 import { ClientProvider, GlobalComponent, Monitoring } from '@/components/Global';
+import { config } from '@/constants/config';
 
 import '@egjs/react-flicking/dist/flicking.css';
 import '@egjs/react-flicking/dist/flicking-inline.css';
@@ -11,6 +12,9 @@ export const metadata: Metadata = {
   title: {
     template: '%s | GitAnimals',
     default: 'GitAnimals',
+  },
+  other: {
+    'naver-site-verification': config.naver.siteVerification,
   },
 };
 

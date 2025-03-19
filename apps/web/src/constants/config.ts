@@ -6,3 +6,12 @@ export const MONITORING_KEY = {
   MIXPANEL: isProd ? '3e01e631ae4efb8019bbcdf2fb401209' : '',
   JENNIFER: isProd ? 'e9e023ee' : '000000',
 };
+
+export const config = {
+  monitoring: {
+    ...MONITORING_KEY,
+  },
+  naver: {
+    siteVerification: '580a222a73190829172def84254ce2e0f89f3b0a',
+  },
+};

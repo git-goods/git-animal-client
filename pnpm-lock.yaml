@@ -235,7 +235,7 @@ importers:
         specifier: ^4.24.7
         version: 4.24.7(next@14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       next-intl:
-        specifier: ^3.5.0
+        specifier: ^3.19.0
         version: 3.19.0(next@14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react@18.2.0)
       next-pwa:
         specifier: ^5.6.0
