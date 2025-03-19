@@ -31,6 +31,24 @@ export function GitanimalsLine({ petId, sizes = [600, 120] }: GitanimalsLineProp
   );
 }
 
+export const getGitanimalsLineString = ({
+  username,
+  petId,
+  sizes = [600, 120],
+}: { username: string } & GitanimalsLineProps) => {
+  const pet = petId ? `?pet-id=${petId}` : '';
+
+  return `
+<a href="${getLink({ username, type: 'line' })}">
+  <img
+    src="https://render.gitanimals.org/lines/${username}${pet}"
+    width="${sizes[0]}"
+    height="${sizes[1]}"
+  />
+</a>
+  `;
+};
+
 interface GitanimalsFarmProps {
   sizes?: [number, number];
 }
@@ -56,6 +74,10 @@ export function GitanimalsFarm({ sizes = [600, 300], imageKey }: FarmImageProps)
       draggable={false}
     />
   );
+}
+
+interface FarmStringProps extends GitanimalsFarmProps {
+  username: string;
 }
 
 export const getGitanimalsFarmString = ({ username, sizes = [600, 300] }: FarmStringProps) => {

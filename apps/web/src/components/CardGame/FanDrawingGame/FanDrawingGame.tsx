@@ -1,23 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
-import { Button, Card } from '@gitanimals/ui-panda';
 import { CardBack as CardBackUi } from '@gitanimals/ui-panda';
-import { RotateCcw } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-import { getPersonaImage } from '@/utils/image';
+import { AnimalCard } from '@/components/AnimalCard';
 
 import { DrawingCardMotion, NonSelectedCardMotion, SelectedCardMotion } from './CardMotion';
 
-const characters = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }];
+interface CardDrawingGameProps {
+  characters: { id: number }[];
+  onSelectCard: (index: number) => Promise<{ type: string; dropRate: string } | undefined>;
+}
 
-export function CardDrawingGame() {
-  const [gameState, setGameState] = useState<'ready' | 'drawing' | 'selected'>('ready');
+export function CardDrawingGame({ characters, onSelectCard }: CardDrawingGameProps) {
+  const [gameState, setGameState] = useState<'ready' | 'drawing' | 'selected' | 'revealing'>('ready');
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [cardData, setCardData] = useState<{ type: string; dropRate: string } | null>(null);
 
   const startDrawing = () => {
     if (isAnimating) return;
@@ -65,44 +68,61 @@ export function CardDrawingGame() {
     return { x, y, rotate };
   };
   // Handle card selection
-  const selectCard = (index: number) => {
+  const selectCard = async (index: number) => {
     if (isAnimating || gameState !== 'drawing') return;
 
     setIsAnimating(true);
     setSelectedCardIndex(index);
-    setGameState('selected');
+    setGameState('revealing');
 
-    setTimeout(() => {
+    try {
+      // 카드 선택 시 API 호출 및 결과 대기
+      // 이 시간 동안 카드가 흔들리는 애니메이션 표시
+      const result = await onSelectCard(index);
+      if (!result) {
+        throw new Error('카드를 뽑을 수 없습니다.');
+      }
+
+      setCardData(result);
+      // API 응답 후 선택된 상태로 변경
+      setGameState('selected');
+    } catch (error) {
+      console.error('카드 선택 중 오류 발생:', error);
+      // 오류 발생 시 drawing 상태로 되돌림
+      setGameState('drawing');
+    } finally {
       setIsAnimating(false);
-    }, 1000);
+    }
   };
+
+  useEffect(() => {
+    startDrawing();
+  }, []);
 
   return (
     <div className={containerStyle}>
-      <div className={buttonContainerStyle}>
-        {gameState === 'ready' && (
+      {/* <div className={buttonContainerStyle}> */}
+      {/* {gameState === 'ready' && (
           <Button onClick={startDrawing} disabled={isAnimating}>
             카드 뽑기 시작
           </Button>
-        )}
-
-        {gameState === 'selected' && (
+        )} */}
+      {/* {gameState === 'selected' && (
           <Button onClick={startDrawing} disabled={isAnimating}>
             다시 뽑기
           </Button>
         )}
 
-        {(gameState === 'drawing' || gameState === 'selected') && (
+        {(gameState === 'drawing' || gameState === 'selected' || gameState === 'revealing') && (
           <Button onClick={resetGame} disabled={isAnimating} variant="secondary">
             <RotateCcw className="mr-2 h-4 w-4" />
             처음으로
           </Button>
-        )}
-      </div>
+        )} */}
+      {/* </div> */}
 
       <div className={gameAreaStyle}>
-        {gameState === 'ready' && <div>ready</div>}
-
+        {/* {gameState === 'ready' && <div>ready</div>} */}
         {gameState === 'drawing' && (
           <div className={cardContainerStyle}>
             {selectedCards.map((cardId, index) => {
@@ -124,6 +144,29 @@ export function CardDrawingGame() {
           </div>
         )}
 
+        {gameState === 'revealing' && selectedCardIndex !== null && (
+          <div className={cardContainerStyle}>
+            {selectedCards.map((cardId, index) => {
+              const isSelected = index === selectedCardIndex;
+              const { x, y, rotate } = getFanPosition(index, selectedCards.length);
+
+              if (isSelected) {
+                return (
+                  <RevealingCardMotion key={`revealing-card-${cardId}`} x={0} y={0} rotate={0} index={index}>
+                    <CardBack />
+                  </RevealingCardMotion>
+                );
+              } else {
+                return (
+                  <NonSelectedCardMotion key={`nonselected-card-${cardId}`} x={x} y={y} rotate={rotate} index={index}>
+                    <CardBack />
+                  </NonSelectedCardMotion>
+                );
+              }
+            })}
+          </div>
+        )}
+
         {gameState === 'selected' && selectedCardIndex !== null && (
           <div className={cardContainerStyle}>
             {selectedCards.map((cardId, index) => {
@@ -131,10 +174,10 @@ export function CardDrawingGame() {
 
               const { x, y, rotate } = getFanPosition(index, selectedCards.length);
 
-              if (isSelected) {
+              if (isSelected && cardData) {
                 return (
                   <SelectedCardMotion key={`selected-card-${cardId}`} x={x} y={y} rotate={rotate} index={index}>
-                    <DetailedCard />
+                    <DetailedCard cardData={cardData} />
                   </SelectedCardMotion>
                 );
               } else {
@@ -161,21 +204,56 @@ function CardBack() {
   );
 }
 
-function DetailedCard() {
-  const getPersona = {
+function DetailedCard({ cardData }: { cardData: { type: string; dropRate: string } }) {
+  // cardData가 없으면 기본값 사용
+  const getPersona = cardData || {
     tier: 'S_PLUS' as const,
     type: 'SCREAM' as const,
     dropRate: '10%' as const,
   };
+
   return (
     <div className={detailedCardStyle} style={{ backfaceVisibility: 'hidden' }}>
-      <Card
-        tier={getPersona.tier}
-        type={getPersona.type}
-        dropRate={getPersona.dropRate}
-        personaImage={getPersonaImage(getPersona.type)}
-      />
+      <AnimalCard type={getPersona.type} dropRate={getPersona.dropRate} />
     </div>
+  );
+}
+
+// RevealingCardMotion 컴포넌트 추가 (카드 흔들림 효과)
+function RevealingCardMotion({
+  children,
+  x,
+  y,
+  rotate,
+}: {
+  children: React.ReactNode;
+  x: number;
+  y: number;
+  rotate: number;
+  index: number;
+}) {
+  return (
+    <motion.div
+      className={css({
+        position: 'absolute',
+        zIndex: 10,
+        transformStyle: 'preserve-3d',
+        cursor: 'pointer',
+      })}
+      initial={{ x, y, rotateZ: rotate }}
+      animate={{
+        x: [x, x + 5, x - 5, x + 5, x - 5, x],
+        y: [y, y - 5, y + 5, y - 5, y + 5, y],
+        rotateZ: [rotate, rotate + 2, rotate - 2, rotate + 2, rotate - 2, rotate],
+      }}
+      transition={{
+        duration: 0.5,
+        repeat: Infinity,
+        repeatType: 'reverse',
+      }}
+    >
+      {children}
+    </motion.div>
   );
 }
 
@@ -193,7 +271,7 @@ const buttonContainerStyle = flex({
 
 const gameAreaStyle = css({
   position: 'relative',
-  height: '600px',
+  height: '360px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

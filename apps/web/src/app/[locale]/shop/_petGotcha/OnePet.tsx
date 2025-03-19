@@ -48,6 +48,7 @@ function OnePet({ onClose }: Props) {
       const res = await postGotcha({ count: 1 });
 
       const resultPersona = res.gotchaResults[0];
+
       const tier = getAnimalTierInfo(Number(resultPersona.dropRate.replace('%', '')));
 
       const persona = {
@@ -65,6 +66,11 @@ function OnePet({ onClose }: Props) {
         type: '1-pet',
         status: 'success',
       });
+
+      return {
+        type: resultPersona.name,
+        dropRate: resultPersona.dropRate,
+      };
     } catch (error) {
       trackEvent('gotcha', {
         type: '1-pet',
@@ -115,10 +121,13 @@ Token: ${data?.user.accessToken}
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="screen">
+      <Dialog.Content size="large" className={dialogContentStyle}>
         <Dialog.Title className={headingStyle}>{t('choose-one-card')}</Dialog.Title>
 
-        <CardDrawingGame />
+        <CardDrawingGame
+          characters={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }]}
+          onSelectCard={onAction}
+        />
 
         {/* <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} /> */}
         {isRunning && (
@@ -139,14 +148,25 @@ const noticeMessageStyle = css({
   textAlign: 'center',
 });
 
+const dialogContentStyle = css({
+  height: 'fit-content',
+
+  _mobile: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
 const headingStyle = css({
   textStyle: 'glyph48.bold',
   color: 'white',
   textAlign: 'center',
-  marginBottom: '60px',
+  // marginBottom: '60px',
 
   _mobile: {
     textStyle: 'glyph28.bold',
-    marginBottom: '40px',
+    // marginBottom: '40px',
   },
 });
