@@ -1,4 +1,11 @@
 {
+  "page": {
+    "main": "메인 | GitAnimals",
+    "shop": "상점",
+    "guild": "길드",
+    "mypage": "마이페이지",
+    "laboratory": "실험실"
+  },
   "Layout": {
     "mypage": "마이페이지",
     "auction": "상점",
