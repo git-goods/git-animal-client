@@ -63,6 +63,8 @@ const mainStyle = grid({
   position: 'relative',
   zIndex: 'floating',
   padding: '120px 200px',
+  minHeight: 'calc(100vh - 60px)',
+  // minHeight: 'fit-content',
 
   '@media (max-width: 1400px)': {
     padding: '120px 100px',
