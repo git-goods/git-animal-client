@@ -3,7 +3,6 @@ import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
 
 import GNB from '@/components/GNB/GNB';
-import PWAGuide from '@/components/PWAInstallBanner';
 import { PWADetector } from '@/hooks/useDeviceInfo';
 
 import { ChoosePetSection } from './landing/ChoosePetSection';
@@ -32,7 +31,6 @@ export default function HomePage() {
       <div className={css({ bg: 'black' })}>
         <Footer />
       </div>
-      <PWAGuide />
       <PWADetector />
     </div>
   );

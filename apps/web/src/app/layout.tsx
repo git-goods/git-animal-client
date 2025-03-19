@@ -52,12 +52,12 @@ export const metadata: Metadata = {
     title: 'GitAnimals',
   },
   icons: {
-    apple: [{ url: '/icons/apple-touch-icon.png' }],
-    shortcut: ['/icons/favicon.ico'],
+    apple: [{ url: '/app-icon.png' }],
+    shortcut: ['/app-icon.png'],
     other: [
       {
         rel: 'apple-touch-startup-image',
-        url: '/splash.png',
+        url: '/app-icon.png',
       },
     ],
   },
