@@ -39,13 +39,6 @@ export const metadata: Metadata = {
     siteName: 'GitAnimals',
   },
   manifest: '/manifest.json',
-  themeColor: '#000000',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -69,7 +62,6 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  viewportFit: 'cover',
 };
 
 setRequestInterceptor(interceptorRequestFulfilled);
