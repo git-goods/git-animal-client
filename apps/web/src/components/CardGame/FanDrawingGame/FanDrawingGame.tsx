@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -13,9 +15,10 @@ import { DrawingCardMotion, NonSelectedCardMotion, SelectedCardMotion } from './
 interface CardDrawingGameProps {
   characters: { id: number }[];
   onSelectCard: (index: number) => Promise<{ type: string; dropRate: string } | undefined>;
+  onClose: () => void;
 }
 
-export function CardDrawingGame({ characters, onSelectCard }: CardDrawingGameProps) {
+export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawingGameProps) {
   const [gameState, setGameState] = useState<'ready' | 'drawing' | 'selected' | 'revealing'>('ready');
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
@@ -49,6 +52,11 @@ export function CardDrawingGame({ characters, onSelectCard }: CardDrawingGamePro
     setTimeout(() => {
       setIsAnimating(false);
     }, 500);
+  };
+
+  const closeGame = () => {
+    onClose();
+    resetGame();
   };
 
   const getFanPosition = (index: number, total: number) => {
@@ -176,9 +184,33 @@ export function CardDrawingGame({ characters, onSelectCard }: CardDrawingGamePro
 
               if (isSelected && cardData) {
                 return (
-                  <SelectedCardMotion key={`selected-card-${cardId}`} x={x} y={y} rotate={rotate} index={index}>
-                    <DetailedCard cardData={cardData} />
-                  </SelectedCardMotion>
+                  <div
+                    key={`selected-card-${cardId}`}
+                    className={css({
+                      position: 'fixed',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      zIndex: 100,
+                      bg: 'black.black_50',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backdropFilter: 'blur(10px)',
+                      flexDirection: 'column',
+                      gap: '100px',
+                    })}
+                    onClick={closeGame}
+                  >
+                    <SelectedCardMotion key={`selected-card-${cardId}`} x={x} y={y} rotate={rotate} index={index}>
+                      <DetailedCard cardData={cardData} />
+                    </SelectedCardMotion>
+                    <p className={noticeMessageStyle}>
+                      한번 클릭하면 창이 꺼집니다.
+                      {/* {t('close-notice-message').replace('[count]', count.toString())} */}
+                    </p>
+                  </div>
                 );
               } else {
                 // Non-selected cards fade out
@@ -294,10 +326,16 @@ const cardBackStyle = css({
 });
 
 const detailedCardStyle = css({
-  width: '280px',
+  // width: '280px',
   height: 'auto',
   overflow: 'hidden',
   position: 'relative',
   transformStyle: 'preserve-3d',
   aspectRatio: '220/272',
+});
+
+const noticeMessageStyle = css({
+  textStyle: 'glyph28.bold',
+  color: 'white',
+  textAlign: 'center',
 });

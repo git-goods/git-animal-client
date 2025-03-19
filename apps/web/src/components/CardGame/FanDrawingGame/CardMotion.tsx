@@ -79,7 +79,7 @@ export function SelectedCardMotion({ children, x, y, rotate }: PropsWithChildren
 }
 
 const selectedCardStyle = css({
-  position: 'absolute',
+  // position: 'absolute',
 });
 
 export function DrawingCardMotion({

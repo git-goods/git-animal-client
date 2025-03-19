@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
@@ -111,13 +111,13 @@ Token: ${data?.user.accessToken}
     }
   };
 
-  useEffect(() => {
-    // 3초 후에 닫기
-    if (isFinished) {
-      onClose();
-      resetTimer();
-    }
-  }, [isFinished, onClose, resetTimer]);
+  // useEffect(() => {
+  //   // 3초 후에 닫기
+  //   if (isFinished) {
+  //     // onClose();
+  //     // resetTimer();
+  //   }
+  // }, [isFinished, onClose, resetTimer]);
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
@@ -127,12 +127,13 @@ Token: ${data?.user.accessToken}
         <CardDrawingGame
           characters={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }]}
           onSelectCard={onAction}
+          onClose={onClose}
         />
 
         {/* <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} /> */}
-        {isRunning && (
+        {/* {isRunning && (
           <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
-        )}
+        )} */}
       </Dialog.Content>
     </Dialog>
   );
