@@ -3,8 +3,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
 import { CardBack as CardBackUi } from '@gitanimals/ui-panda';
 import { motion } from 'framer-motion';
 
@@ -19,6 +19,7 @@ interface CardDrawingGameProps {
 }
 
 export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawingGameProps) {
+  const t = useTranslations('Gotcha');
   const [gameState, setGameState] = useState<'ready' | 'drawing' | 'selected' | 'revealing'>('ready');
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
@@ -60,9 +61,9 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
   };
 
   const getFanPosition = (index: number, total: number) => {
-    const radius = 40;
-    const totalAngle = 80;
-    const startAngle = -40;
+    const radius = 60;
+    const totalAngle = 120;
+    const startAngle = -60;
 
     const angle = startAngle + (index / (total - 1)) * totalAngle;
 
@@ -206,10 +207,7 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
                     <SelectedCardMotion key={`selected-card-${cardId}`} x={x} y={y} rotate={rotate} index={index}>
                       <DetailedCard cardData={cardData} />
                     </SelectedCardMotion>
-                    <p className={noticeMessageStyle}>
-                      한번 클릭하면 창이 꺼집니다.
-                      {/* {t('close-notice-message').replace('[count]', count.toString())} */}
-                    </p>
+                    <p className={noticeMessageStyle}>{t('click-to-close')}</p>
                   </div>
                 );
               } else {
@@ -295,12 +293,6 @@ const containerStyle = css({
   mx: 'auto',
 });
 
-const buttonContainerStyle = flex({
-  justifyContent: 'center',
-  gap: 4,
-  mb: 8,
-});
-
 const gameAreaStyle = css({
   position: 'relative',
   height: '360px',
@@ -335,7 +327,11 @@ const detailedCardStyle = css({
 });
 
 const noticeMessageStyle = css({
-  textStyle: 'glyph28.bold',
+  textStyle: 'glyph22.regular',
   color: 'white',
   textAlign: 'center',
+
+  _mobile: {
+    textStyle: 'glyph16.regular',
+  },
 });

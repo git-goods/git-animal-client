@@ -108,7 +108,7 @@ export function DrawingCardMotion({
         rotate: rotate,
         // rotateY: 180, // Face down
         transition: {
-          duration: 0.7,
+          duration: 0.3,
           type: 'spring',
           stiffness: 70,
           delay: index * 0.1,
