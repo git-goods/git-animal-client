@@ -8,6 +8,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "web": "pnpm -F @gitanimals/web",
     "admin": "pnpm -F @gitanimals/admin",
+    "build:web": "turbo build --filter=@gitanimals/web",
     "prepare": "husky"
   },
   "devDependencies": {
