@@ -1,3 +1,5 @@
 {
-  "*.{js,jsx,ts,tsx}": ["pnpm lint:fix"]
+  "**/*.{js,jsx,ts,tsx}": [
+    "eslint --fix --ignore-pattern 'workbox-*.js'"
+  ]
 }
