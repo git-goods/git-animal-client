@@ -1,6 +1,6 @@
-import { css, cx } from '_panda/css';
+import { css, cva, cx } from '_panda/css';
 import { useRef, useState, useEffect } from 'react';
-import { ANIMAL_CARD_IMAGE_BASE_URL, CARD_INFO } from './constants';
+import { ANIMAL_CARD_IMAGE_BASE_URL, CARD_INFO, CardTierType } from './constants';
 
 export function NewCard2() {
   return (
@@ -9,13 +9,13 @@ export function NewCard2() {
 
       <div className={cardGridStyle}>
         {/* Default card with placeholder */}
-        <GameCard title="Dessert Fox" percentage="10%" rating="A+" />
+        <GameCard title="Dessert Fox" percentage="10%" tier="A_PLUS" size="medium" />
 
         {/* Different content */}
-        <GameCard title="Ice Dragon" percentage="25%" rating="S" />
+        <GameCard title="Ice Dragon" percentage="25%" tier="S_PLUS" size="medium" />
 
         {/* Another example */}
-        <GameCard title="Fire Golem" percentage="75%" rating="B" />
+        <GameCard title="Fire Golem" percentage="75%" tier="B_MINUS" size="medium" />
       </div>
 
       {/* Responsive size demonstration */}
@@ -23,10 +23,10 @@ export function NewCard2() {
         <h2 className={subheadingStyle}>Responsive Sizing</h2>
         <div className={responsiveGridStyle}>
           <div className={fullWidthStyle}>
-            <GameCard title="Small Card" percentage="5%" rating="C" />
+            <GameCard title="Small Card" percentage="5%" tier="A_PLUS" size="small" />
           </div>
           <div className={largeCardContainerStyle}>
-            <GameCard title="Large Card" percentage="90%" rating="S+" customCss={maxWidthFullStyle} />
+            <GameCard title="Large Card" percentage="90%" tier="S_PLUS" size="large" />
           </div>
         </div>
       </div>
@@ -35,102 +35,106 @@ export function NewCard2() {
 }
 
 interface GameCardProps {
-  title: string;
-  percentage: string;
-  rating?: string;
-  imageUrl?: string;
-  customCss?: any;
+  // title: string;
+  // percentage: string;
+  // rating?: string;
+  // imageUrl?: string;
+  // customCss?: any;
+  tier: CardTierType;
+  title?: string;
+  percentage?: string;
+  size?: 'small' | 'medium' | 'large';
 }
 
-function GameCard({
-  title = 'Dessert Fox',
-  percentage = '10%',
-  rating = 'A+',
-  imageUrl = '/placeholder.svg?height=200&width=200',
-  customCss = {},
-}: GameCardProps) {
+function GameCard({ title = 'Dessert Fox', percentage = '10%', tier = 'A_PLUS', size = 'medium' }: GameCardProps) {
   const svgRef = useRef<HTMLDivElement>(null);
   const [fontSize, setFontSize] = useState({
     title: 16,
     percentage: 16,
     rating: 16,
   });
+  const [positions, setPositions] = useState({
+    titlePadding: '1rem',
+    percentagePadding: '1rem',
+  });
 
   // Adjust font size based on container width
   useEffect(() => {
-    const updateFontSize = () => {
+    const updateSizes = () => {
       if (svgRef.current) {
         const width = svgRef.current.clientWidth;
+
+        // 150px(small 사이즈)일 때 정확히 12px이 되도록 계산
         setFontSize({
-          title: Math.max(12, width * 0.08),
-          percentage: Math.max(12, width * 0.08),
-          rating: Math.max(12, width * 0.1),
+          title: width * 0.08, // 150px * 0.08 = 12px
+          percentage: width * 0.08, // 150px * 0.08 = 12px
+          rating: width * 0.1, // 150px * 0.1 = 15px
+        });
+
+        // 카드 크기에 따라 패딩 동적 조정
+        setPositions({
+          titlePadding: `${Math.max(8, width * 0.05)}px`,
+          percentagePadding: `${Math.max(8, width * 0.05)}px`,
         });
       }
     };
 
-    updateFontSize();
-    window.addEventListener('resize', updateFontSize);
-    return () => window.removeEventListener('resize', updateFontSize);
+    updateSizes();
+    window.addEventListener('resize', updateSizes);
+    return () => window.removeEventListener('resize', updateSizes);
   }, []);
 
-  const { bg, thumbnail } = CARD_INFO['A_PLUS'];
+  const { bg, thumbnail } = CARD_INFO[tier];
 
   return (
-    <div className={cx(cardContainerStyle, customCss)}>
+    <div className={cardCva({ size })}>
       <div ref={svgRef}>
         {/* Card background */}
-        <img src={ANIMAL_CARD_IMAGE_BASE_URL + bg} alt={props.tier} width={220} height={272} draggable={false} />
-
-        {/* <defs>
-          <linearGradient id="cardBorder" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#ffd700" />
-            <stop offset="100%" stopColor="#e6b800" />
-          </linearGradient>
-        </defs> */}
-
-        {/* Main card border */}
-        <path
-          d="M10,0 L230,0 L240,10 L240,270 L230,280 L10,280 L0,270 L0,10 Z"
-          fill="url(#cardBorder)"
-          stroke="#d4af37"
-          strokeWidth="2"
-        />
-
-        {/* Inner card area (blue background) */}
-        <rect x="20" y="20" width="200" height="200" fill="#1a237e" />
-
-        {/* Rating badge background */}
-        <path
-          d="M180,0 L230,0 L240,10 L240,50 L220,70 L180,70 L170,60 L170,10 Z"
-          fill="#ffd700"
-          stroke="#d4af37"
-          strokeWidth="1"
+        <img
+          src={ANIMAL_CARD_IMAGE_BASE_URL + bg}
+          alt={'A_PLUS'}
+          width={220}
+          height={272}
+          draggable={false}
+          className={bgImageStyle}
         />
       </div>
 
       {/* Image container */}
       <div className={imageContainerStyle}>
         <div className={imageWrapperStyle}>
-          <img src={imageUrl || '/placeholder.svg'} alt={title} style={{ objectFit: 'contain' }} />
+          <img src={ANIMAL_CARD_IMAGE_BASE_URL + thumbnail} alt={title} style={{ objectFit: 'contain' }} />
         </div>
       </div>
 
       {/* Text elements positioned absolutely over the SVG */}
-      <div className={titleStyle} style={{ fontSize: `${fontSize.title}px` }}>
+      <div
+        className={titleStyle}
+        style={{
+          fontSize: `${fontSize.title}px`,
+          padding: positions.titlePadding,
+        }}
+      >
         {title}
       </div>
 
-      <div className={percentageStyle} style={{ fontSize: `${fontSize.percentage}px` }}>
+      <div
+        className={percentageStyle}
+        style={{
+          fontSize: `${fontSize.percentage}px`,
+          padding: positions.percentagePadding,
+        }}
+      >
         {percentage}
-      </div>
-
-      <div className={ratingStyle} style={{ fontSize: `${fontSize.rating}px` }}>
-        {rating}
       </div>
     </div>
   );
 }
+
+const bgImageStyle = css({
+  width: '100%',
+  height: '100%',
+});
 
 // NewCard2 Component Styles
 const mainStyle = css({
@@ -195,10 +199,6 @@ const largeCardContainerStyle = css({
   },
 });
 
-const maxWidthFullStyle = css({
-  maxWidth: '100%',
-});
-
 // GameCard Component Styles
 const cardContainerStyle = css({
   position: 'relative',
@@ -213,17 +213,17 @@ const imageContainerStyle = css({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  top: '20px',
-  left: '20px',
-  right: '20px',
-  width: 'calc(100% - 40px)',
-  height: 'calc(100% - 120px)',
+  top: '0',
+  left: '0',
+  right: '0',
+  width: '100%',
+  aspectRatio: '1/1',
 });
 
 const imageWrapperStyle = css({
   position: 'relative',
-  width: '75%',
-  height: '75%',
+  width: '90%',
+  aspectRatio: '1/1',
 });
 
 const titleStyle = css({
@@ -252,4 +252,28 @@ const ratingStyle = css({
   fontWeight: 'bold',
   color: '#000000',
   zIndex: 10,
+});
+
+const cardCva = cva({
+  base: {
+    position: 'relative',
+    display: 'inline-block',
+    width: '100%',
+    maxWidth: '300px',
+    border: '5px solid red',
+    aspectRatio: '220/272',
+  },
+  variants: {
+    size: {
+      small: {
+        maxWidth: '150px',
+      },
+      medium: {
+        maxWidth: '200px',
+      },
+      large: {
+        maxWidth: '300px',
+      },
+    },
+  },
 });
