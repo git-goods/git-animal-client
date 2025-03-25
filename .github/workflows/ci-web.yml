@@ -146,4 +146,4 @@ jobs:
 
       - name: Build
         if: steps.cache_build.outputs.cache-hit != 'true'
-        run: pnpm build:web
+        run: pnpm web build
