@@ -66,19 +66,6 @@ export const 변형: Story = {
   ),
 };
 
-// 색상 스키마 스토리
-export const 색상: Story = {
-  render: () => (
-    <div style={{ display: 'flex', gap: '1rem' }}>
-      <Button colorScheme="primary">기본</Button>
-      <Button colorScheme="secondary">보조</Button>
-      <Button colorScheme="error">오류</Button>
-      <Button colorScheme="success">성공</Button>
-      <Button colorScheme="warning">경고</Button>
-    </div>
-  ),
-};
-
 // 비활성화 버튼 스토리
 export const 비활성화: Story = {
   args: {
