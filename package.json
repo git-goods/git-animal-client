@@ -2,13 +2,14 @@
   "name": "gitanimals",
   "private": true,
   "scripts": {
-    "analyze:web": "ANALYZE=true turbo build --filter=@gitanimals/web",
-    "lint": "turbo lint",
-    "lint-staged": "lint-staged",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "web": "pnpm -F @gitanimals/web",
-    "admin": "pnpm -F @gitanimals/admin",
     "build:web": "turbo build --filter=@gitanimals/web",
+    "build:admin": "turbo build --filter=@gitanimals/admin",
+    "analyze:web": "ANALYZE=true turbo build --filter=@gitanimals/web",
+    "dev:web": "turbo dev --filter=@gitanimals/web",
+    "dev:admin": "turbo dev --filter=@gitanimals/admin",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint-staged": "lint-staged",
     "prepare": "husky"
   },
   "devDependencies": {
