@@ -9,6 +9,7 @@ export const section = flex({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  overflowX: 'hidden',
   _mobile: {
     padding: '80px 12px',
   },

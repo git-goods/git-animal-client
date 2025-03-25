@@ -2,10 +2,9 @@
 
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
-import { flex } from '_panda/patterns';
+import { flex, grid } from '_panda/patterns';
 import Flicking from '@egjs/react-flicking';
 import type { GuildLeader, GuildMember } from '@gitanimals/api';
-import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
 import { UsersRoundIcon } from 'lucide-react';
 
@@ -13,8 +12,6 @@ import { USER_GITHUB_URL } from '@/constants/route';
 import { getPersonaImage } from '@/utils/image';
 
 export function GuildPeopleList({ members, leader }: { members: GuildMember[]; leader: GuildLeader }) {
-  const isMobile = useIsMobile();
-
   return (
     <div className={listStyle}>
       <div className={leaderStyle}>
@@ -60,7 +57,8 @@ export function GuildPeopleList({ members, leader }: { members: GuildMember[]; l
   );
 }
 
-const listStyle = flex({
+const listStyle = grid({
+  gridTemplateColumns: '120px 1fr',
   gap: 4,
   overflowX: 'hidden',
   minH: '180px',
