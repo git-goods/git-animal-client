@@ -1,6 +1,6 @@
 import { css } from '_panda/css';
 
-import GameDialog from '../_components/GameDialog';
+import GameDialog from './GameDialog';
 
 export function ScreenContent({
   isPowered,

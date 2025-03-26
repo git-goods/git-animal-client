@@ -1,8 +1,4 @@
-const COLOR_PALLETE = {
-  green: ['#01BB66', '#00A057'],
-  teal: ['#00D1A7', '#00B294'],
-  blue: ['#198BE5', '#1A77C0'],
-};
+import { GAME_BUTTON_COLOR_PALLETE } from '../constants';
 
 export default function GameButton({
   onClick,
@@ -17,7 +13,7 @@ export default function GameButton({
   label: string;
   startX: number;
   startY: number;
-  color: keyof typeof COLOR_PALLETE;
+  color: keyof typeof GAME_BUTTON_COLOR_PALLETE;
 }) {
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // 이벤트 버블링 방지
@@ -31,8 +27,22 @@ export default function GameButton({
 
   return (
     <g onClick={handleClick} style={{ cursor: 'pointer' }}>
-      <rect style={moveStyle} x={startX} y={startY} width="140" height="40" fill={COLOR_PALLETE[color][0]} />
-      <rect style={moveStyle} x={startX} y={startY + 40} width="140" height="20" fill={COLOR_PALLETE[color][1]} />
+      <rect
+        style={moveStyle}
+        x={startX}
+        y={startY}
+        width="140"
+        height="40"
+        fill={GAME_BUTTON_COLOR_PALLETE[color][0]}
+      />
+      <rect
+        style={moveStyle}
+        x={startX}
+        y={startY + 40}
+        width="140"
+        height="20"
+        fill={GAME_BUTTON_COLOR_PALLETE[color][1]}
+      />
       <rect style={moveStyle} x={startX + 120} y={startY} width="20" height="20" fill="#7FE18F" />
       <rect x={startX} y={startY} width="20" height="20" fill="#7FE18F" />
       <rect x={startX - 21} y={startY + 60} width="182" height="40" fill="#1C2923" />

@@ -6,12 +6,13 @@ import { useEffect, useState } from 'react';
 import { css } from '_panda/css';
 
 import GameButton from './_assets/GameButton';
-import { ScreenContent } from './_assets/ScreenContent';
 import { ScreenWrapperSvg } from './_assets/SvgAssets';
 import ControlPanel from './_components/ControlPanel';
 import PowerButton from './_components/PowerButton';
+import { ScreenContent } from './_components/ScreenContent';
 import { useKeyboardControls } from './_hooks/useKeyboardControls';
 import { useSound } from './_hooks/useSound';
+import { GAME_BUTTON_POSITION, MINI_GAME, MINI_GAME_KEYS } from './constants';
 
 type GameType = 'character' | 'basketball' | 'quiz' | null;
 
@@ -173,30 +174,18 @@ export default function InteractiveArcade() {
 
       <ScreenWrapperSvg>
         {/* Game Buttons */}
-        <GameButton
-          onClick={() => handleButtonPress(0)}
-          active={activeButton === 0}
-          label="캐릭터 게임"
-          startX={673}
-          startY={1677}
-          color="green"
-        />
-        <GameButton
-          onClick={() => handleButtonPress(1)}
-          active={activeButton === 1}
-          label="농구 게임"
-          startX={955}
-          startY={1677}
-          color="teal"
-        />
-        <GameButton
-          onClick={() => handleButtonPress(2)}
-          active={activeButton === 2}
-          label="퀴즈 게임"
-          startX={1237}
-          startY={1677}
-          color="blue"
-        />
+        {MINI_GAME_KEYS.map((key) => (
+          <GameButton
+            key={key}
+            onClick={() => handleButtonPress(MINI_GAME[key].GAME_INDEX)}
+            active={activeButton === MINI_GAME[key].GAME_INDEX}
+            label={MINI_GAME[key].TITLE}
+            startX={GAME_BUTTON_POSITION[key].startX}
+            startY={GAME_BUTTON_POSITION[key].startY}
+            color={MINI_GAME[key].color}
+          />
+        ))}
+
         <foreignObject x="280" y="510" width="1100" height="965">
           <ScreenContent
             isPowered={isPowered}
