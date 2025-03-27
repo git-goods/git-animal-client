@@ -6,7 +6,9 @@ import { motion } from 'framer-motion';
 
 import { Joystick } from './Joystick';
 import { MotionButton } from './MotionButton';
+import { PixelNoiseEffect } from './PixelNoiseEffect';
 import { GameConsoleSvgContainer } from './SvgContainer';
+import { GameScreen } from './GameScreen';
 
 export default function GameConsole({ children }: { children: React.ReactNode }) {
   const [isPowered, setIsPowered] = useState(true);
@@ -63,8 +65,7 @@ export default function GameConsole({ children }: { children: React.ReactNode })
   return (
     <div className={containerStyle}>
       <div className={svgContainerStyle}>
-        <GameConsoleSvgContainer joystickRotation={joystickRotation}>
-          {/* Power Button - Interactive */}
+        <GameConsoleSvgContainer>
           <MotionButton
             isPressed={isPowered}
             handleButtonClick={togglePower}
@@ -72,7 +73,6 @@ export default function GameConsole({ children }: { children: React.ReactNode })
             colors={['#01BB66', '#00A057']}
           />
 
-          {/* Button 1 - Interactive */}
           <MotionButton
             isPressed={pressedButtons.button1}
             handleButtonClick={() => handleButtonClick('button1')}
@@ -107,41 +107,10 @@ export default function GameConsole({ children }: { children: React.ReactNode })
           >
             <div className={screenContainerStyle}>
               {/* Pixel noise effect for turning on/off */}
-              <motion.div
-                className={noiseContainerStyle}
-                initial={false}
-                animate={{
-                  opacity: isPowered ? [1, 0] : [0, 1, 0],
-                }}
-                transition={{
-                  duration: 0.2,
-                  times: isPowered ? [0, 1] : [0, 0.5, 1],
-                }}
-              >
-                <div className={noiseGridStyle}>
-                  {Array.from({ length: 144 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className={noiseCellStyle}
-                      style={{
-                        opacity: Math.random() * 0.5,
-                      }}
-                    />
-                  ))}
-                </div>
-              </motion.div>
+              <PixelNoiseEffect isPowered={isPowered} />
 
               {/* Screen Content */}
-              <motion.div
-                className={screenContentStyle}
-                initial={false}
-                animate={{
-                  opacity: isPowered ? 1 : 0,
-                }}
-                transition={{ duration: 0.1, delay: isPowered ? 0.1 : 0 }}
-              >
-                <div className={screenTextStyle}>{children}</div>
-              </motion.div>
+              <GameScreen isPowered={isPowered}>{children}</GameScreen>
             </div>
           </motion.foreignObject>
         </GameConsoleSvgContainer>
@@ -160,11 +129,6 @@ const containerStyle = css({
 });
 
 const svgContainerStyle = css({
-  width: '100%',
-  height: 'auto',
-});
-
-const svgStyle = css({
   width: '100%',
   height: 'auto',
 });
@@ -221,11 +185,4 @@ const screenTextStyle = css({
     fontSize: '96px',
   },
   letterSpacing: '2px',
-});
-
-const blurContainerStyle = css({
-  backdropFilter: 'blur(20px)',
-  clipPath: 'url(#bgblur_0_2620_81262_clip_path)',
-  height: '100%',
-  width: '100%',
 });
