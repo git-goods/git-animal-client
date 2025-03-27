@@ -1,8 +1,6 @@
 import { atom } from 'jotai';
 import { atomWithReset } from 'jotai/utils';
 
-import { powerStateAtom } from './powerState';
-
 export type GameType = 'character' | 'basketball' | 'quiz' | null;
 
 export interface GameState {
@@ -27,97 +25,130 @@ const initialGameState: GameState = {
   scorePopupPosition: { x: 0, y: 0 },
 };
 
-export const gameStateAtom = atomWithReset<GameState>(initialGameState);
+// 함수로 감싸서 매번 새로운 atom 인스턴스를 생성하도록 함
+export const createGameStateAtoms = (powerStateAtom: any) => {
+  // 기본 상태 atom
+  const gameStateAtom = atomWithReset<GameState>(initialGameState);
 
-export const startGameAtom = atom(
-  (get) => get(gameStateAtom).activeGame,
-  (get, set, gameType: GameType) => {
-    const state = get(gameStateAtom);
-    const currentActiveGame = state.activeGame;
+  // 게임 시작 atom
+  const startGameAtom = atom(
+    null, // read 함수 없음
+    (get, set, gameType: GameType) => {
+      const state = get(gameStateAtom);
+      const currentActiveGame = state.activeGame;
 
-    if (currentActiveGame !== gameType) {
-      // 다른 게임으로 전환 시 점수 초기화
+      if (currentActiveGame !== gameType) {
+        // 다른 게임으로 전환 시 점수 초기화
+        set(gameStateAtom, {
+          ...state,
+          activeGame: gameType,
+          pendingGame: null,
+          showDialog: false,
+          totalScore: 0,
+        });
+      } else {
+        // 같은 게임인 경우 점수 유지
+        set(gameStateAtom, {
+          ...state,
+          activeGame: gameType,
+          pendingGame: null,
+          showDialog: false,
+        });
+      }
+    },
+  );
+
+  // 점수 추가 atom
+  const addScoreAtom = atom(
+    null, // read 함수 없음
+    (get, set, params: { points: number; position: { x: number; y: number } }) => {
+      const { points, position } = params;
+      const state = get(gameStateAtom);
+      const newScore = state.totalScore + points;
+      const newHighScore = Math.max(state.highScore, newScore);
+
       set(gameStateAtom, {
         ...state,
-        activeGame: gameType,
-        pendingGame: null,
-        showDialog: false,
-        totalScore: 0,
+        totalScore: newScore,
+        highScore: newHighScore,
+        showScorePopup: true,
+        scorePopupValue: points,
+        scorePopupPosition: position,
       });
-    } else {
-      // 같은 게임인 경우 점수 유지
+    },
+  );
+
+  // 다이얼로그 확인 atom
+  const confirmDialogAtom = atom(
+    null, // read 함수 없음
+    (get, set) => {
+      const state = get(gameStateAtom);
+      if (state.pendingGame) {
+        // 대기 중인 게임 시작
+        set(startGameAtom, state.pendingGame);
+      }
+    },
+  );
+
+  // 다이얼로그 취소 atom
+  const cancelDialogAtom = atom(
+    null, // read 함수 없음
+    (get, set) => {
+      const state = get(gameStateAtom);
       set(gameStateAtom, {
         ...state,
-        activeGame: gameType,
         pendingGame: null,
         showDialog: false,
       });
-    }
-  },
-);
+    },
+  );
 
-export const addScoreAtom = atom(
-  (get) => get(gameStateAtom).totalScore,
-  (get, set, params: { points: number; position: { x: number; y: number } }) => {
-    const { points, position } = params;
-    const state = get(gameStateAtom);
-    const newScore = state.totalScore + points;
-    const newHighScore = Math.max(state.highScore, newScore);
-
-    set(gameStateAtom, {
-      ...state,
-      totalScore: newScore,
-      highScore: newHighScore,
-      showScorePopup: true,
-      scorePopupValue: points,
-      scorePopupPosition: position,
-    });
-  },
-);
-
-export const confirmDialogAtom = atom(null, (get, set) => {
-  const state = get(gameStateAtom);
-  if (state.pendingGame) {
-    // 대기 중인 게임 시작
-    set(startGameAtom, state.pendingGame);
-  }
-});
-
-export const cancelDialogAtom = atom(null, (get, set) => {
-  const state = get(gameStateAtom);
-  set(gameStateAtom, {
-    ...state,
-    pendingGame: null,
-    showDialog: false,
-  });
-});
-
-export const hideScorePopupAtom = atom(null, (get, set) => {
-  const state = get(gameStateAtom);
-  set(gameStateAtom, {
-    ...state,
-    showScorePopup: false,
-  });
-});
-
-export const handleButtonPressAtom = atom(null, (get, set, index: number) => {
-  if (!get(powerStateAtom).isPowered) return;
-
-  const gameState = get(gameStateAtom);
-  // 게임 선택
-  const gameToStart: GameType = index === 0 ? 'character' : index === 1 ? 'basketball' : index === 2 ? 'quiz' : null;
-
-  if (gameToStart) {
-    if (gameState.activeGame && gameState.activeGame !== gameToStart) {
-      // 다른 게임이 이미 활성화된 경우, 확인 대화 상자 표시
+  // 점수 팝업 숨김 atom
+  const hideScorePopupAtom = atom(
+    null, // read 함수 없음
+    (get, set) => {
+      const state = get(gameStateAtom);
       set(gameStateAtom, {
-        ...gameState,
-        pendingGame: gameToStart,
-        showDialog: true,
+        ...state,
+        showScorePopup: false,
       });
-    } else {
-      // 같은 게임이거나 게임이 없는 경우 직접 시작
-      set(startGameAtom, gameToStart);
-    }
-  }
-});
+    },
+  );
+
+  // 버튼 클릭 처리 atom
+  const handleButtonPressAtom = atom(
+    null, // read 함수 없음
+    (get, set, index: number) => {
+      if (!get(powerStateAtom).isPowered) return;
+
+      const gameState = get(gameStateAtom);
+      // 게임 선택
+      const gameToStart: GameType =
+        index === 0 ? 'character' : index === 1 ? 'basketball' : index === 2 ? 'quiz' : null;
+
+      if (gameToStart) {
+        if (gameState.activeGame && gameState.activeGame !== gameToStart) {
+          // 다른 게임이 이미 활성화된 경우, 확인 대화 상자 표시
+          set(gameStateAtom, {
+            ...gameState,
+            pendingGame: gameToStart,
+            showDialog: true,
+          });
+        } else {
+          // 같은 게임이거나 게임이 없는 경우 직접 시작
+          set(startGameAtom, gameToStart);
+        }
+      }
+    },
+  );
+
+  return {
+    gameStateAtom,
+    startGameAtom,
+    addScoreAtom,
+    confirmDialogAtom,
+    cancelDialogAtom,
+    hideScorePopupAtom,
+    handleButtonPressAtom,
+  };
+};

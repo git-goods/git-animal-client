@@ -14,18 +14,23 @@ import PowerButton from './_components/PowerButton';
 import { ScreenContent } from './_components/ScreenContent';
 import { useKeyboardControls } from './_hooks/useKeyboardControls';
 import { useSound } from './_hooks/useSound';
-import {
-  addScoreAtom,
-  cancelDialogAtom,
-  confirmDialogAtom,
-  gameStateAtom,
-  handleButtonPressAtom,
-  startGameAtom,
-} from './store/gameState';
-import { powerStateAtom, togglePowerAtom } from './store/powerState';
+import ArcadeProvider, { useArcadeAtoms } from './ArcadeProvider';
 import { GAME_BUTTON_POSITION, MINI_GAME, MINI_GAME_KEYS } from './constants';
 
-export default function InteractiveArcade() {
+// 실제 Arcade 컴포넌트
+function ArcadeComponent() {
+  // 커스텀 훅을 통해 atom들 가져오기
+  const {
+    powerStateAtom,
+    togglePowerAtom,
+    gameStateAtom,
+    handleButtonPressAtom,
+    startGameAtom,
+    addScoreAtom,
+    confirmDialogAtom,
+    cancelDialogAtom,
+  } = useArcadeAtoms();
+
   // Power state
   const [{ isPowered, bootingUp, shuttingDown }] = useAtom(powerStateAtom);
 
@@ -39,6 +44,7 @@ export default function InteractiveArcade() {
   const [joystickRotation, setJoystickRotation] = useState(0);
   const [activeButton, setActiveButton] = useState<number | null>(null);
 
+  // Action setters
   const togglePower = useSetAtom(togglePowerAtom);
   const handleButtonPress = useSetAtom(handleButtonPressAtom);
   const startGame = useSetAtom(startGameAtom);
@@ -126,6 +132,15 @@ export default function InteractiveArcade() {
         <ControlPanel joystickRotation={joystickRotation} onJoystickMove={rotateJoystick} isPowered={isPowered} />
       </ScreenWrapperSvg>
     </div>
+  );
+}
+
+// Provider로 감싸서 내보내는 메인 컴포넌트
+export default function InteractiveArcade() {
+  return (
+    <ArcadeProvider>
+      <ArcadeComponent />
+    </ArcadeProvider>
   );
 }
 
