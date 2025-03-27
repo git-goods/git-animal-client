@@ -1,5 +1,7 @@
 import { css } from '_panda/css';
 
+import QuizGame from '../_game/quiz-game';
+
 import GameDialog from './GameDialog';
 
 export function ScreenContent({
@@ -33,6 +35,10 @@ export function ScreenContent({
   handleDialogCancel: () => void;
   showDialog: boolean;
 }) {
+  const addScore = () => {
+    console.log('addScore');
+  };
+
   return (
     <div
       className={css({
@@ -191,9 +197,9 @@ export function ScreenContent({
       />
     )}
 
-    {activeGame === 'quiz' && <QuizGame addScore={addScore} onExit={() => setActiveGame(null)} />} */}
-
+*/}
       {/* Game Switch Dialog */}
+      {activeGame === 'quiz' && <QuizGame addScore={addScore} onExit={() => {}} />}
       {showDialog && (
         <GameDialog
           currentGame={activeGame}
