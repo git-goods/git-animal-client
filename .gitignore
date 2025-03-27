@@ -67,3 +67,5 @@ file_descriptor_set.bin
 styled-system
 styled-system-studio
 apps/web/public/sw.js
+
+*storybook.log
