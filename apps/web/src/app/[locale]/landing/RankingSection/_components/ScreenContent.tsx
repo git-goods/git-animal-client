@@ -1,5 +1,5 @@
 import { css } from '_panda/css';
-import { useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 
 import CharacterGame from '../_game/character-game';
 import QuizGame from '../_game/quiz-game';
@@ -7,40 +7,7 @@ import { useArcadeAtoms } from '../ArcadeProvider';
 
 import GameDialog from './GameDialog';
 
-export function ScreenContent({
-  isPowered,
-  bootingUp,
-  shuttingDown,
-  totalScore,
-  highScore,
-  scorePopupPosition,
-  showScorePopup,
-  scorePopupValue,
-  activeGame,
-  pendingGame,
-  handleButtonPress,
-  handleDialogConfirm,
-  handleDialogCancel,
-  showDialog,
-  joystickDirection,
-}: {
-  isPowered: boolean;
-  bootingUp: boolean;
-  shuttingDown: boolean;
-  totalScore: number;
-  highScore: number;
-  scorePopupPosition: { x: number; y: number };
-  showScorePopup: boolean;
-  scorePopupValue: number;
-  activeGame: string | null;
-  pendingGame: string | null;
-  handleButtonPress: (gameIndex: number) => void;
-  handleDialogConfirm: () => void;
-  handleDialogCancel: () => void;
-  showDialog: boolean;
-  joystickDirection: { x: number; y: number };
-}) {
-  console.log('showDialog: ', showDialog);
+export function ScreenContent({ joystickDirection }: { joystickDirection: { x: number; y: number } }) {
   const {
     powerStateAtom,
     togglePowerAtom,
@@ -52,9 +19,20 @@ export function ScreenContent({
     cancelDialogAtom,
     exitGameAtom,
   } = useArcadeAtoms();
+  const [{ isPowered, bootingUp, shuttingDown }] = useAtom(powerStateAtom);
+
+  // Game state
+  const [
+    { activeGame, pendingGame, showDialog, totalScore, highScore, showScorePopup, scorePopupValue, scorePopupPosition },
+  ] = useAtom(gameStateAtom);
 
   const addScore = useSetAtom(addScoreAtom);
   const exitGame = useSetAtom(exitGameAtom);
+
+  const togglePower = useSetAtom(togglePowerAtom);
+  const handleButtonPress = useSetAtom(handleButtonPressAtom);
+  const handleDialogConfirm = useSetAtom(confirmDialogAtom);
+  const handleDialogCancel = useSetAtom(cancelDialogAtom);
   return (
     <div
       className={css({
