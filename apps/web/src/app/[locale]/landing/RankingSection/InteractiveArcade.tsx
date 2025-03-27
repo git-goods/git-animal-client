@@ -38,6 +38,7 @@ function ArcadeComponent() {
   const [
     { activeGame, pendingGame, showDialog, totalScore, highScore, showScorePopup, scorePopupValue, scorePopupPosition },
   ] = useAtom(gameStateAtom);
+  console.log('activeGame: ', activeGame);
 
   // Controls
   const [joystickDirection, setJoystickDirection] = useState({ x: 0, y: 0 });
@@ -127,6 +128,7 @@ function ArcadeComponent() {
             handleDialogConfirm={handleDialogConfirm}
             handleDialogCancel={handleDialogCancel}
             showDialog={showDialog}
+            joystickDirection={joystickDirection}
           />
         </foreignObject>
         <ControlPanel joystickRotation={joystickRotation} onJoystickMove={rotateJoystick} isPowered={isPowered} />

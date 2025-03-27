@@ -1,5 +1,6 @@
 import { css } from '_panda/css';
 
+import CharacterGame from '../_game/character-game';
 import QuizGame from '../_game/quiz-game';
 
 import GameDialog from './GameDialog';
@@ -19,6 +20,7 @@ export function ScreenContent({
   handleDialogConfirm,
   handleDialogCancel,
   showDialog,
+  joystickDirection,
 }: {
   isPowered: boolean;
   bootingUp: boolean;
@@ -34,6 +36,7 @@ export function ScreenContent({
   handleDialogConfirm: () => void;
   handleDialogCancel: () => void;
   showDialog: boolean;
+  joystickDirection: { x: number; y: number };
 }) {
   const addScore = () => {
     console.log('addScore');
@@ -179,15 +182,11 @@ export function ScreenContent({
           </div>
         </div>
       )}
-
+      {activeGame === 'character' && (
+        <CharacterGame joystickDirection={joystickDirection} addScore={addScore} onExit={() => {}} />
+      )}
       {/* Active Game */}
-      {/* {activeGame === 'character' && (
-      <CharacterGame
-        joystickDirection={joystickDirection}
-        addScore={addScore}
-        onExit={() => setActiveGame(null)}
-      />
-    )}
+      {/* 
 
     {activeGame === 'basketball' && (
       <BasketballGame
