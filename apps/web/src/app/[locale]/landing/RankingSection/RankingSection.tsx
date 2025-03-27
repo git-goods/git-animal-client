@@ -5,7 +5,7 @@ import GameConsole from './GameConsole';
 export default function RankingSection() {
   return (
     <div className={containerStyle}>
-      <GameConsole />
+      <GameConsole>hello</GameConsole>
     </div>
   );
 }
