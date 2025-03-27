@@ -1,7 +1,12 @@
+import type { Atom } from 'jotai';
 import { atom } from 'jotai';
 import { atomWithReset } from 'jotai/utils';
 
 export type GameType = 'character' | 'basketball' | 'quiz' | null;
+
+interface PowerState {
+  isPowered: boolean;
+}
 
 export interface GameState {
   activeGame: GameType;
@@ -12,6 +17,7 @@ export interface GameState {
   showScorePopup: boolean;
   scorePopupValue: number;
   scorePopupPosition: { x: number; y: number };
+  exitGame: () => void;
 }
 
 const initialGameState: GameState = {
@@ -23,10 +29,11 @@ const initialGameState: GameState = {
   showScorePopup: false,
   scorePopupValue: 0,
   scorePopupPosition: { x: 0, y: 0 },
+  exitGame: () => {},
 };
 
 // 함수로 감싸서 매번 새로운 atom 인스턴스를 생성하도록 함
-export const createGameStateAtoms = (powerStateAtom: any) => {
+export const createGameStateAtoms = (powerStateAtom: Atom<PowerState>) => {
   // 기본 상태 atom
   const gameStateAtom = atomWithReset<GameState>(initialGameState);
 
@@ -122,10 +129,12 @@ export const createGameStateAtoms = (powerStateAtom: any) => {
       if (!get(powerStateAtom).isPowered) return;
 
       const gameState = get(gameStateAtom);
+      console.log('gameState: ', gameState, index);
       // 게임 선택
       const gameToStart: GameType =
         index === 0 ? 'character' : index === 1 ? 'basketball' : index === 2 ? 'quiz' : null;
 
+      console.log('gameToStart: ', gameToStart);
       if (gameToStart) {
         if (gameState.activeGame && gameState.activeGame !== gameToStart) {
           // 다른 게임이 이미 활성화된 경우, 확인 대화 상자 표시
@@ -142,6 +151,19 @@ export const createGameStateAtoms = (powerStateAtom: any) => {
     },
   );
 
+  // 게임 종료 atom
+  const exitGameAtom = atom(
+    null, // read 함수 없음
+    (get, set) => {
+      set(gameStateAtom, {
+        ...get(gameStateAtom),
+        activeGame: null,
+        pendingGame: null,
+        showDialog: false,
+      });
+    },
+  );
+
   return {
     gameStateAtom,
     startGameAtom,
@@ -150,5 +172,6 @@ export const createGameStateAtoms = (powerStateAtom: any) => {
     cancelDialogAtom,
     hideScorePopupAtom,
     handleButtonPressAtom,
+    exitGameAtom,
   };
 };

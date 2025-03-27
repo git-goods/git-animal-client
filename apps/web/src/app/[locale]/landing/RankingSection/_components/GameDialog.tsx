@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { css } from '_panda/css';
 
 interface GameDialogProps {
   currentGame: string | null;
@@ -34,26 +35,93 @@ export default function GameDialog({ currentGame, newGame, onConfirm, onCancel }
 
   return (
     <div
-      className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300"
-      style={{ opacity: isVisible ? 1 : 0 }}
+      className={css({
+        position: 'absolute',
+        inset: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 50,
+        transition: 'opacity 0.3s',
+        opacity: isVisible ? 1 : 0,
+      })}
     >
-      <div className="bg-gray-800 border-4 border-blue-500 rounded-lg p-6 max-w-md w-full">
-        <h2 className="text-white font-mono text-2xl font-bold mb-4 text-center">게임 전환</h2>
+      <div
+        className={css({
+          backgroundColor: '#1F2937',
+          border: '4px solid #3B82F6',
+          borderRadius: '8px',
+          padding: '24px',
+          maxWidth: '28rem',
+          width: '100%',
+        })}
+      >
+        <h2
+          className={css({
+            color: '#FFFFFF',
+            fontFamily: 'monospace',
+            fontSize: '24px',
+            fontWeight: 'bold',
+            marginBottom: '16px',
+            textAlign: 'center',
+          })}
+        >
+          게임 전환
+        </h2>
 
-        <p className="text-white font-mono text-lg mb-6 text-center">
+        <p
+          className={css({
+            color: '#FFFFFF',
+            fontFamily: 'monospace',
+            fontSize: '18px',
+            marginBottom: '24px',
+            textAlign: 'center',
+          })}
+        >
           {getGameName(currentGame)}에서 {getGameName(newGame)}(으)로 전환하시겠습니까?
           <br />
-          <span className="text-yellow-300 text-sm">(현재 게임의 진행 상황은 저장되지 않습니다)</span>
+          <span
+            className={css({
+              color: '#FDE047',
+              fontSize: '14px',
+            })}
+          >
+            (현재 게임의 진행 상황은 저장되지 않습니다)
+          </span>
         </p>
 
-        <div className="flex justify-center gap-4">
+        <div
+          className={css({
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '16px',
+          })}
+        >
           <button
-            className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded"
+            className={css({
+              backgroundColor: '#059669',
+              '&:hover': { backgroundColor: '#047857' },
+              color: '#FFFFFF',
+              fontWeight: 'bold',
+              padding: '8px 24px',
+              borderRadius: '4px',
+            })}
             onClick={onConfirm}
           >
             확인
           </button>
-          <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded" onClick={onCancel}>
+          <button
+            className={css({
+              backgroundColor: '#DC2626',
+              '&:hover': { backgroundColor: '#B91C1C' },
+              color: '#FFFFFF',
+              fontWeight: 'bold',
+              padding: '8px 24px',
+              borderRadius: '4px',
+            })}
+            onClick={onCancel}
+          >
             취소
           </button>
         </div>

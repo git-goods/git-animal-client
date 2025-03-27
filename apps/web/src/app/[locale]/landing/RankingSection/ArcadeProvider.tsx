@@ -22,6 +22,7 @@ export interface ArcadeAtoms {
   cancelDialogAtom: ReturnType<typeof createGameStateAtoms>['cancelDialogAtom'];
   hideScorePopupAtom: ReturnType<typeof createGameStateAtoms>['hideScorePopupAtom'];
   handleButtonPressAtom: ReturnType<typeof createGameStateAtoms>['handleButtonPressAtom'];
+  exitGameAtom: ReturnType<typeof createGameStateAtoms>['exitGameAtom'];
 }
 
 // Context 생성

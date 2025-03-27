@@ -1,7 +1,9 @@
 import { css } from '_panda/css';
+import { useSetAtom } from 'jotai';
 
 import CharacterGame from '../_game/character-game';
 import QuizGame from '../_game/quiz-game';
+import { useArcadeAtoms } from '../ArcadeProvider';
 
 import GameDialog from './GameDialog';
 
@@ -38,10 +40,21 @@ export function ScreenContent({
   showDialog: boolean;
   joystickDirection: { x: number; y: number };
 }) {
-  const addScore = () => {
-    console.log('addScore');
-  };
+  console.log('showDialog: ', showDialog);
+  const {
+    powerStateAtom,
+    togglePowerAtom,
+    gameStateAtom,
+    handleButtonPressAtom,
+    startGameAtom,
+    addScoreAtom,
+    confirmDialogAtom,
+    cancelDialogAtom,
+    exitGameAtom,
+  } = useArcadeAtoms();
 
+  const addScore = useSetAtom(addScoreAtom);
+  const exitGame = useSetAtom(exitGameAtom);
   return (
     <div
       className={css({
@@ -183,22 +196,32 @@ export function ScreenContent({
         </div>
       )}
       {activeGame === 'character' && (
-        <CharacterGame joystickDirection={joystickDirection} addScore={addScore} onExit={() => {}} />
+        <CharacterGame
+          joystickDirection={joystickDirection}
+          addScore={(points, x, y) => {
+            addScore({ points, position: { x, y } });
+          }}
+          onExit={exitGame}
+        />
       )}
       {/* Active Game */}
       {/* 
 
-    {activeGame === 'basketball' && (
-      <BasketballGame
-        joystickDirection={joystickDirection}
-        addScore={addScore}
-        onExit={() => setActiveGame(null)}
-      />
-    )}
 
 */}
+      {activeGame === 'basketball' && (
+        <div className="text-white font-mono text-xl mb-8">준비중입니다</div>
+        // <BasketballGame joystickDirection={joystickDirection} addScore={addScore} onExit={() => {}} />
+      )}
       {/* Game Switch Dialog */}
-      {activeGame === 'quiz' && <QuizGame addScore={addScore} onExit={() => {}} />}
+      {activeGame === 'quiz' && (
+        <QuizGame
+          addScore={(points, x, y) => {
+            addScore({ points, position: { x, y } });
+          }}
+          onExit={exitGame}
+        />
+      )}
       {showDialog && (
         <GameDialog
           currentGame={activeGame}
