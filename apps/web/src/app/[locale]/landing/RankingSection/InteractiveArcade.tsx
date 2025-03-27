@@ -106,15 +106,8 @@ export default function InteractiveArcade() {
 
 const powerButtonStyle = css({
   position: 'absolute',
-  top: '4px',
-  right: '4px',
-  zIndex: '10',
-});
-
-const controlPanelStyle = css({
-  position: 'absolute',
-  bottom: '4px',
-  left: '4px',
+  top: '100px',
+  right: '100px',
   zIndex: '10',
 });
 
