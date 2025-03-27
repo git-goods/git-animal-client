@@ -4,6 +4,8 @@
 
 import { useEffect, useState } from 'react';
 import { css } from '_panda/css';
+import { useAtom, useSetAtom } from 'jotai';
+import { setTimeout } from 'timers';
 
 import GameButton from './_assets/GameButton';
 import { ScreenWrapperSvg } from './_assets/SvgAssets';
@@ -12,126 +14,43 @@ import PowerButton from './_components/PowerButton';
 import { ScreenContent } from './_components/ScreenContent';
 import { useKeyboardControls } from './_hooks/useKeyboardControls';
 import { useSound } from './_hooks/useSound';
+import {
+  addScoreAtom,
+  cancelDialogAtom,
+  confirmDialogAtom,
+  gameStateAtom,
+  handleButtonPressAtom,
+  startGameAtom,
+} from './store/gameState';
+import { powerStateAtom, togglePowerAtom } from './store/powerState';
 import { GAME_BUTTON_POSITION, MINI_GAME, MINI_GAME_KEYS } from './constants';
-
-type GameType = 'character' | 'basketball' | 'quiz' | null;
 
 export default function InteractiveArcade() {
   // Power state
-  const [isPowered, setIsPowered] = useState(false);
-  const [bootingUp, setBootingUp] = useState(false);
-  const [shuttingDown, setShuttingDown] = useState(false);
+  const [{ isPowered, bootingUp, shuttingDown }] = useAtom(powerStateAtom);
 
   // Game state
-  const [activeGame, setActiveGame] = useState<GameType>(null);
-  const [pendingGame, setPendingGame] = useState<GameType>(null);
-  const [showDialog, setShowDialog] = useState(false);
-  const [totalScore, setTotalScore] = useState(0);
-  const [highScore, setHighScore] = useState(0);
-  const [showScorePopup, setShowScorePopup] = useState(false);
-  const [scorePopupValue, setScorePopupValue] = useState(0);
-  const [scorePopupPosition, setScorePopupPosition] = useState({ x: 0, y: 0 });
+  const [
+    { activeGame, pendingGame, showDialog, totalScore, highScore, showScorePopup, scorePopupValue, scorePopupPosition },
+  ] = useAtom(gameStateAtom);
 
   // Controls
   const [joystickDirection, setJoystickDirection] = useState({ x: 0, y: 0 });
   const [joystickRotation, setJoystickRotation] = useState(0);
   const [activeButton, setActiveButton] = useState<number | null>(null);
 
+  const togglePower = useSetAtom(togglePowerAtom);
+  const handleButtonPress = useSetAtom(handleButtonPressAtom);
+  const startGame = useSetAtom(startGameAtom);
+  const addScore = useSetAtom(addScoreAtom);
+  const handleDialogConfirm = useSetAtom(confirmDialogAtom);
+  const handleDialogCancel = useSetAtom(cancelDialogAtom);
+
   // Sound effects
   const { playSound } = useSound();
 
   // Keyboard controls
   const { direction } = useKeyboardControls();
-
-  // Handle power button
-  const togglePower = () => {
-    if (isPowered) {
-      // Power off sequence
-      playSound('powerDown');
-      setShuttingDown(true);
-      setTimeout(() => {
-        setIsPowered(false);
-        setShuttingDown(false);
-        setActiveGame(null);
-        setTotalScore(0);
-      }, 1000);
-    } else {
-      // Power on sequence
-      playSound('powerUp');
-      setBootingUp(true);
-      setTimeout(() => {
-        setIsPowered(true);
-        setBootingUp(false);
-      }, 1500);
-    }
-  };
-
-  // Handle button press
-  const handleButtonPress = (index: number) => {
-    if (!isPowered) return;
-
-    setActiveButton(index);
-    // playSound('click');
-
-    // Determine which game to start based on button index
-    // const gameToStart: GameType = index === 0 ? 'character' : index === 1 ? 'basketball' : index === 2 ? 'quiz' : null;
-
-    // if (gameToStart) {
-    //   if (activeGame && activeGame !== gameToStart) {
-    //     // If a different game is already active, show confirmation dialog
-    //     setPendingGame(gameToStart);
-    //     setShowDialog(true);
-    //   } else {
-    //     // Start the game directly if no game is active or the same game is clicked
-    //     startGame(gameToStart);
-    //   }
-    // }
-
-    setTimeout(() => setActiveButton(null), 300);
-  };
-
-  // Start a game
-  const startGame = (game: GameType) => {
-    if (activeGame !== game) {
-      // Reset scores when switching games
-      setTotalScore(0);
-    }
-
-    setActiveGame(game);
-    setPendingGame(null);
-    setShowDialog(false);
-    playSound('gameStart');
-  };
-
-  // Handle dialog confirmation
-  const handleDialogConfirm = () => {
-    if (pendingGame) {
-      startGame(pendingGame);
-    }
-  };
-
-  // Handle dialog cancellation
-  const handleDialogCancel = () => {
-    setPendingGame(null);
-    setShowDialog(false);
-  };
-
-  // Add score with animation
-  const addScore = (points: number, x: number, y: number) => {
-    setTotalScore((prev) => {
-      const newScore = prev + points;
-      // Update high score if needed
-      if (newScore > highScore) {
-        setHighScore(newScore);
-      }
-      return newScore;
-    });
-
-    setScorePopupValue(points);
-    setScorePopupPosition({ x, y });
-    setShowScorePopup(true);
-    setTimeout(() => setShowScorePopup(false), 1000);
-  };
 
   // Update joystick based on keyboard input
   useEffect(() => {
