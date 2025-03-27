@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { css } from '_panda/css';
 import { motion } from 'framer-motion';
 
+import { Joystick } from './Joystick';
 import { MotionButton } from './MotionButton';
 import { GameConsoleSvgContainer } from './SvgContainer';
 
@@ -85,8 +86,9 @@ export default function GameConsole({ children }: { children: React.ReactNode })
             startX={1237}
             colors={['#198BE5', '#1A77C0']}
           />
+          <Joystick joystickRotation={joystickRotation} />
 
-          {/* Screen Content with Retro TV Animation */}
+          {/* Screen Content */}
           <motion.foreignObject
             x="280"
             y="121"
