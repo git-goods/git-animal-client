@@ -7,13 +7,13 @@ type RadioItem<T> = {
 
 interface Arguments<T> {
   options: RadioItem<T>[];
-  initalSelectedValue?: T;
+  initialSelectedValue?: T;
 }
 
-const useRadioGroup = <T>({ options, initalSelectedValue }: Arguments<T>) => {
-  const [selected, setSelected] = useState<T | null>(initalSelectedValue ?? options[0].value);
+const useRadioGroup = <T>({ options, initialSelectedValue }: Arguments<T>) => {
+  const [selected, setSelected] = useState<T | null>(initialSelectedValue ?? options[0].value);
 
-  const handleSelect = (value: T) => {
+  const handleClick = (value: T) => {
     setSelected(value);
   };
 
@@ -21,7 +21,7 @@ const useRadioGroup = <T>({ options, initalSelectedValue }: Arguments<T>) => {
     selected: option.value === selected,
     value: option.value,
     label: option.label,
-    onSelect: () => handleSelect(option.value),
+    onClick: () => handleClick(option.value),
   }));
 
   return { selected, setSelected, radioItemProps };

@@ -28,20 +28,18 @@ const SelectCategorySection = () => {
         <h1 className={titleStyle}>Category</h1>
         <h2 className={descriptionStyle}>Choose the category of the quiz</h2>
         <QuizRadio.Group>
-          {categoryRadioItemProps.map((radioItemProps) => {
-            const imageSrc = radioItemProps.selected ? `/quiz/cursor-choiced.webp` : `/quiz/cursor-unchoiced.webp`;
+          {categoryRadioItemProps.map((radioItem) => {
+            const imageSrc = radioItem.selected ? `/quiz/cursor-choiced.webp` : `/quiz/cursor-unchoiced.webp`;
             return (
               <QuizRadio.Button
-                key={radioItemProps.value}
+                key={radioItem.value}
                 className={radioButtonStyle}
-                {...radioItemProps}
-                onClick={() => {
-                  radioItemProps.onSelect();
-                }}
+                selected={radioItem.selected}
+                onClick={radioItem.onClick}
               >
                 <Flex direction="column" align="center" gap="12px">
-                  <Image src={imageSrc} alt={radioItemProps.label} width={60} height={60} />
-                  <span className={radioButtonLabelStyle}>{radioItemProps.label}</span>
+                  <Image src={imageSrc} alt={radioItem.label} width={60} height={60} />
+                  <span className={radioButtonLabelStyle}>{radioItem.label}</span>
                 </Flex>
               </QuizRadio.Button>
             );

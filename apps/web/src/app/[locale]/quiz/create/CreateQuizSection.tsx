@@ -65,7 +65,7 @@ const CreateQuizSection = () => {
           content={
             <QuizRadio.Group>
               {difficultyRadioItemProps.map((item) => (
-                <QuizRadio.Button key={item.value} selected={item.selected} onClick={item.onSelect}>
+                <QuizRadio.Button key={item.value} selected={item.selected} onClick={item.onClick}>
                   {item.label}
                 </QuizRadio.Button>
               ))}
@@ -77,7 +77,7 @@ const CreateQuizSection = () => {
           content={
             <QuizRadio.Group>
               {categoryRadioItemProps.map((item) => (
-                <QuizRadio.Button key={item.value} selected={item.selected} onClick={item.onSelect}>
+                <QuizRadio.Button key={item.value} selected={item.selected} onClick={item.onClick}>
                   {item.label}
                 </QuizRadio.Button>
               ))}
@@ -101,7 +101,7 @@ const CreateQuizSection = () => {
           content={
             <QuizRadio.Group>
               {correctAnswerRadioItemProps.map((item) => (
-                <QuizRadio.Button key={item.value} selected={item.selected} onClick={item.onSelect}>
+                <QuizRadio.Button key={item.value} selected={item.selected} onClick={item.onClick}>
                   {item.label}
                 </QuizRadio.Button>
               ))}
