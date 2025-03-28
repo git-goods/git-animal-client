@@ -1,8 +1,23 @@
+'use client';
+
 import { css } from '_panda/css';
+import { rankQueries } from '@gitanimals/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import GameConsole from './GameConsole/GameConsole';
 
 export default function RankingSection() {
+  const { data: ranks } = useQuery({
+    ...rankQueries.getRanksOptions({
+      rank: 1,
+      size: 10,
+      type: 'WEEKLY_GUILD_CONTRIBUTIONS',
+    }),
+  });
+  // console.log('ranks: ', ranks);
+
+  if (!ranks) return null;
+
   return (
     <div className={containerStyle}>
       <GameConsole>
