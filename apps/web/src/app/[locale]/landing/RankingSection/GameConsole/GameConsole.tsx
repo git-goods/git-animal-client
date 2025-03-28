@@ -3,17 +3,16 @@
 import { useEffect, useState } from 'react';
 import { css } from '_panda/css';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Joystick } from 'lucide-react';
 
-import { PixelNoiseEffect } from '../PixelNoiseEffect';
 import { GameConsoleSvgContainer } from '../SvgContainer';
 
 import { GameScreen } from './GameScreen';
-import { Joystick } from './Joystick';
 import { MotionButton } from './MotionButton';
+import { PixelNoiseEffect } from './PixelNoiseEffect';
 
 export default function GameConsole({ children }: { children: React.ReactNode }) {
   const [isPowered, setIsPowered] = useState(false);
-  console.log('isPowered: ', isPowered);
   const [joystickRotation, setJoystickRotation] = useState(0);
   const [pressedButtons, setPressedButtons] = useState({
     button1: false,
