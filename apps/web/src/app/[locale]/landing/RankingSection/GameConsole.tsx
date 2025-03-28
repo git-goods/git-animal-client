@@ -2,16 +2,17 @@
 
 import { useEffect, useState } from 'react';
 import { css } from '_panda/css';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
+import { GameScreen } from './GameScreen';
 import { Joystick } from './Joystick';
 import { MotionButton } from './MotionButton';
 import { PixelNoiseEffect } from './PixelNoiseEffect';
 import { GameConsoleSvgContainer } from './SvgContainer';
-import { GameScreen } from './GameScreen';
 
 export default function GameConsole({ children }: { children: React.ReactNode }) {
-  const [isPowered, setIsPowered] = useState(true);
+  const [isPowered, setIsPowered] = useState(false);
+  console.log('isPowered: ', isPowered);
   const [joystickRotation, setJoystickRotation] = useState(0);
   const [pressedButtons, setPressedButtons] = useState({
     button1: false,
@@ -88,31 +89,41 @@ export default function GameConsole({ children }: { children: React.ReactNode })
           />
           <Joystick joystickRotation={joystickRotation} />
 
-          {/* Screen Content */}
-          <motion.foreignObject
-            x="280"
-            y="121"
-            width="1100"
-            height="965"
-            initial={false}
-            animate={{
-              clipPath: isPowered
-                ? 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
-                : 'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)',
-              transition: {
-                duration: 0.15,
-                ease: 'easeInOut',
-              },
-            }}
-          >
-            <div className={screenContainerStyle}>
-              {/* Pixel noise effect for turning on/off */}
-              <PixelNoiseEffect isPowered={isPowered} />
+          <AnimatePresence>
+            <motion.foreignObject
+              x="280"
+              y="121"
+              width="1100"
+              height="965"
+              initial={false}
+              animate={{
+                clipPath: isPowered
+                  ? 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
+                  : 'polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)',
+                transition: {
+                  duration: 0.15,
+                  ease: 'easeInOut',
+                },
+              }}
+            >
+              <div className={screenContainerStyle}>
+                <PixelNoiseEffect isPowered={isPowered} />
+                <GameScreen isPowered={isPowered}>hello</GameScreen>
+              </div>
+            </motion.foreignObject>
 
-              {/* Screen Content */}
-              <GameScreen isPowered={isPowered}>{children}</GameScreen>
-            </div>
-          </motion.foreignObject>
+            {/* Screen Content */}
+            <motion.foreignObject
+              x="280"
+              y="121"
+              width="1100"
+              height="965"
+              initial={false}
+              animate={{ transition: { duration: 0.15, ease: 'easeInOut' } }}
+            >
+              <div className={screenContainerStyle}>{!isPowered && children}</div>
+            </motion.foreignObject>
+          </AnimatePresence>
         </GameConsoleSvgContainer>
       </div>
     </div>
@@ -136,27 +147,8 @@ const svgContainerStyle = css({
 const screenContainerStyle = css({
   width: '100%',
   height: '100%',
-  backgroundColor: '#000000',
   position: 'relative',
   overflow: 'hidden',
-});
-
-const noiseContainerStyle = css({
-  position: 'absolute',
-  inset: 0,
-  zIndex: 10,
-});
-
-const noiseGridStyle = css({
-  width: '100%',
-  height: '100%',
-  display: 'grid',
-  gridTemplateColumns: 'repeat(12, 1fr)',
-  gridTemplateRows: 'repeat(12, 1fr)',
-});
-
-const noiseCellStyle = css({
-  backgroundColor: '#4ADE80',
 });
 
 const screenContentStyle = css({
@@ -165,24 +157,4 @@ const screenContentStyle = css({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  backgroundColor: '#000000',
-});
-
-const screenTextStyle = css({
-  color: '#4ADE80',
-  fontFamily: 'monospace',
-  fontSize: '36px',
-  '@media (min-width: 640px)': {
-    fontSize: '48px',
-  },
-  '@media (min-width: 768px)': {
-    fontSize: '60px',
-  },
-  '@media (min-width: 1024px)': {
-    fontSize: '72px',
-  },
-  '@media (min-width: 1280px)': {
-    fontSize: '96px',
-  },
-  letterSpacing: '2px',
 });
