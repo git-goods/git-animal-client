@@ -1,6 +1,6 @@
 import { css } from '_panda/css';
 
-import GameConsole from './GameConsole';
+import GameConsole from './GameConsole/GameConsole';
 
 export default function RankingSection() {
   return (

@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react';
 import { css } from '_panda/css';
 import { AnimatePresence, motion } from 'framer-motion';
 
+import { PixelNoiseEffect } from '../PixelNoiseEffect';
+import { GameConsoleSvgContainer } from '../SvgContainer';
+
 import { GameScreen } from './GameScreen';
 import { Joystick } from './Joystick';
 import { MotionButton } from './MotionButton';
-import { PixelNoiseEffect } from './PixelNoiseEffect';
-import { GameConsoleSvgContainer } from './SvgContainer';
 
 export default function GameConsole({ children }: { children: React.ReactNode }) {
   const [isPowered, setIsPowered] = useState(false);
