@@ -5,23 +5,34 @@ import { rankQueries } from '@gitanimals/react-query';
 import { useQuery } from '@tanstack/react-query';
 
 import GameConsole from './GameConsole/GameConsole';
+import { TopPodium } from './TopPodium';
 
 export default function RankingSection() {
   const { data: ranks } = useQuery({
     ...rankQueries.getRanksOptions({
       rank: 1,
       size: 10,
-      type: 'WEEKLY_GUILD_CONTRIBUTIONS',
+      type: 'WEEKLY_USER_CONTRIBUTIONS',
     }),
   });
-  // console.log('ranks: ', ranks);
 
   if (!ranks) return null;
 
   return (
     <div className={containerStyle}>
       <GameConsole>
-        <div className={screenContentStyle}>안녕하세요!</div>
+        <div className={screenContentStyle}>
+          {/* 상단 탭 */}
+          <div className={tabsStyle}>
+            <button className={tabStyle}>People</button>
+            <button className={tabStyle}>Guild</button>
+          </div>
+
+          {/* 상위 3위 포디움 */}
+          <TopPodium ranks={ranks.slice(0, 3)} />
+
+          </div>
+        </div>
       </GameConsole>
     </div>
   );
