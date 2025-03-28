@@ -5,15 +5,15 @@ import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 
 import { Background } from '@/app/[locale]/quiz/_common/BackGround';
-import QuizProgressBar from '@/app/[locale]/quiz/solve/(status)/_solving/QuizProgressBar';
-import CorrectConfirmDialog from '@/app/[locale]/quiz/solve/(status)/_success/CorrectConfirmDialog';
-import { customScrollStyle } from '@/styles/scrollStyle';
-import { QUIZ_ANSWER, QUIZ_POINT_MAP, QUIZ_TOTAL_STAGE } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
-import FailAlertDialog from '@/app/[locale]/quiz/solve/(status)/_fail/FailAlertDialog';
 import CompleteAlertDialog from '@/app/[locale]/quiz/solve/(status)/_done/CompleteAlertDialog';
-import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/SolveQuizContext';
-import useQuizDialogStatus from '@/app/[locale]/quiz/solve/(status)/_solving/useQuizDialogStatus';
+import FailAlertDialog from '@/app/[locale]/quiz/solve/(status)/_fail/FailAlertDialog';
+import QuizProgressBar from '@/app/[locale]/quiz/solve/(status)/_solving/QuizProgressBar';
 import useQuizAction from '@/app/[locale]/quiz/solve/(status)/_solving/useQuizAction';
+import useQuizDialogStatus from '@/app/[locale]/quiz/solve/(status)/_solving/useQuizDialogStatus';
+import CorrectConfirmDialog from '@/app/[locale]/quiz/solve/(status)/_success/CorrectConfirmDialog';
+import { QUIZ_ANSWER, QUIZ_POINT_MAP, QUIZ_TOTAL_STAGE } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
+import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/SolveQuizContext';
+import { customScrollStyle } from '@/styles/scrollStyle';
 
 // 임시 데이터
 const difficulty = 'Easy';

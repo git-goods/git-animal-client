@@ -1,7 +1,6 @@
 'use client';
 
 import type { ComponentProps, PropsWithChildren } from 'react';
-import React from 'react';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 

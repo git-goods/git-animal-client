@@ -1,7 +1,5 @@
 'use client';
 
-import React from 'react';
-
 import SelectCategorySection from '@/app/[locale]/quiz/solve/(status)/_notStarted/SelectCategorySection';
 import SolvingQuizSection from '@/app/[locale]/quiz/solve/(status)/_solving/SolvingQuizSection';
 import { QUIZ_STATUS } from '@/app/[locale]/quiz/solve/solveQuiz.constants';

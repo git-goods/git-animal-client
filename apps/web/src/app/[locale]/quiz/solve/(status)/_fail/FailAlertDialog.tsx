@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import Image from 'next/image';
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { Button, Dialog } from '@gitanimals/ui-panda';
-import Image from 'next/image';
 
 interface FailAlertDialogProps {
   onClose: () => void;

@@ -1,5 +1,7 @@
-import { QUIZ_STATUS, QuizStatus } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
 import { useState } from 'react';
+
+import type { QuizStatus } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
+import { QUIZ_STATUS } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
 
 const useQuizDialogStatus = () => {
   const [result, setResult] = useState<QuizStatus>(QUIZ_STATUS.SOLVING);

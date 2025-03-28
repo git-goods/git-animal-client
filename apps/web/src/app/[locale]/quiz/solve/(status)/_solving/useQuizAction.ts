@@ -1,15 +1,12 @@
 'use client';
 
-import useQuizDialogStatus from '@/app/[locale]/quiz/solve/(status)/_solving/useQuizDialogStatus';
-import {
-  QUIZ_ANSWER,
-  QuizAnswer,
-  QUIZ_POINT_MAP,
-  QUIZ_TOTAL_STAGE,
-} from '@/app/[locale]/quiz/solve/solveQuiz.constants';
-import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/SolveQuizContext';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+
+import type useQuizDialogStatus from '@/app/[locale]/quiz/solve/(status)/_solving/useQuizDialogStatus';
+import type { QuizAnswer } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
+import { QUIZ_ANSWER, QUIZ_POINT_MAP, QUIZ_TOTAL_STAGE } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
+import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/SolveQuizContext';
 
 interface UseQuizActionProps {
   quizDialog: ReturnType<typeof useQuizDialogStatus>;
