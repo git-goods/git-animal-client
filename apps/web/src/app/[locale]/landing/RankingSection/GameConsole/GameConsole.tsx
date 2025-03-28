@@ -3,11 +3,11 @@
 import { useEffect, useState } from 'react';
 import { css } from '_panda/css';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Joystick } from 'lucide-react';
 
 import { GameConsoleSvgContainer } from '../SvgContainer';
 
 import { GameScreen } from './GameScreen';
+import { Joystick } from './Joystick';
 import { MotionButton } from './MotionButton';
 import { PixelNoiseEffect } from './PixelNoiseEffect';
 
@@ -149,12 +149,4 @@ const screenContainerStyle = css({
   height: '100%',
   position: 'relative',
   overflow: 'hidden',
-});
-
-const screenContentStyle = css({
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
 });
