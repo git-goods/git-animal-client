@@ -1,4 +1,11 @@
 {
+  "page": {
+    "main": "Main | GitAnimals",
+    "shop": "Shop",
+    "guild": "Guild",
+    "mypage": "MyPage",
+    "laboratory": "Laboratory"
+  },
   "Layout": {
     "mypage": "MyPage",
     "auction": "Auction",

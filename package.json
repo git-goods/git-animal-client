@@ -8,9 +8,13 @@
     "dev:web": "turbo dev --filter=@gitanimals/web",
     "dev:admin": "turbo dev --filter=@gitanimals/admin",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint-staged": "lint-staged",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "prettier": "*",
     "turbo": "^2.0.4",
     "typescript": "*"

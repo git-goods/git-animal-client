@@ -1,11 +1,11 @@
 import mixpanel from 'mixpanel-browser';
 
+import { config } from '@/constants/config';
 import { isProd } from '@/constants/env';
-import { MONITORING_KEY } from '@/constants/monitoring';
 
 export const initAnalytics = () => {
   if (!isProd) return;
-  mixpanel.init(MONITORING_KEY.MIXPANEL, {
+  mixpanel.init(config.monitoring.MIXPANEL, {
     debug: process.env.NODE_ENV !== 'production',
     track_pageview: 'url-with-path-and-query-string',
     persistence: 'localStorage',
@@ -35,7 +35,7 @@ export const trackPageView = (url: string) => {
 
   // Google Analytics 페이지 뷰 추적
   if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('config', MONITORING_KEY.GA, {
+    window.gtag('config', config.monitoring.GA, {
       page_path: url,
     });
   }

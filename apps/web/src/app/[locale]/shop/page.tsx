@@ -1,4 +1,6 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 
 import GNB from '@/components/GNB/GNB';
 
@@ -8,6 +10,14 @@ import { AuctionSection } from './_auction';
 import { PetGotcha } from './_petGotcha';
 import type { TabType } from './type';
 import { TABS } from './type';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('page');
+
+  return {
+    title: t('shop'),
+  };
+}
 
 async function ShopPage({
   searchParams,
