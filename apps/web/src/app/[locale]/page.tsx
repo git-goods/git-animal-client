@@ -7,6 +7,7 @@ import { PWADetector } from '@/hooks/useDeviceInfo';
 
 import { ChoosePetSection } from './landing/ChoosePetSection';
 import { Footer } from './landing/Footer';
+import RankingSection from './landing/RankingSection/RankingSection';
 import { AvailablePetSection, HavePetWaySection, MainSection } from './landing';
 
 import '@egjs/react-flicking/dist/flicking.css';
@@ -25,6 +26,7 @@ export default function HomePage() {
     <div>
       <GNB />
       <MainSection />
+      <RankingSection />
       <AvailablePetSection />
       <HavePetWaySection />
       <ChoosePetSection />
