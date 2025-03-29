@@ -1,5 +1,6 @@
 import { css, cx } from '_panda/css';
 import type { RankType } from '@gitanimals/api';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { RankingLink } from './RankingLink';
 
@@ -25,7 +26,7 @@ export function TopPodium({ ranks }: { ranks: RankType[] }) {
     },
     {
       rank: 3,
-      height: 80,
+      height: 120,
       crownElement: (
         <div className={subCrownStyle}>
           <img src="/rank/icon_crown_3.svg" alt="3rd place crown" width={36} height={36} />
@@ -37,23 +38,49 @@ export function TopPodium({ ranks }: { ranks: RankType[] }) {
   if (ranks.length < 3) return null;
 
   return (
-    <div className={podiumStyle}>
-      {RANK.map((item) => {
-        const currentRank = ranks[item.rank - 1];
-        return (
-          <RankingLink id={currentRank.name} className={runnerUpStyle} key={item.rank}>
-            <div className={profileStyle}>
-              <img src={currentRank.image} alt={`${item.rank}등`} />
-              {item.crownElement}
-              <div className={brightBgStyle} />
-            </div>
-            <div className={nameStyle}>{currentRank.name}</div>
-            <div className={contributionStyle}>{currentRank.contributions}</div>
-            <div className={cx(rostrumStyle, css({ minHeight: `${item.height}px` }))}>{item.rank}</div>
-          </RankingLink>
-        );
-      })}
-    </div>
+    <AnimatePresence>
+      <div className={podiumStyle}>
+        {RANK.map((item) => {
+          const currentRank = ranks[item.rank - 1];
+          return (
+            <RankingLink id={currentRank.name} className={runnerUpStyle} key={`${item.rank}`}>
+              <div className={profileStyle}>
+                <img src={currentRank.image} alt={`${item.rank}등`} />
+                {item.crownElement}
+                <div className={brightBgStyle} />
+              </div>
+              <div className={nameStyle}>{currentRank.name}</div>
+              <div className={contributionStyle}>{currentRank.contributions}</div>
+              <motion.div
+                key={`rostrum-${item.rank}`}
+                initial={{ height: 0 }}
+                animate={{ height: `${item.height}px`, flex: 0 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 200,
+                  damping: 20,
+                  delay: (item.rank || 1) * 0.3,
+                }}
+                className={cx(rostrumStyle)}
+              >
+                <motion.p
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 200,
+                    damping: 20,
+                    delay: (item.rank || 1) * 0.3 + 0.5, // rostrum 애니메이션 후 0.5초 뒤에 시작
+                  }}
+                >
+                  {item.rank}
+                </motion.p>
+              </motion.div>
+            </RankingLink>
+          );
+        })}
+      </div>
+    </AnimatePresence>
   );
 }
 
@@ -62,10 +89,10 @@ const podiumStyle = css({
   justifyContent: 'center',
   alignItems: 'flex-end',
   gap: '12px',
+  flex: 1,
 });
 
 const rostrumStyle = css({
-  flex: 0,
   width: '140px',
   borderRadius: '8px',
   background:
@@ -82,14 +109,16 @@ const rostrumStyle = css({
   fontFamily: 'token(fonts.dnf)',
   pt: '16px',
   mt: '12px',
+  position: 'relative',
+  overflow: 'hidden',
 });
 
 const runnerUpStyle = css({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: '10px',
   fontSize: '20px',
+  minHeight: '170px',
 });
 
 const brightBgStyle = css({
@@ -103,19 +132,6 @@ const brightBgStyle = css({
   opacity: 0.5,
   background:
     'radial-gradient(50% 50% at 50% 50%, #FFED86 0%, rgba(255, 237, 134, 0.17) 81%, rgba(255, 237, 134, 0.00) 100%)',
-});
-
-const winnerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '10px',
-});
-
-const thirdPlaceStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
 });
 
 const profileStyle = css({
@@ -137,6 +153,10 @@ const subCrownStyle = css({
   transform: 'translateX(-50%)',
   width: '36px',
   height: '36px',
+  '& > img': {
+    width: '100%',
+    height: '100%',
+  },
 });
 
 const winnerCrownStyle = css({
@@ -146,10 +166,16 @@ const winnerCrownStyle = css({
   transform: 'translateX(-50%)',
   width: '60px',
   height: '60px',
+
+  '& > img': {
+    width: '100%',
+    height: '100%',
+  },
 });
 
 const nameStyle = css({
   textStyle: 'glyph18.bold',
+  mt: '12px',
   color: 'white.white_90',
 });
 

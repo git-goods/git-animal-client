@@ -53,9 +53,12 @@ const containerStyle = css({
 });
 
 const screenContentStyle = css({
-  padding: '60px 130px 0',
+  padding: '60px 130px',
   color: '#4ADE80',
+  height: '100%',
   fontFamily: 'token(fonts.dnf)',
+  display: 'flex',
+  flexDirection: 'column',
 });
 
 function RankingTab({ selectedTab }: { selectedTab: string }) {
