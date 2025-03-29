@@ -19,7 +19,7 @@ export function TopPodium({ ranks }: { ranks: RankType[] }) {
         </div>
         <div className={nameStyle}>{ranks[1].name}</div>
         <div className={contributionStyle}>{ranks[1].contributions}</div>
-        <div className={cx(rostrumStyle, css({ height: '148px' }))}>2</div>
+        <div className={cx(rostrumStyle, css({ minHeight: '148px' }))}>2</div>
       </a>
 
       {/* 1등 */}
@@ -33,7 +33,7 @@ export function TopPodium({ ranks }: { ranks: RankType[] }) {
         </div>
         <div className={nameStyle}>{ranks[0].name}</div>
         <div className={contributionStyle}>{ranks[0].contributions}</div>
-        <div className={cx(rostrumStyle, css({ height: '200px' }))}>1</div>
+        <div className={cx(rostrumStyle, css({ minHeight: '200px' }))}>1</div>
       </a>
 
       {/* 3등 */}
@@ -47,7 +47,7 @@ export function TopPodium({ ranks }: { ranks: RankType[] }) {
         </div>
         <div className={nameStyle}>{ranks[2].name}</div>
         <div className={contributionStyle}>{ranks[2].contributions}</div>
-        <div className={cx(rostrumStyle, css({ height: '120px' }))}>3</div>
+        <div className={cx(rostrumStyle, css({ minHeight: '120px' }))}>3</div>
       </a>
     </div>
   );
@@ -61,8 +61,8 @@ const podiumStyle = css({
 });
 
 const rostrumStyle = css({
+  flex: 0,
   width: '140px',
-  height: '140px',
   borderRadius: '8px',
   background:
     'linear-gradient(180deg, #B9FFBD 0%, rgba(195, 255, 199, 0.85) 24.5%, rgba(203, 255, 206, 0.74) 43%, rgba(255, 255, 255, 0.00) 100%)',

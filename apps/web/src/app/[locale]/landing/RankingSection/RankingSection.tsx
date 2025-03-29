@@ -22,18 +22,17 @@ export default function RankingSection() {
       type: selectedTab === 'people' ? 'WEEKLY_USER_CONTRIBUTIONS' : 'WEEKLY_GUILD_CONTRIBUTIONS',
     }),
   });
-  console.log('ranks: ', ranks);
-
-  if (!ranks) return null;
 
   return (
     <div className={containerStyle}>
       <GameConsole>
-        <div className={screenContentStyle}>
-          <RankingTab selectedTab={selectedTab} />
-          <TopPodium ranks={ranks.slice(0, 3)} />
-          <RankingTable ranks={ranks.slice(3)} />
-        </div>
+        {ranks && (
+          <div className={screenContentStyle}>
+            <RankingTab selectedTab={selectedTab} />
+            <TopPodium ranks={ranks.slice(0, 3)} />
+            <RankingTable ranks={ranks.slice(3)} />
+          </div>
+        )}
       </GameConsole>
     </div>
   );
@@ -47,6 +46,10 @@ const containerStyle = css({
   backgroundColor: '#111827',
   padding: '130px',
   overflow: 'hidden',
+
+  _mobile: {
+    display: 'none',
+  },
 });
 
 const screenContentStyle = css({
