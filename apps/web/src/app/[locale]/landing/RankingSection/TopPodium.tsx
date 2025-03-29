@@ -4,51 +4,55 @@ import type { RankType } from '@gitanimals/api';
 import { RankingLink } from './RankingLink';
 
 export function TopPodium({ ranks }: { ranks: RankType[] }) {
+  const RANK = [
+    {
+      rank: 2,
+      height: 148,
+      crownElement: (
+        <div className={subCrownStyle}>
+          <img src="/rank/icon_crown_2.svg" alt="2nd place crown" width={36} height={36} />
+        </div>
+      ),
+    },
+    {
+      rank: 1,
+      height: 200,
+      crownElement: (
+        <div className={winnerCrownStyle}>
+          <img src="/rank/icon_crown_1.svg" alt="1st place crown" width={60} height={60} />
+        </div>
+      ),
+    },
+    {
+      rank: 3,
+      height: 80,
+      crownElement: (
+        <div className={subCrownStyle}>
+          <img src="/rank/icon_crown_3.svg" alt="3rd place crown" width={36} height={36} />
+        </div>
+      ),
+    },
+  ];
+
   if (ranks.length < 3) return null;
 
   return (
     <div className={podiumStyle}>
-      {/* 2등 */}
-      <RankingLink id={ranks[1].name} className={runnerUpStyle}>
-        <div className={profileStyle}>
-          <img src={ranks[1].image} alt="2등" />
-          <div className={subCrownStyle}>
-            <img src="/rank/icon_crown_2.svg" alt="2nd place crown" width={36} height={36} />
-          </div>
-          <div className={brightBgStyle} />
-        </div>
-        <div className={nameStyle}>{ranks[1].name}</div>
-        <div className={contributionStyle}>{ranks[1].contributions}</div>
-        <div className={cx(rostrumStyle, css({ minHeight: '148px' }))}>2</div>
-      </RankingLink>
-
-      {/* 1등 */}
-      <RankingLink id={ranks[0].name} className={winnerStyle}>
-        <div className={profileStyle}>
-          <img src={ranks[0].image} alt="1등" />
-          <div className={winnerCrownStyle}>
-            <img src="/rank/icon_crown_1.svg" alt="1st place crown" width={60} height={60} />
-          </div>
-          <div className={brightBgStyle} />
-        </div>
-        <div className={nameStyle}>{ranks[0].name}</div>
-        <div className={contributionStyle}>{ranks[0].contributions}</div>
-        <div className={cx(rostrumStyle, css({ minHeight: '200px' }))}>1</div>
-      </RankingLink>
-
-      {/* 3등 */}
-      <RankingLink id={ranks[2].name} className={thirdPlaceStyle}>
-        <div className={profileStyle}>
-          <img src={ranks[2].image} alt="3등" />
-          <div className={subCrownStyle}>
-            <img src="/rank/icon_crown_3.svg" alt="3rd place crown" width={36} height={36} />
-          </div>
-          <div className={brightBgStyle} />
-        </div>
-        <div className={nameStyle}>{ranks[2].name}</div>
-        <div className={contributionStyle}>{ranks[2].contributions}</div>
-        <div className={cx(rostrumStyle, css({ minHeight: '120px' }))}>3</div>
-      </RankingLink>
+      {RANK.map((item) => {
+        const currentRank = ranks[item.rank - 1];
+        return (
+          <RankingLink id={currentRank.name} className={runnerUpStyle} key={item.rank}>
+            <div className={profileStyle}>
+              <img src={currentRank.image} alt={`${item.rank}등`} />
+              {item.crownElement}
+              <div className={brightBgStyle} />
+            </div>
+            <div className={nameStyle}>{currentRank.name}</div>
+            <div className={contributionStyle}>{currentRank.contributions}</div>
+            <div className={cx(rostrumStyle, css({ minHeight: `${item.height}px` }))}>{item.rank}</div>
+          </RankingLink>
+        );
+      })}
     </div>
   );
 }
