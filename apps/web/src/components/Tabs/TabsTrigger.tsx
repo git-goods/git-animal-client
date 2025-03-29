@@ -3,14 +3,14 @@
 import type { ComponentProps, PropsWithChildren } from 'react';
 import { css, cx } from '_panda/css';
 
-import { useRadioContext } from './Root';
+import { useTabsContext } from './Tabs';
 
-interface RadioButtonProps extends ComponentProps<'button'> {
+interface TabsTriggerProps extends ComponentProps<'button'> {
   value: string;
 }
 
-const RadioButton = ({ children, className, ...props }: PropsWithChildren<RadioButtonProps>) => {
-  const { value, handleChangeValue } = useRadioContext();
+const TabsTrigger = ({ children, className, ...props }: PropsWithChildren<TabsTriggerProps>) => {
+  const { value, handleChangeValue } = useTabsContext();
   const isSelected = value === props.value;
 
   return (
@@ -55,4 +55,4 @@ const buttonStyle = css({
   },
 });
 
-export default RadioButton;
+export default TabsTrigger;

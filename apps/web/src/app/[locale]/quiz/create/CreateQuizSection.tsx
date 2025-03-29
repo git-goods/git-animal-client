@@ -10,8 +10,10 @@ import { toast } from 'sonner';
 
 import QuizField from '@/app/[locale]/quiz/create/QuizField';
 import QuizTextArea from '@/app/[locale]/quiz/create/QuizTextArea';
-import Radio from '@/components/Radio';
-import useRadio from '@/components/Radio/useRadio';
+import Tabs from '@/components/Tabs/Tabs';
+import TabsList from '@/components/Tabs/TabsList';
+import TabsTrigger from '@/components/Tabs/TabsTrigger';
+import useTabs from '@/components/Tabs/useTabs';
 
 const CreateQuizSection = () => {
   const [quizContents, setQuizContents] = useState<string>('');
@@ -20,10 +22,10 @@ const CreateQuizSection = () => {
   };
 
   const {
-    radioItemProps: difficultyRadioItemProps,
+    tabsTriggerProps: difficultyTabsTriggerProps,
     selected: selectedDifficulty,
     handleChange: handleChangeDifficulty,
-  } = useRadio({
+  } = useTabs({
     options: [
       { label: 'Easy', value: 'easy' },
       { label: 'Medium', value: 'medium' },
@@ -32,10 +34,10 @@ const CreateQuizSection = () => {
   });
 
   const {
-    radioItemProps: categoryRadioItemProps,
+    tabsTriggerProps: categoryTabsTriggerProps,
     selected: selectedCategory,
     handleChange: handleChangeCategory,
-  } = useRadio({
+  } = useTabs({
     options: [
       { label: 'Frontend', value: 'frontend' },
       { label: 'Backend', value: 'backend' },
@@ -43,10 +45,10 @@ const CreateQuizSection = () => {
   });
 
   const {
-    radioItemProps: correctAnswerRadioItemProps,
+    tabsTriggerProps: correctAnswerTabsTriggerProps,
     selected: selectedCorrectAnswer,
     handleChange: handleChangeCorrectAnswer,
-  } = useRadio({
+  } = useTabs({
     options: [
       { label: 'O', value: 'TRUE' },
       { label: 'X', value: 'FALSE' },
@@ -75,25 +77,29 @@ const CreateQuizSection = () => {
         <QuizField
           title="Difficulty Level"
           content={
-            <Radio value={selectedDifficulty} onValueChange={handleChangeDifficulty}>
-              {difficultyRadioItemProps.map((item) => (
-                <Radio.Button key={item.value} value={item.value}>
-                  {item.label}
-                </Radio.Button>
-              ))}
-            </Radio>
+            <Tabs value={selectedDifficulty} onValueChange={handleChangeDifficulty}>
+              <TabsList>
+                {difficultyTabsTriggerProps.map((item) => (
+                  <TabsTrigger key={item.value} value={item.value}>
+                    {item.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
           }
         />
         <QuizField
           title="Category"
           content={
-            <Radio value={selectedCategory} onValueChange={handleChangeCategory}>
-              {categoryRadioItemProps.map((item) => (
-                <Radio.Button key={item.value} value={item.value}>
-                  {item.label}
-                </Radio.Button>
-              ))}
-            </Radio>
+            <Tabs value={selectedCategory} onValueChange={handleChangeCategory}>
+              <TabsList>
+                {categoryTabsTriggerProps.map((item) => (
+                  <TabsTrigger key={item.value} value={item.value}>
+                    {item.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
           }
         />
         <QuizField
@@ -111,13 +117,15 @@ const CreateQuizSection = () => {
           title="Answer"
           description="Choose the correct answer for the quiz."
           content={
-            <Radio value={selectedCorrectAnswer} onValueChange={handleChangeCorrectAnswer}>
-              {correctAnswerRadioItemProps.map((item) => (
-                <Radio.Button key={item.value} value={item.value}>
-                  {item.label}
-                </Radio.Button>
-              ))}
-            </Radio>
+            <Tabs value={selectedCorrectAnswer} onValueChange={handleChangeCorrectAnswer}>
+              <TabsList>
+                {correctAnswerTabsTriggerProps.map((item) => (
+                  <TabsTrigger key={item.value} value={item.value}>
+                    {item.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
           }
         />
         <Button className={buttonStyle} disabled={!enabledToCreate} onClick={handleCreateQuiz}>

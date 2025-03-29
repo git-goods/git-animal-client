@@ -1,28 +1,28 @@
 import { useState } from 'react';
 
-type RadioItem<T> = {
+type TabsTriggerItem<T> = {
   label: string;
   value: T;
 };
 
 interface Arguments<T> {
-  options: RadioItem<T>[];
+  options: TabsTriggerItem<T>[];
   initialSelectedValue?: T;
 }
 
-const useRadio = <T>({ options, initialSelectedValue }: Arguments<T>) => {
+const useTabs = <T>({ options, initialSelectedValue }: Arguments<T>) => {
   const [selected, setSelected] = useState<T>(initialSelectedValue ?? options[0].value);
 
   const handleChange = (value: T) => {
     setSelected(value);
   };
 
-  const radioItemProps = options.map((option) => ({
+  const tabsTriggerProps = options.map((option) => ({
     value: option.value,
     label: option.label,
   }));
 
-  return { selected, setSelected, radioItemProps, handleChange };
+  return { selected, setSelected, tabsTriggerProps, handleChange };
 };
 
-export default useRadio;
+export default useTabs;

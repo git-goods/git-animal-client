@@ -5,15 +5,17 @@ import { Button } from '@gitanimals/ui-panda';
 
 import { QUIZ_STATUS } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
 import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/SolveQuizContext';
-import Radio from '@/components/Radio';
-import useRadio from '@/components/Radio/useRadio';
+import Tabs from '@/components/Tabs/Tabs';
+import TabsList from '@/components/Tabs/TabsList';
+import TabsTrigger from '@/components/Tabs/TabsTrigger';
+import useTabs from '@/components/Tabs/useTabs';
 
 const SelectCategorySection = () => {
   const {
-    radioItemProps: categoryRadioItemProps,
+    tabsTriggerProps: categoryTabsTriggerProps,
     selected: selectedCategory,
     handleChange: handleChangeCategory,
-  } = useRadio({
+  } = useTabs({
     options: [
       { label: 'Frontend', value: 'frontend' },
       { label: 'Backend', value: 'backend' },
@@ -31,20 +33,23 @@ const SelectCategorySection = () => {
       <div className={contentContainerStyle}>
         <h1 className={titleStyle}>Category</h1>
         <h2 className={descriptionStyle}>Choose the category of the quiz</h2>
-        <Radio value={selectedCategory} onValueChange={handleChangeCategory}>
-          {categoryRadioItemProps.map((radioItem) => {
-            const isSelected = radioItem.value === selectedCategory;
-            const imageSrc = isSelected ? `/quiz/cursor-choiced.webp` : `/quiz/cursor-unchoiced.webp`;
-            return (
-              <Radio.Button key={radioItem.value} className={radioButtonStyle} value={radioItem.value}>
-                <Flex direction="column" align="center" gap="12px">
-                  <Image src={imageSrc} alt={radioItem.label} width={60} height={60} />
-                  <span className={radioButtonLabelStyle}>{radioItem.label}</span>
-                </Flex>
-              </Radio.Button>
-            );
-          })}
-        </Radio>
+        <Tabs value={selectedCategory} onValueChange={handleChangeCategory}>
+          <TabsList>
+            {categoryTabsTriggerProps.map((tabsTriggerItem) => {
+              const { value, label } = tabsTriggerItem;
+              const isSelected = value === selectedCategory;
+              const imageSrc = isSelected ? `/quiz/cursor-choiced.webp` : `/quiz/cursor-unchoiced.webp`;
+              return (
+                <TabsTrigger key={value} value={value} className={tabsTriggerStyle}>
+                  <Flex direction="column" align="center" gap="12px">
+                    <Image src={imageSrc} alt={label} width={60} height={60} />
+                    <span className={tabsTriggerLabelStyle}>{label}</span>
+                  </Flex>
+                </TabsTrigger>
+              );
+            })}
+          </TabsList>
+        </Tabs>
       </div>
       <div className={buttonContainerStyle}>
         <Button className={buttonStyle} onClick={handleStart}>
@@ -83,12 +88,12 @@ const descriptionStyle = css({
   color: 'white.white_90',
 });
 
-const radioButtonStyle = css({
+const tabsTriggerStyle = css({
   width: '100%',
   height: '214px',
 });
 
-const radioButtonLabelStyle = css({
+const tabsTriggerLabelStyle = css({
   textStyle: 'body18.bold',
   fontFamily: 'Product Sans',
   fontWeight: 700,
