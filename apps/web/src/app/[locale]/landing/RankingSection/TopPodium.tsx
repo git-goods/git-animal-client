@@ -58,7 +58,6 @@ const podiumStyle = css({
   justifyContent: 'center',
   alignItems: 'flex-end',
   gap: '12px',
-  marginBottom: '60px',
 });
 
 const rostrumStyle = css({

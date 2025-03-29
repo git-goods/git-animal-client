@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from '@/i18n/routing';
 
 import GameConsole from './GameConsole/GameConsole';
+import { RankingTable } from './RankingTable';
 import { TopPodium } from './TopPodium';
 
 export default function RankingSection() {
@@ -17,7 +18,7 @@ export default function RankingSection() {
   const { data: ranks } = useQuery({
     ...rankQueries.getRanksOptions({
       rank: 1,
-      size: 10,
+      size: 8,
       type: selectedTab === 'people' ? 'WEEKLY_USER_CONTRIBUTIONS' : 'WEEKLY_GUILD_CONTRIBUTIONS',
     }),
   });
@@ -31,36 +32,7 @@ export default function RankingSection() {
         <div className={screenContentStyle}>
           <RankingTab selectedTab={selectedTab} />
           <TopPodium ranks={ranks.slice(0, 3)} />
-
-          {/* 랭킹 리스트 */}
-          <div className={rankingListStyle}>
-            <table className={tableStyle}>
-              <thead>
-                <tr>
-                  <th>Rank</th>
-                  <th>Pet</th>
-                  <th>Name</th>
-                  <th>Contribution</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { rank: 4, pet: '🐱', name: 'cjivxxx', contribution: 4372 },
-                  { rank: 555, pet: '🐱', name: 'cjivxxx', contribution: 4372 },
-                  { rank: 6666, pet: '🐱', name: 'cjivxxx', contribution: 4372 },
-                  { rank: 77777, pet: '🐱', name: 'cjivxxx', contribution: 4372 },
-                  { rank: 999999, pet: '🐱', name: 'cjivxxx', contribution: 4372 },
-                ].map((item) => (
-                  <tr key={item.rank}>
-                    <td>{item.rank}</td>
-                    <td>{item.pet}</td>
-                    <td>{item.name}</td>
-                    <td>{item.contribution}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <RankingTable ranks={ranks.slice(3)} />
         </div>
       </GameConsole>
     </div>
@@ -82,29 +54,6 @@ const screenContentStyle = css({
   color: '#4ADE80',
   fontFamily: 'monospace',
 });
-
-const rankingListStyle = css({
-  marginTop: '40px',
-});
-
-const tableStyle = css({
-  width: '100%',
-  borderCollapse: 'separate',
-  borderSpacing: '0 10px',
-  '& th': {
-    textAlign: 'left',
-    padding: '10px',
-    fontSize: '18px',
-  },
-  '& td': {
-    padding: '10px',
-    fontSize: '16px',
-  },
-  '& tr': {
-    backgroundColor: 'rgba(74, 222, 128, 0.1)',
-  },
-});
-
 function RankingTab({ selectedTab }: { selectedTab: string }) {
   return (
     <div className={tabsStyle}>
