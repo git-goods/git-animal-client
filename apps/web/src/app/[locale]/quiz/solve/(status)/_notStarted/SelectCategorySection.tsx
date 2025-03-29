@@ -3,13 +3,17 @@ import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { Button } from '@gitanimals/ui-panda';
 
-import QuizRadio from '@/app/[locale]/quiz/create/QuizRadioButton';
-import useRadioGroup from '@/app/[locale]/quiz/create/useRadioGroup';
 import { QUIZ_STATUS } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
 import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/SolveQuizContext';
+import Radio from '@/components/Radio';
+import useRadio from '@/components/Radio/useRadio';
 
 const SelectCategorySection = () => {
-  const { radioItemProps: categoryRadioItemProps } = useRadioGroup({
+  const {
+    radioItemProps: categoryRadioItemProps,
+    selected: selectedCategory,
+    handleChange: handleChangeCategory,
+  } = useRadio({
     options: [
       { label: 'Frontend', value: 'frontend' },
       { label: 'Backend', value: 'backend' },
@@ -27,24 +31,20 @@ const SelectCategorySection = () => {
       <div className={contentContainerStyle}>
         <h1 className={titleStyle}>Category</h1>
         <h2 className={descriptionStyle}>Choose the category of the quiz</h2>
-        <QuizRadio.Group>
+        <Radio value={selectedCategory} onValueChange={handleChangeCategory}>
           {categoryRadioItemProps.map((radioItem) => {
-            const imageSrc = radioItem.selected ? `/quiz/cursor-choiced.webp` : `/quiz/cursor-unchoiced.webp`;
+            const isSelected = radioItem.value === selectedCategory;
+            const imageSrc = isSelected ? `/quiz/cursor-choiced.webp` : `/quiz/cursor-unchoiced.webp`;
             return (
-              <QuizRadio.Button
-                key={radioItem.value}
-                className={radioButtonStyle}
-                selected={radioItem.selected}
-                onClick={radioItem.onClick}
-              >
+              <Radio.Button key={radioItem.value} className={radioButtonStyle} value={radioItem.value}>
                 <Flex direction="column" align="center" gap="12px">
                   <Image src={imageSrc} alt={radioItem.label} width={60} height={60} />
                   <span className={radioButtonLabelStyle}>{radioItem.label}</span>
                 </Flex>
-              </QuizRadio.Button>
+              </Radio.Button>
             );
           })}
-        </QuizRadio.Group>
+        </Radio>
       </div>
       <div className={buttonContainerStyle}>
         <Button className={buttonStyle} onClick={handleStart}>

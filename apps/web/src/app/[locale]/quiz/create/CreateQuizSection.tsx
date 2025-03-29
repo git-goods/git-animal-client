@@ -9,9 +9,9 @@ import { ChevronLeft } from 'lucide-react';
 import { toast } from 'sonner';
 
 import QuizField from '@/app/[locale]/quiz/create/QuizField';
-import QuizRadio from '@/app/[locale]/quiz/create/QuizRadioButton';
 import QuizTextArea from '@/app/[locale]/quiz/create/QuizTextArea';
-import useRadioGroup from '@/app/[locale]/quiz/create/useRadioGroup';
+import Radio from '@/components/Radio';
+import useRadio from '@/components/Radio/useRadio';
 
 const CreateQuizSection = () => {
   const [quizContents, setQuizContents] = useState<string>('');
@@ -19,7 +19,11 @@ const CreateQuizSection = () => {
     setQuizContents(e.target.value);
   };
 
-  const { radioItemProps: difficultyRadioItemProps, selected: selectedDifficulty } = useRadioGroup({
+  const {
+    radioItemProps: difficultyRadioItemProps,
+    selected: selectedDifficulty,
+    handleChange: handleChangeDifficulty,
+  } = useRadio({
     options: [
       { label: 'Easy', value: 'easy' },
       { label: 'Medium', value: 'medium' },
@@ -27,14 +31,22 @@ const CreateQuizSection = () => {
     ],
   });
 
-  const { radioItemProps: categoryRadioItemProps, selected: selectedCategory } = useRadioGroup({
+  const {
+    radioItemProps: categoryRadioItemProps,
+    selected: selectedCategory,
+    handleChange: handleChangeCategory,
+  } = useRadio({
     options: [
       { label: 'Frontend', value: 'frontend' },
       { label: 'Backend', value: 'backend' },
     ],
   });
 
-  const { radioItemProps: correctAnswerRadioItemProps, selected: selectedCorrectAnswer } = useRadioGroup({
+  const {
+    radioItemProps: correctAnswerRadioItemProps,
+    selected: selectedCorrectAnswer,
+    handleChange: handleChangeCorrectAnswer,
+  } = useRadio({
     options: [
       { label: 'O', value: 'TRUE' },
       { label: 'X', value: 'FALSE' },
@@ -63,25 +75,25 @@ const CreateQuizSection = () => {
         <QuizField
           title="Difficulty Level"
           content={
-            <QuizRadio.Group>
+            <Radio value={selectedDifficulty} onValueChange={handleChangeDifficulty}>
               {difficultyRadioItemProps.map((item) => (
-                <QuizRadio.Button key={item.value} selected={item.selected} onClick={item.onClick}>
+                <Radio.Button key={item.value} value={item.value}>
                   {item.label}
-                </QuizRadio.Button>
+                </Radio.Button>
               ))}
-            </QuizRadio.Group>
+            </Radio>
           }
         />
         <QuizField
           title="Category"
           content={
-            <QuizRadio.Group>
+            <Radio value={selectedCategory} onValueChange={handleChangeCategory}>
               {categoryRadioItemProps.map((item) => (
-                <QuizRadio.Button key={item.value} selected={item.selected} onClick={item.onClick}>
+                <Radio.Button key={item.value} value={item.value}>
                   {item.label}
-                </QuizRadio.Button>
+                </Radio.Button>
               ))}
-            </QuizRadio.Group>
+            </Radio>
           }
         />
         <QuizField
@@ -99,13 +111,13 @@ const CreateQuizSection = () => {
           title="Answer"
           description="Choose the correct answer for the quiz."
           content={
-            <QuizRadio.Group>
+            <Radio value={selectedCorrectAnswer} onValueChange={handleChangeCorrectAnswer}>
               {correctAnswerRadioItemProps.map((item) => (
-                <QuizRadio.Button key={item.value} selected={item.selected} onClick={item.onClick}>
+                <Radio.Button key={item.value} value={item.value}>
                   {item.label}
-                </QuizRadio.Button>
+                </Radio.Button>
               ))}
-            </QuizRadio.Group>
+            </Radio>
           }
         />
         <Button className={buttonStyle} disabled={!enabledToCreate} onClick={handleCreateQuiz}>
