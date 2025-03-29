@@ -5,7 +5,7 @@ export const rankQueries = {
   allKey: () => ['rank'],
   getRanksOptions: (request: GetRanksRequest) =>
     queryOptions({
-      queryKey: rankQueries.allKey(),
+      queryKey: [...rankQueries.allKey(), request],
       queryFn: () => getRanks(request),
     }),
 };

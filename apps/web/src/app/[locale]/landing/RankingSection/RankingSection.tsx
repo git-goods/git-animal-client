@@ -1,20 +1,27 @@
 'use client';
 
-import { css } from '_panda/css';
+import { useSearchParams } from 'next/navigation';
+import { css, cx } from '_panda/css';
 import { rankQueries } from '@gitanimals/react-query';
 import { useQuery } from '@tanstack/react-query';
+
+import { Link } from '@/i18n/routing';
 
 import GameConsole from './GameConsole/GameConsole';
 import { TopPodium } from './TopPodium';
 
 export default function RankingSection() {
+  const searchParams = useSearchParams();
+  const selectedTab = searchParams.get('ranking') ?? 'people';
+
   const { data: ranks } = useQuery({
     ...rankQueries.getRanksOptions({
       rank: 1,
       size: 10,
-      type: 'WEEKLY_USER_CONTRIBUTIONS',
+      type: selectedTab === 'people' ? 'WEEKLY_USER_CONTRIBUTIONS' : 'WEEKLY_GUILD_CONTRIBUTIONS',
     }),
   });
+  console.log('ranks: ', ranks);
 
   if (!ranks) return null;
 
@@ -22,15 +29,37 @@ export default function RankingSection() {
     <div className={containerStyle}>
       <GameConsole>
         <div className={screenContentStyle}>
-          {/* 상단 탭 */}
-          <div className={tabsStyle}>
-            <button className={tabStyle}>People</button>
-            <button className={tabStyle}>Guild</button>
-          </div>
-
-          {/* 상위 3위 포디움 */}
+          <RankingTab selectedTab={selectedTab} />
           <TopPodium ranks={ranks.slice(0, 3)} />
 
+          {/* 랭킹 리스트 */}
+          <div className={rankingListStyle}>
+            <table className={tableStyle}>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Pet</th>
+                  <th>Name</th>
+                  <th>Contribution</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { rank: 4, pet: '🐱', name: 'cjivxxx', contribution: 4372 },
+                  { rank: 555, pet: '🐱', name: 'cjivxxx', contribution: 4372 },
+                  { rank: 6666, pet: '🐱', name: 'cjivxxx', contribution: 4372 },
+                  { rank: 77777, pet: '🐱', name: 'cjivxxx', contribution: 4372 },
+                  { rank: 999999, pet: '🐱', name: 'cjivxxx', contribution: 4372 },
+                ].map((item) => (
+                  <tr key={item.rank}>
+                    <td>{item.rank}</td>
+                    <td>{item.pet}</td>
+                    <td>{item.name}</td>
+                    <td>{item.contribution}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </GameConsole>
@@ -49,15 +78,68 @@ const containerStyle = css({
 });
 
 const screenContentStyle = css({
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  padding: '60px 130px 0',
   color: '#4ADE80',
   fontFamily: 'monospace',
-  fontSize: '36px',
-  '@media (min-width: 640px)': {
-    fontSize: '48px',
+});
+
+const rankingListStyle = css({
+  marginTop: '40px',
+});
+
+const tableStyle = css({
+  width: '100%',
+  borderCollapse: 'separate',
+  borderSpacing: '0 10px',
+  '& th': {
+    textAlign: 'left',
+    padding: '10px',
+    fontSize: '18px',
   },
+  '& td': {
+    padding: '10px',
+    fontSize: '16px',
+  },
+  '& tr': {
+    backgroundColor: 'rgba(74, 222, 128, 0.1)',
+  },
+});
+
+function RankingTab({ selectedTab }: { selectedTab: string }) {
+  return (
+    <div className={tabsStyle}>
+      <Link
+        href="/?ranking=people"
+        shallow
+        scroll={false}
+        className={cx(tabStyle, selectedTab === 'people' && selectedTabStyle)}
+      >
+        People
+      </Link>
+      <Link
+        href="/?ranking=guild"
+        shallow
+        scroll={false}
+        className={cx(tabStyle, selectedTab === 'guild' && selectedTabStyle)}
+      >
+        Guild
+      </Link>
+    </div>
+  );
+}
+
+const tabsStyle = css({
+  display: 'flex',
+  justifyContent: 'center',
+  mb: '60px',
+});
+
+const tabStyle = css({
+  textStyle: 'glyph18.bold',
+  color: 'white.white_50',
+  p: '4px 10px',
+});
+
+const selectedTabStyle = css({
+  color: 'white.white_100',
 });
