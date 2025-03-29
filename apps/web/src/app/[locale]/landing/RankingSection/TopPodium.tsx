@@ -1,7 +1,7 @@
 import { css, cx } from '_panda/css';
 import type { RankType } from '@gitanimals/api';
 
-import { USER_GITHUB_URL } from '@/constants/route';
+import { RankingLink } from './RankingLink';
 
 export function TopPodium({ ranks }: { ranks: RankType[] }) {
   if (ranks.length < 3) return null;
@@ -9,7 +9,7 @@ export function TopPodium({ ranks }: { ranks: RankType[] }) {
   return (
     <div className={podiumStyle}>
       {/* 2등 */}
-      <a href={USER_GITHUB_URL(ranks[1].name)} className={runnerUpStyle} target="_blank">
+      <RankingLink id={ranks[1].name} className={runnerUpStyle}>
         <div className={profileStyle}>
           <img src={ranks[1].image} alt="2등" />
           <div className={subCrownStyle}>
@@ -20,10 +20,10 @@ export function TopPodium({ ranks }: { ranks: RankType[] }) {
         <div className={nameStyle}>{ranks[1].name}</div>
         <div className={contributionStyle}>{ranks[1].contributions}</div>
         <div className={cx(rostrumStyle, css({ minHeight: '148px' }))}>2</div>
-      </a>
+      </RankingLink>
 
       {/* 1등 */}
-      <a href={USER_GITHUB_URL(ranks[0].name)} className={winnerStyle} target="_blank">
+      <RankingLink id={ranks[0].name} className={winnerStyle}>
         <div className={profileStyle}>
           <img src={ranks[0].image} alt="1등" />
           <div className={winnerCrownStyle}>
@@ -34,10 +34,10 @@ export function TopPodium({ ranks }: { ranks: RankType[] }) {
         <div className={nameStyle}>{ranks[0].name}</div>
         <div className={contributionStyle}>{ranks[0].contributions}</div>
         <div className={cx(rostrumStyle, css({ minHeight: '200px' }))}>1</div>
-      </a>
+      </RankingLink>
 
       {/* 3등 */}
-      <a href={USER_GITHUB_URL(ranks[2].name)} className={thirdPlaceStyle} target="_blank">
+      <RankingLink id={ranks[2].name} className={thirdPlaceStyle}>
         <div className={profileStyle}>
           <img src={ranks[2].image} alt="3등" />
           <div className={subCrownStyle}>
@@ -48,7 +48,7 @@ export function TopPodium({ ranks }: { ranks: RankType[] }) {
         <div className={nameStyle}>{ranks[2].name}</div>
         <div className={contributionStyle}>{ranks[2].contributions}</div>
         <div className={cx(rostrumStyle, css({ minHeight: '120px' }))}>3</div>
-      </a>
+      </RankingLink>
     </div>
   );
 }
