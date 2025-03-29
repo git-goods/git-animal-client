@@ -75,7 +75,7 @@ const rostrumStyle = css({
   fontWeight: '400',
   lineHeight: '140%',
   letterSpacing: '-5.961px',
-  fontFamily: 'DNF Bit Bit v2',
+  fontFamily: 'token(fonts.dnf)',
   pt: '16px',
   mt: '12px',
 });

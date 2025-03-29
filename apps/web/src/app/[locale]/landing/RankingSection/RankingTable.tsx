@@ -85,7 +85,8 @@ const trStyle = cx(
     '& td:first-child': {
       fontSize: '20px',
       lineHeight: '28px',
-      fontFamily: 'DNF Bit Bit v2',
+      fontFamily: 'token(fonts.dnf)',
+      color: 'white.white_50',
     },
   }),
 );

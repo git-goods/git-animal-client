@@ -52,8 +52,9 @@ const containerStyle = css({
 const screenContentStyle = css({
   padding: '60px 130px 0',
   color: '#4ADE80',
-  fontFamily: 'monospace',
+  fontFamily: 'token(fonts.dnf)',
 });
+
 function RankingTab({ selectedTab }: { selectedTab: string }) {
   return (
     <div className={tabsStyle}>
