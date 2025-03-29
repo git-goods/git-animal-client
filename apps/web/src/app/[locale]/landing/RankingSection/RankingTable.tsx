@@ -1,6 +1,8 @@
 import { css, cx } from '_panda/css';
 import type { RankType } from '@gitanimals/api';
 
+import { USER_GITHUB_URL } from '@/constants/route';
+
 export function RankingTable({ ranks }: { ranks: RankType[] }) {
   return (
     <div className={rankingListStyle}>
@@ -18,9 +20,15 @@ export function RankingTable({ ranks }: { ranks: RankType[] }) {
             <tr key={item.rank} className={trStyle}>
               <td>{item.rank}</td>
               <td>
-                <img src={item.image} alt={item.name} width={60} height={60} />
+                <a href={USER_GITHUB_URL(item.name)} target="_blank">
+                  <img src={item.image} alt={item.name} width={60} height={60} />
+                </a>
               </td>
-              <td>{item.name}</td>
+              <td>
+                <a href={USER_GITHUB_URL(item.name)} target="_blank">
+                  {item.name}
+                </a>
+              </td>
               <td>{item.contributions}</td>
             </tr>
           ))}
