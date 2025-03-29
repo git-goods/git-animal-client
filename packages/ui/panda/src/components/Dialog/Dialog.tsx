@@ -15,25 +15,31 @@ const DialogPortal = withContext(styled(DialogPrimitive.Portal), 'portal');
 const DialogOverlay = withContext(styled(DialogPrimitive.Overlay), 'overlay');
 const DialogClose = withContext(styled(DialogPrimitive.Close), 'close');
 
-const Content = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & DialogContentVariants
->(({ children, ...props }, ref) => (
-  <DialogPortal>
-    <DialogOverlay className={overlayStyle} />
-    <DialogPrimitive.Content
-      ref={ref}
-      {...props}
-      className={cx(dialogContentCva({ size: props.size ?? 'default' }), props.className)}
-    >
-      {children}
-      <DialogClose className={closeStyle}>
-        <X size={24} color="white" />
-        <span className={css({ srOnly: true })}>Close</span>
-      </DialogClose>
-    </DialogPrimitive.Content>
-  </DialogPortal>
-));
+type DialogContentProps = {
+  isShowClose?: boolean;
+} & DialogContentVariants &
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
+
+const Content = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
+  ({ children, isShowClose = true, ...props }, ref) => (
+    <DialogPortal>
+      <DialogOverlay className={overlayStyle} />
+      <DialogPrimitive.Content
+        ref={ref}
+        {...props}
+        className={cx(dialogContentCva({ size: props.size ?? 'default' }), props.className)}
+      >
+        {children}
+        {isShowClose && (
+          <DialogClose className={closeStyle}>
+            <X size={24} color="white" />
+            <span className={css({ srOnly: true })}>Close</span>
+          </DialogClose>
+        )}
+      </DialogPrimitive.Content>
+    </DialogPortal>
+  ),
+);
 
 Content.displayName = DialogPrimitive.Content.displayName;
 
