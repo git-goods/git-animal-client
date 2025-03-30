@@ -22,6 +22,12 @@
     },
     "storybook": {
       "dependsOn": ["^storybook"]
+    },
+    "type-check": {
+      "dependsOn": ["^type-check"]
+    },
+    "lint-staged": {
+      "outputs": []
     }
   }
 }
