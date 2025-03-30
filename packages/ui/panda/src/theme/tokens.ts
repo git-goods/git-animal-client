@@ -12,6 +12,7 @@ export const tokens = defineTokens({
   zIndex: {
     hide: { value: '-1' },
     base: { value: '0' },
+    aboveDefault: { value: '1' },
     floating: { value: '2' },
     dropdown: { value: '1000' },
     sticky: { value: '1100' },
