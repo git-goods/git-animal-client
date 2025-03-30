@@ -1,49 +1,27 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": [
-    "NODE_ENV"
-  ],
-  "globalDependencies": [
-    ".env",
-    ".env.*"
-  ],
+  "globalEnv": ["NODE_ENV"],
+  "globalDependencies": [".env", ".env.*"],
   "tasks": {
     "prepare": {
-      "dependsOn": [
-        "^prepare"
-      ],
-      "outputs": [
-        "styled-system/**"
-      ]
+      "dependsOn": ["^prepare"],
+      "outputs": ["styled-system/**"]
     },
     "build": {
-      "dependsOn": [
-        "^build",
-        "^prepare"
-      ],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        ".env",
-        ".env.*"
-      ],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**",
-        ".vercel/**"
-      ]
+      "dependsOn": ["^build", "^prepare"],
+      "inputs": ["$TURBO_DEFAULT$", ".env", ".env.*"],
+      "outputs": [".next/**", "!.next/cache/**", ".vercel/**"]
     },
     "lint": {
-      "dependsOn": [
-        "^lint"
-      ]
+      "dependsOn": ["^lint"]
     },
     "dev": {
       "cache": false,
       "persistent": true,
-      "env": [
-        "NODE_ENV",
-        "SLACK_ERROR_CHANNEL_WEBHOOK_URL"
-      ]
+      "env": ["NODE_ENV", "SLACK_ERROR_CHANNEL_WEBHOOK_URL"]
+    },
+    "storybook": {
+      "dependsOn": ["^storybook"]
     }
   }
 }
