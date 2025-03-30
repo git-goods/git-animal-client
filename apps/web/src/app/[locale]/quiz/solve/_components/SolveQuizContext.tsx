@@ -3,7 +3,7 @@
 import type { PropsWithChildren } from 'react';
 import { createContext, useContext, useState } from 'react';
 
-import { QUIZ_STATUS, type QuizStatus } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
+import { QUIZ_STATUS, type QuizStatus } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
 
 interface SolveQuizContextProps {
   status: QuizStatus;

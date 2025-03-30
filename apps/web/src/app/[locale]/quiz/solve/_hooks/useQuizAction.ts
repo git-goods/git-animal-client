@@ -3,10 +3,15 @@
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-import type useQuizDialogStatus from '@/app/[locale]/quiz/solve/(status)/_solving/useQuizDialogStatus';
-import type { QuizAnswer } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
-import { QUIZ_ANSWER, QUIZ_POINT_MAP, QUIZ_TOTAL_STAGE } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
-import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/SolveQuizContext';
+import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/_components/SolveQuizContext';
+import type { QuizAnswer } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
+import {
+  QUIZ_ANSWER,
+  QUIZ_POINT_MAP,
+  QUIZ_TOTAL_STAGE,
+} from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
+
+import type useQuizDialogStatus from './useQuizDialogStatus';
 
 interface UseQuizActionProps {
   quizDialog: ReturnType<typeof useQuizDialogStatus>;

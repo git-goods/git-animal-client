@@ -8,8 +8,8 @@ import { Button } from '@gitanimals/ui-panda';
 import { ChevronLeft } from 'lucide-react';
 import { toast } from 'sonner';
 
-import QuizField from '@/app/[locale]/quiz/create/QuizField';
-import QuizTextArea from '@/app/[locale]/quiz/create/QuizTextArea';
+import QuizField from '@/app/[locale]/quiz/create/_components/QuizField';
+import QuizTextArea from '@/app/[locale]/quiz/create/_components/QuizTextArea';
 import Tabs from '@/components/Tabs/Tabs';
 import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';
