@@ -1,9 +1,9 @@
 'use client';
 
-import SelectCategorySection from '@/app/[locale]/quiz/solve/(status)/_notStarted/SelectCategorySection';
-import SolvingQuizSection from '@/app/[locale]/quiz/solve/(status)/_solving/SolvingQuizSection';
-import { QUIZ_STATUS } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
-import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/SolveQuizContext';
+import SelectCategorySection from '@/app/[locale]/quiz/solve/_components/notStarted/SelectCategorySection';
+import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/_components/SolveQuizContext';
+import SolvingQuizSection from '@/app/[locale]/quiz/solve/_components/solving/SolvingQuizSection';
+import { QUIZ_STATUS } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
 
 const SolveQuizSection = () => {
   // rs 데이터 응답 상태에 따른 section 렌더링 분기 처리

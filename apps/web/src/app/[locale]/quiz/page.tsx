@@ -1,4 +1,4 @@
-import CreateOrSolveSection from '@/app/[locale]/quiz/_createOrSolve/CreateOrSolveSection';
+import CreateOrSolveSection from './_components/CreateOrSolve/CreateOrSolveSection';
 
 async function QuizPage() {
   return <CreateOrSolveSection />;

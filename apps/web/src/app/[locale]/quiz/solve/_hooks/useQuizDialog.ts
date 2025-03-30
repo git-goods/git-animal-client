@@ -1,5 +1,5 @@
-import useQuizAction from '@/app/[locale]/quiz/solve/(status)/_solving/useQuizAction';
-import useQuizDialogStatus from '@/app/[locale]/quiz/solve/(status)/_solving/useQuizDialogStatus';
+import useQuizAction from '@/app/[locale]/quiz/solve/_hooks/useQuizAction';
+import useQuizDialogStatus from '@/app/[locale]/quiz/solve/_hooks/useQuizDialogStatus';
 
 const useQuizDialog = () => {
   const quizDialog = useQuizDialogStatus();

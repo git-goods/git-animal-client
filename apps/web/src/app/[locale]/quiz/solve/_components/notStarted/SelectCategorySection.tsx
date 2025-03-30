@@ -3,8 +3,8 @@ import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { Button } from '@gitanimals/ui-panda';
 
-import { QUIZ_STATUS } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
-import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/SolveQuizContext';
+import { QUIZ_STATUS } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
+import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/_components/SolveQuizContext';
 import Tabs from '@/components/Tabs/Tabs';
 import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';
