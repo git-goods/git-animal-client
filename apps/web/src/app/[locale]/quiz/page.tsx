@@ -3,7 +3,7 @@ import { css } from '_panda/css';
 import { Background } from '@/app/[locale]/quiz/_components/BackGround';
 import { MobileLayout } from '@/app/[locale]/quiz/_components/MobileLayout';
 
-import SelectQuizType from './_components/createOrSolve/SelectQuizType';
+import SelectQuizType from './_components/CreateOrSolve/SelectQuizType';
 
 async function QuizPage() {
   return (
