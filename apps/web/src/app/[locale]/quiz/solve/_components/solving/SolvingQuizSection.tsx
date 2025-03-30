@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
@@ -7,7 +8,6 @@ import { Flex } from '_panda/jsx';
 import { Background } from '@/app/[locale]/quiz/_components/BackGround';
 import CompleteAlertDialog from '@/app/[locale]/quiz/solve/_components/done/CompleteAlertDialog';
 import FailAlertDialog from '@/app/[locale]/quiz/solve/_components/fail/FailAlertDialog';
-import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/_components/SolveQuizContext';
 import QuizProgressBar from '@/app/[locale]/quiz/solve/_components/solving/QuizProgressBar';
 import CorrectConfirmDialog from '@/app/[locale]/quiz/solve/_components/success/CorrectConfirmDialog';
 import {
@@ -26,11 +26,13 @@ const content =
   'Q. Example of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz Content?';
 
 const SolvingQuizSection = () => {
-  const { stage } = useSolveQuizContext();
+  const [stage, setStage] = useState(1);
   const currentPoint = QUIZ_POINT_MAP[stage - 1];
 
   const quizDialog = useQuizDialogStatus();
   const quizAction = useQuizAction({
+    stage,
+    setStage,
     quizDialog,
   });
 
