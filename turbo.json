@@ -20,6 +20,9 @@
       "persistent": true,
       "env": ["NODE_ENV", "SLACK_ERROR_CHANNEL_WEBHOOK_URL"]
     },
+    "storybook": {
+      "dependsOn": ["^storybook"]
+    },
     "type-check": {
       "dependsOn": ["^type-check"]
     },
