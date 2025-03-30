@@ -3,14 +3,18 @@ import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { Button } from '@gitanimals/ui-panda';
 
+import type { QuizStatus } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
 import { QUIZ_STATUS } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
-import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/_components/SolveQuizContext';
 import Tabs from '@/components/Tabs/Tabs';
 import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';
 import useTabs from '@/components/Tabs/useTabs';
 
-const SelectCategorySection = () => {
+interface Props {
+  setStatus: (status: QuizStatus) => void;
+}
+
+const SelectCategorySection = ({ setStatus }: Props) => {
   const {
     tabsTriggerProps: categoryTabsTriggerProps,
     selected: selectedCategory,
@@ -21,8 +25,6 @@ const SelectCategorySection = () => {
       { label: 'Backend', value: 'backend' },
     ],
   });
-
-  const { setStatus } = useSolveQuizContext();
 
   const handleStart = () => {
     setStatus(QUIZ_STATUS.SOLVING);

@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/_components/SolveQuizContext';
 import type { QuizAnswer } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
 import {
   QUIZ_ANSWER,
@@ -14,11 +13,12 @@ import {
 import type useQuizDialogStatus from './useQuizDialogStatus';
 
 interface UseQuizActionProps {
+  stage: number;
+  setStage: (stage: number) => void;
   quizDialog: ReturnType<typeof useQuizDialogStatus>;
 }
 
-const useQuizAction = ({ quizDialog }: UseQuizActionProps) => {
-  const { stage, setStage } = useSolveQuizContext();
+const useQuizAction = ({ stage, setStage, quizDialog }: UseQuizActionProps) => {
   const { correctDialog, failDialog, completeDialog } = quizDialog;
 
   const submit = (answer: QuizAnswer) => {
