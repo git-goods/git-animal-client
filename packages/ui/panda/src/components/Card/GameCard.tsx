@@ -19,10 +19,7 @@ export function GameCard({ title, percentage, tier, imageUrl, size = 'medium' }:
     percentage: 16,
     rating: 16,
   });
-  const [positions, setPositions] = useState({
-    titlePadding: '1rem',
-    percentagePadding: '1rem',
-  });
+  const [positions, setPositions] = useState('1rem');
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -39,10 +36,7 @@ export function GameCard({ title, percentage, tier, imageUrl, size = 'medium' }:
       const paddingX = Math.max(12, width * 0.075);
       const paddingY = Math.max(14.4, width * 0.09);
 
-      setPositions({
-        titlePadding: `${paddingY}px ${paddingX}px`,
-        percentagePadding: `${paddingY}px ${paddingX}px`,
-      });
+      setPositions(`${paddingY}px ${paddingX}px`);
     });
 
     resizeObserver.observe(svgRef.current);
@@ -73,15 +67,10 @@ export function GameCard({ title, percentage, tier, imageUrl, size = 'medium' }:
         </div>
       </div>
 
-      <div className={titleStyle} style={{ fontSize: `${fontSize.title}px`, padding: positions.titlePadding }}>
-        {title}
-      </div>
+      <div className={textWrapperStyle} style={{ fontSize: `${fontSize.title}px`, padding: positions }}>
+        <div className={titleStyle}>{title}</div>
 
-      <div
-        className={percentageStyle}
-        style={{ fontSize: `${fontSize.percentage}px`, padding: positions.percentagePadding }}
-      >
-        {percentage}
+        <div className={percentageStyle}>{percentage}</div>
       </div>
     </div>
   );
@@ -128,22 +117,32 @@ const imageStyle = css({
   },
 });
 
-const titleStyle = css({
+const textWrapperStyle = css({
   position: 'absolute',
   bottom: '0',
   left: '0',
-  padding: '1rem',
-  fontWeight: 'bold',
-  color: '#000000',
-});
-
-const percentageStyle = css({
-  position: 'absolute',
-  bottom: '0',
   right: '0',
   padding: '1rem',
   fontWeight: 'bold',
   color: '#000000',
+  display: 'flex',
+  justifyContent: 'space-between',
+});
+
+const titleStyle = css({
+  fontWeight: 'bold',
+  color: '#000000',
+  flex: 1,
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  textAlign: 'left',
+});
+
+const percentageStyle = css({
+  fontWeight: 'bold',
+  color: '#000000',
+  textAlign: 'right',
 });
 
 const cardCva = cva({

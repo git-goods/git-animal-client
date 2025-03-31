@@ -1,4 +1,4 @@
-import { Card } from '@gitanimals/ui-panda';
+import { GameCard } from '@gitanimals/ui-panda';
 
 import { getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
@@ -11,7 +11,15 @@ interface AnimalCardProps {
 function AnimalCard(props: AnimalCardProps) {
   const tier = getAnimalTierInfo(Number(props.dropRate.replace('%', '')));
 
-  return <Card tier={tier} type={props.type} dropRate={props.dropRate} personaImage={getPersonaImage(props.type)} />;
+  return (
+    <GameCard
+      tier={tier}
+      title={props.type}
+      percentage={props.dropRate}
+      imageUrl={getPersonaImage(props.type)}
+      size="responsive"
+    />
+  );
 }
 
 export default AnimalCard;
