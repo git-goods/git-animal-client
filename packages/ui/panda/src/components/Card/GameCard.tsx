@@ -1,3 +1,5 @@
+'use client';
+
 import { css, cva } from '_panda/css';
 import { useRef, useState, useEffect } from 'react';
 import { ANIMAL_CARD_IMAGE_BASE_URL, CARD_INFO, CardTierType } from './constants';
@@ -7,7 +9,7 @@ interface GameCardProps {
   title: string;
   percentage: string;
   imageUrl: string;
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large' | 'responsive';
 }
 
 export function GameCard({ title, percentage, tier, imageUrl, size = 'medium' }: GameCardProps) {
@@ -162,6 +164,9 @@ const cardCva = cva({
       },
       large: {
         maxWidth: '300px',
+      },
+      responsive: {
+        maxWidth: '100%',
       },
     },
   },
