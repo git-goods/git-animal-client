@@ -8,13 +8,6 @@ const meta: Meta<typeof Tooltip> = {
   parameters: {
     layout: 'centered',
   },
-  decorators: [
-    (Story) => (
-      <div style={{ padding: '20px', backgroundColor: '#2C2929', width: '400px', color: 'white' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 export default meta;

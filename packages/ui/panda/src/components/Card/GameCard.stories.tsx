@@ -9,7 +9,6 @@ const meta: Meta<typeof GameCard> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  decorators: [(Story) => <Story />],
 };
 
 export default meta;

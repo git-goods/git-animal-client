@@ -5,14 +5,6 @@ const meta: Meta<typeof TextArea> = {
   title: 'Components/TextArea',
   component: TextArea,
   tags: ['autodocs'],
-
-  decorators: [
-    (Story) => (
-      <div style={{ padding: '20px', backgroundColor: '#2C2929', width: '400px' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 export default meta;

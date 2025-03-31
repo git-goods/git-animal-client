@@ -8,13 +8,6 @@ const meta: Meta<typeof CombineChip> = {
   parameters: {
     layout: 'centered',
   },
-  decorators: [
-    (Story) => (
-      <div style={{ padding: '20px', backgroundColor: '#2C2929', width: '400px' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 export default meta;

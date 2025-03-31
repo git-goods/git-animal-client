@@ -5,13 +5,6 @@ const meta: Meta<typeof SearchBar> = {
   title: 'Components/SearchBar',
   component: SearchBar,
   tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <div style={{ padding: '20px', backgroundColor: '#2C2929' }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 export default meta;
