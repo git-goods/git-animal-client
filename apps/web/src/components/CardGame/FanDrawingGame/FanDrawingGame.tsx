@@ -9,6 +9,7 @@ import { CardBack as CardBackUi } from '@gitanimals/ui-panda';
 import { motion } from 'framer-motion';
 
 import { AnimalCard } from '@/components/AnimalCard';
+import { Portal } from '@/components/Portal';
 
 import { DrawingCardMotion, NonSelectedCardMotion, SelectedCardMotion } from './CardMotion';
 
@@ -20,6 +21,7 @@ interface CardDrawingGameProps {
 
 export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawingGameProps) {
   const t = useTranslations('Gotcha');
+
   const [gameState, setGameState] = useState<'ready' | 'drawing' | 'selected' | 'revealing'>('ready');
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
@@ -185,30 +187,31 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
 
               if (isSelected && cardData) {
                 return (
-                  <div
-                    key={`selected-card-${cardId}`}
-                    className={css({
-                      position: 'fixed',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: '100%',
-                      zIndex: 100,
-                      bg: 'black.black_50',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      backdropFilter: 'blur(10px)',
-                      flexDirection: 'column',
-                      gap: '100px',
-                    })}
-                    onClick={closeGame}
-                  >
-                    <SelectedCardMotion key={`selected-card-${cardId}`} x={x} y={y} rotate={rotate} index={index}>
-                      <DetailedCard cardData={cardData} />
-                    </SelectedCardMotion>
-                    <p className={noticeMessageStyle}>{t('click-to-close')}</p>
-                  </div>
+                  <Portal key={`selected-card-${cardId}`}>
+                    <div
+                      className={css({
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        bg: 'black.black_50',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backdropFilter: 'blur(10px)',
+                        flexDirection: 'column',
+                        gap: '100px',
+                        zIndex: 3001, // TODO: overlayStyle 보다 높게, z-index 수정 필요
+                      })}
+                      onClick={closeGame}
+                    >
+                      <SelectedCardMotion key={`selected-card-${cardId}`} x={x} y={y} rotate={rotate} index={index}>
+                        <DetailedCard cardData={cardData} />
+                      </SelectedCardMotion>
+                      <p className={noticeMessageStyle}>{t('click-to-close')}</p>
+                    </div>
+                  </Portal>
                 );
               } else {
                 // Non-selected cards fade out

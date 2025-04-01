@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { motion } from 'framer-motion';
 
 interface CardMotionProps {
@@ -66,7 +66,7 @@ export function SelectedCardMotion({ children, x, y, rotate }: PropsWithChildren
           stiffness: 70,
         },
       }}
-      className={selectedCardStyle}
+      className={cx('selected-card', selectedCardStyle)}
       style={{
         transformStyle: 'preserve-3d',
         transformOrigin: 'center center',
@@ -79,7 +79,7 @@ export function SelectedCardMotion({ children, x, y, rotate }: PropsWithChildren
 }
 
 const selectedCardStyle = css({
-  // position: 'absolute',
+  width: '40vw',
 });
 
 export function DrawingCardMotion({
