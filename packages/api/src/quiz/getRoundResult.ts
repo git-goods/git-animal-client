@@ -17,10 +17,11 @@ export type GetRoundResultResponse = z.infer<typeof GetRoundResultResponseSchema
 export const getRoundResult = async (
   request: GetRoundResultRequest & QuizCommonHeader,
 ): Promise<GetRoundResultResponse> => {
-  return await safeGet(GetRoundResultResponseSchema)(`/quizs/context/${request.contextId}/results/result`, {
+  const { contextId, locale } = request;
+
+  return await safeGet(GetRoundResultResponseSchema)(`/quizs/context/${contextId}/results/result`, {
     headers: {
-      Authorization: `Bearer ${request.token}`,
-      Locale: request.locale,
+      Locale: locale,
     },
   });
 };

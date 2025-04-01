@@ -20,10 +20,11 @@ export type CreateQuizRequest = z.infer<typeof CreateQuizRequestSchema>;
 export type CreateQuizResponse = z.infer<typeof CreateQuizResponseSchema>;
 
 export const createQuiz = async (request: CreateQuizRequest & QuizCommonHeader): Promise<CreateQuizResponse> => {
-  return await safePost(CreateQuizResponseSchema)('/quizs', request, {
+  const { locale, ...data } = request;
+
+  return await safePost(CreateQuizResponseSchema)('/quizs', data, {
     headers: {
-      Authorization: `Bearer ${request.token}`,
-      Locale: request.locale,
+      Locale: locale,
     },
   });
 };

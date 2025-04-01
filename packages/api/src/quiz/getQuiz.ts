@@ -24,10 +24,11 @@ export type GetQuizRequest = z.infer<typeof GetQuizRequestSchema>;
 export type GetQuizResponse = z.infer<typeof GetQuizResponseSchema>;
 
 export const getQuiz = async (request: GetQuizRequest & QuizCommonHeader): Promise<GetQuizResponse> => {
-  return await safeGet(GetQuizResponseSchema)(`/quizs/context/${request.contextId}`, {
+  const { contextId, locale } = request;
+
+  return await safeGet(GetQuizResponseSchema)(`/quizs/context/${contextId}`, {
     headers: {
-      Authorization: `Bearer ${request.token}`,
-      Locale: request.locale,
+      Locale: locale,
     },
   });
 };

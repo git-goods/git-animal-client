@@ -15,7 +15,6 @@ import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';
 import useTabs from '@/components/Tabs/useTabs';
 import type { Locale } from '@/i18n/routing';
-import { useClientSession } from '@/utils/clientAuth';
 
 import type { QuizCategory, QuizLevel } from '../../_constants/quiz.constants';
 import { QUIZ_ANSWER, QUIZ_CATEGORY, QUIZ_LEVEL, QUIZ_RESULT } from '../../_constants/quiz.constants';
@@ -65,8 +64,6 @@ const QuizCreateForm = () => {
   const enabledToCreate = quizContents.length > 0 && level && category && expectedAnswer;
 
   const locale = useLocale() as Locale;
-  const session = useClientSession();
-  const token = session.data?.user.accessToken as string;
   const handleCreateQuiz = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -76,7 +73,6 @@ const QuizCreateForm = () => {
         category,
         problem: quizContents,
         expectedAnswer,
-        token,
         locale,
       });
 

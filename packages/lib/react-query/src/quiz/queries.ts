@@ -2,7 +2,6 @@ import { getQuiz, getRoundResult } from '@gitanimals/api';
 import { queryOptions } from '@tanstack/react-query';
 
 interface QuizCommonHeader {
-  token: string;
   locale: 'en_US' | 'ko_KR';
 }
 

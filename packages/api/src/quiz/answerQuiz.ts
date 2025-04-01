@@ -15,10 +15,11 @@ export type AnswerQuizRequest = z.infer<typeof AnswerQuizRequestSchema>;
 export type AnswerQuizResponse = z.infer<typeof AnswerQuizResponseSchema>;
 
 export const answerQuiz = async (request: AnswerQuizRequest & QuizCommonHeader): Promise<AnswerQuizResponse> => {
-  return await safePost(AnswerQuizResponseSchema)(`/quizs/context/${request.contextId}/answers`, request, {
+  const { locale, ...data } = request;
+
+  return await safePost(AnswerQuizResponseSchema)(`/quizs/context/${request.contextId}/answers`, data, {
     headers: {
-      Authorization: `Bearer ${request.token}`,
-      Locale: request.locale,
+      Locale: locale,
     },
   });
 };
