@@ -72,13 +72,13 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
     const radians = (angle * Math.PI) / 180;
 
     const x = Math.sin(radians) * radius * 2;
-    const y = (-Math.cos(radians) * radius) / 2; // Flatten the arc a bit
+    const y = (-Math.cos(radians) * radius) / 2;
 
     const rotate = angle / 1.5;
 
     return { x, y, rotate };
   };
-  // Handle card selection
+
   const selectCard = async (index: number) => {
     if (isAnimating || gameState !== 'drawing') return;
 
@@ -95,11 +95,9 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
       }
 
       setCardData(result);
-      // API 응답 후 선택된 상태로 변경
       setGameState('selected');
     } catch (error) {
       console.error('카드 선택 중 오류 발생:', error);
-      // 오류 발생 시 drawing 상태로 되돌림
       setGameState('drawing');
     } finally {
       setIsAnimating(false);
@@ -112,28 +110,7 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
 
   return (
     <div className={containerStyle}>
-      {/* <div className={buttonContainerStyle}> */}
-      {/* {gameState === 'ready' && (
-          <Button onClick={startDrawing} disabled={isAnimating}>
-            카드 뽑기 시작
-          </Button>
-        )} */}
-      {/* {gameState === 'selected' && (
-          <Button onClick={startDrawing} disabled={isAnimating}>
-            다시 뽑기
-          </Button>
-        )}
-
-        {(gameState === 'drawing' || gameState === 'selected' || gameState === 'revealing') && (
-          <Button onClick={resetGame} disabled={isAnimating} variant="secondary">
-            <RotateCcw className="mr-2 h-4 w-4" />
-            처음으로
-          </Button>
-        )} */}
-      {/* </div> */}
-
       <div className={gameAreaStyle}>
-        {/* {gameState === 'ready' && <div>ready</div>} */}
         {gameState === 'drawing' && (
           <div className={cardContainerStyle}>
             {selectedCards.map((cardId, index) => {
@@ -182,30 +159,12 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
           <div className={cardContainerStyle}>
             {selectedCards.map((cardId, index) => {
               const isSelected = index === selectedCardIndex;
-
               const { x, y, rotate } = getFanPosition(index, selectedCards.length);
 
               if (isSelected && cardData) {
                 return (
                   <Portal key={`selected-card-${cardId}`}>
-                    <div
-                      className={css({
-                        position: 'fixed',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        bg: 'black.black_50',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backdropFilter: 'blur(10px)',
-                        flexDirection: 'column',
-                        gap: '100px',
-                        zIndex: 3001, // TODO: overlayStyle 보다 높게, z-index 수정 필요
-                      })}
-                      onClick={closeGame}
-                    >
+                    <div className={overlayStyle} onClick={closeGame}>
                       <SelectedCardMotion key={`selected-card-${cardId}`} x={x} y={y} rotate={rotate} index={index}>
                         <DetailedCard cardData={cardData} />
                       </SelectedCardMotion>
@@ -214,7 +173,6 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
                   </Portal>
                 );
               } else {
-                // Non-selected cards fade out
                 return (
                   <NonSelectedCardMotion key={`nonselected-card-${cardId}`} x={x} y={y} rotate={rotate} index={index}>
                     <CardBack />
@@ -267,12 +225,7 @@ function RevealingCardMotion({
 }) {
   return (
     <motion.div
-      className={css({
-        position: 'absolute',
-        zIndex: 10,
-        transformStyle: 'preserve-3d',
-        cursor: 'pointer',
-      })}
+      className={revealingCardMotionStyle}
       initial={{ x, y, rotateZ: rotate }}
       animate={{
         x: [x, x + 5, x - 5, x + 5, x - 5, x],
@@ -290,7 +243,6 @@ function RevealingCardMotion({
   );
 }
 
-// 스타일 정의
 const containerStyle = css({
   width: '100%',
   mx: 'auto',
@@ -314,6 +266,29 @@ const cardContainerStyle = css({
   justifyContent: 'center',
 });
 
+const overlayStyle = css({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  bg: 'black.black_50',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backdropFilter: 'blur(10px)',
+  flexDirection: 'column',
+  gap: '100px',
+  zIndex: 3001,
+});
+
+const revealingCardMotionStyle = css({
+  position: 'absolute',
+  zIndex: 10,
+  transformStyle: 'preserve-3d',
+  cursor: 'pointer',
+});
+
 const cardBackStyle = css({
   width: '220px',
   height: '272px',
@@ -321,7 +296,6 @@ const cardBackStyle = css({
 });
 
 const detailedCardStyle = css({
-  // width: '280px',
   height: 'auto',
   overflow: 'hidden',
   position: 'relative',
@@ -333,7 +307,6 @@ const noticeMessageStyle = css({
   textStyle: 'glyph22.regular',
   color: 'white',
   textAlign: 'center',
-
   _mobile: {
     textStyle: 'glyph16.regular',
   },
