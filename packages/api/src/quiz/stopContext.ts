@@ -15,7 +15,7 @@ export const stopContext = async (request: StopContextRequest & QuizCommonHeader
   return await safePost(StopContextResponseSchema)(`/quizs/context/${request.contextId}/stops`, request, {
     headers: {
       Authorization: `Bearer ${request.token}`,
-      Locale: request.language,
+      Locale: request.locale,
     },
   });
 };

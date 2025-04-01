@@ -27,7 +27,7 @@ export const getQuiz = async (request: GetQuizRequest & QuizCommonHeader): Promi
   return await safeGet(GetQuizResponseSchema)(`/quizs/context/${request.contextId}`, {
     headers: {
       Authorization: `Bearer ${request.token}`,
-      Locale: request.language,
+      Locale: request.locale,
     },
   });
 };

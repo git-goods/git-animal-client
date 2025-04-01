@@ -18,7 +18,7 @@ export const answerQuiz = async (request: AnswerQuizRequest & QuizCommonHeader):
   return await safePost(AnswerQuizResponseSchema)(`/quizs/context/${request.contextId}/answers`, request, {
     headers: {
       Authorization: `Bearer ${request.token}`,
-      Locale: request.language,
+      Locale: request.locale,
     },
   });
 };

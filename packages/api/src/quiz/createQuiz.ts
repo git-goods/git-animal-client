@@ -23,7 +23,7 @@ export const createQuiz = async (request: CreateQuizRequest & QuizCommonHeader):
   return await safePost(CreateQuizResponseSchema)('/quizs', request, {
     headers: {
       Authorization: `Bearer ${request.token}`,
-      Locale: request.language,
+      Locale: request.locale,
     },
   });
 };

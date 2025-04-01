@@ -3,7 +3,7 @@ import { queryOptions } from '@tanstack/react-query';
 
 interface QuizCommonHeader {
   token: string;
-  language: 'ko' | 'en';
+  locale: 'en_US' | 'ko_KR';
 }
 
 export const quizQueries = {

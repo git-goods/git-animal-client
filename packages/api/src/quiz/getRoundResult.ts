@@ -20,7 +20,7 @@ export const getRoundResult = async (
   return await safeGet(GetRoundResultResponseSchema)(`/quizs/context/${request.contextId}/results/result`, {
     headers: {
       Authorization: `Bearer ${request.token}`,
-      Locale: request.language,
+      Locale: request.locale,
     },
   });
 };
