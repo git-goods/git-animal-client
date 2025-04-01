@@ -1,19 +1,24 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 
-import { Background } from '@/app/[locale]/quiz/_common/BackGround';
-import CompleteAlertDialog from '@/app/[locale]/quiz/solve/(status)/_done/CompleteAlertDialog';
-import FailAlertDialog from '@/app/[locale]/quiz/solve/(status)/_fail/FailAlertDialog';
-import QuizProgressBar from '@/app/[locale]/quiz/solve/(status)/_solving/QuizProgressBar';
-import useQuizAction from '@/app/[locale]/quiz/solve/(status)/_solving/useQuizAction';
-import useQuizDialogStatus from '@/app/[locale]/quiz/solve/(status)/_solving/useQuizDialogStatus';
-import CorrectConfirmDialog from '@/app/[locale]/quiz/solve/(status)/_success/CorrectConfirmDialog';
-import { QUIZ_ANSWER, QUIZ_POINT_MAP, QUIZ_TOTAL_STAGE } from '@/app/[locale]/quiz/solve/solveQuiz.constants';
-import { useSolveQuizContext } from '@/app/[locale]/quiz/solve/SolveQuizContext';
+import { Background } from '@/app/[locale]/quiz/_components/BackGround';
+import CompleteAlertDialog from '@/app/[locale]/quiz/solve/_components/done/CompleteAlertDialog';
+import FailAlertDialog from '@/app/[locale]/quiz/solve/_components/fail/FailAlertDialog';
+import QuizProgressBar from '@/app/[locale]/quiz/solve/_components/solving/QuizProgressBar';
+import CorrectConfirmDialog from '@/app/[locale]/quiz/solve/_components/success/CorrectConfirmDialog';
+import {
+  QUIZ_ANSWER,
+  QUIZ_POINT_MAP,
+  QUIZ_TOTAL_STAGE,
+} from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
 import { customScrollStyle } from '@/styles/scrollStyle';
+
+import useQuizAction from '../../_hooks/useQuizAction';
+import useQuizDialogStatus from '../../_hooks/useQuizDialogStatus';
 
 // 임시 데이터
 const difficulty = 'Easy';
@@ -21,11 +26,13 @@ const content =
   'Q. Example of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz Content?';
 
 const SolvingQuizSection = () => {
-  const { stage } = useSolveQuizContext();
+  const [stage, setStage] = useState(1);
   const currentPoint = QUIZ_POINT_MAP[stage - 1];
 
   const quizDialog = useQuizDialogStatus();
   const quizAction = useQuizAction({
+    stage,
+    setStage,
     quizDialog,
   });
 

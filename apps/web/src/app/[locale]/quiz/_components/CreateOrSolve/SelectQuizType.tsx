@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { css } from '_panda/css';
 
-import QuizTypeCard from '@/app/[locale]/quiz/_createOrSolve/QuizTypeCard';
-import SolveQuizConfirmDialog from '@/app/[locale]/quiz/_createOrSolve/SolveQuizConfirmDialog';
+import QuizTypeCard from './QuizTypeCard';
+import SolveQuizConfirmDialog from './SolveQuizConfirmDialog';
 
 const QUIZ_REGISTER_POINT = 5000;
 const QUIZ_SOLVE_MAXIMUM_POINT = 32000;
