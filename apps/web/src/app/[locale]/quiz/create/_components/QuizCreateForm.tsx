@@ -63,11 +63,13 @@ const QuizCreateForm = () => {
   const router = useRouter();
   const enabledToCreate = quizContents.length > 0 && level && category && expectedAnswer;
 
+  const [isCreating, setIsCreating] = useState(false);
   const locale = useLocale() as Locale;
   const handleCreateQuiz = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     try {
+      setIsCreating(true);
       const { result, message } = await createQuiz({
         level,
         category,
@@ -85,6 +87,8 @@ const QuizCreateForm = () => {
     } catch (error) {
       console.error(error);
       toast.error('Failed to create quiz. Please try again.');
+    } finally {
+      setIsCreating(false);
     }
   };
 
@@ -144,7 +148,7 @@ const QuizCreateForm = () => {
           </Tabs>
         }
       />
-      <Button className={buttonStyle} disabled={!enabledToCreate} onClick={handleCreateQuiz}>
+      <Button className={buttonStyle} disabled={!enabledToCreate || isCreating} onClick={handleCreateQuiz}>
         Create
       </Button>
     </form>
