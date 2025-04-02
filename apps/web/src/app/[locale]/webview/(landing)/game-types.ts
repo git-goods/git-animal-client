@@ -18,4 +18,6 @@ export interface Character {
   showSpeechBubble: boolean;
   speechBubbleText: string;
   speechBubbleTimer: number;
+
+  image: string;
 }

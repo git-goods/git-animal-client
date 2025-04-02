@@ -3,6 +3,8 @@
 import React from 'react';
 import { useEffect, useRef, useState } from 'react';
 
+import { getDummyPersonaImage } from '@/utils/image';
+
 import { GAME_CONSTANTS } from './game-constants';
 import type { Character } from './game-types';
 import { darkenColor, getRandomPosition, lightenColor } from './game-utils';
@@ -34,6 +36,7 @@ export default function IsometricGame() {
         showSpeechBubble: false,
         speechBubbleText: '',
         speechBubbleTimer: 0,
+        image: getDummyPersonaImage(),
       },
       {
         id: 2,
@@ -50,6 +53,7 @@ export default function IsometricGame() {
         showSpeechBubble: false,
         speechBubbleText: '',
         speechBubbleTimer: 0,
+        image: getDummyPersonaImage(),
       },
       {
         id: 3,
@@ -66,6 +70,7 @@ export default function IsometricGame() {
         showSpeechBubble: false,
         speechBubbleText: '',
         speechBubbleTimer: 0,
+        image: getDummyPersonaImage(),
       },
       {
         id: 4,
@@ -82,6 +87,7 @@ export default function IsometricGame() {
         showSpeechBubble: false,
         speechBubbleText: '',
         speechBubbleTimer: 0,
+        image: getDummyPersonaImage(),
       },
     ] as Character[],
     lastTimestamp: 0,
@@ -98,6 +104,7 @@ export default function IsometricGame() {
     const resizeCanvas = () => {
       const container = canvas.parentElement;
       if (container) {
+        // 컨테이너에 맞춤 (반응형)
         canvas.width = container.clientWidth;
         canvas.height = container.clientHeight;
         gameStateRef.current.canvasWidth = canvas.width;
@@ -542,31 +549,20 @@ export default function IsometricGame() {
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%', backgroundColor: '#f5f5f5' }}>
+    <div style={{ position: 'relative', width: '100%', height: '100vh', backgroundColor: '#f5f5f5' }}>
       <canvas
         ref={canvasRef}
-        style={{ width: '100%', height: '100%' }}
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'block',
+          margin: '0',
+        }}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       />
-
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '16px',
-          left: '16px',
-          backgroundColor: 'rgba(255, 255, 255, 0.8)',
-          padding: '16px',
-          borderRadius: '8px',
-          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-        }}
-      >
-        <h2 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }}>조작 방법:</h2>
-        <p style={{ margin: '4px 0' }}>• 캐릭터 클릭: 점프</p>
-        <p style={{ margin: '4px 0' }}>• 캐릭터 꾹 누르기: 위치 이동</p>
-      </div>
     </div>
   );
 }

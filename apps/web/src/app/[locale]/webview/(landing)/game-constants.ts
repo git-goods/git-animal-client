@@ -52,4 +52,14 @@ export const GAME_CONSTANTS = {
   INTERACTION: {
     LONG_PRESS_DURATION: 500, // 롱프레스 감지 시간 (밀리초)
   },
+
+  CANVAS: {
+    DEFAULT_WIDTH: 800,
+    DEFAULT_HEIGHT: 600,
+    MIN_WIDTH: 400,
+    MIN_HEIGHT: 300,
+    MAX_WIDTH: 1600,
+    MAX_HEIGHT: 1200,
+    STEP: 50, // 크기 조절 단계
+  },
 };
