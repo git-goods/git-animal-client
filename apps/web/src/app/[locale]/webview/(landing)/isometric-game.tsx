@@ -61,7 +61,7 @@ export default function IsometricGame() {
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100vh', backgroundColor: '#f5f5f5' }}>
+    <div style={{ position: 'relative', width: '100%', height: '100%', minHeight: 'calc(100vh - 400px)' }}>
       <canvas
         ref={canvasRef}
         style={{
@@ -69,6 +69,7 @@ export default function IsometricGame() {
           height: '100%',
           display: 'block',
           margin: '0',
+          border: '1px solid red',
         }}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}

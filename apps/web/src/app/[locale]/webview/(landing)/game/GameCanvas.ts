@@ -77,7 +77,9 @@ export class GameCanvas {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
       // 배경 그리기
-      this.drawBackground();
+      // this.drawBackground();
+      // 캔버스 투명하게 설정
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
       // 캐릭터 업데이트 및 그리기
       this.characterManager.updateCharacters(deltaTime, this.canvas.width, this.canvas.height);
