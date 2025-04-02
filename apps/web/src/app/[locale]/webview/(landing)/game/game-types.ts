@@ -18,7 +18,7 @@ export interface Character {
   showSpeechBubble: boolean;
   speechBubbleText: string;
   speechBubbleTimer: number;
-
   image: string;
   imageElement: HTMLImageElement | null;
+  isSelected: boolean;
 }
