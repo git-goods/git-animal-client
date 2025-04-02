@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from 'next/image';
-import { getTranslations } from 'next-intl/server';
+import { GithubIcon } from '@gitanimals/ui-icon';
 import { css, cx } from '_panda/css';
 import { center, flex } from '_panda/patterns';
-import { GithubIcon } from '@gitanimals/ui-icon';
 import { ChevronRightIcon } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
+import Image from 'next/image';
 
 import { getServerAuth } from '@/auth';
 import { AdaptiveLink } from '@/components/AdaptiveLink';
@@ -14,8 +14,8 @@ import { checkIdDevAccessPossible } from '@/utils/dev';
 
 import { LoginButton, LogoutButton } from '../AuthButton';
 
-import { Notification } from './Notification/Notification';
 import { DesktopLanguageSelector } from './LanguageSelector';
+import { Notification } from './Notification/Notification';
 import type { NavMenu } from './menu.constants';
 import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
 
@@ -40,7 +40,7 @@ export async function DesktopGNB() {
             <li>{isLogin ? <LogoutButton /> : <LoginButton />}</li>
           </ul>
           {session && (
-            <a href="/mypage" className={profileStyle}>
+            <Link href="/mypage" className={profileStyle}>
               <>
                 <div className="profile-image">
                   <img src={session.user.image} alt="profile" width={160} height={160} />
@@ -50,7 +50,7 @@ export async function DesktopGNB() {
                   <ChevronRightIcon size={16} color="#000" />
                 </button>
               </>
-            </a>
+            </Link>
           )}
           <div className={iconWrapperStyle}>
             <Notification />
