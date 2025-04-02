@@ -1,15 +1,15 @@
-import type { CharacterState } from './Character';
-import { Character } from './Character';
+import { CharacterManager } from './CharacterManager';
+import { EventManager } from './EventManager';
 import { GAME_CONSTANTS } from './game-constants';
+import { InputHandler } from './InputHandler';
 
 export class GameCanvas {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
-  private characters: Character[];
   private lastTimestamp: number = 0;
-  private isDragging: number | null = null;
-  private longPressTarget: number | null = null;
-  private longPressTimer: NodeJS.Timeout | null = null;
+  private inputHandler: InputHandler;
+  private characterManager: CharacterManager;
+  private eventManager: EventManager;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -17,12 +17,17 @@ export class GameCanvas {
     if (!context) throw new Error('Canvas context를 가져올 수 없습니다.');
     this.ctx = context;
 
+    // 초기화
+    this.eventManager = new EventManager();
+    this.characterManager = new CharacterManager();
+    this.inputHandler = new InputHandler(this.eventManager, this.characterManager);
+
     // 캔버스 크기 설정
     this.resizeCanvas();
     window.addEventListener('resize', () => this.resizeCanvas());
 
-    // 초기 캐릭터 설정
-    this.characters = this.initializeCharacters();
+    // 이벤트 리스너 설정
+    this.setupEventListeners();
   }
 
   private resizeCanvas() {
@@ -33,72 +38,38 @@ export class GameCanvas {
     }
   }
 
-  private initializeCharacters(): Character[] {
-    const characterStates: CharacterState[] = [
-      {
-        id: 1,
-        position: { x: 200, y: 150 },
-        targetPosition: null,
-        color: GAME_CONSTANTS.COLORS.RED,
-        secondaryColor: GAME_CONSTANTS.COLORS.DARK_RED,
-        size: 20,
-        speed: GAME_CONSTANTS.MOVEMENT.SLOW_SPEED,
-        isIdle: false,
-        idleTimer: 0,
-        image: '',
-        imageElement: null,
-        isSelected: false,
-      },
-      {
-        id: 2,
-        position: { x: 300, y: 250 },
-        targetPosition: null,
-        color: GAME_CONSTANTS.COLORS.TEAL,
-        secondaryColor: GAME_CONSTANTS.COLORS.DARK_TEAL,
-        size: 18,
-        speed: GAME_CONSTANTS.MOVEMENT.VERY_SLOW_SPEED,
-        isIdle: false,
-        idleTimer: 0,
-        image: '',
-        imageElement: null,
-        isSelected: false,
-      },
-      {
-        id: 3,
-        position: { x: 400, y: 350 },
-        targetPosition: null,
-        color: GAME_CONSTANTS.COLORS.YELLOW,
-        secondaryColor: GAME_CONSTANTS.COLORS.DARK_YELLOW,
-        size: 22,
-        speed: GAME_CONSTANTS.MOVEMENT.MEDIUM_SLOW_SPEED,
-        isIdle: false,
-        idleTimer: 0,
-        image: '',
-        imageElement: null,
-        isSelected: false,
-      },
-      {
-        id: 4,
-        position: { x: 500, y: 200 },
-        targetPosition: null,
-        color: GAME_CONSTANTS.COLORS.PURPLE,
-        secondaryColor: GAME_CONSTANTS.COLORS.DARK_PURPLE,
-        size: 19,
-        speed: GAME_CONSTANTS.MOVEMENT.SLOW_SPEED,
-        isIdle: false,
-        idleTimer: 0,
-        image: '',
-        imageElement: null,
-        isSelected: false,
-      },
-    ];
+  private setupEventListeners() {
+    this.eventManager.on('CLICK', (event: any) => {
+      const character = this.characterManager.findCharacterById(event.targetId);
+      if (character) {
+        character.jump();
+      }
+    });
 
-    return characterStates.map((state) => new Character(state));
+    this.eventManager.on('DRAG_START', (event: any) => {
+      const character = this.characterManager.findCharacterById(event.targetId);
+      if (character) {
+        character.startDragging();
+      }
+    });
+
+    this.eventManager.on('DRAG_END', (event: any) => {
+      const character = this.characterManager.findCharacterById(event.targetId);
+      if (character) {
+        character.stopDragging(event.position.x, event.position.y);
+      }
+    });
+
+    this.eventManager.on('DRAG_MOVE', (event: any) => {
+      const character = this.characterManager.findCharacterById(event.targetId);
+      if (character) {
+        character.updatePosition(event.position.x, event.position.y);
+      }
+    });
   }
 
   public startAnimation() {
     const animate = (timestamp: number) => {
-      // 델타 타임 계산 (밀리초를 초 단위로 변환)
       const deltaTime = this.lastTimestamp ? (timestamp - this.lastTimestamp) / 100 : 0;
       this.lastTimestamp = timestamp;
 
@@ -108,15 +79,10 @@ export class GameCanvas {
       // 배경 그리기
       this.drawBackground();
 
-      // 모든 캐릭터 업데이트 및 그리기
-      this.characters.forEach((character) => {
-        if (this.isDragging !== character.getId()) {
-          character.update(deltaTime, this.canvas.width, this.canvas.height);
-        }
-        character.draw(this.ctx);
-      });
+      // 캐릭터 업데이트 및 그리기
+      this.characterManager.updateCharacters(deltaTime, this.canvas.width, this.canvas.height);
+      this.characterManager.drawCharacters(this.ctx);
 
-      // 다음 프레임 요청
       requestAnimationFrame(animate);
     };
 
@@ -164,93 +130,31 @@ export class GameCanvas {
   }
 
   public handleMouseDown(e: React.MouseEvent) {
-    const rect = this.canvas.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const point = { x: mouseX, y: mouseY };
-
-    for (const character of this.characters) {
-      if (character.isPointInside(point)) {
-        if (this.longPressTimer) {
-          clearTimeout(this.longPressTimer);
-        }
-
-        this.longPressTarget = character.getId();
-        character.setSelected(true);
-
-        this.longPressTimer = setTimeout(() => {
-          this.isDragging = character.getId();
-          this.longPressTarget = null;
-          character.startDragging();
-        }, GAME_CONSTANTS.INTERACTION.LONG_PRESS_DURATION);
-
-        break;
-      }
-    }
+    this.inputHandler.handleMouseDown(e, this.canvas);
   }
 
   public handleMouseUp(e: React.MouseEvent) {
-    if (this.longPressTimer) {
-      clearTimeout(this.longPressTimer);
-      this.longPressTimer = null;
-    }
-
-    if (this.longPressTarget !== null && this.isDragging === null) {
-      const character = this.characters.find((c) => c.getId() === this.longPressTarget);
-      if (character) {
-        character.jump();
-      }
-    }
-
-    if (this.isDragging !== null) {
-      const rect = this.canvas.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
-
-      const character = this.characters.find((c) => c.getId() === this.isDragging);
-      if (character) {
-        character.stopDragging(mouseX, mouseY);
-      }
-    }
-
-    this.longPressTarget = null;
-    this.isDragging = null;
+    this.inputHandler.handleMouseUp(e, this.canvas);
   }
 
   public handleMouseMove(e: React.MouseEvent) {
-    if (this.isDragging === null) return;
-
-    const rect = this.canvas.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    const character = this.characters.find((c) => c.getId() === this.isDragging);
-    if (character) {
-      character.updatePosition(mouseX, mouseY);
-    }
+    this.inputHandler.handleMouseMove(e, this.canvas);
   }
 
   public handleMouseLeave() {
-    if (this.longPressTimer) {
-      clearTimeout(this.longPressTimer);
-      this.longPressTimer = null;
-    }
-
-    this.longPressTarget = null;
-    this.isDragging = null;
-
-    // 모든 캐릭터의 선택 상태 해제
-    this.characters.forEach((character) => character.setSelected(false));
+    this.inputHandler.handleMouseLeave();
   }
 
-  public getCharacters(): Character[] {
-    return this.characters;
+  public getCharacters() {
+    return this.characterManager.getCharacters();
+  }
+
+  public setCharacterImage(id: number, imageElement: HTMLImageElement) {
+    this.characterManager.setCharacterImage(id, imageElement);
   }
 
   public cleanup() {
     window.removeEventListener('resize', () => this.resizeCanvas());
-    if (this.longPressTimer) {
-      clearTimeout(this.longPressTimer);
-    }
+    this.inputHandler.cleanup();
   }
 }
