@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import { GithubIcon } from '@gitanimals/ui-icon';
+import Image from 'next/image';
+import { getTranslations } from 'next-intl/server';
 import { css, cx } from '_panda/css';
 import { center, flex } from '_panda/patterns';
+import { GithubIcon } from '@gitanimals/ui-icon';
 import { ChevronRightIcon } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
-import Image from 'next/image';
 
 import { getServerAuth } from '@/auth';
 import { AdaptiveLink } from '@/components/AdaptiveLink';
@@ -14,8 +14,8 @@ import { checkIdDevAccessPossible } from '@/utils/dev';
 
 import { LoginButton, LogoutButton } from '../AuthButton';
 
-import { DesktopLanguageSelector } from './LanguageSelector';
 import { Notification } from './Notification/Notification';
+import { DesktopLanguageSelector } from './LanguageSelector';
 import type { NavMenu } from './menu.constants';
 import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
 
