@@ -8,11 +8,14 @@ import { handleGithubLogin } from '../utils/github';
 
 interface CustomWebViewProps {
   url: string;
+  token?: string | null;
 }
 
 // 웹뷰에서 history 스택을 관리하기 위한 자바스크립트 코드
 const INJECTED_JAVASCRIPT = `
 (function() {
+  console.log('[WebView Debug] Injected script loaded');
+  
   function wrap(fn) {
     return function wrapper() {
       var res = fn.apply(this, arguments);
@@ -38,11 +41,41 @@ const INJECTED_JAVASCRIPT = `
       }
     }));
   });
+
+  // 토큰을 웹으로 전달하는 함수
+  window.postToken = function(token) {
+    console.log('[WebView Debug] postToken called with:', token);
+    if (token) {
+      fetch('/api/auth/callback/rn-webview', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          token,
+          callbackUrl: window.location.origin 
+        })
+      })
+      .then(response => {
+        console.log('[WebView Debug] Token response status:', response.status);
+        return response.json();
+      })
+      .then(data => {
+        console.log('[WebView Debug] Token response data:', data);
+        if (data.url) {
+          window.location.href = data.url;
+        }
+      })
+      .catch(error => {
+        console.error('[WebView Debug] Token posting failed:', error);
+      });
+    }
+  };
 })();
 true;
 `;
 
-const CustomWebView: React.FC<CustomWebViewProps> = ({ url }) => {
+const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
   const webViewRef = useRef<WebView>(null);
   const [loading, setLoading] = useState(true);
   const [canGoBack, setCanGoBack] = useState(false);
@@ -81,13 +114,15 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url }) => {
   const onMessage = async (event: any) => {
     try {
       const { type, data } = JSON.parse(event.nativeEvent.data);
+      console.log('[WebView Debug] Received message:', { type, data });
+
       if (type === 'navigation') {
         setCanGoBack(data.canGoBack);
       } else if (type === 'GITHUB_LOGIN') {
         await handleGithubLogin();
       }
     } catch (error) {
-      console.log('Failed to parse webview message', error);
+      console.log('[WebView Debug] Failed to parse webview message:', error);
     }
   };
 
@@ -134,6 +169,18 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url }) => {
       });
     })();
   `;
+
+  // 토큰이 있을 때 웹뷰로 전달
+  useEffect(() => {
+    if (token && webViewRef.current) {
+      console.log('[WebView Debug] Token received:', token);
+      const injectTokenScript = `
+        console.log('[WebView Debug] Injecting token script');
+        window.postToken("${token}");
+      `;
+      webViewRef.current.injectJavaScript(injectTokenScript);
+    }
+  }, [token]);
 
   return (
     <View style={styles.container}>

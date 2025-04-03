@@ -6,7 +6,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 
 export default function TabOneScreen() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, token } = useAuth();
   const router = useRouter();
   const isFirstRender = useRef(true);
 
@@ -53,7 +53,7 @@ export default function TabOneScreen() {
         </View>
       </SafeAreaView>
       <View style={styles.webViewContainer}>
-        <CustomWebView url="https://www.gitanimals.org/" />
+        <CustomWebView url="https://www.gitanimals.org/" token={token} />
       </View>
     </View>
   );
