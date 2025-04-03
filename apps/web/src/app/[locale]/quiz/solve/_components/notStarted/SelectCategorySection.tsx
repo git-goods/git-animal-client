@@ -1,7 +1,10 @@
 import Image from 'next/image';
+import { useLocale } from 'next-intl';
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
+import { createQuizContext } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
+import { toast } from 'sonner';
 
 import type { QuizStatus } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
 import { QUIZ_STATUS } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
@@ -9,25 +12,42 @@ import Tabs from '@/components/Tabs/Tabs';
 import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';
 import useTabs from '@/components/Tabs/useTabs';
+import type { Locale } from '@/i18n/routing';
+
+import type { QuizCategory } from '../../../_constants/quiz.constants';
+import { QUIZ_CATEGORY } from '../../../_constants/quiz.constants';
 
 interface Props {
   setStatus: (status: QuizStatus) => void;
+  setContextId: (contextId: string) => void;
 }
 
-const SelectCategorySection = ({ setStatus }: Props) => {
+const SelectCategorySection = ({ setStatus, setContextId }: Props) => {
   const {
-    tabsTriggerProps: categoryTabsTriggerProps,
-    selected: selectedCategory,
+    tabsTriggerProps: categoryRadioProps,
+    selected: category,
     handleChange: handleChangeCategory,
-  } = useTabs({
+  } = useTabs<QuizCategory>({
     options: [
-      { label: 'Frontend', value: 'frontend' },
-      { label: 'Backend', value: 'backend' },
+      { label: 'Frontend', value: QUIZ_CATEGORY.FRONTEND },
+      { label: 'Backend', value: QUIZ_CATEGORY.BACKEND },
     ],
   });
 
-  const handleStart = () => {
-    setStatus(QUIZ_STATUS.SOLVING);
+  const locale = useLocale() as Locale;
+  const handleStart = async () => {
+    try {
+      const { contextId } = await createQuizContext({
+        category,
+        locale,
+      });
+
+      setContextId(contextId);
+      setStatus(QUIZ_STATUS.SOLVING);
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to start quiz');
+    }
   };
 
   return (
@@ -35,11 +55,11 @@ const SelectCategorySection = ({ setStatus }: Props) => {
       <div className={contentContainerStyle}>
         <h1 className={titleStyle}>Category</h1>
         <h2 className={descriptionStyle}>Choose the category of the quiz</h2>
-        <Tabs value={selectedCategory} onValueChange={handleChangeCategory}>
+        <Tabs value={category} onValueChange={(value) => handleChangeCategory(value as QuizCategory)}>
           <TabsList>
-            {categoryTabsTriggerProps.map((tabsTriggerItem) => {
+            {categoryRadioProps.map((tabsTriggerItem) => {
               const { value, label } = tabsTriggerItem;
-              const isSelected = value === selectedCategory;
+              const isSelected = value === category;
               const imageSrc = isSelected ? `/quiz/cursor-choiced.webp` : `/quiz/cursor-unchoiced.webp`;
               return (
                 <TabsTrigger key={value} value={value} className={tabsTriggerStyle}>

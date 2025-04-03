@@ -1,58 +1,76 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useLocale } from 'next-intl';
+import { answerQuiz, getRoundResult } from '@gitanimals/api';
 import { toast } from 'sonner';
 
 import type { QuizAnswer } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
-import {
-  QUIZ_ANSWER,
-  QUIZ_POINT_MAP,
-  QUIZ_TOTAL_STAGE,
-} from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
+import { ROUTE } from '@/constants/route';
+import { type Locale, useRouter } from '@/i18n/routing';
+
+import { QUIZ_RESULT } from '../../_constants/quiz.constants';
 
 import type useQuizDialogStatus from './useQuizDialogStatus';
 
 interface UseQuizActionProps {
-  stage: number;
-  setStage: (stage: number) => void;
+  contextId: string;
   quizDialog: ReturnType<typeof useQuizDialogStatus>;
+  round: {
+    total: number;
+    current: number;
+  };
+  prize: number;
+  refetchQuiz: () => void;
 }
 
-const useQuizAction = ({ stage, setStage, quizDialog }: UseQuizActionProps) => {
+const useQuizAction = ({ contextId, quizDialog, round, prize, refetchQuiz }: UseQuizActionProps) => {
+  const locale = useLocale() as Locale;
   const { correctDialog, failDialog, completeDialog } = quizDialog;
 
-  const submit = (answer: QuizAnswer) => {
-    // FIXME:: API 연동 전까지 임시 코드
-    const isCorrect = answer === QUIZ_ANSWER.YES;
-    if (!isCorrect) {
+  const submit = async (answer: QuizAnswer) => {
+    try {
+      await answerQuiz({
+        contextId,
+        locale,
+        answer,
+      });
+
+      const { result } = await getRoundResult({
+        contextId,
+        locale,
+      });
+
+      if (result === QUIZ_RESULT.FAIL) {
+        failDialog.open();
+        return;
+      }
+
+      const isFinalStage = round.current === round.total;
+      if (isFinalStage) {
+        completeDialog.open();
+        return;
+      }
+
+      correctDialog.open();
+    } catch (error) {
+      console.error(error);
       failDialog.open();
-      return;
     }
-
-    const isFinalStage = stage === QUIZ_TOTAL_STAGE;
-    if (isFinalStage) {
-      completeDialog.open();
-      return;
-    }
-
-    correctDialog.open();
   };
 
   const router = useRouter();
   const terminateQuiz = () => {
-    const currentPoint = QUIZ_POINT_MAP[stage - 1];
-
-    toast.success(`Finished quiz. You got ${currentPoint}P!`);
+    toast.success(`Finished quiz. You got ${prize}P!`);
     moveToQuizMain();
   };
 
   const moveToNextStage = () => {
+    refetchQuiz();
     correctDialog.close();
-    setStage(stage + 1);
   };
 
   const moveToQuizMain = () => {
-    router.push('/quiz');
+    router.push(ROUTE.QUIZ.MAIN());
   };
 
   return {

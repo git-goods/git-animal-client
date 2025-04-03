@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { css } from '_panda/css';
+
+import { ROUTE } from '@/constants/route';
+import { useRouter } from '@/i18n/routing';
 
 import QuizTypeCard from './QuizTypeCard';
 import SolveQuizConfirmDialog from './SolveQuizConfirmDialog';
@@ -21,9 +23,7 @@ const SelectQuizType = () => {
         description={`Create an O/X quiz and get ${QUIZ_REGISTER_POINT}P!`}
         image="/quiz/quiz-cat.webp"
         point={`${QUIZ_REGISTER_POINT}P`}
-        onClick={() => {
-          router.push('/quiz/create');
-        }}
+        onClick={() => router.push(ROUTE.QUIZ.CREATE())}
       />
       <QuizTypeCard
         title="Solve quiz"
@@ -34,7 +34,7 @@ const SelectQuizType = () => {
       />
       <SolveQuizConfirmDialog
         isOpen={isSolveQuizConfirmDialogOpen}
-        onConfirm={() => router.push('/quiz/solve')}
+        onConfirm={() => router.push(ROUTE.QUIZ.SOLVE())}
         onClose={() => setIsSolveQuizConfirmDialogOpen(false)}
       />
     </div>

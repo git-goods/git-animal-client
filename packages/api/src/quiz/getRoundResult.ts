@@ -19,7 +19,7 @@ export const getRoundResult = async (
 ): Promise<GetRoundResultResponse> => {
   const { contextId, locale } = request;
 
-  return await safeGet(GetRoundResultResponseSchema)(`/quizs/context/${contextId}/results/result`, {
+  return await safeGet(GetRoundResultResponseSchema)(`/quizs/context/${contextId}/results`, {
     headers: {
       Locale: locale,
     },

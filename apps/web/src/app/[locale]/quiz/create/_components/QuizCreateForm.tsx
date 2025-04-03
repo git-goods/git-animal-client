@@ -80,7 +80,7 @@ const QuizCreateForm = () => {
 
       if (result === QUIZ_RESULT.SUCCESS) {
         toast.success(message);
-        router.push('/quiz');
+        router.back();
       } else {
         toast.error(message);
       }
