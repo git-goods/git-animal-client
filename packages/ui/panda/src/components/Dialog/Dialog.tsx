@@ -37,6 +37,7 @@ const Content = React.forwardRef<
 
 Content.displayName = DialogPrimitive.Content.displayName;
 
+// TODO: z-index 수정 필요
 const overlayStyle = css({ background: 'black.black_75', zIndex: 3000 });
 const closeStyle = css({ background: 'transparent', outline: 'none', padding: '0' });
 

@@ -37,7 +37,7 @@ export const dialogContentCva = cva({
         maxWidth: 'calc(100% - 400px)',
         maxHeight: 'calc(100% - 240px)',
         width: '100%',
-        height: '100%',
+        height: 'fit-content',
 
         '@media (max-width: 1200px)': {
           padding: '48px 24px',
@@ -45,6 +45,7 @@ export const dialogContentCva = cva({
           maxHeight: 'calc(100vh - 120px)',
         },
         _mobile: {
+          height: '100%',
           maxWidth: '100vw',
           maxHeight: '100vh',
           borderRadius: '0px',
