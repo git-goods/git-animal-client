@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Platform, StatusBar } from 'react-native';
 import { router, useRouter } from 'expo-router';
 import CustomWebView from '../../components/CustomWebView';
 import { useAuth } from '../../hooks/useAuth';
+import { IconSymbol } from '@/components/ui/IconSymbol';
 
 export default function TabOneScreen() {
   const { isAuthenticated, logout } = useAuth();
@@ -36,17 +37,25 @@ export default function TabOneScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.headerContent}>
-          <Text style={styles.welcomeText}>GitAnimals</Text>
-          <TouchableOpacity onPress={onPressLogout} style={styles.logoutButton}>
-            <Text style={styles.buttonText}>로그아웃</Text>
-          </TouchableOpacity>
+    <View style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="#f8f9fa" />
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.header}>
+          <View style={styles.headerContent}>
+            <View style={styles.titleContainer}>
+              <IconSymbol size={24} name="house.fill" color="#24292e" />
+              <Text style={styles.welcomeText}>GitAnimals</Text>
+            </View>
+            <TouchableOpacity onPress={onPressLogout} style={styles.logoutButton}>
+              <Text style={styles.buttonText}>로그아웃</Text>
+            </TouchableOpacity>
+          </View>
         </View>
+      </SafeAreaView>
+      <View style={styles.webViewContainer}>
+        <CustomWebView url="https://www.gitanimals.org/" />
       </View>
-      <CustomWebView url="https://www.gitanimals.org/" />
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -54,6 +63,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  safeArea: {
+    backgroundColor: '#f8f9fa',
   },
   header: {
     backgroundColor: '#f8f9fa',
@@ -70,7 +82,6 @@ const styles = StyleSheet.create({
         elevation: 3,
       },
     }),
-    marginBottom: -1,
   },
   headerContent: {
     flexDirection: 'row',
@@ -79,10 +90,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
   },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   welcomeText: {
     fontSize: 18,
     fontWeight: '600',
     color: '#24292e',
+    marginLeft: 8,
   },
   logoutButton: {
     backgroundColor: '#dc3545',
@@ -94,5 +110,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
     fontWeight: '500',
+  },
+  webViewContainer: {
+    flex: 1,
   },
 });

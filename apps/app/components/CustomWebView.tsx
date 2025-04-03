@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { StyleSheet, View, BackHandler, Platform, Linking } from 'react-native';
+import { StyleSheet, View, BackHandler, Platform, Linking, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
 import Constants from 'expo-constants';
 import { useEffect } from 'react';
@@ -63,8 +63,6 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url }) => {
           return '/(tabs)' as const;
         // case '/profile':
         //   return '/(tabs)/profile' as const;
-        case '/explore':
-          return '/(tabs)/explore' as const;
         default:
           return '/(tabs)' as const;
       }
@@ -177,7 +175,7 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url }) => {
       <WebView
         ref={webViewRef}
         source={{ uri: url }}
-        style={{ flex: 1, marginTop: -1 }}
+        style={styles.webview}
         onLoadEnd={() => setLoading(false)}
         onNavigationStateChange={handleNavigationStateChange}
         onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
@@ -192,7 +190,11 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url }) => {
         allowsBackForwardNavigationGestures={true} // iOS에서 스와이프로 뒤로가기/앞으로가기
         bounces={false}
       />
-      {loading && <View style={styles.loadingView} />}
+      {loading && (
+        <View style={styles.loadingView}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      )}
     </View>
   );
 };
@@ -200,10 +202,11 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: Constants.statusBarHeight,
+    backgroundColor: '#fff',
   },
   webview: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   loadingView: {
     position: 'absolute',
