@@ -182,11 +182,22 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
     }
   }, [token]);
 
+  const webViewUrl = () => {
+    const urlObj = new URL(url);
+    if (token) {
+      urlObj.pathname = '/en_US/auth';
+      urlObj.searchParams.append('jwt', token);
+      return urlObj.toString();
+    }
+    return url;
+  };
+  console.log('webViewUrl(): ', webViewUrl());
+
   return (
     <View style={styles.container}>
       <WebView
         ref={webViewRef}
-        source={{ uri: url }}
+        source={{ uri: webViewUrl() }}
         style={styles.webview}
         onLoadEnd={() => setLoading(false)}
         onNavigationStateChange={handleNavigationStateChange}
