@@ -52,7 +52,13 @@ const SolvingQuizSection = wrap
           <p className={cx(contentStyle, customScrollStyle)}>{problem}</p>
           <div className={bottomContainerStyle}>
             <p className={noticeStyle}>Choose the correct answer!</p>
-            <QuizProgressBar progress={30} />
+            <QuizProgressBar
+              startedAt={new Date()}
+              timeoutAt={new Date(round.timeoutAt)}
+              onTimeout={() => {
+                console.log('끝났다!');
+              }}
+            />
             <Flex gap="8px" marginTop="24px">
               <button className={oxButtonStyle} title="O" onClick={() => submit(QUIZ_ANSWER.YES)}>
                 <Image src="/quiz/ox_o.webp" alt="O" width={60} height={60} />
