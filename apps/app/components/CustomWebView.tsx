@@ -1,11 +1,10 @@
 import { useRef, useState } from 'react';
-import { StyleSheet, View, BackHandler, Platform, Linking, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, BackHandler, Platform, Linking, ActivityIndicator, Text } from 'react-native';
 import { WebView } from 'react-native-webview';
 import Constants from 'expo-constants';
 import { useEffect } from 'react';
 import { WebViewNavigation } from 'react-native-webview';
 import { handleGithubLogin } from '../utils/github';
-import { usePathname, useRouter } from 'expo-router';
 
 interface CustomWebViewProps {
   url: string;
@@ -44,47 +43,13 @@ true;
 `;
 
 const CustomWebView: React.FC<CustomWebViewProps> = ({ url }) => {
-  const router = useRouter();
-  const pathname = usePathname();
   const webViewRef = useRef<WebView>(null);
   const [loading, setLoading] = useState(true);
   const [canGoBack, setCanGoBack] = useState(false);
 
-  // URL 경로를 앱 경로로 변환하는 함수
-  const getAppPath = (webUrl: string) => {
-    try {
-      const urlObj = new URL(webUrl);
-      // locale 패턴 제거 (/en_US, /ko_KR 등)
-      const path = urlObj.pathname.replace(/^\/[a-z]{2}_[A-Z]{2}/, '');
-
-      // 타입에 맞는 경로 반환
-      switch (path) {
-        case '/':
-          return '/(tabs)' as const;
-        // case '/profile':
-        //   return '/(tabs)/profile' as const;
-        default:
-          return '/(tabs)' as const;
-      }
-    } catch (e) {
-      return '/(tabs)' as const;
-    }
-  };
-
   const handleNavigationStateChange = (navState: WebViewNavigation) => {
     // 웹뷰 상태 업데이트
     setCanGoBack(navState.canGoBack);
-
-    // URL이 gitanimals.org 도메인인 경우에만 경로 동기화
-    if (navState.url.includes('gitanimals.org')) {
-      const appPath = getAppPath(navState.url);
-      console.log('Syncing path:', { webUrl: navState.url, appPath });
-
-      // 현재 앱 경로와 다른 경우에만 업데이트
-      if (appPath !== pathname) {
-        router.replace(appPath);
-      }
-    }
   };
 
   const onAndroidBackPress = () => {
@@ -192,7 +157,8 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url }) => {
       />
       {loading && (
         <View style={styles.loadingView}>
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="#24292e" />
+          <Text style={styles.loadingText}>GitAnimals 로딩 중...</Text>
         </View>
       )}
     </View>
@@ -217,6 +183,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: '#24292e',
+    fontWeight: '500',
   },
 });
 
