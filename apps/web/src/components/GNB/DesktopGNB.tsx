@@ -40,7 +40,7 @@ export async function DesktopGNB() {
             <li>{isLogin ? <LogoutButton /> : <LoginButton />}</li>
           </ul>
           {session && (
-            <a href="/mypage" className={profileStyle}>
+            <Link href="/mypage" className={profileStyle}>
               <>
                 <div className="profile-image">
                   <img src={session.user.image} alt="profile" width={160} height={160} />
@@ -50,7 +50,7 @@ export async function DesktopGNB() {
                   <ChevronRightIcon size={16} color="#000" />
                 </button>
               </>
-            </a>
+            </Link>
           )}
           <div className={iconWrapperStyle}>
             <Notification />
