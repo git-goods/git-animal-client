@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { css } from '_panda/css';
-import { Button } from '@gitanimals/ui-panda';
 
-import { ErrorPage } from '@/components/Error/ErrorPage';
-import { Link } from '@/i18n/routing';
+import GNB from '@/components/GNB/GNB';
 
+import { BackgroundSection } from './_background/BackgroundSection';
+import { FloatingPointSection } from './_common/FloatingPointSection';
+import { AuctionSection } from './_auction';
+import { PetGotcha } from './_petGotcha';
 import type { TabType } from './type';
 import { TABS } from './type';
 
@@ -34,26 +35,13 @@ async function ShopPage({
 
   return (
     <div>
-      <ErrorPage
-        heading="Store temporarily unavailable 😭"
-        paragraph={
-          <div className={css({ textAlign: 'center' })}>
-            Server normalization operation is in progress. <br />
-            <br />
-            <Link href="/">
-              <Button>Back to Main</Button>
-            </Link>
-          </div>
-        }
-      />
-      {/* <GNB />
+      <GNB />
       <FloatingPointSection />
-
       <main>
         <PetGotcha />
         <AuctionSection selectedTab={searchParamsTab} />
         <BackgroundSection />
-      </main> */}
+      </main>
     </div>
   );
 }
