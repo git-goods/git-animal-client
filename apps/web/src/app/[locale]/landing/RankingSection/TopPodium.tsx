@@ -90,6 +90,10 @@ const podiumStyle = css({
   alignItems: 'flex-end',
   gap: '12px',
   flex: 1,
+
+  _mobile: {
+    minH: '300px',
+  },
 });
 
 const rostrumStyle = css({

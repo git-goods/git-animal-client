@@ -26,6 +26,8 @@ export default function RankingSection() {
 
   return (
     <div className={containerStyle}>
+      <h2 className={titleStyle}>Ranking</h2>
+      <p className={descriptionStyle}>You can get up to 10000P depending on your ranking!</p>
       <MediaQuery
         desktop={
           <GameConsole>
@@ -52,16 +54,34 @@ export default function RankingSection() {
   );
 }
 
+const titleStyle = css({
+  textStyle: 'glyph82.bold',
+  color: 'white.white_100',
+  textAlign: 'center',
+  mb: '16px',
+  _mobile: {
+    mb: '8px',
+    textStyle: 'glyph40.bold',
+  },
+});
+
+const descriptionStyle = css({
+  textStyle: 'glyph18.regular',
+  color: 'white.white_90',
+  textAlign: 'center',
+  _mobile: {
+    textStyle: 'glyph16.regular',
+  },
+});
 const containerStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
   width: '100%',
   backgroundColor: '#111827',
   padding: '130px',
   overflow: 'hidden',
   _mobile: {
     padding: '80px 16px',
+    width: '100%',
+    background: 'linear-gradient(180deg, #000 0%, #001420 16.5%, #002943 36.5%, #008FE8 100%)',
   },
 });
 
@@ -74,6 +94,7 @@ const screenContentStyle = css({
   flexDirection: 'column',
   _mobile: {
     padding: '40px 0 0',
+    width: '100%',
   },
 });
 
