@@ -9,6 +9,7 @@ import { MediaQuery } from '@/components/MediaQuery';
 import { Link } from '@/i18n/routing';
 
 import GameConsole from './GameConsole/GameConsole';
+import { MobileGameConsole } from './MobileGameConsole/MobileGameConsole';
 import { RankingTable } from './RankingTable';
 import { TopPodium } from './TopPodium';
 
@@ -46,6 +47,7 @@ export default function RankingSection() {
               <RankingTab selectedTab={selectedTab} />
               <TopPodium ranks={ranks.slice(0, 3)} />
               <RankingTable ranks={ranks.slice(3)} />
+              <MobileGameConsole />
             </div>
           )
         }
@@ -79,7 +81,7 @@ const containerStyle = css({
   padding: '130px',
   overflow: 'hidden',
   _mobile: {
-    padding: '80px 16px',
+    padding: '80px 16px 0',
     width: '100%',
     background: 'linear-gradient(180deg, #000 0%, #001420 16.5%, #002943 36.5%, #008FE8 100%)',
   },
