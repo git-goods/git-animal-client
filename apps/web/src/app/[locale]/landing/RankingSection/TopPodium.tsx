@@ -111,6 +111,13 @@ const rostrumStyle = css({
   mt: '12px',
   position: 'relative',
   overflow: 'hidden',
+  _mobile: {
+    width: '80px',
+    fontSize: '36px',
+    pt: '12px',
+    mt: '8px',
+    pr: '4px',
+  },
 });
 
 const runnerUpStyle = css({
@@ -119,6 +126,9 @@ const runnerUpStyle = css({
   alignItems: 'center',
   fontSize: '20px',
   minHeight: '170px',
+  _mobile: {
+    minH: '80px',
+  },
 });
 
 const brightBgStyle = css({
@@ -132,6 +142,10 @@ const brightBgStyle = css({
   opacity: 0.5,
   background:
     'radial-gradient(50% 50% at 50% 50%, #FFED86 0%, rgba(255, 237, 134, 0.17) 81%, rgba(255, 237, 134, 0.00) 100%)',
+  _mobile: {
+    width: '60px',
+    height: '60px',
+  },
 });
 
 const profileStyle = css({
@@ -143,6 +157,10 @@ const profileStyle = css({
     height: '100%',
     borderRadius: '50%',
     objectFit: 'cover',
+  },
+  _mobile: {
+    width: '40px',
+    height: '40px',
   },
 });
 
@@ -156,6 +174,11 @@ const subCrownStyle = css({
   '& > img': {
     width: '100%',
     height: '100%',
+  },
+  _mobile: {
+    width: '28px',
+    height: '28px',
+    top: '-28px',
   },
 });
 
@@ -171,15 +194,34 @@ const winnerCrownStyle = css({
     width: '100%',
     height: '100%',
   },
+  _mobile: {
+    width: '40px',
+    height: '40px',
+    top: '-40px',
+  },
 });
 
 const nameStyle = css({
   textStyle: 'glyph18.bold',
   mt: '12px',
   color: 'white.white_90',
+  maxWidth: '100%',
+  overflow: 'visible',
+  display: 'flex',
+  justifyContent: 'center',
+  whiteSpace: 'nowrap',
+
+  _mobile: {
+    fontSize: 'glyph15.bold',
+    maxWidth: '80px',
+    mt: '6px',
+  },
 });
 
 const contributionStyle = css({
   textStyle: 'glyph14.regular',
   color: 'white.white_50',
+  _mobile: {
+    fontSize: 'glyph12.regular',
+  },
 });

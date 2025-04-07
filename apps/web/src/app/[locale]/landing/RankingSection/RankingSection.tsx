@@ -5,6 +5,7 @@ import { css, cx } from '_panda/css';
 import { rankQueries } from '@gitanimals/react-query';
 import { useQuery } from '@tanstack/react-query';
 
+import { MediaQuery } from '@/components/MediaQuery';
 import { Link } from '@/i18n/routing';
 
 import GameConsole from './GameConsole/GameConsole';
@@ -25,15 +26,28 @@ export default function RankingSection() {
 
   return (
     <div className={containerStyle}>
-      <GameConsole>
-        {ranks && (
-          <div className={screenContentStyle}>
-            <RankingTab selectedTab={selectedTab} />
-            <TopPodium ranks={ranks.slice(0, 3)} />
-            <RankingTable ranks={ranks.slice(3)} />
-          </div>
-        )}
-      </GameConsole>
+      <MediaQuery
+        desktop={
+          <GameConsole>
+            {ranks && (
+              <div className={screenContentStyle}>
+                <RankingTab selectedTab={selectedTab} />
+                <TopPodium ranks={ranks.slice(0, 3)} />
+                <RankingTable ranks={ranks.slice(3)} />
+              </div>
+            )}
+          </GameConsole>
+        }
+        mobile={
+          ranks && (
+            <div className={screenContentStyle}>
+              <RankingTab selectedTab={selectedTab} />
+              <TopPodium ranks={ranks.slice(0, 3)} />
+              <RankingTable ranks={ranks.slice(3)} />
+            </div>
+          )
+        }
+      />
     </div>
   );
 }
@@ -46,9 +60,8 @@ const containerStyle = css({
   backgroundColor: '#111827',
   padding: '130px',
   overflow: 'hidden',
-
   _mobile: {
-    display: 'none',
+    padding: '80px 16px',
   },
 });
 
@@ -59,6 +72,9 @@ const screenContentStyle = css({
   fontFamily: 'token(fonts.dnf)',
   display: 'flex',
   flexDirection: 'column',
+  _mobile: {
+    padding: '40px 0 0',
+  },
 });
 
 function RankingTab({ selectedTab }: { selectedTab: string }) {
