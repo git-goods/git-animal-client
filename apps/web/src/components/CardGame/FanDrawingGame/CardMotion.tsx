@@ -80,6 +80,7 @@ export function SelectedCardMotion({ children, x, y, rotate }: PropsWithChildren
 
 const selectedCardStyle = css({
   width: '40vw',
+  maxWidth: '400px',
 });
 
 export function DrawingCardMotion({
