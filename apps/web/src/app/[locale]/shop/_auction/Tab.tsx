@@ -79,7 +79,7 @@ const tabItemContainerStyle = css({
   },
 });
 
-function TabItem({ isSelected, label, path }: { isSelected?: boolean } & TabItemType) {
+export function TabItem({ isSelected, label, path }: { isSelected?: boolean } & TabItemType) {
   return (
     <Link className={isSelected ? selectedLinkCss : nonSelectedLinkCss} href={path} shallow scroll={false}>
       {label}

@@ -48,6 +48,11 @@ const tableStyle = css({
 const trBaseStyle = css({
   borderRadius: '8px',
 
+  '& img': {
+    borderRadius: '50%',
+    overflow: 'hidden',
+  },
+
   '& td, & th': {
     border: 'none',
     padding: '0 16px',
@@ -67,6 +72,26 @@ const trBaseStyle = css({
     textAlign: 'center',
     width: '72px',
     padding: '0 8px',
+  },
+
+  _mobile: {
+    borderRadius: '6px',
+    '& td, & th': {
+      border: 'none',
+      padding: '0 8px',
+    },
+
+    '& td:first-child, & th:first-child': {
+      paddingLeft: '16px',
+      width: '54px',
+    },
+    '& td:last-child, & th:last-child': {
+      paddingRight: '16px',
+    },
+    '& td:nth-child(2), & th:nth-child(2)': {
+      width: '28px',
+      paddingLeft: '0px',
+    },
   },
 });
 
@@ -93,6 +118,14 @@ const trStyle = cx(
       lineHeight: '28px',
       fontFamily: 'token(fonts.dnf)',
       color: 'white.white_50',
+    },
+    _mobile: {
+      height: '48px',
+      fontSize: 'glyph15.regular',
+
+      '& td:first-child': {
+        fontSize: '16px',
+      },
     },
   }),
 );
