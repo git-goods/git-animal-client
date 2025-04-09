@@ -71,7 +71,9 @@ const descriptionStyle = css({
   textStyle: 'glyph18.regular',
   color: 'white.white_90',
   textAlign: 'center',
+  mb: '120px',
   _mobile: {
+    mb: '40px',
     textStyle: 'glyph16.regular',
   },
 });
@@ -100,6 +102,7 @@ const screenContentStyle = css({
   },
 });
 
+// TODO: tab 공통화 필요
 function RankingTab({ selectedTab }: { selectedTab: string }) {
   return (
     <div className={tabsStyle}>
@@ -107,7 +110,7 @@ function RankingTab({ selectedTab }: { selectedTab: string }) {
         href="/?ranking=people"
         shallow
         scroll={false}
-        className={cx(tabStyle, selectedTab === 'people' && selectedTabStyle)}
+        className={cx(tabStyle, selectedTab === 'people' ? selectedTabStyle : nonSelectedTabStyle)}
       >
         People
       </Link>
@@ -115,7 +118,7 @@ function RankingTab({ selectedTab }: { selectedTab: string }) {
         href="/?ranking=guild"
         shallow
         scroll={false}
-        className={cx(tabStyle, selectedTab === 'guild' && selectedTabStyle)}
+        className={cx(tabStyle, selectedTab === 'guild' ? selectedTabStyle : nonSelectedTabStyle)}
       >
         Guild
       </Link>
@@ -127,14 +130,36 @@ const tabsStyle = css({
   display: 'flex',
   justifyContent: 'center',
   mb: '60px',
+
+  _mobile: {
+    backgroundColor: 'black.black_25',
+    width: 'fit-content',
+    margin: '0 auto 60px',
+    borderRadius: '20px',
+    p: '4px',
+  },
 });
 
 const tabStyle = css({
   textStyle: 'glyph18.bold',
-  color: 'white.white_50',
   p: '4px 10px',
+
+  _mobile: {
+    padding: '0 12px',
+    display: 'inline-flex',
+    textStyle: 'glyph16.bold',
+    height: '32px',
+    borderRadius: '32px',
+    lineHeight: '32px',
+  },
+});
+
+const nonSelectedTabStyle = css({
+  color: 'white.white_50',
+  _mobile: { color: 'white.white_25' },
 });
 
 const selectedTabStyle = css({
   color: 'white.white_100',
+  _mobile: { color: 'white.white_75', backgroundColor: 'white.white_10' },
 });

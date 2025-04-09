@@ -40,11 +40,11 @@ export function MobileGameConsole() {
 
         <motion.g
           animate={{ y: isPressed.button1 ? 5 : 0 }}
-          transition={{ type: 'spring', stiffness: 500, damping: 5 }}
+          transition={{ type: 'spring', stiffness: 500 }}
           onClick={() => handleButtonClick('button1')}
           style={{ cursor: 'pointer' }}
         >
-          <rect x="150.896" y="69.9619" width="36.5163" height="5.21662" fill="#00A057" />
+          <rect x="150.896" y="69.9619" width="36.5163" height="8.21662" fill="#00A057" />
           <path
             fill-rule="evenodd"
             clip-rule="evenodd"
@@ -56,11 +56,11 @@ export function MobileGameConsole() {
 
         <motion.g
           animate={{ y: isPressed.button2 ? 5 : 0 }}
-          transition={{ type: 'spring', stiffness: 500, damping: 5 }}
+          transition={{ type: 'spring', stiffness: 500 }}
           onClick={() => handleButtonClick('button2')}
           style={{ cursor: 'pointer' }}
         >
-          <rect x="224.451" y="69.9619" width="36.5163" height="5.21662" fill="#00B294" />
+          <rect x="224.451" y="69.9619" width="36.5163" height="8.21662" fill="#00B294" />
           <path
             fill-rule="evenodd"
             clip-rule="evenodd"
@@ -72,11 +72,11 @@ export function MobileGameConsole() {
 
         <motion.g
           animate={{ y: isPressed.button3 ? 5 : 0 }}
-          transition={{ type: 'spring', stiffness: 500, damping: 5 }}
+          transition={{ type: 'spring', stiffness: 500 }}
           onClick={() => handleButtonClick('button3')}
           style={{ cursor: 'pointer' }}
         >
-          <rect x="298.006" y="69.9619" width="36.5163" height="5.21662" fill="#1A77C0" />
+          <rect x="298.006" y="69.9619" width="36.5163" height="8.21662" fill="#1A77C0" />
           <path
             fill-rule="evenodd"
             clip-rule="evenodd"
