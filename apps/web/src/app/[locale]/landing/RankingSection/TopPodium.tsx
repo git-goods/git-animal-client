@@ -136,13 +136,13 @@ const runnerUpStyle = css({
 });
 
 const brightBgStyle = css({
-  width: '120px',
-  height: '120px',
+  width: '130px',
+  height: '130px',
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  zIndex: -1,
+  zIndex: 'base',
   opacity: 0.5,
   background:
     'radial-gradient(50% 50% at 50% 50%, #FFED86 0%, rgba(255, 237, 134, 0.17) 81%, rgba(255, 237, 134, 0.00) 100%)',
@@ -161,6 +161,8 @@ const profileStyle = css({
     height: '100%',
     borderRadius: '50%',
     objectFit: 'cover',
+    position: 'relative',
+    zIndex: 'aboveDefault',
   },
   _mobile: {
     width: '40px',
