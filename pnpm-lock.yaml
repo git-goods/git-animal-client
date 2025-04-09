@@ -165,6 +165,9 @@ importers:
       '@gitanimals/asset-font':
         specifier: workspace:*
         version: link:../../packages/asset/font
+      '@gitanimals/dayjs':
+        specifier: workspace:*
+        version: link:../../packages/lib/dayjs
       '@gitanimals/exception':
         specifier: workspace:*
         version: link:../../packages/exception
@@ -431,6 +434,10 @@ importers:
         version: 5.4.5
 
   packages/lib/dayjs:
+    dependencies:
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
     devDependencies:
       '@gitanimals/eslint-config':
         specifier: workspace:*
@@ -438,9 +445,6 @@ importers:
       '@gitanimals/typescript-config':
         specifier: workspace:*
         version: link:../../typescript-config
-      dayjs:
-        specifier: ^1.11.13
-        version: 1.11.13
       vitest:
         specifier: ^3.1.1
         version: 3.1.1(@types/debug@4.1.12)(@types/node@20.11.24)(lightningcss@1.23.0)(terser@5.31.1)

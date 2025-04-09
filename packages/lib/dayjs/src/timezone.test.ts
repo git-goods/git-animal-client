@@ -1,30 +1,25 @@
 import { describe, it, expect } from 'vitest';
-import { convertToUTC } from './timezone';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+import dayjs from './timezone';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
+describe('dayjs timezone', () => {
+  // 한국 시간
+  it('KST(UTC+9, Asia/Seoul) 21:00은 UTC 12:00과 같다', () => {
+    const utcTime = dayjs.tz('2025-03-09 12:00:00', 'UTC');
+    const kstTime = dayjs.tz('2025-03-09 21:00:00', 'Asia/Seoul');
+    expect(kstTime.isSame(utcTime)).toBe(true);
+  });
 
-describe('Timezone Utilities', () => {
-  describe('convertToUTC', () => {
-    it('KST에서 UTC로 변환하면 +9시간 차이가 나야 한다.', () => {
-      const date = dayjs.tz('2024-01-01 12:00:00', 'Asia/Seoul').toDate();
-      const utcDate = convertToUTC(date);
-      expect(utcDate.toISOString()).toBe('2024-01-01T03:00:00.000Z');
-    });
+  // 서머타임 미적용
+  it('EST(UTC-5, America/New_York) 07:00은 UTC 12:00과 같다', () => {
+    const utcTime = dayjs.tz('2025-03-09 12:00:00', 'UTC');
+    const estTime = dayjs.tz('2025-03-09 07:00:00', 'America/New_York');
+    expect(estTime.isSame(utcTime)).toBe(true);
+  });
 
-    it('EST에서 UTC로 변환하면 -5시간 차이가 나야 한다.', () => {
-      const date = dayjs.tz('2024-01-01 12:00:00', 'America/New_York').toDate();
-      const utcDate = convertToUTC(date);
-      expect(utcDate.toISOString()).toBe('2024-01-01T17:00:00.000Z');
-    });
-
-    it('UTC로 변환하면 시간대 오프셋이 0이어야 한다.', () => {
-      const date = new Date('2024-01-01T12:00:00');
-      const utcDate = convertToUTC(date);
-      expect(utcDate).toEqual(new Date('2024-01-01T03:00:00.000Z'));
-    });
+  // 서머타임 적용
+  it('EDT(UTC-4, America/New_York) 08:00은 UTC 12:00과 같다', () => {
+    const utcTime = dayjs.tz('2025-11-02 12:00:00', 'UTC');
+    const edtTime = dayjs.tz('2025-11-02 08:00:00', 'America/New_York');
+    expect(edtTime.isSame(utcTime)).toBe(true);
   });
 });
