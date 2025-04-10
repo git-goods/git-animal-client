@@ -3,10 +3,10 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import 'react-native-reanimated';
 import DebugPath from '../components/DebugPath';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useAuth } from '../hooks/useAuth'; // 인증 상태 관리 훅
@@ -38,7 +38,9 @@ export default function RootLayout() {
 
   return (
     <View style={{ flex: 1 }}>
-      <DebugPath />
+      <SafeAreaView>
+        <DebugPath />
+      </SafeAreaView>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack
           initialRouteName={isAuthenticated ? '(tabs)' : 'auth/login'}

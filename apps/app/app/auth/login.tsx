@@ -23,6 +23,10 @@ export default function LoginScreen() {
     }
   };
 
+  const onPressAppleLogin = async () => {
+    console.log('Apple 로그인 시작');
+  };
+
   const onPressLogout = async () => {
     try {
       await logout();
@@ -50,7 +54,10 @@ export default function LoginScreen() {
           </View>
         ) : (
           <View style={styles.contentContainer}>
-            <Text style={styles.subtitle}>GitHub으로 시작하기</Text>
+            <TouchableOpacity onPress={onPressAppleLogin} style={styles.githubButton}>
+              <Text style={styles.buttonText}>Apple 계정으로 로그인</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity onPress={onPressGithubLogin} style={styles.githubButton}>
               <Text style={styles.buttonText}>GitHub 계정으로 로그인</Text>
             </TouchableOpacity>
