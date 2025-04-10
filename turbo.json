@@ -10,7 +10,12 @@
     "build": {
       "dependsOn": ["^build", "^prepare"],
       "inputs": ["$TURBO_DEFAULT$", ".env", ".env.*"],
-      "outputs": [".next/**", "!.next/cache/**", ".vercel/**"]
+      "outputs": [".next/**", "!.next/cache/**", ".vercel/**", "build/**", "dist/**"]
+    },
+    "admin#build": {
+      "dependsOn": ["^build", "^prepare"],
+      "inputs": ["$TURBO_DEFAULT$", ".env", ".env.*"],
+      "outputs": ["dist/**", "build/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
