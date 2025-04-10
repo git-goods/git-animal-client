@@ -2,8 +2,6 @@
 
 import { useSearchParams } from 'next/navigation';
 import { css, cx } from '_panda/css';
-import { rankQueries } from '@gitanimals/react-query';
-import { useQuery } from '@tanstack/react-query';
 
 import { MediaQuery } from '@/components/MediaQuery';
 import { Link } from '@/i18n/routing';
@@ -13,17 +11,9 @@ import { MobileGameConsole } from './MobileGameConsole/MobileGameConsole';
 import { RankingTable } from './RankingTable';
 import { TopPodium } from './TopPodium';
 
-export default function RankingSection() {
+export default function RankingSection({ data: ranks }: { data: any }) {
   const searchParams = useSearchParams();
   const selectedTab = searchParams.get('ranking') ?? 'people';
-
-  const { data: ranks } = useQuery({
-    ...rankQueries.getRanksOptions({
-      rank: 1,
-      size: 8,
-      type: selectedTab === 'people' ? 'WEEKLY_USER_CONTRIBUTIONS' : 'WEEKLY_GUILD_CONTRIBUTIONS',
-    }),
-  });
 
   return (
     <div className={containerStyle}>
