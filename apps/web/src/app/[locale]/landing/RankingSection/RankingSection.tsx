@@ -63,7 +63,7 @@ const descriptionStyle = css({
   textAlign: 'center',
   mb: '120px',
   _mobile: {
-    mb: '40px',
+    mb: '0',
     textStyle: 'glyph16.regular',
   },
 });
