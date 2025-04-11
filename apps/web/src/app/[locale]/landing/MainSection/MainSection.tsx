@@ -6,11 +6,13 @@ import { Link } from '@/i18n/routing';
 
 import * as styles from './MainSection.style';
 import MainSlider from './MainSlider';
+import TopBanner from './TopBanner';
 
 async function MainSection() {
   const session = await getServerAuth();
   return (
     <section className={styles.section}>
+      <TopBanner />
       <h1 className={styles.heading}>Have your pet in GITHUB! </h1>
       <p className={styles.desc}>
         You can acquire and grow pets through GitHub activities. Choose from over 50 different pets and raise them.
@@ -29,7 +31,7 @@ async function MainSection() {
         </Link>
       )}
       <picture className={styles.bg}>
-        <source srcSet="/main/section1_bg-mobile.webp" media="(max-width: 768px)" type="image/webp" />
+        {/* <source srcSet="/main/section1_bg-mobile.webp" media="(max-width: 768px)" type="image/webp" /> */}
         <img src="/main/section1_bg-pc.webp" alt="section background" />
       </picture>
       <div className={styles.sliderContainer}>
