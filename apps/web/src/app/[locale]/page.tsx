@@ -25,6 +25,7 @@ export default function HomePage() {
     <div>
       <GNB />
       <MainSection />
+      {/* <RankingSection /> */}
       <AvailablePetSection />
       <HavePetWaySection />
       <ChoosePetSection />
