@@ -35,7 +35,7 @@ const useQuizAction = ({ contextId, quizDialog, round, prize, refetchQuiz }: Use
         answer,
       });
 
-      const { result } = await getRoundResult({
+      const { result, prize } = await getRoundResult({
         contextId,
         locale,
       });
@@ -47,11 +47,11 @@ const useQuizAction = ({ contextId, quizDialog, round, prize, refetchQuiz }: Use
 
       const isFinalStage = round.current === round.total;
       if (isFinalStage) {
-        completeDialog.open();
+        completeDialog.open(prize);
         return;
       }
 
-      correctDialog.open();
+      correctDialog.open(prize);
     } catch (error) {
       console.error(error);
       failDialog.open();

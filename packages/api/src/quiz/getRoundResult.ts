@@ -9,6 +9,7 @@ const GetRoundResultRequestSchema = z.object({
 
 const GetRoundResultResponseSchema = z.object({
   result: QuizResultSchema,
+  prize: z.number(),
 });
 
 export type GetRoundResultRequest = z.infer<typeof GetRoundResultRequestSchema>;

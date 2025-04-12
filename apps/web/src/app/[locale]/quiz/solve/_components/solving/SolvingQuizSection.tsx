@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
@@ -27,9 +28,10 @@ const SolvingQuizSection = wrap
   })
   .Suspense({ fallback: <></> })
   .on(function SolvingQuizSection({ contextId }: Props) {
-    const { round, level, problem, prize, status, refetchQuiz } = useQuizData({ contextId });
+    const { round, level, problem, refetchQuiz } = useQuizData({ contextId });
 
-    const quizDialog = useQuizDialogStatus();
+    const [prize, setPrize] = useState(0);
+    const quizDialog = useQuizDialogStatus({ setPrize });
     const quizAction = useQuizAction({
       contextId,
       quizDialog,
@@ -68,7 +70,7 @@ const SolvingQuizSection = wrap
           onClose={correctDialog.close}
           onStop={terminateQuiz}
           onConfirm={moveToNextStage}
-          currentPoint={prize}
+          correctPoint={prize}
         />
         <FailAlertDialog isOpen={failDialog.isOpen} onClose={moveToQuizMain} />
         <CompleteAlertDialog isOpen={completeDialog.isOpen} onClose={terminateQuiz} completePoint={prize} />
