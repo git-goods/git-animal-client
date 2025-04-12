@@ -8,6 +8,7 @@ const GetRoundResultRequestSchema = z.object({
 });
 
 const GetRoundResultResponseSchema = z.object({
+  prize: z.number(),
   result: QuizResultSchema,
 });
 

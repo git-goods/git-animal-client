@@ -34,7 +34,6 @@ const SolvingQuizSection = wrap
       contextId,
       quizDialog,
       round,
-      prize,
       refetchQuiz,
     });
 
@@ -66,12 +65,16 @@ const SolvingQuizSection = wrap
         <CorrectConfirmDialog
           isOpen={correctDialog.isOpen}
           onClose={correctDialog.close}
-          onStop={terminateQuiz}
+          onStop={() => terminateQuiz(prize)}
           onConfirm={moveToNextStage}
           currentPoint={prize}
         />
         <FailAlertDialog isOpen={failDialog.isOpen} onClose={moveToQuizMain} />
-        <CompleteAlertDialog isOpen={completeDialog.isOpen} onClose={terminateQuiz} completePoint={prize} />
+        <CompleteAlertDialog
+          isOpen={completeDialog.isOpen}
+          onClose={() => terminateQuiz(prize)}
+          completePoint={prize}
+        />
       </>
     );
   });

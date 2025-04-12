@@ -6,7 +6,7 @@ import { Button, Dialog } from '@gitanimals/ui-panda';
 
 interface CompleteAlertDialogProps {
   completePoint: number;
-  onClose: () => void;
+  onClose: (prize: number) => void;
   isOpen: boolean;
 }
 
@@ -17,12 +17,12 @@ const CompleteAlertDialog = ({ completePoint, onClose, isOpen }: CompleteAlertDi
     if (isLoading) return;
 
     setIsLoading(true);
-    await onClose();
+    await onClose(completePoint);
     setIsLoading(false);
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen}>
       <Dialog.Content className={contentStyle} isShowClose={false}>
         <Flex flexDirection="column" alignItems="center" gap="12px" width="100%">
           <Dialog.Title className={titleStyle}>Champion of the quiz!</Dialog.Title>

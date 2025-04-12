@@ -19,11 +19,10 @@ interface UseQuizActionProps {
     total: number;
     current: number;
   };
-  prize: number;
   refetchQuiz: () => void;
 }
 
-const useQuizAction = ({ contextId, quizDialog, round, prize, refetchQuiz }: UseQuizActionProps) => {
+const useQuizAction = ({ contextId, quizDialog, round, refetchQuiz }: UseQuizActionProps) => {
   const locale = useLocale() as Locale;
   const { correctDialog, failDialog, completeDialog } = quizDialog;
 
@@ -35,7 +34,7 @@ const useQuizAction = ({ contextId, quizDialog, round, prize, refetchQuiz }: Use
         answer,
       });
 
-      const { result } = await getRoundResult({
+      const { result, prize } = await getRoundResult({
         contextId,
         locale,
       });
@@ -59,7 +58,7 @@ const useQuizAction = ({ contextId, quizDialog, round, prize, refetchQuiz }: Use
   };
 
   const router = useRouter();
-  const terminateQuiz = () => {
+  const terminateQuiz = (prize: number) => {
     toast.success(`Finished quiz. You got ${prize}P!`);
     moveToQuizMain();
   };
