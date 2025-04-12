@@ -16,7 +16,7 @@ const layoutStyle = css({
   justifyContent: 'center',
   alignItems: 'center',
   width: '100%',
-  height: 'calc(100vh - var(--mobile-header-height))',
+  minHeight: 'calc(100vh - var(--mobile-header-height))',
   backgroundColor: 'black',
   zIndex: 0,
 });
