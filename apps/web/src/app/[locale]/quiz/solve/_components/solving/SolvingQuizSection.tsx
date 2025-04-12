@@ -79,6 +79,7 @@ export default SolvingQuizSection;
 const containerStyle = css({
   display: 'flex',
   flexDirection: 'column',
+  flex: 1,
   width: '100%',
   height: '100%',
   padding: '40px 16px',
@@ -106,12 +107,13 @@ const difficultyStyle = css({
 });
 
 const contentStyle = css({
+  flex: 1,
+  flexShrink: 1,
+  height: '100%',
   textStyle: 'glyph16.regular',
   fontFamily: 'Product Sans',
   fontWeight: 400,
   color: 'white.white_75',
-  flexShrink: 1,
-  height: '100%',
   overflowY: 'auto',
 });
 

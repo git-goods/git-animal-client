@@ -69,6 +69,7 @@ const containerStyle = css({
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
+  flex: 1,
   width: '100%',
   height: '100%',
   paddingInline: '16px',
@@ -108,7 +109,6 @@ const contentContainerStyle = css({
   justifyContent: 'center',
   alignItems: 'center',
   width: '100%',
-  height: '100%',
 });
 
 const buttonContainerStyle = css({
