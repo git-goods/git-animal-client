@@ -16,7 +16,7 @@ import { TenPet } from './TenPet';
 
 export function PetGotcha() {
   const t = useTranslations('Gotcha');
-  const [openModal, setOpenModal] = useState<'one-pet' | 'ten-pet' | 'ratio-chart' | null>(null);
+  const [openModal, setOpenModal] = useState<'one-pet' | 'ten-pet' | 'ratio-chart' | 'one-pet-1' | null>(null);
 
   return (
     <div className={containerStyle}>

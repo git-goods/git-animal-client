@@ -2,8 +2,9 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { css, cx } from '_panda/css';
-import { Card, CardBack } from '@gitanimals/ui-panda';
+import { GameCard } from '@gitanimals/ui-panda';
 
+import { AnimalCardBack } from '@/components/AnimalCard/AnimalCard';
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
 import { getPersonaImage } from '@/utils/image';
 
@@ -61,15 +62,16 @@ const CardFlipGame = ({ onGetPersona, getPersona }: CardFlipGameProps) => {
               )}
             >
               <div className={cx(cardFaceStyle, selectedCard !== null && cardScaleStyle)}>
-                <CardBack tier="S_PLUS" />
+                <AnimalCardBack tier="S_PLUS" />
               </div>
               <div className={cx(cardFaceStyle, cardBackStyle)}>
                 {getPersona && (
-                  <Card
+                  <GameCard
+                    title={getPersona.type}
+                    percentage={getPersona.dropRate}
                     tier={getPersona.tier}
-                    type={getPersona.type}
-                    dropRate={getPersona.dropRate}
-                    personaImage={getPersonaImage(getPersona.type)}
+                    imageUrl={getPersonaImage(getPersona.type)}
+                    size="responsive"
                   />
                 )}
               </div>

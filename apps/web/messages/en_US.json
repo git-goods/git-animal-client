@@ -53,7 +53,8 @@
     "many-error-message": "If you continue to experience problems, please contact us.",
     "gotcha-in-progress": "Drawing in progress. Please wait a moment.",
     "click-card-to-flip": "Click the card to flip!",
-    "not-enough-points": "You don't have enough points to draw a pet."
+    "not-enough-points": "You don't have enough points to draw a pet.",
+    "click-to-close": "Touch the screen to close."
   },
   "Shop": {
     "no-mobile-support": "Currently, mobile is not supported. Please connect to the desktop.",

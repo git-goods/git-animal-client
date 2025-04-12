@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect } from 'react';
 import { center } from '_panda/patterns';
 import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
 import { setRenderRequestInterceptor, setRenderResponseInterceptor } from '@gitanimals/api/src/_instance';
@@ -19,6 +22,13 @@ function JWTPage({
 }) {
   const jwtToken = searchParams.jwt;
   const token = jwtToken.split(' ')[1];
+
+  useEffect(() => {
+    console.log('[Auth Debug] JWTPage: Page loaded with JWT token', {
+      hasToken: !!token,
+      tokenLength: token?.length,
+    });
+  }, [token]);
 
   setRequestInterceptor(interceptorRequestFulfilled);
   setResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);

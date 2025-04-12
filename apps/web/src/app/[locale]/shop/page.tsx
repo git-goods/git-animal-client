@@ -37,7 +37,6 @@ async function ShopPage({
     <div>
       <GNB />
       <FloatingPointSection />
-
       <main>
         <PetGotcha />
         <AuctionSection selectedTab={searchParamsTab} />
