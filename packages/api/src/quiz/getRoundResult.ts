@@ -9,6 +9,7 @@ const GetRoundResultRequestSchema = z.object({
 
 const GetRoundResultResponseSchema = z.object({
   result: QuizResultSchema,
+  prize: z.number(),
 });
 
 export type GetRoundResultRequest = z.infer<typeof GetRoundResultRequestSchema>;
@@ -17,10 +18,11 @@ export type GetRoundResultResponse = z.infer<typeof GetRoundResultResponseSchema
 export const getRoundResult = async (
   request: GetRoundResultRequest & QuizCommonHeader,
 ): Promise<GetRoundResultResponse> => {
-  return await safeGet(GetRoundResultResponseSchema)(`/quizs/context/${request.contextId}/results/result`, {
+  const { contextId, locale } = request;
+
+  return await safeGet(GetRoundResultResponseSchema)(`/quizs/context/${contextId}/results`, {
     headers: {
-      Authorization: `Bearer ${request.token}`,
-      Locale: request.language,
+      Locale: locale,
     },
   });
 };
