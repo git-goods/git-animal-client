@@ -18,7 +18,6 @@ const useQuizData = ({ contextId }: Props) => {
   );
 
   const { round, level, category, problem, prize, status } = data;
-
   return { round, level, category, problem, prize, status, refetchQuiz };
 };
 
