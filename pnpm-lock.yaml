@@ -579,7 +579,7 @@ importers:
         version: 8.1.9(@types/react-dom@18.2.19)(@types/react@18.2.61)(prettier@3.2.5)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       '@storybook/addon-interactions':
         specifier: ^8.0.9
-        version: 8.1.9
+        version: 8.1.9(vitest@3.1.1(@types/debug@4.1.12)(@types/node@20.11.24)(lightningcss@1.23.0)(terser@5.31.1))
       '@storybook/addon-links':
         specifier: ^8.0.9
         version: 8.1.9(react@18.2.0)
@@ -591,13 +591,13 @@ importers:
         version: 8.1.9(@types/react-dom@18.2.19)(@types/react@18.2.61)(prettier@3.2.5)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       '@storybook/nextjs':
         specifier: ^8.0.9
-        version: 8.1.9(esbuild@0.20.2)(next@14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(prettier@3.2.5)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(type-fest@2.19.0)(typescript@5.4.5)(webpack-hot-middleware@2.26.1)(webpack@5.92.0(esbuild@0.20.2))
+        version: 8.1.9(esbuild@0.20.2)(next@14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(prettier@3.2.5)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(type-fest@2.19.0)(typescript@5.4.5)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@20.11.24)(lightningcss@1.23.0)(terser@5.31.1))(webpack-hot-middleware@2.26.1)(webpack@5.92.0(esbuild@0.20.2))
       '@storybook/react':
         specifier: ^8.0.9
         version: 8.1.9(prettier@3.2.5)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5)
       '@storybook/test':
         specifier: ^8.0.9
-        version: 8.1.9
+        version: 8.1.9(vitest@3.1.1(@types/debug@4.1.12)(@types/node@20.11.24)(lightningcss@1.23.0)(terser@5.31.1))
       '@turbo/gen':
         specifier: ^1.12.4
         version: 1.12.4(@types/node@20.11.24)(typescript@5.4.5)
