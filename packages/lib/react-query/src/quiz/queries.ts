@@ -1,4 +1,4 @@
-import { getQuiz, getRoundResult } from '@gitanimals/api';
+import { getQuiz, getQuizToday, getRoundResult } from '@gitanimals/api';
 import { queryOptions } from '@tanstack/react-query';
 
 interface QuizCommonHeader {
@@ -9,6 +9,12 @@ export const quizQueries = {
   allKey: () => ['quiz'],
   quizKey: () => quizQueries.allKey(),
   getQuiz: (contextId: string) => ['quiz', contextId],
+  getQuizToday: () => ['quiz', 'today'],
+  getQuizTodayOptions: () =>
+    queryOptions({
+      queryKey: quizQueries.getQuizToday(),
+      queryFn: () => getQuizToday(),
+    }),
   getQuizOptions: (request: { contextId: string } & QuizCommonHeader) =>
     queryOptions({
       queryKey: quizQueries.getQuiz(request.contextId),
