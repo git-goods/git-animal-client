@@ -28,5 +28,6 @@ export const QUIZ_ANSWER = {
 export const QUIZ_RESULT = {
   SUCCESS: 'SUCCESS',
   FAIL: 'FAIL',
+  DONE: 'DONE',
 } as const;
 export type QuizResult = (typeof QUIZ_RESULT)[keyof typeof QUIZ_RESULT];

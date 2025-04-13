@@ -40,18 +40,17 @@ const useQuizAction = ({ contextId, quizDialog, round, prize, refetchQuiz }: Use
         locale,
       });
 
-      if (result === QUIZ_RESULT.FAIL) {
-        failDialog.open();
-        return;
+      switch (result) {
+        case QUIZ_RESULT.FAIL:
+          failDialog.open();
+          break;
+        case QUIZ_RESULT.SUCCESS:
+          correctDialog.open(prize);
+          break;
+        case QUIZ_RESULT.DONE:
+          completeDialog.open(prize);
+          break;
       }
-
-      const isFinalStage = round.current === round.total;
-      if (isFinalStage) {
-        completeDialog.open(prize);
-        return;
-      }
-
-      correctDialog.open(prize);
     } catch (error) {
       console.error(error);
       failDialog.open();
