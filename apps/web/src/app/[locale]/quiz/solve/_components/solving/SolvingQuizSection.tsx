@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
@@ -30,8 +30,9 @@ const SolvingQuizSection = wrap
   .on(function SolvingQuizSection({ contextId }: Props) {
     const { round, level, problem, refetchQuiz } = useQuizData({ contextId });
 
+    const [isRoundEnd, setIsRoundEnd] = useState(false);
     const [prize, setPrize] = useState(0);
-    const quizDialog = useQuizDialogStatus({ setPrize });
+    const quizDialog = useQuizDialogStatus({ setPrize, setIsRoundEnd });
     const quizAction = useQuizAction({
       contextId,
       quizDialog,
@@ -42,6 +43,11 @@ const SolvingQuizSection = wrap
 
     const { correctDialog, failDialog, completeDialog } = quizDialog;
     const { submit, terminateQuiz, moveToNextStage, moveToQuizMain } = quizAction;
+
+    // round 바뀌면 타이머 정지 해제
+    useEffect(() => {
+      setIsRoundEnd(false);
+    }, [round]);
 
     return (
       <>
@@ -54,7 +60,7 @@ const SolvingQuizSection = wrap
           <p className={cx(contentStyle, customScrollStyle)}>{problem}</p>
           <div className={bottomContainerStyle}>
             <p className={noticeStyle}>Choose the correct answer!</p>
-            <QuizProgressBar progress={30} />
+            <QuizProgressBar timeoutAt={round.timeoutAt} onTimeout={failDialog.open} paused={isRoundEnd} />
             <Flex gap="8px" marginTop="24px">
               <button className={oxButtonStyle} title="O" onClick={() => submit(QUIZ_ANSWER.YES)}>
                 <Image src="/quiz/ox_o.webp" alt="O" width={60} height={60} />
