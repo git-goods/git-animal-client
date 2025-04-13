@@ -1,12 +1,19 @@
 import z from 'zod';
-import { PersonaSchema } from '../render';
 import { safePatch } from '../_instance/safe';
 
+const ChangeProductPersonaSchema = z.object({
+  personaId: z.string(),
+  personaType: z.string(),
+  personaLevel: z.number(),
+});
+
 const ChangeProductResponseSchema = z.object({
+  id: z.string(),
   sellerId: z.string(),
-  persona: PersonaSchema,
+  persona: ChangeProductPersonaSchema,
   price: z.string(),
   paymentState: z.string(),
+  receipt: z.string().nullable(),
 });
 
 const ChangeProductRequestSchema = z.object({
