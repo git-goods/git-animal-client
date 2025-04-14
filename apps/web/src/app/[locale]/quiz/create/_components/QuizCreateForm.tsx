@@ -33,7 +33,7 @@ const QuizCreateForm = () => {
     options: [
       { label: t('easy'), value: QUIZ_LEVEL.EASY },
       { label: t('medium'), value: QUIZ_LEVEL.MEDIUM },
-      { label: t('hard'), value: QUIZ_LEVEL.DIFFICULT },
+      { label: t('difficult'), value: QUIZ_LEVEL.DIFFICULT },
     ],
   });
 

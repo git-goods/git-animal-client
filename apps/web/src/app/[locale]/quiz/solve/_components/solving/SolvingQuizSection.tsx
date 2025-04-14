@@ -57,7 +57,9 @@ const SolvingQuizSection = wrap
           <p className={titleStyle}>
             Quiz {round.current}/{round.total}
           </p>
-          <span className={difficultyStyle}>{level} Level</span>
+          <span className={difficultyStyle}>
+            {t(level.toLowerCase())} {t('level')}
+          </span>
           <p className={cx(contentStyle, customScrollStyle)}>{problem}</p>
           <div className={bottomContainerStyle}>
             <p className={noticeStyle}>{t('timer-mention')}</p>
