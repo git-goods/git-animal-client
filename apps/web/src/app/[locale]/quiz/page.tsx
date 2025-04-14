@@ -1,16 +1,21 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 
 import { Background } from '@/app/[locale]/quiz/_components/BackGround';
 
 import SelectQuizType from './_components/CreateOrSolve/SelectQuizType';
 
-async function QuizPage() {
+function QuizPage() {
+  const t = useTranslations('Quiz');
+
   return (
     <>
       <Background widthBottom />
       <div className={containerStyle}>
         <h1 className={titleStyle}>Quiz</h1>
-        <h2 className={descriptionStyle}>Create a quiz or solve it to earn points!</h2>
+        <h2 className={descriptionStyle}>{t('quiz-solve-description')}</h2>
         <SelectQuizType />
       </div>
     </>

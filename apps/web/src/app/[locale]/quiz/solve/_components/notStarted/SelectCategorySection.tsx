@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Image from 'next/image';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { createQuizContext } from '@gitanimals/api';
@@ -34,6 +34,7 @@ const SelectCategorySection = wrap
     fallback: <></>,
   })
   .on(function SelectCategorySection({ setStatus, setContextId }: Props) {
+    const t = useTranslations('Quiz');
     const { isSolved } = useTodayQuizData();
     const {
       tabsTriggerProps: categoryRadioProps,
@@ -72,8 +73,8 @@ const SelectCategorySection = wrap
     return (
       <div className={containerStyle}>
         <div className={contentContainerStyle}>
-          <h1 className={titleStyle}>Category</h1>
-          <h2 className={descriptionStyle}>Choose the category of the quiz</h2>
+          <h1 className={titleStyle}>{t('category')}</h1>
+          <h2 className={descriptionStyle}>{t('category-description')}</h2>
           <Tabs value={category} onValueChange={(value) => handleChangeCategory(value as QuizCategory)}>
             <TabsList>
               {categoryRadioProps.map((tabsTriggerItem) => {
@@ -94,7 +95,7 @@ const SelectCategorySection = wrap
         </div>
         <div className={buttonContainerStyle}>
           <Button className={buttonStyle} onClick={handleStart}>
-            Start!
+            {t('start')}
           </Button>
         </div>
       </div>

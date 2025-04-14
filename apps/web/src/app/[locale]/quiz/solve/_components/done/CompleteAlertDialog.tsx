@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { Button, Dialog } from '@gitanimals/ui-panda';
+
+import { customT } from '../../../_utils/quiz.intl';
 
 interface CompleteAlertDialogProps {
   completePoint: number;
@@ -11,6 +14,7 @@ interface CompleteAlertDialogProps {
 }
 
 const CompleteAlertDialog = ({ completePoint, onClose, isOpen }: CompleteAlertDialogProps) => {
+  const t = useTranslations('Quiz');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClose = async () => {
@@ -25,9 +29,9 @@ const CompleteAlertDialog = ({ completePoint, onClose, isOpen }: CompleteAlertDi
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content className={contentStyle} isShowClose={false}>
         <Flex flexDirection="column" alignItems="center" gap="12px" width="100%">
-          <Dialog.Title className={titleStyle}>Champion of the quiz!</Dialog.Title>
+          <Dialog.Title className={titleStyle}>{t('complete-dialog.title')}</Dialog.Title>
           <Dialog.Description className={descriptionStyle}>
-            Finished the final quiz and got {completePoint}P.
+            {customT(t('complete-dialog.description'), { point: completePoint })}
           </Dialog.Description>
         </Flex>
         <div className={imageContainerStyle}>
@@ -35,7 +39,7 @@ const CompleteAlertDialog = ({ completePoint, onClose, isOpen }: CompleteAlertDi
         </div>
         <Flex width="100%">
           <Button className={buttonStyle} onClick={handleClose} variant="secondary" size="m">
-            Close
+            {t('complete-dialog.close-button')}
           </Button>
         </Flex>
       </Dialog.Content>
