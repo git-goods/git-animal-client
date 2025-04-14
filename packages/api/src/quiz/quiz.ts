@@ -1,4 +1,3 @@
 export interface QuizCommonHeader {
-  token: string;
-  language: 'ko' | 'en';
+  locale: 'en_US' | 'ko_KR';
 }

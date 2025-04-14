@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 
 interface QuizTypeCardProps {
@@ -8,11 +8,12 @@ interface QuizTypeCardProps {
   image: string;
   point: string;
   onClick: () => void;
+  isDisabled?: boolean;
 }
 
-const QuizTypeCard = ({ title, description, image, point, onClick }: QuizTypeCardProps) => {
+const QuizTypeCard = ({ title, description, image, point, onClick, isDisabled }: QuizTypeCardProps) => {
   return (
-    <button className={cardStyle} onClick={onClick}>
+    <button className={cx(cardStyle, isDisabled && disabledStyle)} onClick={onClick} disabled={isDisabled}>
       <Image className={imageStyle} src={image} alt={title} width={100} height={100} />
       <Flex direction="column" gap="4px">
         <h4 className={titleStyle}>{title}</h4>
@@ -34,6 +35,11 @@ const cardStyle = css({
   padding: '40px 24px',
   backgroundColor: 'white.white_25',
   borderRadius: '10px',
+});
+
+const disabledStyle = css({
+  opacity: 0.5,
+  pointerEvents: 'none',
 });
 
 const imageStyle = css({

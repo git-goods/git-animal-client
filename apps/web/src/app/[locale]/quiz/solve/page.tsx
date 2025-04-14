@@ -13,13 +13,14 @@ function SolveQuizPage() {
 
   // TODO:: UI 작업을 위한 임시 status
   const [status, setStatus] = useState<QuizStatus>(QUIZ_STATUS.NOT_STARTED);
+  const [contextId, setContextId] = useState<string | null>(null);
 
   if (status === QUIZ_STATUS.NOT_STARTED) {
-    return <SelectCategorySection setStatus={setStatus} />;
+    return <SelectCategorySection setStatus={setStatus} setContextId={setContextId} />;
   }
 
-  if (status === QUIZ_STATUS.SOLVING) {
-    return <SolvingQuizSection />;
+  if (status === QUIZ_STATUS.SOLVING && contextId) {
+    return <SolvingQuizSection contextId={contextId} />;
   }
 
   return null;

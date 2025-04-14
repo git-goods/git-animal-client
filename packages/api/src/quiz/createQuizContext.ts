@@ -17,10 +17,11 @@ export type CreateQuizContextResponse = z.infer<typeof CreateQuizContextResponse
 export const createQuizContext = async (
   request: CreateQuizContextRequest & QuizCommonHeader,
 ): Promise<CreateQuizContextResponse> => {
-  return await safePost(CreateQuizContextResponseSchema)('/quizs/context', request, {
+  const { locale, ...data } = request;
+
+  return await safePost(CreateQuizContextResponseSchema)('/quizs/context', data, {
     headers: {
-      Authorization: `Bearer ${request.token}`,
-      Locale: request.language,
+      Locale: locale,
     },
   });
 };

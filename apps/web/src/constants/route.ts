@@ -5,8 +5,15 @@ const GUILD = {
   JOIN: (id: string) => `/guild/detail/${id}/join`,
 };
 
+const QUIZ = {
+  MAIN: () => '/quiz',
+  CREATE: () => '/quiz/create',
+  SOLVE: () => '/quiz/solve',
+};
+
 export const ROUTE = {
   GUILD,
+  QUIZ,
 };
 
 export const ORIGIN_URL = 'https://www.gitanimals.org/en_US';

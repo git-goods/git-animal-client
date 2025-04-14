@@ -1,78 +1,88 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
+import { wrap } from '@suspensive/react';
 
 import { Background } from '@/app/[locale]/quiz/_components/BackGround';
 import CompleteAlertDialog from '@/app/[locale]/quiz/solve/_components/done/CompleteAlertDialog';
 import FailAlertDialog from '@/app/[locale]/quiz/solve/_components/fail/FailAlertDialog';
 import QuizProgressBar from '@/app/[locale]/quiz/solve/_components/solving/QuizProgressBar';
 import CorrectConfirmDialog from '@/app/[locale]/quiz/solve/_components/success/CorrectConfirmDialog';
-import {
-  QUIZ_ANSWER,
-  QUIZ_POINT_MAP,
-  QUIZ_TOTAL_STAGE,
-} from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
+import { QUIZ_ANSWER } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
 import { customScrollStyle } from '@/styles/scrollStyle';
 
 import useQuizAction from '../../_hooks/useQuizAction';
+import useQuizData from '../../_hooks/useQuizData';
 import useQuizDialogStatus from '../../_hooks/useQuizDialogStatus';
 
-// 임시 데이터
-const difficulty = 'Easy';
-const content =
-  'Q. Example of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz ContentExample of Quiz Content?';
+interface Props {
+  contextId: string;
+}
 
-const SolvingQuizSection = () => {
-  const [stage, setStage] = useState(1);
-  const currentPoint = QUIZ_POINT_MAP[stage - 1];
+const SolvingQuizSection = wrap
+  .ErrorBoundary({
+    fallback: () => <></>,
+  })
+  .Suspense({ fallback: <></> })
+  .on(function SolvingQuizSection({ contextId }: Props) {
+    const { round, level, problem, refetchQuiz } = useQuizData({ contextId });
 
-  const quizDialog = useQuizDialogStatus();
-  const quizAction = useQuizAction({
-    stage,
-    setStage,
-    quizDialog,
-  });
+    const [isRoundEnd, setIsRoundEnd] = useState(false);
+    const [prize, setPrize] = useState(0);
+    const quizDialog = useQuizDialogStatus({ setPrize, setIsRoundEnd });
+    const quizAction = useQuizAction({
+      contextId,
+      quizDialog,
+      round,
+      prize,
+      refetchQuiz,
+    });
 
-  const { correctDialog, failDialog, completeDialog } = quizDialog;
-  const { submit, terminateQuiz, moveToNextStage, moveToQuizMain } = quizAction;
+    const { correctDialog, failDialog, completeDialog } = quizDialog;
+    const { submit, terminateQuiz, moveToNextStage, moveToQuizMain } = quizAction;
 
-  return (
-    <>
-      <Background />
-      <div className={containerStyle}>
-        <p className={titleStyle}>
-          Quiz {stage}/{QUIZ_TOTAL_STAGE}
-        </p>
-        <span className={difficultyStyle}>{difficulty} Level</span>
-        <p className={cx(contentStyle, customScrollStyle)}>{content}</p>
-        <div className={bottomContainerStyle}>
-          <p className={noticeStyle}>Choose the correct answer!</p>
-          <QuizProgressBar progress={30} />
-          <Flex gap="8px" marginTop="24px">
-            <button className={oxButtonStyle} title="O" onClick={() => submit(QUIZ_ANSWER.YES)}>
-              <Image src="/quiz/ox_o.webp" alt="O" width={60} height={60} />
-            </button>
-            <button className={oxButtonStyle} title="X" onClick={() => submit(QUIZ_ANSWER.NO)}>
-              <Image src="/quiz/ox_x.webp" alt="X" width={60} height={60} />
-            </button>
-          </Flex>
+    // round 바뀌면 타이머 정지 해제
+    useEffect(() => {
+      setIsRoundEnd(false);
+    }, [round]);
+
+    return (
+      <>
+        <Background />
+        <div className={containerStyle}>
+          <p className={titleStyle}>
+            Quiz {round.current}/{round.total}
+          </p>
+          <span className={difficultyStyle}>{level} Level</span>
+          <p className={cx(contentStyle, customScrollStyle)}>{problem}</p>
+          <div className={bottomContainerStyle}>
+            <p className={noticeStyle}>Choose the correct answer!</p>
+            <QuizProgressBar timeoutAt={round.timeoutAt} onTimeout={failDialog.open} paused={isRoundEnd} />
+            <Flex gap="8px" marginTop="24px">
+              <button className={oxButtonStyle} title="O" onClick={() => submit(QUIZ_ANSWER.YES)}>
+                <Image src="/quiz/ox_o.webp" alt="O" width={60} height={60} />
+              </button>
+              <button className={oxButtonStyle} title="X" onClick={() => submit(QUIZ_ANSWER.NO)}>
+                <Image src="/quiz/ox_x.webp" alt="X" width={60} height={60} />
+              </button>
+            </Flex>
+          </div>
         </div>
-      </div>
-      <CorrectConfirmDialog
-        isOpen={correctDialog.isOpen}
-        onClose={correctDialog.close}
-        onStop={terminateQuiz}
-        onConfirm={moveToNextStage}
-        currentPoint={currentPoint}
-      />
-      <FailAlertDialog isOpen={failDialog.isOpen} onClose={moveToQuizMain} />
-      <CompleteAlertDialog isOpen={completeDialog.isOpen} onClose={terminateQuiz} completePoint={currentPoint} />
-    </>
-  );
-};
+        <CorrectConfirmDialog
+          isOpen={correctDialog.isOpen}
+          onClose={correctDialog.close}
+          onStop={terminateQuiz}
+          onConfirm={moveToNextStage}
+          correctPoint={prize}
+        />
+        <FailAlertDialog isOpen={failDialog.isOpen} onClose={moveToQuizMain} />
+        <CompleteAlertDialog isOpen={completeDialog.isOpen} onClose={terminateQuiz} completePoint={prize} />
+      </>
+    );
+  });
 
 export default SolvingQuizSection;
 

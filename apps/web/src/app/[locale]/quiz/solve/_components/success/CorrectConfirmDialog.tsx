@@ -5,14 +5,14 @@ import { Flex } from '_panda/jsx';
 import { Button, Dialog } from '@gitanimals/ui-panda';
 
 interface CorrectConfirmDialogProps {
-  currentPoint: number;
+  correctPoint: number;
   onConfirm: () => void;
   onStop: () => void;
   onClose: () => void;
   isOpen: boolean;
 }
 
-const CorrectConfirmDialog = ({ currentPoint, onConfirm, onStop, onClose, isOpen }: CorrectConfirmDialogProps) => {
+const CorrectConfirmDialog = ({ correctPoint, onConfirm, onStop, onClose, isOpen }: CorrectConfirmDialogProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleConfirm = async () => {
@@ -55,7 +55,7 @@ const CorrectConfirmDialog = ({ currentPoint, onConfirm, onStop, onClose, isOpen
             Challenge the next Quiz
           </Button>
           <Button className={buttonStyle} onClick={handleStop} variant="secondary" size="m">
-            Stop Quiz & Get {currentPoint}P
+            Stop Quiz & Get {correctPoint}P
           </Button>
         </Flex>
       </Dialog.Content>

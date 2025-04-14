@@ -6,5 +6,6 @@ export * from './user';
 export * from './shop';
 export * from './inbox';
 export * from './guild';
+export * from './quiz';
 export * from './rank';
 export * from './quiz';
