@@ -174,5 +174,58 @@
   "Guild": {
     "join-request-success": "Successfully sent a guild join request.",
     "invalid-guild-name": "Guild name may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen."
+  },
+  "Quiz": {
+    "quiz-solve-description": "Create a quiz or solve it to earn points!",
+    "create-quiz-card-title": "Create Quiz",
+    "create-quiz-card-description": "Create an O/X quiz and get [point]P!",
+    "difficulty-level": "Difficulty Level",
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "category": "Category",
+    "category-description": "Choose the category of the quiz.",
+    "quiz-contents": "Quiz Contents",
+    "quiz-contents-description": "Write down the contents of the quiz...",
+    "answer-title": "Answer",
+    "answer-description": "Choose the correct answer for the quiz.",
+    "create-quiz-button": "Create",
+    "solve-quiz-card-title": {
+      "not-started": "Solve Quiz",
+      "fail": "Quiz Failed",
+      "done": "Quiz Solved"
+    },
+    "solve-quiz-card-description": {
+      "not-started": "Solve random quiz and get up to [point]P! You can only try once a day.",
+      "fail": "Failed today's quiz",
+      "done": "Already solved today and earned [point]P"
+    },
+    "solve-quiz-card-point": {
+      "not-started": "Up to [point]P",
+      "fail": "Better Luck Tomorrow!",
+      "done": "Earned [point]P"
+    },
+    "solve-todays-quiz": "Solve today's quiz?",
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "start": "Start!",
+    "correct-dialog": {
+      "title": "Correct!",
+      "description": "Challenge the next quiz and get double points.",
+      "challenge-button": "Challenge the next Quiz",
+      "stop-button": "Stop Quiz & Get [point]P"
+    },
+    "fail-dialog": {
+      "title": "Wrong answer..",
+      "description": "You can't get points because the challenge failed.",
+      "close-button": "Close"
+    },
+    "complete-dialog": {
+      "title": "Champion of the quiz!",
+      "description": "Finished the final quiz and got [point]P.",
+      "close-button": "Close"
+    },
+    "timer-mention": "Choose the correct answer!",
+    "quiz-finished": "Finished quiz. You got [point]P!"
   }
 }

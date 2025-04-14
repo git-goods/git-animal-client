@@ -1,10 +1,16 @@
-import Link from 'next/link';
+'use client';
+
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { ChevronLeft } from 'lucide-react';
+
+import { Link } from '@/i18n/routing';
 
 import QuizCreateForm from './_components/QuizCreateForm';
 
 function CreateQuizPage() {
+  const t = useTranslations('Quiz');
+
   return (
     <div className={containerStyle}>
       <div className={headingStyle}>
@@ -12,7 +18,7 @@ function CreateQuizPage() {
           <Link href="/quiz">
             <ChevronLeft className={headingPrevButtonStyle} size={24} color="white" />
           </Link>
-          Create Quiz
+          {t('create-quiz-card-title')}
         </h1>
       </div>
       <QuizCreateForm />

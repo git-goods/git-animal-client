@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { wrap } from '@suspensive/react';
@@ -28,6 +29,7 @@ const SolvingQuizSection = wrap
   })
   .Suspense({ fallback: <></> })
   .on(function SolvingQuizSection({ contextId }: Props) {
+    const t = useTranslations('Quiz');
     const { round, level, problem, refetchQuiz } = useQuizData({ contextId });
 
     const [isRoundEnd, setIsRoundEnd] = useState(false);
@@ -36,7 +38,6 @@ const SolvingQuizSection = wrap
     const quizAction = useQuizAction({
       contextId,
       quizDialog,
-      round,
       prize,
       refetchQuiz,
     });
@@ -59,7 +60,7 @@ const SolvingQuizSection = wrap
           <span className={difficultyStyle}>{level} Level</span>
           <p className={cx(contentStyle, customScrollStyle)}>{problem}</p>
           <div className={bottomContainerStyle}>
-            <p className={noticeStyle}>Choose the correct answer!</p>
+            <p className={noticeStyle}>{t('timer-mention')}</p>
             <QuizProgressBar timeoutAt={round.timeoutAt} onTimeout={failDialog.open} paused={isRoundEnd} />
             <Flex gap="8px" marginTop="24px">
               <button className={oxButtonStyle} title="O" onClick={() => submit(QUIZ_ANSWER.YES)}>

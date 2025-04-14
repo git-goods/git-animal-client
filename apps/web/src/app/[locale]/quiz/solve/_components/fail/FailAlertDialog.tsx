@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { Button, Dialog } from '@gitanimals/ui-panda';
@@ -10,6 +11,7 @@ interface FailAlertDialogProps {
 }
 
 const FailAlertDialog = ({ onClose, isOpen }: FailAlertDialogProps) => {
+  const t = useTranslations('Quiz');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClose = async () => {
@@ -24,17 +26,15 @@ const FailAlertDialog = ({ onClose, isOpen }: FailAlertDialogProps) => {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content className={contentStyle} isShowClose={false}>
         <Flex flexDirection="column" alignItems="center" gap="12px" width="100%">
-          <Dialog.Title className={titleStyle}>Wrong answer..</Dialog.Title>
-          <Dialog.Description className={descriptionStyle}>
-            You can't get points because the challenge failed.
-          </Dialog.Description>
+          <Dialog.Title className={titleStyle}>{t('fail-dialog.title')}</Dialog.Title>
+          <Dialog.Description className={descriptionStyle}>{t('fail-dialog.description')}</Dialog.Description>
         </Flex>
         <div className={imageContainerStyle}>
           <Image src="/quiz/cursor-unchoiced.webp" alt="quiz-failed" width={100} height={100} draggable={false} />
         </div>
         <Flex width="100%">
           <Button className={buttonStyle} onClick={handleClose} variant="secondary" size="m">
-            Close
+            {t('fail-dialog.close-button')}
           </Button>
         </Flex>
       </Dialog.Content>

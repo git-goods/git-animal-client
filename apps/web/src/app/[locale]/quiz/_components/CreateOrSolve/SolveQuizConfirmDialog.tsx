@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { Button, Dialog } from '@gitanimals/ui-panda';
@@ -11,6 +12,7 @@ interface SolveQuizConfirmDialogProps {
 
 const SolveQuizConfirmDialog = ({ onConfirm, onClose, isOpen }: SolveQuizConfirmDialogProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const t = useTranslations('Quiz');
 
   const handleConfirm = async () => {
     if (isLoading) return;
@@ -25,13 +27,13 @@ const SolveQuizConfirmDialog = ({ onConfirm, onClose, isOpen }: SolveQuizConfirm
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content isShowClose={false}>
-        <Dialog.Title>Solve today quiz?</Dialog.Title>
+        <Dialog.Title>{t('solve-todays-quiz')}</Dialog.Title>
         <Flex alignItems="center" gap="8px" width="100%">
           <Button className={buttonStyle} onClick={onClose} variant="secondary" size="m">
-            Cancel
+            {t('cancel')}
           </Button>
           <Button className={buttonStyle} onClick={handleConfirm} variant="primary" size="m" disabled={isLoading}>
-            Yes
+            {t('yes')}
           </Button>
         </Flex>
       </Dialog.Content>
