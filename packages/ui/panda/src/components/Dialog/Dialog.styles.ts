@@ -13,7 +13,6 @@ export const dialogContentCva = cva({
     size: {
       default: {
         display: 'flex',
-        height: '100%',
         width: '100%',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -38,7 +37,7 @@ export const dialogContentCva = cva({
         maxWidth: 'calc(100% - 400px)',
         maxHeight: 'calc(100% - 240px)',
         width: '100%',
-        height: 'fit-content',
+        height: '100%',
 
         '@media (max-width: 1200px)': {
           padding: '48px 24px',
