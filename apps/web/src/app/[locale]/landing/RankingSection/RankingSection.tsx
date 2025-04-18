@@ -2,6 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import { css, cx } from '_panda/css';
+import type { GetRanksResponse } from '@gitanimals/api';
 
 import { MediaQuery } from '@/components/MediaQuery';
 import { Link } from '@/i18n/routing';
@@ -11,7 +12,13 @@ import { MobileGameConsole } from './MobileGameConsole/MobileGameConsole';
 import { RankingTable } from './RankingTable';
 import { TopPodium } from './TopPodium';
 
-export default function RankingSection({ data: ranks }: { data: any }) {
+export default function RankingSection({
+  topRanks,
+  bottomRanks,
+}: {
+  topRanks: GetRanksResponse;
+  bottomRanks: GetRanksResponse;
+}) {
   const searchParams = useSearchParams();
   const selectedTab = searchParams.get('ranking') ?? 'people';
 
@@ -22,24 +29,20 @@ export default function RankingSection({ data: ranks }: { data: any }) {
       <MediaQuery
         desktop={
           <GameConsole>
-            {ranks && (
-              <div className={screenContentStyle}>
-                <RankingTab selectedTab={selectedTab} />
-                <TopPodium ranks={ranks.slice(0, 3)} />
-                <RankingTable ranks={ranks.slice(3)} />
-              </div>
-            )}
+            <div className={screenContentStyle}>
+              <RankingTab selectedTab={selectedTab} />
+              <TopPodium ranks={topRanks} />
+              <RankingTable ranks={bottomRanks} />
+            </div>
           </GameConsole>
         }
         mobile={
-          ranks && (
-            <div className={screenContentStyle}>
-              <RankingTab selectedTab={selectedTab} />
-              <TopPodium ranks={ranks.slice(0, 3)} />
-              <RankingTable ranks={ranks.slice(3)} />
-              <MobileGameConsole />
-            </div>
-          )
+          <div className={screenContentStyle}>
+            <RankingTab selectedTab={selectedTab} />
+            <TopPodium ranks={topRanks} />
+            <RankingTable ranks={bottomRanks} />
+            <MobileGameConsole />
+          </div>
         }
       />
     </div>

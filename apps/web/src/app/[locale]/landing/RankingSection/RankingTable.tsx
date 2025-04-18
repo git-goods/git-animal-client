@@ -1,9 +1,13 @@
+import { useSession } from 'next-auth/react';
 import { css, cx } from '_panda/css';
 import type { RankType } from '@gitanimals/api';
 
 import { RankingLink } from './RankingLink';
 
 export function RankingTable({ ranks }: { ranks: RankType[] }) {
+  const { data: session } = useSession();
+  const currentUsername = session?.user?.name;
+
   return (
     <div className={rankingListStyle}>
       <table className={tableStyle}>
@@ -17,7 +21,7 @@ export function RankingTable({ ranks }: { ranks: RankType[] }) {
         </thead>
         <tbody>
           {ranks.map((item) => (
-            <tr key={item.rank} className={trStyle}>
+            <tr key={item.rank} className={cx(trStyle, item.name === currentUsername && currentUserTrStyle)}>
               <td>{item.rank}</td>
               <td>
                 <RankingLink id={item.name}>
@@ -129,3 +133,8 @@ const trStyle = cx(
     },
   }),
 );
+
+const currentUserTrStyle = css({
+  background:
+    'linear-gradient(133deg, rgba(255, 253, 201, 0.30) 2.19%, rgba(150, 230, 216, 0.30) 49.24%, rgba(125, 171, 241, 0.30) 98.21%)',
+});
