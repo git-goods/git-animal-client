@@ -14,11 +14,13 @@ import { RankingTable } from './RankingTable';
 import { TopPodium } from './TopPodium';
 
 export default function RankingSection({
-  startRankNumber,
+  page,
   type,
+  startRankNumber,
 }: {
-  startRankNumber: number;
+  page: number;
   type: 'WEEKLY_USER_CONTRIBUTIONS' | 'WEEKLY_GUILD_CONTRIBUTIONS';
+  startRankNumber: number;
 }) {
   const searchParams = useSearchParams();
   const selectedTab = searchParams.get('ranking') ?? 'people';
@@ -44,7 +46,7 @@ export default function RankingSection({
             <div className={screenContentStyle}>
               <RankingTab selectedTab={selectedTab} />
               <TopPodium ranks={queries[0].data} />
-              <RankingTable ranks={queries[1].data} />
+              <RankingTable ranks={queries[1].data} page={page} />
             </div>
           </GameConsole>
         }
@@ -52,7 +54,7 @@ export default function RankingSection({
           <div className={screenContentStyle}>
             <RankingTab selectedTab={selectedTab} />
             <TopPodium ranks={queries[0].data} />
-            <RankingTable ranks={queries[1].data} />
+            <RankingTable ranks={queries[1].data} page={page} />
             <MobileGameConsole />
           </div>
         }

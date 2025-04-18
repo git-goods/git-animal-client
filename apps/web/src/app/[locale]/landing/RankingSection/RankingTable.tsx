@@ -1,12 +1,22 @@
+import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { css, cx } from '_panda/css';
 import type { RankType } from '@gitanimals/api';
+import { getNewUrl } from '@gitanimals/util-common';
+
+import { PaginationServer } from '@/components/Pagination/PaginationServer';
 
 import { RankingLink } from './RankingLink';
 
-export function RankingTable({ ranks }: { ranks: RankType[] }) {
+export function RankingTable({ ranks, page }: { page: number; ranks: RankType[] }) {
   const { data: session } = useSession();
+  const searchParams = useSearchParams();
   const currentUsername = session?.user?.name;
+
+  const getRankingPageUrl = (params: Record<string, unknown>) => {
+    const oldParams = Object.fromEntries(searchParams.entries());
+    return getNewUrl({ baseUrl: '/test/ranking', newParams: params, oldParams });
+  };
 
   return (
     <div className={rankingListStyle}>
@@ -36,6 +46,14 @@ export function RankingTable({ ranks }: { ranks: RankType[] }) {
           ))}
         </tbody>
       </table>
+      <PaginationServer
+        totalRecords={100} // TODO: 서버 데이터 필요
+        currentPage={page}
+        totalPages={100}
+        nextPage={page + 1}
+        prevPage={page - 1}
+        generateMoveLink={getRankingPageUrl}
+      />
     </div>
   );
 }

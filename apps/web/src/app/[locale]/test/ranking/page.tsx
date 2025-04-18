@@ -20,20 +20,21 @@ export default async function TestRankingPage({
 
     const session = await getServerSession();
 
-    const getRankStartNumber = async () => {
+    const getStartPageNumber = async () => {
       if (session && type === 'people') {
         const rankByUsername = await getRankByUsername(session.user.name);
         const currentUserRank = rankByUsername.rank;
 
         const currentPage = Math.ceil((currentUserRank - RANKS_TOP_3) / RANKS_PER_PAGE);
-        const startRankNumber = currentPage * RANKS_PER_PAGE + 1;
-        return startRankNumber;
+        return currentPage;
       }
 
       return 4;
     };
 
-    const startRankNumber = await getRankStartNumber();
+    const currentPage = Number(searchParams.page) ?? (await getStartPageNumber());
+    const startRankNumber = currentPage * RANKS_PER_PAGE + 4;
+
     const rankType = type === 'people' ? 'WEEKLY_USER_CONTRIBUTIONS' : 'WEEKLY_GUILD_CONTRIBUTIONS';
 
     const queries = await getDehydratedQueries([
@@ -43,7 +44,7 @@ export default async function TestRankingPage({
 
     return (
       <Hydrate state={{ queries }}>
-        <RankingSection startRankNumber={startRankNumber} type={rankType} />
+        <RankingSection page={currentPage} type={rankType} startRankNumber={startRankNumber} />
       </Hydrate>
     );
   } catch (error) {
