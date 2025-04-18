@@ -1,5 +1,8 @@
 import { getServerSession } from 'next-auth';
-import { getRankByUsername, getRanks } from '@gitanimals/api';
+import { getRankByUsername } from '@gitanimals/api';
+import { rankQueries } from '@gitanimals/react-query';
+
+import { getDehydratedQueries, Hydrate } from '@/lib/react-query/queryClient';
 
 import RankingSection from '../../landing/RankingSection/RankingSection';
 
@@ -17,27 +20,32 @@ export default async function TestRankingPage({
 
     const session = await getServerSession();
 
+    const getRankStartNumber = async () => {
+      if (session && type === 'people') {
+        const rankByUsername = await getRankByUsername(session.user.name);
+        const currentUserRank = rankByUsername.rank;
+
+        const currentPage = Math.ceil((currentUserRank - RANKS_TOP_3) / RANKS_PER_PAGE);
+        const startRankNumber = currentPage * RANKS_PER_PAGE + 1;
+        return startRankNumber;
+      }
+
+      return 4;
+    };
+
+    const startRankNumber = await getRankStartNumber();
     const rankType = type === 'people' ? 'WEEKLY_USER_CONTRIBUTIONS' : 'WEEKLY_GUILD_CONTRIBUTIONS';
 
-    if (!session) {
-      const data = await getRanks({ rank: 1, size: TOTAL_VIEW_RANKS, type: rankType });
+    const queries = await getDehydratedQueries([
+      rankQueries.getRanksOptions({ rank: 1, size: RANKS_TOP_3, type: rankType }),
+      rankQueries.getRanksOptions({ rank: startRankNumber, size: RANKS_PER_PAGE, type: rankType }),
+    ]);
 
-      return <RankingSection topRanks={data.slice(0, 3)} bottomRanks={data.slice(3)} />;
-    }
-
-    const rankByUsername = await getRankByUsername(session.user.name);
-    const currentUserRank = rankByUsername.rank;
-
-    if (currentUserRank <= 3) {
-      const data = await getRanks({ rank: 1, size: TOTAL_VIEW_RANKS, type: rankType });
-
-      return <RankingSection topRanks={data} bottomRanks={data} />;
-    }
-
-    const topRanks = await getRanks({ rank: 1, size: RANKS_TOP_3, type: rankType });
-    const currentUserRankData = await getRanks({ rank: currentUserRank, size: RANKS_PER_PAGE, type: rankType });
-
-    return <RankingSection topRanks={topRanks} bottomRanks={currentUserRankData} />;
+    return (
+      <Hydrate state={{ queries }}>
+        <RankingSection startRankNumber={startRankNumber} type={rankType} />
+      </Hydrate>
+    );
   } catch (error) {
     return <></>;
   }

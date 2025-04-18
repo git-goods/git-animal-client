@@ -2,7 +2,8 @@
 
 import { useSearchParams } from 'next/navigation';
 import { css, cx } from '_panda/css';
-import type { GetRanksResponse } from '@gitanimals/api';
+import { rankQueries } from '@gitanimals/react-query';
+import { useQueries } from '@tanstack/react-query';
 
 import { MediaQuery } from '@/components/MediaQuery';
 import { Link } from '@/i18n/routing';
@@ -13,14 +14,25 @@ import { RankingTable } from './RankingTable';
 import { TopPodium } from './TopPodium';
 
 export default function RankingSection({
-  topRanks,
-  bottomRanks,
+  startRankNumber,
+  type,
 }: {
-  topRanks: GetRanksResponse;
-  bottomRanks: GetRanksResponse;
+  startRankNumber: number;
+  type: 'WEEKLY_USER_CONTRIBUTIONS' | 'WEEKLY_GUILD_CONTRIBUTIONS';
 }) {
   const searchParams = useSearchParams();
   const selectedTab = searchParams.get('ranking') ?? 'people';
+
+  const queries = useQueries({
+    queries: [
+      rankQueries.getRanksOptions({ rank: 1, size: 3, type }),
+      rankQueries.getRanksOptions({ rank: startRankNumber, size: 5, type }),
+    ],
+  });
+
+  if (queries[0].isLoading || queries[1].isLoading || !queries[0].data || !queries[1].data) {
+    return <div></div>;
+  }
 
   return (
     <div className={containerStyle}>
@@ -31,16 +43,16 @@ export default function RankingSection({
           <GameConsole>
             <div className={screenContentStyle}>
               <RankingTab selectedTab={selectedTab} />
-              <TopPodium ranks={topRanks} />
-              <RankingTable ranks={bottomRanks} />
+              <TopPodium ranks={queries[0].data} />
+              <RankingTable ranks={queries[1].data} />
             </div>
           </GameConsole>
         }
         mobile={
           <div className={screenContentStyle}>
             <RankingTab selectedTab={selectedTab} />
-            <TopPodium ranks={topRanks} />
-            <RankingTable ranks={bottomRanks} />
+            <TopPodium ranks={queries[0].data} />
+            <RankingTable ranks={queries[1].data} />
             <MobileGameConsole />
           </div>
         }
