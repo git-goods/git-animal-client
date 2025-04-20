@@ -25,14 +25,14 @@ export default async function TestRankingPage({
         const rankByUsername = await getRankByUsername(session.user.name);
         const currentUserRank = rankByUsername.rank;
 
-        const currentPage = Math.ceil((currentUserRank - RANKS_TOP_3) / RANKS_PER_PAGE);
+        const currentPage = Math.ceil((currentUserRank - RANKS_TOP_3) / RANKS_PER_PAGE) - 1;
         return currentPage;
       }
 
       return 4;
     };
 
-    const currentPage = Number(searchParams.page) ?? (await getStartPageNumber());
+    const currentPage = searchParams.page ? Number(searchParams.page) : await getStartPageNumber();
     const startRankNumber = currentPage * RANKS_PER_PAGE + 4;
 
     const rankType = type === 'people' ? 'WEEKLY_USER_CONTRIBUTIONS' : 'WEEKLY_GUILD_CONTRIBUTIONS';
