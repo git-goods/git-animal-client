@@ -70,10 +70,12 @@ const paginationContainerStyle = css({
 
 const nonSelectedCss = css({
   textStyle: 'glyph16.regular',
+  lineHeight: '10px',
   color: 'white.white_50',
 });
 
 const selectedCss = css({
   textStyle: 'glyph16.bold',
+  lineHeight: '10px',
   color: 'white.white_100',
 });

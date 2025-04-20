@@ -46,17 +46,23 @@ export function RankingTable({ ranks, page }: { page: number; ranks: RankType[] 
           ))}
         </tbody>
       </table>
-      <PaginationServer
-        totalRecords={100} // TODO: 서버 데이터 필요
-        currentPage={page}
-        totalPages={100}
-        nextPage={page + 1}
-        prevPage={page - 1}
-        generateMoveLink={getRankingPageUrl}
-      />
+      <div className={paginationStyle}>
+        <PaginationServer
+          totalRecords={100} // TODO: 서버 데이터 필요
+          currentPage={page}
+          totalPages={100}
+          nextPage={page + 1}
+          prevPage={page - 1}
+          generateMoveLink={getRankingPageUrl}
+        />
+      </div>
     </div>
   );
 }
+
+const paginationStyle = css({
+  marginTop: '24px',
+});
 
 const rankingListStyle = css({});
 
