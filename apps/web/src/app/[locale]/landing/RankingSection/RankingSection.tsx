@@ -10,6 +10,7 @@ import { Link } from '@/i18n/routing';
 
 import GameConsole from './GameConsole/GameConsole';
 import { MobileGameConsole } from './MobileGameConsole/MobileGameConsole';
+import { MobileRankingTable } from './MobileRankingTable';
 import { RankingTable } from './RankingTable';
 import { TopPodium } from './TopPodium';
 
@@ -29,8 +30,12 @@ export default function RankingSection({
     queries: [
       rankQueries.getRanksOptions({ rank: 1, size: 3, type }),
       rankQueries.getRanksOptions({ rank: startRankNumber, size: 5, type }),
+      rankQueries.getTotalRankOptions({ type }),
     ],
   });
+
+  const totalPage = calcTotalPage(queries[2].data?.count ?? 0);
+  console.log('totalPage: ', totalPage);
 
   if (queries[0].isLoading || queries[1].isLoading || !queries[0].data || !queries[1].data) {
     return <div></div>;
@@ -46,7 +51,7 @@ export default function RankingSection({
             <div className={screenContentStyle}>
               <RankingTab selectedTab={selectedTab} />
               <TopPodium ranks={queries[0].data} />
-              <RankingTable ranks={queries[1].data} page={page} />
+              <RankingTable ranks={queries[1].data} page={page} totalPage={totalPage} />
             </div>
           </GameConsole>
         }
@@ -54,7 +59,7 @@ export default function RankingSection({
           <div className={screenContentStyle}>
             <RankingTab selectedTab={selectedTab} />
             <TopPodium ranks={queries[0].data} />
-            <RankingTable ranks={queries[1].data} page={page} />
+            <MobileRankingTable ranks={queries[1].data} page={page} totalPage={totalPage} />
             <MobileGameConsole />
           </div>
         }
@@ -62,6 +67,11 @@ export default function RankingSection({
     </div>
   );
 }
+
+const calcTotalPage = (totalCount: number) => {
+  if (totalCount <= 3) return 0;
+  return Math.ceil((totalCount - 3) / 5) - 1;
+};
 
 const titleStyle = css({
   textStyle: 'glyph82.bold',

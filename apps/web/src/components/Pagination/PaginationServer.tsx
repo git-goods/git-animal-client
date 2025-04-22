@@ -17,15 +17,17 @@ export function PaginationServer(props: { generateMoveLink: (props: { page: numb
 
   return (
     <div className={paginationContainerStyle}>
-      <Link
-        href={props.generateMoveLink({ page: props.prevPage ?? 0 })}
-        style={{
-          pointerEvents: props.prevPage === null ? 'none' : 'auto',
-          cursor: props.prevPage === null ? 'not-allowed' : 'pointer',
-        }}
-      >
-        <ChevronLeft color="#B5B8C0" />
-      </Link>
+      {props.prevPage !== null && (
+        <Link
+          href={props.generateMoveLink({ page: props.prevPage })}
+          style={{
+            pointerEvents: props.prevPage === null ? 'none' : 'auto',
+            cursor: props.prevPage === null ? 'not-allowed' : 'pointer',
+          }}
+        >
+          <ChevronLeft color="#B5B8C0" />
+        </Link>
+      )}
 
       {getPaginationGroup().map((i) => {
         return (
@@ -39,15 +41,17 @@ export function PaginationServer(props: { generateMoveLink: (props: { page: numb
         );
       })}
 
-      <Link
-        href={props.generateMoveLink({ page: props.nextPage ?? 0 })}
-        style={{
-          pointerEvents: props.nextPage === null ? 'none' : 'auto',
-          cursor: props.nextPage === null ? 'not-allowed' : 'pointer',
-        }}
-      >
-        <ChevronRight color="#B5B8C0" />
-      </Link>
+      {props.nextPage !== null && (
+        <Link
+          href={props.generateMoveLink({ page: props.nextPage })}
+          style={{
+            pointerEvents: props.nextPage === null ? 'none' : 'auto',
+            cursor: props.nextPage === null ? 'not-allowed' : 'pointer',
+          }}
+        >
+          <ChevronRight color="#B5B8C0" />
+        </Link>
+      )}
     </div>
   );
 }

@@ -40,6 +40,7 @@ export default async function TestRankingPage({
     const queries = await getDehydratedQueries([
       rankQueries.getRanksOptions({ rank: 1, size: RANKS_TOP_3, type: rankType }),
       rankQueries.getRanksOptions({ rank: startRankNumber, size: RANKS_PER_PAGE, type: rankType }),
+      rankQueries.getTotalRankOptions({ type: rankType }),
     ]);
 
     return (
