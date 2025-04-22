@@ -35,7 +35,6 @@ export default function RankingSection({
   });
 
   const totalPage = calcTotalPage(queries[2].data?.count ?? 0);
-  console.log('totalPage: ', totalPage);
 
   if (queries[0].isLoading || queries[1].isLoading || !queries[0].data || !queries[1].data) {
     return <div></div>;

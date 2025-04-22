@@ -62,9 +62,9 @@ export function RankingTable({ ranks, page, totalPage }: { page: number; ranks: 
       ))}
       <div className={paginationStyle}>
         <PaginationServer
-          totalRecords={totalPage}
           currentPage={page}
-          totalPages={totalPage}
+          totalRecords={totalPage + 1}
+          totalPages={totalPage + 1}
           nextPage={page === totalPage ? null : page + 1}
           prevPage={page < 1 ? null : page - 1}
           generateMoveLink={getRankingPageUrl}

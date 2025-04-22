@@ -29,7 +29,7 @@ export default async function TestRankingPage({
         return currentPage;
       }
 
-      return 4;
+      return 0;
     };
 
     const currentPage = searchParams.page ? Number(searchParams.page) : await getStartPageNumber();
