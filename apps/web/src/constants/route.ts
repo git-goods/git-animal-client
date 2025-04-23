@@ -6,6 +6,7 @@ const GUILD = {
 };
 
 export const ROUTE = {
+  HOME: () => '/',
   GUILD,
 };
 
