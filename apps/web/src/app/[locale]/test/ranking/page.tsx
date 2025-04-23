@@ -45,7 +45,7 @@ export default async function TestRankingPage({
 
     return (
       <Hydrate state={{ queries }}>
-        <RankingSection page={currentPage} type={rankType} startRankNumber={startRankNumber} />
+        <RankingSection type={rankType} startRankNumber={startRankNumber} currentPage={currentPage} />
       </Hydrate>
     );
   } catch (error) {
