@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import React from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { StatusBar } from 'expo-status-bar';
+import AppleLogin from './AppleLogin';
 
 export default function LoginScreen() {
   const { isAuthenticated, logout } = useAuth();
@@ -54,9 +55,10 @@ export default function LoginScreen() {
           </View>
         ) : (
           <View style={styles.contentContainer}>
-            <TouchableOpacity onPress={onPressAppleLogin} style={styles.githubButton}>
+            <AppleLogin />
+            {/* <TouchableOpacity onPress={onPressAppleLogin} style={styles.githubButton}>
               <Text style={styles.buttonText}>Apple 계정으로 로그인</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity onPress={onPressGithubLogin} style={styles.githubButton}>
               <Text style={styles.buttonText}>GitHub 계정으로 로그인</Text>
