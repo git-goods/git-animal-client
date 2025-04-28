@@ -1,6 +1,6 @@
 'use client';
 
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { answerQuiz, getRoundResult } from '@gitanimals/api';
 import { toast } from 'sonner';
 
@@ -9,21 +9,19 @@ import { ROUTE } from '@/constants/route';
 import { type Locale, useRouter } from '@/i18n/routing';
 
 import { QUIZ_RESULT } from '../../_constants/quiz.constants';
+import { customT } from '../../_utils/quiz.intl';
 
 import type useQuizDialogStatus from './useQuizDialogStatus';
 
 interface UseQuizActionProps {
   contextId: string;
   quizDialog: ReturnType<typeof useQuizDialogStatus>;
-  round: {
-    total: number;
-    current: number;
-  };
   prize: number;
   refetchQuiz: () => void;
 }
 
-const useQuizAction = ({ contextId, quizDialog, round, prize, refetchQuiz }: UseQuizActionProps) => {
+const useQuizAction = ({ contextId, quizDialog, prize, refetchQuiz }: UseQuizActionProps) => {
+  const t = useTranslations('Quiz');
   const locale = useLocale() as Locale;
   const { correctDialog, failDialog, completeDialog } = quizDialog;
 
@@ -59,7 +57,7 @@ const useQuizAction = ({ contextId, quizDialog, round, prize, refetchQuiz }: Use
 
   const router = useRouter();
   const terminateQuiz = () => {
-    toast.success(`Finished quiz. You got ${prize}P!`);
+    toast.success(customT(t('quiz-finished'), { point: prize }));
     moveToQuizMain();
   };
 

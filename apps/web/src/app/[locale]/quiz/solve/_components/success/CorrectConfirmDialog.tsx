@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { Button, Dialog } from '@gitanimals/ui-panda';
+
+import { customT } from '../../../_utils/quiz.intl';
 
 interface CorrectConfirmDialogProps {
   correctPoint: number;
@@ -13,6 +16,7 @@ interface CorrectConfirmDialogProps {
 }
 
 const CorrectConfirmDialog = ({ correctPoint, onConfirm, onStop, onClose, isOpen }: CorrectConfirmDialogProps) => {
+  const t = useTranslations('Quiz');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleConfirm = async () => {
@@ -37,10 +41,8 @@ const CorrectConfirmDialog = ({ correctPoint, onConfirm, onStop, onClose, isOpen
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content className={contentStyle} isShowClose={false}>
         <Flex flexDirection="column" alignItems="center" gap="12px" width="100%">
-          <Dialog.Title className={titleStyle}>Correct!</Dialog.Title>
-          <Dialog.Description className={descriptionStyle}>
-            Challenge the next quiz and get double points.
-          </Dialog.Description>
+          <Dialog.Title className={titleStyle}>{t('correct-dialog.title')}</Dialog.Title>
+          <Dialog.Description className={descriptionStyle}>{t('correct-dialog.description')}</Dialog.Description>
         </Flex>
         <Image
           className={imageStyle}
@@ -52,10 +54,10 @@ const CorrectConfirmDialog = ({ correctPoint, onConfirm, onStop, onClose, isOpen
         />
         <Flex flexDirection="column" gap="8px" width="100%">
           <Button className={buttonStyle} onClick={handleConfirm} variant="primary" size="m" disabled={isLoading}>
-            Challenge the next Quiz
+            {t('correct-dialog.challenge-button')}
           </Button>
           <Button className={buttonStyle} onClick={handleStop} variant="secondary" size="m">
-            Stop Quiz & Get {correctPoint}P
+            {customT(t('correct-dialog.stop-button'), { point: correctPoint })}
           </Button>
         </Flex>
       </Dialog.Content>

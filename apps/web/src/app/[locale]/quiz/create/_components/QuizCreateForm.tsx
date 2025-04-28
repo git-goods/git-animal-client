@@ -1,8 +1,6 @@
-'use client';
-
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { createQuiz } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
@@ -25,6 +23,7 @@ const QuizCreateForm = () => {
   const handleChangeQuizContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuizContents(e.target.value);
   };
+  const t = useTranslations('Quiz');
 
   const {
     tabsTriggerProps: levelRadioProps,
@@ -32,9 +31,9 @@ const QuizCreateForm = () => {
     handleChange: handleChangeLevel,
   } = useTabs<QuizLevel>({
     options: [
-      { label: 'Easy', value: QUIZ_LEVEL.EASY },
-      { label: 'Medium', value: QUIZ_LEVEL.MEDIUM },
-      { label: 'Hard', value: QUIZ_LEVEL.DIFFICULT },
+      { label: t('easy'), value: QUIZ_LEVEL.EASY },
+      { label: t('medium'), value: QUIZ_LEVEL.MEDIUM },
+      { label: t('difficult'), value: QUIZ_LEVEL.DIFFICULT },
     ],
   });
 
@@ -95,7 +94,7 @@ const QuizCreateForm = () => {
   return (
     <form className={contentStyle}>
       <QuizField
-        title="Difficulty Level"
+        title={t('difficulty-level')}
         content={
           <Tabs value={level} onValueChange={(value) => handleChangeLevel(value as QuizLevel)}>
             <TabsList>
@@ -109,7 +108,7 @@ const QuizCreateForm = () => {
         }
       />
       <QuizField
-        title="Category"
+        title={t('category')}
         content={
           <Tabs value={category} onValueChange={(value) => handleChangeCategory(value as QuizCategory)}>
             <TabsList>
@@ -123,19 +122,19 @@ const QuizCreateForm = () => {
         }
       />
       <QuizField
-        title="Quiz Contents"
+        title={t('quiz-contents')}
         description=""
         content={
           <QuizTextArea
             value={quizContents}
-            placeholder="Write down the contents of the quiz...."
+            placeholder={t('quiz-contents-description')}
             onChange={handleChangeQuizContents}
           />
         }
       />
       <QuizField
-        title="Answer"
-        description="Choose the correct answer for the quiz."
+        title={t('answer-title')}
+        description={t('answer-description')}
         content={
           <Tabs value={expectedAnswer} onValueChange={(value) => handleChangeExpectedAnswer(value as QuizAnswer)}>
             <TabsList>
@@ -149,7 +148,7 @@ const QuizCreateForm = () => {
         }
       />
       <Button className={buttonStyle} disabled={!enabledToCreate || isCreating} onClick={handleCreateQuiz}>
-        Create
+        {t('create-quiz-button')}
       </Button>
     </form>
   );

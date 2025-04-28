@@ -1,6 +1,5 @@
-'use client';
-
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { wrap } from '@suspensive/react';
 
@@ -8,6 +7,7 @@ import { ROUTE } from '@/constants/route';
 import { useRouter } from '@/i18n/routing';
 
 import useTodayQuizData from '../../_hooks/useTodayQuizData';
+import { customT } from '../../_utils/quiz.intl';
 
 import QuizTypeCard from './QuizTypeCard';
 import SolveQuizConfirmDialog from './SolveQuizConfirmDialog';
@@ -23,12 +23,13 @@ const SelectQuizType = wrap
     const router = useRouter();
     const [isSolveQuizConfirmDialogOpen, setIsSolveQuizConfirmDialogOpen] = useState(false);
     const { isSolved, quizSolveCard } = useTodayQuizData();
+    const t = useTranslations('Quiz');
 
     return (
       <div className={containerStyle}>
         <QuizTypeCard
-          title="Create Quiz"
-          description={`Create an O/X quiz and get ${QUIZ_REGISTER_POINT}P!`}
+          title={t('create-quiz-card-title')}
+          description={customT(t('create-quiz-card-description'), { point: QUIZ_REGISTER_POINT })}
           image="/quiz/quiz-cat.webp"
           point={`${QUIZ_REGISTER_POINT}P`}
           onClick={() => router.push(ROUTE.QUIZ.CREATE())}
