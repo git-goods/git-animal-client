@@ -68,9 +68,6 @@ export const bg = css({
     height: '100%',
     objectFit: 'cover',
   },
-  _mobile: {
-    display: 'none',
-  },
 });
 
 export const sliderContainer = css({

@@ -32,7 +32,7 @@ async function MainSection() {
       )}
       <picture className={styles.bg}>
         {/* <source srcSet="/main/section1_bg-mobile.webp" media="(max-width: 768px)" type="image/webp" /> */}
-        <img src="/main/section1_bg-pc.webp" alt="section background" />
+        {/* <img src="/main/section1_bg-pc.webp" alt="section background" /> */}
       </picture>
       <div className={styles.sliderContainer}>
         <MainSlider />

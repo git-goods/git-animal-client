@@ -38,7 +38,7 @@ const SplitText = ({
   animationTo = { opacity: 1, transform: 'translate3d(0,0,0)' },
   easing = 'easeOutCubic',
   threshold = 0.1,
-  rootMargin = '-100px',
+  rootMargin = '-50px',
   textAlign = 'center',
   onLetterAnimationComplete,
   style,
@@ -62,7 +62,11 @@ const SplitText = ({
           }
         }
       },
-      { threshold, rootMargin },
+      {
+        threshold,
+        rootMargin,
+        // delay: 100,
+      },
     );
 
     observer.observe(ref.current);
@@ -100,8 +104,8 @@ const SplitText = ({
                 key={index}
                 style={{
                   ...springs[index],
-                  display: 'inline-block',
-                  willChange: 'transform, opacity',
+                  display: 'inline',
+                  position: 'relative',
                   ...style,
                 }}
               >
@@ -122,15 +126,19 @@ const splitParentStyle = css({
   display: 'inline',
   whiteSpace: 'normal',
   wordWrap: 'break-word',
+  backfaceVisibility: 'hidden',
+  fontSmoothing: 'antialiased',
 });
 
 const wordStyle = css({
-  display: 'inline-block',
+  display: 'inline',
   whiteSpace: 'nowrap',
+  backfaceVisibility: 'hidden',
+  fontSmoothing: 'antialiased',
 });
 
 const spaceStyle = css({
-  display: 'inline-block',
+  display: 'inline',
   width: '0.3em',
 });
 
