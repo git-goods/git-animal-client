@@ -6,7 +6,7 @@ import { Link } from '@/i18n/routing';
 
 import * as styles from './MainSection.style';
 import MainSlider from './MainSlider';
-import TopBanner from './TopBanner';
+import { TopBanner } from './TopBanner';
 
 async function MainSection() {
   const session = await getServerAuth();

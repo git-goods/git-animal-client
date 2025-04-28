@@ -2,43 +2,29 @@
 
 import { useState } from 'react';
 import { css } from '_panda/css';
+import { rankQueries } from '@gitanimals/react-query';
 import SplitText from '@gitanimals/ui-panda/src/animation/SplitText/SplitText';
+import { wrap } from '@suspensive/react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 
-export default function TopBanner() {
-  const data = [
-    {
-      id: '671643895035339143',
-      name: 'Frontend-Engineer',
-      rank: 0,
-      prize: 3000,
-      rankType: 'WEEKLY_GUILD_CONTRIBUTIONS',
-    },
-    {
-      id: '669546667782242005',
-      name: 'Guild',
-      rank: 1,
-      prize: 2000,
-      rankType: 'WEEKLY_GUILD_CONTRIBUTIONS',
-    },
-    {
-      id: '673540103172091050',
-      name: 'JIWOO-HOUSE',
-      rank: 2,
-      prize: 1000,
-      rankType: 'WEEKLY_GUILD_CONTRIBUTIONS',
-    },
-  ];
+export const TopBanner = wrap.Suspense({ fallback: <>{}</> }).on(() => {
+  const { data: rankHistories, isLoading } = useSuspenseQuery(
+    rankQueries.getRankHistoriesOptions({ rankType: 'WEEKLY_GUILD_CONTRIBUTIONS' }),
+  );
+
+  console.log(rankHistories);
 
   const [animateStep, setAnimateStep] = useState<'TEXT' | 'COIN' | 'PRIZE'>('TEXT');
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const currentItem = data[currentIndex];
+  const currentItem = rankHistories.winner[currentIndex];
+  const maxLength = rankHistories.winner.length;
 
   const onNextText = () => {
     const timer = setTimeout(() => {
       setAnimateStep('TEXT');
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % maxLength);
     }, 1000);
 
     return () => clearTimeout(timer);
@@ -86,7 +72,7 @@ export default function TopBanner() {
       </div>
     </div>
   );
-}
+});
 
 const coinContainerStyle = css({
   display: 'flex',
