@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { css } from '_panda/css';
+import SplitText from '@gitanimals/ui-panda/src/animation/SplitText/SplitText';
+import { motion } from 'framer-motion';
 
 export default function TopBanner() {
   const data = [
@@ -31,25 +33,66 @@ export default function TopBanner() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
-    }, 3000); // 3초마다 다음 항목으로 전환
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     // setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+  //     setAnimateStep('TEXT');
+  //   }, 5000);
 
-    return () => clearInterval(interval);
-  }, [data.length]);
+  //   return () => clearInterval(interval);
+  // }, [data.length]);
 
   const currentItem = data[currentIndex];
 
+  const [animateStep, setAnimateStep] = useState<'TEXT' | 'COIN' | 'PRIZE'>('TEXT');
+
+  const onNextText = () => {
+    setAnimateStep('TEXT');
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+  };
+
   return (
-    <div className={containerStyle}>
-      <p style={textStyle}>
-        Last Week {currentIndex + 1}ST {currentItem.name}
-      </p>
-      <Image className={coinStyle} width={32} height={32} src="/shop/coin.webp" alt="coin" />
-      <p style={textStyle}>{currentItem.prize}P!</p>
+    <div className={containerStyle} key={currentIndex}>
+      <SplitText
+        style={textStyle}
+        text={`Last Week ${currentIndex + 1}ST ${currentItem.name}`}
+        onLetterAnimationComplete={() => {
+          setAnimateStep('COIN');
+        }}
+      />
+      {animateStep === 'COIN' && (
+        <>
+          <motion.div
+            initial={{ y: 15, opacity: 0.5 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+          >
+            <Image className={coinStyle} width={32} height={32} src="/shop/coin.webp" alt="coin" />
+          </motion.div>
+          <SplitText
+            key={currentIndex}
+            style={textStyle}
+            text={`${currentItem.prize}P!`}
+            onLetterAnimationComplete={() => {
+              onNextText();
+            }}
+          />
+        </>
+      )}
     </div>
   );
+}
+
+function CoinImage({ onNextText }: { onNextText: () => void }) {
+  useEffect(() => {
+    const interval = setInterval(() => {
+      onNextText();
+    }, 0);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return;
 }
 
 const containerStyle = css({
