@@ -1,12 +1,53 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { css } from '_panda/css';
 
 export default function TopBanner() {
+  const data = [
+    {
+      id: '671643895035339143',
+      name: 'Frontend-Engineer',
+      rank: 0,
+      prize: 3000,
+      rankType: 'WEEKLY_GUILD_CONTRIBUTIONS',
+    },
+    {
+      id: '669546667782242005',
+      name: 'Guild',
+      rank: 1,
+      prize: 2000,
+      rankType: 'WEEKLY_GUILD_CONTRIBUTIONS',
+    },
+    {
+      id: '673540103172091050',
+      name: 'JIWOO-HOUSE',
+      rank: 2,
+      prize: 1000,
+      rankType: 'WEEKLY_GUILD_CONTRIBUTIONS',
+    },
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+    }, 3000); // 3초마다 다음 항목으로 전환
+
+    return () => clearInterval(interval);
+  }, [data.length]);
+
+  const currentItem = data[currentIndex];
+
   return (
     <div className={containerStyle}>
-      <p style={textStyle}>Last Week 1ST sumi-0011</p>
+      <p style={textStyle}>
+        Last Week {currentIndex + 1}ST {currentItem.name}
+      </p>
       <Image className={coinStyle} width={32} height={32} src="/shop/coin.webp" alt="coin" />
-      <p style={textStyle}>10000P!</p>
+      <p style={textStyle}>{currentItem.prize}P!</p>
     </div>
   );
 }
