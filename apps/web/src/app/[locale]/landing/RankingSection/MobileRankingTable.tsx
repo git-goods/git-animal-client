@@ -19,7 +19,7 @@ export function MobileRankingTable({ ranks, page, totalPage }: { page: number; r
 
   const getRankingPageUrl = (params: Record<string, unknown>) => {
     const oldParams = Object.fromEntries(searchParams.entries());
-    return getNewUrl({ baseUrl: '/ranking', newParams: params, oldParams });
+    return getNewUrl({ baseUrl: '/', newParams: params, oldParams });
   };
 
   const handleMoveEnd = (e: any) => {

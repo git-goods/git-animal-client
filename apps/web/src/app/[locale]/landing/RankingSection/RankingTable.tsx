@@ -15,7 +15,7 @@ export function RankingTable({ ranks, page, totalPage }: { page: number; ranks: 
 
   const getRankingPageUrl = (params: Record<string, unknown>) => {
     const oldParams = Object.fromEntries(searchParams.entries());
-    return getNewUrl({ baseUrl: '/ranking', newParams: params, oldParams });
+    return getNewUrl({ baseUrl: '/', newParams: params, oldParams });
   };
 
   // 페이지 데이터를 10개씩 그룹화

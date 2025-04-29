@@ -20,6 +20,8 @@ export function PaginationServer(props: { generateMoveLink: (props: { page: numb
       {props.prevPage !== null && (
         <Link
           href={props.generateMoveLink({ page: props.prevPage })}
+          shallow
+          scroll={false}
           style={{
             pointerEvents: props.prevPage === null ? 'none' : 'auto',
             cursor: props.prevPage === null ? 'not-allowed' : 'pointer',
@@ -34,6 +36,8 @@ export function PaginationServer(props: { generateMoveLink: (props: { page: numb
           <Link
             href={props.generateMoveLink({ page: i })}
             key={i}
+            shallow
+            scroll={false}
             className={props.currentPage === i ? selectedCss : nonSelectedCss}
           >
             {i + 1}
@@ -44,6 +48,8 @@ export function PaginationServer(props: { generateMoveLink: (props: { page: numb
       {props.nextPage !== null && (
         <Link
           href={props.generateMoveLink({ page: props.nextPage })}
+          shallow
+          scroll={false}
           style={{
             pointerEvents: props.nextPage === null ? 'none' : 'auto',
             cursor: props.nextPage === null ? 'not-allowed' : 'pointer',
