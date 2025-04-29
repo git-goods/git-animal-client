@@ -6,6 +6,7 @@ import GNB from '@/components/GNB/GNB';
 
 import { ChoosePetSection } from './landing/ChoosePetSection';
 import { Footer } from './landing/Footer';
+import { RankingServerSide } from './landing/RankingSection/RankingServerSide';
 import { AvailablePetSection, HavePetWaySection, MainSection } from './landing';
 
 import '@egjs/react-flicking/dist/flicking.css';
@@ -19,12 +20,12 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function HomePage() {
+export default function HomePage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   return (
     <div>
       <GNB />
       <MainSection />
-      {/* <RankingSection /> */}
+      <RankingServerSide searchParams={searchParams} />
       <AvailablePetSection />
       <HavePetWaySection />
       <ChoosePetSection />
