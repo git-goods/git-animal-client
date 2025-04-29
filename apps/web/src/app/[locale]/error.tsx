@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { ErrorPage } from '@/components/Error/ErrorPage';
 import { isDev } from '@/constants/env';
-import { useRouter } from '@/i18n/routing';
+import { usePathname, useRouter } from '@/i18n/routing';
 
 interface Props {
   error: Error;
@@ -19,6 +19,7 @@ const KNOWN_ERROR_MESSAGES = [NOT_AUTHORIZED_MESSAGE];
 
 const GlobalErrorPage = ({ error, reset }: Props) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (isDev) return;
@@ -30,6 +31,8 @@ Error Message: ${error.message}
 \`\`\`
 Error Stack: ${error.stack}
 \`\`\`
+
+Pathname: ${pathname}
 `);
   }, [error]);
 
