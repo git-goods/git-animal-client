@@ -30,6 +30,7 @@ async function MainSection() {
           </Button>
         </Link>
       )}
+      <div className={styles.bg} />
       <div className={styles.sliderContainer}>
         <MainSlider />
       </div>

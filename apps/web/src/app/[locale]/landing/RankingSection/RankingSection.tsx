@@ -123,8 +123,8 @@ function RankingTab({ selectedTab }: { selectedTab: string }) {
   return (
     <div className={tabsStyle}>
       <Link
-        // href="/?ranking=people"
-        href="/test/ranking/?ranking=people"
+        href="/?ranking=people"
+        // href="/test/ranking/?ranking=people"
         shallow
         scroll={false}
         className={cx(tabStyle, selectedTab === 'people' ? selectedTabStyle : nonSelectedTabStyle)}
@@ -132,8 +132,8 @@ function RankingTab({ selectedTab }: { selectedTab: string }) {
         People
       </Link>
       <Link
-        // href="/?ranking=guild"
-        href="/test/ranking/?ranking=guild"
+        href="/?ranking=guild"
+        // href="/test/ranking/?ranking=guild"
         shallow
         scroll={false}
         className={cx(tabStyle, selectedTab === 'guild' ? selectedTabStyle : nonSelectedTabStyle)}
