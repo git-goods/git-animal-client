@@ -6,7 +6,7 @@ import { Link } from '@/i18n/routing';
 
 import * as styles from './MainSection.style';
 import MainSlider from './MainSlider';
-import TopBanner from './TopBanner';
+import { TopBanner } from './TopBanner';
 
 async function MainSection() {
   const session = await getServerAuth();
@@ -30,10 +30,6 @@ async function MainSection() {
           </Button>
         </Link>
       )}
-      <picture className={styles.bg}>
-        {/* <source srcSet="/main/section1_bg-mobile.webp" media="(max-width: 768px)" type="image/webp" /> */}
-        {/* <img src="/main/section1_bg-pc.webp" alt="section background" /> */}
-      </picture>
       <div className={styles.sliderContainer}>
         <MainSlider />
       </div>

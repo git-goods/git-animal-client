@@ -2,91 +2,98 @@
 
 import { useState } from 'react';
 import { css } from '_panda/css';
+import { rankQueries } from '@gitanimals/react-query';
 import SplitText from '@gitanimals/ui-panda/src/animation/SplitText/SplitText';
+import { wrap } from '@suspensive/react';
+import { useSuspenseQueries } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 
-export default function TopBanner() {
-  const data = [
-    {
-      id: '671643895035339143',
-      name: 'Frontend-Engineer',
-      rank: 0,
-      prize: 3000,
-      rankType: 'WEEKLY_GUILD_CONTRIBUTIONS',
-    },
-    {
-      id: '669546667782242005',
-      name: 'Guild',
-      rank: 1,
-      prize: 2000,
-      rankType: 'WEEKLY_GUILD_CONTRIBUTIONS',
-    },
-    {
-      id: '673540103172091050',
-      name: 'JIWOO-HOUSE',
-      rank: 2,
-      prize: 1000,
-      rankType: 'WEEKLY_GUILD_CONTRIBUTIONS',
-    },
-  ];
+type AnimateStep = 'TEXT' | 'COIN';
 
-  const [animateStep, setAnimateStep] = useState<'TEXT' | 'COIN' | 'PRIZE'>('TEXT');
-  const [currentIndex, setCurrentIndex] = useState(0);
+const CHANGE_NEXT_BANNER_DELAY_TIME = 1000 as const;
 
-  const currentItem = data[currentIndex];
+export const TopBanner = wrap
+  .ErrorBoundary({ fallback: <></> })
+  .Suspense({ fallback: <></> })
+  .on(() => {
+    const quries = useSuspenseQueries({
+      queries: [
+        rankQueries.getRankHistoriesOptions({ rankType: 'WEEKLY_GUILD_CONTRIBUTIONS' }),
+        rankQueries.getRankHistoriesOptions({ rankType: 'WEEKLY_USER_CONTRIBUTIONS' }),
+      ],
+    });
 
-  const onNextText = () => {
-    const timer = setTimeout(() => {
-      setAnimateStep('TEXT');
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
-    }, 1000);
+    const [animateStep, setAnimateStep] = useState<AnimateStep>('TEXT');
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-    return () => clearTimeout(timer);
-  };
+    const guildHistories = quries[0].data.winner.map((winner) => ({ ...winner, rankType: 'Guild' }));
+    const userHistories = quries[1].data.winner.map((winner) => ({ ...winner, rankType: 'User' }));
+    const histories = [...guildHistories, ...userHistories];
 
-  return (
-    <div className={containerStyle}>
-      <div className={textContainerStyle} key={currentIndex}>
-        <SplitText
-          style={textStyle}
-          text={`Last Week ${currentIndex + 1}ST ${currentItem.name}`}
-          delay={50}
-          onLetterAnimationComplete={() => {
-            setAnimateStep('COIN');
-          }}
-        />
-        {animateStep === 'COIN' && (
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: 'auto' }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            className={coinContainerStyle}
-          >
-            <motion.img
-              initial={{ opacity: 0.3 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.2, ease: 'easeInOut' }}
-              className={coinStyle}
-              width={32}
-              height={32}
-              src="/shop/coin.webp"
-              alt="coin"
-            />
+    const currentItem = histories[currentIndex];
+    const maxLength = histories.length;
+
+    const onNextText = () => {
+      const timer = setTimeout(() => {
+        setAnimateStep('TEXT');
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % maxLength);
+      }, CHANGE_NEXT_BANNER_DELAY_TIME);
+
+      return () => clearTimeout(timer);
+    };
+
+    return (
+      <>
+        <div className={containerStyle}>
+          <div className={textContainerStyle} key={currentIndex}>
             <SplitText
-              key={currentIndex}
-              delay={50}
               style={textStyle}
-              text={`${currentItem.prize}P!`}
-              onLetterAnimationComplete={() => {
-                onNextText();
-              }}
+              text={`Last Week ${currentItem.rank + 1}ST ${currentItem.rankType} ${currentItem.name}`}
+              delay={50}
+              onLetterAnimationComplete={() => setAnimateStep('COIN')}
             />
-          </motion.div>
-        )}
-      </div>
-    </div>
-  );
-}
+            {animateStep === 'COIN' && (
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: 'auto' }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                className={coinContainerStyle}
+              >
+                <motion.img
+                  initial={{ opacity: 0.3 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2, ease: 'easeInOut' }}
+                  className={coinStyle}
+                  width={32}
+                  height={32}
+                  src="/shop/coin.webp"
+                  alt="coin"
+                />
+                <SplitText
+                  key={currentIndex}
+                  delay={50}
+                  style={textStyle}
+                  text={`${currentItem.prize}P!`}
+                  onLetterAnimationComplete={() => {
+                    onNextText();
+                  }}
+                />
+              </motion.div>
+            )}
+          </div>
+        </div>
+        <div className={blankStyle} />
+      </>
+    );
+  });
+
+const blankStyle = css({
+  width: '100%',
+  height: '78px',
+  _mobile: {
+    height: '52px',
+  },
+});
 
 const coinContainerStyle = css({
   display: 'flex',
