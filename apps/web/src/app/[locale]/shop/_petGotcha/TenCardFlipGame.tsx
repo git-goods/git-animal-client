@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { css, cx } from '_panda/css';
 import type { GotchaResult } from '@gitanimals/api';
-import { CardBack } from '@gitanimals/ui-panda';
 import { motion } from 'framer-motion';
 
 import { AnimalCard } from '@/components/AnimalCard';
+import { AnimalCardBack } from '@/components/AnimalCard/AnimalCard';
 
 const Card = ({
   onClick,
@@ -27,7 +27,7 @@ const Card = ({
           {persona && <AnimalCard type={persona.name} dropRate={persona.dropRate} />}
         </div>
         <div className={cx(cardFaceStyle, cardFrontFaceStyle)}>
-          <CardBack tier="S_PLUS" />
+          <AnimalCardBack tier="S_PLUS" />
         </div>
       </motion.div>
     </button>

@@ -1,27 +1,18 @@
 'use client';
 
-import type { PropsWithChildren } from 'react';
-import type { QueryClientConfig } from '@tanstack/react-query';
-import { QueryClient, QueryClientProvider as BaseQueryClientProvider } from '@tanstack/react-query';
+import { type PropsWithChildren } from 'react';
+import { QueryClientProvider as BaseQueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-const queryClientOption: QueryClientConfig = {
-  defaultOptions: {
-    queries: {
-      retry: false,
-      refetchOnWindowFocus: false,
-      staleTime: 1000,
-    },
-  },
-};
-
-const queryClient = new QueryClient(queryClientOption);
+import { getQueryClient } from '@/lib/react-query/queryClient';
 
 const QueryClientProvider = ({ children }: PropsWithChildren) => {
+  const queryClient = getQueryClient();
+
   return (
     <BaseQueryClientProvider client={queryClient}>
       {children}
-      <ReactQueryDevtools />
+      {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
     </BaseQueryClientProvider>
   );
 };

@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import type { ReactNode } from 'react';
-import Image from 'next/image';
 import { css, cx } from '_panda/css';
 import { Box } from '_panda/jsx';
 import type { Product } from '@gitanimals/api';
@@ -24,7 +23,7 @@ export function ShopTableDesktopRow({ rightElement, ...item }: Props) {
   return (
     <div className={rowStyle}>
       <div>
-        <Image src={getPersonaImage(item.personaType)} width={60} height={67} alt="animal1" />
+        <img src={getPersonaImage(item.personaType)} width={60} height={67} alt="animal1" />
       </div>
       <span>{snakeToTitleCase(item.personaType)}</span>
       <span>{ANIMAL_TIER_TEXT_MAP[tier]}</span>
@@ -79,7 +78,7 @@ export function ShopTableMobileRow({ personaType, personaLevel, price, rightElem
   return (
     <div className={contentStyle}>
       <div>
-        <Image src={getPersonaImage(personaType)} width={60} height={67} alt="animal1" />
+        <img src={getPersonaImage(personaType)} width={60} height={67} alt="animal1" />
       </div>
       <Box flex="1">
         <span className={personaTypeStyle}>{snakeToTitleCase(personaType)}</span>

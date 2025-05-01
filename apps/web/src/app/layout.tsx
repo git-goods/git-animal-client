@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
 import { setRenderRequestInterceptor, setRenderResponseInterceptor } from '@gitanimals/api/src/_instance';
 
@@ -38,6 +38,30 @@ export const metadata: Metadata = {
     description: '깃허브 활동으로 펫을 키우세요!',
     siteName: 'GitAnimals',
   },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'GitAnimals',
+  },
+  icons: {
+    apple: [{ url: '/app-icon.png' }],
+    shortcut: ['/app-icon.png'],
+    other: [
+      {
+        rel: 'apple-touch-startup-image',
+        url: '/app-icon.png',
+      },
+    ],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#ffffff',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 setRequestInterceptor(interceptorRequestFulfilled);

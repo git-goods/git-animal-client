@@ -45,6 +45,7 @@ export const dialogContentCva = cva({
           maxHeight: 'calc(100vh - 120px)',
         },
         _mobile: {
+          height: '100%',
           maxWidth: '100vw',
           maxHeight: '100vh',
           borderRadius: '0px',

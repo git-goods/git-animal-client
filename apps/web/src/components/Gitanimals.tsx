@@ -21,14 +21,13 @@ export function GitanimalsLine({ petId, sizes = [600, 120] }: GitanimalsLineProp
   const pet = petId ? `?pet-id=${petId}` : '';
 
   return (
-    <a href={getLink({ username, type: 'line' })}>
-      <img
-        src={`https://render.gitanimals.org/lines/${username}${pet}`}
-        width={sizes[0]}
-        height={sizes[1]}
-        alt="gitanimals"
-      />
-    </a>
+    <img
+      src={`https://render.gitanimals.org/lines/${username}${pet}`}
+      width={sizes[0]}
+      height={sizes[1]}
+      alt="gitanimals"
+      draggable={false}
+    />
   );
 }
 
@@ -64,17 +63,16 @@ interface FarmImageProps extends GitanimalsFarmProps {
 export function GitanimalsFarm({ sizes = [600, 300], imageKey }: FarmImageProps) {
   const { name: username } = useClientUser();
   return (
-    <a href={getLink({ username, type: 'farm' })}>
-      <img
-        src={`https://render.gitanimals.org/farms/${username}?${imageKey}`}
-        width={sizes[0]}
-        height={sizes[1]}
-        alt="preview farm"
-        style={{
-          backgroundColor: '#fff',
-        }}
-      />
-    </a>
+    <img
+      src={`https://render.gitanimals.org/farms/${username}?${imageKey}`}
+      width={sizes[0]}
+      height={sizes[1]}
+      alt="preview farm"
+      style={{
+        backgroundColor: '#fff',
+      }}
+      draggable={false}
+    />
   );
 }
 
@@ -93,7 +91,7 @@ export const getGitanimalsFarmString = ({ username, sizes = [600, 300] }: FarmSt
 };
 
 export function GitanimalsGuild({ guildId }: { guildId: string }) {
-  return <img src={`https://render.gitanimals.org/guilds/${guildId}/draw`} alt="gitanimals" />;
+  return <img src={`https://render.gitanimals.org/guilds/${guildId}/draw`} alt="gitanimals" draggable={false} />;
 }
 
 export const getGuildString = ({ guildId, sizes = [600, 300] }: { guildId: string } & GitanimalsFarmProps) => {

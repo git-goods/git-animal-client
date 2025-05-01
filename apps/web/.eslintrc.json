@@ -6,6 +6,7 @@
     "project": true
   },
   "rules": {
+    "@next/next/no-img-element": "off",
     "no-restricted-imports": [
       "error",
       {

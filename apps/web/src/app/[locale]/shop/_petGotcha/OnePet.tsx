@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
@@ -10,16 +10,14 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
-import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
+import { CardDrawingGame } from '@/components/CardGame/FanDrawingGame/FanDrawingGame';
 import { GITHUB_ISSUE_URL } from '@/constants/outlink';
-import { useTimer } from '@/hooks/useTimer';
 import { trackEvent } from '@/lib/analytics';
-import { getAnimalTierInfo } from '@/utils/animals';
 
-import CardFlipGame from './CardFlipGame';
 import { useCheckEnoughMoney } from './useCheckEnoughMoney';
 
 const ONE_PET_POINT = 1000 as const;
+
 interface Props {
   onClose: () => void;
 }
@@ -27,14 +25,6 @@ interface Props {
 function OnePet({ onClose }: Props) {
   const queryClient = useQueryClient();
   const t = useTranslations('Gotcha');
-
-  const [getPersona, setGetPersona] = useState<{
-    type: string;
-    dropRate: string;
-    tier: AnimalTierType;
-  } | null>(null);
-
-  const { count, isRunning, isFinished, startTimer, resetTimer } = useTimer(3);
 
   const { data } = useSession();
   const { checkEnoughMoney } = useCheckEnoughMoney({ enoughPoint: ONE_PET_POINT });
@@ -46,17 +36,7 @@ function OnePet({ onClose }: Props) {
       }
 
       const res = await postGotcha({ count: 1 });
-
       const resultPersona = res.gotchaResults[0];
-      const tier = getAnimalTierInfo(Number(resultPersona.dropRate.replace('%', '')));
-
-      const persona = {
-        type: resultPersona.name,
-        dropRate: resultPersona.dropRate,
-        tier: tier,
-      };
-      setGetPersona(persona);
-      startTimer();
 
       queryClient.invalidateQueries({ queryKey: userQueries.userKey() });
       toast.success(t('get-persona-success'));
@@ -65,6 +45,8 @@ function OnePet({ onClose }: Props) {
         type: '1-pet',
         status: 'success',
       });
+
+      return { type: resultPersona.name, dropRate: resultPersona.dropRate };
     } catch (error) {
       trackEvent('gotcha', {
         type: '1-pet',
@@ -105,22 +87,16 @@ Token: ${data?.user.accessToken}
     }
   };
 
-  useEffect(() => {
-    // 3초 후에 닫기
-    if (isFinished) {
-      onClose();
-      resetTimer();
-    }
-  }, [isFinished, onClose, resetTimer]);
-
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="screen">
+      <Dialog.Content size="large" className={dialogContentStyle}>
         <Dialog.Title className={headingStyle}>{t('choose-one-card')}</Dialog.Title>
-        <CardFlipGame onClose={onClose} onGetPersona={onAction} getPersona={getPersona} />
-        {isRunning && (
-          <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
-        )}
+
+        <CardDrawingGame
+          characters={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }]}
+          onSelectCard={onAction}
+          onClose={onClose}
+        />
       </Dialog.Content>
     </Dialog>
   );
@@ -128,22 +104,23 @@ Token: ${data?.user.accessToken}
 
 export default OnePet;
 
-const noticeMessageStyle = css({
-  position: 'absolute',
-  bottom: '100px',
-  textStyle: 'glyph28.bold',
-  color: 'white',
-  textAlign: 'center',
+const dialogContentStyle = css({
+  height: 'fit-content',
+
+  _mobile: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 const headingStyle = css({
   textStyle: 'glyph48.bold',
   color: 'white',
   textAlign: 'center',
-  marginBottom: '60px',
 
   _mobile: {
     textStyle: 'glyph28.bold',
-    marginBottom: '40px',
   },
 });

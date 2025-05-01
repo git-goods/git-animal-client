@@ -9,6 +9,7 @@ import axios from 'axios';
 export const config = {
   providers: [
     CredentialsProvider({
+      id: 'web-credentials', // 웹용 credentials provider
       name: 'Credentials',
       credentials: {
         token: { type: 'string' },
@@ -45,16 +46,54 @@ export const config = {
         }
       },
     }),
+    CredentialsProvider({
+      id: 'rn-webview', // RN 웹뷰용 credentials provider
+      name: 'RN WebView',
+      credentials: {
+        token: { type: 'text' },
+      },
+      async authorize(credentials) {
+        if (!credentials?.token) {
+          throw new Error('No token provided from RN WebView');
+        }
+
+        try {
+          const data = await getUserByToken(`Bearer ${credentials.token}`);
+
+          if (!data) return null;
+
+          return {
+            id: data.id,
+            name: data.username,
+            image: data.profileImage,
+            token: credentials.token,
+            accessToken: credentials.token,
+            source: 'rn-webview', // 토큰 출처 표시
+          };
+        } catch (error) {
+          console.error('RN WebView authorization failed:', error);
+          return null;
+        }
+      },
+    }),
   ],
   callbacks: {
     async jwt({ token, user }) {
-      return { ...token, ...user };
+      if (user) {
+        // user 객체가 있을 때만 token을 업데이트
+        return { ...token, ...user };
+      }
+      return token;
     },
 
     async session({ session, token }) {
       session.user = token as any;
       return session;
     },
+  },
+  pages: {
+    signIn: '/auth/signin',
+    error: '/auth/error',
   },
 } satisfies NextAuthOptions;
 
