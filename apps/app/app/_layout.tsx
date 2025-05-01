@@ -3,10 +3,13 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import 'react-native-reanimated';
+import DebugPath from '../components/DebugPath';
+import { SafeAreaView, View } from 'react-native';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useAuth } from '../hooks/useAuth'; // 인증 상태 관리 훅
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -16,6 +19,8 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
+
+  const { isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
     if (loaded) {
@@ -27,13 +32,34 @@ export default function RootLayout() {
     return null;
   }
 
+  if (isLoading) {
+    return null; // 또는 로딩 화면
+  }
+
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <View style={{ flex: 1 }}>
+      <SafeAreaView>
+        <DebugPath />
+      </SafeAreaView>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack
+          initialRouteName={isAuthenticated ? '(tabs)' : 'auth/login'}
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="auth/login"
+            options={{
+              headerShown: false,
+              presentation: 'modal',
+            }}
+          />
+          <Stack.Screen name="auth/success" options={{ title: '로그인 완료' }} />
+        </Stack>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </View>
   );
 }
