@@ -6,7 +6,9 @@
   "scripts": {
     "prepare": "panda codegen",
     "lint": "eslint . ",
-    "generate:component": "turbo gen react-component"
+    "generate:component": "turbo gen react-component",
+    "storybook": "panda codegen && storybook dev -p 6001",
+    "build-storybook": "panda codegen && storybook build"
   },
   "dependencies": {
     "@gitanimals/react": "workspace:*",
@@ -17,23 +19,35 @@
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-tooltip": "^1.1.6",
+    "@react-spring/web": "^9.7.5",
     "@shadow-panda/style-context": "^0.7.1",
     "lucide-react": "^0.408.0"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^1.9.0",
     "@gitanimals/eslint-config": "workspace:*",
     "@gitanimals/typescript-config": "workspace:*",
     "@gitanimals/ui-token": "workspace:*",
     "@gitanimals/util-typescript": "workspace:*",
     "@pandacss/dev": "^0.41.0",
     "@shadow-panda/preset": "^0.7.1",
+    "@storybook/addon-essentials": "^8.0.9",
+    "@storybook/addon-interactions": "^8.0.9",
+    "@storybook/addon-links": "^8.0.9",
+    "@storybook/addon-onboarding": "^8.0.9",
+    "@storybook/blocks": "^8.0.9",
+    "@storybook/nextjs": "^8.0.9",
+    "@storybook/react": "^8.0.9",
+    "@storybook/test": "^8.0.9",
     "@turbo/gen": "^1.12.4",
     "@types/eslint": "^8.56.5",
     "@types/node": "^20.11.24",
     "@types/react": "*",
     "@types/react-dom": "^18.2.19",
     "eslint": "^8.57.0",
+    "eslint-plugin-storybook": "^0.8.0",
     "react": "*",
+    "storybook": "^8.0.9",
     "typescript": "*"
   }
 }

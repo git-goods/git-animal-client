@@ -1,0 +1,37 @@
+@layer reset, base, tokens, recipes, utilities;
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    position: relative;
+  }
+
+  button {
+    cursor: pointer;
+    border: transparent;
+    background-color: transparent;
+    padding: 0;
+    outline: none;
+  }
+
+  @media (max-width: 768px) {
+    .mobile {
+      display: block;
+    }
+
+    .desktop {
+      display: none;
+    }
+  }
+}
+
+.sb-show-main,
+.docs-story {
+  background-color: #2c2929;
+  color: white;
+  min-width: 400px;
+}
