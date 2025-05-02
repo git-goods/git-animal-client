@@ -4,6 +4,7 @@ import { BehanceIcon, GithubIcon } from '@gitanimals/ui-icon';
 
 import * as styles from './TeammateProfile.style';
 
+type UrlType = 'github' | 'behance' | null;
 interface Props {
   nickname: string;
   image: {
@@ -11,17 +12,17 @@ interface Props {
     width: number;
     height: number;
   };
-  urlType: 'github' | 'behance';
+  urlType: UrlType;
   url: string;
   role: string;
 }
 
-export const TeammateProfile: FC<Props> = ({ nickname, image, urlType, url, role }) => {
-  const ICON_MAP: Record<Props['urlType'], ReactElement> = {
-    github: <GithubIcon />,
-    behance: <BehanceIcon />,
-  };
+const ICON_MAP: Record<Exclude<UrlType, null>, ReactElement> = {
+  github: <GithubIcon />,
+  behance: <BehanceIcon />,
+};
 
+export const TeammateProfile: FC<Props> = ({ nickname, image, urlType, url, role }) => {
   return (
     <div className={styles.wrapperCss}>
       <Image className={styles.imageCss} src={image.src} width={image.width} height={image.height} alt={nickname} />
@@ -29,9 +30,11 @@ export const TeammateProfile: FC<Props> = ({ nickname, image, urlType, url, role
       <div className={styles.textWrapperCss}>
         <span className={styles.nicknameWrapperCss}>
           <span>{nickname}</span>
-          <a target="_blank" href={url}>
-            {ICON_MAP[urlType]}
-          </a>
+          {urlType && (
+            <a target="_blank" href={url}>
+              {ICON_MAP[urlType]}
+            </a>
+          )}
         </span>
         <span className={styles.roleCss}>{role}</span>
       </div>
