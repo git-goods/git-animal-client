@@ -19,7 +19,7 @@ async function MainSection() {
       </p>
       {/* TODO: button 반응형 처리 */}
       {!session ? (
-        <LoginButton label="Have Pet" />
+        <LoginButton label="Get a Pet" />
       ) : (
         <Link href="/mypage">
           <Button className="desktop" size="l">

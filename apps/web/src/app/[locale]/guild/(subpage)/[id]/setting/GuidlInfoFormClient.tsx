@@ -35,10 +35,10 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
     <>
       <Flex flexDirection="column" gap="24px">
         <div>
-          <p className={headingStyle}>Guild info</p>
+          <p className={headingStyle}>Guild Information</p>
           <div className={css({ position: 'relative' })}>
             <TextField
-              placeholder="Type guild name"
+              placeholder="Enter guild name"
               value={props.fields.title}
               onChange={(e) => {
                 setFormError?.({ title: '' });
@@ -69,7 +69,7 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
             </div>
           </div>
           <TextArea
-            placeholder="Type guild description"
+            placeholder="Enter guild description"
             value={props.fields.body}
             onChange={(e) => props.onFieldChange('body', e.target.value)}
             className={css({ mt: '6px' })}
@@ -77,8 +77,8 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
         </div>
         <div className={joinSettingStyle}>
           <div>
-            <p className={headingStyle}>Guild join setting</p>
-            <p>You can configure the settings for guild joining requests.</p>
+            <p className={headingStyle}>Guild Join Settings</p>
+            <p>Configure how users can join your guild.</p>
           </div>
           <div>
             <button
@@ -102,7 +102,7 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
           </div>
         </div>
         <div>
-          <p className={headingStyle}>Guild thumbnail</p>
+          <p className={headingStyle}>Guild Icon</p>
           <Flex gap="6px" className={css({ _mobile: { flexWrap: 'wrap' } })}>
             {props.icons?.map((icon) => (
               <button
