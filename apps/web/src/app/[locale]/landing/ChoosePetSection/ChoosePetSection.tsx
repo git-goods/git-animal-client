@@ -19,7 +19,7 @@ async function ChoosePetSection() {
         over 50+ different pets and raise them
       </h2>
       {!session ? (
-        <LoginButton label="Have Pet" />
+        <LoginButton label="Get a Pet" />
       ) : (
         <Link href="/mypage">
           <Button className="desktop" size="l">

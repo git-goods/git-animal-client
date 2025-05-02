@@ -38,7 +38,7 @@ async function Mypage({
     <>
       <div className={tabListStyle}>
         <Link href={`/mypage?${updateUrlSearchParams(searchParams, 'type', 'line-type')}`}>
-          <button className={cx('tab-item', selectedType === 'line-type' && 'selected')}>1 Type</button>
+          <button className={cx('tab-item', selectedType === 'line-type' && 'selected')}>Single Type</button>
         </Link>
         <Link href={`/mypage?${updateUrlSearchParams(searchParams, 'type', 'farm-type')}`}>
           <button className={cx('tab-item', selectedType === 'farm-type' && 'selected')}>Farm Type</button>
