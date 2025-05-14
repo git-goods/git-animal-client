@@ -1,19 +1,22 @@
 export class Character {
-  private element: HTMLElement | null = null;
+  private element: SVGElement | null = null;
   private isJumping: boolean = false;
   private jumpHeight: number = 30; // 점프 높이 조정
   private jumpDuration: number = 500;
   private currentY: number = 100; // 초기 Y 위치
 
-  constructor(elementId: string) {
-    this.element = document.getElementById(elementId);
+  constructor(element: SVGElement) {
+    this.element = element;
     this.init();
   }
 
   private init() {
     if (!this.element) return;
 
+    // SVG 요소에 스타일 적용
     this.element.style.cursor = 'pointer';
+
+    // 클릭 이벤트 리스너 추가
     this.element.addEventListener('click', () => this.jump());
   }
 

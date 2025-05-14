@@ -6,9 +6,7 @@ import CharacterView from './CharacterView';
 
 export default function WebviewPage() {
   useEffect(() => {
-    axios.get('/api/render?type=snowman').then((res) => {
-      console.log(res.data);
-    });
+    axios.get('/api/render?type=snowman').then((res) => {});
   }, []);
   return (
     <div className="w-full h-screen">
