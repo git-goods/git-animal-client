@@ -68,9 +68,15 @@ export default function CharacterView() {
     <div className="relative w-full h-full">
       <svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300" fill="none">
         {snowmanSvg && (
-          <g ref={snowmanElementRef} id="snowman-container" dangerouslySetInnerHTML={{ __html: snowmanSvg }} />
+          <g ref={snowmanElementRef} id="snowman-container" dangerouslySetInnerHTML={{ __html: snowmanSvg }}>
+            {/* <g dangerouslySetInnerHTML={{ __html: snowmanSvg }} /> */}
+          </g>
         )}
-        {foxSvg && <g ref={foxElementRef} id="fox-container" dangerouslySetInnerHTML={{ __html: foxSvg }} />}
+        {foxSvg && (
+          <g ref={foxElementRef} id="fox-container" dangerouslySetInnerHTML={{ __html: foxSvg }}>
+            {/* <g dangerouslySetInnerHTML={{ __html: foxSvg }} /> */}
+          </g>
+        )}
         <rect x="0.5" y="0.5" width="599" height="299" rx="4.5" stroke="#00894D" />
       </svg>
     </div>
