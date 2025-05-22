@@ -77,7 +77,8 @@ export const interceptorResponseRejected = async (error: AxiosError<ApiErrorSche
     if (typeof window !== 'undefined') {
       signOut();
     } else {
-      axios.get('/api/auth/signOut');
+      await axios.get('/api/auth/signOut');
+      // redirect('/');
     }
     throw new CustomException('TOKEN_EXPIRED', 'token expired and sign out success');
   }
