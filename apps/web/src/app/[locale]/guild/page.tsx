@@ -19,6 +19,7 @@ import { SortSelect } from './_components/SortSelect';
 import { Box } from '_panda/jsx';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
+import { getServerSession } from 'next-auth';
 
 interface GuildPageProps {
   searchParams: {
@@ -39,7 +40,22 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function GuildPage({ searchParams }: GuildPageProps) {
-  return <GuildInner searchParams={searchParams} />;
+  let redirectUrl = null;
+  try {
+    const session = await getServerSession();
+
+    if (!session) {
+      throw new Error('session not found');
+    }
+
+    return <GuildInner searchParams={searchParams} />;
+  } catch (error) {
+    redirectUrl = ROUTE.HOME();
+  }
+
+  if (redirectUrl) {
+    redirect(redirectUrl);
+  }
 }
 
 async function GuildInner({ searchParams }: GuildPageProps) {
