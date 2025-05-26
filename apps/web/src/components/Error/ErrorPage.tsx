@@ -16,7 +16,7 @@ export function ErrorPage({ heading, paragraph, onClickButton, buttonText = 'Ret
   return (
     <main className={mainCss}>
       <h1 className={h1Css}>{heading}</h1>
-      {paragraph && <p className={pCss}>{paragraph}</p>}
+      {paragraph && <div className={pCss}>{paragraph}</div>}
       {onClickButton && <Button onClick={onClickButton}>{buttonText}</Button>}
     </main>
   );

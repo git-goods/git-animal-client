@@ -6,6 +6,7 @@ import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { ErrorPage } from '@/components/Error/ErrorPage';
 import { isDev } from '@/constants/env';
 import { usePathname, useRouter } from '@/i18n/routing';
+import { useClientUser } from '@/utils/clientAuth';
 
 interface Props {
   error: Error;
@@ -20,6 +21,7 @@ const KNOWN_ERROR_MESSAGES = [NOT_AUTHORIZED_MESSAGE];
 const GlobalErrorPage = ({ error, reset }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
+  const user = useClientUser();
 
   useEffect(() => {
     if (isDev) return;
@@ -33,6 +35,7 @@ Error Stack: ${error.stack}
 \`\`\`
 
 Pathname: ${pathname}
+User: ${user ? JSON.stringify(user) : 'NOT LOGGED IN'}
 `);
   }, [error]);
 
