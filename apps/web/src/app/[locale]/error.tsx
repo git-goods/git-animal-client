@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { Button } from '@gitanimals/ui-panda';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { ErrorPage } from '@/components/Error/ErrorPage';
@@ -29,6 +30,7 @@ const GlobalErrorPage = ({ error, reset }: Props) => {
 
     sendMessageToErrorChannel(`<!here>
 🔥 Global Error 발생 🔥
+Something went wrong 😭
 Error Message: ${error.message}
 \`\`\`
 Error Stack: ${error.stack}
@@ -50,19 +52,16 @@ User: ${user ? JSON.stringify(user) : 'NOT LOGGED IN'}
   };
 
   return (
-    <html lang="en">
-      <body>
-        <ErrorPage
-          heading="Something went wrong 😭"
-          paragraph={
-            <>
-              If you want to report this error, please create an issue in <a href={GITHUB_ISSUE_URL}>Github</a>.
-            </>
-          }
-          onClickButton={onClickRetry}
-        />
-      </body>
-    </html>
+    <ErrorPage
+      heading="Something went wrong 😭"
+      paragraph={
+        <>
+          If you want to report this error, please create an issue in <a href={GITHUB_ISSUE_URL}>Github</a>.
+        </>
+      }
+      onClickButton={onClickRetry}
+      secondButtonElement={<Button onClick={() => router.push('/')}>Go to Home</Button>}
+    />
   );
 };
 
