@@ -1,7 +1,6 @@
 import { getSession, signOut } from 'next-auth/react';
 import { CustomException } from '@gitanimals/exception';
 import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-import axios from 'axios';
 
 import { getServerAuth } from '@/auth';
 import type { ApiErrorScheme } from '@/exceptions/type';
@@ -63,11 +62,6 @@ export const interceptorRequestFulfilled = async (config: InternalAxiosRequestCo
 
 // Response interceptor
 export const interceptorResponseFulfilled = (res: AxiosResponse) => {
-  // if (200 <= res.status && res.status < 300) {
-  //   return res.data;
-  // }
-
-  // return Promise.reject(res.data);
   return res;
 };
 
@@ -76,9 +70,6 @@ export const interceptorResponseRejected = async (error: AxiosError<ApiErrorSche
   if (error?.response?.status === 401) {
     if (typeof window !== 'undefined') {
       signOut();
-    } else {
-      await axios.get('/api/auth/signOut');
-      // redirect('/');
     }
     throw new CustomException('TOKEN_EXPIRED', 'token expired and sign out success');
   }
@@ -90,12 +81,12 @@ export const interceptorResponseRejected = async (error: AxiosError<ApiErrorSche
 
 export const setInterceptors = (instance: AxiosInstance) => {
   instance.interceptors.request.use(interceptorRequestFulfilled);
-  instance.interceptors.response.use((res) => {
-    if (200 <= res.status && res.status < 300) {
-      return res.data;
-    }
-
-    return Promise.reject(res.data);
-  }, interceptorResponseRejected);
+  if (typeof window !== 'undefined') {
+    // 클라이언트에서만 리다이렉트 감지 인터셉터 등록
+    instance.interceptors.response.use(interceptorResponseFulfilled, interceptorResponseRejected);
+  } else {
+    // 서버에서는 기본 응답만 반환 (항상 res 반환)
+    instance.interceptors.response.use((res) => res, interceptorResponseRejected);
+  }
   return instance;
 };
