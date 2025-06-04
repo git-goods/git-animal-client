@@ -35,7 +35,7 @@ Error Stack: ${error.stack}
 \`\`\`
 
 Pathname: ${pathname}
-User: ${user ? JSON.stringify(user) : 'NOT LOGGED IN'}
+User: ${user?.id ? JSON.stringify(user) : 'NOT LOGGED IN'}
 `);
   }, [error]);
 
@@ -43,7 +43,7 @@ User: ${user ? JSON.stringify(user) : 'NOT LOGGED IN'}
     try {
       reset();
       router.refresh();
-      router.push(window.location.pathname);
+      router.push(pathname);
     } catch (e) {
       console.error('Error during reset:', e);
     }
