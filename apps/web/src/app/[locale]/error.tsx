@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
+import { css } from '_panda/css';
 import { Button } from '@gitanimals/ui-panda';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
@@ -24,6 +26,8 @@ const GlobalErrorPage = ({ error, reset }: Props) => {
   const pathname = usePathname();
   const user = useClientUser();
 
+  const t = useTranslations('Error');
+
   useEffect(() => {
     if (isDev) return;
     if (KNOWN_ERROR_MESSAGES.includes(error.message)) return;
@@ -37,7 +41,7 @@ Error Stack: ${error.stack}
 \`\`\`
 
 Pathname: ${pathname}
-User: ${user ? JSON.stringify(user) : 'NOT LOGGED IN'}
+User: ${user?.id ? JSON.stringify(user) : 'NOT LOGGED IN'}
 `);
   }, [error]);
 
@@ -53,14 +57,19 @@ User: ${user ? JSON.stringify(user) : 'NOT LOGGED IN'}
 
   return (
     <ErrorPage
-      heading="Something went wrong 😭"
-      paragraph={
-        <>
-          If you want to report this error, please create an issue in <a href={GITHUB_ISSUE_URL}>Github</a>.
-        </>
-      }
+      heading={t('global-error-message')}
+      paragraph={<p className={css({ whiteSpace: 'pre-wrap', textAlign: 'center' })}>{t('want-to-report-error')}</p>}
       onClickButton={onClickRetry}
-      secondButtonElement={<Button onClick={() => router.push('/')}>Go to Home</Button>}
+      secondButtonElement={
+        <div className={css({ display: 'flex', justifyContent: 'center', gap: '16px' })}>
+          <Button variant="secondary" onClick={() => router.push('/')}>
+            Go to Home
+          </Button>
+          <Button variant="secondary" onClick={() => window.open(GITHUB_ISSUE_URL, '_blank')}>
+            {t('report-error-button')}
+          </Button>
+        </div>
+      }
     />
   );
 };

@@ -174,5 +174,10 @@
   "Guild": {
     "join-request-success": "Successfully sent a guild join request.",
     "invalid-guild-name": "Guild name may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen."
+  },
+  "Error": {
+    "global-error-message": "Something went wrong 😭",
+    "want-to-report-error": "The gitanimals development team is currently tracking this error.\nIf you have a moment, we would greatly appreciate it if you could report the circumstances that led to this error.",
+    "report-error-button": "Report Error"
   }
 }
