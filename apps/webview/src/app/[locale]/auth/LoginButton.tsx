@@ -3,27 +3,27 @@
 import React from 'react';
 import { signIn } from 'next-auth/react';
 
-import { LOCAL_STORAGE_KEY } from '@/constants/storage';
+import { ROUTE } from '@/constants/route';
 
-function LoginButton({ token }: { token: string }) {
+function LoginButton({ jwtToken }: { jwtToken: string }) {
+  // const jwtToken = searchParams.jwt;
+  const token = jwtToken.split(' ')[1];
+
   const ref = React.useRef<HTMLButtonElement>(null);
 
   React.useEffect(() => {
     if (ref.current) {
       console.log('[Auth Debug] LoginButton: Token received', { tokenLength: token?.length });
       ref.current.click();
-      localStorage.setItem('accessToken', token);
     }
   }, [token]);
-
-  const callbackUrl = localStorage.getItem(LOCAL_STORAGE_KEY.callbackUrl) || '/mypage';
 
   const handleLogin = async () => {
     console.log('[Auth Debug] LoginButton: Signing in with token', { tokenLength: token?.length });
     try {
       const result = await signIn('web-credentials', {
         token,
-        callbackUrl,
+        callbackUrl: ROUTE.HOME(),
         redirect: true,
       });
       console.log('[Auth Debug] LoginButton: SignIn result', result);

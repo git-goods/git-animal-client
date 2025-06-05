@@ -3,14 +3,9 @@
 import { createPortal } from 'react-dom';
 import { Toaster } from 'sonner';
 
-import FeedBack from './FeedbackForm';
-import { DialogComponent } from './useDialog';
-
 function GlobalComponent() {
   return createPortal(
     <>
-      <FeedBack />
-      <DialogComponent />
       <Toaster
         position="top-center"
         toastOptions={{

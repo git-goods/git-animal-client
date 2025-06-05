@@ -1,45 +1,27 @@
-'use client';
-
-import { useEffect } from 'react';
 import { center } from '_panda/patterns';
-import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
-import { setRenderRequestInterceptor, setRenderResponseInterceptor } from '@gitanimals/api/src/_instance';
-
-import {
-  interceptorRequestFulfilled,
-  interceptorResponseFulfilled,
-  interceptorResponseRejected,
-} from '@/apis/interceptor';
 
 import LoginButton from './LoginButton';
 
-function JWTPage({
-  searchParams,
-}: {
-  searchParams: {
-    jwt: string;
-  };
-}) {
-  const jwtToken = searchParams.jwt;
-  const token = jwtToken.split(' ')[1];
+async function JWTPage({ searchParams }: { searchParams: Promise<{ jwt: string }> }) {
+  const jwtToken = (await searchParams).jwt;
 
-  useEffect(() => {
-    console.log('[Auth Debug] JWTPage: Page loaded with JWT token', {
-      hasToken: !!token,
-      tokenLength: token?.length,
-    });
-  }, [token]);
+  // useEffect(() => {
+  //   console.log('[Auth Debug] JWTPage: Page loaded with JWT token', {
+  //     hasToken: !!token,
+  //     tokenLength: token?.length,
+  //   });
+  // }, [token]);
 
-  setRequestInterceptor(interceptorRequestFulfilled);
-  setResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
-  setRenderRequestInterceptor(interceptorRequestFulfilled);
-  setRenderResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
+  // setRequestInterceptor(interceptorRequestFulfilled);
+  // setResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
+  // setRenderRequestInterceptor(interceptorRequestFulfilled);
+  // setRenderResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
 
   return (
     <div className={loadingContainerStyle}>
       Loading....
       <div style={{ visibility: 'hidden' }}>
-        <LoginButton token={token} />
+        <LoginButton jwtToken={jwtToken} />
       </div>
     </div>
   );

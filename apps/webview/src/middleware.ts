@@ -2,9 +2,10 @@ import type { NextRequest } from 'next/server';
 import withAuth from 'next-auth/middleware';
 import createMiddleware from 'next-intl/middleware';
 
+import { ROUTE } from './constants/route';
 import { routing } from './i18n/routing';
 
-const publicPages = ['/', '/auth', '/event/HALLOWEEN_2024', '/event/CHRISTMAS_2024', '/test/ranking'];
+const publicPages = ['/auth', '/auth/test'];
 
 const intlMiddleware = createMiddleware({
   ...routing,
@@ -15,7 +16,7 @@ const authMiddleware = withAuth((req) => intlMiddleware(req), {
     authorized: ({ token }) => token != null,
   },
   pages: {
-    signIn: '/',
+    signIn: ROUTE.AUTH.LOGIN(),
   },
 });
 
