@@ -2,6 +2,7 @@ export const ROUTE = {
   HOME: () => '/',
   AUTH: {
     LOGIN: () => '/auth',
+    ERROR: () => '/auth/error',
   },
 };
 

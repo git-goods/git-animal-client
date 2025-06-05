@@ -11,9 +11,6 @@ export const convertSnakeToKebab = (str: string) => {
 export const convertKebabToSnake = (str: string) => {
   return str.replaceAll('-', '_');
 };
-// Object.entries(request || {})
-//         .map(([key, value]) => ({ convertSnakeToKebab(key): value }))
-//         .join('&'),
 
 export const convertCamelToSnake = (str: string) => {
   if (typeof str !== 'string') return str;

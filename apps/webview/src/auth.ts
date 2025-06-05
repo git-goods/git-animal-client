@@ -46,36 +46,6 @@ export const config = {
         }
       },
     }),
-    CredentialsProvider({
-      id: 'rn-webview', // RN 웹뷰용 credentials provider
-      name: 'RN WebView',
-      credentials: {
-        token: { type: 'text' },
-      },
-      async authorize(credentials) {
-        if (!credentials?.token) {
-          throw new Error('No token provided from RN WebView');
-        }
-
-        try {
-          const data = await getUserByToken(`Bearer ${credentials.token}`);
-
-          if (!data) return null;
-
-          return {
-            id: data.id,
-            name: data.username,
-            image: data.profileImage,
-            token: credentials.token,
-            accessToken: credentials.token,
-            source: 'rn-webview', // 토큰 출처 표시
-          };
-        } catch (error) {
-          console.error('RN WebView authorization failed:', error);
-          return null;
-        }
-      },
-    }),
   ],
   callbacks: {
     async jwt({ token, user }) {
@@ -92,7 +62,7 @@ export const config = {
     },
   },
   pages: {
-    signIn: '/auth/signin',
+    signIn: '/auth',
     error: '/auth/error',
   },
 } satisfies NextAuthOptions;
