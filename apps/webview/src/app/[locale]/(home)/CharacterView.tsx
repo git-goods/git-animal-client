@@ -12,7 +12,7 @@ const IMAGE_SECRET_KEY = process.env.NEXT_PUBLIC_IMAGE_TOKEN || '';
 
 export default function CharacterView() {
   const session = useClientUser();
-  console.log('session: ', session);
+
   const snowmanRef = useRef<Character | null>(null);
   const foxRef = useRef<Character | null>(null);
   const snowmanElementRef = useRef<SVGGElement>(null);
@@ -36,8 +36,8 @@ export default function CharacterView() {
             secretKey: IMAGE_SECRET_KEY,
           }),
         ]);
-        setSnowmanSvg(snowmanResponse.data);
-        setFoxSvg(foxResponse.data);
+        setSnowmanSvg(snowmanResponse);
+        setFoxSvg(foxResponse);
       } catch (error) {
         console.error('SVG 로드 중 오류 발생:', error);
       }

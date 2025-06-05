@@ -12,5 +12,5 @@ export const getOnlyPet = async (request: GetOnlyPetRequest) => {
       'Image-Secret': request.secretKey,
     },
   });
-  return response.data;
+  return response;
 };
