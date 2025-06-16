@@ -2,14 +2,16 @@
 
 import { css } from '_panda/css';
 
+import { ProfileBoard } from './_components/ProfileBoard';
 import CharacterView from './CharacterView';
 
 export default function WebviewPage() {
   return (
     <div className={containerStyle}>
+      <ProfileBoard />
       <CharacterView />
       <div className={backgroundStyle}>
-        <img src="/webview/app-background-home.png" alt="background" />
+        <img src="/assets/home/app-background-home.png" alt="background" />
       </div>
     </div>
   );
@@ -25,7 +27,7 @@ const containerStyle = css({
   paddingBottom: '160px',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'flex-end',
+  justifyContent: 'space-between',
 });
 
 const backgroundStyle = css({
@@ -43,6 +45,7 @@ const backgroundStyle = css({
 
   '& img': {
     w: '100%',
+    minH: '90%',
     objectFit: 'cover',
     objectPosition: 'bottom center',
   },

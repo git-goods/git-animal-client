@@ -62,7 +62,7 @@ export const config = {
     },
   },
   pages: {
-    signIn: '/auth',
+    signIn: '/auth/test', // dev
     error: '/auth/error',
   },
 } satisfies NextAuthOptions;

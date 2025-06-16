@@ -97,6 +97,6 @@ const containerStyle = css({
 
 const svgStyle = css({
   w: '100%',
-  h: '277px',
-  maxH: '277px',
+  h: '290px',
+  maxH: '290px',
 });

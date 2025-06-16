@@ -5,18 +5,6 @@ import LoginButton from './LoginButton';
 async function JWTPage({ searchParams }: { searchParams: Promise<{ jwt: string }> }) {
   const jwtToken = (await searchParams).jwt;
 
-  // useEffect(() => {
-  //   console.log('[Auth Debug] JWTPage: Page loaded with JWT token', {
-  //     hasToken: !!token,
-  //     tokenLength: token?.length,
-  //   });
-  // }, [token]);
-
-  // setRequestInterceptor(interceptorRequestFulfilled);
-  // setResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
-  // setRenderRequestInterceptor(interceptorRequestFulfilled);
-  // setRenderResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
-
   return (
     <div className={loadingContainerStyle}>
       Loading....
