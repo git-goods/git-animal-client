@@ -5,6 +5,8 @@ import { center } from '_panda/patterns';
 import { PawPrintIcon } from 'lucide-react';
 
 import { TabBar } from '@/components/Layout/TabBar';
+import { ROUTE } from '@/constants/route';
+import { Link } from '@/i18n/routing';
 
 import { ProfileBoard } from './_components/ProfileBoard';
 import CharacterView from './CharacterView';
@@ -25,7 +27,8 @@ export default function WebviewPage() {
 
 function SelectPetButton() {
   return (
-    <button
+    <Link
+      href={ROUTE.HOME.PERSONA()}
       className={center({
         position: 'absolute',
         width: '48px',
@@ -41,7 +44,7 @@ function SelectPetButton() {
       })}
     >
       <PawPrintIcon className={css({ w: '24px', h: '24px' })} color="white" />
-    </button>
+    </Link>
   );
 }
 

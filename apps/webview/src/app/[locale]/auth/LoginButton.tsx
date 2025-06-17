@@ -23,7 +23,7 @@ function LoginButton({ jwtToken }: { jwtToken: string }) {
     try {
       const result = await signIn('web-credentials', {
         token,
-        callbackUrl: ROUTE.HOME(),
+        callbackUrl: ROUTE.HOME.ROOT(),
         redirect: true,
       });
       console.log('[Auth Debug] LoginButton: SignIn result', result);

@@ -1,5 +1,8 @@
 export const ROUTE = {
-  HOME: () => '/',
+  HOME: {
+    ROOT: () => '/',
+    PERSONA: () => '/persona',
+  },
   AUTH: {
     LOGIN: () => '/auth',
     ERROR: () => '/auth/error',
