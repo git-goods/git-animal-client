@@ -1,6 +1,7 @@
 'use client';
 
 import { css } from '_panda/css';
+import { TabBar } from '@/components/Layout/TabBar';
 
 import { ProfileBoard } from './_components/ProfileBoard';
 import CharacterView from './CharacterView';
@@ -13,6 +14,7 @@ export default function WebviewPage() {
       <div className={backgroundStyle}>
         <img src="/assets/home/app-background-home.png" alt="background" />
       </div>
+      <TabBar />
     </div>
   );
 }
@@ -42,6 +44,7 @@ const backgroundStyle = css({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-end',
+  paddingBottom: '56px',
 
   '& img': {
     w: '100%',
