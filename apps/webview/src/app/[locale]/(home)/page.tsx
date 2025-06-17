@@ -1,6 +1,9 @@
 'use client';
 
 import { css } from '_panda/css';
+import { center } from '_panda/patterns';
+import { PawPrintIcon } from 'lucide-react';
+
 import { TabBar } from '@/components/Layout/TabBar';
 
 import { ProfileBoard } from './_components/ProfileBoard';
@@ -14,8 +17,31 @@ export default function WebviewPage() {
       <div className={backgroundStyle}>
         <img src="/assets/home/app-background-home.png" alt="background" />
       </div>
+      <SelectPetButton />
       <TabBar />
     </div>
+  );
+}
+
+function SelectPetButton() {
+  return (
+    <button
+      className={center({
+        position: 'absolute',
+        width: '48px',
+        height: '48px',
+        right: '18px',
+        bottom: '74px',
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        backdropFilter: 'blur(40px)',
+        borderRadius: '50%',
+        border: 'none',
+        cursor: 'pointer',
+        zIndex: 100,
+      })}
+    >
+      <PawPrintIcon className={css({ w: '24px', h: '24px' })} color="white" />
+    </button>
   );
 }
 
