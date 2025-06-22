@@ -7,7 +7,7 @@ import * as styles from './HavePetWaySection.style';
 function HavePetWaySection() {
   return (
     <section className={styles.section}>
-      <h2 className={styles.heading}>Two way to Have Pets</h2>
+      <h2 className={styles.heading}>Two Ways to Have Pets</h2>
       <div className={styles.wayContainer}>
         <div className={cx(styles.wayItem, css({ background: 'brand.coral' }))}>
           <div>

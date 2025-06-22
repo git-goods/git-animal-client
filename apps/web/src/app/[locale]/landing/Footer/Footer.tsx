@@ -40,7 +40,29 @@ export function Footer() {
         height: 34,
       },
       url: 'https://www.behance.net/sopungcjw42af',
-      role: 'Design',
+      role: 'Designer',
+    },
+    {
+      nickname: 'sunwoo',
+      urlType: 'behance',
+      image: {
+        src: '/teammate/sunwoo.webp',
+        width: 34,
+        height: 34,
+      },
+      url: 'https://www.behance.net/6a39a177',
+      role: 'Designer',
+    },
+    {
+      nickname: 'seunghun',
+      urlType: 'github',
+      image: {
+        src: '/teammate/seunghun.webp',
+        width: 34,
+        height: 34,
+      },
+      url: 'https://github.com/Orchemi',
+      role: 'Frontend',
     },
     {
       nickname: 'hyesungoh',
@@ -53,14 +75,25 @@ export function Footer() {
       url: 'https://github.com/hyesungoh',
       role: 'Frontend',
     },
-  ];
+    {
+      nickname: 'gaeun',
+      urlType: null,
+      image: {
+        src: '/teammate/gaeun.webp',
+        width: 34,
+        height: 34,
+      },
+      url: 'https://github.com/hyesungoh',
+      role: 'Data Analyst',
+    },
+  ] as const;
 
   const REPO_DATA = [
     { title: 'Organization', href: 'https://github.com/git-goods' },
     { title: 'Gitanimals', href: 'https://github.com/git-goods/gitanimals' },
     { title: 'Client', href: 'https://github.com/git-goods/git-animal-client' },
     { title: 'API', href: 'https://github.com/git-goods/gitanimals-api' },
-  ];
+  ] as const;
 
   return (
     <footer className={cx(styles.footer, 'footer')}>

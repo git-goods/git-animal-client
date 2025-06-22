@@ -4,13 +4,13 @@ import { rankQueries } from '@gitanimals/react-query';
 
 import { getDehydratedQueries, Hydrate } from '@/lib/react-query/queryClient';
 
-import RankingSection from '../../landing/RankingSection/RankingSection';
+import RankingSection from './RankingSection';
 
 const TOTAL_VIEW_RANKS = 8 as const;
 const RANKS_TOP_3 = 3 as const;
 const RANKS_PER_PAGE = TOTAL_VIEW_RANKS - RANKS_TOP_3;
 
-export default async function TestRankingPage({
+export async function RankingServerSide({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };

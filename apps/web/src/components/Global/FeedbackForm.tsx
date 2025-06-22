@@ -91,7 +91,10 @@ function FeedBack() {
             <h2>Feedback</h2>
             <img src="/feedback/feedback-profile.png" alt="feedback" width={67.5} height={67} />
             <p>
-              Hello!! I’m Gitanimals Developer. Please leave any improvements, and it will be register GitHub issue.
+              Hi there! I&apos;m a Gitanimals developer.
+              <br />
+              Feel free to leave feedback — it will be automatically posted as a GitHub issue. We’d love to hear from
+              you!
             </p>
             <button className={closeIconWrapperStyle} onClick={() => setIsOpen(false)}>
               <XIcon color="black" width={20} height={20} />
@@ -100,12 +103,12 @@ function FeedBack() {
           <section className={formStyle}>
             <LabelSelect onChange={(relations) => onContentChange('labels', relations)} />
             <Input
-              placeholder="Type issue title..."
+              placeholder="Enter a title for your feedback"
               value={content.title}
               onChange={(e) => onContentChange('title', e.target.value)}
             />
             <TextArea
-              placeholder="Please feel free to leave any good points for improvement..."
+              placeholder="Let us know what could be improved! "
               value={content.body}
               onChange={(e) => onContentChange('body', e.target.value)}
             />
@@ -150,7 +153,7 @@ const useFeedbackContent = () => {
 function LabelSelect({ onChange }: { onChange: (value: string[]) => void }) {
   return (
     <Select>
-      <Select.Label placeholder="Select label">
+      <Select.Label placeholder="Choose a feedback type ">
         {({ value }) =>
           value && (
             <>

@@ -13,6 +13,7 @@ import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
 import { trackEvent } from '@/lib/analytics';
+import { getQueryClient } from '@/lib/react-query/queryClient';
 import { useClientUser } from '@/utils/clientAuth';
 import { getBackgroundImage } from '@/utils/image';
 import { addNumberComma } from '@/utils/number';
@@ -35,8 +36,11 @@ export const BackgroundSection = wrap
     } = useSuspenseQuery(shopQueries.backgroundOptions());
     const { data: myBackground } = useQuery(renderUserQueries.getMyBackground(name));
 
+    const queryClient = getQueryClient();
     const { mutate: buyBackground } = useBuyBackground({
       onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: renderUserQueries.getMyBackground(name).queryKey });
+
         toast.success(t('buy-success'));
       },
       onError: (error) => {

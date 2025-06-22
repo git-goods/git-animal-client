@@ -230,5 +230,10 @@
     },
     "timer-mention": "정답을 선택해주세요!",
     "quiz-finished": "퀴즈를 완료했어요. [point]P를 얻었어요!"
+  },
+  "Error": {
+    "global-error-message": "문제가 발생했어요 😭",
+    "want-to-report-error": "gitanimals 개발팀은 현재 이 오류를 추적하고 있습니다.\n시간이 되신다면 이 오류가 발생한 상황을 보고해주시면 감사하겠습니다.",
+    "report-error-button": "오류 보고하기"
   }
 }

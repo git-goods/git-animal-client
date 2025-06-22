@@ -22,6 +22,9 @@ export const tokens = defineTokens({
     product: {
       value: 'Product Sans, system-ui, sans-serif',
     },
+    dosgothic: {
+      value: 'DOSGothic, system-ui, sans-serif',
+    },
   },
   zIndex: {
     hide: { value: '-1' },

@@ -1,11 +1,15 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
+import { css } from '_panda/css';
+import { Button } from '@gitanimals/ui-panda';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { ErrorPage } from '@/components/Error/ErrorPage';
 import { isDev } from '@/constants/env';
-import { useRouter } from '@/i18n/routing';
+import { usePathname, useRouter } from '@/i18n/routing';
+import { useClientUser } from '@/utils/clientAuth';
 
 interface Props {
   error: Error;
@@ -19,6 +23,10 @@ const KNOWN_ERROR_MESSAGES = [NOT_AUTHORIZED_MESSAGE];
 
 const GlobalErrorPage = ({ error, reset }: Props) => {
   const router = useRouter();
+  const pathname = usePathname();
+  const user = useClientUser();
+
+  const t = useTranslations('Error');
 
   useEffect(() => {
     if (isDev) return;
@@ -26,10 +34,14 @@ const GlobalErrorPage = ({ error, reset }: Props) => {
 
     sendMessageToErrorChannel(`<!here>
 🔥 Global Error 발생 🔥
+Something went wrong 😭
 Error Message: ${error.message}
 \`\`\`
 Error Stack: ${error.stack}
 \`\`\`
+
+Pathname: ${pathname}
+User: ${user?.id ? JSON.stringify(user) : 'NOT LOGGED IN'}
 `);
   }, [error]);
 
@@ -44,19 +56,21 @@ Error Stack: ${error.stack}
   };
 
   return (
-    <html lang="en">
-      <body>
-        <ErrorPage
-          heading="Something went wrong 😭"
-          paragraph={
-            <>
-              If you want to report this error, please create an issue in <a href={GITHUB_ISSUE_URL}>Github</a>.
-            </>
-          }
-          onClickButton={onClickRetry}
-        />
-      </body>
-    </html>
+    <ErrorPage
+      heading={t('global-error-message')}
+      paragraph={<p className={css({ whiteSpace: 'pre-wrap', textAlign: 'center' })}>{t('want-to-report-error')}</p>}
+      onClickButton={onClickRetry}
+      secondButtonElement={
+        <div className={css({ display: 'flex', justifyContent: 'center', gap: '16px' })}>
+          <Button variant="secondary" onClick={() => router.push('/')}>
+            Go to Home
+          </Button>
+          <Button variant="secondary" onClick={() => window.open(GITHUB_ISSUE_URL, '_blank')}>
+            {t('report-error-button')}
+          </Button>
+        </div>
+      }
+    />
   );
 };
 

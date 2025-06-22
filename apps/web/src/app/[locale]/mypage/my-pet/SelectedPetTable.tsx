@@ -82,7 +82,7 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
             <div>{currentPersona.level}</div>
             <div className={flex({ gap: '8px' })}>
               <Button variant="secondary" onClick={onSellClick}>
-                100P {t('sell')}
+                {t('sell')} (100P)
               </Button>
               <Button variant="secondary" onClick={() => setIsMergeOpen(true)}>
                 {t('merge')}

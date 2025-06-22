@@ -11,9 +11,15 @@ const QUIZ = {
   SOLVE: () => '/quiz/solve',
 };
 
+const AUTH = {
+  SIGN_OUT: () => '/auth/signOut',
+};
+
 export const ROUTE = {
+  HOME: () => '/',
   GUILD,
   QUIZ,
+  AUTH,
 };
 
 export const ORIGIN_URL = 'https://www.gitanimals.org/en_US';

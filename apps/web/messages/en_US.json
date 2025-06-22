@@ -60,7 +60,7 @@
     "no-mobile-support": "Currently, mobile is not supported. Please connect to the desktop.",
     "buy-product-success": "Purchase complete!",
     "buy-product-fail": "Failed to purchase.",
-    "buy": "buy",
+    "buy": "Buy",
     "pet": "Pet",
     "name": "Name",
     "grade": "Grade",
@@ -126,7 +126,7 @@
       "merge": "Merge",
       "merge-result": "Merge result",
       "cancel": "Cancel",
-      "please-choose-pet": "Please choose a pet to use to merge the level. The pet used disappears."
+      "please-choose-pet": "Select a pet to merge. The selected pet will be consumed and disappear."
     },
     "laboratory": "Laboratory"
   },
@@ -228,5 +228,10 @@
     },
     "timer-mention": "Choose the correct answer!",
     "quiz-finished": "Finished quiz. You got [point]P!"
+  },
+  "Error": {
+    "global-error-message": "Something went wrong 😭",
+    "want-to-report-error": "The gitanimals development team is currently tracking this error.\nIf you have a moment, we would greatly appreciate it if you could report the circumstances that led to this error.",
+    "report-error-button": "Report Error"
   }
 }

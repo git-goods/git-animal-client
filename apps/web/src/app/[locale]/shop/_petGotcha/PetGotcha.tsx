@@ -90,10 +90,10 @@ const ButtonWrapper = wrap
     return (
       <div className={buttonContainerStyle}>
         <Button size={buttonSize} onClick={onClickOnePet} disabled={points < 1_000}>
-          1 Pet / 1,000 P
+          Get 1 Pet - 1,000pts
         </Button>
         <Button size={buttonSize} onClick={onClickTenPet} disabled={points < 10_000}>
-          10 Pets / 10,000 P
+          Get 10 Pets - 10,000pts
         </Button>
       </div>
     );
