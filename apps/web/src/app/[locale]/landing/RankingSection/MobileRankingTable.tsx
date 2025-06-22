@@ -1,14 +1,18 @@
+import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { css, cx } from '_panda/css';
+import Flicking from '@egjs/react-flicking';
 import type { RankType } from '@gitanimals/api';
 import { getNewUrl } from '@gitanimals/util-common';
 
-import { PaginationServer } from '@/components/Pagination/PaginationServer';
-
 import { RankingLink } from './RankingLink';
 
-export function RankingTable({ ranks, page, totalPage }: { page: number; ranks: RankType[]; totalPage: number }) {
+import '@egjs/react-flicking/dist/flicking.css';
+import '@egjs/flicking-plugins/dist/pagination.css';
+
+export function MobileRankingTable({ ranks, page, totalPage }: { page: number; ranks: RankType[]; totalPage: number }) {
+  const router = useRouter();
   const { data: session } = useSession();
   const searchParams = useSearchParams();
   const currentUsername = session?.user?.name;
@@ -16,6 +20,17 @@ export function RankingTable({ ranks, page, totalPage }: { page: number; ranks: 
   const getRankingPageUrl = (params: Record<string, unknown>) => {
     const oldParams = Object.fromEntries(searchParams.entries());
     return getNewUrl({ baseUrl: '/', newParams: params, oldParams });
+  };
+
+  const handleMoveEnd = (e: any) => {
+    const direction = e.direction;
+    const newPage = direction === 'NEXT' ? page - 1 : page + 1;
+
+    if (newPage < 0) return;
+    if (newPage > totalPage) return;
+
+    const newUrl = getRankingPageUrl({ page: newPage });
+    router.push(newUrl);
   };
 
   // 페이지 데이터를 10개씩 그룹화
@@ -30,49 +45,66 @@ export function RankingTable({ ranks, page, totalPage }: { page: number; ranks: 
 
   return (
     <div className={rankingListStyle}>
-      {groupedRanks.map((group, index) => (
-        <div key={index} className={slideStyle}>
-          <table className={tableStyle}>
-            <thead>
-              <tr className={theadTrStyle}>
-                <th>Rank</th>
-                <th>Pet</th>
-                <th>Name</th>
-                <th>Contribution</th>
-              </tr>
-            </thead>
-            <tbody>
-              {group.map((item) => (
-                <tr key={item.rank} className={cx(trStyle, item.name === currentUsername && currentUserTrStyle)}>
-                  <td>{item.rank}</td>
-                  <td>
-                    <RankingLink id={item.name}>
-                      <img src={item.image} alt={item.name} width={60} height={60} />
-                    </RankingLink>
-                  </td>
-                  <td>
-                    <RankingLink id={item.name}>{item.name}</RankingLink>
-                  </td>
-                  <td>{item.contributions}</td>
+      <Flicking
+        className={flickingStyle}
+        defaultIndex={page - 1}
+        circular={false}
+        moveType="strict"
+        bound={true}
+        renderOnlyVisible={true}
+        onMoveEnd={handleMoveEnd}
+      >
+        {groupedRanks.map((group, index) => (
+          <div key={index} className={slideStyle}>
+            <table className={tableStyle}>
+              <thead>
+                <tr className={theadTrStyle}>
+                  <th>Rank</th>
+                  <th>Pet</th>
+                  <th>Name</th>
+                  <th>Contribution</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ))}
+              </thead>
+              <tbody>
+                {group.map((item) => (
+                  <tr key={item.rank} className={cx(trStyle, item.name === currentUsername && currentUserTrStyle)}>
+                    <td>{item.rank}</td>
+                    <td>
+                      <RankingLink id={item.name}>
+                        <img src={item.image} alt={item.name} width={60} height={60} />
+                      </RankingLink>
+                    </td>
+                    <td>
+                      <RankingLink id={item.name}>{item.name}</RankingLink>
+                    </td>
+                    <td>{item.contributions}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
+      </Flicking>
       <div className={paginationStyle}>
-        <PaginationServer
-          currentPage={page}
-          totalRecords={totalPage + 1}
-          totalPages={totalPage + 1}
-          nextPage={page === totalPage ? null : page + 1}
-          prevPage={page < 1 ? null : page - 1}
-          generateMoveLink={getRankingPageUrl}
-        />
+        {[0, 1, 2].map((group, index) => {
+          const isActive =
+            (page === 0 && index === 0) ||
+            (page !== 0 && page !== totalPage && index === 1) ||
+            (page === totalPage && index === 2);
+          return <div key={index} className={cx(paginationBulletStyle, isActive && 'active')}></div>;
+        })}
       </div>
     </div>
   );
 }
+
+const flickingStyle = css({
+  width: '100%',
+  height: 'auto',
+  margin: '0 auto',
+  position: 'relative',
+  overflow: 'hidden',
+});
 
 const slideStyle = css({
   width: '100%',
@@ -90,6 +122,18 @@ const paginationStyle = css({
   alignItems: 'center',
   justifyContent: 'center',
   gap: 2,
+});
+
+const paginationBulletStyle = css({
+  width: '8px',
+  height: '8px',
+  borderRadius: '50%',
+  backgroundColor: 'white.white_50',
+  cursor: 'pointer',
+
+  '&.active': {
+    backgroundColor: 'white.white_100',
+  },
 });
 
 const rankingListStyle = css({

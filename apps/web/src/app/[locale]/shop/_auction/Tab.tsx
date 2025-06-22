@@ -13,7 +13,7 @@ interface TabItemType {
 
 const TAB: TabItemType[] = [
   {
-    label: 'Products',
+    label: 'Auction',
     key: 'products',
     path: '/shop?tab=products',
   },
@@ -23,12 +23,12 @@ const TAB: TabItemType[] = [
     path: '/shop?tab=history',
   },
   {
-    label: 'Sell',
+    label: 'Sell Pets',
     key: 'sell',
     path: '/shop?tab=sell',
   },
   {
-    label: 'Sell list',
+    label: 'My Sales',
     key: 'sellList',
     path: '/shop?tab=sellList',
   },

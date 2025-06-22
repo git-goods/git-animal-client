@@ -39,7 +39,7 @@ export function GuildSearch() {
 
       <Box flex="1">
         <SearchBar
-          placeholder="Search guild"
+          placeholder="Search for a guild"
           defaultValue={text}
           onChange={(e) => setInput(e.target.value)}
           onSubmit={onSubmit}

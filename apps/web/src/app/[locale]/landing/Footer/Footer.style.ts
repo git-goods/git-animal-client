@@ -45,11 +45,11 @@ const defaultContentWrapper: SystemStyleObject = {
 
 export const teamContentWrapper = css(defaultContentWrapper, {
   display: 'flex',
-  gap: '12px',
+  gap: '24px',
+  flexWrap: 'wrap',
 
   _mobile: {
-    flexDir: 'column',
-    gap: '16px',
+    gap: '12px',
   },
 });
 

@@ -10,6 +10,7 @@ export const section = flex({
   alignItems: 'center',
   justifyContent: 'center',
   overflowX: 'hidden',
+
   _mobile: {
     padding: '80px 12px',
   },
@@ -61,6 +62,7 @@ export const bg = css({
   zIndex: 'hide',
   width: '100%',
   height: '100%',
+  background: 'linear-gradient(151deg, #016EDB 11.25%, #16B7CD 61.95%, #5CCA69 94.01%)',
   '& img': {
     width: '100%',
     height: '100%',

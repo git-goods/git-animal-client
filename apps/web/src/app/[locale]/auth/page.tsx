@@ -23,12 +23,7 @@ function JWTPage({
   const jwtToken = searchParams.jwt;
   const token = jwtToken.split(' ')[1];
 
-  useEffect(() => {
-    console.log('[Auth Debug] JWTPage: Page loaded with JWT token', {
-      hasToken: !!token,
-      tokenLength: token?.length,
-    });
-  }, [token]);
+  useEffect(() => {}, [token]);
 
   setRequestInterceptor(interceptorRequestFulfilled);
   setResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);

@@ -1,12 +1,12 @@
 import { css } from '_panda/css';
 
 export const wrapperCss = css({
-  width: '25%',
+  width: 'calc(25% - 24px)',
   display: 'flex',
   flexDir: 'column',
 
   _mobile: {
-    width: '100%',
+    width: 'calc(50% - 6px)',
     flexDir: 'row',
     gap: '5px',
   },

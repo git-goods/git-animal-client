@@ -8,7 +8,6 @@ import { motion } from 'framer-motion';
 export function KingGhost() {
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  console.log('isExpanded: ', isExpanded);
 
   const floatingAnimation = {
     y: [0, -10, 0],
