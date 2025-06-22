@@ -1,5 +1,12 @@
+const QUIZ = {
+  MAIN: () => '/quiz',
+  CREATE: () => '/quiz/create',
+  SOLVE: () => '/quiz/solve',
+};
+
 export const ROUTE = {
   HOME: () => '/',
+  QUIZ,
   AUTH: {
     LOGIN: () => '/auth',
     ERROR: () => '/auth/error',
