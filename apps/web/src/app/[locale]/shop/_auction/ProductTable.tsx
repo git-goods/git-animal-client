@@ -75,7 +75,7 @@ function ProductTableRow({ product }: { product: Product }) {
 
   const productStatus = product.sellerId === myId ? 'MY_SELLING' : product.paymentState;
 
-  const { mutate: buyProduct } = useBuyProduct({
+  const { mutate: buyProduct, isPending: isBuying } = useBuyProduct({
     onSuccess: () => {
       toast.success(t('buy-product-success'), {
         duration: 1000,
@@ -107,6 +107,7 @@ function ProductTableRow({ product }: { product: Product }) {
   });
 
   const onAction = (id: Product['id']) => {
+    if (isBuying) return;
     setLoading(true);
 
     if (productStatus === 'MY_SELLING') {
@@ -128,7 +129,7 @@ function ProductTableRow({ product }: { product: Product }) {
           price={product.price}
           rightElement={
             <Button variant="secondary" size="s" onClick={() => onAction(product.id)}>
-              {t(productStatus === 'MY_SELLING' ? 'cancel' : 'buy')}
+              {t(productStatus === 'MY_SELLING' ? 'cancel' : isBuying ? 'buying' : 'buy')}
             </Button>
           }
         />

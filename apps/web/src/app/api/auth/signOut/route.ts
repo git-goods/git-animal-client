@@ -7,3 +7,10 @@ export async function GET() {
 
   return NextResponse.redirect('/');
 }
+
+export async function POST() {
+  const cookieStore = cookies();
+  cookieStore.delete('next-auth.session-token');
+
+  return NextResponse.redirect('/');
+}

@@ -10,5 +10,7 @@ export * from './coupon';
 export * from './shop';
 export * from './inbox';
 export * from './guild';
+export * from './quiz';
 export * from './ranks';
+export * from './quiz';
 export * from './lines';
