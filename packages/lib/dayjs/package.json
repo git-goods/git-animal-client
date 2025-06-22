@@ -1,0 +1,16 @@
+{
+  "name": "@gitanimals/dayjs",
+  "version": "0.0.0",
+  "main": "./src/index.ts",
+  "scripts": {
+    "test": "vitest"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.13"
+  },
+  "devDependencies": {
+    "@gitanimals/eslint-config": "workspace:*",
+    "@gitanimals/typescript-config": "workspace:*",
+    "vitest": "^3.1.1"
+  }
+}
