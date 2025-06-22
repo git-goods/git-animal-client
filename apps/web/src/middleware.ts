@@ -1,4 +1,4 @@
-import type { NextRequest } from 'next/server';
+import { type NextRequest } from 'next/server';
 import withAuth from 'next-auth/middleware';
 import createMiddleware from 'next-intl/middleware';
 

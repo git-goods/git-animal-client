@@ -3,6 +3,7 @@
 import z from 'zod';
 import { GuildSchema } from './schema';
 import { safeRenderGet } from '../_instance/safe';
+import { renderGet } from '../_instance';
 
 const GetAllJoinGuildsResponseSchema = z.object({
   guilds: z.array(GuildSchema),
@@ -11,5 +12,5 @@ const GetAllJoinGuildsResponseSchema = z.object({
 export type GetAllJoinGuildsResponse = z.infer<typeof GetAllJoinGuildsResponseSchema>;
 
 export const getAllJoinGuilds = async (): Promise<GetAllJoinGuildsResponse> => {
-  return safeRenderGet(GetAllJoinGuildsResponseSchema)(`/guilds`);
+  return renderGet(`/guilds`);
 };

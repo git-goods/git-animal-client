@@ -1,6 +1,6 @@
 /* eslint-disable simple-import-sort/imports */
 import type { FilterType } from '@gitanimals/api';
-import { getAllJoinGuilds, searchGuild } from '@gitanimals/api';
+import { getAllJoinGuilds, getUser, searchGuild } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 import { getNewUrl } from '@gitanimals/util-common';
 import { css } from '_panda/css';
@@ -20,6 +20,7 @@ import { Box } from '_panda/jsx';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { getServerSession } from 'next-auth';
+import { CustomException } from '@gitanimals/exception';
 
 interface GuildPageProps {
   searchParams: {
@@ -59,20 +60,35 @@ export default async function GuildPage({ searchParams }: GuildPageProps) {
 }
 
 async function GuildInner({ searchParams }: GuildPageProps) {
-  const isSearchMode = Boolean(searchParams.search);
+  let redirectUrl = null;
+  try {
+    const isSearchMode = Boolean(searchParams.search);
 
-  const allJoinGuilds = await getAllJoinGuilds();
+    await getUser(); // 토큰 유효성 검사
 
-  if (isSearchMode) {
-    return <GuildMain searchParams={searchParams} isSearchMode />;
+    const allJoinGuilds = await getAllJoinGuilds();
+
+    if (isSearchMode) {
+      return <GuildMain searchParams={searchParams} isSearchMode />;
+    }
+
+    if (allJoinGuilds.guilds.length === 0) {
+      return <GuildMain searchParams={searchParams} />;
+    }
+
+    const guildId = allJoinGuilds.guilds[0].id;
+    redirectUrl = ROUTE.GUILD.MAIN(guildId);
+  } catch (error) {
+    if (error instanceof CustomException) {
+      if (error.code === 'TOKEN_EXPIRED') {
+        redirectUrl = ROUTE.AUTH.SIGN_OUT();
+      }
+    }
   }
 
-  if (allJoinGuilds.guilds.length === 0) {
-    return <GuildMain searchParams={searchParams} />;
+  if (redirectUrl) {
+    redirect(redirectUrl);
   }
-
-  const guildId = allJoinGuilds.guilds[0].id;
-  redirect(ROUTE.GUILD.MAIN(guildId));
 }
 
 interface GuildMainProps {
@@ -93,8 +109,6 @@ async function GuildMain({ searchParams, isSearchMode }: GuildMainProps) {
     text: searchParams?.text,
     pageNumber: searchParams?.page ? Number(searchParams.page) : undefined,
   });
-
-  console.log('a', data);
 
   const getGuildPageUrl = (params: Record<string, unknown>) => {
     const newParams = { ...params, rd: randomId };

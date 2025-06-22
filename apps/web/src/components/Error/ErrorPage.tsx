@@ -10,17 +10,29 @@ interface Props {
    * @default "Retry"
    */
   buttonText?: string;
+  // TODO: Error page 다시
+  secondButtonElement?: ReactNode;
 }
 
-export function ErrorPage({ heading, paragraph, onClickButton, buttonText = 'Retry' }: Props) {
+export function ErrorPage({ heading, paragraph, onClickButton, buttonText = 'Retry', secondButtonElement }: Props) {
   return (
     <main className={mainCss}>
       <h1 className={h1Css}>{heading}</h1>
       {paragraph && <div className={pCss}>{paragraph}</div>}
-      {onClickButton && <Button onClick={onClickButton}>{buttonText}</Button>}
+      <div className={buttonCss}>
+        {onClickButton && <Button onClick={onClickButton}>{buttonText}</Button>}
+        {secondButtonElement}
+      </div>
     </main>
   );
 }
+
+const buttonCss = css({
+  display: 'flex',
+  justifyContent: 'center',
+  w: '100%',
+  gap: '16px',
+});
 
 const mainCss = css({
   backgroundColor: 'white',
