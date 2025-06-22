@@ -4,7 +4,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { answerQuiz, getRoundResult } from '@gitanimals/api';
 import { toast } from 'sonner';
 
-import type { QuizAnswer } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
+import type { QuizAnswer } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
 import { ROUTE } from '@/constants/route';
 import { type Locale, useRouter } from '@/i18n/routing';
 
@@ -67,7 +67,7 @@ const useQuizAction = ({ contextId, quizDialog, prize, refetchQuiz }: UseQuizAct
   };
 
   const moveToQuizMain = () => {
-    router.push(ROUTE.QUIZ.MAIN());
+    router.push(ROUTE.GAME.QUIZ.MAIN());
   };
 
   return {

@@ -7,12 +7,12 @@ import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { wrap } from '@suspensive/react';
 
-import { Background } from '@/app/[locale]/quiz/_components/BackGround';
-import CompleteAlertDialog from '@/app/[locale]/quiz/solve/_components/done/CompleteAlertDialog';
-import FailAlertDialog from '@/app/[locale]/quiz/solve/_components/fail/FailAlertDialog';
-import QuizProgressBar from '@/app/[locale]/quiz/solve/_components/solving/QuizProgressBar';
-import CorrectConfirmDialog from '@/app/[locale]/quiz/solve/_components/success/CorrectConfirmDialog';
-import { QUIZ_ANSWER } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
+import { Background } from '@/app/[locale]/game/quiz/_components/BackGround';
+import CompleteAlertDialog from '@/app/[locale]/game/quiz/solve/_components/done/CompleteAlertDialog';
+import FailAlertDialog from '@/app/[locale]/game/quiz/solve/_components/fail/FailAlertDialog';
+import QuizProgressBar from '@/app/[locale]/game/quiz/solve/_components/solving/QuizProgressBar';
+import CorrectConfirmDialog from '@/app/[locale]/game/quiz/solve/_components/success/CorrectConfirmDialog';
+import { QUIZ_ANSWER } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
 import { customScrollStyle } from '@/styles/scrollStyle';
 
 import useQuizAction from '../../_hooks/useQuizAction';
@@ -66,10 +66,10 @@ const SolvingQuizSection = wrap
             <QuizProgressBar timeoutAt={round.timeoutAt} onTimeout={failDialog.open} paused={isRoundEnd} />
             <Flex gap="8px" marginTop="24px">
               <button className={oxButtonStyle} title="O" onClick={() => submit(QUIZ_ANSWER.YES)}>
-                <Image src="/quiz/ox_o.webp" alt="O" width={60} height={60} />
+                <Image src="/assets/game/quiz/ox_o.webp" alt="O" width={60} height={60} />
               </button>
               <button className={oxButtonStyle} title="X" onClick={() => submit(QUIZ_ANSWER.NO)}>
-                <Image src="/quiz/ox_x.webp" alt="X" width={60} height={60} />
+                <Image src="/assets/game/quiz/ox_x.webp" alt="X" width={60} height={60} />
               </button>
             </Flex>
           </div>

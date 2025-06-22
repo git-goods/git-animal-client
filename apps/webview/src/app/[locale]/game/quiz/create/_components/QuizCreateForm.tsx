@@ -6,8 +6,8 @@ import { createQuiz } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
 import { toast } from 'sonner';
 
-import QuizField from '@/app/[locale]/quiz/create/_components/QuizField';
-import QuizTextArea from '@/app/[locale]/quiz/create/_components/QuizTextArea';
+import QuizField from '@/app/[locale]/game/quiz/create/_components/QuizField';
+import QuizTextArea from '@/app/[locale]/game/quiz/create/_components/QuizTextArea';
 import Tabs from '@/components/Tabs/Tabs';
 import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';

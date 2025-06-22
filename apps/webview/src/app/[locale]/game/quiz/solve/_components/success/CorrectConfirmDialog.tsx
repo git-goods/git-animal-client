@@ -7,21 +7,33 @@ import { Button, Dialog } from '@gitanimals/ui-panda';
 
 import { customT } from '../../../_utils/quiz.intl';
 
-interface CompleteAlertDialogProps {
-  completePoint: number;
+interface CorrectConfirmDialogProps {
+  correctPoint: number;
+  onConfirm: () => void;
+  onStop: () => void;
   onClose: () => void;
   isOpen: boolean;
 }
 
-const CompleteAlertDialog = ({ completePoint, onClose, isOpen }: CompleteAlertDialogProps) => {
+const CorrectConfirmDialog = ({ correctPoint, onConfirm, onStop, onClose, isOpen }: CorrectConfirmDialogProps) => {
   const t = useTranslations('Quiz');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleClose = async () => {
+  const handleConfirm = async () => {
     if (isLoading) return;
 
     setIsLoading(true);
-    await onClose();
+    await onConfirm();
+    setIsLoading(false);
+
+    onClose();
+  };
+
+  const handleStop = async () => {
+    if (isLoading) return;
+
+    setIsLoading(true);
+    await onStop();
     setIsLoading(false);
   };
 
@@ -29,17 +41,23 @@ const CompleteAlertDialog = ({ completePoint, onClose, isOpen }: CompleteAlertDi
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content className={contentStyle} isShowClose={false}>
         <Flex flexDirection="column" alignItems="center" gap="12px" width="100%">
-          <Dialog.Title className={titleStyle}>{t('complete-dialog.title')}</Dialog.Title>
-          <Dialog.Description className={descriptionStyle}>
-            {customT(t('complete-dialog.description'), { point: completePoint })}
-          </Dialog.Description>
+          <Dialog.Title className={titleStyle}>{t('correct-dialog.title')}</Dialog.Title>
+          <Dialog.Description className={descriptionStyle}>{t('correct-dialog.description')}</Dialog.Description>
         </Flex>
-        <div className={imageContainerStyle}>
-          <Image src="/quiz/quiz-double-coin.webp" alt="quiz-complete" width={204} height={184} draggable={false} />
-        </div>
-        <Flex width="100%">
-          <Button className={buttonStyle} onClick={handleClose} variant="secondary" size="m">
-            {t('complete-dialog.close-button')}
+        <Image
+          className={imageStyle}
+          src="/assets/game/quiz/quiz-coin.svg"
+          alt="quiz-coin"
+          width={160}
+          height={160}
+          draggable={false}
+        />
+        <Flex flexDirection="column" gap="8px" width="100%">
+          <Button className={buttonStyle} onClick={handleConfirm} variant="primary" size="m" disabled={isLoading}>
+            {t('correct-dialog.challenge-button')}
+          </Button>
+          <Button className={buttonStyle} onClick={handleStop} variant="secondary" size="m">
+            {customT(t('correct-dialog.stop-button'), { point: correctPoint })}
           </Button>
         </Flex>
       </Dialog.Content>
@@ -47,7 +65,7 @@ const CompleteAlertDialog = ({ completePoint, onClose, isOpen }: CompleteAlertDi
   );
 };
 
-export default CompleteAlertDialog;
+export default CorrectConfirmDialog;
 
 const buttonStyle = css({
   width: '100%',
@@ -77,11 +95,6 @@ const descriptionStyle = css({
   wordBreak: 'keep-all',
 });
 
-const imageContainerStyle = css({
-  width: '160px',
-  height: '160px',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+const imageStyle = css({
   marginBlock: '4px',
 });

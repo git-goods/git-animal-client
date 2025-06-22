@@ -30,7 +30,13 @@ const FailAlertDialog = ({ onClose, isOpen }: FailAlertDialogProps) => {
           <Dialog.Description className={descriptionStyle}>{t('fail-dialog.description')}</Dialog.Description>
         </Flex>
         <div className={imageContainerStyle}>
-          <Image src="/quiz/cursor-unchoiced.webp" alt="quiz-failed" width={100} height={100} draggable={false} />
+          <Image
+            src="/assets/game/quiz/cursor-unchoiced.webp"
+            alt="quiz-failed"
+            width={100}
+            height={100}
+            draggable={false}
+          />
         </div>
         <Flex width="100%">
           <Button className={buttonStyle} onClick={handleClose} variant="secondary" size="m">

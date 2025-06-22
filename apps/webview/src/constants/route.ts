@@ -1,16 +1,18 @@
-const QUIZ = {
-  MAIN: () => '/quiz',
-  CREATE: () => '/quiz/create',
-  SOLVE: () => '/quiz/solve',
+const GAME = {
+  QUIZ: {
+    MAIN: () => '/game/quiz',
+    CREATE: () => '/game/quiz/create',
+    SOLVE: () => '/game/quiz/solve',
+  },
 };
 
 export const ROUTE = {
   HOME: () => '/',
-  QUIZ,
   AUTH: {
     LOGIN: () => '/auth',
     ERROR: () => '/auth/error',
   },
+  GAME,
 };
 
 export const ORIGIN_URL = 'https://www.gitanimals.org/en_US';

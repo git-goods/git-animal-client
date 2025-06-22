@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 
-import { Background } from '@/app/[locale]/quiz/_components/BackGround';
+import { Background } from '@/app/[locale]/game/quiz/_components/BackGround';
 
 import SelectQuizType from './_components/CreateOrSolve/SelectQuizType';
 

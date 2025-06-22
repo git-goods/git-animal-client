@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { ChevronLeft } from 'lucide-react';
 
+import { ROUTE } from '@/constants/route';
 import { Link } from '@/i18n/routing';
 
 import QuizCreateForm from './_components/QuizCreateForm';
@@ -15,7 +16,7 @@ function CreateQuizPage() {
     <div className={containerStyle}>
       <div className={headingStyle}>
         <h1 className={titleStyle}>
-          <Link href="/quiz">
+          <Link href={ROUTE.GAME.QUIZ.MAIN()}>
             <ChevronLeft className={headingPrevButtonStyle} size={24} color="white" />
           </Link>
           {t('create-quiz-card-title')}
