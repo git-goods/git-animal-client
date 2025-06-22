@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { css } from '_panda/css';
 
 export const Background = memo(function Background({ widthBottom }: { widthBottom?: boolean }) {
-  const imageSrc = widthBottom ? '/quiz/quiz-bg.webp' : '/quiz/quiz-bg-raw.webp';
+  const imageSrc = widthBottom ? '/assets/game/quiz/quiz-bg.webp' : '/assets/game/quiz/quiz-bg-raw.webp';
   return (
     <div className={backgroundStyle}>
       <Image className={imageStyle} src={imageSrc} alt="background" layout="fill" draggable={false} />

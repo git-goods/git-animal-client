@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import type { QuizStatus } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
-import { QUIZ_STATUS } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
+import type { QuizStatus } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
+import { QUIZ_STATUS } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
 
 interface UseQuizDialogStatusProps {
   setPrize: (prize: number) => void;

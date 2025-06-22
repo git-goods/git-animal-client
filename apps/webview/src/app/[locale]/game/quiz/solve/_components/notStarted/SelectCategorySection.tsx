@@ -8,8 +8,8 @@ import { Button } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { toast } from 'sonner';
 
-import type { QuizStatus } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
-import { QUIZ_STATUS } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
+import type { QuizStatus } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
+import { QUIZ_STATUS } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
 import Tabs from '@/components/Tabs/Tabs';
 import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';
@@ -66,7 +66,7 @@ const SelectCategorySection = wrap
     const router = useRouter();
     useEffect(() => {
       if (isSolved) {
-        router.push(ROUTE.QUIZ.MAIN());
+        router.push(ROUTE.GAME.QUIZ.MAIN());
       }
     }, [isSolved, router]);
 
@@ -80,7 +80,9 @@ const SelectCategorySection = wrap
               {categoryRadioProps.map((tabsTriggerItem) => {
                 const { value, label } = tabsTriggerItem;
                 const isSelected = value === category;
-                const imageSrc = isSelected ? `/quiz/cursor-choiced.webp` : `/quiz/cursor-unchoiced.webp`;
+                const imageSrc = isSelected
+                  ? `/assets/game/quiz/cursor-choiced.webp`
+                  : `/assets/game/quiz/cursor-unchoiced.webp`;
                 return (
                   <TabsTrigger key={value} value={value} className={tabsTriggerStyle}>
                     <Flex direction="column" align="center" gap="12px">

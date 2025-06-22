@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { css } from '_panda/css';
 
@@ -26,7 +28,7 @@ const contentStyle = css({
   width: '100%',
   maxWidth: '475px',
   height: '100%',
-  minHeight: 'calc(100vh - var(--mobile-header-height))',
+  minHeight: '100vh',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-start',

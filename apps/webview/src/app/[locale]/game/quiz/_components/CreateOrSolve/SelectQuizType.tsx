@@ -30,21 +30,21 @@ const SelectQuizType = wrap
         <QuizTypeCard
           title={t('create-quiz-card-title')}
           description={customT(t('create-quiz-card-description'), { point: QUIZ_REGISTER_POINT })}
-          image="/quiz/quiz-cat.webp"
+          image="/assets/game/quiz/quiz-cat.webp"
           point={`${QUIZ_REGISTER_POINT}P`}
-          onClick={() => router.push(ROUTE.QUIZ.CREATE())}
+          onClick={() => router.push(ROUTE.GAME.QUIZ.CREATE())}
         />
         <QuizTypeCard
           title={quizSolveCard.title}
           description={quizSolveCard.description}
-          image="/quiz/quiz-coin.webp"
+          image="/assets/game/quiz/quiz-coin.webp"
           point={quizSolveCard.point}
           onClick={() => setIsSolveQuizConfirmDialogOpen(true)}
           isDisabled={isSolved}
         />
         <SolveQuizConfirmDialog
           isOpen={isSolveQuizConfirmDialogOpen}
-          onConfirm={() => router.push(ROUTE.QUIZ.SOLVE())}
+          onConfirm={() => router.push(ROUTE.GAME.QUIZ.SOLVE())}
           onClose={() => setIsSolveQuizConfirmDialogOpen(false)}
         />
       </div>

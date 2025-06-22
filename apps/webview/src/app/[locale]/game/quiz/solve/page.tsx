@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 
-import SelectCategorySection from '@/app/[locale]/quiz/solve/_components/notStarted/SelectCategorySection';
-import SolvingQuizSection from '@/app/[locale]/quiz/solve/_components/solving/SolvingQuizSection';
-import type { QuizStatus } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
-import { QUIZ_STATUS } from '@/app/[locale]/quiz/solve/_constants/solveQuiz.constants';
+import SelectCategorySection from '@/app/[locale]/game/quiz/solve/_components/notStarted/SelectCategorySection';
+import SolvingQuizSection from '@/app/[locale]/game/quiz/solve/_components/solving/SolvingQuizSection';
+import type { QuizStatus } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
+import { QUIZ_STATUS } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
 
 function SolveQuizPage() {
   // rs 데이터 응답 상태에 따른 section 렌더링 분기 처리

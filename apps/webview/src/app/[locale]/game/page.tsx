@@ -2,27 +2,33 @@
 
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
+import { Button } from '@gitanimals/ui-panda';
 
-import { Background } from '@/app/[locale]/quiz/_components/BackGround';
+import { TabBar } from '@/components/Layout/TabBar';
+import { ROUTE } from '@/constants/route';
+import { Link } from '@/i18n/routing';
 
-import SelectQuizType from './_components/CreateOrSolve/SelectQuizType';
+import { Background } from './quiz/_components/BackGround';
 
-function QuizPage() {
-  const t = useTranslations('Quiz');
+function GamePage() {
+  const t = useTranslations('Game');
 
   return (
     <>
       <Background widthBottom />
       <div className={containerStyle}>
-        <h1 className={titleStyle}>Quiz</h1>
-        <h2 className={descriptionStyle}>{t('quiz-solve-description')}</h2>
-        <SelectQuizType />
+        <h1 className={titleStyle}>Game</h1>
+        <p className={descriptionStyle}>Join the game and earn points!</p>
+        <Link href={ROUTE.GAME.QUIZ.MAIN()}>
+          <Button>Quiz</Button>
+        </Link>
       </div>
+      <TabBar />
     </>
   );
 }
 
-export default QuizPage;
+export default GamePage;
 
 const containerStyle = css({
   display: 'flex',
