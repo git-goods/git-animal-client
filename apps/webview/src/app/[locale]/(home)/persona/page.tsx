@@ -2,10 +2,12 @@
 
 import { css } from '_panda/css';
 import { grid } from '_panda/patterns';
+import type { ChangePersonaVisibleRequest } from '@gitanimals/api';
 import { changePersonaVisible, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
 import { LevelBanner } from '@gitanimals/ui-panda';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { SubLayout } from '@/components/Layout/SubLayout';
 import { useClientUser } from '@/utils/clientAuth';
@@ -14,19 +16,28 @@ import { getPersonaImage } from '@/utils/image';
 export default function PersonaPage() {
   const session = useClientUser();
   const queryClient = useQueryClient();
+
   const { data: user } = useQuery(userQueries.allPersonasOptions(session.name));
+  const { mutate: mutateChangePersonaVisible, isPending: isChangingPersonaVisible } = useMutation({
+    mutationFn: (request: ChangePersonaVisibleRequest) => changePersonaVisible(request),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
+    },
+    onError: () => {
+      toast.error('Failed to change persona visible');
+    },
+  });
 
   const personas = user?.personas ?? [];
   const selectedPersonas = personas.filter((persona) => persona.appVisible);
 
   const onSelectPersona = async (persona: Persona) => {
     try {
-      await changePersonaVisible({
+      mutateChangePersonaVisible({
         personaId: persona.id,
         visible: !persona.appVisible,
         type: 'APP',
       });
-      queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
     } catch (error) {
       console.error(error);
     }
@@ -42,7 +53,11 @@ export default function PersonaPage() {
         })}
       >
         {personas.map((persona) => (
-          <button key={persona.id} onClick={() => onSelectPersona(persona)}>
+          <button
+            key={persona.id}
+            onClick={() => !isChangingPersonaVisible && onSelectPersona(persona)}
+            disabled={isChangingPersonaVisible}
+          >
             <LevelBanner
               image={getPersonaImage(persona.type)}
               status={selectedPersonas.find((p) => p.id === persona.id) ? 'selected' : 'default'}
