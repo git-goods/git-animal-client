@@ -12,6 +12,9 @@ export const SubLayout = ({ children, title }: { children: React.ReactNode; titl
         backgroundColor: 'black',
         padding: '16px',
         minHeight: '100vh',
+        maxW: '560px',
+        mx: 'auto',
+        color: 'white',
       })}
     >
       <div

@@ -6,6 +6,7 @@ export const PersonaSchema = z.object({
   level: z.string(),
   visible: z.boolean(),
   dropRate: z.string(),
+  appVisible: z.boolean(),
 });
 
 export const PersonaInfoSchema = PersonaSchema.pick({
