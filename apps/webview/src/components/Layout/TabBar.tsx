@@ -27,6 +27,14 @@ const TAB_LIST = [
     href: '/mypage',
   },
 ];
+
+const isActiveTab = (pathname: string, href: string) => {
+  if (href === '/') {
+    return pathname === href;
+  }
+  return pathname.startsWith(href);
+};
+
 export const TabBar = wrap.Suspense().on(() => {
   const pathname = usePathname();
   return (
@@ -58,7 +66,7 @@ export const TabBar = wrap.Suspense().on(() => {
             gap: '2px',
             color: 'white.white_25',
             textStyle: 'glyph12.regular',
-            ...(pathname === tab.href && {
+            ...(isActiveTab(pathname, tab.href) && {
               color: 'white',
             }),
           })}

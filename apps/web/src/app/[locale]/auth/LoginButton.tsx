@@ -10,7 +10,6 @@ function LoginButton({ token }: { token: string }) {
 
   React.useEffect(() => {
     if (ref.current) {
-      console.log('[Auth Debug] LoginButton: Token received', { tokenLength: token?.length });
       ref.current.click();
       localStorage.setItem('accessToken', token);
     }
@@ -19,17 +18,11 @@ function LoginButton({ token }: { token: string }) {
   const callbackUrl = localStorage.getItem(LOCAL_STORAGE_KEY.callbackUrl) || '/mypage';
 
   const handleLogin = async () => {
-    console.log('[Auth Debug] LoginButton: Signing in with token', { tokenLength: token?.length });
-    try {
-      const result = await signIn('web-credentials', {
-        token,
-        callbackUrl,
-        redirect: true,
-      });
-      console.log('[Auth Debug] LoginButton: SignIn result', result);
-    } catch (error) {
-      console.error('[Auth Debug] LoginButton: SignIn error', error);
-    }
+    await signIn('web-credentials', {
+      token,
+      callbackUrl,
+      redirect: true,
+    });
   };
 
   return (
