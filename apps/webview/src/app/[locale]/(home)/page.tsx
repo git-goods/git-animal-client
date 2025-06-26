@@ -9,13 +9,13 @@ import { ROUTE } from '@/constants/route';
 import { Link } from '@/i18n/routing';
 
 import { ProfileBoard } from './_components/ProfileBoard';
-import CharacterView from './CharacterView';
+import { CharacterViewMemo } from './CharacterView';
 
 export default function WebviewPage() {
   return (
     <div className={containerStyle}>
       <ProfileBoard />
-      <CharacterView />
+      <CharacterViewMemo petIds={[]} />
       <div className={backgroundStyle}>
         <img src="/assets/home/app-background-home.png" alt="background" />
       </div>

@@ -7,7 +7,6 @@ export const SubLayout = ({ children, title }: { children: React.ReactNode; titl
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
         gap: '16px',
         backgroundColor: 'black',
         padding: '16px',
@@ -42,3 +41,36 @@ export const SubLayout = ({ children, title }: { children: React.ReactNode; titl
     </div>
   );
 };
+
+export function BottomButton({ children }: { children: React.ReactNode }) {
+  return (
+    <div>
+      <div
+        className={css({
+          position: 'fixed',
+          bottom: '-34px',
+          zIndex: 99,
+          left: 0,
+          pointerEvents: 'none',
+          right: 0,
+          bg: 'linear-gradient(180deg, rgba(24, 26, 29, 0) 0%, #181A1D 50%)',
+          height: '160px',
+        })}
+      />
+      <div
+        className={css({
+          position: 'fixed',
+          bottom: 0,
+          width: '100%',
+          zIndex: 100,
+          px: 4,
+          py: 2,
+          left: 0,
+          right: 0,
+        })}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
