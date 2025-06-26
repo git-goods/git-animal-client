@@ -13,6 +13,8 @@ import { SubLayout } from '@/components/Layout/SubLayout';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
+import CharacterView from '../CharacterView';
+
 export default function PersonaPage() {
   const session = useClientUser();
   const queryClient = useQueryClient();
@@ -30,6 +32,7 @@ export default function PersonaPage() {
 
   const personas = user?.personas ?? [];
   const selectedPersonas = personas.filter((persona) => persona.appVisible);
+  console.log('selectedPersonas: ', selectedPersonas);
 
   const onSelectPersona = async (persona: Persona) => {
     try {
@@ -45,6 +48,21 @@ export default function PersonaPage() {
 
   return (
     <SubLayout title="Select Pet">
+      <div
+        className={css({
+          bgImage: 'url(/assets/home/preview-background.png)',
+          bgSize: 'cover',
+          bgPosition: 'center',
+          bgRepeat: 'no-repeat',
+          width: '100%',
+          height: '100%',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          bgColor: '#94D7A1',
+        })}
+      >
+        <CharacterView />
+      </div>
       <div
         className={grid({
           gridTemplateColumns: 'repeat(4, 1fr)',
