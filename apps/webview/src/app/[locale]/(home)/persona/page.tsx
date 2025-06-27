@@ -26,6 +26,7 @@ export default function PersonaPage() {
   const selectedPetIds = selectedPersonas.map((persona) => persona.id);
   return (
     <SubLayout title="Select Pet">
+      <h2 className={css({ textStyle: 'glyph15.bold', mb: 3 })}>Preview</h2>
       <div
         className={css({
           bgImage: 'url(/assets/home/preview-background.png)',
@@ -36,9 +37,19 @@ export default function PersonaPage() {
           borderRadius: '8px',
           overflow: 'hidden',
           bgColor: '#94D7A1',
+          mb: 6,
         })}
       >
         <CharacterViewMemo petIds={selectedPetIds} />
+      </div>
+      <div className={css({ mb: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between' })}>
+        <h3 className={css({ textStyle: 'glyph15.regular', color: 'white.white_50' })}>
+          Please select the pet shown in the home.
+        </h3>
+        <div>
+          <span className={css({ textStyle: 'glyph15.regular', color: 'white.white_90' })}>15</span>
+          <span className={css({ textStyle: 'glyph15.regular', color: 'white.white_50' })}>/15</span>
+        </div>
       </div>
       <div className={css({ flex: 1, overflowY: 'auto' })}>
         <PersonaSelectList personas={personas} selectedPersonas={selectedPersonas} />
