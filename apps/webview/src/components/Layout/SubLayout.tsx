@@ -3,7 +3,11 @@
 import { css } from '_panda/css';
 import { ChevronLeftIcon } from 'lucide-react';
 
+import { useRouter } from '@/i18n/routing';
+
 export const SubLayout = ({ children, title }: { children: React.ReactNode; title: string }) => {
+  const router = useRouter();
+
   return (
     <div
       className={css({
@@ -31,7 +35,7 @@ export const SubLayout = ({ children, title }: { children: React.ReactNode; titl
           px: 4,
         })}
       >
-        <button>
+        <button onClick={() => router.back()}>
           <ChevronLeftIcon size={24} />
         </button>
         <h1

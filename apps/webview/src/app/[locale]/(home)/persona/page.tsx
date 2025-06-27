@@ -24,6 +24,9 @@ export default function PersonaPage() {
   const selectedPersonas = personas.filter((persona) => persona.appVisible);
 
   const selectedPetIds = selectedPersonas.map((persona) => persona.id);
+
+  const isSelectable = selectedPersonas.length < 15;
+
   return (
     <SubLayout title="Select Pet">
       <h2 className={css({ textStyle: 'glyph15.bold', mb: 3 })}>Preview</h2>
@@ -47,12 +50,14 @@ export default function PersonaPage() {
           Please select the pet shown in the home.
         </h3>
         <div>
-          <span className={css({ textStyle: 'glyph15.regular', color: 'white.white_90' })}>15</span>
+          <span className={css({ textStyle: 'glyph15.regular', color: 'white.white_90' })}>
+            {selectedPersonas.length}
+          </span>
           <span className={css({ textStyle: 'glyph15.regular', color: 'white.white_50' })}>/15</span>
         </div>
       </div>
       <div className={css({ flex: 1, overflowY: 'auto' })}>
-        <PersonaSelectList personas={personas} selectedPersonas={selectedPersonas} />
+        <PersonaSelectList personas={personas} selectedPersonas={selectedPersonas} isSelectable={isSelectable} />
         <div className={css({ h: '32px' })}></div>
       </div>
       <BottomButton>
@@ -64,7 +69,15 @@ export default function PersonaPage() {
   );
 }
 
-function PersonaSelectList({ personas, selectedPersonas }: { personas: Persona[]; selectedPersonas: Persona[] }) {
+function PersonaSelectList({
+  personas,
+  selectedPersonas,
+  isSelectable,
+}: {
+  personas: Persona[];
+  selectedPersonas: Persona[];
+  isSelectable: boolean;
+}) {
   const queryClient = useQueryClient();
 
   const { mutate: mutateChangePersonaVisible, isPending: isChangingPersonaVisible } = useMutation({
@@ -78,6 +91,10 @@ function PersonaSelectList({ personas, selectedPersonas }: { personas: Persona[]
   });
 
   const onSelectPersona = async (persona: Persona) => {
+    if (!persona.appVisible && !isSelectable) {
+      toast.error('You can only select 15 pets');
+      return;
+    }
     try {
       mutateChangePersonaVisible({
         personaId: persona.id,
