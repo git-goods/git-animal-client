@@ -13,7 +13,7 @@ import { SubLayout } from '@/components/Layout/SubLayout';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
-import CharacterView from '../CharacterView';
+import { CharacterViewMemo } from '../CharacterView';
 
 export default function PersonaPage() {
   const session = useClientUser();
@@ -33,6 +33,9 @@ export default function PersonaPage() {
   const personas = user?.personas ?? [];
   const selectedPersonas = personas.filter((persona) => persona.appVisible);
   console.log('selectedPersonas: ', selectedPersonas);
+
+  // 선택된 펫들의 petId 리스트 생성 (Persona의 id를 petId로 사용)
+  const selectedPetIds = selectedPersonas.map((persona) => persona.id);
 
   const onSelectPersona = async (persona: Persona) => {
     try {
@@ -61,7 +64,7 @@ export default function PersonaPage() {
           bgColor: '#94D7A1',
         })}
       >
-        <CharacterView />
+        <CharacterViewMemo petIds={selectedPetIds} />
       </div>
       <div
         className={grid({
