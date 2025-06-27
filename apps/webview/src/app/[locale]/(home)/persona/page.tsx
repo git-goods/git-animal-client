@@ -1,6 +1,6 @@
 'use client';
 
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { grid } from '_panda/patterns';
 import type { ChangePersonaVisibleRequest } from '@gitanimals/api';
 import { changePersonaVisible, type Persona } from '@gitanimals/api';
@@ -10,6 +10,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { BottomButton, SubLayout } from '@/components/Layout/SubLayout';
+import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
@@ -56,7 +57,7 @@ export default function PersonaPage() {
           <span className={css({ textStyle: 'glyph15.regular', color: 'white.white_50' })}>/15</span>
         </div>
       </div>
-      <div className={css({ flex: 1, overflowY: 'auto' })}>
+      <div className={cx(css({ flex: 1, overflowY: 'auto' }), customScrollStyle)}>
         <PersonaSelectList personas={personas} selectedPersonas={selectedPersonas} isSelectable={isSelectable} />
         <div className={css({ h: '32px' })}></div>
       </div>

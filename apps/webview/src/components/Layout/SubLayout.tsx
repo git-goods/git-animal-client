@@ -4,7 +4,7 @@ import { css, cx } from '_panda/css';
 import { ChevronLeftIcon } from 'lucide-react';
 
 import { useRouter } from '@/i18n/routing';
-import { containerStyle } from '@/utils/style';
+import { containerStyle } from '@/styles/layout';
 
 export const SubLayout = ({ children, title }: { children: React.ReactNode; title: string }) => {
   const router = useRouter();
