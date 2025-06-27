@@ -1,16 +1,14 @@
+'use client';
+
 import { css } from '_panda/css';
+import { ChevronLeftIcon } from 'lucide-react';
 
 export const SubLayout = ({ children, title }: { children: React.ReactNode; title: string }) => {
   return (
     <div
       className={css({
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '16px',
         backgroundColor: 'black',
-        padding: '16px',
-        minHeight: '100vh',
+        h: '100vh',
         maxW: '560px',
         mx: 'auto',
         color: 'white',
@@ -21,23 +19,44 @@ export const SubLayout = ({ children, title }: { children: React.ReactNode; titl
           position: 'fixed',
           height: 'var(--mobile-sub-header-height)',
           width: '100%',
-          zIndex: 100,
+          zIndex: 101,
           top: 0,
           left: 0,
           right: 0,
+          minHeight: '44px',
+          display: 'grid',
+          gridTemplateColumns: '24px 1fr 24px',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          px: 4,
         })}
       >
+        <button>
+          <ChevronLeftIcon size={24} />
+        </button>
         <h1
           className={css({
-            fontSize: '24px',
-            fontWeight: 'bold',
+            textStyle: 'glyph18.bold',
             color: 'white',
+            textAlign: 'center',
           })}
         >
           {title}
         </h1>
       </div>
-      {children}
+      <div className={css({ minH: 'var(--mobile-sub-header-height)', w: '100%' })}></div>
+
+      <div
+        className={css({
+          padding: '16px',
+          h: 'calc(100vh - var(--mobile-sub-header-height))',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+        })}
+      >
+        {children}
+      </div>
     </div>
   );
 };

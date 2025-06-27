@@ -55,6 +55,7 @@
 @layer base {
   :root {
     --mobile-header-height: 60px;
+    --mobile-sub-header-height: 44px;
   }
 }
 

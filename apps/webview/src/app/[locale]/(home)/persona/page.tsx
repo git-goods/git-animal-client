@@ -26,31 +26,29 @@ export default function PersonaPage() {
   const selectedPetIds = selectedPersonas.map((persona) => persona.id);
   return (
     <SubLayout title="Select Pet">
-      <div className={css({ height: 'calc(100vh - 32px)', gap: 6, display: 'flex', flexDirection: 'column' })}>
-        <div
-          className={css({
-            bgImage: 'url(/assets/home/preview-background.png)',
-            bgSize: 'cover',
-            bgPosition: 'center',
-            bgRepeat: 'no-repeat',
-            width: '100%',
-            borderRadius: '8px',
-            overflow: 'hidden',
-            bgColor: '#94D7A1',
-          })}
-        >
-          <CharacterViewMemo petIds={selectedPetIds} />
-        </div>
-        <div className={css({ flex: 1, overflowY: 'auto' })}>
-          <PersonaSelectList personas={personas} selectedPersonas={selectedPersonas} />
-          <div className={css({ h: '32px' })}></div>
-        </div>
-        <BottomButton>
-          <Button size="m" className={css({ width: '100%' })}>
-            Save
-          </Button>
-        </BottomButton>
+      <div
+        className={css({
+          bgImage: 'url(/assets/home/preview-background.png)',
+          bgSize: 'cover',
+          bgPosition: 'center',
+          bgRepeat: 'no-repeat',
+          width: '100%',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          bgColor: '#94D7A1',
+        })}
+      >
+        <CharacterViewMemo petIds={selectedPetIds} />
       </div>
+      <div className={css({ flex: 1, overflowY: 'auto' })}>
+        <PersonaSelectList personas={personas} selectedPersonas={selectedPersonas} />
+        <div className={css({ h: '32px' })}></div>
+      </div>
+      <BottomButton>
+        <Button size="m" className={css({ width: '100%' })}>
+          Save
+        </Button>
+      </BottomButton>
     </SubLayout>
   );
 }
