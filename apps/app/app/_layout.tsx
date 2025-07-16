@@ -57,6 +57,9 @@ export default function RootLayout() {
             }}
           />
           <Stack.Screen name="auth/success" options={{ title: '로그인 완료' }} />
+
+          {/* test/auth-web?token= */}
+          <Stack.Screen name="test/auth-web" options={{ title: '로그인 완료' }} />
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>

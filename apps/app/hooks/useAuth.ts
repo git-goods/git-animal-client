@@ -69,9 +69,9 @@ export const useAuth = () => {
   };
 
   // 테스트 로그인 함수 추가
-  const testLogin = async () => {
+  const testLogin = async (token: string) => {
     try {
-      const testToken = 'test_token_' + Date.now();
+      const testToken = token;
       console.log('테스트 토큰 생성:', testToken);
 
       // 플랫폼에 따라 저장 방식 선택
