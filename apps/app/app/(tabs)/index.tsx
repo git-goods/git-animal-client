@@ -39,19 +39,6 @@ export default function TabOneScreen() {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#f8f9fa" />
-      <SafeAreaView style={styles.safeArea}>
-        <View style={styles.header}>
-          <View style={styles.headerContent}>
-            <View style={styles.titleContainer}>
-              <IconSymbol size={24} name="house.fill" color="#24292e" />
-              <Text style={styles.welcomeText}>GitAnimals</Text>
-            </View>
-            <TouchableOpacity onPress={onPressLogout} style={styles.logoutButton}>
-              <Text style={styles.buttonText}>로그아웃</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </SafeAreaView>
       <View style={styles.webViewContainer}>
         <CustomWebView url="https://www.gitanimals.org/" token={token} />
       </View>
