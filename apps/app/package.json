@@ -7,7 +7,7 @@
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo run:android",
     "ios": "expo start --ios --port 3000",
-    "web": "expo start --web",
+    "web": "expo start --web --port 3000",
     "test": "jest --watchAll",
     "lint": "expo lint"
   },

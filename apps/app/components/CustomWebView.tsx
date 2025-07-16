@@ -1,9 +1,6 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { StyleSheet, View, BackHandler, Platform, Linking, ActivityIndicator, Text } from 'react-native';
-import { WebView } from 'react-native-webview';
-import Constants from 'expo-constants';
-import { useEffect } from 'react';
-import { WebViewNavigation } from 'react-native-webview';
+import { WebView, WebViewNavigation } from 'react-native-webview';
 import { handleGithubLogin } from '../utils/github';
 
 interface CustomWebViewProps {
