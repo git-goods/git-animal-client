@@ -5,9 +5,10 @@ import React from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { StatusBar } from 'expo-status-bar';
 import AppleLogin from './AppleLogin';
+import * as SecureStore from 'expo-secure-store';
 
 export default function LoginScreen() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, testLogin } = useAuth();
 
   const onPressGithubLogin = async () => {
     try {
@@ -37,6 +38,24 @@ export default function LoginScreen() {
     }
   };
 
+  const onPressTestLogin = async () => {
+    try {
+      console.log('테스트 로그인 시작...');
+
+      const success = await testLogin();
+
+      if (success) {
+        console.log('테스트 로그인 완료');
+        // 성공 페이지로 이동
+        router.replace('/auth/success');
+      } else {
+        console.error('테스트 로그인 실패');
+      }
+    } catch (error) {
+      console.error('테스트 로그인 중 오류:', error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar style="light" />
@@ -62,6 +81,11 @@ export default function LoginScreen() {
 
             <TouchableOpacity onPress={onPressGithubLogin} style={styles.githubButton}>
               <Text style={styles.buttonText}>GitHub 계정으로 로그인</Text>
+            </TouchableOpacity>
+
+            {/* 개발용 테스트 로그인 버튼 */}
+            <TouchableOpacity onPress={onPressTestLogin} style={styles.testButton}>
+              <Text style={styles.buttonText}>🧪 테스트 로그인</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -101,6 +125,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     alignItems: 'center',
     width: '100%',
+    gap: 15,
   },
   subtitle: {
     fontSize: 20,
@@ -110,6 +135,16 @@ const styles = StyleSheet.create({
   },
   githubButton: {
     backgroundColor: '#24292e',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 8,
+    minWidth: 280,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  testButton: {
+    backgroundColor: '#ff6b35',
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 8,
