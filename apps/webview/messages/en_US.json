@@ -1,0 +1,232 @@
+{
+  "page": {
+    "main": "Main | GitAnimals",
+    "shop": "Shop",
+    "guild": "Guild",
+    "mypage": "MyPage",
+    "laboratory": "Laboratory"
+  },
+  "Layout": {
+    "mypage": "MyPage",
+    "auction": "Auction",
+    "shop": "Shop",
+    "guild": "Guild",
+    "login": "Login",
+    "logout": "Logout",
+    "github": "Github",
+    "dev": "Dev",
+    "language": "Language",
+    "notification": "Notification"
+  },
+  "HomePage": {
+    "title": "Hello world!",
+    "about": "Go to the about page"
+  },
+  "Landing": {
+    "title": "Have your pet in GITHUB! "
+  },
+  "Common": {
+    "pet": "Pet",
+    "name": "Name",
+    "grade": "Grade",
+    "level": "Level",
+    "price": "Price",
+    "date": "Date",
+    "sell": "Sell",
+    "pet-list": "Pet list",
+    "merge": "Merge",
+    "prepare": "Prepare",
+    "confirm": "Confirm",
+    "close": "Close",
+    "processing": "Processing...",
+    "leave": "Leave",
+    "cancel": "Cancel"
+  },
+  "Gotcha": {
+    "pet-gotcha-desc": "Draw a S+ Grade pet for 1,000 points",
+    "choose-one-card": "Choose one card you want!",
+    "close-notice-message": "[count] seconds later, this window will close.",
+    "get-persona-success": "You have successfully drawn a pet!",
+    "get-persona-fail": "Failed to draw a pet.",
+    "token-expired": "Token expired. Please sign in again.",
+    "contact-us": "Contact us",
+    "many-error-message": "If you continue to experience problems, please contact us.",
+    "gotcha-in-progress": "Drawing in progress. Please wait a moment.",
+    "click-card-to-flip": "Click the card to flip!",
+    "not-enough-points": "You don't have enough points to draw a pet.",
+    "click-to-close": "Touch the screen to close."
+  },
+  "Shop": {
+    "no-mobile-support": "Currently, mobile is not supported. Please connect to the desktop.",
+    "buy-product-success": "Purchase complete!",
+    "buy-product-fail": "Failed to purchase.",
+    "buy": "Buy",
+    "pet": "Pet",
+    "name": "Name",
+    "grade": "Grade",
+    "level": "Level",
+    "price": "Price",
+    "date": "Date",
+    "sell": "Sell",
+    "price-you-want": "Price you want",
+    "sell-product-success": "Sell complete!",
+    "sell-product-fail": "Failed to sell.",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "delete-product-success": "Cancellation complete!",
+    "delete-product-fail": "Failed to cancellation.",
+    "edit": "Edit",
+    "pet-sold": "Pet sold successfully for [money]!",
+    "prepare": "Prepare",
+    "merge": "Merge",
+    "edit-product": "Edit Product",
+    "buy-error-not-login": "Please sign in to use this feature.",
+    "sell-confirm": "Are you sure you want to sell?",
+    "sell-confirm-description": "After selling, the pet will disappear.",
+    "sell-confirm-checkbox": "Do not show this message again",
+    "sell-price-modal-title": "Enter the price you want to sell",
+    "Background": {
+      "buy-success": "Background purchased successfully",
+      "buy-fail": "Failed to purchase background",
+      "purchased": "Purchased",
+      "buy": "Buy",
+      "event-sale": "Event Limited Sale",
+      "buy-possible-user": "Please sign in to use this feature."
+    }
+  },
+  "NoticeToast": {
+    "go": "GO!",
+    "visit": "Visit",
+    "star-now": "Star Now!",
+    "visit-shop": "New! Visit the GitAnimals Shop page",
+    "github-star": "Enjoying GitAnimals?\nGive us a GitHub Star! ⭐",
+    "update-shop-renewal": "Update: The shop page has been renewed.\n Check it out!",
+    "multi-translation": "You can choose English, 한국어! 🌐\nPlease change the language in the top menu.",
+    "update-mypage-renewal": "Update: The MyPage page has been renewed.\n Check it out!",
+    "update-background": "You can change the background from now on!\n🎃 Halloween Limited 🎃 is on sale. "
+  },
+  "Mypage": {
+    "copy-link-title": "Copy Link",
+    "copy-link-success": "Copy success!",
+    "line-set-error": "Cannot set more than 1000.",
+    "apply-button": "Apply",
+    "customize-size": "Customize Size",
+    "extend-button": "Extend",
+    "shrink-button": "Shrink",
+    "change-pet": "Change pet",
+    "no-mobile-support": "Currently, mobile is not supported.\nPlease connect to the desktop.",
+    "pet-list": "Pet list",
+    "sell-to-other": "Tip. If you want to sell your pet to other users, please use the auction.",
+    "my-pet": "My pet",
+    "github-custom": "Github Custom",
+    "invalid-size-error": "Invalid size",
+    "farm-type-select-pet": "Select a pet for Farm Type",
+    "line-type-select-pet": "Select a pet for Line Type",
+    "Merge": {
+      "merge": "Merge",
+      "merge-result": "Merge result",
+      "cancel": "Cancel",
+      "please-choose-pet": "Select a pet to merge. The selected pet will be consumed and disappear."
+    },
+    "laboratory": "Laboratory"
+  },
+  "Event": {
+    "event-end": "Event has ended.",
+    "Halloween": {
+      "description": "Halloween has come to Gitanimals\nDraw Halloween pet for free!",
+      "draw-button": "Draw!",
+      "draw-more-button": "Draw more!",
+      "draw-button-not-signed-in": "Sign in to draw.",
+      "draw-error": "Failed to draw.",
+      "result-title": "You've got a...",
+      "result-apply": "Apply it now!",
+      "result-already-star": "Draw more for 👻 already stared user! 👻",
+      "result-star-again": "👻 Star and draw more! 👻",
+      "result-halloween-coupon": "🎃 It's Halloween! 🎃\nUse your Halloween pet guaranteed draw coupon now!",
+      "result-halloween-star-bonus-coupon": "🎃 It's Halloween! 🎃\nGive us a Github Star and use your Halloween bonus coupon!",
+      "result-halloween-star-bonus-coupon-already-star": "🎃 It's Halloween! 🎃\nFor users who have given us a Github Star, use your Halloween bonus!",
+      "not-login-toast": "🎃 It's Halloween! 🎃\nLogin and draw your Halloween pet!",
+      "go": "GO!"
+    }
+  },
+  "Laboratory": {
+    "property-pet-sell": {
+      "title": "Property Pet Sell",
+      "description": "Sell your pet to other users!",
+      "count": "ea",
+      "saleSuccess": "sale success",
+      "saleFail": "sale fail",
+      "totalAmount": "Total Amount"
+    }
+  },
+  "Inbox": {
+    "github-star-title": "Enjoying GitAnimals?",
+    "github-star-body": "Give us a GitHub Star! ⭐",
+    "event-christmas-title": "Christmas has come to GitAnimals! 🎄",
+    "event-christmas-body": "Get your free Christmas pet right now!",
+    "open-guild-title": "New 'Guild' feature is now open!",
+    "open-guild-body": "Create a guild and grow together with your friends!"
+  },
+  "Preview": {
+    "copy-link-title": "Copy Link",
+    "copy-link-success": "Copy success!"
+  },
+  "Guild": {
+    "join-request-success": "Successfully sent a guild join request.",
+    "invalid-guild-name": "Guild name may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen."
+  },
+  "Quiz": {
+    "quiz-solve-description": "Create a quiz or solve it to earn points!",
+    "create-quiz-card-title": "Create Quiz",
+    "create-quiz-card-description": "Create an O/X quiz and get [point]P!",
+    "difficulty-level": "Difficulty Level",
+    "easy": "Easy",
+    "medium": "Medium",
+    "difficult": "Difficult",
+    "level": "Level",
+    "category": "Category",
+    "category-description": "Choose the category of the quiz.",
+    "quiz-contents": "Quiz Contents",
+    "quiz-contents-description": "Write down the contents of the quiz...",
+    "answer-title": "Answer",
+    "answer-description": "Choose the correct answer for the quiz.",
+    "create-quiz-button": "Create",
+    "solve-quiz-card-title": {
+      "not-started": "Solve Quiz",
+      "fail": "Quiz Failed",
+      "done": "Quiz Solved"
+    },
+    "solve-quiz-card-description": {
+      "not-started": "Solve random quiz and get up to [point]P! You can only try once a day.",
+      "fail": "Failed today's quiz",
+      "done": "Already solved today and earned [point]P"
+    },
+    "solve-quiz-card-point": {
+      "not-started": "Up to [point]P",
+      "fail": "Better Luck Tomorrow!",
+      "done": "Earned [point]P"
+    },
+    "solve-todays-quiz": "Solve today's quiz?",
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "start": "Start!",
+    "correct-dialog": {
+      "title": "Correct!",
+      "description": "Challenge the next quiz and get double points.",
+      "challenge-button": "Challenge the next Quiz",
+      "stop-button": "Stop Quiz & Get [point]P"
+    },
+    "fail-dialog": {
+      "title": "Wrong answer..",
+      "description": "You can't get points because the challenge failed.",
+      "close-button": "Close"
+    },
+    "complete-dialog": {
+      "title": "Champion of the quiz!",
+      "description": "Finished the final quiz and got [point]P.",
+      "close-button": "Close"
+    },
+    "timer-mention": "Choose the correct answer!",
+    "quiz-finished": "Finished quiz. You got [point]P!"
+  }
+}

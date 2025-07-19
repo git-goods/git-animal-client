@@ -49,7 +49,7 @@ User: ${user?.id ? JSON.stringify(user) : 'NOT LOGGED IN'}
     try {
       reset();
       router.refresh();
-      router.push(window.location.pathname);
+      router.push(pathname);
     } catch (e) {
       console.error('Error during reset:', e);
     }
