@@ -14,6 +14,10 @@
   font-style: normal;
 }
 
+:root {
+  --container-max-width: 560px;
+}
+
 @layer reset {
   *,
   *::before,

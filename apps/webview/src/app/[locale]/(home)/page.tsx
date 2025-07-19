@@ -1,6 +1,7 @@
 'use client';
 
 import { css } from '_panda/css';
+
 import { TabBar } from '@/components/Layout/TabBar';
 
 import { ProfileBoard } from './_components/ProfileBoard';
@@ -23,7 +24,7 @@ const containerStyle = css({
   w: '100%',
   h: '100%',
   minH: '100vh',
-  maxW: '560px',
+  maxW: 'var(--container-max-width)',
   mx: 'auto',
   position: 'relative',
   paddingBottom: '160px',
