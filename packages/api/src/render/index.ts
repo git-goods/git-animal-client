@@ -7,3 +7,4 @@ export * from './isPressStar';
 export * from './getMyBackground';
 export * from './changeMyBackground';
 export * from './mergePersonaLevel';
+export * from './changePersonaVisible';

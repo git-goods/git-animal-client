@@ -12,6 +12,7 @@ const MergePersonaLevelResponseSchema = z.object({
   level: z.string(),
   visible: z.boolean(),
   dropRate: z.string(),
+  appVisible: z.boolean(), // TODO: 준영이와 이야기해서 추가하기
 });
 
 export type MergePersonaLevelRequest = z.infer<typeof MergePersonaLevelRequestSchema>;
