@@ -4,8 +4,8 @@ import { css } from '_panda/css';
 
 import { TabBar } from '@/components/Layout/TabBar';
 
+import CharacterView from './_components/CharacterView';
 import { ProfileBoard } from './_components/ProfileBoard';
-import CharacterView from './CharacterView';
 
 export default function WebviewPage() {
   return (
