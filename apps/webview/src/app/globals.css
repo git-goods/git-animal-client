@@ -1,0 +1,94 @@
+@layer reset, base, tokens, recipes, utilities;
+
+@font-face {
+  font-family: 'DNFBitBitv2';
+  font-style: normal;
+  font-weight: 400;
+  src: url('//cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'DOSGothic';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/DOSGothic.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --container-max-width: 560px;
+}
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    position: relative;
+  }
+
+  button {
+    cursor: pointer;
+    border: transparent;
+    background-color: transparent;
+    padding: 0;
+    outline: none;
+  }
+
+  .mobile {
+    display: none;
+  }
+
+  .desktop {
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .mobile {
+      display: block;
+    }
+
+    .desktop {
+      display: none;
+    }
+  }
+}
+
+@layer base {
+  :root {
+    --mobile-header-height: 60px;
+  }
+}
+
+/* toast */
+[data-sonner-toaster] {
+  z-index: 500;
+}
+.toast-title {
+  white-space: pre;
+}
+.toast-action-button {
+  color: #000 !important;
+  background-color: #fcfd9c !important;
+  box-shadow:
+    0 2px 2px #00000040,
+    inset 0 -3px #c4c382,
+    inset 0 3px #fdfed2;
+  border-radius: 6px !important;
+  border: 1px solid #000 !important;
+  height: 32px !important;
+  padding: 0 16px;
+  font-size: 14px !important;
+  font-weight: 500;
+}
+
+.toast-container {
+  box-shadow:
+    0 2px 4px #00000040,
+    inset 0 -3px #c8c8c888,
+    inset 0 3px #f1f1f1c4 !important;
+  width: fit-content;
+  gap: 12px;
+}

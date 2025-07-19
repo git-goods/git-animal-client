@@ -1,0 +1,23 @@
+{
+  "root": true,
+  "extends": ["@gitanimals/eslint-config/next.js"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": true
+  },
+  "rules": {
+    "@next/next/no-img-element": "off",
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "styled-jsx/css",
+            "message": "Please use panda/css instead."
+          }
+        ]
+      }
+    ]
+  },
+  "ignorePatterns": ["node_modules/", "next.config.mjs"]
+}
