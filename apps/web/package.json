@@ -22,7 +22,6 @@
     "@gitanimals/exception": "workspace:*",
     "@gitanimals/react": "workspace:*",
     "@gitanimals/react-query": "workspace:*",
-    "@gitanimals/dayjs": "workspace:*",
     "@gitanimals/ui-icon": "workspace:*",
     "@gitanimals/ui-panda": "workspace:*",
     "@gitanimals/util-common": "workspace:*",

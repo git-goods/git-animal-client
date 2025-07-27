@@ -5,12 +5,6 @@ const GUILD = {
   JOIN: (id: string) => `/guild/detail/${id}/join`,
 };
 
-const QUIZ = {
-  MAIN: () => '/quiz',
-  CREATE: () => '/quiz/create',
-  SOLVE: () => '/quiz/solve',
-};
-
 const AUTH = {
   SIGN_OUT: () => '/auth/signOut',
 };
@@ -18,7 +12,6 @@ const AUTH = {
 export const ROUTE = {
   HOME: () => '/',
   GUILD,
-  QUIZ,
   AUTH,
 };
 
