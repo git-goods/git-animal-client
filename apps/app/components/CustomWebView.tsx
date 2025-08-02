@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { StyleSheet, View, BackHandler, Platform, Linking, ActivityIndicator, Text } from 'react-native';
 import { WebView, WebViewNavigation } from 'react-native-webview';
 import { handleGithubLogin } from '../utils/github';
+import { useAuth } from '../hooks/useAuth';
 
 interface CustomWebViewProps {
   url: string;
@@ -76,6 +77,7 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
   const webViewRef = useRef<WebView>(null);
   const [loading, setLoading] = useState(true);
   const [canGoBack, setCanGoBack] = useState(false);
+  const { logout } = useAuth();
 
   const handleNavigationStateChange = (navState: WebViewNavigation) => {
     // 웹뷰 상태 업데이트
@@ -92,9 +94,9 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
 
   useEffect(() => {
     if (Platform.OS === 'android') {
-      BackHandler.addEventListener('hardwareBackPress', onAndroidBackPress);
+      const subscription = BackHandler.addEventListener('hardwareBackPress', onAndroidBackPress);
       return () => {
-        BackHandler.removeEventListener('hardwareBackPress', onAndroidBackPress);
+        subscription.remove();
       };
     }
   }, [canGoBack]);
@@ -117,6 +119,10 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
         setCanGoBack(data.canGoBack);
       } else if (type === 'GITHUB_LOGIN') {
         await handleGithubLogin();
+      } else if (type === 'LOGOUT') {
+        console.log('[WebView Debug] Logout request received');
+        await logout();
+        console.log('[WebView Debug] Logout completed');
       }
     } catch (error) {
       console.log('[WebView Debug] Failed to parse webview message:', error);
@@ -126,11 +132,19 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
   const loginInjectedJavaScript = `
     (function() {
       // GitHub 로그인 버튼을 찾기 위한 선택자들을 추가
-      const selectors = [
+      const loginSelectors = [
         '[data-testid="github-login-button"]',
         '[data-testid="login-button"]',
         'button:contains("GitHub")',
         'a:contains("GitHub")'
+      ];
+
+      // Logout 버튼을 찾기 위한 선택자들
+      const logoutSelectors = [
+        'button:contains("logout")',
+        '[data-testid="logout-button"]',
+        '.logout-button',
+        '#logout-button'
       ];
 
       function addLoginHandler(element) {
@@ -142,20 +156,38 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
         });
       }
 
-      // 모든 선택자를 시도
-      selectors.forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(addLoginHandler);
-      });
+      function addLogoutHandler(element) {
+        console.log('[WebView Debug] Adding logout handler to element:', element);
+        element.addEventListener('click', function(e) {
+          console.log('[WebView Debug] Logout button clicked');
+          window.ReactNativeWebView.postMessage(JSON.stringify({
+            type: 'LOGOUT'
+          }));
+        });
+      }
+
+      function attachHandlers() {
+        // 로그인 버튼 핸들러 추가
+        loginSelectors.forEach(selector => {
+          const elements = document.querySelectorAll(selector);
+          elements.forEach(addLoginHandler);
+        });
+
+        // 로그아웃 버튼 핸들러 추가
+        logoutSelectors.forEach(selector => {
+          const elements = document.querySelectorAll(selector);
+          elements.forEach(addLogoutHandler);
+        });
+      }
+
+      // 초기 핸들러 연결
+      attachHandlers();
 
       // 동적으로 추가되는 버튼을 위한 MutationObserver
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           if (mutation.addedNodes.length) {
-            selectors.forEach(selector => {
-              const elements = document.querySelectorAll(selector);
-              elements.forEach(addLoginHandler);
-            });
+            attachHandlers();
           }
         });
       });
