@@ -40,7 +40,7 @@ export default function TabOneScreen() {
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#f8f9fa" />
       <View style={styles.webViewContainer}>
-        <CustomWebView url="https://www.gitanimals.org/" token={token} />
+        <CustomWebView url="https://git-animal-webview.vercel.app/" token={token} />
       </View>
     </View>
   );

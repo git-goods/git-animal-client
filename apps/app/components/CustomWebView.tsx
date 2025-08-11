@@ -80,8 +80,19 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
   const { logout } = useAuth();
 
   const handleNavigationStateChange = (navState: WebViewNavigation) => {
+    console.log('[WebView Debug] Navigation state changed:', {
+      url: navState.url,
+      loading: navState.loading,
+      canGoBack: navState.canGoBack,
+    });
+
     // 웹뷰 상태 업데이트
     setCanGoBack(navState.canGoBack);
+
+    // 로딩 상태 업데이트
+    if (!navState.loading) {
+      setLoading(false);
+    }
   };
 
   const onAndroidBackPress = () => {
@@ -103,10 +114,20 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
 
   const onShouldStartLoadWithRequest = (event: WebViewNavigation) => {
     const { url: eventUrl } = event;
-    if (!eventUrl.includes('gitanimals.org')) {
+    console.log('[WebView Debug] Checking URL:', eventUrl);
+
+    // 허용할 도메인들 목록
+    const allowedDomains = ['gitanimals.org', 'git-animal-webview.vercel.app', 'vercel.app'];
+
+    const isAllowedDomain = allowedDomains.some((domain) => eventUrl.includes(domain));
+
+    if (!isAllowedDomain) {
+      console.log('[WebView Debug] External URL detected, opening in browser:', eventUrl);
       Linking.openURL(eventUrl);
       return false;
     }
+
+    console.log('[WebView Debug] Allowed URL, loading in WebView:', eventUrl);
     return true;
   };
 
@@ -228,7 +249,18 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
         ref={webViewRef}
         source={{ uri: webViewUrl() }}
         style={styles.webview}
-        onLoadEnd={() => setLoading(false)}
+        onLoadEnd={() => {
+          console.log('[WebView Debug] Load ended');
+          setLoading(false);
+        }}
+        onError={(syntheticEvent) => {
+          console.log('[WebView Debug] Error occurred:', syntheticEvent.nativeEvent);
+          setLoading(false);
+        }}
+        onLoadStart={() => {
+          console.log('[WebView Debug] Load started');
+          setLoading(true);
+        }}
         onNavigationStateChange={handleNavigationStateChange}
         onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
         onMessage={onMessage}
