@@ -37,19 +37,29 @@ export default function TabOneScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#f8f9fa" />
-      <View style={styles.webViewContainer}>
-        <CustomWebView url="https://git-animal-webview.vercel.app/" token={token} />
-      </View>
+    <View style={styles.fullScreenContainer}>
+      <StatusBar barStyle="light-content" backgroundColor="#212429" translucent={true} />
+      <SafeAreaView style={styles.container}>
+        {/* 커스텀 헤더 */}
+        {/* <View style={styles.customHeader}>
+          <Text style={styles.headerTitle}>GitAnimals</Text>
+        </View> */}
+        <View style={styles.webViewContainer}>
+          <CustomWebView url="https://git-animal-webview.vercel.app/" token={token} />
+        </View>
+      </SafeAreaView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  fullScreenContainer: {
+    flex: 1,
+    backgroundColor: '#212429',
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#212429',
   },
   safeArea: {
     backgroundColor: '#f8f9fa',
@@ -100,5 +110,18 @@ const styles = StyleSheet.create({
   },
   webViewContainer: {
     flex: 1,
+  },
+  customHeader: {
+    height: 50,
+    backgroundColor: '#212429',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#333',
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#ffffff',
   },
 });

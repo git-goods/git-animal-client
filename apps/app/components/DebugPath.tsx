@@ -20,7 +20,6 @@ export default function DebugPath() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ffeb3b',
     paddingVertical: 4,
     paddingHorizontal: 20,
     position: 'absolute',

@@ -273,10 +273,12 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
         showsHorizontalScrollIndicator={false}
         allowsBackForwardNavigationGestures={true} // iOS에서 스와이프로 뒤로가기/앞으로가기
         bounces={false}
+        contentInsetAdjustmentBehavior="never" // iOS에서 자동 inset 조정 비활성화
+        automaticallyAdjustContentInsets={false} // iOS에서 자동 content insets 비활성화
       />
       {loading && (
         <View style={styles.loadingView}>
-          <ActivityIndicator size="large" color="#24292e" />
+          <ActivityIndicator size="large" color="#ffffff" />
           <Text style={styles.loadingText}>GitAnimals 로딩 중...</Text>
         </View>
       )}
@@ -287,11 +289,12 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#212429',
   },
   webview: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#212429',
+    marginBottom: Platform.OS === 'ios' ? 0 : 0, // 하단 여백 제거
   },
   loadingView: {
     position: 'absolute',
@@ -301,12 +304,12 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#212429',
   },
   loadingText: {
     marginTop: 10,
     fontSize: 16,
-    color: '#24292e',
+    color: '#ffffff',
     fontWeight: '500',
   },
 });
