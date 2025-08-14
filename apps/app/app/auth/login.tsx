@@ -42,18 +42,22 @@ export default function LoginScreen() {
     try {
       console.log('테스트 로그인 시작...');
 
-      const success = await testLogin();
+      // const success = await testLogin();
 
-      if (success) {
-        console.log('테스트 로그인 완료');
-        // 성공 페이지로 이동
-        router.replace('/auth/success');
-      } else {
-        console.error('테스트 로그인 실패');
-      }
+      // if (success) {
+      //   console.log('테스트 로그인 완료');
+      //   // 성공 페이지로 이동
+      //   router.replace('/auth/success');
+      // } else {
+      //   console.error('테스트 로그인 실패');
+      // }
     } catch (error) {
       console.error('테스트 로그인 중 오류:', error);
     }
+  };
+
+  const onPressWebview = () => {
+    router.replace('/(tabs)');
   };
 
   return (
@@ -68,6 +72,10 @@ export default function LoginScreen() {
         {isAuthenticated ? (
           <View style={styles.contentContainer}>
             <Text style={styles.subtitle}>로그인 완료</Text>
+            {/* webview 페이지로 이동 */}
+            <TouchableOpacity onPress={onPressWebview} style={styles.logoutButton}>
+              <Text style={styles.buttonText}>webview 페이지로 이동</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={onPressLogout} style={styles.logoutButton}>
               <Text style={styles.buttonText}>로그아웃</Text>
             </TouchableOpacity>
