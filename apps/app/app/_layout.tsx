@@ -1,6 +1,6 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
 import 'react-native-reanimated';
@@ -15,6 +15,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const router = useRouter();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
@@ -26,6 +27,20 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
+
+  // 인증 상태 변경 시 네비게이션 처리
+  useEffect(() => {
+    console.log('[RootLayout Debug] Auth state changed:', { isAuthenticated, isLoading, loaded });
+
+    if (loaded && !isLoading) {
+      if (!isAuthenticated) {
+        console.log('[RootLayout Debug] Redirecting to login');
+        router.replace('/auth/login');
+      } else {
+        console.log('[RootLayout Debug] User authenticated, staying on current screen');
+      }
+    }
+  }, [isAuthenticated, isLoading, loaded, router]);
 
   if (!loaded) {
     return null;
@@ -43,7 +58,6 @@ export default function RootLayout() {
       </SafeAreaView> */}
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack
-          initialRouteName={isAuthenticated ? '(tabs)' : 'auth/login'}
           screenOptions={{
             headerShown: false,
           }}

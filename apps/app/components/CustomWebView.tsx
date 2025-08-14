@@ -3,6 +3,7 @@ import { StyleSheet, View, BackHandler, Platform, Linking, ActivityIndicator, Te
 import { WebView, WebViewNavigation } from 'react-native-webview';
 import { handleGithubLogin } from '../utils/github';
 import { useAuth } from '../hooks/useAuth';
+import { useRouter } from 'expo-router';
 const isDevelopment = __DEV__; // React Native의 개발 모드 플래그
 
 interface CustomWebViewProps {
@@ -79,6 +80,7 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
   const [loading, setLoading] = useState(true);
   const [canGoBack, setCanGoBack] = useState(false);
   const { logout } = useAuth();
+  const router = useRouter();
 
   const handleNavigationStateChange = (navState: WebViewNavigation) => {
     console.log('[WebView Debug] Navigation state changed:', {
@@ -151,7 +153,39 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
         await handleGithubLogin();
       } else if (type === 'LOGOUT') {
         console.log('[WebView Debug] Logout request received');
+
+        // 1. 웹뷰 내부 세션 로그아웃
+        const logoutScript = `
+          console.log('[WebView Debug] Clearing web session');
+          // NextAuth 세션 로그아웃
+          fetch('/api/auth/signout', { method: 'POST' })
+            .then(() => {
+              console.log('[WebView Debug] Web session cleared');
+              // 쿠키 삭제
+              document.cookie.split(";").forEach(function(c) { 
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+              });
+              // 로컬스토리지 및 세션스토리지 삭제
+              localStorage.clear();
+              sessionStorage.clear();
+            })
+            .catch(err => console.error('[WebView Debug] Web logout error:', err));
+        `;
+        webViewRef.current?.injectJavaScript(logoutScript);
+
+        // 2. React Native 앱 로그아웃
+        console.log('[WebView Debug] Starting React Native logout');
         await logout();
+        console.log('[WebView Debug] React Native logout completed');
+
+        // 앱에서 즉시 로그인 화면으로 이동
+        try {
+          console.log('[WebView Debug] Navigating to /auth/login');
+          router.replace('/auth/login');
+        } catch (navErr) {
+          console.log('[WebView Debug] Navigation error:', navErr);
+        }
+
         console.log('[WebView Debug] Logout completed');
       }
     } catch (error) {
@@ -229,26 +263,41 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
     })();
   `;
 
-  // 토큰이 있을 때 웹뷰로 전달
+  // 토큰 상태 변경 시 처리
   useEffect(() => {
     if (token && webViewRef.current) {
       console.log('[WebView Debug] Token received:', token);
+      const cleaned = typeof token === 'string' ? token.replace(/^bearer\\s+/i, '').trim() : token;
       const injectTokenScript = `
         console.log('[WebView Debug] Injecting token script');
-        window.postToken("${token}");
+        window.postToken("${cleaned}");
       `;
       webViewRef.current.injectJavaScript(injectTokenScript);
+    } else if (!token && webViewRef.current) {
+      // 토큰이 없어진 경우 (로그아웃) auth 페이지로 이동
+      console.log('[WebView Debug] Token removed, redirecting to auth');
+      const authUrl = new URL(url);
+      authUrl.pathname = '/en_US/auth';
+      webViewRef.current.injectJavaScript(`
+        console.log('[WebView Debug] Navigating to auth page due to token removal');
+        window.location.href = '${authUrl.toString()}';
+      `);
     }
-  }, [token]);
+  }, [token, url]);
 
   const webViewUrl = () => {
+    const urlObj = new URL(url);
     if (token) {
-      // 토큰이 있으면 홈페이지로 바로 이동 (인증은 JavaScript로 처리)
-      const urlObj = new URL(url);
-      urlObj.pathname = '/en_US';
+      // 토큰이 있으면 JWT를 쿼리로 전달하여 웹에서 처리
+      const cleaned = typeof token === 'string' ? token.replace(/^bearer\s+/i, '').trim() : token;
+      urlObj.pathname = '/en_US/auth';
+      if (cleaned) urlObj.searchParams.set('jwt', String(cleaned));
       return urlObj.toString();
     }
-    return url;
+    // 토큰이 없으면 auth 페이지로 이동 (테스트 페이지가 아닌 실제 auth 경로)
+    urlObj.pathname = '/en_US/auth';
+    urlObj.search = '';
+    return urlObj.toString();
   };
   console.log('webViewUrl(): ', webViewUrl());
 

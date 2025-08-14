@@ -6,34 +6,32 @@ import { useAuth } from '../../hooks/useAuth';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 
 export default function TabOneScreen() {
-  const { isAuthenticated, logout, token } = useAuth();
+  const { isAuthenticated, isLoading, logout, token } = useAuth();
   const router = useRouter();
-  const isFirstRender = useRef(true);
 
-  useEffect(() => {
-    // 첫 렌더링에서는 리다이렉트 스킵
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
-    // 이후 렌더링에서만 리다이렉트 수행
-    if (!isAuthenticated) {
-      router.replace('/auth/login');
-    }
-  }, [isAuthenticated]);
+  // 인증 상태는 _layout.tsx에서 전역적으로 처리됨
 
   const onPressLogout = async () => {
     try {
       await logout();
-      router.replace('/auth/login');
+      // 네비게이션은 _layout.tsx에서 자동으로 처리됨
     } catch (error) {
       console.error('로그아웃 실패:', error);
     }
   };
 
-  if (!isAuthenticated) {
-    return null;
+  // 로딩 중이거나 인증되지 않은 경우 빈 화면 표시 (리다이렉트 진행 중)
+  if (isLoading || !isAuthenticated) {
+    return (
+      <View style={styles.fullScreenContainer}>
+        <StatusBar barStyle="light-content" backgroundColor="#212429" translucent={true} />
+        <SafeAreaView style={styles.container}>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ color: '#ffffff', fontSize: 16 }}>{isLoading ? 'Loading...' : 'Redirecting...'}</Text>
+          </View>
+        </SafeAreaView>
+      </View>
+    );
   }
 
   return (
