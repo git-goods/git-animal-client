@@ -1,7 +1,6 @@
 import type { NextRequest } from 'next/server';
-import NextAuth from 'next-auth';
-
-import { authOptions } from '@/auth';
+import { signIn } from 'next-auth/react';
+import { getUserByToken } from '@gitanimals/api';
 
 export async function POST(req: NextRequest) {
   try {
@@ -22,33 +21,33 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // NextAuth 세션 생성
-    console.log('[Server Debug] Creating NextAuth session');
-    const nextauth = await NextAuth(authOptions);
-    const session = await nextauth.signIn('rn-webview', {
-      token,
-      redirect: false,
-    });
-
-    console.log('[Server Debug] SignIn result:', {
-      hasSession: !!session,
-      hasError: !!session?.error,
-    });
-
-    if (!session || session.error) {
-      console.log('[Server Debug] Authentication failed:', session?.error);
-      return new Response(JSON.stringify({ error: session?.error || 'Authentication failed' }), {
+    // 토큰 유효성 검증
+    console.log('[Server Debug] Validating token');
+    try {
+      const userData = await getUserByToken(`Bearer ${token}`);
+      if (!userData) {
+        console.log('[Server Debug] Invalid token');
+        return new Response(JSON.stringify({ error: 'Invalid token' }), {
+          status: 401,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+      console.log('[Server Debug] Token validation successful:', userData.username);
+    } catch (error) {
+      console.error('[Server Debug] Token validation failed:', error);
+      return new Response(JSON.stringify({ error: 'Token validation failed' }), {
         status: 401,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    // 세션 쿠키 설정
+    // 성공 응답
     console.log('[Server Debug] Authentication successful, sending response');
     const response = new Response(
       JSON.stringify({
         url: callbackUrl || '/',
         success: true,
+        token: token,
       }),
       {
         status: 200,

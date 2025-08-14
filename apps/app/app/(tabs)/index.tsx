@@ -45,7 +45,7 @@ export default function TabOneScreen() {
           <Text style={styles.headerTitle}>GitAnimals</Text>
         </View> */}
         <View style={styles.webViewContainer}>
-          <CustomWebView url="https://git-animal-webview.vercel.app/" token={token} />
+          <CustomWebView url="http://192.168.0.38:3000/" token={token} />
         </View>
       </SafeAreaView>
     </View>

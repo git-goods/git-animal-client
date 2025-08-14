@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "prepare": "panda codegen",
-    "dev": "rm -rf .next && next dev --turbo",
+    "dev": "rm -rf .next && next dev --turbo --port 3000",
     "prebuild": "panda codegen",
     "build": "next build",
     "start": "next start",

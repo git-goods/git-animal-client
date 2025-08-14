@@ -77,7 +77,9 @@ export const interceptorResponseRejected = async (error: AxiosError<ApiErrorSche
     if (typeof window !== 'undefined') {
       signOut();
     } else {
-      await axios.get('/api/auth/signOut');
+      // 서버 사이드에서는 절대 URL 사용
+      const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+      await axios.get(`${baseUrl}/api/auth/signOut`);
       // redirect('/');
     }
     throw new CustomException('TOKEN_EXPIRED', 'token expired and sign out success');

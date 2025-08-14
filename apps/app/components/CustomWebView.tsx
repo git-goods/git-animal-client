@@ -3,6 +3,7 @@ import { StyleSheet, View, BackHandler, Platform, Linking, ActivityIndicator, Te
 import { WebView, WebViewNavigation } from 'react-native-webview';
 import { handleGithubLogin } from '../utils/github';
 import { useAuth } from '../hooks/useAuth';
+const isDevelopment = __DEV__; // React Native의 개발 모드 플래그
 
 interface CustomWebViewProps {
   url: string;
@@ -116,8 +117,16 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
     const { url: eventUrl } = event;
     console.log('[WebView Debug] Checking URL:', eventUrl);
 
+    // 개발 환경 확인
+    const isDevelopment = __DEV__;
+
     // 허용할 도메인들 목록
-    const allowedDomains = ['gitanimals.org', 'git-animal-webview.vercel.app', 'vercel.app'];
+    const allowedDomains = [
+      'gitanimals.org',
+      'git-animal-webview.vercel.app',
+      'vercel.app',
+      ...(isDevelopment ? ['localhost', '127.0.0.1', '192.168.', '10.0.2.2'] : []),
+    ];
 
     const isAllowedDomain = allowedDomains.some((domain) => eventUrl.includes(domain));
 
@@ -233,10 +242,10 @@ const CustomWebView: React.FC<CustomWebViewProps> = ({ url, token }) => {
   }, [token]);
 
   const webViewUrl = () => {
-    const urlObj = new URL(url);
     if (token) {
-      urlObj.pathname = '/en_US/auth';
-      urlObj.searchParams.append('jwt', token);
+      // 토큰이 있으면 홈페이지로 바로 이동 (인증은 JavaScript로 처리)
+      const urlObj = new URL(url);
+      urlObj.pathname = '/en_US';
       return urlObj.toString();
     }
     return url;
