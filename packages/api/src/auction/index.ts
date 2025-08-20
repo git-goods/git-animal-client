@@ -8,3 +8,4 @@ export * from './getProductsTypes';
 export * from './getMyProducts';
 export * from './deleteProduct';
 export * from './changeProduct';
+export * from './registerProduct';
