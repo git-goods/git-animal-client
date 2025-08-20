@@ -304,10 +304,7 @@ const detailedCardStyle = css({
 });
 
 const noticeMessageStyle = css({
-  textStyle: 'glyph22.regular',
   color: 'white',
   textAlign: 'center',
-  _mobile: {
-    textStyle: 'glyph16.regular',
-  },
+  textStyle: 'glyph16.regular',
 });

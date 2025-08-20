@@ -90,12 +90,8 @@ const bgStyle = css({
 });
 
 const headingStyle = css({
-  textStyle: 'glyph82.bold',
   color: 'white',
-
-  _mobile: {
-    textStyle: 'glyph40.bold',
-  },
+  textStyle: 'glyph40.bold',
 });
 
 const descStyle = css({

@@ -18,12 +18,8 @@ export function ArrowButton({
         css({
           rotate: direction === 'prev' ? '180deg' : '0deg',
           cursor: disabled ? 'not-allowed' : 'pointer',
-          width: disabled ? '36px' : '40px',
-          height: disabled ? '36px' : '40px',
-          _mobile: {
-            width: disabled ? '24px' : '26px',
-            height: disabled ? '24px' : '26px',
-          },
+          width: disabled ? '24px' : '26px',
+          height: disabled ? '24px' : '26px',
         }),
       )}
     >
@@ -39,7 +35,6 @@ export function ArrowButton({
 const arrowStyle = css({
   position: 'absolute',
   top: '0',
-  bottom: '0',
   margin: 'auto',
   zIndex: 'floating',
 
@@ -48,27 +43,19 @@ const arrowStyle = css({
     height: '100%',
   },
 
-  _mobile: {
-    bottom: '72px',
-  },
+  bottom: '72px',
 });
 
 const prevArrowStyle = cx(
   arrowStyle,
   css({
-    left: '-62px',
-    _mobile: {
-      left: '-26px',
-    },
+    left: '-26px',
   }),
 );
 
 const nextArrowStyle = cx(
   arrowStyle,
   css({
-    right: '-62px',
-    _mobile: {
-      right: '-26px',
-    },
+    right: '-26px',
   }),
 );

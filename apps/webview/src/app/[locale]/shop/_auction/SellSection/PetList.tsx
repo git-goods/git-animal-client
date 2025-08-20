@@ -52,11 +52,8 @@ export default PetList;
 const listContainerStyle = css({
   display: 'flex',
   flexWrap: 'wrap',
-  maxHeight: '582px',
   overflowY: 'scroll',
   gap: '4px',
 
-  _mobile: {
-    maxHeight: '347px',
-  },
+  maxHeight: '347px',
 });

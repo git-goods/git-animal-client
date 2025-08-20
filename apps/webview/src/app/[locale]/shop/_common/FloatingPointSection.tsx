@@ -18,7 +18,6 @@ export const FloatingPointSection = memo(
 
       return (
         <div className={divCss}>
-          <span className={titleCss}>My Points</span>
           <span className={pointCss}>
             <Image width={28} height={28} src="/shop/coin.webp" alt="coin" />
             {addNumberComma(data.points)}P
@@ -33,7 +32,6 @@ const divCss = css({
   top: '88px',
   left: '20px',
   w: 'fit-content',
-  padding: '12px 16px',
   borderRadius: '12px',
   backgroundColor: 'black.black_25',
   zIndex: 'sticky',
@@ -44,26 +42,12 @@ const divCss = css({
   color: 'white_100',
   backdropFilter: 'blur(7px)',
 
-  _mobile: {
-    padding: '6px 10px 6px 8px',
-  },
-});
-
-const titleCss = css({
-  textStyle: 'glyph16.bold',
-
-  _mobile: {
-    display: 'none',
-  },
+  padding: '6px 10px 6px 8px',
 });
 
 const pointCss = css({
   display: 'flex',
   alignItems: 'center',
   gap: '6px',
-  textStyle: 'glyph32.bold',
-
-  _mobile: {
-    textStyle: 'glyph15.bold',
-  },
+  textStyle: 'glyph15.bold',
 });

@@ -139,31 +139,21 @@ const selectedPersonaWrapperStyle = css({
   display: 'flex',
   justifyContent: 'flex-start',
   width: '100%',
-  marginBottom: '16px',
-
-  _mobile: {
-    mb: 0,
-    margin: '24px 0',
-  },
+  mb: 0,
+  margin: '24px 0',
 });
 
 const selectedPersonaTagStyle = css({
-  textStyle: 'glyph16.bold',
-  color: 'white.white_90',
   borderRadius: '8px',
   background: 'rgba(255, 255, 255, 0.25)',
-  h: '36px',
   display: 'flex',
   gap: '2px',
   alignItems: 'center',
-  px: '8px',
 
-  _mobile: {
-    textStyle: 'glyph12.regular',
-    color: 'white.white_50',
-    h: '30px',
-    px: '12px',
-  },
+  textStyle: 'glyph12.regular',
+  color: 'white.white_50',
+  h: '30px',
+  px: '12px',
 });
 
 const contentStyle = cx(
@@ -177,14 +167,11 @@ const contentStyle = cx(
 );
 
 const personaListHeadingStyle = css({
-  textStyle: 'glyph18.bold',
   color: 'white',
   textAlign: 'left',
   my: '12px',
 
-  _mobile: {
-    textStyle: 'glyph16.bold',
-  },
+  textStyle: 'glyph16.bold',
 });
 
 const personaListStyle = css({

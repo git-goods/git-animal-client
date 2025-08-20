@@ -58,25 +58,19 @@ export default Tab;
 
 const tabContainerStyle = css({
   display: 'flex',
-  alignItems: 'center',
   justifyContent: 'space-between',
-  marginBottom: '32px',
 
-  _mobile: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    gap: '32px',
-    marginBottom: '12px',
-  },
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  gap: '32px',
+  marginBottom: '12px',
 });
 
 const tabItemContainerStyle = css({
-  _mobile: {
-    backgroundColor: 'black.black_25',
-    padding: '4px',
-    margin: 'auto',
-    borderRadius: '16px',
-  },
+  backgroundColor: 'black.black_25',
+  padding: '4px',
+  margin: 'auto',
+  borderRadius: '16px',
 });
 
 export function TabItem({ isSelected, label, path }: { isSelected?: boolean } & TabItemType) {
@@ -88,29 +82,22 @@ export function TabItem({ isSelected, label, path }: { isSelected?: boolean } & 
 }
 
 const defaultLinkCss = css.raw({
-  padding: '4px 10px',
-  textStyle: 'glyph24.bold',
   fontFeatureSettings: 'liga off, clig off',
   transition: 'all 0.3s ease',
 
-  _mobile: {
-    padding: '0 12px',
-    display: 'inline-flex',
-    textStyle: 'glyph16.bold',
-    height: '32px',
-    borderRadius: '32px',
-    lineHeight: '32px',
-  },
+  padding: '0 12px',
+  display: 'inline-flex',
+  textStyle: 'glyph16.bold',
+  height: '32px',
+  borderRadius: '32px',
+  lineHeight: '32px',
 });
 
 const selectedLinkCss = css(defaultLinkCss, {
-  color: 'white',
-
-  _mobile: { color: 'white.white_75', backgroundColor: 'white.white_10' },
+  color: 'white.white_75',
+  backgroundColor: 'white.white_10',
 });
 
 const nonSelectedLinkCss = css(defaultLinkCss, {
   color: 'white.white_25',
-
-  _mobile: { color: 'white.white_25' },
 });

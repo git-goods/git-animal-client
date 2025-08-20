@@ -64,22 +64,16 @@ const containerStyle = css({
   width: '100%',
   maxWidth: '1200px',
   margin: '0 auto',
-  padding: '0 60px',
   position: 'relative',
 
-  _mobile: {
-    padding: '0 35px',
-  },
+  padding: '0 35px',
 });
 
 const sliderContainerStyle = css({
   position: 'relative',
   width: '100%',
-  marginTop: '20px',
 
-  _mobile: {
-    marginTop: '0px',
-  },
+  marginTop: '0px',
 });
 
 const sliderItemStyle = css({

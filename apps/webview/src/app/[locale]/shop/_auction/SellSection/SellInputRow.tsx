@@ -16,7 +16,7 @@ import { ANIMAL_TIER_TEXT_MAP } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
 import { rowStyle, ShopTableMobileRow } from '../../_common/ShopTableMobileRow';
-import { tableCss, theadCss } from '../table.styles';
+import { tableCss } from '../table.styles';
 
 const MAX_PRICE = 100_000_000;
 
@@ -92,15 +92,6 @@ function SellInputRow({ item, initPersona }: Props) {
 
   return (
     <div className={tableCss}>
-      <div className={theadCss}>
-        <span>{t('pet')}</span>
-        <span>{t('name')}</span>
-        <span>{t('grade')}</span>
-        <span>{t('level')}</span>
-        <span>{t('price')}</span>
-        <span></span>
-      </div>
-
       <div className={cx(rowStyle, 'row')}>
         {item && personaTier && (
           <>

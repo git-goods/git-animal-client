@@ -134,7 +134,6 @@ const sectionCss = css({
   display: 'flex',
   flexDir: 'column',
   alignItems: 'center',
-  padding: '120px 20px',
   width: '100%',
   bg: '#6DE575',
 
@@ -148,20 +147,13 @@ const sectionCss = css({
     bg: '#6DE575',
   },
 
-  _mobile: {
-    padding: '40px 16px',
-  },
+  padding: '40px 16px',
 });
 
 const h2Css = css({
-  textStyle: 'glyph82.bold',
   color: 'black',
-  marginBottom: '80px',
-
-  _mobile: {
-    marginBottom: '40px',
-    textStyle: 'glyph40.bold',
-  },
+  marginBottom: '40px',
+  textStyle: 'glyph40.bold',
 });
 
 const cardCss = css({

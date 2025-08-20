@@ -13,7 +13,7 @@ import Pagination from '@/components/Pagination/Pagination';
 import { ShopTableMobileRow, ShopTableRowViewSkeleton } from '../_common/ShopTableMobileRow';
 
 import EditModal from './SellSection/EditModal';
-import { tableCss, tbodyCss, theadCss } from './table.styles';
+import { tableCss, tbodyCss } from './table.styles';
 
 function SellListSection() {
   const t = useTranslations('Shop');
@@ -33,14 +33,6 @@ function SellListSection() {
   return (
     <>
       <div className={tableCss}>
-        <div className={theadCss}>
-          <span>{t('pet')}</span>
-          <span>{t('name')}</span>
-          <span>{t('grade')}</span>
-          <span>{t('level')}</span>
-          <span>{t('price')}</span>
-          <span></span>
-        </div>
         <div className={tbodyCss}>
           {!data && Array.from({ length: 8 }).map((_, index) => <ShopTableRowViewSkeleton key={`skeleton-${index}`} />)}
           {data?.products.map((product) => (
