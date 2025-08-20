@@ -26,7 +26,6 @@ const contentStyle = css({
   position: 'relative',
   zIndex: 1,
   width: '100%',
-  maxWidth: '475px',
   height: '100%',
   minHeight: '100vh',
   display: 'flex',

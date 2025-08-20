@@ -44,7 +44,7 @@ export default async function LocaleLayout({
 
         <ClientProvider>
           <NextIntlClientProvider messages={messages}>
-            <div className={css({ maxWidth: '575px', margin: '0 auto' })}>{children}</div>
+            <div className={css({ maxWidth: 'var(--container-max-width)', margin: '0 auto' })}>{children}</div>
 
             <GlobalComponent />
           </NextIntlClientProvider>
