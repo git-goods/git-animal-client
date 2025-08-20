@@ -1,6 +1,8 @@
 import { css } from '_panda/css';
 import { grid } from '_panda/patterns';
 
+import { TabBar } from '@/components/Layout/TabBar';
+
 import { ProfileSection } from './ProfileSection';
 
 async function MypageLayout({ children }: { children: React.ReactNode }) {
@@ -10,6 +12,7 @@ async function MypageLayout({ children }: { children: React.ReactNode }) {
         <ProfileSection />
         {children}
       </div>
+      <TabBar />
     </div>
   );
 }

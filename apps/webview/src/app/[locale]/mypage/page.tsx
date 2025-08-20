@@ -43,7 +43,7 @@ export default MypageMyPets;
 
 const listStyle = cx(
   flex({
-    maxHeight: 'calc(100vh - 542px)',
+    maxHeight: 'calc(100vh - 446px)',
     overflow: 'auto',
     gap: '4px',
     w: '100%',

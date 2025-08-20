@@ -52,7 +52,7 @@ export const ProfileSection = memo(
 
 const profileSectionStyle = css({
   display: 'flex',
-  padding: '32px 20px',
+  padding: '32px 0',
   gap: '12px',
   alignItems: 'center',
 });
