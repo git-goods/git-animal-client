@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { css } from '_panda/css';
 
 import { ClientProvider, GlobalComponent, Monitoring } from '@/components/Global';
 import { config } from '@/constants/config';
@@ -43,7 +44,7 @@ export default async function LocaleLayout({
 
         <ClientProvider>
           <NextIntlClientProvider messages={messages}>
-            {children}
+            <div className={css({ maxWidth: '575px', margin: '0 auto' })}>{children}</div>
 
             <GlobalComponent />
           </NextIntlClientProvider>

@@ -1,8 +1,6 @@
 'use client';
 
-import type { ComponentPropsWithoutRef } from 'react';
 import { useState } from 'react';
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
@@ -20,46 +18,18 @@ export function PetGotcha() {
 
   return (
     <div className={containerStyle}>
-      <ResponsiveImage
-        src="/shop/pet-gotcha-bg"
-        alt="pet-gotcha-bg"
-        width={{ mobile: 375, desktop: 1920 }}
-        height={{ mobile: 621, desktop: 1226 }}
-        className={bgStyle}
-      />
+      <img src="/assets/shop/pet-gotcha-bg-m.webp" alt="pet-gotcha-bg" className={bgStyle} width={357} height={621} />
       <h1 className={headingStyle}>Pet Gotcha</h1>
       <p className={descStyle}>{t('pet-gotcha-desc')}</p>
 
       <ButtonWrapper onClickOnePet={() => setOpenModal('one-pet')} onClickTenPet={() => setOpenModal('ten-pet')} />
 
       <div className={petContainerStyle}>
-        <Image src="/shop/pet-gotcha-image-card.webp" alt="pet-gotcha-pet" width={1120} height={530} />
+        <img src="/assets/shop/pet-gotcha-image-card.webp" alt="pet-gotcha-pet" width={1120} height={530} />
       </div>
       {openModal === 'one-pet' && <OnePet onClose={() => setOpenModal(null)} />}
       {openModal === 'ten-pet' && <TenPet onClose={() => setOpenModal(null)} />}
     </div>
-  );
-}
-
-function ResponsiveImage({
-  width,
-  height,
-  src,
-  alt,
-  ...props
-}: Omit<ComponentPropsWithoutRef<typeof Image>, 'width' | 'height'> & {
-  width: { mobile: number; desktop: number };
-  height: { mobile: number; desktop: number };
-}) {
-  const isMobile = useIsMobile();
-  return (
-    <Image
-      src={isMobile ? `${src}-m.webp` : `${src}.webp`}
-      width={width[isMobile ? 'mobile' : 'desktop']}
-      height={height[isMobile ? 'mobile' : 'desktop']}
-      alt={alt}
-      {...props}
-    />
   );
 }
 
@@ -101,15 +71,12 @@ const ButtonWrapper = wrap
 
 const containerStyle = css({
   position: 'relative',
-  padding: '120px 0',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
 
-  _mobile: {
-    padding: '100px 0',
-  },
+  padding: '100px 0',
 });
 
 const bgStyle = css({
@@ -132,39 +99,27 @@ const headingStyle = css({
 });
 
 const descStyle = css({
-  textStyle: 'glyph24.regular',
   color: 'white',
-  marginTop: '16px',
 
-  _mobile: {
-    marginTop: '8px',
-    textStyle: 'glyph16.regular',
-  },
+  marginTop: '8px',
+  textStyle: 'glyph16.regular',
 });
 
 const buttonContainerStyle = css({
   display: 'flex',
-  gap: '16px',
-  marginTop: '80px',
 
-  _mobile: {
-    gap: '8px',
-    paddingInline: '16px',
-    marginTop: '20px',
-  },
+  gap: '8px',
+  paddingInline: '16px',
+  marginTop: '20px',
 });
 
 const petContainerStyle = css({
-  marginTop: '150px',
-  width: '60%',
   '& img': {
     objectFit: 'contain',
     margin: '0 auto',
   },
 
-  _mobile: {
-    width: '100%',
-    paddingInline: '16px',
-    marginTop: '80px',
-  },
+  width: '100%',
+  paddingInline: '16px',
+  marginTop: '80px',
 });

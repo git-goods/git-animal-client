@@ -21,23 +21,16 @@ const backgroundDivCss = css({
   bottom: 0,
   left: 0,
   w: '100%',
-  h: '354px',
   overflow: 'hidden',
-
-  _mobile: {
-    h: '70px',
-  },
+  h: '70px',
 
   '& img': {
     position: 'absolute',
     maxWidth: 'unset',
-    height: '100%',
     objectFit: 'contain',
 
-    _mobile: {
-      width: 'auto',
-      height: '70px',
-    },
+    width: 'auto',
+    height: '70px',
   },
 
   '& img:first-of-type': {

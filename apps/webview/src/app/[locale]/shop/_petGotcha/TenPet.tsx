@@ -127,28 +127,20 @@ Token: ${data?.user.accessToken}
 }
 
 const dialogContentStyle = css({
-  _mobile: {
-    gap: '12px',
-  },
+  gap: '12px',
 });
 
 const noticeMessageStyle = css({
   textStyle: 'glyph28.bold',
   color: 'white',
   textAlign: 'center',
-  mt: '12px',
 
-  _mobile: {
-    fontSize: '12px',
-    mt: '0px',
-  },
+  fontSize: '12px',
+  mt: '0px',
 });
 
 const gameContainerStyle = css({
   width: '100%',
-  mt: '60px',
 
-  _mobile: {
-    mt: '28px',
-  },
+  mt: '28px',
 });

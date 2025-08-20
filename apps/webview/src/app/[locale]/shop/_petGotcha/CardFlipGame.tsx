@@ -95,26 +95,20 @@ const containerStyle = css({
 
 const cardContainerStyle = css({
   display: 'flex',
-  gap: '1rem',
   width: '100%',
 
-  _mobile: {
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: '8px',
-  },
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  gap: '8px',
 });
 
 const cardStyle = css({
-  width: '20%',
   perspective: '1000px',
   cursor: 'pointer',
   height: 'auto',
   aspectRatio: '109/135',
 
-  _mobile: {
-    width: '30%',
-  },
+  width: '30%',
 });
 
 const cardInnerStyle = css({

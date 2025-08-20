@@ -107,20 +107,14 @@ export default OnePet;
 const dialogContentStyle = css({
   height: 'fit-content',
 
-  _mobile: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
 });
 
 const headingStyle = css({
-  textStyle: 'glyph48.bold',
   color: 'white',
   textAlign: 'center',
-
-  _mobile: {
-    textStyle: 'glyph28.bold',
-  },
+  textStyle: 'glyph28.bold',
 });
