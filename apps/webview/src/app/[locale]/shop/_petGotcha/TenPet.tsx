@@ -134,13 +134,11 @@ const noticeMessageStyle = css({
   textStyle: 'glyph28.bold',
   color: 'white',
   textAlign: 'center',
-
   fontSize: '12px',
   mt: '0px',
 });
 
 const gameContainerStyle = css({
   width: '100%',
-
   mt: '28px',
 });

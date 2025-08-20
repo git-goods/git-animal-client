@@ -67,7 +67,6 @@ const divCss = css({
   maxW: '1120px',
   width: '100%',
   zIndex: 'floating',
-  minH: '924px',
   height: 'auto',
   padding: '0',
   paddingBottom: '12px',

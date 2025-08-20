@@ -24,9 +24,9 @@ export function ArrowButton({
       )}
     >
       {disabled ? (
-        <Image src="/icon/circle-arrow-disable.svg" alt="arrow" width={36} height={36} />
+        <Image src="/assets/icon/circle-arrow-disable.svg" alt="arrow" width={36} height={36} />
       ) : (
-        <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
+        <Image src="/assets/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
       )}
     </button>
   );

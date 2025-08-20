@@ -8,8 +8,8 @@ export const Background = memo(function Background() {
   return (
     <>
       <div className={backgroundDivCss}>
-        <Image width={750} height={140} src="/shop/land-m.webp" alt="land" />
-        <Image width={750} height={140} src="/shop/land-m.webp" alt="land" />
+        <Image width={750} height={140} src="/assets/shop/land-m.webp" alt="land" />
+        <Image width={750} height={140} src="/assets/shop/land-m.webp" alt="land" />
       </div>
     </>
   );
