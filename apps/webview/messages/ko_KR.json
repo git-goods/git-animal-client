@@ -82,8 +82,7 @@
     "prepare": "준비중",
     "merge": "펫 합치기",
     "edit-product": "펫 경매 수정",
-    "sell-confirm": "정말로 판매하시겠습니까?",
-    "sell-confirm-description": "판매 후 펫은 사라집니다.",
+    "sell-confirm": "100P에 판매하시겠습니까?",
     "sell-confirm-checkbox": "메시지 다시 보지 않기",
     "sell-price-modal-title": "판매하고 싶은 가격을 입력해주세요.",
     "Background": {

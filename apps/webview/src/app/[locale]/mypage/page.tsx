@@ -44,11 +44,11 @@ export default MypageMyPets;
 const listStyle = cx(
   flex({
     overflow: 'auto',
-    gap: '4px',
     w: '100%',
     h: '100%',
     minH: '0',
     overflowY: 'auto',
+    gap: '4px',
     display: 'flex',
     flexWrap: 'wrap',
     flex: 1,

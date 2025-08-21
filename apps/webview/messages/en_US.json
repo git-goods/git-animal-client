@@ -81,8 +81,7 @@
     "merge": "Merge",
     "edit-product": "Edit Product",
     "buy-error-not-login": "Please sign in to use this feature.",
-    "sell-confirm": "Are you sure you want to sell?",
-    "sell-confirm-description": "After selling, the pet will disappear.",
+    "sell-confirm": "Would you like to sell your pet for 100 points?",
     "sell-confirm-checkbox": "Do not show this message again",
     "sell-price-modal-title": "Enter the price you want to sell",
     "Background": {

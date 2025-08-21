@@ -1,18 +1,17 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
-import { Flex } from '_panda/jsx';
+import { Flex, Grid } from '_panda/jsx';
 import { flex } from '_panda/patterns';
 import { dropPet, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Button, Checkbox, Dialog, Label } from '@gitanimals/ui-panda';
+import { Button, Dialog } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { LOCAL_STORAGE_KEY } from '@/constants/storage';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
@@ -28,7 +27,6 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
   const t = useTranslations('Shop');
   const [isMergeOpen, setIsMergeOpen] = useState(false);
   const [sellPersonaId, setSellPersonaId] = useState<string | null>(null);
-  const { setDoNotShowAgain, isChecked: isDoNotShowAgain } = useDoNotShowAgain();
 
   const { mutate: dropPetMutation } = useMutation({
     mutationFn: (personaId: string) => dropPet({ personaId }),
@@ -45,33 +43,24 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
 
   const onSellClick = async () => {
     if (!currentPersona) return;
-    if (isDoNotShowAgain) {
-      dropPetMutation(currentPersona.id);
-    } else {
-      setSellPersonaId(currentPersona.id);
-    }
+    setSellPersonaId(currentPersona.id);
   };
 
-  const onSellAction = async (isDoNotShowAgain: boolean) => {
+  const onSellAction = async () => {
     if (!sellPersonaId) return;
     dropPetMutation(sellPersonaId);
-    if (isDoNotShowAgain) {
-      setDoNotShowAgain(true);
-    }
   };
 
   return (
-    <div className={css({})}>
+    <div className={css({ minH: '200px', bg: 'gray.gray_150', borderRadius: '10px' })}>
       {currentPersona && (
         <div
           className={css({
-            bg: 'gray.gray_150',
             minH: '200px',
             display: 'flex',
             flexDir: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            borderRadius: '10px',
             pb: '20px',
             pt: '8px',
           })}
@@ -114,26 +103,6 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
   );
 }
 
-const DO_NOT_SHOW_AGAIN_KEY = LOCAL_STORAGE_KEY.isDoNotShowAgain;
-
-const useDoNotShowAgain = () => {
-  const [isChecked, setIsChecked] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return localStorage.getItem(DO_NOT_SHOW_AGAIN_KEY) === 'true';
-  });
-
-  const setDoNotShowAgain = useCallback((value: boolean) => {
-    setIsChecked(value);
-    if (typeof window === 'undefined') return;
-    localStorage.setItem(DO_NOT_SHOW_AGAIN_KEY, value.toString());
-  }, []);
-
-  return {
-    isChecked,
-    setDoNotShowAgain,
-  };
-};
-
 function SellConfirmDialog({
   onConfirm,
   onClose,
@@ -145,13 +114,12 @@ function SellConfirmDialog({
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations();
-  const [isDoNotShowAgain, setIsDoNotShowAgain] = useState(false);
 
   const confirmDialog = async () => {
     if (isLoading) return;
 
     setIsLoading(true);
-    await onConfirm(isDoNotShowAgain);
+    await onConfirm(false);
     setIsLoading(false);
 
     onClose();
@@ -159,34 +127,19 @@ function SellConfirmDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content>
+      <Dialog.Content className={css({ animation: 'none' })}>
         <Dialog.Title>{t('Shop.sell-confirm')}</Dialog.Title>
-        <Dialog.Description className={descriptionStyle}>
-          <p>{t('Shop.sell-confirm-description')}</p>
-        </Dialog.Description>
         <Flex alignItems="center" justifyContent="space-between" width="100%">
-          <Flex alignItems="center" gap="2">
-            <Checkbox id="do-not-show-again" onClick={() => setIsDoNotShowAgain(!isDoNotShowAgain)} />
-            <Label htmlFor="do-not-show-again" whiteSpace="nowrap">
-              {t('Shop.sell-confirm-checkbox')}
-            </Label>
-          </Flex>
-          <Flex gap="8px" justifyContent="flex-end" width="100%">
+          <Grid gap="8px" gridTemplateColumns="1fr 1fr" width="100%">
             <Button onClick={onClose} variant="secondary" size="m">
               {t('Common.close')}
             </Button>
             <Button onClick={confirmDialog} variant="primary" size="m" disabled={isLoading}>
               {isLoading ? t('Common.processing') : t('Common.confirm')}
             </Button>
-          </Flex>
+          </Grid>
         </Flex>
       </Dialog.Content>
     </Dialog>
   );
 }
-
-const descriptionStyle = css({
-  textAlign: 'left',
-  color: 'white.white_75',
-  width: '100%',
-});
