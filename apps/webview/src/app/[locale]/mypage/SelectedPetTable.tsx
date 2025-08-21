@@ -12,10 +12,9 @@ import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
+import { Link } from '@/i18n/routing';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
-
-import { MergePersona } from './(merge)';
 
 interface SelectedPetTableProps {
   currentPersona: Persona | null;
@@ -25,6 +24,7 @@ interface SelectedPetTableProps {
 export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProps) {
   const queryClient = useQueryClient();
   const t = useTranslations('Shop');
+
   const [isMergeOpen, setIsMergeOpen] = useState(false);
   const [sellPersonaId, setSellPersonaId] = useState<string | null>(null);
 
@@ -79,21 +79,13 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
             <Button variant="secondary" onClick={onSellClick}>
               {t('sell')} (100P)
             </Button>
-            <Button variant="secondary" onClick={() => setIsMergeOpen(true)}>
-              {t('merge')}
-            </Button>
+            <Link href={`/mypage/merge?personaId=${currentPersona.id}`}>
+              <Button variant="secondary">{t('merge')}</Button>
+            </Link>
           </div>
         </div>
       )}
 
-      {currentPersona && (
-        <MergePersona
-          key={currentPersona.id}
-          isOpen={isMergeOpen}
-          onClose={() => setIsMergeOpen(false)}
-          targetPersona={currentPersona}
-        />
-      )}
       <SellConfirmDialog
         isOpen={Boolean(sellPersonaId)}
         onConfirm={onSellAction}
