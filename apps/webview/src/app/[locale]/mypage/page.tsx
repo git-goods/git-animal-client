@@ -16,7 +16,7 @@ function MypageMyPets() {
   const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
 
   return (
-    <div className={flex({ flexDir: 'column' })}>
+    <>
       <SelectedPetTable currentPersona={selectPersona} reset={() => setSelectPersona(null)} />
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('pet-list')}</h2>
@@ -35,7 +35,7 @@ function MypageMyPets() {
       </section>
 
       <p className={captionMessageStyle}>{t('sell-to-other')}</p>
-    </div>
+    </>
   );
 }
 
@@ -43,7 +43,6 @@ export default MypageMyPets;
 
 const listStyle = cx(
   flex({
-    maxHeight: 'calc(100vh - 446px)',
     overflow: 'auto',
     gap: '4px',
     w: '100%',
@@ -52,14 +51,17 @@ const listStyle = cx(
     overflowY: 'auto',
     display: 'flex',
     flexWrap: 'wrap',
+    flex: 1,
+    minHeight: 0, // ← 핵심: flex 자식이 수축 가능하도록
   }),
   customScrollStyle,
 );
 
 const captionMessageStyle = css({
-  textStyle: 'glyph18.regular',
+  textStyle: 'glyph14.regular',
   color: 'white_75',
-  marginTop: '16px',
+  marginTop: '4px',
+  pb: '8px',
 
   // 안내 멘트 5초 뒤에 등장
   opacity: 0,
@@ -68,10 +70,16 @@ const captionMessageStyle = css({
 
 const selectPetContainerStyle = css({
   position: 'relative',
+  flex: 1,
+  minHeight: 0, // ← 핵심: flex 자식이 수축 가능하도록
+  overflowY: 'auto',
+  display: 'flex',
+  flexDir: 'column',
+  pt: '28px',
 
   '& .heading': {
     textStyle: 'glyph18.bold',
     color: 'white',
-    marginBottom: '16px',
+    marginBottom: '8px',
   },
 });

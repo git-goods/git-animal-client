@@ -1,9 +1,8 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
+import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { flex } from '_panda/patterns';
 import { dropPet, type Persona } from '@gitanimals/api';
@@ -62,35 +61,41 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
   };
 
   return (
-    <div className={tableCss}>
-      <div className={theadCss}>
-        <span>{t('pet')}</span>
-        <span>{t('name')}</span>
-        <span>{t('grade')}</span>
-        <span>{t('level')}</span>
-        <span></span>
-      </div>
-
-      <div className={cx(rowStyle, 'row')}>
-        {currentPersona && (
-          <>
-            <div>
-              <Image src={getPersonaImage(currentPersona.type)} alt={currentPersona.type} width={60} height={67} />
+    <div className={css({})}>
+      {currentPersona && (
+        <div
+          className={css({
+            bg: 'gray.gray_150',
+            minH: '200px',
+            display: 'flex',
+            flexDir: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '10px',
+            pb: '20px',
+            pt: '8px',
+          })}
+        >
+          <img src={getPersonaImage(currentPersona.type)} alt={currentPersona.type} width={100} height={100} />
+          <div className={css({ display: 'flex', gap: '12px' })}>
+            <div className={css({ textStyle: 'glyph15.regular', color: 'white.white' })}>
+              {snakeToTitleCase(currentPersona.type)}
             </div>
-            <div>{snakeToTitleCase(currentPersona.type)}</div>
-            <div>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</div>
-            <div>{currentPersona.level}</div>
-            <div className={flex({ gap: '8px' })}>
-              <Button variant="secondary" onClick={onSellClick}>
-                {t('sell')} (100P)
-              </Button>
-              <Button variant="secondary" onClick={() => setIsMergeOpen(true)}>
-                {t('merge')}
-              </Button>
+            <div className={css({ textStyle: 'glyph14.regular', color: 'white.white_50' })}>
+              <span>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</span>
+              <span>{currentPersona.level}</span>
             </div>
-          </>
-        )}
-      </div>
+          </div>
+          <div className={flex({ gap: '8px', mt: 3 })}>
+            <Button variant="secondary" onClick={onSellClick}>
+              {t('sell')} (100P)
+            </Button>
+            <Button variant="secondary" onClick={() => setIsMergeOpen(true)}>
+              {t('merge')}
+            </Button>
+          </div>
+        </div>
+      )}
 
       {currentPersona && (
         <MergePersona
@@ -108,57 +113,6 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
     </div>
   );
 }
-
-const tableCss = css({
-  width: '100%',
-  marginBottom: '32px',
-});
-
-const theadCss = css({
-  display: 'grid',
-  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 5.7fr',
-  gap: '16px',
-  padding: '4px 32px',
-  borderRadius: '12px',
-  backgroundColor: 'white_50',
-  alignItems: 'center',
-
-  height: '46px',
-  textStyle: 'glyph16.bold',
-  color: 'white_100',
-  marginBottom: '4px',
-
-  '& > span:nth-child(1)': {
-    textAlign: 'center',
-  },
-});
-
-const rowStyle = css({
-  width: '100%',
-  height: '80px',
-  backgroundColor: 'white_10',
-  borderRadius: '12px',
-
-  display: 'grid',
-  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 5.7fr',
-  alignItems: 'center',
-  padding: '0 32px',
-  gap: '16px',
-
-  textStyle: 'glyph16.regular',
-  color: 'white.white_100',
-
-  '& button': {
-    color: 'black.black',
-    width: '100%',
-    paddingX: '6px',
-  },
-
-  '& *': {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-});
 
 const DO_NOT_SHOW_AGAIN_KEY = LOCAL_STORAGE_KEY.isDoNotShowAgain;
 

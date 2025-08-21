@@ -1,5 +1,4 @@
 import { css } from '_panda/css';
-import { grid } from '_panda/patterns';
 
 import { TabBar } from '@/components/Layout/TabBar';
 
@@ -8,10 +7,8 @@ import { ProfileSection } from './ProfileSection';
 async function MypageLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className={containerStyle}>
-      <div className={mainStyle}>
-        <ProfileSection />
-        {children}
-      </div>
+      <ProfileSection />
+      {children}
       <TabBar />
     </div>
   );
@@ -19,18 +16,13 @@ async function MypageLayout({ children }: { children: React.ReactNode }) {
 
 export default MypageLayout;
 
-const mainStyle = grid({
-  position: 'relative',
-  zIndex: 'aboveDefault',
-  minHeight: 'calc(100vh - 60px)',
-
-  gridTemplateColumns: '1fr',
-  padding: '0 16px 0',
-  gap: 0,
-});
-
 const containerStyle = css({
   minHeight: '100vh',
-  height: 'fit-content',
+  height: '100vh',
   backgroundColor: 'gray.gray_050',
+  position: 'relative',
+  flexDir: 'column',
+  display: 'flex',
+  padding: '0 16px 60px',
+  gap: 0,
 });

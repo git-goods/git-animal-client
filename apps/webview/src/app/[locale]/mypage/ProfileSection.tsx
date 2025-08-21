@@ -55,6 +55,7 @@ const profileSectionStyle = css({
   padding: '32px 0',
   gap: '12px',
   alignItems: 'center',
+  h: 'fit',
 });
 
 const profileTextStyle = css({
