@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from '../components/layout';
-import { HomePage, ProfilePage, SettingsPage, LoginPage, AboutPage } from '../pages';
+import { HomePage, ProfilePage, SettingsPage, LoginPage, AboutPage, NotFoundPage } from '../pages';
 import ProtectedRoute from '../components/auth/ProtectedRoute';
 import { ROUTES, NESTED_PATHS } from './constants';
 
@@ -42,6 +42,11 @@ export const router = createBrowserRouter([
       {
         path: NESTED_PATHS.ABOUT(),
         element: <AboutPage />,
+      },
+      // 404 페이지 (모든 경로에 매치되지 않은 경우)
+      {
+        path: '*',
+        element: <NotFoundPage />,
       },
     ],
   },
