@@ -11,4 +11,12 @@ export default defineConfig({
       _panda: path.resolve(__dirname, './styled-system'),
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://api.gitanimals.org',
+        changeOrigin: true,
+      },
+    },
+  },
 });

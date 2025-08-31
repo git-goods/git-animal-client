@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "prepare": "panda codegen",
-    "dev": "vite",
+    "dev": "vite --port 3000",
     "prebuild": "panda codegen",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

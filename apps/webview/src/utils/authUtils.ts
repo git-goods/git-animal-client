@@ -27,13 +27,15 @@ export const authUtils = {
    */
   logout: (): void => {
     tokenManager.clearTokens();
-    
+
     // webview 환경에서는 부모 앱에 로그아웃 메시지 전송
     if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({
-        type: 'LOGOUT',
-        message: 'User logged out'
-      }));
+      window.ReactNativeWebView.postMessage(
+        JSON.stringify({
+          type: 'LOGOUT',
+          message: 'User logged out',
+        }),
+      );
     } else {
       window.location.href = '/login';
     }
@@ -53,12 +55,12 @@ export const authUtils = {
     const token = tokenManager.getAccessToken();
     if (token) {
       return {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       };
     }
     return {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     };
   },
 
@@ -67,7 +69,7 @@ export const authUtils = {
    */
   onAuthStateChange: (callback: (isAuthenticated: boolean) => void): (() => void) => {
     let lastAuthState = authUtils.isAuthenticated();
-    
+
     const interval = setInterval(() => {
       const currentAuthState = authUtils.isAuthenticated();
       if (currentAuthState !== lastAuthState) {
@@ -85,13 +87,15 @@ export const authUtils = {
    */
   setTokensFromParent: (accessToken: string, refreshToken?: string): void => {
     tokenManager.setTokens(accessToken, refreshToken);
-    
+
     // 토큰 설정 완료 메시지 전송
     if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({
-        type: 'TOKENS_SET',
-        message: 'Tokens successfully set'
-      }));
+      window.ReactNativeWebView.postMessage(
+        JSON.stringify({
+          type: 'TOKENS_SET',
+          message: 'Tokens successfully set',
+        }),
+      );
     }
   },
 
@@ -100,12 +104,14 @@ export const authUtils = {
    */
   requestAuthFromParent: (): void => {
     if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({
-        type: 'REQUEST_AUTH',
-        message: 'Authentication required'
-      }));
+      window.ReactNativeWebView.postMessage(
+        JSON.stringify({
+          type: 'REQUEST_AUTH',
+          message: 'Authentication required',
+        }),
+      );
     }
-  }
+  },
 };
 
 // webview 환경을 위한 글로벌 메시지 핸들러 설정
@@ -113,8 +119,18 @@ export const setupWebViewMessageHandler = (): (() => void) | void => {
   // webview에서 부모로부터 메시지를 받기 위한 핸들러
   const handleMessage = (event: MessageEvent) => {
     try {
-      const data = JSON.parse(event.data);
-      
+      let data;
+
+      // event.data가 이미 객체인 경우와 문자열인 경우 모두 처리
+      if (typeof event.data === 'string') {
+        data = JSON.parse(event.data);
+      } else if (typeof event.data === 'object' && event.data !== null) {
+        data = event.data;
+      } else {
+        console.warn('Invalid message data format:', event.data);
+        return;
+      }
+
       switch (data.type) {
         case 'SET_TOKENS':
           if (data.accessToken) {
@@ -125,7 +141,7 @@ export const setupWebViewMessageHandler = (): (() => void) | void => {
           authUtils.logout();
           break;
         default:
-          console.log('Unknown message type:', data.type);
+        // console.log('Unknown message type:', data.type);
       }
     } catch (error) {
       console.error('Error parsing webview message:', error);
@@ -135,7 +151,7 @@ export const setupWebViewMessageHandler = (): (() => void) | void => {
   // React Native WebView에서 오는 메시지 처리
   if (typeof window !== 'undefined') {
     window.addEventListener('message', handleMessage);
-    
+
     // cleanup을 위한 함수 반환
     return () => window.removeEventListener('message', handleMessage);
   }

@@ -9,6 +9,8 @@ import {
   interceptorResponseFulfilled,
   interceptorResponseRejected,
 } from './utils/interceptor';
+import { TestLoginPage } from './components/auth/TestLoginPage';
+import { AuthPage } from './components/auth/AuthPage';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -16,11 +18,31 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userProfile, setUserProfile] = useState<any>(null);
   const [tokenInfo, setTokenInfo] = useState<any>(null);
+  const [showTestLogin, setShowTestLogin] = useState(false);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [jwtFromUrl, setJwtFromUrl] = useState<string | null>(null);
 
   // WebView 통신 초기화 및 인증 상태 관리
   useEffect(() => {
     // 웹뷰 통신 설정
     const cleanup = setupWebViewMessageHandler();
+
+    // URL에서 JWT 토큰 확인
+    const checkUrlForToken = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const jwtToken = urlParams.get('jwt');
+
+      if (jwtToken) {
+        console.log('[Auth Debug] App: JWT token found in URL');
+        setIsAuthenticating(true);
+        // URL에서 JWT 파라미터 제거
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
+        return jwtToken;
+      }
+
+      return null;
+    };
 
     // 초기 인증 상태 확인
     const checkAuth = () => {
@@ -44,7 +66,14 @@ function App() {
       setRenderResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
     };
 
-    checkAuth();
+    // URL에서 JWT 토큰 확인 후 처리
+    const tokenFromUrl = checkUrlForToken();
+    if (tokenFromUrl) {
+      setJwtFromUrl(tokenFromUrl);
+    } else {
+      checkAuth();
+    }
+
     setInterceptors();
 
     // 인증 상태 변경 감지
@@ -91,6 +120,23 @@ function App() {
     }
   };
 
+  const handleAuthComplete = () => {
+    setIsAuthenticating(false);
+    setJwtFromUrl(null);
+    setIsLoading(false);
+
+    // 인증 완료 후 상태 업데이트
+    const authStatus = authUtils.isAuthenticated();
+    const tokenData = authUtils.getTokenInfo();
+
+    setIsAuthenticated(authStatus);
+    setTokenInfo(tokenData);
+
+    if (authStatus) {
+      fetchUserProfile();
+    }
+  };
+
   // 로딩 화면
   if (isLoading) {
     return (
@@ -132,7 +178,14 @@ function App() {
           Authentication Required
         </h1>
         <Banner image="🔐" label="Please authenticate in the parent app to continue" />
-        <Button onClick={() => authUtils.requestAuthFromParent()}>Request Authentication</Button>
+        <div className={css({ display: 'flex', gap: '1rem', flexWrap: 'wrap' })}>
+          <Button onClick={() => authUtils.requestAuthFromParent()}>Request Authentication</Button>
+          <Button variant="secondary" onClick={() => setShowTestLogin(true)}>
+            Test Login
+          </Button>
+        </div>
+        {/* 테스트 로그인 모달 */}
+        {showTestLogin && <TestLoginPage onClose={() => setShowTestLogin(false)} />}
       </div>
     );
   }
@@ -255,6 +308,9 @@ function App() {
           </div>
         </Dialog.Content>
       </Dialog>
+
+      {/* JWT 토큰 인증 처리 오버레이 */}
+      {jwtFromUrl && isAuthenticating && <AuthPage jwtToken={jwtFromUrl} onAuthComplete={handleAuthComplete} />}
     </div>
   );
 }
