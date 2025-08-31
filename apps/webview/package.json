@@ -13,13 +13,14 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@gitanimals/api": "workspace:*",
     "@gitanimals/exception": "workspace:*",
     "@gitanimals/ui-panda": "workspace:*",
-    "@gitanimals/api": "workspace:*",
     "@gitanimals/ui-token": "workspace:*",
     "axios": "^1.6.8",
     "react": "*",
-    "react-dom": "*"
+    "react-dom": "*",
+    "react-router-dom": "^7.8.2"
   },
   "devDependencies": {
     "@gitanimals/eslint-config": "workspace:*",

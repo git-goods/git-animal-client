@@ -1,3 +1,5 @@
+import { ROUTES } from '../router/constants';
+
 interface TokenData {
   accessToken: string;
   refreshToken: string;
@@ -65,7 +67,7 @@ class TokenManager {
     this.refreshToken = null;
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
-    
+
     if (this.refreshTimer) {
       clearInterval(this.refreshTimer);
       this.refreshTimer = null;
@@ -80,7 +82,7 @@ class TokenManager {
       const now = Date.now() / 1000;
 
       // 만료시간 확인 (5분 여유 두기)
-      return payload.exp > (now + 300);
+      return payload.exp > now + 300;
     } catch (error) {
       return false;
     }
@@ -93,7 +95,7 @@ class TokenManager {
       atob(base64)
         .split('')
         .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-        .join('')
+        .join(''),
     );
 
     return JSON.parse(jsonPayload);
@@ -141,8 +143,8 @@ class TokenManager {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          refreshToken: this.refreshToken
-        })
+          refreshToken: this.refreshToken,
+        }),
       });
 
       if (response.ok) {
@@ -168,13 +170,15 @@ class TokenManager {
   private redirectToLogin(): void {
     // webview 환경에서는 부모 앱에 로그인 필요 메시지 전송
     if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({
-        type: 'AUTH_REQUIRED',
-        message: 'Authentication required'
-      }));
+      window.ReactNativeWebView.postMessage(
+        JSON.stringify({
+          type: 'AUTH_REQUIRED',
+          message: 'Authentication required',
+        }),
+      );
     } else {
       // 일반 웹 환경에서는 로그인 페이지로 리다이렉트
-      window.location.href = '/login';
+      window.location.href = ROUTES.AUTH;
     }
   }
 
@@ -182,7 +186,7 @@ class TokenManager {
     return {
       isValid: this.isAuthenticated(),
       expiresIn: this.getTimeUntilExpiry(),
-      token: this.accessToken
+      token: this.accessToken,
     };
   }
 }

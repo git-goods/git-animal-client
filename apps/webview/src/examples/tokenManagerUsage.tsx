@@ -1,12 +1,12 @@
 /**
  * Token Manager Usage Examples
- * 
+ *
  * This file demonstrates how to use the token manager, auth utilities, and API client
  * in the webview application.
  */
 
 import React, { useState, useEffect } from 'react';
-import { tokenManager, authUtils, apiClient, authAPI, userAPI, setupWebViewMessageHandler } from '../utils';
+import { tokenManager, authUtils, setupWebViewMessageHandler } from '../utils';
 
 // 1. 기본 인증 상태 확인
 export const checkAuthStatus = () => {
@@ -48,43 +48,30 @@ export const initializeWebViewCommunication = () => {
 };
 
 // 4. API 호출 예시
-export const apiUsageExamples = {
-  // 사용자 프로필 가져오기
-  getUserProfile: async () => {
-    try {
-      const response = await userAPI.getProfile();
-      console.log('User profile:', response.data);
-      return response.data;
-    } catch (error) {
-      console.error('Failed to get user profile:', error);
-      throw error;
-    }
-  },
-
-  // 사용자 정보 업데이트
-  updateUserProfile: async (profileData: any) => {
-    try {
-      const response = await userAPI.updateProfile(profileData);
-      console.log('Profile updated:', response.data);
-      return response.data;
-    } catch (error) {
-      console.error('Failed to update profile:', error);
-      throw error;
-    }
-  },
-
-  // 커스텀 API 호출
-  customAPICall: async () => {
-    try {
-      const response = await apiClient.get('/custom-endpoint');
-      console.log('Custom API response:', response.data);
-      return response.data;
-    } catch (error) {
-      console.error('Custom API call failed:', error);
-      throw error;
-    }
-  }
-};
+// export const apiUsageExamples = {
+//   // 사용자 프로필 가져오기
+//   // getUserProfile: async () => {
+//   //   try {
+//   //     const response = await userAPI.getProfile();
+//   //     console.log('User profile:', response.data);
+//   //     return response.data;
+//   //   } catch (error) {
+//   //     console.error('Failed to get user profile:', error);
+//   //     throw error;
+//   //   }
+//   // },
+//   // 사용자 정보 업데이트
+//   // updateUserProfile: async (profileData: any) => {
+//   //   try {
+//   //     const response = await userAPI.updateProfile(profileData);
+//   //     console.log('Profile updated:', response.data);
+//   //     return response.data;
+//   //   } catch (error) {
+//   //     console.error('Failed to update profile:', error);
+//   //     throw error;
+//   //   }
+//   // },
+// };
 
 // 5. 로그인/로그아웃 처리
 export const authActions = {
@@ -110,7 +97,7 @@ export const authActions = {
       console.error('Token refresh failed:', error);
       return false;
     }
-  }
+  },
 };
 
 // 6. React 컴포넌트에서 사용하는 훅 예시

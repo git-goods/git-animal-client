@@ -503,6 +503,9 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.2.0)
+      react-router-dom:
+        specifier: ^7.8.2
+        version: 7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
     devDependencies:
       '@gitanimals/eslint-config':
         specifier: workspace:*
@@ -6827,6 +6830,10 @@ packages:
     resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
 
+  cookie@1.0.2:
+    resolution: {integrity: sha512-9Kr/j4O16ISv8zBBhJoi4bXOYNTkFLOqSL3UDB0njXxCXNezjeyVrJyGOWtgfs/q2km1gwBcfH8q1yEGoMYunA==}
+    engines: {node: '>=18'}
+
   core-js-compat@3.37.1:
     resolution: {integrity: sha512-9TNiImhKvQqSUkOvk/mMRZzOANTiEVC7WaBNhHcKM7x+/5E1l5NvsysR19zuDQScE8k+kfQXWRN3AtS/eOSHpg==}
 
@@ -11382,11 +11389,28 @@ packages:
       react: ^18
       react-dom: ^18.3.1
 
+  react-router-dom@7.8.2:
+    resolution: {integrity: sha512-Z4VM5mKDipal2jQ385H6UBhiiEDlnJPx6jyWsTYoZQdl5TrjxEV2a9yl3Fi60NBJxYzOTGTTHXPi0pdizvTwow==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      react: ^18
+      react-dom: ^18.3.1
+
   react-router@6.25.0:
     resolution: {integrity: sha512-bziKjCcDbcxgWS9WlWFcQIVZ2vJHnCP6DGpQDT0l+0PFDasfJKgzf9CM22eTyhFsZkjk8ApCdKjJwKtzqH80jQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: ^18
+
+  react-router@7.8.2:
+    resolution: {integrity: sha512-7M2fR1JbIZ/jFWqelpvSZx+7vd7UlBTfdZqf6OSdF9g6+sfdqJDAWcak6ervbHph200ePlu+7G8LdoiC3ReyAQ==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      react: ^18
+      react-dom: ^18.3.1
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
 
   react-server-dom-webpack@19.0.0-rc-6230622a1a-20240610:
     resolution: {integrity: sha512-nr+IsOVD07QdeCr4BLvR5TALfLaZLi9AIaoa6vXymBc051iDPWedJujYYrjRJy5+9jp9oCx3G8Tt/Bs//TckJw==}
@@ -20893,6 +20917,8 @@ snapshots:
 
   cookie@0.6.0: {}
 
+  cookie@1.0.2: {}
+
   core-js-compat@3.37.1:
     dependencies:
       browserslist: 4.25.1
@@ -26924,10 +26950,24 @@ snapshots:
       react-dom: 18.3.1(react@18.2.0)
       react-router: 6.25.0(react@18.2.0)
 
+  react-router-dom@7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.3.1(react@18.2.0)
+      react-router: 7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+
   react-router@6.25.0(react@18.2.0):
     dependencies:
       '@remix-run/router': 1.18.0
       react: 18.2.0
+
+  react-router@7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0):
+    dependencies:
+      cookie: 1.0.2
+      react: 18.2.0
+      set-cookie-parser: 2.6.0
+    optionalDependencies:
+      react-dom: 18.3.1(react@18.2.0)
 
   react-server-dom-webpack@19.0.0-rc-6230622a1a-20240610(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(webpack@5.92.0):
     dependencies:

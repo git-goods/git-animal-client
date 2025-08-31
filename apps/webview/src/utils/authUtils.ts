@@ -1,3 +1,4 @@
+import { ROUTES } from '../router/constants';
 import tokenManager from './tokenManager';
 
 export const authUtils = {
@@ -37,7 +38,7 @@ export const authUtils = {
         }),
       );
     } else {
-      window.location.href = '/login';
+      window.location.href = ROUTES.AUTH;
     }
   },
 
