@@ -482,12 +482,21 @@ importers:
 
   apps/webview:
     dependencies:
+      '@gitanimals/api':
+        specifier: workspace:*
+        version: link:../../packages/api
+      '@gitanimals/exception':
+        specifier: workspace:*
+        version: link:../../packages/exception
       '@gitanimals/ui-panda':
         specifier: workspace:*
         version: link:../../packages/ui/panda
       '@gitanimals/ui-token':
         specifier: workspace:*
         version: link:../../packages/ui/token
+      axios:
+        specifier: ^1.6.8
+        version: 1.7.2
       react:
         specifier: ^18
         version: 18.2.0
@@ -21836,7 +21845,7 @@ snapshots:
 
   eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.17.0(eslint@9.34.0(jiti@1.21.0))(typescript@5.4.5))(eslint-plugin-import@2.29.1)(eslint@9.34.0(jiti@1.21.0)):
     dependencies:
-      debug: 4.4.0
+      debug: 4.3.4
       enhanced-resolve: 5.17.0
       eslint: 9.34.0(jiti@1.21.0)
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.17.0(eslint@9.34.0(jiti@1.21.0))(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.17.0(eslint@9.34.0(jiti@1.21.0))(typescript@5.4.5))(eslint-plugin-import@2.29.1)(eslint@9.34.0(jiti@1.21.0)))(eslint@9.34.0(jiti@1.21.0))
@@ -21853,7 +21862,7 @@ snapshots:
 
   eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.1.0(eslint@9.34.0(jiti@1.21.0))(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@9.34.0(jiti@1.21.0)):
     dependencies:
-      debug: 4.4.0
+      debug: 4.3.4
       enhanced-resolve: 5.17.0
       eslint: 9.34.0(jiti@1.21.0)
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@7.1.0(eslint@9.34.0(jiti@1.21.0))(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.1.0(eslint@9.34.0(jiti@1.21.0))(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@9.34.0(jiti@1.21.0)))(eslint@9.34.0(jiti@1.21.0))

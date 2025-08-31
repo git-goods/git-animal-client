@@ -13,8 +13,11 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@gitanimals/exception": "workspace:*",
     "@gitanimals/ui-panda": "workspace:*",
+    "@gitanimals/api": "workspace:*",
     "@gitanimals/ui-token": "workspace:*",
+    "axios": "^1.6.8",
     "react": "*",
     "react-dom": "*"
   },
