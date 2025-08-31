@@ -24,15 +24,16 @@ export async function RankingServerSide({
       if (session && type === 'people') {
         const rankByUsername = await getRankByUsername(session.user.name);
         const currentUserRank = rankByUsername.rank;
-
         const currentPage = Math.ceil((currentUserRank - RANKS_TOP_3) / RANKS_PER_PAGE) - 1;
-        return currentPage;
+
+        return Math.max(currentPage, 0);
       }
 
       return 0;
     };
 
     const currentPage = searchParams.page ? Number(searchParams.page) : await getStartPageNumber();
+    console.log('currentPage', currentPage);
     const startRankNumber = currentPage * RANKS_PER_PAGE + 4;
 
     const rankType = type === 'people' ? 'WEEKLY_USER_CONTRIBUTIONS' : 'WEEKLY_GUILD_CONTRIBUTIONS';
