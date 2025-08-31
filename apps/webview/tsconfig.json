@@ -1,7 +1,36 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+  "extends": "@gitanimals/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "_panda/*": [
+        "./styled-system/*"
+      ]
+    },
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": false,
+    "strictNullChecks": true,
+    "types": [
+      "@pandacss/dev",
+      "vite/client"
+    ],
+    "skipLibCheck": true,
+    "target": "ES2017",
+    "lib": ["DOM", "DOM.Iterable", "ES2017"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "styled-system",
+    "src/vite-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
