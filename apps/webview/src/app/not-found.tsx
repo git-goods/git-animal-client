@@ -1,25 +1,22 @@
 'use client';
 
-import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { css } from '_panda/css';
 
-import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { ErrorPage } from '@/components/Error/ErrorPage';
-import { isDev } from '@/constants/env';
 import { GITHUB_ISSUE_URL } from '@/constants/outlink';
 
 export default function NotFound() {
   const pathname = usePathname();
 
-  useEffect(() => {
-    if (isDev) return;
+  //   useEffect(() => {
+  //     if (isDev) return;
 
-    sendMessageToErrorChannel(`<!here>
-🌌 Not Found 🌌
-Path: ${pathname}
-`);
-  }, [pathname]);
+  //     sendMessageToErrorChannel(`<!here>
+  // 🌌 Not Found 🌌
+  // Path: ${pathname}
+  // `);
+  //   }, [pathname]);
 
   const router = useRouter();
 
