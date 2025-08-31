@@ -4,7 +4,10 @@ import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConf
 import axios from 'axios';
 
 import { getServerAuth } from '@/auth';
-import type { ApiErrorScheme } from '@/exceptions/type';
+
+export interface ApiErrorScheme {
+  message: string;
+}
 
 interface CachedSession {
   accessToken: string;
