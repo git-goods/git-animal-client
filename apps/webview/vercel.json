@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd ../.. && npx turbo build --filter=webview",
+  "buildCommand": "cd ../.. && npx turbo build --filter=@gitanimals/webview",
   "outputDirectory": "dist",
   "installCommand": "pnpm install",
   "rewrites": [
