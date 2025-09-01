@@ -2,23 +2,39 @@ import { InternalAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import tokenManager from './tokenManager';
 import authUtils from './authUtils';
 
-// 커스텀 인터페이스 확장
-interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
-  _retry?: boolean;
-}
+// 커스텀 인터페이스 확장 (향후 재시도 로직에서 사용 예정)
+// interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+//   _retry?: boolean;
+// }
 
 /**
- * 요청 인터셉터 - 모든 요청에 토큰 헤더 추가
+ * 요청 인터셉터 - 모든 요청에 토큰 헤더 추가 (토큰이 준비될 때까지 대기)
  */
-export const interceptorRequestFulfilled = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-  const token = authUtils.getToken();
-  console.log('token', token);
+export const interceptorRequestFulfilled = async (
+  config: InternalAxiosRequestConfig,
+): Promise<InternalAxiosRequestConfig> => {
+  try {
+    // 토큰이 준비될 때까지 대기
+    await tokenManager.waitForToken();
 
-  if (token && config.headers) {
-    config.headers.Authorization = `Bearer ${token}`;
+    const token = authUtils.getToken();
+
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  } catch (error) {
+    console.error('Token wait failed:', error);
+
+    // 토큰 대기 실패 시 webview 환경에서는 부모에게 인증 요청
+    if (window.ReactNativeWebView) {
+      authUtils.requestAuthFromParent();
+    }
+
+    // 토큰이 없으면 요청을 취소하고 에러를 던짐
+    throw new Error('Authentication required');
   }
-
-  return config;
 };
 
 /**
@@ -32,7 +48,7 @@ export const interceptorResponseFulfilled = (response: AxiosResponse): AxiosResp
  * 응답 인터셉터 - 에러 응답 처리
  */
 export const interceptorResponseRejected = async (error: AxiosError): Promise<AxiosError> => {
-  const originalRequest = error.config as CustomAxiosRequestConfig;
+  // const originalRequest = error.config as CustomAxiosRequestConfig;
 
   // 401 에러 (인증 실패) 처리
   // if (error.response?.status === 401 && originalRequest && !originalRequest._retry) {

@@ -1,15 +1,20 @@
 import { css } from '_panda/css';
 import { userQueries } from '@gitanimals/react-query';
 import { wrap } from '@suspensive/react';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 export const ProfileBoard = wrap
   .Suspense({ fallback: null })
   .ErrorBoundary({ fallback: null })
   .on(function ProfileBoard() {
-    const { data } = useSuspenseQuery(userQueries.userOptions());
+    const { data } = useQuery({
+      ...userQueries.userOptions(),
+    });
 
-    console.log('data: ', data);
+    if (!data) {
+      return null;
+    }
+
     return (
       <div className={containerStyle}>
         <div className={profileItemStyle}>

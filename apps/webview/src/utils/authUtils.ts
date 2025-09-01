@@ -1,5 +1,5 @@
 import { ROUTES } from '../router/constants';
-import tokenManager from './tokenManager';
+import tokenManager, { TokenState } from './tokenManager';
 
 export const authUtils = {
   /**
@@ -112,6 +112,34 @@ export const authUtils = {
         }),
       );
     }
+  },
+
+  /**
+   * 토큰이 준비될 때까지 대기
+   */
+  waitForToken: (): Promise<void> => {
+    return tokenManager.waitForToken();
+  },
+
+  /**
+   * 토큰 준비 상태 확인
+   */
+  isTokenReady: (): boolean => {
+    return tokenManager.isTokenReady();
+  },
+
+  /**
+   * 현재 토큰 상태 반환
+   */
+  getTokenState: (): TokenState => {
+    return tokenManager.getTokenState();
+  },
+
+  /**
+   * 토큰이 초기화 중인지 확인
+   */
+  isTokenInitializing: (): boolean => {
+    return tokenManager.getTokenState() === TokenState.INITIALIZING;
   },
 };
 
