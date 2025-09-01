@@ -4,7 +4,7 @@ import { Button } from '@gitanimals/ui-panda';
 import { css } from '../../../styled-system/css';
 import { authUtils } from '../../utils';
 import { ROUTES } from '../../router/constants';
-import LanguageSwitcher from '../LanguageSwitcher';
+// import LanguageSwitcher from '../LanguageSwitcher';
 
 function Navigation() {
   const { t } = useTranslation();
@@ -83,12 +83,14 @@ function Navigation() {
             ))}
           </div>
         </div>
-        
+
         <div className={css({ display: 'flex', gap: '0.5rem', alignItems: 'center' })}>
-          <LanguageSwitcher />
+          {/* <LanguageSwitcher /> */}
           {!isAuthenticated && (
             <Link to={ROUTES.ABOUT}>
-              <Button variant="secondary" size="s">{t('navigation.about')}</Button>
+              <Button variant="secondary" size="s">
+                {t('navigation.about')}
+              </Button>
             </Link>
           )}
           {isAuthenticated && (

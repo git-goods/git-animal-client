@@ -28,7 +28,7 @@ export default function WebviewPage() {
         logout
       </button>
       <ProfileBoard />
-      {/* <CharacterView /> */}
+      <CharacterView />
       <div className={backgroundStyle}>
         <img src="/assets/home/app-background-home.png" alt="background" />
       </div>

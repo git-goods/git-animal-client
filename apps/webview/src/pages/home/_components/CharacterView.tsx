@@ -4,14 +4,16 @@ import { useEffect, useRef, useState } from 'react';
 import { css } from '_panda/css';
 import { getOnlyPet } from '@gitanimals/api';
 
-// import { useClientUser } from '@/utils/clientAuth';
-
 import { Character } from './Character';
+import { userQueries } from '@gitanimals/react-query';
+import { useQuery } from '@tanstack/react-query';
 
-const IMAGE_SECRET_KEY = process.env.NEXT_PUBLIC_IMAGE_TOKEN || '';
+const IMAGE_SECRET_KEY = import.meta.env.NEXT_PUBLIC_IMAGE_TOKEN || '';
 
 export default function CharacterView() {
-  // const session = useClientUser();
+  const { data } = useQuery({ ...userQueries.userOptions() });
+
+  const username = data?.username;
 
   const snowmanRef = useRef<Character | null>(null);
   const foxRef = useRef<Character | null>(null);
@@ -23,28 +25,31 @@ export default function CharacterView() {
   useEffect(() => {
     // SVG 문자열 가져오기
     const fetchSvgs = async () => {
+      if (!username) {
+        return;
+      }
       try {
-        // const [snowmanResponse, foxResponse] = await Promise.all([
-        //   getOnlyPet({
-        //     username: session.name,
-        //     petId: '641456247052154861',
-        //     secretKey: IMAGE_SECRET_KEY,
-        //   }),
-        //   getOnlyPet({
-        //     username: session.name,
-        //     petId: '586220803811802842',
-        //     secretKey: IMAGE_SECRET_KEY,
-        //   }),
-        // ]);
-        // setSnowmanSvg(snowmanResponse);
-        // setFoxSvg(foxResponse);
+        const [snowmanResponse, foxResponse] = await Promise.all([
+          getOnlyPet({
+            username: username,
+            petId: '641456247052154861',
+            secretKey: IMAGE_SECRET_KEY,
+          }),
+          getOnlyPet({
+            username: username,
+            petId: '586220803811802842',
+            secretKey: IMAGE_SECRET_KEY,
+          }),
+        ]);
+        setSnowmanSvg(snowmanResponse);
+        setFoxSvg(foxResponse);
       } catch (error) {
         console.error('SVG 로드 중 오류 발생:', error);
       }
     };
 
     fetchSvgs();
-  }, []);
+  }, [username]);
 
   useEffect(() => {
     // SVG가 로드된 후 캐릭터 초기화
