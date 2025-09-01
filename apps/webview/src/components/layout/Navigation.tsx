@@ -3,6 +3,7 @@ import { Button } from '@gitanimals/ui-panda';
 import { css } from '../../../styled-system/css';
 import { authUtils } from '../../utils';
 import { ROUTES } from '../../router/constants';
+import bridgeUtils from '../../utils/bridgeUtils';
 
 function Navigation() {
   const location = useLocation();
@@ -10,6 +11,7 @@ function Navigation() {
   const isAuthenticated = authUtils.isAuthenticated();
 
   const handleLogout = () => {
+    // 웹뷰 환경에서는 브릿지를 통해 앱에 로그아웃 요청
     authUtils.logout();
     navigate(ROUTES.AUTH);
   };
@@ -80,11 +82,13 @@ function Navigation() {
             ))}
           </div>
         </div>
-        
+
         <div className={css({ display: 'flex', gap: '0.5rem', alignItems: 'center' })}>
           {!isAuthenticated && (
             <Link to={ROUTES.ABOUT}>
-              <Button variant="secondary" size="s">About</Button>
+              <Button variant="secondary" size="s">
+                About
+              </Button>
             </Link>
           )}
           {isAuthenticated && (

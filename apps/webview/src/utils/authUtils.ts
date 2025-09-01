@@ -1,5 +1,6 @@
 import { ROUTES } from '../router/constants';
 import tokenManager from './tokenManager';
+import bridgeUtils from './bridgeUtils';
 
 export const authUtils = {
   /**
@@ -26,17 +27,31 @@ export const authUtils = {
   /**
    * 로그아웃 처리
    */
-  logout: (): void => {
+  logout: async (): Promise<void> => {
     tokenManager.clearTokens();
 
-    // webview 환경에서는 부모 앱에 로그아웃 메시지 전송
+    // webview 환경에서는 브릿지를 통해 앱에 로그아웃 메시지 전송
     if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(
-        JSON.stringify({
-          type: 'LOGOUT',
-          message: 'User logged out',
-        }),
-      );
+      try {
+        // 웹뷰 내부 세션 로그아웃
+        // await fetch('/api/auth/signout', { method: 'POST' });
+
+        // // 쿠키 삭제
+        // document.cookie.split(';').forEach(function (c) {
+        //   document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
+        // });
+
+        // 로컬스토리지 및 세션스토리지 삭제
+        localStorage.clear();
+        sessionStorage.clear();
+
+        // 앱에 로그아웃 요청 전송
+        bridgeUtils.requestLogout();
+      } catch (error) {
+        console.error('Logout failed:', error);
+        // 에러가 있어도 앱에 로그아웃 요청 전송
+        bridgeUtils.requestLogout();
+      }
     } else {
       window.location.href = ROUTES.AUTH;
     }
@@ -91,12 +106,9 @@ export const authUtils = {
 
     // 토큰 설정 완료 메시지 전송
     if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(
-        JSON.stringify({
-          type: 'TOKENS_SET',
-          message: 'Tokens successfully set',
-        }),
-      );
+      bridgeUtils.sendCustomMessage('TOKENS_SET', {
+        message: 'Tokens successfully set',
+      });
     }
   },
 
@@ -105,12 +117,16 @@ export const authUtils = {
    */
   requestAuthFromParent: (): void => {
     if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(
-        JSON.stringify({
-          type: 'REQUEST_AUTH',
-          message: 'Authentication required',
-        }),
-      );
+      bridgeUtils.requestAuth();
+    }
+  },
+
+  /**
+   * GitHub 로그인 요청
+   */
+  requestGithubLogin: (): void => {
+    if (window.ReactNativeWebView) {
+      bridgeUtils.requestGithubLogin();
     }
   },
 };
