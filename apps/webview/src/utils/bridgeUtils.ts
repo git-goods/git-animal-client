@@ -1,4 +1,6 @@
+import { token } from '_panda/tokens';
 import { bridge } from './bridge';
+import tokenManager from './tokenManager';
 
 /**
  * 앱으로 메시지를 전송하는 유틸리티 함수들
@@ -16,6 +18,8 @@ export const bridgeUtils = {
    */
   requestLogout: () => {
     bridge.sendToApp('LOGOUT_COMPLETED');
+    // 로그아웃 시 토큰 제거
+    tokenManager.clearTokens();
   },
 
   /**
@@ -54,6 +58,34 @@ export const bridgeUtils = {
    */
   isAvailable: (): boolean => {
     return typeof window !== 'undefined' && !!window.ReactNativeWebView;
+  },
+
+  /**
+   * 토큰 수신 리스너 설정
+   */
+  setupTokenListener: () => {
+    bridge.on('SET_TOKEN', (data: any) => {
+      // alert('SET_TOKEN received: ' + JSON.stringify(data));
+
+      // 다양한 메시지 형식 지원
+      let token: string;
+      if (typeof data === 'string') {
+        token = data;
+      } else if (data && typeof data === 'object') {
+        token = data.token || data.accessToken || data.access_token;
+      } else {
+        console.log('Invalid token data format: ' + JSON.stringify(data));
+        return;
+      }
+
+      if (!token) {
+        console.log('No token found in data: ' + JSON.stringify(data));
+        return;
+      }
+
+      tokenManager.setTokens(token);
+      console.log('Token saved via tokenManager: ' + token);
+    });
   },
 };
 

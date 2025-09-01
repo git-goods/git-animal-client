@@ -1,7 +1,5 @@
 import { bridge } from './utils/bridge';
-import { setupTokenHandler } from './handlers/tokenHandler';
-import { setupLogoutHandler } from './handlers/logoutHandler';
-import { setupButtonHandlers } from './handlers/buttonHandler';
+import { bridgeUtils } from './utils/bridgeUtils';
 import { setupNavigationHandler } from './handlers/navigationHandler';
 
 let cleanupFunctions: (() => void)[] = [];
@@ -9,22 +7,30 @@ let cleanupFunctions: (() => void)[] = [];
 export function initializeBridge() {
   console.log('Initializing WebView bridge...');
 
-  // 각 핸들러 설정
-  setupTokenHandler();
-  setupLogoutHandler();
+  try {
+    const navigationCleanup = setupNavigationHandler();
+    console.log('Navigation handler setup completed');
 
-  const buttonCleanup = setupButtonHandlers();
-  const navigationCleanup = setupNavigationHandler();
+    if (navigationCleanup) {
+      cleanupFunctions.push(navigationCleanup);
+      console.log('Navigation cleanup function added');
+    }
 
-  if (buttonCleanup) cleanupFunctions.push(buttonCleanup);
-  if (navigationCleanup) cleanupFunctions.push(navigationCleanup);
+    // 토큰 리스너 설정
+    console.log('About to setup token listener...');
+    bridgeUtils.setupTokenListener();
+    console.log('Token listener setup completed');
 
-  // 브릿지를 전역에서 접근할 수 있도록 설정
-  if (typeof window !== 'undefined') {
-    (window as any).__bridge = bridge;
+    // 브릿지를 전역에서 접근할 수 있도록 설정
+    if (typeof window !== 'undefined') {
+      (window as any).__bridge = bridge;
+      console.log('Bridge set to window.__bridge');
+    }
+
+    console.log('WebView bridge initialized successfully');
+  } catch (error) {
+    console.error('Error during bridge initialization:', error);
   }
-
-  console.log('WebView bridge initialized');
 }
 
 export function cleanupBridge() {

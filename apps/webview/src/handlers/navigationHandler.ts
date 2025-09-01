@@ -4,10 +4,14 @@ export function setupNavigationHandler() {
   function wrap(fn: Function) {
     return function wrapper(this: any, ...args: any[]) {
       const res = fn.apply(this, args);
-      bridge.sendToApp('navigation', {
-        url: window.location.href,
-        canGoBack: window.history.length > 1,
-      });
+      try {
+        bridge.sendToApp('navigation', {
+          url: window.location.href,
+          canGoBack: window.history.length > 1,
+        });
+      } catch (error) {
+        console.log('Navigation sendToApp failed:', error);
+      }
       return res;
     };
   }
@@ -21,19 +25,27 @@ export function setupNavigationHandler() {
 
   // popstate 이벤트 리스너
   const handlePopState = () => {
-    bridge.sendToApp('navigation', {
-      url: window.location.href,
-      canGoBack: window.history.length > 1,
-    });
+    try {
+      bridge.sendToApp('navigation', {
+        url: window.location.href,
+        canGoBack: window.history.length > 1,
+      });
+    } catch (error) {
+      console.log('PopState sendToApp failed:', error);
+    }
   };
 
   window.addEventListener('popstate', handlePopState);
 
   // 초기 네비게이션 상태 전송
-  bridge.sendToApp('navigation', {
-    url: window.location.href,
-    canGoBack: window.history.length > 1,
-  });
+  try {
+    bridge.sendToApp('navigation', {
+      url: window.location.href,
+      canGoBack: window.history.length > 1,
+    });
+  } catch (error) {
+    console.log('Initial navigation sendToApp failed:', error);
+  }
 
   // 정리 함수 반환
   return () => {
