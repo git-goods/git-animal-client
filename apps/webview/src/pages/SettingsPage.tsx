@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Banner, Dialog } from '@gitanimals/ui-panda';
 import { css } from '../../styled-system/css';
 import { authUtils } from '../utils';
 
 function SettingsPage() {
+  const { t } = useTranslation();
   const [tokenInfo, setTokenInfo] = useState<any>(null);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
@@ -52,7 +54,7 @@ function SettingsPage() {
           marginBottom: '2rem',
         })}
       >
-        Settings
+        {t('settings.title')}
       </h1>
 
       {/* 토큰 관리 섹션 */}
@@ -65,17 +67,17 @@ function SettingsPage() {
           backgroundColor: 'blue.50',
         })}
       >
-        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>Token Management</h2>
+        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>{t('settings.token_management')}</h2>
         <div className={css({ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: 'sm', marginBottom: '1rem' })}>
-          <div>Token Valid: {tokenInfo?.isValid ? '✅ Yes' : '❌ No'}</div>
+          <div>{t('auth.token_valid')}: {tokenInfo?.isValid ? `✅ ${t('settings.yes')}` : `❌ ${t('settings.no')}`}</div>
           <div>
-            Expires In: {tokenInfo?.expiresIn ? `${Math.floor(tokenInfo.expiresIn / 1000 / 60)} minutes` : 'Unknown'}
+            {t('auth.expires_in')}: {tokenInfo?.expiresIn ? `${Math.floor(tokenInfo.expiresIn / 1000 / 60)} ${t('auth.minutes')}` : t('settings.unknown')}
           </div>
         </div>
         <div className={css({ display: 'flex', gap: '1rem', flexWrap: 'wrap' })}>
-          <Button onClick={handleRefreshToken}>Refresh Token</Button>
+          <Button onClick={handleRefreshToken}>{t('auth.refresh_token')}</Button>
           <Button variant="secondary" onClick={() => authUtils.requestAuthFromParent()}>
-            Request New Auth
+            {t('auth.request_new_auth')}
           </Button>
         </div>
       </div>
@@ -90,13 +92,13 @@ function SettingsPage() {
           backgroundColor: 'white',
         })}
       >
-        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>App Settings</h2>
+        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>{t('settings.app_settings')}</h2>
         <div className={css({ display: 'flex', gap: '1rem', flexWrap: 'wrap' })}>
           <Button variant="secondary" onClick={handleClearCache}>
-            Clear Cache
+            {t('settings.clear_cache')}
           </Button>
           <Button variant="secondary" onClick={() => window.location.reload()}>
-            Reload App
+            {t('settings.reload_app')}
           </Button>
         </div>
       </div>
@@ -111,27 +113,27 @@ function SettingsPage() {
           backgroundColor: 'red.50',
         })}
       >
-        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>Account</h2>
+        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>{t('settings.account')}</h2>
         <Button variant="primary" onClick={() => setShowLogoutDialog(true)}>
-          Logout
+          {t('settings.logout')}
         </Button>
       </div>
 
-      <Banner image="⚙️" label="Settings page for managing your WebView preferences" />
+      <Banner image="⚙️" label={t('settings.banner_message')} />
 
       {/* 로그아웃 확인 다이얼로그 */}
       <Dialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
         <Dialog.Content>
-          <Dialog.Title>Confirm Logout</Dialog.Title>
+          <Dialog.Title>{t('settings.logout_confirm_title')}</Dialog.Title>
           <Dialog.Description>
-            Are you sure you want to logout? You will need to authenticate again to use the app.
+            {t('settings.logout_confirm_description')}
           </Dialog.Description>
           <div className={css({ display: 'flex', gap: '1rem', justifyContent: 'flex-end', marginTop: '1rem' })}>
             <Button variant="secondary" onClick={() => setShowLogoutDialog(false)}>
-              Cancel
+              {t('common.cancel')}
             </Button>
             <Button variant="primary" onClick={handleLogout}>
-              Logout
+              {t('settings.logout')}
             </Button>
           </div>
         </Dialog.Content>

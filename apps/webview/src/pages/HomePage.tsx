@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Banner, Dialog } from '@gitanimals/ui-panda';
 import { css } from '../../styled-system/css';
 import { authUtils } from '../utils';
 
 function HomePage() {
+  const { t } = useTranslation();
   const [count, setCount] = useState(0);
   const [userProfile, setUserProfile] = useState<any>(null);
   const [tokenInfo, setTokenInfo] = useState<any>(null);
@@ -58,7 +60,7 @@ function HomePage() {
             fontWeight: 'bold',
           })}
         >
-          GitAnimals Webview - Home
+          {t('home.title')}
         </h1>
       </div>
 
@@ -72,16 +74,16 @@ function HomePage() {
           backgroundColor: 'green.50',
         })}
       >
-        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>Authentication Status</h2>
+        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>{t('auth.authentication_status')}</h2>
         <div className={css({ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: 'sm' })}>
-          <div>Status: ✅ Authenticated</div>
-          <div>Token Valid: {tokenInfo?.isValid ? '✅ Yes' : '❌ No'}</div>
+          <div>{t('home.status')}: ✅ {t('auth.authenticated')}</div>
+          <div>{t('auth.token_valid')}: {tokenInfo?.isValid ? `✅ ${t('settings.yes')}` : `❌ ${t('settings.no')}`}</div>
           <div>
-            Expires In: {tokenInfo?.expiresIn ? `${Math.floor(tokenInfo.expiresIn / 1000 / 60)} minutes` : 'Unknown'}
+            {t('auth.expires_in')}: {tokenInfo?.expiresIn ? `${Math.floor(tokenInfo.expiresIn / 1000 / 60)} ${t('auth.minutes')}` : t('settings.unknown')}
           </div>
         </div>
         <Button size="s" variant="secondary" onClick={handleRefreshToken} className={css({ marginTop: '1rem' })}>
-          Refresh Token
+          {t('auth.refresh_token')}
         </Button>
       </div>
 
@@ -96,7 +98,7 @@ function HomePage() {
             backgroundColor: 'blue.50',
           })}
         >
-          <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>User Profile</h2>
+          <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>{t('home.user_profile')}</h2>
           <pre className={css({ fontSize: 'sm', whiteSpace: 'pre-wrap' })}>{JSON.stringify(userProfile, null, 2)}</pre>
         </div>
       )}
@@ -111,40 +113,39 @@ function HomePage() {
           backgroundColor: 'white',
         })}
       >
-        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>API Testing</h2>
+        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>{t('home.api_testing')}</h2>
         <div className={css({ display: 'flex', gap: '1rem', flexWrap: 'wrap' })}>
-          <Button onClick={fetchUserProfile}>Fetch Profile</Button>
+          <Button onClick={fetchUserProfile}>{t('home.fetch_profile')}</Button>
           <Button variant="secondary" onClick={() => setCount(count + 1)}>
-            Counter: {count}
+            {t('home.counter')}: {count}
           </Button>
           <Button variant="primary" size="s" onClick={handleRefreshToken}>
-            Refresh Token
+            {t('auth.refresh_token')}
           </Button>
         </div>
       </div>
 
-      <Banner image="🎉" label="WebView with Token Manager is working!" />
+      <Banner image="🎉" label={t('home.banner_message')} />
 
       <Dialog>
         <Dialog.Trigger asChild>
-          <Button>WebView Info</Button>
+          <Button>{t('home.webview_info')}</Button>
         </Dialog.Trigger>
         <Dialog.Content>
-          <Dialog.Title>WebView Information</Dialog.Title>
+          <Dialog.Title>{t('home.webview_info_title')}</Dialog.Title>
           <Dialog.Description>
-            This webview includes integrated token management for secure communication with the GitAnimals backend.
+            {t('home.webview_info_description')}
           </Dialog.Description>
           <div className={css({ marginTop: '1rem' })}>
-            <h3 className={css({ fontWeight: 'semibold', marginBottom: '0.5rem' })}>Features:</h3>
+            <h3 className={css({ fontWeight: 'semibold', marginBottom: '0.5rem' })}>{t('home.features')}:</h3>
             <ul className={css({ listStyle: 'disc', paddingLeft: '1.5rem', fontSize: 'sm' })}>
-              <li>Automatic token refresh</li>
-              <li>WebView ↔ Parent App communication</li>
-              <li>Secure API calls with Bearer token</li>
-              <li>Authentication state management</li>
+              {(t('home.features_list', { returnObjects: true }) as string[]).map((feature: string, index: number) => (
+                <li key={index}>{feature}</li>
+              ))}
             </ul>
           </div>
           <div className={css({ display: 'flex', gap: '1rem', justifyContent: 'flex-end', marginTop: '1rem' })}>
-            <Button variant="secondary">Close</Button>
+            <Button variant="secondary">{t('common.close')}</Button>
           </div>
         </Dialog.Content>
       </Dialog>

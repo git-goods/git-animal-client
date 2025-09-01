@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Banner } from '@gitanimals/ui-panda';
 import { css } from '../../styled-system/css';
 
 function ProfilePage() {
+  const { t } = useTranslation();
   const [userProfile, setUserProfile] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -19,7 +21,7 @@ function ProfilePage() {
       // setUserProfile(response.data);
     } catch (error) {
       console.error('Failed to fetch user profile:', error);
-      setError('Failed to load user profile');
+      setError(t('profile.error'));
     } finally {
       setIsLoading(false);
     }
@@ -36,7 +38,7 @@ function ProfilePage() {
           fontSize: 'lg',
         })}
       >
-        Loading profile...
+        {t('profile.loading')}
       </div>
     );
   }
@@ -53,7 +55,7 @@ function ProfilePage() {
         })}
       >
         <Banner image="❌" label={error} />
-        <Button onClick={fetchUserProfile}>Retry</Button>
+        <Button onClick={fetchUserProfile}>{t('common.retry')}</Button>
       </div>
     );
   }
@@ -76,7 +78,7 @@ function ProfilePage() {
           marginBottom: '2rem',
         })}
       >
-        User Profile
+        {t('profile.title')}
       </h1>
 
       {userProfile ? (
@@ -89,15 +91,15 @@ function ProfilePage() {
             backgroundColor: 'white',
           })}
         >
-          <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>Profile Information</h2>
+          <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>{t('profile.profile_information')}</h2>
           <pre className={css({ fontSize: 'sm', whiteSpace: 'pre-wrap' })}>{JSON.stringify(userProfile, null, 2)}</pre>
         </div>
       ) : (
-        <Banner image="⚠️" label="No profile data available" />
+        <Banner image="⚠️" label={t('profile.no_data')} />
       )}
 
       <div className={css({ display: 'flex', gap: '1rem' })}>
-        <Button onClick={fetchUserProfile}>Refresh Profile</Button>
+        <Button onClick={fetchUserProfile}>{t('profile.refresh_profile')}</Button>
       </div>
     </div>
   );

@@ -18,8 +18,11 @@
     "@gitanimals/ui-panda": "workspace:*",
     "@gitanimals/ui-token": "workspace:*",
     "axios": "^1.6.8",
+    "i18next": "^25.4.2",
+    "i18next-browser-languagedetector": "^8.2.0",
     "react": "*",
     "react-dom": "*",
+    "react-i18next": "^15.7.3",
     "react-router-dom": "^7.8.2"
   },
   "devDependencies": {

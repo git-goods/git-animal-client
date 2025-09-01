@@ -1,10 +1,13 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@gitanimals/ui-panda';
 import { css } from '../../../styled-system/css';
 import { authUtils } from '../../utils';
 import { ROUTES } from '../../router/constants';
+import LanguageSwitcher from '../LanguageSwitcher';
 
 function Navigation() {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const isAuthenticated = authUtils.isAuthenticated();
@@ -15,14 +18,14 @@ function Navigation() {
   };
 
   const publicNavItems = [
-    { path: ROUTES.ABOUT, label: 'About', icon: 'ℹ️' },
-    { path: ROUTES.AUTH, label: 'Login', icon: '🔐' },
+    { path: ROUTES.ABOUT, label: t('navigation.about'), icon: 'ℹ️' },
+    { path: ROUTES.AUTH, label: t('navigation.login'), icon: '🔐' },
   ];
 
   const protectedNavItems = [
-    { path: ROUTES.HOME, label: 'Home', icon: '🏠' },
-    { path: ROUTES.PROFILE, label: 'Profile', icon: '👤' },
-    { path: ROUTES.SETTINGS, label: 'Settings', icon: '⚙️' },
+    { path: ROUTES.HOME, label: t('navigation.home'), icon: '🏠' },
+    { path: ROUTES.PROFILE, label: t('navigation.profile'), icon: '👤' },
+    { path: ROUTES.SETTINGS, label: t('navigation.settings'), icon: '⚙️' },
   ];
 
   const navItems = isAuthenticated ? protectedNavItems : publicNavItems;
@@ -82,14 +85,15 @@ function Navigation() {
         </div>
         
         <div className={css({ display: 'flex', gap: '0.5rem', alignItems: 'center' })}>
+          <LanguageSwitcher />
           {!isAuthenticated && (
             <Link to={ROUTES.ABOUT}>
-              <Button variant="secondary" size="s">About</Button>
+              <Button variant="secondary" size="s">{t('navigation.about')}</Button>
             </Link>
           )}
           {isAuthenticated && (
             <Button variant="secondary" size="s" onClick={handleLogout}>
-              Logout
+              {t('settings.logout')}
             </Button>
           )}
         </div>

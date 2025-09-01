@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import { Button, Banner } from '@gitanimals/ui-panda';
 import { css } from '../../styled-system/css';
@@ -14,6 +15,7 @@ import { TestLoginPage } from '../components/auth/TestLoginPage';
 import { AuthPage } from '../components/auth/AuthPage';
 
 function LoginPage() {
+  const { t } = useTranslation();
   const location = useLocation();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showTestLogin, setShowTestLogin] = useState(false);
@@ -121,7 +123,7 @@ function LoginPage() {
             marginBottom: '1rem',
           })}
         >
-          Welcome to GitAnimals
+          {t('auth.welcome_title')}
         </h1>
 
         <p
@@ -130,15 +132,15 @@ function LoginPage() {
             marginBottom: '2rem',
           })}
         >
-          Please authenticate to access your GitAnimals dashboard
+          {t('auth.welcome_description')}
         </p>
 
-        <Banner image="🔐" label="Authentication required to continue" />
+        <Banner image="🔐" label={t('auth.auth_required')} />
 
         <div className={css({ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '2rem' })}>
-          <Button onClick={() => authUtils.requestAuthFromParent()}>Authenticate with Parent App</Button>
+          <Button onClick={() => authUtils.requestAuthFromParent()}>{t('auth.authenticate_button')}</Button>
           <a href="https://api.gitanimals.org/logins/oauth/github/by-redirect-when-success/LOCAL">
-            <Button variant="secondary">Local Login</Button>
+            <Button variant="secondary">{t('auth.local_login')}</Button>
           </a>
           {/* <Button variant="secondary" onClick={() => setShowTestLogin(true)}>
             Test Login (Development)
@@ -147,7 +149,7 @@ function LoginPage() {
 
         {from !== '/' && (
           <p className={css({ fontSize: 'sm', color: 'gray.500', marginTop: '1rem' })}>
-            You'll be redirected to: {from}
+            {t('auth.redirecting_to', { path: from })}
           </p>
         )}
       </div>

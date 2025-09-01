@@ -367,12 +367,21 @@ importers:
       axios:
         specifier: ^1.6.8
         version: 1.7.2
+      i18next:
+        specifier: ^25.4.2
+        version: 25.4.2(typescript@5.4.5)
+      i18next-browser-languagedetector:
+        specifier: ^8.2.0
+        version: 8.2.0
       react:
         specifier: ^18
         version: 18.2.0
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.2.0)
+      react-i18next:
+        specifier: ^15.7.3
+        version: 15.7.3(i18next@25.4.2(typescript@5.4.5))(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5)
       react-router-dom:
         specifier: ^7.8.2
         version: 7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
@@ -7432,6 +7441,9 @@ packages:
     engines: {node: '>=12'}
     hasBin: true
 
+  html-parse-stringify@3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
+
   html-tags@3.3.1:
     resolution: {integrity: sha512-ztqyC3kLto0e9WbNp0aeP+M3kTt+nbaIveGmUxAtZa+8iFgKLUOD4YKM5j+f3QD89bra7UeumolZHKuOXnTmeQ==}
     engines: {node: '>=8'}
@@ -7490,6 +7502,17 @@ packages:
     resolution: {integrity: sha512-AB6lFlbwwyIqMdHYhwPe+kjOC3Oc5P3nThEoW/AaO2BX3vJDjWPFxYLxokUZOo6RNX20He3AaT8sESs9NJcmEw==}
     engines: {node: '>=18'}
     hasBin: true
+
+  i18next-browser-languagedetector@8.2.0:
+    resolution: {integrity: sha512-P+3zEKLnOF0qmiesW383vsLdtQVyKtCNA9cjSoKCppTKPQVfKd2W8hbVo5ZhNJKDqeM7BOcvNoKJOjpHh4Js9g==}
+
+  i18next@25.4.2:
+    resolution: {integrity: sha512-gD4T25a6ovNXsfXY1TwHXXXLnD/K2t99jyYMCSimSCBnBRJVQr5j+VAaU83RJCPzrTGhVQ6dqIga66xO2rtd5g==}
+    peerDependencies:
+      typescript: ^5.4.5
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -9660,6 +9683,22 @@ packages:
       react: ^18
       react-dom: ^18.3.1
 
+  react-i18next@15.7.3:
+    resolution: {integrity: sha512-AANws4tOE+QSq/IeMF/ncoHlMNZaVLxpa5uUGW1wjike68elVYr0018L9xYoqBr1OFO7G7boDPrbn0HpMCJxTw==}
+    peerDependencies:
+      i18next: '>= 25.4.1'
+      react: ^18
+      react-dom: '*'
+      react-native: '*'
+      typescript: ^5.4.5
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+      typescript:
+        optional: true
+
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -11180,6 +11219,10 @@ packages:
 
   vm-browserify@1.1.2:
     resolution: {integrity: sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==}
+
+  void-elements@3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
+    engines: {node: '>=0.10.0'}
 
   w3c-xmlserializer@4.0.0:
     resolution: {integrity: sha512-d+BFHzbiCx6zGfz0HyQ6Rg69w9k19nviJspaj4yNscGjrHu94sVP+aRm75yEbCh+r2/yR+7q6hux9LVtbuTGBw==}
@@ -19959,6 +20002,10 @@ snapshots:
       relateurl: 0.2.7
       terser: 5.31.1
 
+  html-parse-stringify@3.0.1:
+    dependencies:
+      void-elements: 3.1.0
+
   html-tags@3.3.1: {}
 
   html-webpack-plugin@5.6.0(webpack@5.92.0(esbuild@0.20.2)):
@@ -20026,6 +20073,16 @@ snapshots:
   human-signals@5.0.0: {}
 
   husky@9.0.11: {}
+
+  i18next-browser-languagedetector@8.2.0:
+    dependencies:
+      '@babel/runtime': 7.27.6
+
+  i18next@25.4.2(typescript@5.4.5):
+    dependencies:
+      '@babel/runtime': 7.27.6
+    optionalDependencies:
+      typescript: 5.4.5
 
   iconv-lite@0.4.24:
     dependencies:
@@ -22697,6 +22754,16 @@ snapshots:
       react-dom: 18.3.1(react@18.2.0)
       react-is: 18.1.0
 
+  react-i18next@15.7.3(i18next@25.4.2(typescript@5.4.5))(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5):
+    dependencies:
+      '@babel/runtime': 7.27.6
+      html-parse-stringify: 3.0.1
+      i18next: 25.4.2(typescript@5.4.5)
+      react: 18.2.0
+    optionalDependencies:
+      react-dom: 18.3.1(react@18.2.0)
+      typescript: 5.4.5
+
   react-is@16.13.1: {}
 
   react-is@17.0.2: {}
@@ -24349,6 +24416,8 @@ snapshots:
       - terser
 
   vm-browserify@1.1.2: {}
+
+  void-elements@3.1.0: {}
 
   w3c-xmlserializer@4.0.0:
     dependencies:

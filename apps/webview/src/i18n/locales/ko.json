@@ -1,0 +1,111 @@
+{
+  "navigation": {
+    "home": "홈",
+    "about": "소개",
+    "profile": "프로필",
+    "settings": "설정",
+    "login": "로그인"
+  },
+  "common": {
+    "loading": "로딩중...",
+    "retry": "다시시도",
+    "refresh": "새로고침",
+    "close": "닫기",
+    "cancel": "취소",
+    "confirm": "확인",
+    "save": "저장",
+    "delete": "삭제",
+    "edit": "편집",
+    "back": "뒤로가기"
+  },
+  "auth": {
+    "welcome_title": "GitAnimals에 오신 것을 환영합니다",
+    "welcome_description": "GitAnimals 대시보드에 접근하기 위해 인증을 진행해 주세요",
+    "authenticate_button": "부모 앱으로 인증하기",
+    "local_login": "로컬 로그인",
+    "test_login": "테스트 로그인 (개발용)",
+    "auth_required": "계속하려면 인증이 필요합니다",
+    "redirecting_to": "리다이렉트 될 주소: {{path}}",
+    "authenticated": "인증됨",
+    "not_authenticated": "인증되지 않음",
+    "authentication_status": "인증 상태",
+    "token_valid": "토큰 유효",
+    "expires_in": "만료까지",
+    "minutes": "분",
+    "refresh_token": "토큰 새로고침",
+    "request_new_auth": "새 인증 요청"
+  },
+  "home": {
+    "title": "GitAnimals Webview - 홈",
+    "api_testing": "API 테스트",
+    "fetch_profile": "프로필 가져오기",
+    "counter": "카운터",
+    "webview_info": "WebView 정보",
+    "webview_info_title": "WebView 정보",
+    "webview_info_description": "이 webview는 GitAnimals 백엔드와의 보안 통신을 위한 통합 토큰 관리를 포함합니다.",
+    "features": "기능",
+    "features_list": [
+      "자동 토큰 새로고침",
+      "WebView ↔ 부모 앱 통신",
+      "Bearer 토큰으로 보안 API 호출",
+      "인증 상태 관리"
+    ],
+    "banner_message": "토큰 매니저가 포함된 WebView가 작동하고 있습니다!",
+    "status": "상태",
+    "user_profile": "사용자 프로필"
+  },
+  "about": {
+    "title": "GitAnimals 소개",
+    "what_is_title": "GitAnimals란?",
+    "description_1": "GitAnimals는 개발자들이 GitHub 활동을 통해 가상 펫을 기를 수 있는 게임화된 플랫폼입니다. 저장소에 더 많이 기여할수록 가상 동물들이 더 많이 성장하고 진화합니다!",
+    "description_2": "이 webview 애플리케이션은 GitAnimals 대시보드와 상호작용하고, 펫을 보고, 진행 상황을 추적할 수 있는 모바일 친화적인 인터페이스를 제공합니다.",
+    "features_title": "기능",
+    "features_list": [
+      "GitHub 기여를 통한 가상 펫 관리",
+      "진행 상황 추적 및 통계",
+      "모바일 최적화된 webview 인터페이스",
+      "토큰 관리를 통한 보안 인증",
+      "GitHub 활동과의 실시간 동기화"
+    ],
+    "get_started_title": "시작하기",
+    "authenticated_description": "이미 인증되었습니다! 대시보드를 탐색하고 가상 펫을 관리하세요.",
+    "go_to_dashboard": "대시보드로 이동",
+    "view_profile": "프로필 보기",
+    "not_authenticated_description": "GitAnimals를 사용하기 시작하려면 GitHub 계정으로 인증해야 합니다.",
+    "get_started_button": "시작하기",
+    "banner_message": "오늘부터 GitAnimals와 함께 여행을 시작하세요!"
+  },
+  "profile": {
+    "title": "사용자 프로필",
+    "loading": "프로필 로딩중...",
+    "error": "사용자 프로필을 불러오는데 실패했습니다",
+    "profile_information": "프로필 정보",
+    "no_data": "프로필 데이터가 없습니다",
+    "refresh_profile": "프로필 새로고침"
+  },
+  "settings": {
+    "title": "설정",
+    "token_management": "토큰 관리",
+    "app_settings": "앱 설정",
+    "account": "계정",
+    "clear_cache": "캐시 지우기",
+    "reload_app": "앱 새로고침",
+    "logout": "로그아웃",
+    "logout_confirm_title": "로그아웃 확인",
+    "logout_confirm_description": "정말 로그아웃하시겠습니까? 앱을 사용하려면 다시 인증해야 합니다.",
+    "banner_message": "WebView 환경설정을 관리하는 설정 페이지",
+    "yes": "예",
+    "no": "아니오",
+    "unknown": "알 수 없음"
+  },
+  "notfound": {
+    "title": "페이지를 찾을 수 없습니다",
+    "description": "요청하신 페이지가 존재하지 않습니다.",
+    "go_home": "홈으로 이동"
+  },
+  "language": {
+    "korean": "한국어",
+    "english": "English",
+    "change_language": "언어 변경"
+  }
+}
