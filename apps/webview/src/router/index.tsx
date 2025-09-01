@@ -3,6 +3,7 @@ import { Layout } from '../components/layout';
 import { HomePage, ProfilePage, SettingsPage, LoginPage, AboutPage, NotFoundPage } from '../pages';
 import ProtectedRoute from '../components/auth/ProtectedRoute';
 import { ROUTES, NESTED_PATHS } from './constants';
+import WebviewPage from '@/pages/home/page';
 
 export const router = createBrowserRouter([
   {
@@ -14,7 +15,8 @@ export const router = createBrowserRouter([
         index: true,
         element: (
           <ProtectedRoute>
-            <HomePage />
+            <WebviewPage />
+            {/* <HomePage /> */}
           </ProtectedRoute>
         ),
       },

@@ -358,12 +358,21 @@ importers:
       '@gitanimals/exception':
         specifier: workspace:*
         version: link:../../packages/exception
+      '@gitanimals/react-query':
+        specifier: workspace:*
+        version: link:../../packages/lib/react-query
       '@gitanimals/ui-panda':
         specifier: workspace:*
         version: link:../../packages/ui/panda
       '@gitanimals/ui-token':
         specifier: workspace:*
         version: link:../../packages/ui/token
+      '@suspensive/react':
+        specifier: ^2.17.1
+        version: 2.17.1(react@18.2.0)
+      '@tanstack/react-query':
+        specifier: ^5.32.0
+        version: 5.45.0(react@18.2.0)
       axios:
         specifier: ^1.6.8
         version: 1.7.2
@@ -373,6 +382,9 @@ importers:
       i18next-browser-languagedetector:
         specifier: ^8.2.0
         version: 8.2.0
+      lucide-react:
+        specifier: ^0.408.0
+        version: 0.408.0(react@18.2.0)
       react:
         specifier: ^18
         version: 18.2.0
