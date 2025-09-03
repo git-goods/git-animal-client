@@ -5,7 +5,13 @@ export const ROUTES = {
   SETTINGS: '/settings',
   MYPAGE: '/mypage',
   SHOP: '/shop',
-  GAME: '/game',
+  GAME: {
+    QUIZ: {
+      MAIN: () => '/game/quiz',
+      CREATE: () => '/game/quiz/create',
+      SOLVE: () => '/game/quiz/solve',
+    },
+  },
 
   // 공개 라우트들 (인증 불필요)
   AUTH: '/auth',

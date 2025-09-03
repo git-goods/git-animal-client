@@ -355,6 +355,9 @@ importers:
       '@gitanimals/api':
         specifier: workspace:*
         version: link:../../packages/api
+      '@gitanimals/dayjs':
+        specifier: workspace:*
+        version: link:../../packages/lib/dayjs
       '@gitanimals/exception':
         specifier: workspace:*
         version: link:../../packages/exception
@@ -397,6 +400,9 @@ importers:
       react-router-dom:
         specifier: ^7.8.2
         version: 7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      sonner:
+        specifier: ^1.5.0
+        version: 1.5.0(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
     devDependencies:
       '@gitanimals/eslint-config':
         specifier: workspace:*

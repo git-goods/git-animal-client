@@ -7,6 +7,7 @@ import DevPage from '@/pages/dev/page';
 import LoginPage from '@/pages/LoginPage';
 import MyPagePage from '@/pages/MypagePage';
 import NotFoundPage from '@/pages/NotFoundPage';
+import GamePage from '@/pages/game/page';
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,14 @@ export const router = createBrowserRouter([
           <ProtectedRoute>
             <WebviewPage />
             {/* <HomePage /> */}
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: NESTED_PATHS.GAME(),
+        element: (
+          <ProtectedRoute>
+            <GamePage />
           </ProtectedRoute>
         ),
       },
