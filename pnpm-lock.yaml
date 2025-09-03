@@ -379,6 +379,9 @@ importers:
       axios:
         specifier: ^1.6.8
         version: 1.7.2
+      framer-motion:
+        specifier: ^11.1.7
+        version: 11.2.10(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       i18next:
         specifier: ^25.4.2
         version: 25.4.2(typescript@5.4.5)

@@ -10,10 +10,14 @@ const resources = {
   en: {
     translation: enTranslations,
     quiz: enTranslations.quiz,
+    gotcha: enTranslations.gotcha,
+    shop: enTranslations.shop,
   },
   ko: {
     translation: koTranslations,
     quiz: koTranslations.quiz,
+    gotcha: koTranslations.gotcha,
+    shop: koTranslations.shop,
   },
 };
 

@@ -19,4 +19,4 @@ export const CARD_INFO: Record<CardTierType, { bg: string; thumbnail: string }> 
   },
 };
 
-export const ANIMAL_CARD_IMAGE_BASE_URL = '/animal-card/';
+export const ANIMAL_CARD_IMAGE_BASE_URL = '/assets/animal-card/';
