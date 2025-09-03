@@ -33,7 +33,7 @@ const EVENT = {
 
 interface PersonaSearchProps {
   onSelect: (personaType?: string) => void;
-  selected?: string;
+  selected?: string | null;
 }
 
 const buttonWrapperStyle = center({

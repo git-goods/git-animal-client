@@ -20,7 +20,15 @@ function HistoryTable() {
   const { searchOptions } = useSearchOptions();
 
   const { data } = useQuery({
-    ...auctionQueries.historyOptions({ pageNumber: currentPage, ...searchOptions, count: 6 }),
+    ...auctionQueries.historyOptions({
+      pageNumber: currentPage,
+      ...{
+        personaType: searchOptions.personaType ?? undefined,
+        orderType: searchOptions.orderType ?? undefined,
+        sortDirection: searchOptions.sortDirection ?? undefined,
+      },
+      count: 6,
+    }),
     placeholderData: (prevData) => prevData,
   });
 

@@ -6,16 +6,13 @@ import type { OrderType, SortDirection } from '@gitanimals/api';
 import { parseAsStringLiteral, useQueryState } from 'nuqs';
 
 interface SearchOptions {
-  personaType: string;
+  personaType: string | null;
   orderType: OrderType;
   sortDirection: SortDirection;
 }
 
 export const useSearchOptions = () => {
-  const [personaType, setPersonaType] = useQueryState(
-    'personaType',
-    parseAsStringLiteral(['CREATED_AT', 'PRICE', 'LEVEL']).withDefault('CREATED_AT'),
-  );
+  const [personaType, setPersonaType] = useQueryState('personaType');
   const [orderType, setOrderType] = useQueryState(
     'orderType',
     parseAsStringLiteral(['CREATED_AT', 'PRICE', 'LEVEL']).withDefault('CREATED_AT'),

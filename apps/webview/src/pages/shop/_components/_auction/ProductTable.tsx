@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import type { Product } from '@gitanimals/api';
 import { auctionQueries, useBuyProduct, useDeleteProduct, userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-panda';
@@ -20,7 +20,7 @@ import { useUser } from '@/hooks/useUser';
 function ProductTable() {
   const { t } = useTranslation('shop');
   const { id: myId } = useUser();
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { searchOptions } = useSearchOptions();
   useEffect(
@@ -31,7 +31,15 @@ function ProductTable() {
   );
 
   const { data } = useQuery({
-    ...auctionQueries.productsOptions({ pageNumber: currentPage, ...searchOptions, count: 6 }),
+    ...auctionQueries.productsOptions({
+      pageNumber: currentPage,
+      ...{
+        personaType: searchOptions.personaType ?? undefined,
+        orderType: searchOptions.orderType ?? undefined,
+        sortDirection: searchOptions.sortDirection ?? undefined,
+      },
+      count: 6,
+    }),
     enabled: Boolean(myId),
     placeholderData: (prevData) => prevData,
   });
@@ -51,7 +59,11 @@ function ProductTable() {
         <div className={tbodyCss}>
           {!data && Array.from({ length: 8 }).map((_, index) => <ShopTableRowViewSkeleton key={`skeleton-${index}`} />)}
           {data?.products.map((product) => {
-            return <ProductTableRow product={product} key={product.id} />;
+            return (
+              <Suspense>
+                <ProductTableRow product={product} key={product.id} />
+              </Suspense>
+            );
           })}
         </div>
       </div>

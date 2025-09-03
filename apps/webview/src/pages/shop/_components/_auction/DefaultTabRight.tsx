@@ -17,7 +17,7 @@ export function DefaultTabRight() {
       <SortDirectionSelect onSelect={(option) => onSearchOptionChange('sortDirection', option)} />
       <PersonaSearch
         onSelect={(option) => onSearchOptionChange('personaType', option)}
-        selected={searchOptions.personaType}
+        selected={searchOptions.personaType ?? undefined}
       />
     </Flex>
   );
