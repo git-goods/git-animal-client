@@ -15,6 +15,7 @@
   "dependencies": {
     "@gitanimals/api": "workspace:*",
     "@gitanimals/dayjs": "workspace:*",
+    "@gitanimals/util-common": "workspace:*",
     "@gitanimals/exception": "workspace:*",
     "@gitanimals/react-query": "workspace:*",
     "@gitanimals/ui-panda": "workspace:*",
@@ -26,6 +27,7 @@
     "i18next": "^25.4.2",
     "i18next-browser-languagedetector": "^8.2.0",
     "lucide-react": "^0.408.0",
+    "nuqs": "^2.5.2",
     "react": "*",
     "react-dom": "*",
     "react-i18next": "^15.7.3",
