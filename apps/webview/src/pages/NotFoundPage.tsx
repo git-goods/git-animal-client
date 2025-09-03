@@ -26,9 +26,7 @@ function NotFoundPage() {
         <Button onClick={handleGoBack} variant="secondary">
           {t('common.back', { defaultValue: 'Back' })}
         </Button>
-        <Button onClick={handleGoHome}>
-          {t('notfound.go_home')}
-        </Button>
+        <Button onClick={handleGoHome}>{t('notfound.go_home')}</Button>
       </div>
     </main>
   );
@@ -42,8 +40,6 @@ const buttonCss = css({
 });
 
 const mainCss = css({
-  backgroundColor: 'white',
-  w: '100dvw',
   h: '100dvh',
   textStyle: 'glyph16.regular',
   padding: '0 16px',
@@ -52,6 +48,7 @@ const mainCss = css({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  color: 'white',
 });
 
 const h1Css = css({
