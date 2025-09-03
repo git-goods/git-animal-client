@@ -13,6 +13,7 @@ function Navigation() {
   const isAuthenticated = authUtils.isAuthenticated();
 
   const handleLogout = () => {
+    // 웹뷰 환경에서는 브릿지를 통해 앱에 로그아웃 요청
     authUtils.logout();
     navigate(ROUTES.AUTH);
   };

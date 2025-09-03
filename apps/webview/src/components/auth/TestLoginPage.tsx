@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Button, Banner } from '@gitanimals/ui-panda';
 import { css } from '../../../styled-system/css';
-import { LoginButton } from './AuthButton';
 import { authUtils } from '../../utils';
 
 interface TestLoginPageProps {
@@ -88,7 +87,6 @@ export function TestLoginPage({ onClose }: TestLoginPageProps) {
             <p className={css({ fontSize: 'sm', color: 'gray.600', marginBottom: '1rem' })}>
               Login using GitHub OAuth (requires backend integration)
             </p>
-            <LoginButton label="Login with GitHub" />
           </div>
 
           {/* 수동 토큰 입력 */}

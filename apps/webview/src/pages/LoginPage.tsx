@@ -13,6 +13,7 @@ import {
 } from '../utils/interceptor';
 import { TestLoginPage } from '../components/auth/TestLoginPage';
 import { AuthPage } from '../components/auth/AuthPage';
+import bridgeUtils from '../utils/bridgeUtils';
 
 function LoginPage() {
   const { t } = useTranslation();
