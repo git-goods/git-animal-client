@@ -10,7 +10,7 @@ interface FailAlertDialogProps {
 }
 
 const FailAlertDialog = ({ onClose, isOpen }: FailAlertDialogProps) => {
-  const { t, i18n } = useTranslation('Quiz');
+  const { t, i18n } = useTranslation('quiz');
 
   const [isLoading, setIsLoading] = useState(false);
 

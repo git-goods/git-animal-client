@@ -22,7 +22,7 @@ const QuizCreateForm = () => {
   const handleChangeQuizContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuizContents(e.target.value);
   };
-  const { t, i18n } = useTranslation('Quiz');
+  const { t, i18n } = useTranslation('quiz');
 
   const {
     tabsTriggerProps: levelRadioProps,

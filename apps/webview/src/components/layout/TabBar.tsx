@@ -73,6 +73,7 @@ const tabBarStyle = css({
   w: '100%',
   maxW: 'var(--container-max-width)',
   mx: 'auto',
+  h: 'var(--tab-bar-height)',
 });
 
 const tabBarLinkStyle = flex({

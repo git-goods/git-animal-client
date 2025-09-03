@@ -31,7 +31,7 @@ const SelectCategorySection = wrap
     fallback: <></>,
   })
   .on(function SelectCategorySection({ setStatus, setContextId }: Props) {
-    const { t, i18n } = useTranslation('Quiz');
+    const { t, i18n } = useTranslation('quiz');
     const { isSolved } = useTodayQuizData();
     const {
       tabsTriggerProps: categoryRadioProps,

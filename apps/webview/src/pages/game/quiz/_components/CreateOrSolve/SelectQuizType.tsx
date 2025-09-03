@@ -23,7 +23,7 @@ const SelectQuizType = wrap
     const navigate = useNavigate();
     const [isSolveQuizConfirmDialogOpen, setIsSolveQuizConfirmDialogOpen] = useState(false);
     const { isSolved, quizSolveCard } = useTodayQuizData();
-    const { t } = useTranslation('Quiz');
+    const { t } = useTranslation('quiz');
 
     return (
       <div className={containerStyle}>

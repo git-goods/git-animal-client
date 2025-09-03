@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { Layout } from '../components/layout';
 import ProtectedRoute from '../components/auth/ProtectedRoute';
 import { ROUTES, NESTED_PATHS } from './constants';
@@ -7,7 +7,10 @@ import DevPage from '@/pages/dev/page';
 import LoginPage from '@/pages/LoginPage';
 import MyPagePage from '@/pages/MypagePage';
 import NotFoundPage from '@/pages/NotFoundPage';
-import GamePage from '@/pages/game/page';
+import { MobileLayout } from '@/pages/game/quiz/_components/MobileLayout';
+import QuizPage from '@/pages/game/quiz/page';
+import SolveQuizPage from '@/pages/game/quiz/solve/page';
+import CreateQuizPage from '@/pages/game/quiz/create/page';
 
 export const router = createBrowserRouter([
   {
@@ -25,12 +28,37 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: NESTED_PATHS.GAME(),
+        path: 'game',
         element: (
           <ProtectedRoute>
-            <GamePage />
+            <MobileLayout>
+              <Outlet />
+            </MobileLayout>
           </ProtectedRoute>
         ),
+        children: [
+          {
+            index: true,
+            element: <QuizPage />,
+          },
+          {
+            path: 'quiz',
+            children: [
+              {
+                index: true,
+                element: <QuizPage />,
+              },
+              {
+                path: 'create',
+                element: <CreateQuizPage />,
+              },
+              {
+                path: 'solve',
+                element: <SolveQuizPage />,
+              },
+            ],
+          },
+        ],
       },
       {
         path: NESTED_PATHS.MYPAGE(),

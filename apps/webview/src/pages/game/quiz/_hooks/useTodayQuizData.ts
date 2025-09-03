@@ -8,7 +8,7 @@ import { customT } from '../_utils/quiz.intl';
 const QUIZ_SOLVE_MAXIMUM_POINT = 32000;
 
 const useTodayQuizData = () => {
-  const { t } = useTranslation('Quiz');
+  const { t } = useTranslation('quiz');
   const { data: quizToday } = useSuspenseQuery(quizQueries.getQuizTodayOptions());
 
   const { isSolved, prize, result } = quizToday;

@@ -13,7 +13,7 @@ interface CompleteAlertDialogProps {
 }
 
 const CompleteAlertDialog = ({ completePoint, onClose, isOpen }: CompleteAlertDialogProps) => {
-  const { t, i18n } = useTranslation('Quiz');
+  const { t, i18n } = useTranslation('quiz');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClose = async () => {

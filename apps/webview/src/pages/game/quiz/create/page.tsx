@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import QuizCreateForm from './_components/QuizCreateForm';
 
 function CreateQuizPage() {
-  const { t, i18n } = useTranslation('Quiz');
+  const { t } = useTranslation('quiz');
 
   return (
     <div className={containerStyle}>
@@ -31,7 +31,7 @@ export default CreateQuizPage;
 
 const containerStyle = css({
   width: '100%',
-  height: '100vh',
+  height: 'var(--container-height)',
   padding: '12px 16px',
   backgroundColor: 'gray.gray_050',
 });

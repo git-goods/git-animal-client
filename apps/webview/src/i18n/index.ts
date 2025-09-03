@@ -9,9 +9,11 @@ import koTranslations from './locales/ko.json';
 const resources = {
   en: {
     translation: enTranslations,
+    quiz: enTranslations.quiz,
   },
   ko: {
     translation: koTranslations,
+    quiz: koTranslations.quiz,
   },
 };
 
@@ -32,13 +34,7 @@ i18n
 
     detection: {
       // options for language detection
-      order: [
-        'localStorage',
-        'navigator',
-        'htmlTag',
-        'path',
-        'subdomain',
-      ],
+      order: ['localStorage', 'navigator', 'htmlTag', 'path', 'subdomain'],
       lookupLocalStorage: 'gitanimals-language',
       caches: ['localStorage'],
     },

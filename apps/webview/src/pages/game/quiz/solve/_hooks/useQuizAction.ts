@@ -21,7 +21,7 @@ interface UseQuizActionProps {
 }
 
 const useQuizAction = ({ contextId, quizDialog, prize, refetchQuiz }: UseQuizActionProps) => {
-  const { t, i18n } = useTranslation('Quiz');
+  const { t, i18n } = useTranslation('quiz');
 
   const locale = i18n.language as 'en_US' | 'ko_KR';
   const { correctDialog, failDialog, completeDialog } = quizDialog;

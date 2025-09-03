@@ -12,7 +12,7 @@ interface SolveQuizConfirmDialogProps {
 
 const SolveQuizConfirmDialog = ({ onConfirm, onClose, isOpen }: SolveQuizConfirmDialogProps) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { t } = useTranslation('Quiz');
+  const { t } = useTranslation('quiz');
 
   const handleConfirm = async () => {
     if (isLoading) return;

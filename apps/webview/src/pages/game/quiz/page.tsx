@@ -9,14 +9,14 @@ import { Background } from './_components/BackGround';
 import { useTranslation } from 'react-i18next';
 
 function QuizPage() {
-  const { t } = useTranslation('Quiz');
+  const { t } = useTranslation('quiz');
 
   return (
     <>
       <Background widthBottom />
       <div className={containerStyle}>
         <h1 className={titleStyle}>Quiz</h1>
-        <p className={descriptionStyle}>{t('quiz-solve-description')}</p>
+        <p className={descriptionStyle}>{t('quiz_solve_description')}</p>
         <SelectQuizType />
       </div>
       <TabBar />

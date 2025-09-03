@@ -27,7 +27,7 @@ const SolvingQuizSection = wrap
   })
   .Suspense({ fallback: <></> })
   .on(function SolvingQuizSection({ contextId }: Props) {
-    const { t, i18n } = useTranslation('Quiz');
+    const { t, i18n } = useTranslation('quiz');
     const { round, level, problem, refetchQuiz } = useQuizData({ contextId });
 
     const [isRoundEnd, setIsRoundEnd] = useState(false);

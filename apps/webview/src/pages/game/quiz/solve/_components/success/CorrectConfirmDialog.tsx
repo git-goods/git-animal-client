@@ -15,7 +15,7 @@ interface CorrectConfirmDialogProps {
 }
 
 const CorrectConfirmDialog = ({ correctPoint, onConfirm, onStop, onClose, isOpen }: CorrectConfirmDialogProps) => {
-  const { t, i18n } = useTranslation('Quiz');
+  const { t, i18n } = useTranslation('quiz');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleConfirm = async () => {
