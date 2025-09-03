@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import { css } from '../../../styled-system/css';
 import { TabBar } from './TabBar';
 import { authUtils } from '@/utils';
+import { css } from '_panda/css';
 
 function Layout() {
   const isAuthenticated = authUtils.isAuthenticated();
