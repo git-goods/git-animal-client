@@ -55,3 +55,7 @@
     }
   }
 }
+
+:root {
+  --container-max-width: 560px;
+}

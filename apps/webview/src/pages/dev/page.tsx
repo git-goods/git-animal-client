@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Banner, Dialog } from '@gitanimals/ui-panda';
-import { css } from '../../styled-system/css';
-import { authUtils } from '../utils';
+import { css } from '_panda/css';
+import { authUtils } from '@/utils';
 
-function HomePage() {
+export default function DevPage() {
   const { t } = useTranslation();
   const [count, setCount] = useState(0);
   const [userProfile, setUserProfile] = useState<any>(null);
@@ -74,12 +74,21 @@ function HomePage() {
           backgroundColor: 'green.50',
         })}
       >
-        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>{t('auth.authentication_status')}</h2>
+        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>
+          {t('auth.authentication_status')}
+        </h2>
         <div className={css({ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: 'sm' })}>
-          <div>{t('home.status')}: ✅ {t('auth.authenticated')}</div>
-          <div>{t('auth.token_valid')}: {tokenInfo?.isValid ? `✅ ${t('settings.yes')}` : `❌ ${t('settings.no')}`}</div>
           <div>
-            {t('auth.expires_in')}: {tokenInfo?.expiresIn ? `${Math.floor(tokenInfo.expiresIn / 1000 / 60)} ${t('auth.minutes')}` : t('settings.unknown')}
+            {t('home.status')}: ✅ {t('auth.authenticated')}
+          </div>
+          <div>
+            {t('auth.token_valid')}: {tokenInfo?.isValid ? `✅ ${t('settings.yes')}` : `❌ ${t('settings.no')}`}
+          </div>
+          <div>
+            {t('auth.expires_in')}:{' '}
+            {tokenInfo?.expiresIn
+              ? `${Math.floor(tokenInfo.expiresIn / 1000 / 60)} ${t('auth.minutes')}`
+              : t('settings.unknown')}
           </div>
         </div>
         <Button size="s" variant="secondary" onClick={handleRefreshToken} className={css({ marginTop: '1rem' })}>
@@ -98,7 +107,9 @@ function HomePage() {
             backgroundColor: 'blue.50',
           })}
         >
-          <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>{t('home.user_profile')}</h2>
+          <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>
+            {t('home.user_profile')}
+          </h2>
           <pre className={css({ fontSize: 'sm', whiteSpace: 'pre-wrap' })}>{JSON.stringify(userProfile, null, 2)}</pre>
         </div>
       )}
@@ -113,7 +124,9 @@ function HomePage() {
           backgroundColor: 'white',
         })}
       >
-        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>{t('home.api_testing')}</h2>
+        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>
+          {t('home.api_testing')}
+        </h2>
         <div className={css({ display: 'flex', gap: '1rem', flexWrap: 'wrap' })}>
           <Button onClick={fetchUserProfile}>{t('home.fetch_profile')}</Button>
           <Button variant="secondary" onClick={() => setCount(count + 1)}>
@@ -133,9 +146,7 @@ function HomePage() {
         </Dialog.Trigger>
         <Dialog.Content>
           <Dialog.Title>{t('home.webview_info_title')}</Dialog.Title>
-          <Dialog.Description>
-            {t('home.webview_info_description')}
-          </Dialog.Description>
+          <Dialog.Description>{t('home.webview_info_description')}</Dialog.Description>
           <div className={css({ marginTop: '1rem' })}>
             <h3 className={css({ fontWeight: 'semibold', marginBottom: '0.5rem' })}>{t('home.features')}:</h3>
             <ul className={css({ listStyle: 'disc', paddingLeft: '1.5rem', fontSize: 'sm' })}>
@@ -152,5 +163,3 @@ function HomePage() {
     </div>
   );
 }
-
-export default HomePage;

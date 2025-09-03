@@ -8,31 +8,13 @@ import CharacterView from './_components/CharacterView';
 import { ProfileBoard } from './_components/ProfileBoard';
 
 export default function WebviewPage() {
-  const handleLogout = () => {
-    // React Native로 logout 메시지 전송
-    if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(
-        JSON.stringify({
-          type: 'LOGOUT',
-        }),
-      );
-    } else {
-      // 웹 브라우저에서의 경우 일반적인 로그아웃 처리
-      console.log('Logout clicked in web browser');
-    }
-  };
-
   return (
     <div className={containerStyle}>
-      <button onClick={handleLogout} className={logoutButtonStyle}>
-        logout
-      </button>
       <ProfileBoard />
       <CharacterView />
       <div className={backgroundStyle}>
         <img src="/assets/home/app-background-home.png" alt="background" />
       </div>
-      <TabBar />
     </div>
   );
 }
