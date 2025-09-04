@@ -8,6 +8,7 @@ import {
   interceptorResponseRejected,
 } from '../../utils/interceptor';
 import { AuthPage } from './AuthPage';
+import { useNavigate } from 'react-router-dom';
 
 interface AuthWrapperProps {
   children: ReactNode;
@@ -17,6 +18,8 @@ function AuthWrapper({ children }: AuthWrapperProps) {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [jwtFromUrl, setJwtFromUrl] = useState<string | null>(null);
   const [isTokenReady, setIsTokenReady] = useState(false);
+
+  console.log('isTokenReady', isTokenReady);
 
   useEffect(() => {
     const cleanup = setupWebViewMessageHandler();
@@ -84,8 +87,10 @@ function AuthWrapper({ children }: AuthWrapperProps) {
           justifyContent: 'center',
           alignItems: 'center',
           height: '100vh',
+          width: '100vw',
           fontSize: '16px',
           color: '#666',
+          backgroundColor: 'black',
         }}
       >
         인증 정보를 확인하는 중...

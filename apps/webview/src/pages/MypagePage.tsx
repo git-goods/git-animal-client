@@ -5,15 +5,22 @@ import { css } from '../../styled-system/css';
 import { authUtils } from '@/utils';
 import { ROUTES } from '@/router/constants';
 import { useNavigate } from 'react-router-dom';
+import { useBridge } from '@webview-bridge/react';
+import { bridge } from '@/components/layout/BridgeProvider';
 
 function MyPagePage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  const appLogout = useBridge(bridge.store, (state) => state.logout);
+  const count = useBridge(bridge.store, (state) => state);
+  console.log('count', count);
+
   const isAuthenticated = authUtils.isAuthenticated();
   const handleLogout = () => {
     // 웹뷰 환경에서는 브릿지를 통해 앱에 로그아웃 요청
     authUtils.logout();
+    appLogout();
     navigate(ROUTES.AUTH);
   };
 

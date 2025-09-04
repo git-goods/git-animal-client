@@ -105,11 +105,6 @@ export const authUtils = {
     tokenManager.setTokens(accessToken, refreshToken);
 
     // 토큰 설정 완료 메시지 전송
-    if (window.ReactNativeWebView) {
-      bridgeUtils.sendCustomMessage('TOKENS_SET', {
-        message: 'Tokens successfully set',
-      });
-    }
   },
 
   /**
