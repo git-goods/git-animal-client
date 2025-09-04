@@ -6,5 +6,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 
-# pnpm dlx turbo type-check
-# pnpm dlx lint-staged
+pnpm dlx turbo type-check
+pnpm dlx lint-staged
