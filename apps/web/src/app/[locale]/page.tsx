@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
+import { ErrorBoundary } from '@suspensive/react';
 
+import { ErrorSection } from '@/components/Error/ErrorSection';
 import GNB from '@/components/GNB/GNB';
 
 import { ChoosePetSection } from './landing/ChoosePetSection';
@@ -25,7 +27,11 @@ export default function HomePage({ searchParams }: { searchParams: { [key: strin
     <div>
       <GNB />
       <MainSection />
-      <RankingServerSide searchParams={searchParams} />
+      <ErrorBoundary
+        fallback={<ErrorSection title="랭킹 정보를 불러올 수 없습니다" description="잠시 후 다시 시도해주세요" />}
+      >
+        <RankingServerSide searchParams={searchParams} />
+      </ErrorBoundary>
       <AvailablePetSection />
       <HavePetWaySection />
       <ChoosePetSection />

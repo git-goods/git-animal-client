@@ -1,2 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Node.js 경로 설정 (NVM 및 Fork 앱 호환성)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+
 pnpm dlx turbo type-check
 pnpm dlx lint-staged

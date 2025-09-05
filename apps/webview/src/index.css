@@ -1,0 +1,63 @@
+@layer reset, base, tokens, recipes, utilities;
+
+@font-face {
+  font-family: 'DNFBitBitv2';
+  font-style: normal;
+  font-weight: 400;
+  src: url('//cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'DOSGothic';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/DOSGothic.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    position: relative;
+    font-family: system-ui, sans-serif;
+    background-color: #ffffff;
+    color: #213547;
+  }
+
+  button {
+    cursor: pointer;
+    border: transparent;
+    background-color: transparent;
+    padding: 0;
+    outline: none;
+  }
+
+  .mobile {
+    display: none;
+  }
+
+  .desktop {
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .mobile {
+      display: block;
+    }
+
+    .desktop {
+      display: none;
+    }
+  }
+}
+
+:root {
+  --container-max-width: 560px;
+  --container-height: calc(100vh - var(--tab-bar-height));
+  --tab-bar-height: 60px;
+}

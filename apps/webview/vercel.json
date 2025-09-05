@@ -1,0 +1,11 @@
+{
+  "buildCommand": "cd ../.. && npx turbo build --filter=@gitanimals/webview",
+  "outputDirectory": "dist",
+  "installCommand": "pnpm install",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

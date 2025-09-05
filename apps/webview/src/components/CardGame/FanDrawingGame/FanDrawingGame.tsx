@@ -3,7 +3,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { css } from '_panda/css';
 import { CardBack as CardBackUi } from '@gitanimals/ui-panda';
 import { motion } from 'framer-motion';
@@ -20,7 +20,7 @@ interface CardDrawingGameProps {
 }
 
 export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawingGameProps) {
-  const t = useTranslations('Gotcha');
+  const { t } = useTranslation('gotcha');
 
   const [gameState, setGameState] = useState<'ready' | 'drawing' | 'selected' | 'revealing'>('ready');
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
@@ -304,7 +304,10 @@ const detailedCardStyle = css({
 });
 
 const noticeMessageStyle = css({
+  textStyle: 'glyph22.regular',
   color: 'white',
   textAlign: 'center',
-  textStyle: 'glyph16.regular',
+  _mobile: {
+    textStyle: 'glyph16.regular',
+  },
 });

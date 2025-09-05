@@ -9,26 +9,26 @@
         "./styled-system/*"
       ]
     },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
     "allowJs": true,
     "forceConsistentCasingInFileNames": false,
     "strictNullChecks": true,
     "types": [
-      "@pandacss/dev"
+      "@pandacss/dev",
+      "vite/client"
     ],
-    "target": "ES2017"
+    "skipLibCheck": true,
+    "target": "ES2017",
+    "lib": ["DOM", "DOM.Iterable", "ES2017"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "jsx": "react-jsx"
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
     "styled-system",
-    "types/**/*.ts"
+    "src/vite-env.d.ts"
   ],
   "exclude": [
     "node_modules"

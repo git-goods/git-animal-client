@@ -1,16 +1,7 @@
-import type { GetAllPersonaResponse } from '@gitanimals/api';
-import { getAllPersona } from '@gitanimals/api';
-import type { UseQueryOptions } from '@tanstack/react-query';
-import { useSuspenseQuery } from '@tanstack/react-query';
-
 import { getAnimalTierInfo } from '@/utils/animals';
+import { getAllPersona, GetAllPersonaResponse, Persona } from '@gitanimals/api';
 
-const useGetAllPersona = (options?: Omit<UseQueryOptions<GetAllPersonaResponse>, 'queryKey' | 'queryFn'>) =>
-  useSuspenseQuery<GetAllPersonaResponse>({
-    queryKey: ['persona', 'info', 'all'],
-    queryFn: getAllPersona,
-    ...options,
-  });
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 /**
  * 페르소나의 드랍률을 가져오는 훅
@@ -21,7 +12,10 @@ const useGetAllPersona = (options?: Omit<UseQueryOptions<GetAllPersonaResponse>,
 export const useGetPersonaDropRate = (personaType: string) => {
   const {
     data: { personas },
-  } = useGetAllPersona();
+  } = useSuspenseQuery<GetAllPersonaResponse>({
+    queryKey: ['persona', 'info', 'all'],
+    queryFn: getAllPersona,
+  });
   const currentPersona = personas.find((persona) => persona.type === personaType);
   if (!currentPersona) throw new Error('unexpected persona');
 

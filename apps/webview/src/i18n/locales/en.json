@@ -1,0 +1,217 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "profile": "Profile",
+    "settings": "Settings",
+    "login": "Login"
+  },
+  "common": {
+    "loading": "Loading...",
+    "retry": "Retry",
+    "refresh": "Refresh",
+    "close": "Close",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back"
+  },
+  "auth": {
+    "welcome_title": "Welcome to GitAnimals",
+    "welcome_description": "Please authenticate to access your GitAnimals dashboard",
+    "authenticate_button": "Authenticate with Parent App",
+    "local_login": "Local Login",
+    "test_login": "Test Login (Development)",
+    "auth_required": "Authentication required to continue",
+    "redirecting_to": "You'll be redirected to: {{path}}",
+    "authenticated": "Authenticated",
+    "not_authenticated": "Not Authenticated",
+    "authentication_status": "Authentication Status",
+    "token_valid": "Token Valid",
+    "expires_in": "Expires In",
+    "minutes": "minutes",
+    "refresh_token": "Refresh Token",
+    "request_new_auth": "Request New Auth"
+  },
+  "home": {
+    "title": "GitAnimals Webview - Home",
+    "api_testing": "API Testing",
+    "fetch_profile": "Fetch Profile",
+    "counter": "Counter",
+    "webview_info": "WebView Info",
+    "webview_info_title": "WebView Information",
+    "webview_info_description": "This webview includes integrated token management for secure communication with the GitAnimals backend.",
+    "features": "Features",
+    "features_list": [
+      "Automatic token refresh",
+      "WebView ↔ Parent App communication",
+      "Secure API calls with Bearer token",
+      "Authentication state management"
+    ],
+    "banner_message": "WebView with Token Manager is working!",
+    "status": "Status",
+    "user_profile": "User Profile"
+  },
+  "about": {
+    "title": "About GitAnimals",
+    "what_is_title": "What is GitAnimals?",
+    "description_1": "GitAnimals is a gamified platform that allows developers to raise virtual pets through their GitHub activity. The more you contribute to your repositories, the more your virtual animals grow and evolve!",
+    "description_2": "This webview application provides a mobile-friendly interface to interact with your GitAnimals dashboard, view your pets, and track your progress.",
+    "features_title": "Features",
+    "features_list": [
+      "Virtual pet management through GitHub contributions",
+      "Progress tracking and statistics",
+      "Mobile-optimized webview interface",
+      "Secure authentication with token management",
+      "Real-time synchronization with your GitHub activity"
+    ],
+    "get_started_title": "Get Started",
+    "authenticated_description": "You're already authenticated! Explore your dashboard and manage your virtual pets.",
+    "go_to_dashboard": "Go to Dashboard",
+    "view_profile": "View Profile",
+    "not_authenticated_description": "To start using GitAnimals, you'll need to authenticate with your GitHub account.",
+    "get_started_button": "Get Started",
+    "banner_message": "Start your journey with GitAnimals today!"
+  },
+  "profile": {
+    "title": "User Profile",
+    "loading": "Loading profile...",
+    "error": "Failed to load user profile",
+    "profile_information": "Profile Information",
+    "no_data": "No profile data available",
+    "refresh_profile": "Refresh Profile"
+  },
+  "settings": {
+    "title": "Settings",
+    "token_management": "Token Management",
+    "app_settings": "App Settings",
+    "account": "Account",
+    "clear_cache": "Clear Cache",
+    "reload_app": "Reload App",
+    "logout": "Logout",
+    "logout_confirm_title": "Confirm Logout",
+    "logout_confirm_description": "Are you sure you want to logout? You will need to authenticate again to use the app.",
+    "banner_message": "Settings page for managing your WebView preferences",
+    "yes": "Yes",
+    "no": "No",
+    "unknown": "Unknown"
+  },
+  "notfound": {
+    "title": "Page Not Found",
+    "description": "The page you requested does not exist.",
+    "go_home": "Go Home"
+  },
+  "language": {
+    "korean": "한국어",
+    "english": "English",
+    "change_language": "Change Language"
+  },
+  "quiz": {
+    "quiz_solve_description": "Create a quiz or solve it to earn points!",
+    "create-quiz-card-title": "Create Quiz",
+    "create-quiz-card-description": "Create an O/X quiz and get [point]P!",
+    "difficulty-level": "Difficulty Level",
+    "easy": "Easy",
+    "medium": "Medium",
+    "difficult": "Difficult",
+    "level": "Level",
+    "category": "Category",
+    "category-description": "Choose the category of the quiz.",
+    "quiz-contents": "Quiz Contents",
+    "quiz-contents-description": "Write down the contents of the quiz...",
+    "answer-title": "Answer",
+    "answer-description": "Choose the correct answer for the quiz.",
+    "create-quiz-button": "Create",
+    "solve-quiz-card-title": {
+      "not-started": "Solve Quiz",
+      "fail": "Quiz Failed",
+      "done": "Quiz Solved"
+    },
+    "solve-quiz-card-description": {
+      "not-started": "Solve random quiz and get up to [point]P! You can only try once a day.",
+      "fail": "Failed today's quiz",
+      "done": "Already solved today and earned [point]P"
+    },
+    "solve-quiz-card-point": {
+      "not-started": "Up to [point]P",
+      "fail": "Better Luck Tomorrow!",
+      "done": "Earned [point]P"
+    },
+    "solve-todays-quiz": "Solve today's quiz?",
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "start": "Start!",
+    "correct-dialog": {
+      "title": "Correct!",
+      "description": "Challenge the next quiz and get double points.",
+      "challenge-button": "Challenge the next Quiz",
+      "stop-button": "Stop Quiz & Get [point]P"
+    },
+    "fail-dialog": {
+      "title": "Wrong answer..",
+      "description": "You can't get points because the challenge failed.",
+      "close-button": "Close"
+    },
+    "complete-dialog": {
+      "title": "Champion of the quiz!",
+      "description": "Finished the final quiz and got [point]P.",
+      "close-button": "Close"
+    },
+    "timer-mention": "Choose the correct answer!",
+    "quiz-finished": "Finished quiz. You got [point]P!"
+  },
+  "gotcha": {
+    "pet-gotcha-desc": "Draw a S+ Grade pet for 1,000 points",
+    "choose-one-card": "Choose one card you want!",
+    "close-notice-message": "[count] seconds later, this window will close.",
+    "get-persona-success": "You have successfully drawn a pet!",
+    "get-persona-fail": "Failed to draw a pet.",
+    "token-expired": "Token expired. Please sign in again.",
+    "contact-us": "Contact us",
+    "many-error-message": "If you continue to experience problems, please contact us.",
+    "gotcha-in-progress": "Drawing in progress. Please wait a moment.",
+    "click-card-to-flip": "Click the card to flip!",
+    "not-enough-points": "You don't have enough points to draw a pet.",
+    "click-to-close": "Touch the screen to close."
+  },
+  "shop": {
+    "no-mobile-support": "Currently, mobile is not supported. Please connect to the desktop.",
+    "buy-product-success": "Purchase complete!",
+    "buy-product-fail": "Failed to purchase.",
+    "buy": "Buy",
+    "pet": "Pet",
+    "name": "Name",
+    "grade": "Grade",
+    "level": "Level",
+    "price": "Price",
+    "date": "Date",
+    "sell": "Sell",
+    "price-you-want": "Price you want",
+    "sell-product-success": "Sell complete!",
+    "sell-product-fail": "Failed to sell.",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "delete-product-success": "Cancellation complete!",
+    "delete-product-fail": "Failed to cancellation.",
+    "edit": "Edit",
+    "pet-sold": "Pet sold successfully for [money]!",
+    "prepare": "Prepare",
+    "merge": "Merge",
+    "edit-product": "Edit Product",
+    "buy-error-not-login": "Please sign in to use this feature.",
+    "sell-confirm": "Are you sure you want  to sell?",
+    "sell-confirm-description": "After selling, the pet will disappear.",
+    "sell-confirm-checkbox": "Do not show this message again",
+    "sell-price-modal-title": "Enter the price you want to sell",
+    "Background": {
+      "buy-success": "Background purchased successfully",
+      "buy-fail": "Failed to purchase background",
+      "purchased": "Purchased",
+      "buy": "Buy",
+      "event-sale": "Event Limited Sale",
+      "buy-possible-user": "Please sign in to use this feature."
+    }
+  }
+}
