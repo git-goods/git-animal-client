@@ -1,8 +1,7 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { flex } from '_panda/patterns';
@@ -26,7 +25,7 @@ interface SelectedPetTableProps {
 
 export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProps) {
   const queryClient = useQueryClient();
-  const t = useTranslations('Shop');
+  const { t } = useTranslation('shop');
   const [isMergeOpen, setIsMergeOpen] = useState(false);
   const [sellPersonaId, setSellPersonaId] = useState<string | null>(null);
   const { setDoNotShowAgain, isChecked: isDoNotShowAgain } = useDoNotShowAgain();
@@ -75,7 +74,7 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
         {currentPersona && (
           <>
             <div>
-              <Image src={getPersonaImage(currentPersona.type)} alt={currentPersona.type} width={60} height={67} />
+              <img src={getPersonaImage(currentPersona.type)} alt={currentPersona.type} width={60} height={67} />
             </div>
             <div>{snakeToTitleCase(currentPersona.type)}</div>
             <div>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</div>
@@ -190,7 +189,7 @@ function SellConfirmDialog({
   isOpen: boolean;
 }) {
   const [isLoading, setIsLoading] = useState(false);
-  const t = useTranslations();
+  const { t } = useTranslation();
   const [isDoNotShowAgain, setIsDoNotShowAgain] = useState(false);
 
   const confirmDialog = async () => {
@@ -206,23 +205,23 @@ function SellConfirmDialog({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content>
-        <Dialog.Title>{t('Shop.sell-confirm')}</Dialog.Title>
+        <Dialog.Title>{t('shop.sell-confirm')}</Dialog.Title>
         <Dialog.Description className={descriptionStyle}>
-          <p>{t('Shop.sell-confirm-description')}</p>
+          <p>{t('shop.sell-confirm-description')}</p>
         </Dialog.Description>
         <Flex alignItems="center" justifyContent="space-between" width="100%">
           <Flex alignItems="center" gap="2">
             <Checkbox id="do-not-show-again" onClick={() => setIsDoNotShowAgain(!isDoNotShowAgain)} />
             <Label htmlFor="do-not-show-again" whiteSpace="nowrap">
-              {t('Shop.sell-confirm-checkbox')}
+              {t('shop.sell-confirm-checkbox')}
             </Label>
           </Flex>
           <Flex gap="8px" justifyContent="flex-end" width="100%">
             <Button onClick={onClose} variant="secondary" size="m">
-              {t('Common.close')}
+              {t('common.close')}
             </Button>
             <Button onClick={confirmDialog} variant="primary" size="m" disabled={isLoading}>
-              {isLoading ? t('Common.processing') : t('Common.confirm')}
+              {isLoading ? t('common.processing') : t('common.confirm')}
             </Button>
           </Flex>
         </Flex>

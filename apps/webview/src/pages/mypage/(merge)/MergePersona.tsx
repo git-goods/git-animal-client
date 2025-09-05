@@ -1,7 +1,7 @@
 'use client';
 
 import { memo, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { css, cx } from '_panda/css';
 import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
@@ -11,11 +11,12 @@ import { wrap } from '@suspensive/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 
 import { customScrollStyle } from '@/styles/scrollStyle';
-import { useClientSession, useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 import { MergePreview } from './MergePreview';
 import { MergeResultModal } from './MergeResult';
+import { useUser } from '@/hooks/useUser';
+import { authUtils } from '@/utils';
 
 interface MergePersonaProps {
   isOpen: boolean;
@@ -25,19 +26,19 @@ interface MergePersonaProps {
 
 export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona }: MergePersonaProps) {
   const queryClient = useQueryClient();
-  const t = useTranslations('Mypage.Merge');
+  const { t } = useTranslation('mypage');
 
   const [resultData, setResultData] = useState<MergePersonaLevelResponse | null>(null);
 
   const [materialPersona, setMaterialPersona] = useState<Persona | null>(null);
   const [targetPersona, setTargetPersona] = useState<Persona>(initTargetPersona);
 
-  const session = useClientSession();
-  const token = session.data?.user.accessToken as string;
   const isMergeDisabled = !materialPersona || !targetPersona;
   const selectPersona = [targetPersona.id, materialPersona?.id].filter(Boolean) as string[];
 
-  const { mutate: mergePersonaLevel, isPending: isMerging } = useMergePersonaLevelByToken(token, {
+  const token = authUtils.getToken();
+
+  const { mutate: mergePersonaLevel, isPending: isMerging } = useMergePersonaLevelByToken(token as string, {
     onSuccess: (data) => {
       setMaterialPersona(null);
       setResultData(data);
@@ -75,10 +76,10 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
 
         <Dialog.Footer className={footerStyle}>
           <Button variant="secondary" onClick={onClose}>
-            {t('cancel')}
+            {t('Merge.cancel')}
           </Button>
           <Button disabled={isMergeDisabled} onClick={onMergeAction}>
-            {t('merge')}
+            {t('Merge.merge')}
           </Button>
         </Dialog.Footer>
         <MergeResultModal
@@ -107,15 +108,15 @@ const SelectPersonaList = wrap
   .ErrorBoundary({ fallback: <div>error</div> })
   .Suspense({ fallback: <BannerSkeletonList length={6} size="small" /> })
   .on(function SelectPersonaList({ selectPersona, onSelectPersona }: SelectPersonaListProps) {
-    const { name } = useClientUser();
+    const { username: name } = useUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
-    const t = useTranslations('Mypage.Merge');
+    const { t } = useTranslation('mypage');
 
     // TODO: 정렬
     return (
       <section className={sectionStyle}>
         <div className={listSectionTitleStyle}>
-          <p>{t('please-choose-pet')}</p>
+          <p>{t('Merge.please-choose-pet')}</p>
         </div>
         <div className={flexOverflowStyle}>
           {data.personas.map((persona) => (

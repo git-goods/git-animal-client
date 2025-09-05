@@ -2,7 +2,6 @@
 'use client';
 
 import { memo } from 'react';
-import Image from 'next/image';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { userQueries } from '@gitanimals/react-query';
@@ -41,8 +40,7 @@ export const ProfileSection = memo(
           <div className={profileTextStyle}>
             <p className={profileNameStyle}>{data?.username}</p>
             <div className={pointStyle}>
-              <Image src="/assets/mypage/coin.svg" alt="coin" width={24} height={24} />{' '}
-              {addNumberComma(data.points ?? 0)}
+              <img src="/assets/mypage/coin.svg" alt="coin" width={24} height={24} /> {addNumberComma(data.points ?? 0)}
             </div>
           </div>
         </section>

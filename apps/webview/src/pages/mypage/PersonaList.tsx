@@ -9,8 +9,8 @@ import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banne
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
+import { useUser } from '@/hooks/useUser';
 
 interface Props {
   selectPersona: string[];
@@ -35,8 +35,8 @@ export const SelectPersonaList = wrap
   })
 
   .on(function SelectPersonaList({ selectPersona, onSelectPersona, initSelectPersonas, loadingPersona }: Props) {
-    const { name } = useClientUser();
-    const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
+    const { username } = useUser();
+    const { data } = useSuspenseQuery(userQueries.allPersonasOptions(username));
 
     // 초기 선택 로직, 외부에서 초기화 함수 전달
     useEffect(() => {

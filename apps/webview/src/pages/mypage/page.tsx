@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { type Persona } from '@gitanimals/api';
@@ -10,9 +9,10 @@ import { customScrollStyle } from '@/styles/scrollStyle';
 
 import { SelectPersonaList } from './PersonaList';
 import { SelectedPetTable } from './SelectedPetTable';
+import { useTranslation } from 'react-i18next';
 
 function MypageMyPets() {
-  const t = useTranslations('Mypage');
+  const { t } = useTranslation('mypage');
   const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
 
   return (

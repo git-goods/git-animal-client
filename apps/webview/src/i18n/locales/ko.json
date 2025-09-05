@@ -16,7 +16,19 @@
     "save": "저장",
     "delete": "삭제",
     "edit": "편집",
-    "back": "뒤로가기"
+    "back": "뒤로가기",
+    "pet": "펫",
+    "name": "이름",
+    "grade": "등급",
+    "level": "레벨",
+    "price": "가격",
+    "date": "날짜",
+    "pet-list": "펫 목록",
+    "sell": "판매",
+    "merge": "합치기",
+    "prepare": "준비중",
+    "processing": "처리중...",
+    "leave": "나가기"
   },
   "auth": {
     "welcome_title": "GitAnimals에 오신 것을 환영합니다",
@@ -214,5 +226,31 @@
       "event-sale": "이벤트 한정 세일",
       "buy-possible-user": "로그인 후 이용해주세요."
     }
+  },
+  "mypage": {
+    "copy-link-title": "이미지 복사",
+    "copy-link-success": "복사 성공!",
+    "line-set-error": "1000 이상은 설정할 수 없습니다.",
+    "apply-button": "적용하기",
+    "customize-size": "Customize Size",
+    "extend-button": "확장",
+    "shrink-button": "축소",
+    "change-pet": "펫 변경",
+    "no-mobile-support": "현재 모바일은 지원하지 않습니다.\n데스크탑으로 접속해주세요.",
+    "pet-list": "펫 목록",
+    "sell-to-other": "Tip. 다른 사용자에게 펫을 팔고싶다면, 경매장을 이용해주세요.",
+    "my-pet": "내 펫",
+    "github-custom": "Github Custom",
+    "invalid-size-error": "유효하지 않은 사이즈",
+    "farm-type-select-pet": "Farm Type에 사용할 펫을 선택해주세요.",
+    "line-type-select-pet": "Line Type에 사용할 펫을 선택해주세요.",
+
+    "Merge": {
+      "merge": "합치기",
+      "merge-result": "합치기 결과",
+      "cancel": "취소",
+      "please-choose-pet": "합치기에 사용할 펫을 선택해주세요. 합친 펫은 사라집니다."
+    },
+    "laboratory": "실험실"
   }
 }

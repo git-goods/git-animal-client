@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable @next/next/no-img-element */
 import type { PropsWithChildren } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 import { css } from '_panda/css';
 import type { MergePersonaLevelResponse } from '@gitanimals/api';
 import { snakeToTitleCase } from '@gitanimals/util-common';
@@ -18,19 +18,19 @@ interface MergeResultModalProps {
 }
 
 export const MergeResultModal = ({ isOpen, onClose, result }: MergeResultModalProps) => {
-  const t = useTranslations('Mypage.Merge');
+  const { t } = useTranslation('mypage');
 
   if (!isOpen) return null;
 
   return (
     <MotionContainer onClose={onClose}>
-      <h3 className={css({ textStyle: 'glyph24.bold' })}>{t('merge-result')}</h3>
+      <h3 className={css({ textStyle: 'glyph24.bold' })}>{t('Merge.merge-result')}</h3>
       <div className={mergeItemStyle}>
         <img src={getPersonaImage(result.type)} alt={result.type} width={100} height={100} />
       </div>
       <div className={resultTextStyle}>
-        <p>{snakeToTitleCase(result.type)}</p>
-        <span>Level {result.level}</span>
+        <p>{t('Merge.name', { name: snakeToTitleCase(result.type) })}</p>
+        <span>{t('Merge.level', { level: result.level })}</span>
       </div>
     </MotionContainer>
   );

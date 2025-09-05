@@ -10,13 +10,25 @@
     "loading": "Loading...",
     "retry": "Retry",
     "refresh": "Refresh",
-    "close": "Close",
-    "cancel": "Cancel",
-    "confirm": "Confirm",
     "save": "Save",
     "delete": "Delete",
     "edit": "Edit",
-    "back": "Back"
+    "back": "Back",
+    "pet": "Pet",
+    "name": "Name",
+    "grade": "Grade",
+    "level": "Level",
+    "price": "Price",
+    "date": "Date",
+    "sell": "Sell",
+    "pet-list": "Pet list",
+    "merge": "Merge",
+    "prepare": "Prepare",
+    "confirm": "Confirm",
+    "close": "Close",
+    "processing": "Processing...",
+    "leave": "Leave",
+    "cancel": "Cancel"
   },
   "auth": {
     "welcome_title": "Welcome to GitAnimals",
@@ -213,5 +225,30 @@
       "event-sale": "Event Limited Sale",
       "buy-possible-user": "Please sign in to use this feature."
     }
+  },
+  "mypage": {
+    "copy-link-title": "Copy Link",
+    "copy-link-success": "Copy success!",
+    "line-set-error": "Cannot set more than 1000.",
+    "apply-button": "Apply",
+    "customize-size": "Customize Size",
+    "extend-button": "Extend",
+    "shrink-button": "Shrink",
+    "change-pet": "Change pet",
+    "no-mobile-support": "Currently, mobile is not supported.\nPlease connect to the desktop.",
+    "pet-list": "Pet list",
+    "sell-to-other": "Tip. If you want to sell your pet to other users, please use the auction.",
+    "my-pet": "My pet",
+    "github-custom": "Github Custom",
+    "invalid-size-error": "Invalid size",
+    "farm-type-select-pet": "Select a pet for Farm Type",
+    "line-type-select-pet": "Select a pet for Line Type",
+    "Merge": {
+      "merge": "Merge",
+      "merge-result": "Merge result",
+      "cancel": "Cancel",
+      "please-choose-pet": "Select a pet to merge. The selected pet will be consumed and disappear."
+    },
+    "laboratory": "Laboratory"
   }
 }

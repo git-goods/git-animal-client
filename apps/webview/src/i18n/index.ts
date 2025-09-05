@@ -12,12 +12,14 @@ const resources = {
     quiz: enTranslations.quiz,
     gotcha: enTranslations.gotcha,
     shop: enTranslations.shop,
+    mypage: enTranslations.mypage,
   },
   ko: {
     translation: koTranslations,
     quiz: koTranslations.quiz,
     gotcha: koTranslations.gotcha,
     shop: koTranslations.shop,
+    mypage: koTranslations.mypage,
   },
 };
 
