@@ -7,6 +7,9 @@ import {
   ChangeProductResponse,
   deleteProduct,
   DeleteProductResponse,
+  registerProduct,
+  RegisterProductRequest,
+  RegisterProductResponse,
 } from '@gitanimals/api';
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 
@@ -27,5 +30,13 @@ export const useChangeProductPrice = (
 export const useBuyProduct = (options?: UseMutationOptions<BuyProductResponse, unknown, BuyProductRequest>) =>
   useMutation<BuyProductResponse, unknown, BuyProductRequest>({
     mutationFn: buyProduct,
+    ...options,
+  });
+
+export const useRegisterProduct = (
+  options?: UseMutationOptions<RegisterProductResponse, unknown, RegisterProductRequest>,
+) =>
+  useMutation<RegisterProductResponse, unknown, RegisterProductRequest>({
+    mutationFn: registerProduct,
     ...options,
   });

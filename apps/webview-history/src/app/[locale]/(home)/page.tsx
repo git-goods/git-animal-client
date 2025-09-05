@@ -1,5 +1,6 @@
 'use client';
 
+import { signOut } from 'next-auth/react';
 import { css } from '_panda/css';
 
 import { TabBar } from '@/components/Layout/TabBar';
@@ -16,9 +17,12 @@ export default function WebviewPage() {
           type: 'LOGOUT',
         }),
       );
+
+      signOut();
     } else {
       // 웹 브라우저에서의 경우 일반적인 로그아웃 처리
       console.log('Logout clicked in web browser');
+      signOut();
     }
   };
 

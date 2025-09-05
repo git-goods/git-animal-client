@@ -2,9 +2,9 @@ import { center } from '_panda/patterns';
 
 import LoginButton from './LoginButton';
 
-async function JWTPage({ searchParams }: { searchParams: Promise<{ jwt: string }> }) {
-  const jwtToken = (await searchParams).jwt;
-
+async function JWTPage({ searchParams }: { searchParams: { jwt?: string } }) {
+  const jwtToken = searchParams.jwt || '';
+  console.log('[Auth Debug] JWTPage: jwtToken -- server', jwtToken);
   return (
     <div className={loadingContainerStyle}>
       Loading....

@@ -69,3 +69,5 @@ styled-system-studio
 apps/web/public/sw.js
 
 *storybook.log
+
+apps/app/.expo/

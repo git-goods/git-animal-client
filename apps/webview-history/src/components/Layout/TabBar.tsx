@@ -1,3 +1,5 @@
+'use client';
+
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { wrap } from '@suspensive/react';
