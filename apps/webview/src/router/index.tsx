@@ -11,6 +11,7 @@ import { MobileLayout } from '@/pages/game/quiz/_components/MobileLayout';
 import QuizPage from '@/pages/game/quiz/page';
 import SolveQuizPage from '@/pages/game/quiz/solve/page';
 import CreateQuizPage from '@/pages/game/quiz/create/page';
+import ShopPage from '@/pages/shop/page';
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
             ],
           },
         ],
+      },
+      {
+        path: 'shop',
+        element: <ShopPage />,
       },
       {
         path: NESTED_PATHS.MYPAGE(),

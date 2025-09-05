@@ -1,0 +1,55 @@
+'use client';
+
+import { memo } from 'react';
+import { css } from '_panda/css';
+
+export const Background = memo(function Background() {
+  return (
+    <div className={backgroundDivCss}>
+      <img width={750} height={140} src="/assets/shop/land-m.webp" alt="land" />
+      <img width={750} height={140} src="/assets/shop/land-m.webp" alt="land" />
+    </div>
+  );
+});
+
+const coinCss = css({
+  position: 'absolute',
+  width: 'fit-content',
+  top: '860px',
+  left: '80px',
+});
+
+const backgroundDivCss = css({
+  position: 'absolute',
+  zIndex: 'base',
+  bottom: 0,
+  left: 0,
+  w: '100%',
+  h: '354px',
+  overflow: 'hidden',
+
+  _mobile: {
+    h: '70px',
+  },
+
+  '& img': {
+    position: 'absolute',
+    maxWidth: 'unset',
+    height: '100%',
+    objectFit: 'contain',
+
+    _mobile: {
+      width: 'auto',
+      height: '70px',
+    },
+  },
+
+  '& img:first-of-type': {
+    animation: `slide 60s linear infinite`,
+  },
+
+  '& img:last-of-type': {
+    left: '454px', // NOTE: 2px은 깨지는 부분이 존재해 당김
+    animation: `slide 60s linear infinite`,
+  },
+});

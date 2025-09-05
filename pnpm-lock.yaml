@@ -370,6 +370,9 @@ importers:
       '@gitanimals/ui-token':
         specifier: workspace:*
         version: link:../../packages/ui/token
+      '@gitanimals/util-common':
+        specifier: workspace:*
+        version: link:../../packages/util/common
       '@suspensive/react':
         specifier: ^2.17.1
         version: 2.17.1(react@18.2.0)
@@ -379,6 +382,9 @@ importers:
       axios:
         specifier: ^1.6.8
         version: 1.7.2
+      framer-motion:
+        specifier: ^11.1.7
+        version: 11.2.10(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       i18next:
         specifier: ^25.4.2
         version: 25.4.2(typescript@5.4.5)
@@ -388,6 +394,9 @@ importers:
       lucide-react:
         specifier: ^0.408.0
         version: 0.408.0(react@18.2.0)
+      nuqs:
+        specifier: ^2.5.2
+        version: 2.5.2(@remix-run/react@2.10.3(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(next@14.2.3(@babel/core@7.28.3)(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react-router-dom@7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react-router@7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react@18.2.0)
       react:
         specifier: ^18
         version: 18.2.0
@@ -4220,6 +4229,9 @@ packages:
 
   '@sinonjs/fake-timers@10.3.0':
     resolution: {integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==}
+
+  '@standard-schema/spec@1.0.0':
+    resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
 
   '@storybook/addon-actions@8.1.9':
     resolution: {integrity: sha512-7ZefE9AER42htn4McqMXcL2RDnflesIf4SxY7pCHpL7rUoldxfZ1DGGRgyKen00H6vx1LGzLRBN9fhBUf9XqCA==}
@@ -8989,6 +9001,27 @@ packages:
 
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
+
+  nuqs@2.5.2:
+    resolution: {integrity: sha512-vzKeoYlMRmNYPWECdn53Nmh/jM+r/iSezEin342EVXPogT6KzALwdnYbZxASE5vTdXRUtOymtPkgsarLipKetg==}
+    peerDependencies:
+      '@remix-run/react': '>=2'
+      '@tanstack/react-router': ^1
+      next: 14.2.3
+      react: ^18
+      react-router: ^6 || ^7
+      react-router-dom: ^6 || ^7
+    peerDependenciesMeta:
+      '@remix-run/react':
+        optional: true
+      '@tanstack/react-router':
+        optional: true
+      next:
+        optional: true
+      react-router:
+        optional: true
+      react-router-dom:
+        optional: true
 
   nwsapi@2.2.20:
     resolution: {integrity: sha512-/ieB+mDe4MrrKMT8z+mQL8klXydZWGR5Dowt4RAGKbJ3kIGEx3X4ljUo+6V73IXtUPWgfOlU5B9MlGxFO5T+cA==}
@@ -15226,6 +15259,8 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
     optional: true
+
+  '@standard-schema/spec@1.0.0': {}
 
   '@storybook/addon-actions@8.1.9':
     dependencies:
@@ -21865,6 +21900,32 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
+  next@14.2.3(@babel/core@7.28.3)(react-dom@18.3.1(react@18.2.0))(react@18.2.0):
+    dependencies:
+      '@next/env': 14.2.3
+      '@swc/helpers': 0.5.5
+      busboy: 1.6.0
+      caniuse-lite: 1.0.30001633
+      graceful-fs: 4.2.11
+      postcss: 8.4.31
+      react: 18.2.0
+      react-dom: 18.3.1(react@18.2.0)
+      styled-jsx: 5.1.1(@babel/core@7.28.3)(react@18.2.0)
+    optionalDependencies:
+      '@next/swc-darwin-arm64': 14.2.3
+      '@next/swc-darwin-x64': 14.2.3
+      '@next/swc-linux-arm64-gnu': 14.2.3
+      '@next/swc-linux-arm64-musl': 14.2.3
+      '@next/swc-linux-x64-gnu': 14.2.3
+      '@next/swc-linux-x64-musl': 14.2.3
+      '@next/swc-win32-arm64-msvc': 14.2.3
+      '@next/swc-win32-ia32-msvc': 14.2.3
+      '@next/swc-win32-x64-msvc': 14.2.3
+    transitivePeerDependencies:
+      - '@babel/core'
+      - babel-plugin-macros
+    optional: true
+
   no-case@2.3.2:
     dependencies:
       lower-case: 1.1.4
@@ -21987,6 +22048,16 @@ snapshots:
   nth-check@2.1.1:
     dependencies:
       boolbase: 1.0.0
+
+  nuqs@2.5.2(@remix-run/react@2.10.3(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(next@14.2.3(@babel/core@7.28.3)(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react-router-dom@7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react-router@7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react@18.2.0):
+    dependencies:
+      '@standard-schema/spec': 1.0.0
+      react: 18.2.0
+    optionalDependencies:
+      '@remix-run/react': 2.10.3(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5)
+      next: 14.2.3(@babel/core@7.28.3)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      react-router: 7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      react-router-dom: 7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
 
   nwsapi@2.2.20:
     optional: true
@@ -23698,6 +23769,14 @@ snapshots:
       react: 18.2.0
     optionalDependencies:
       '@babel/core': 7.28.0
+
+  styled-jsx@5.1.1(@babel/core@7.28.3)(react@18.2.0):
+    dependencies:
+      client-only: 0.0.1
+      react: 18.2.0
+    optionalDependencies:
+      '@babel/core': 7.28.3
+    optional: true
 
   supports-color@5.5.0:
     dependencies:

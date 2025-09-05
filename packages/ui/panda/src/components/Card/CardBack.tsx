@@ -1,5 +1,5 @@
 import { css } from '_panda/css';
-const ANIMAL_CARD_IMAGE_BASE_URL = '/animal-card/';
+import { ANIMAL_CARD_IMAGE_BASE_URL } from './constants';
 
 interface Props {
   tier: 'EX' | 'S_PLUS' | 'A_PLUS' | 'B_MINUS';

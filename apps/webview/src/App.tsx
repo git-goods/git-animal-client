@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { initializeBridge, cleanupBridge } from './bridge';
 import { authUtils } from './utils';
+import { NuqsAdapter } from 'nuqs/adapters/react';
 
 const queryClient = new QueryClient();
 
@@ -47,9 +48,11 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthWrapper>
-        <RouterProvider router={router} />
-      </AuthWrapper>
+      <NuqsAdapter>
+        <AuthWrapper>
+          <RouterProvider router={router} />
+        </AuthWrapper>
+      </NuqsAdapter>
     </QueryClientProvider>
   );
 }
