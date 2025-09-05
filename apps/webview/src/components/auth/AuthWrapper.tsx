@@ -16,6 +16,7 @@ interface AuthWrapperProps {
 function AuthWrapper({ children }: AuthWrapperProps) {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [jwtFromUrl, setJwtFromUrl] = useState<string | null>(null);
+  const [isTokenReady, setIsTokenReady] = useState(false);
 
   useEffect(() => {
     const cleanup = setupWebViewMessageHandler();
@@ -42,6 +43,19 @@ function AuthWrapper({ children }: AuthWrapperProps) {
       setRenderResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
     };
 
+    const waitForTokenReady = async () => {
+      try {
+        await authUtils.waitForToken();
+        setIsTokenReady(true);
+      } catch (error) {
+        console.error('[AuthWrapper] Token wait failed:', error);
+        // webview 환경에서는 토큰이 없어도 계속 진행
+        if (window.ReactNativeWebView) {
+          setIsTokenReady(true);
+        }
+      }
+    };
+
     // URL에서 JWT 토큰 확인 후 처리
     const tokenFromUrl = checkUrlForToken();
     if (tokenFromUrl) {
@@ -49,6 +63,7 @@ function AuthWrapper({ children }: AuthWrapperProps) {
     }
 
     setInterceptors();
+    waitForTokenReady();
 
     return () => {
       cleanup?.();
@@ -59,6 +74,24 @@ function AuthWrapper({ children }: AuthWrapperProps) {
     setIsAuthenticating(false);
     setJwtFromUrl(null);
   };
+
+  // 토큰이 준비되지 않았으면 로딩 상태 표시
+  if (!isTokenReady) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          fontSize: '16px',
+          color: '#666',
+        }}
+      >
+        인증 정보를 확인하는 중...
+      </div>
+    );
+  }
 
   return (
     <>

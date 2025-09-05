@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button, Banner } from '@gitanimals/ui-panda';
 import { css } from '../../styled-system/css';
 import { authUtils } from '../utils';
 import { ROUTES } from '../router/constants';
 
 function AboutPage() {
+  const { t } = useTranslation();
   const isAuthenticated = authUtils.isAuthenticated();
 
   return (
@@ -25,7 +27,7 @@ function AboutPage() {
           marginBottom: '2rem',
         })}
       >
-        About GitAnimals
+        {t('about.title')}
       </h1>
 
       <div
@@ -38,15 +40,13 @@ function AboutPage() {
         })}
       >
         <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>
-          What is GitAnimals?
+          {t('about.what_is_title')}
         </h2>
         <p className={css({ marginBottom: '1rem', lineHeight: '1.6' })}>
-          GitAnimals is a gamified platform that allows developers to raise virtual pets through their GitHub activity. 
-          The more you contribute to your repositories, the more your virtual animals grow and evolve!
+          {t('about.description_1')}
         </p>
         <p className={css({ marginBottom: '1rem', lineHeight: '1.6' })}>
-          This webview application provides a mobile-friendly interface to interact with your GitAnimals dashboard, 
-          view your pets, and track your progress.
+          {t('about.description_2')}
         </p>
       </div>
 
@@ -60,14 +60,12 @@ function AboutPage() {
         })}
       >
         <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>
-          Features
+          {t('about.features_title')}
         </h2>
         <ul className={css({ listStyle: 'disc', paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' })}>
-          <li>Virtual pet management through GitHub contributions</li>
-          <li>Progress tracking and statistics</li>
-          <li>Mobile-optimized webview interface</li>
-          <li>Secure authentication with token management</li>
-          <li>Real-time synchronization with your GitHub activity</li>
+          {(t('about.features_list', { returnObjects: true }) as string[]).map((feature: string, index: number) => (
+            <li key={index}>{feature}</li>
+          ))}
         </ul>
       </div>
 
@@ -81,29 +79,29 @@ function AboutPage() {
         })}
       >
         <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>
-          Get Started
+          {t('about.get_started_title')}
         </h2>
         {isAuthenticated ? (
           <div>
             <p className={css({ marginBottom: '1rem' })}>
-              You're already authenticated! Explore your dashboard and manage your virtual pets.
+              {t('about.authenticated_description')}
             </p>
             <div className={css({ display: 'flex', gap: '1rem', flexWrap: 'wrap' })}>
               <Link to={ROUTES.HOME}>
-                <Button>Go to Dashboard</Button>
+                <Button>{t('about.go_to_dashboard')}</Button>
               </Link>
               <Link to={ROUTES.PROFILE}>
-                <Button variant="secondary">View Profile</Button>
+                <Button variant="secondary">{t('about.view_profile')}</Button>
               </Link>
             </div>
           </div>
         ) : (
           <div>
             <p className={css({ marginBottom: '1rem' })}>
-              To start using GitAnimals, you'll need to authenticate with your GitHub account.
+              {t('about.not_authenticated_description')}
             </p>
             <Link to={ROUTES.AUTH}>
-              <Button>Get Started</Button>
+              <Button>{t('about.get_started_button')}</Button>
             </Link>
           </div>
         )}
@@ -111,7 +109,7 @@ function AboutPage() {
 
       <Banner 
         image="🐾" 
-        label="Start your journey with GitAnimals today!" 
+        label={t('about.banner_message')} 
       />
     </div>
   );

@@ -12,10 +12,18 @@ interface DecodedToken {
   [key: string]: any;
 }
 
+enum TokenState {
+  INITIALIZING = 'initializing',
+  READY = 'ready',
+  INVALID = 'invalid',
+}
+
 class TokenManager {
   private accessToken: string | null = null;
   private refreshToken: string | null = null;
   private refreshTimer: NodeJS.Timeout | null = null;
+  private tokenState: TokenState = TokenState.INITIALIZING;
+  private waitingPromises: Array<{ resolve: () => void; reject: (error: Error) => void }> = [];
 
   constructor() {
     this.init();
@@ -24,6 +32,15 @@ class TokenManager {
   private init(): void {
     this.loadTokensFromStorage();
     this.setupTokenRefresh();
+
+    // webview 환경에서는 부모로부터 토큰을 받기를 기다림
+    if (window.ReactNativeWebView && !this.accessToken) {
+      this.requestTokenFromParent();
+      // webview에서는 토큰 요청 후에도 INITIALIZING 상태 유지
+      // 부모로부터 토큰을 받으면 setTokens에서 READY로 변경됨
+    } else {
+      this.setTokenState(this.accessToken ? TokenState.READY : TokenState.INVALID);
+    }
   }
 
   private loadTokensFromStorage(): void {
@@ -43,6 +60,61 @@ class TokenManager {
     }
   }
 
+  private setTokenState(state: TokenState): void {
+    this.tokenState = state;
+
+    if (state === TokenState.READY || state === TokenState.INVALID) {
+      // 대기 중인 Promise들 해결
+      this.waitingPromises.forEach(({ resolve, reject }) => {
+        if (state === TokenState.READY) {
+          resolve();
+        } else {
+          reject(new Error('Token is not available'));
+        }
+      });
+      this.waitingPromises = [];
+    }
+  }
+
+  private requestTokenFromParent(): void {
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(
+        JSON.stringify({
+          type: 'REQUEST_AUTH',
+          message: 'Token required for API requests',
+        }),
+      );
+    }
+  }
+
+  /**
+   * 토큰이 준비될 때까지 대기
+   */
+  public waitForToken(): Promise<void> {
+    if (this.tokenState === TokenState.READY && this.accessToken) {
+      return Promise.resolve();
+    }
+
+    if (this.tokenState === TokenState.INVALID) {
+      return Promise.reject(new Error('Token is not available'));
+    }
+
+    // INITIALIZING 상태인 경우 토큰이 준비될 때까지 대기
+    return new Promise((resolve, reject) => {
+      this.waitingPromises.push({ resolve, reject });
+
+      // webview 환경에서는 더 긴 타임아웃 설정 (30초)
+      const timeout = window.ReactNativeWebView ? 30000 : 10000;
+      setTimeout(() => {
+        const index = this.waitingPromises.findIndex((p) => p.resolve === resolve);
+        if (index !== -1) {
+          this.waitingPromises.splice(index, 1);
+          reject(new Error(`Token wait timeout after ${timeout / 1000}s`));
+        }
+      }, timeout);
+    });
+  }
+
   public setTokens(accessToken: string, refreshToken?: string): void {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken || this.refreshToken;
@@ -52,6 +124,9 @@ class TokenManager {
     if (refreshToken) {
       localStorage.setItem('refresh_token', refreshToken);
     }
+
+    // 토큰이 설정되면 상태를 READY로 변경
+    this.setTokenState(TokenState.READY);
   }
 
   public getAccessToken(): string | null {
@@ -72,6 +147,9 @@ class TokenManager {
       clearInterval(this.refreshTimer);
       this.refreshTimer = null;
     }
+
+    // 토큰이 클리어되면 상태를 INVALID로 변경
+    this.setTokenState(TokenState.INVALID);
   }
 
   private isValidToken(token: string): boolean {
@@ -84,6 +162,7 @@ class TokenManager {
       // 만료시간 확인 (5분 여유 두기)
       return payload.exp > now + 300;
     } catch (error) {
+      console.error('[TokenManager] Token validation error:', error);
       return false;
     }
   }
@@ -182,12 +261,21 @@ class TokenManager {
     }
   }
 
-  public getTokenInfo(): { isValid: boolean; expiresIn: number; token: string | null } {
+  public getTokenInfo(): { isValid: boolean; expiresIn: number; token: string | null; state: TokenState } {
     return {
       isValid: this.isAuthenticated(),
       expiresIn: this.getTimeUntilExpiry(),
       token: this.accessToken,
+      state: this.tokenState,
     };
+  }
+
+  public getTokenState(): TokenState {
+    return this.tokenState;
+  }
+
+  public isTokenReady(): boolean {
+    return this.tokenState === TokenState.READY && !!this.accessToken;
   }
 }
 
@@ -195,4 +283,4 @@ class TokenManager {
 const tokenManager = new TokenManager();
 
 export default tokenManager;
-export { TokenManager, type TokenData };
+export { TokenManager, TokenState, type TokenData };

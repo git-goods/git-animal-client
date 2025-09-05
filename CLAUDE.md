@@ -11,19 +11,21 @@ GitAnimals is a monorepo that allows users to raise virtual pets through GitHub 
 **Monorepo Structure:**
 - `apps/web` - Next.js 14 web application (main frontend)  
 - `apps/admin` - Remix admin dashboard
-- `apps/app` - React Native mobile app (Expo)
-- `apps/webview` - Vite-based webview for mobile integration
+- `apps/webview` - Vite + React Router webview for mobile integration
+- `apps/webview-history` - Legacy Next.js webview (being migrated)
 - `packages/ui/panda` - Component library using PandaCSS
-- `packages/ui/icon` - Icon components
+- `packages/ui/icon` - Icon components  
 - `packages/ui/token` - Design tokens
-- `packages/lib/*` - Shared libraries and utilities
+- `packages/api` - Shared API client with interceptors
+- `packages/lib/*` - Shared libraries (react, react-query, dayjs)
+- `packages/util/*` - Utility packages (common, typescript)
 
 **Key Technologies:**
 - **Styling:** PandaCSS with Shadow Panda preset for component styling
 - **State Management:** Tanstack Query v5 (server state), Jotai & Zustand (client state)  
-- **Authentication:** NextAuth.js
+- **Authentication:** NextAuth.js (web), token-based auth (webview)
 - **UI Components:** Radix UI primitives + custom PandaCSS components
-- **Package Manager:** pnpm with workspace configuration
+- **Package Manager:** pnpm v9.0+ with workspace configuration
 - **Build System:** Turborepo for orchestration
 
 ## Development Commands
@@ -31,30 +33,38 @@ GitAnimals is a monorepo that allows users to raise virtual pets through GitHub 
 **Root-level commands (run from project root):**
 ```bash
 # Development servers
-pnpm dev:web          # Start web app dev server
-pnpm dev:admin        # Start admin app dev server  
-pnpm dev:webview      # Start webview dev server
+pnpm dev:web          # Start web app dev server (Next.js)
+pnpm dev:admin        # Start admin app dev server (Remix)
+pnpm dev:webview      # Start webview dev server (Vite)
 
 # Build commands
 pnpm build:web        # Build web application
-pnpm build:admin      # Build admin application
+pnpm build:admin      # Build admin application  
 pnpm build:webview    # Build webview application
 
-# Analysis
+# Analysis & Quality
 pnpm analyze:web      # Bundle analyzer for web app
-
-# Linting and formatting
 pnpm lint             # Lint all workspaces
 pnpm format           # Format code with Prettier
 
-# UI Development  
+# UI Development
 pnpm sb:panda         # Start Storybook for UI components
 ```
 
-**App-specific commands:**
-- Web app: `prepare` (PandaCSS codegen), `type-check`, `lint:fix`
-- Admin app: `typecheck`, Remix-specific build/dev commands
-- Mobile app: `test` (Jest), `android`, `ios`, `reset-project`
+**Workspace-specific commands:**
+```bash
+# Web app (apps/web)
+pnpm --filter @gitanimals/web prepare      # PandaCSS codegen
+pnpm --filter @gitanimals/web type-check   # TypeScript validation
+pnpm --filter @gitanimals/web lint:fix     # Fix ESLint issues
+
+# Webview app (apps/webview) 
+pnpm --filter @gitanimals/webview dev       # Vite dev server on port 3000
+pnpm --filter @gitanimals/webview type-check # TypeScript validation
+
+# UI components (packages/ui/panda)
+pnpm --filter @gitanimals/ui-panda storybook # Start Storybook
+```
 
 ## Code Patterns & Conventions
 

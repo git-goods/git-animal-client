@@ -55,3 +55,9 @@
     }
   }
 }
+
+:root {
+  --container-max-width: 560px;
+  --container-height: calc(100vh - var(--tab-bar-height));
+  --tab-bar-height: 60px;
+}

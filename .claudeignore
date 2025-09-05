@@ -1,0 +1,11 @@
+cat > .claudeignore << EOF
+node_modules/
+*.log
+*.tmp
+build/
+dist/
+coverage/
+.git/
+package-lock.json
+yarn.lock
+EOF

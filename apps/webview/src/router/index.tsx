@@ -1,8 +1,16 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { Layout } from '../components/layout';
-import { HomePage, ProfilePage, SettingsPage, LoginPage, AboutPage, NotFoundPage } from '../pages';
 import ProtectedRoute from '../components/auth/ProtectedRoute';
 import { ROUTES, NESTED_PATHS } from './constants';
+import WebviewPage from '@/pages/home/page';
+import DevPage from '@/pages/dev/page';
+import LoginPage from '@/pages/LoginPage';
+import MyPagePage from '@/pages/MypagePage';
+import NotFoundPage from '@/pages/NotFoundPage';
+import { MobileLayout } from '@/pages/game/quiz/_components/MobileLayout';
+import QuizPage from '@/pages/game/quiz/page';
+import SolveQuizPage from '@/pages/game/quiz/solve/page';
+import CreateQuizPage from '@/pages/game/quiz/create/page';
 
 export const router = createBrowserRouter([
   {
@@ -14,23 +22,49 @@ export const router = createBrowserRouter([
         index: true,
         element: (
           <ProtectedRoute>
-            <HomePage />
+            <WebviewPage />
+            {/* <HomePage /> */}
           </ProtectedRoute>
         ),
       },
       {
-        path: NESTED_PATHS.PROFILE(),
+        path: 'game',
         element: (
           <ProtectedRoute>
-            <ProfilePage />
+            <MobileLayout>
+              <Outlet />
+            </MobileLayout>
           </ProtectedRoute>
         ),
+        children: [
+          {
+            index: true,
+            element: <QuizPage />,
+          },
+          {
+            path: 'quiz',
+            children: [
+              {
+                index: true,
+                element: <QuizPage />,
+              },
+              {
+                path: 'create',
+                element: <CreateQuizPage />,
+              },
+              {
+                path: 'solve',
+                element: <SolveQuizPage />,
+              },
+            ],
+          },
+        ],
       },
       {
-        path: NESTED_PATHS.SETTINGS(),
+        path: NESTED_PATHS.MYPAGE(),
         element: (
           <ProtectedRoute>
-            <SettingsPage />
+            <MyPagePage />
           </ProtectedRoute>
         ),
       },
@@ -40,8 +74,8 @@ export const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: NESTED_PATHS.ABOUT(),
-        element: <AboutPage />,
+        path: 'dev',
+        element: <DevPage />,
       },
       // 404 페이지 (모든 경로에 매치되지 않은 경우)
       {

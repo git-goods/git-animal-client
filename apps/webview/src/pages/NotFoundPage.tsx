@@ -1,8 +1,10 @@
 import { Button } from '@gitanimals/ui-panda';
 import { css } from '../../styled-system/css';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function NotFoundPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handleGoHome = () => {
@@ -17,16 +19,14 @@ function NotFoundPage() {
     <main className={mainCss}>
       <h1 className={h1Css}>404</h1>
       <div className={pCss}>
-        <p>페이지를 찾을 수 없습니다.</p>
-        <p>요청하신 페이지가 존재하지 않거나 이동되었을 수 있습니다.</p>
+        <p>{t('notfound.title')}</p>
+        <p>{t('notfound.description')}</p>
       </div>
       <div className={buttonCss}>
         <Button onClick={handleGoBack} variant="secondary">
-          이전 페이지로
+          {t('common.back', { defaultValue: 'Back' })}
         </Button>
-        <Button onClick={handleGoHome}>
-          홈으로 가기
-        </Button>
+        <Button onClick={handleGoHome}>{t('notfound.go_home')}</Button>
       </div>
     </main>
   );
@@ -40,8 +40,6 @@ const buttonCss = css({
 });
 
 const mainCss = css({
-  backgroundColor: 'white',
-  w: '100dvw',
   h: '100dvh',
   textStyle: 'glyph16.regular',
   padding: '0 16px',
@@ -50,6 +48,7 @@ const mainCss = css({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  color: 'white',
 });
 
 const h1Css = css({
