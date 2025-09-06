@@ -4,6 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GitAnimals Webview</title>
+
+    <script>
+      const initAppleLogin = () => {
+        window.AppleID.auth.init({
+          scope: 'email',
+          state: 'state',
+          clientId: process.env.NEXT_PUBLIC_APPLE_LOGIN_CLIENT_ID ?? '',
+          redirectURI: process.env.NEXT_PUBLIC_APPLE_LOGIN_REDIRECT_URI ?? '',
+          nonce: process.env.NEXT_PUBLIC_SNS_LOGIN_NONCE ?? '',
+          usePopup: true,
+        });
+      };
+    </script>
   </head>
   <body>
     <div id="root"></div>

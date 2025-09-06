@@ -1,5 +1,4 @@
 import { ROUTES } from '../router/constants';
-import bridgeUtils from './bridgeUtils';
 import tokenManager, { TokenState } from './tokenManager';
 
 export const authUtils = {
@@ -46,11 +45,11 @@ export const authUtils = {
         sessionStorage.clear();
 
         // 앱에 로그아웃 요청 전송
-        bridgeUtils.requestLogout();
+        // bridgeUtils.requestLogout();
       } catch (error) {
         console.error('Logout failed:', error);
         // 에러가 있어도 앱에 로그아웃 요청 전송
-        bridgeUtils.requestLogout();
+        // bridgeUtils.requestLogout();
       }
     } else {
       window.location.href = ROUTES.AUTH;
@@ -106,9 +105,9 @@ export const authUtils = {
 
     // 토큰 설정 완료 메시지 전송
     if (window.ReactNativeWebView) {
-      bridgeUtils.sendCustomMessage('TOKENS_SET', {
-        message: 'Tokens successfully set',
-      });
+      // bridgeUtils.sendCustomMessage('TOKENS_SET', {
+      //   message: 'Tokens successfully set',
+      // });
     }
   },
 
@@ -117,7 +116,7 @@ export const authUtils = {
    */
   requestAuthFromParent: (): void => {
     if (window.ReactNativeWebView) {
-      bridgeUtils.requestAuth();
+      // bridgeUtils.requestAuth();
     }
   },
 
@@ -126,7 +125,7 @@ export const authUtils = {
    */
   requestGithubLogin: (): void => {
     if (window.ReactNativeWebView) {
-      bridgeUtils.requestGithubLogin();
+      // bridgeUtils.requestGithubLogin();
     }
   },
 

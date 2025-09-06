@@ -8,6 +8,7 @@ export const ProfileBoard = wrap
   .ErrorBoundary({ fallback: null })
   .on(function ProfileBoard() {
     const { data } = useQuery({ ...userQueries.userOptions() });
+    console.log('data', data);
 
     if (!data) {
       return null;

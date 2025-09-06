@@ -75,28 +75,31 @@ function AuthWrapper({ children }: AuthWrapperProps) {
     setJwtFromUrl(null);
   };
 
+  console.log('isTokenReady', isTokenReady);
+
   // 토큰이 준비되지 않았으면 로딩 상태 표시
-  if (!isTokenReady) {
-    return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-          fontSize: '16px',
-          color: '#666',
-        }}
-      >
-        인증 정보를 확인하는 중...
-      </div>
-    );
-  }
+  // if (!isTokenReady) {
+  //   return (
+  //     <div
+  //       style={{
+  //         display: 'flex',
+  //         justifyContent: 'center',
+  //         alignItems: 'center',
+  //         height: '100vh',
+  //         fontSize: '16px',
+  //         backgroundColor: 'red',
+  //         color: '#666',
+  //       }}
+  //     >
+  //       인증 정보를 확인하는 중...
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
       {children}
-      {jwtFromUrl && isAuthenticating && <AuthPage jwtToken={jwtFromUrl} onAuthComplete={handleAuthComplete} />}
+      {/* {jwtFromUrl && isAuthenticating && <AuthPage jwtToken={jwtFromUrl} onAuthComplete={handleAuthComplete} />} */}
     </>
   );
 }
