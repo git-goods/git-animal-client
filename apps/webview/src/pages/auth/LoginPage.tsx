@@ -22,7 +22,6 @@ export default function LoginPage() {
       );
       return;
     }
-    // window.AppleID.auth.signIn();
   };
 
   const onClickGithubLogin = () => {
@@ -44,16 +43,15 @@ export default function LoginPage() {
       authUtils.setTokensFromParent(token);
 
       setAllInterceptors();
+
       navigate('/');
+      // window.location.href = '/';
     };
 
-    document.addEventListener(NATIVE_CUSTOM_EVENTS.APPLE_LOGIN_CALLBACK, setTokenAndNavigate as EventListener);
-
-    document.addEventListener(NATIVE_CUSTOM_EVENTS.GITHUB_LOGIN_CALLBACK, setTokenAndNavigate as EventListener);
+    document.addEventListener(NATIVE_CUSTOM_EVENTS.LOGIN_CALLBACK, setTokenAndNavigate as EventListener);
 
     return () => {
-      document.removeEventListener(NATIVE_CUSTOM_EVENTS.APPLE_LOGIN_CALLBACK, setTokenAndNavigate as EventListener);
-      document.removeEventListener(NATIVE_CUSTOM_EVENTS.GITHUB_LOGIN_CALLBACK, setTokenAndNavigate as EventListener);
+      document.removeEventListener(NATIVE_CUSTOM_EVENTS.LOGIN_CALLBACK, setTokenAndNavigate as EventListener);
     };
   }, []);
 

@@ -1,11 +1,13 @@
 export const NATIVE_CUSTOM_EVENTS = {
   APPLE_LOGIN: 'appleLogin',
-  APPLE_LOGIN_CALLBACK: 'appleLoginCallback',
   VIBRATE: 'vibrate',
   HAPTIC: 'haptic',
   FOREGROUND_FCM: 'foregroundFcm',
   GITHUB_LOGIN: 'githubLogin',
   GITHUB_LOGIN_CALLBACK: 'githubLoginCallback',
+  LOGIN_CALLBACK: 'loginCallback',
+  APPLE_LOGIN_CALLBACK: 'appleLoginCallback',
+  LOGOUT: 'logout',
 } as const;
 
 // window.ReactNativeWebView?.postMessage(

@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { TabBar } from './TabBar';
 import { authUtils } from '@/utils';
 import { css } from '_panda/css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   interceptorRequestFulfilled,
   interceptorResponseFulfilled,
@@ -12,7 +12,19 @@ import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
 import { setRenderRequestInterceptor, setRenderResponseInterceptor } from '@gitanimals/api/src/_instance';
 
 function Layout() {
-  const isAuthenticated = authUtils.isAuthenticated();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setIsAuthenticated(authUtils.isAuthenticated());
+
+    const unsubscribe = authUtils.onAuthStateChange((authState: boolean) => {
+      setIsAuthenticated(authState);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     const setInterceptors = () => {
@@ -46,15 +58,6 @@ function Layout() {
       </main>
     </div>
   );
-
-  // return (
-  //   <div className={css({ minHeight: '100vh', backgroundColor: 'black' })}>
-  //     <main className={css({ h: 'full', maxWidth: 'var(--container-max-width)', mx: 'auto' })}>
-  //       <Outlet />
-  //       <div className={css({ p: '2rem', color: 'white', backgroundColor: 'red' })}>no auth</div>
-  //     </main>
-  //   </div>
-  // );
 }
 
 export default Layout;

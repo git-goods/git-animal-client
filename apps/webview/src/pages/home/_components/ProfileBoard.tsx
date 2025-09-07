@@ -2,13 +2,13 @@ import { css } from '_panda/css';
 import { userQueries } from '@gitanimals/react-query';
 import { wrap } from '@suspensive/react';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 export const ProfileBoard = wrap
   .Suspense({ fallback: null })
   .ErrorBoundary({ fallback: null })
   .on(function ProfileBoard() {
     const { data } = useQuery({ ...userQueries.userOptions() });
-    console.log('data', data);
 
     if (!data) {
       return null;

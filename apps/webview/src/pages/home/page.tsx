@@ -4,8 +4,24 @@ import { css } from '_panda/css';
 
 import CharacterView from './_components/CharacterView';
 import { ProfileBoard } from './_components/ProfileBoard';
+import { authUtils } from '@/utils';
+import { useState, useEffect } from 'react';
 
 export default function WebviewPage() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setIsAuthenticated(authUtils.isAuthenticated());
+
+    const unsubscribe = authUtils.onAuthStateChange((authState: boolean) => {
+      setIsAuthenticated(authState);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   return (
     <div className={containerStyle}>
       <div className={backgroundStyle}>
