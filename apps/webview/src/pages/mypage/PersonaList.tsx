@@ -7,7 +7,7 @@ import { userQueries } from '@gitanimals/react-query';
 import { Banner } from '@gitanimals/ui-panda';
 import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 import { getPersonaImage } from '@/utils/image';
 
