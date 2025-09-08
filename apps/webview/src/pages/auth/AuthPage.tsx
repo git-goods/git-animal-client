@@ -142,9 +142,6 @@ function LoginPage() {
           <a href="https://api.gitanimals.org/logins/oauth/github/by-redirect-when-success/LOCAL">
             <Button variant="secondary">{t('auth.local_login')}</Button>
           </a>
-          {/* <Button variant="secondary" onClick={() => setShowTestLogin(true)}>
-            Test Login (Development)
-          </Button> */}
         </div>
 
         {from !== '/' && (

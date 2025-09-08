@@ -32,6 +32,8 @@ export default function LoginPage() {
         }),
       );
       return;
+    } else {
+      window.location.href = '/';
     }
   };
 
@@ -45,7 +47,6 @@ export default function LoginPage() {
       setAllInterceptors();
 
       navigate('/');
-      // window.location.href = '/';
     };
 
     document.addEventListener(NATIVE_CUSTOM_EVENTS.LOGIN_CALLBACK, setTokenAndNavigate as EventListener);
