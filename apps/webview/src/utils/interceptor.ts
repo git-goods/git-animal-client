@@ -1,6 +1,8 @@
 import { InternalAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import tokenManager from './tokenManager';
 import authUtils from './authUtils';
+import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
+import { setRenderRequestInterceptor, setRenderResponseInterceptor } from '@gitanimals/api/src/_instance';
 
 // 커스텀 인터페이스 확장 (향후 재시도 로직에서 사용 예정)
 // interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
@@ -84,4 +86,11 @@ export const interceptorResponseRejected = async (error: AxiosError): Promise<Ax
   // }
 
   return Promise.reject(error);
+};
+
+export const setAllInterceptors = () => {
+  setRequestInterceptor(interceptorRequestFulfilled);
+  setResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
+  setRenderRequestInterceptor(interceptorRequestFulfilled);
+  setRenderResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
 };

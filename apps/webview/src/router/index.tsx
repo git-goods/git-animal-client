@@ -4,7 +4,6 @@ import ProtectedRoute from '../components/auth/ProtectedRoute';
 import { ROUTES, NESTED_PATHS } from './constants';
 import WebviewPage from '@/pages/home/page';
 import DevPage from '@/pages/dev/page';
-import LoginPage from '@/pages/LoginPage';
 import MyPagePage from '@/pages/MypagePage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import { MobileLayout } from '@/pages/game/quiz/_components/MobileLayout';
@@ -12,6 +11,7 @@ import QuizPage from '@/pages/game/quiz/page';
 import SolveQuizPage from '@/pages/game/quiz/solve/page';
 import CreateQuizPage from '@/pages/game/quiz/create/page';
 import ShopPage from '@/pages/shop/page';
+import LoginPage from '@/pages/auth/LoginPage';
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +22,7 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: (
+          // <DevPage />
           <ProtectedRoute>
             <WebviewPage />
             {/* <HomePage /> */}
@@ -77,6 +78,12 @@ export const router = createBrowserRouter([
       {
         path: NESTED_PATHS.AUTH(),
         element: <LoginPage />,
+        children: [
+          {
+            path: 'login',
+            element: <LoginPage />,
+          },
+        ],
       },
       {
         path: 'dev',

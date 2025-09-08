@@ -2,20 +2,13 @@
   "extends": "@gitanimals/typescript-config/nextjs.json",
   "compilerOptions": {
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "_panda/*": [
-        "./styled-system/*"
-      ]
+      "@/*": ["./src/*"],
+      "_panda/*": ["./styled-system/*"]
     },
     "allowJs": true,
     "forceConsistentCasingInFileNames": false,
     "strictNullChecks": true,
-    "types": [
-      "@pandacss/dev",
-      "vite/client"
-    ],
+    "types": ["@pandacss/dev", "vite/client"],
     "skipLibCheck": true,
     "target": "ES2017",
     "lib": ["DOM", "DOM.Iterable", "ES2017"],
@@ -24,13 +17,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "styled-system",
-    "src/vite-env.d.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", "styled-system", "src/vite-env.d.ts", "./global.d.ts"],
+  "exclude": ["node_modules"]
 }

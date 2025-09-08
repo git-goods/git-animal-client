@@ -2,18 +2,17 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import { Button, Banner } from '@gitanimals/ui-panda';
-import { css } from '../../styled-system/css';
-import { authUtils, setupWebViewMessageHandler } from '../utils';
+import { css } from '../../../styled-system/css';
+import { authUtils, setupWebViewMessageHandler } from '../../utils';
 import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
 import { setRenderRequestInterceptor, setRenderResponseInterceptor } from '@gitanimals/api/src/_instance';
 import {
   interceptorRequestFulfilled,
   interceptorResponseFulfilled,
   interceptorResponseRejected,
-} from '../utils/interceptor';
-import { TestLoginPage } from '../components/auth/TestLoginPage';
-import { AuthPage } from '../components/auth/AuthPage';
-import bridgeUtils from '../utils/bridgeUtils';
+} from '../../utils/interceptor';
+import { TestLoginPage } from '../../components/auth/TestLoginPage';
+import { AuthPage } from '../../components/auth/AuthPage';
 
 function LoginPage() {
   const { t } = useTranslation();

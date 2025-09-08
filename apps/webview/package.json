@@ -15,11 +15,11 @@
   "dependencies": {
     "@gitanimals/api": "workspace:*",
     "@gitanimals/dayjs": "workspace:*",
-    "@gitanimals/util-common": "workspace:*",
     "@gitanimals/exception": "workspace:*",
     "@gitanimals/react-query": "workspace:*",
     "@gitanimals/ui-panda": "workspace:*",
     "@gitanimals/ui-token": "workspace:*",
+    "@gitanimals/util-common": "workspace:*",
     "@suspensive/react": "^2.17.1",
     "@tanstack/react-query": "*",
     "axios": "^1.6.8",
@@ -30,6 +30,7 @@
     "nuqs": "^2.5.2",
     "react": "*",
     "react-dom": "*",
+    "react-helmet": "^6.1.0",
     "react-i18next": "^15.7.3",
     "react-router-dom": "^7.8.2",
     "sonner": "^1.5.0"
