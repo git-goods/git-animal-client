@@ -1,6 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-'use client';
-
 import { memo } from 'react';
 import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
@@ -11,21 +8,16 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { addNumberComma } from '@/utils/number';
 
-const profileSkeletonStyle = css({
-  '& > div': {
-    margin: '32px 20px',
-    width: '48px',
-    height: '48px',
-  },
-});
-
 export const ProfileSection = memo(
   wrap
     .Suspense({
       fallback: (
-        <section className={profileSkeletonStyle}>
-          <Skeleton width={160} height={160} borderRadius="50%" />
-        </section>
+        <Skeleton
+          width={160}
+          height={160}
+          borderRadius="50%"
+          className={css({ margin: '32px 20px', width: '48px', height: '48px' })}
+        />
       ),
     })
     .ErrorBoundary({ fallback: <section></section> })
@@ -49,10 +41,11 @@ export const ProfileSection = memo(
 );
 
 const profileSectionStyle = css({
-  display: 'flex',
   padding: '32px 0',
   gap: '12px',
   alignItems: 'center',
+  display: 'grid',
+  gridTemplateColumns: '48px 1fr 48px',
 });
 
 const profileTextStyle = css({

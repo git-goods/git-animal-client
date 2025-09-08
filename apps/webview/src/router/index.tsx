@@ -12,6 +12,7 @@ import QuizPage from '@/pages/game/quiz/page';
 import SolveQuizPage from '@/pages/game/quiz/solve/page';
 import CreateQuizPage from '@/pages/game/quiz/create/page';
 import ShopPage from '@/pages/shop/page';
+import MypageMyPets from '@/pages/mypage/page';
 
 export const router = createBrowserRouter([
   {
@@ -66,10 +67,10 @@ export const router = createBrowserRouter([
         element: <ShopPage />,
       },
       {
-        path: NESTED_PATHS.MYPAGE(),
+        path: 'mypage',
         element: (
           <ProtectedRoute>
-            <MyPagePage />
+            <MypageMyPets />
           </ProtectedRoute>
         ),
       },

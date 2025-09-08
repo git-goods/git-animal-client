@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { type Persona } from '@gitanimals/api';
@@ -10,6 +10,7 @@ import { customScrollStyle } from '@/styles/scrollStyle';
 import { SelectPersonaList } from './PersonaList';
 import { SelectedPetTable } from './SelectedPetTable';
 import { useTranslation } from 'react-i18next';
+import { ProfileSection } from './ProfileSection';
 
 function MypageMyPets() {
   const { t } = useTranslation('mypage');
@@ -17,6 +18,7 @@ function MypageMyPets() {
 
   return (
     <div className={flex({ flexDir: 'column' })}>
+      <ProfileSection />
       <SelectedPetTable currentPersona={selectPersona} reset={() => setSelectPersona(null)} />
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('pet-list')}</h2>
