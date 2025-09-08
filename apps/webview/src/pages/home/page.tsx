@@ -11,7 +11,16 @@ export default function WebviewPage() {
       <div className={backgroundStyle}>
         <img src="/assets/home/app-background-home.png" alt="background" />
       </div>
-      <div className={css({ position: 'relative' })}>
+      <div
+        className={css({
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: '100%',
+          paddingBottom: '25%',
+        })}
+      >
         <ProfileBoard />
         <CharacterView />
       </div>
@@ -22,11 +31,9 @@ export default function WebviewPage() {
 const containerStyle = css({
   w: '100%',
   h: '100%',
-  minH: '100vh',
   maxW: 'var(--container-max-width)',
   mx: 'auto',
   position: 'relative',
-  paddingBottom: '160px',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
@@ -43,7 +50,6 @@ const backgroundStyle = css({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-end',
-  paddingBottom: '56px',
 
   '& img': {
     w: '100%',

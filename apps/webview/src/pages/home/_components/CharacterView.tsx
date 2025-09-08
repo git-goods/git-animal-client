@@ -8,7 +8,7 @@ import { Character } from './Character';
 import { userQueries } from '@gitanimals/react-query';
 import { useQuery } from '@tanstack/react-query';
 
-const IMAGE_SECRET_KEY = import.meta.env.NEXT_PUBLIC_IMAGE_TOKEN || '';
+const IMAGE_SECRET_KEY = import.meta.env.VITE_IMAGE_TOKEN || '';
 
 export default function CharacterView() {
   const { data } = useQuery({ ...userQueries.userOptions() });
@@ -97,11 +97,11 @@ export default function CharacterView() {
 }
 
 const containerStyle = css({
-  border: '1px solid white',
+  h: '55%',
+  // border: '1px solid white',
 });
 
 const svgStyle = css({
   w: '100%',
-  h: '290px',
-  maxH: '290px',
+  h: '100%',
 });

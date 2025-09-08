@@ -1,8 +1,4 @@
-'use client';
-
 import { css } from '_panda/css';
-
-import { TabBar } from '@/components/Layout/TabBar';
 
 import SelectQuizType from './_components/CreateOrSolve/SelectQuizType';
 import { Background } from './_components/BackGround';
@@ -19,7 +15,6 @@ function QuizPage() {
         <p className={descriptionStyle}>{t('quiz_solve_description')}</p>
         <SelectQuizType />
       </div>
-      <TabBar />
     </>
   );
 }

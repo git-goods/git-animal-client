@@ -42,7 +42,13 @@ function Layout() {
   if (isAuthenticated) {
     return (
       <div className={css({ minHeight: '100vh', backgroundColor: 'black' })}>
-        <main className={css({ h: 'full', maxWidth: 'var(--container-max-width)', mx: 'auto' })}>
+        <main
+          className={css({
+            h: 'calc(100vh - var(--tab-bar-height))',
+            maxWidth: 'var(--container-max-width)',
+            mx: 'auto',
+          })}
+        >
           <Outlet />
         </main>
         <div className={css({ h: 'var(--tab-bar-height)' })}></div>
