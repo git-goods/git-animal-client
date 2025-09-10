@@ -25,6 +25,7 @@ export function FarmPersonaSelect({
 }) {
   const queryClient = useQueryClient();
   const t = useTranslations('Mypage');
+  const tError = useTranslations('Error');
 
   const [selectPersona, setSelectPersona] = useState<string[]>([]);
   const [loadingPersona, setLoadingPersona] = useState<string[]>([]);
@@ -46,12 +47,17 @@ export function FarmPersonaSelect({
       const axiosError = error as AxiosError<ApiErrorScheme>;
       const isMaximumPetCountError = axiosError.response?.data?.message === MAXIMUM_PET_COUNT_ERROR_MESSAGE;
 
+      // onSettled에서 res는 undefined이므로
+      // onError에서 personaId 추출 후 setState 실행
+      const { personaId } = JSON.parse(axiosError.config?.data);
+      setLoadingPersona((prev) => prev.filter((id) => id !== personaId));
+
       if (isMaximumPetCountError) {
-        // onSettled에서 res는 undefined이므로
-        // onError에서 personaId 추출 후 setState 실행
-        const { personaId } = JSON.parse(axiosError.config?.data);
-        setLoadingPersona((prev) => prev.filter((id) => id !== personaId));
+        // 최대 펫 개수 초과 에러
         toast.error(t('maximum-pet-count-error'));
+      } else {
+        // 기타 에러
+        toast.error(tError('global-error-message'));
       }
     },
     onSettled: async (res) => {
