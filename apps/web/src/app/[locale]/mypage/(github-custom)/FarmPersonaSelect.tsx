@@ -6,12 +6,17 @@ import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
 import { Dialog } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
+import type { AxiosError } from 'axios';
 import { ExpandIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
+import type { ApiErrorScheme } from '@/exceptions/type';
 import { customScrollHorizontalStyle, customScrollStyle } from '@/styles/scrollStyle';
 
 import { SelectPersonaList } from '../PersonaList';
+
+const MAXIMUM_PET_COUNT_ERROR_MESSAGE = 'Persona count must be under "30" but, current persona count is "30"';
 
 export function FarmPersonaSelect({
   onChangeStatus,
@@ -26,6 +31,7 @@ export function FarmPersonaSelect({
   const [isOpen, setIsOpen] = useState(false);
 
   const { mutate } = useChangePersonaVisible({
+    throwOnError: false,
     onMutate: () => {
       onChangeStatus('loading');
     },
@@ -36,12 +42,23 @@ export function FarmPersonaSelect({
         setSelectPersona((prev) => prev.filter((id) => id !== res.id));
       }
     },
-    onError: () => {
-      onChangeStatus('error');
+    onError: (error) => {
+      const axiosError = error as AxiosError<ApiErrorScheme>;
+      const isMaximumPetCountError = axiosError.response?.data?.message === MAXIMUM_PET_COUNT_ERROR_MESSAGE;
+
+      if (isMaximumPetCountError) {
+        // onSettled에서 res는 undefined이므로
+        // onError에서 personaId 추출 후 setState 실행
+        const { personaId } = JSON.parse(axiosError.config?.data);
+        setLoadingPersona((prev) => prev.filter((id) => id !== personaId));
+        toast.error(t('maximum-pet-count-error'));
+      }
     },
     onSettled: async (res) => {
+      // res가 undefined라면 error, 아니면 success
+      const status = res ? 'success' : 'error';
       await queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
-      onChangeStatus('success');
+      onChangeStatus(status);
       setLoadingPersona((prev) => prev.filter((id) => id !== res?.id));
     },
   });
@@ -51,11 +68,8 @@ export function FarmPersonaSelect({
 
     const isVisible = selectPersona.includes(persona.id);
 
-    if (isVisible) {
-      mutate({ personaId: persona.id, visible: false });
-    } else {
-      mutate({ personaId: persona.id, visible: true });
-    }
+    // 보이는 상태라면 숨김으로, 숨김 상태라면 보이는 상태로 변경 요청
+    mutate({ personaId: persona.id, visible: !isVisible });
   };
 
   const initSelectPersonas = (list: Persona[]) => {
