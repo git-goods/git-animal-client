@@ -6,17 +6,13 @@ import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
 import { Dialog } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
-import type { AxiosError } from 'axios';
 import { ExpandIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
-import type { ApiErrorScheme } from '@/exceptions/type';
 import { customScrollHorizontalStyle, customScrollStyle } from '@/styles/scrollStyle';
 
 import { SelectPersonaList } from '../PersonaList';
-
-const MAXIMUM_PET_COUNT_ERROR_MESSAGE = 'Persona count must be under "30" but, current persona count is "30"';
 
 export function FarmPersonaSelect({
   onChangeStatus,
@@ -45,12 +41,11 @@ export function FarmPersonaSelect({
       onChangeStatus('success');
     },
     onError: (error) => {
-      const axiosError = error as AxiosError<ApiErrorScheme>;
-      const isMaximumPetCountError = axiosError.response?.data?.message === MAXIMUM_PET_COUNT_ERROR_MESSAGE;
+      const isMaximumPetCountError = error.response?.status === 400;
 
       // onSettled에서 res는 undefined이므로
       // onError에서 personaId 추출 후 setState 실행
-      const { personaId } = JSON.parse(axiosError.config?.data);
+      const { personaId } = JSON.parse(error.config?.data);
       setLoadingPersona((prev) => prev.filter((id) => id !== personaId));
       onChangeStatus('error');
 
