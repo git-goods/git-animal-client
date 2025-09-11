@@ -60,7 +60,7 @@
 
 /* toast */
 [data-sonner-toaster] {
-  z-index: 3002 !important;
+  isolation: isolate;
 }
 .toast-title {
   white-space: pre;
