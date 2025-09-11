@@ -42,6 +42,7 @@ export function FarmPersonaSelect({
       } else {
         setSelectPersona((prev) => prev.filter((id) => id !== res.id));
       }
+      onChangeStatus('success');
     },
     onError: (error) => {
       const axiosError = error as AxiosError<ApiErrorScheme>;
@@ -51,6 +52,7 @@ export function FarmPersonaSelect({
       // onError에서 personaId 추출 후 setState 실행
       const { personaId } = JSON.parse(axiosError.config?.data);
       setLoadingPersona((prev) => prev.filter((id) => id !== personaId));
+      onChangeStatus('error');
 
       if (isMaximumPetCountError) {
         // 최대 펫 개수 초과 에러
@@ -61,10 +63,7 @@ export function FarmPersonaSelect({
       }
     },
     onSettled: async (res) => {
-      // res가 undefined라면 error, 아니면 success
-      const status = res ? 'success' : 'error';
       await queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
-      onChangeStatus(status);
       setLoadingPersona((prev) => prev.filter((id) => id !== res?.id));
     },
   });
