@@ -43,10 +43,6 @@ export function FarmPersonaSelect({
     onError: (error) => {
       const isMaximumPetCountError = error.response?.status === 400;
 
-      // onSettled에서 res는 undefined이므로
-      // onError에서 personaId 추출 후 setState 실행
-      const { personaId } = JSON.parse(error.config?.data);
-      setLoadingPersona((prev) => prev.filter((id) => id !== personaId));
       onChangeStatus('error');
 
       if (isMaximumPetCountError) {
@@ -57,9 +53,9 @@ export function FarmPersonaSelect({
         toast.error(tError('global-error-message'));
       }
     },
-    onSettled: async (res) => {
+    onSettled: async (res, error, variables) => {
       await queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
-      setLoadingPersona((prev) => prev.filter((id) => id !== res?.id));
+      setLoadingPersona((prev) => prev.filter((id) => id !== variables.personaId));
     },
   });
 
