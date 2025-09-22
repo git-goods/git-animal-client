@@ -130,7 +130,8 @@
       "cancel": "취소",
       "please-choose-pet": "합치기에 사용할 펫을 선택해주세요. 합친 펫은 사라집니다."
     },
-    "laboratory": "실험실"
+    "laboratory": "실험실",
+    "maximum-pet-count-error": "펫은 최대 30마리까지 가능합니다."
   },
   "Event": {
     "event-end": "이벤트가 종료되었습니다.",

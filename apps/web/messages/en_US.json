@@ -128,7 +128,8 @@
       "cancel": "Cancel",
       "please-choose-pet": "Select a pet to merge. The selected pet will be consumed and disappear."
     },
-    "laboratory": "Laboratory"
+    "laboratory": "Laboratory",
+    "maximum-pet-count-error": "You can have a maximum of 30 pets."
   },
   "Event": {
     "event-end": "Event has ended.",

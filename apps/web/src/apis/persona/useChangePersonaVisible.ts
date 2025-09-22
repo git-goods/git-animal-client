@@ -1,6 +1,7 @@
-import type { Persona } from '@gitanimals/api';
+import type { ApiErrorScheme, Persona } from '@gitanimals/api';
 import type { UseMutationOptions } from '@tanstack/react-query';
 import { useMutation } from '@tanstack/react-query';
+import type { AxiosError, AxiosResponse } from 'axios';
 
 import { renderPatch } from '../render';
 
@@ -11,8 +12,10 @@ interface ChangePersonaVisibleRequest {
 
 type ChangePersonaVisibleResponse = Persona;
 
-const changePersonaVisible = async (request: ChangePersonaVisibleRequest): Promise<ChangePersonaVisibleResponse> =>
-  renderPatch(`/personas`, request);
+const changePersonaVisible = async (request: ChangePersonaVisibleRequest): Promise<ChangePersonaVisibleResponse> => {
+  const response = await renderPatch<AxiosResponse<ChangePersonaVisibleResponse>>(`/personas`, request);
+  return response.data;
+};
 
 /**
  *
@@ -21,9 +24,9 @@ const changePersonaVisible = async (request: ChangePersonaVisibleRequest): Promi
  * @returns
  */
 export const useChangePersonaVisible = (
-  options?: UseMutationOptions<ChangePersonaVisibleResponse, unknown, ChangePersonaVisibleRequest>,
+  options?: UseMutationOptions<ChangePersonaVisibleResponse, AxiosError<ApiErrorScheme>, ChangePersonaVisibleRequest>,
 ) =>
-  useMutation<ChangePersonaVisibleResponse, unknown, ChangePersonaVisibleRequest>({
+  useMutation<ChangePersonaVisibleResponse, AxiosError<ApiErrorScheme>, ChangePersonaVisibleRequest>({
     mutationFn: changePersonaVisible,
     ...options,
   });

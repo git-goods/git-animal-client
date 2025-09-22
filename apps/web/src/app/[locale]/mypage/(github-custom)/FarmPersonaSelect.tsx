@@ -7,6 +7,7 @@ import { userQueries } from '@gitanimals/react-query';
 import { Dialog } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { ExpandIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
 import { customScrollHorizontalStyle, customScrollStyle } from '@/styles/scrollStyle';
@@ -20,12 +21,14 @@ export function FarmPersonaSelect({
 }) {
   const queryClient = useQueryClient();
   const t = useTranslations('Mypage');
+  const tError = useTranslations('Error');
 
   const [selectPersona, setSelectPersona] = useState<string[]>([]);
   const [loadingPersona, setLoadingPersona] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
   const { mutate } = useChangePersonaVisible({
+    throwOnError: false,
     onMutate: () => {
       onChangeStatus('loading');
     },
@@ -35,14 +38,24 @@ export function FarmPersonaSelect({
       } else {
         setSelectPersona((prev) => prev.filter((id) => id !== res.id));
       }
-    },
-    onError: () => {
-      onChangeStatus('error');
-    },
-    onSettled: async (res) => {
-      await queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
       onChangeStatus('success');
-      setLoadingPersona((prev) => prev.filter((id) => id !== res?.id));
+    },
+    onError: (error) => {
+      const isMaximumPetCountError = error.response?.status === 400;
+
+      onChangeStatus('error');
+
+      if (isMaximumPetCountError) {
+        // 최대 펫 개수 초과 에러
+        toast.error(t('maximum-pet-count-error'));
+      } else {
+        // 기타 에러
+        toast.error(tError('global-error-message'));
+      }
+    },
+    onSettled: async (res, error, variables) => {
+      await queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
+      setLoadingPersona((prev) => prev.filter((id) => id !== variables.personaId));
     },
   });
 
@@ -51,11 +64,8 @@ export function FarmPersonaSelect({
 
     const isVisible = selectPersona.includes(persona.id);
 
-    if (isVisible) {
-      mutate({ personaId: persona.id, visible: false });
-    } else {
-      mutate({ personaId: persona.id, visible: true });
-    }
+    // 보이는 상태라면 숨김으로, 숨김 상태라면 보이는 상태로 변경 요청
+    mutate({ personaId: persona.id, visible: !isVisible });
   };
 
   const initSelectPersonas = (list: Persona[]) => {
