@@ -85,6 +85,7 @@
     "sell-confirm-description": "After selling, the pet will disappear.",
     "sell-confirm-checkbox": "Do not show this message again",
     "sell-price-modal-title": "Enter the price you want to sell",
+    "evolution": "Evolution",
     "Background": {
       "buy-success": "Background purchased successfully",
       "buy-fail": "Failed to purchase background",

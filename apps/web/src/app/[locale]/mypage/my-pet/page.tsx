@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
@@ -16,6 +16,15 @@ function MypageMyPets() {
   const t = useTranslations('Mypage');
   const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
 
+  const initSelectPersonas = useCallback(
+    (list: Persona[]) => {
+      if (!selectPersona && list.length > 0) {
+        setSelectPersona(list[0]);
+      }
+    },
+    [selectPersona],
+  );
+
   return (
     <div className={flex({ flexDir: 'column' })}>
       <SelectedPetTable currentPersona={selectPersona} reset={() => setSelectPersona(null)} />
@@ -26,11 +35,7 @@ function MypageMyPets() {
           <SelectPersonaList
             selectPersona={selectPersona ? [selectPersona.id] : []}
             onSelectPersona={(persona) => setSelectPersona(persona)}
-            initSelectPersonas={(list) => {
-              if (!selectPersona) {
-                setSelectPersona(list[0]);
-              }
-            }}
+            initSelectPersonas={initSelectPersonas}
           />
         </div>
       </section>

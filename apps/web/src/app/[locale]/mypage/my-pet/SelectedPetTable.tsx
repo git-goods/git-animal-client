@@ -18,6 +18,7 @@ import { LOCAL_STORAGE_KEY } from '@/constants/storage';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
+import { EvolutionPersona } from './(evolution)';
 import { MergePersona } from './(merge)';
 
 interface SelectedPetTableProps {
@@ -69,6 +70,19 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
     ));
   };
 
+  const onEvolutionClick = () => {
+    if (!currentPersona) return;
+    // setIsEvolutionOpen(true);
+    overlay.open(({ isOpen, close }) => (
+      <EvolutionPersona
+        key={currentPersona.id}
+        isOpen={isOpen}
+        onClose={() => close()}
+        targetPersona={currentPersona}
+      />
+    ));
+  };
+
   return (
     <div className={tableCss}>
       <div className={theadCss}>
@@ -95,6 +109,11 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
               <Button variant="secondary" onClick={onMergeClick}>
                 {t('merge')}
               </Button>
+              {currentPersona.grade === 'EVOLUTION' && (
+                <Button variant="secondary" onClick={onEvolutionClick}>
+                  {t('evolution')}
+                </Button>
+              )}
             </div>
           </>
         )}

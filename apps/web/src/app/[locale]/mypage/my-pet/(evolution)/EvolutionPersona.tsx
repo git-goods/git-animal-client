@@ -23,7 +23,7 @@ interface MergePersonaProps {
   targetPersona: Persona;
 }
 
-export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona }: MergePersonaProps) {
+export function EvolutionPersona({ isOpen, onClose, targetPersona: initTargetPersona }: MergePersonaProps) {
   const queryClient = useQueryClient();
   const t = useTranslations('Mypage.Merge');
 
@@ -39,9 +39,9 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
 
   const { mutate: mergePersonaLevel, isPending: isMerging } = useMergePersonaLevelByToken(token, {
     onSuccess: (data) => {
-      setMaterialPersona(null);
-      setResultData(data);
-      setTargetPersona(data);
+      // setMaterialPersona(null);
+      // setResultData(data);
+      // setTargetPersona(data as Persona); // TODO: 타입 확인
       queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
     },
   });

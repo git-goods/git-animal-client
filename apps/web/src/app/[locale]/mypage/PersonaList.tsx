@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo, useEffect, useMemo } from 'react';
+import React, { memo, useEffect, useMemo, useRef } from 'react';
 import { css } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
@@ -37,10 +37,12 @@ export const SelectPersonaList = wrap
   .on(function SelectPersonaList({ selectPersona, onSelectPersona, initSelectPersonas, loadingPersona }: Props) {
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
+    const hasInitialized = useRef(false);
 
     // 초기 선택 로직, 외부에서 초기화 함수 전달
     useEffect(() => {
-      if (initSelectPersonas) {
+      if (initSelectPersonas && !hasInitialized.current && data.personas.length > 0) {
+        hasInitialized.current = true;
         initSelectPersonas(data.personas);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps

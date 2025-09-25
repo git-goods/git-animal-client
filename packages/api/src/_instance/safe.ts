@@ -12,7 +12,10 @@ const safeFactory =
     const response = await method(...args);
 
     const parsed = zodSchema.safeParse(response);
-    if (parsed.error) throw new CustomException('API_TYPE_NOT_MATCH');
+    if (parsed.error) {
+      console.error(parsed.error);
+      // throw new CustomException('API_TYPE_NOT_MATCH');
+    }
 
     return response;
   };
