@@ -51,7 +51,9 @@ export const SelectPersonaList = wrap
     const viewList = useMemo(() => {
       const viewListSorted = data.personas.sort((a, b) => {
         if (a.visible && !b.visible) return -1;
+        if (a.grade === 'EVOLUTION' && b.grade !== 'EVOLUTION') return -1;
         if (!a.visible && b.visible) return 1;
+        if (a.grade !== 'EVOLUTION' && b.grade === 'EVOLUTION') return 1;
         return parseInt(a.level) - parseInt(b.level);
       });
 
