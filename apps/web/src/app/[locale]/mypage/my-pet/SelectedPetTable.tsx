@@ -11,6 +11,7 @@ import { userQueries } from '@gitanimals/react-query';
 import { Button, Checkbox, Dialog, Label } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import { LOCAL_STORAGE_KEY } from '@/constants/storage';
@@ -27,7 +28,6 @@ interface SelectedPetTableProps {
 export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProps) {
   const queryClient = useQueryClient();
   const t = useTranslations('Shop');
-  const [isMergeOpen, setIsMergeOpen] = useState(false);
   const [sellPersonaId, setSellPersonaId] = useState<string | null>(null);
   const { setDoNotShowAgain, isChecked: isDoNotShowAgain } = useDoNotShowAgain();
 
@@ -61,6 +61,14 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
     }
   };
 
+  const onMergeClick = () => {
+    if (!currentPersona) return;
+    // setIsMergeOpen(true);
+    overlay.open(({ isOpen, close }) => (
+      <MergePersona key={currentPersona.id} isOpen={isOpen} onClose={() => close()} targetPersona={currentPersona} />
+    ));
+  };
+
   return (
     <div className={tableCss}>
       <div className={theadCss}>
@@ -84,7 +92,7 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
               <Button variant="secondary" onClick={onSellClick}>
                 {t('sell')} (100P)
               </Button>
-              <Button variant="secondary" onClick={() => setIsMergeOpen(true)}>
+              <Button variant="secondary" onClick={onMergeClick}>
                 {t('merge')}
               </Button>
             </div>
@@ -92,14 +100,6 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
         )}
       </div>
 
-      {currentPersona && (
-        <MergePersona
-          key={currentPersona.id}
-          isOpen={isMergeOpen}
-          onClose={() => setIsMergeOpen(false)}
-          targetPersona={currentPersona}
-        />
-      )}
       <SellConfirmDialog
         isOpen={Boolean(sellPersonaId)}
         onConfirm={onSellAction}

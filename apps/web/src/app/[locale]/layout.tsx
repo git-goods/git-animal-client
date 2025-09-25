@@ -44,13 +44,13 @@ export default async function LocaleLayout({
       <body>
         <Monitoring />
 
-        <ClientProvider>
-          <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={messages}>
+          <ClientProvider>
             {children}
 
             <GlobalComponent />
-          </NextIntlClientProvider>
-        </ClientProvider>
+          </ClientProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
