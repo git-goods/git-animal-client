@@ -5,12 +5,12 @@ import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
-import { Button, Dialog } from '@gitanimals/ui-panda';
+import { Button, CommonDialog, Dialog } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useClientSession } from '@/utils/clientAuth';
 
-import { SelectPersonaList } from '../../PersonaList';
+import { SelectPersonaList } from '../_components/SelectPersonaList';
 import { SpinningLoader } from '../_components/SpinningLoader';
 
 import { MergePreview } from './MergePreview';
@@ -65,32 +65,28 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content size="large">
-        <Dialog.Title className={headingStyle}>Merge to Level Up</Dialog.Title>
-        <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
+    <CommonDialog isOpen={isOpen} onClose={onClose} title="Merge to Level Up" size="large">
+      <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
 
-        <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
+      <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
 
-        <Dialog.Footer className={footerStyle}>
-          <Button variant="secondary" onClick={onClose}>
-            {t('cancel')}
-          </Button>
-          <Button disabled={isMergeDisabled} onClick={onMergeAction}>
-            {t('merge')}
-          </Button>
-        </Dialog.Footer>
-        <MergeResultModal
-          key={resultData?.id}
-          isOpen={Boolean(resultData)}
-          onClose={() => setResultData(null)}
-          result={resultData as MergePersonaLevelResponse}
-        />
-        {isMerging && <SpinningLoader />}
-      </Dialog.Content>
-    </Dialog>
+      <Dialog.Footer className={footerStyle}>
+        <Button variant="secondary" onClick={onClose}>
+          {t('cancel')}
+        </Button>
+        <Button disabled={isMergeDisabled} onClick={onMergeAction}>
+          {t('merge')}
+        </Button>
+      </Dialog.Footer>
+      <MergeResultModal
+        key={resultData?.id}
+        isOpen={Boolean(resultData)}
+        onClose={() => setResultData(null)}
+        result={resultData as MergePersonaLevelResponse}
+      />
+      {isMerging && <SpinningLoader />}
+    </CommonDialog>
   );
 }
 
-const headingStyle = css({ marginTop: '40px' });
 const footerStyle = css({ display: 'flex', justifyContent: 'center', gap: '12px' });

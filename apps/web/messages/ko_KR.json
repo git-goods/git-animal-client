@@ -124,7 +124,8 @@
     "invalid-size-error": "유효하지 않은 사이즈",
     "farm-type-select-pet": "Farm Type에 사용할 펫을 선택해주세요.",
     "line-type-select-pet": "Line Type에 사용할 펫을 선택해주세요.",
-
+    "evolution": "진화",
+    "evolution-result": "진화 성공!",
     "Merge": {
       "merge": "합치기",
       "merge-result": "합치기 결과",

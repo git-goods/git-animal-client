@@ -37,7 +37,6 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
     enabled: !!currentPersona?.id,
     select: (data) => data.evolutionAble,
   });
-  console.log('isEvolutionAble', isEvolutionAble);
 
   const { mutate: dropPetMutation } = useMutation({
     mutationFn: (personaId: string) => dropPet({ personaId }),

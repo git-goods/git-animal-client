@@ -4,7 +4,7 @@
 import type { PropsWithChildren } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
-import type { MergePersonaLevelResponse } from '@gitanimals/api';
+import type { EvolutionPersonaResponse } from '@gitanimals/api';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
@@ -14,23 +14,22 @@ import { getPersonaImage } from '@/utils/image';
 interface MergeResultModalProps {
   isOpen: boolean;
   onClose: () => void;
-  result: MergePersonaLevelResponse;
+  result: EvolutionPersonaResponse;
 }
 
-export const MergeResultModal = ({ isOpen, onClose, result }: MergeResultModalProps) => {
-  const t = useTranslations('Mypage.Merge');
+export const EvolutionResult = ({ isOpen, onClose, result }: MergeResultModalProps) => {
+  const t = useTranslations('Mypage');
 
   if (!isOpen) return null;
 
   return (
     <MotionContainer onClose={onClose}>
-      <h3 className={css({ textStyle: 'glyph24.bold' })}>{t('merge-result')}</h3>
+      <h3 className={css({ textStyle: 'glyph24.bold', color: 'white' })}>{t('evolution-result')}</h3>
       <div className={mergeItemStyle}>
         <img src={getPersonaImage(result.type)} alt={result.type} width={100} height={100} />
       </div>
       <div className={resultTextStyle}>
         <p>{snakeToTitleCase(result.type)}</p>
-        <span>Level {result.level}</span>
       </div>
     </MotionContainer>
   );
@@ -45,6 +44,7 @@ const mergeItemStyle = css({
 
 const resultTextStyle = css({
   textStyle: 'glyph18.bold',
+  color: 'white',
 
   '& > span': {
     marginTop: '4px',

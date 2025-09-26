@@ -88,3 +88,28 @@
   width: fit-content;
   gap: 12px;
 }
+
+.evolution-rainbow-gradient-text {
+  /* Level 1 */
+
+  /* glyph18 bold */
+  /* font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 120%;
+  text-align: center;
+  letter-spacing: -0.3px; */
+
+  /* gradient-rainbow */
+  background: linear-gradient(132.51deg, #fffdc9 2.19%, #96e6d8 49.24%, #7dabf1 98.21%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}

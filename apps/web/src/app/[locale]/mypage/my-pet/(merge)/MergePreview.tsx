@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import type { PropsWithChildren } from 'react';
-import { css, cx } from '_panda/css';
+import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
 import type { Persona } from '@gitanimals/api';
 import { motion } from 'framer-motion';
 import { EqualIcon, PlusIcon } from 'lucide-react';
 
-import { getPersonaImage } from '@/utils/image';
+import { PersonaBanner, PersonaBannerUnknown } from '../_components/PersonaBanner';
 
 type MergePersonaProps = {
   targetPersona: Persona | null;
@@ -33,13 +33,27 @@ export const MergePreview = ({ materialPersona, targetPersona }: MergePersonaPro
   return (
     <div className={containerStyle}>
       <div className={itemContainerStyle}>
-        {targetPersona ? <MergeItem persona={targetPersona} /> : <MergeEmptyItem />}
+        {targetPersona ? (
+          <PersonaBanner level={targetPersona.level} personaType={targetPersona.type} />
+        ) : (
+          <PersonaBannerUnknown />
+        )}
         <PlusIcon width={24} height={24} className={iconStyle} color="#FFFFFFBF" />
-        {materialPersona ? <MergeItem persona={materialPersona} /> : <MergeEmptyItem />}
+
+        {materialPersona ? (
+          <PersonaBanner level={materialPersona.level} personaType={materialPersona.type} />
+        ) : (
+          <PersonaBannerUnknown />
+        )}
 
         <EqualIcon width={24} height={24} className={iconStyle} color="#FFFFFFBF" />
+
         <ResultItemAnimation isVisible={Boolean(resultPersona)} key={resultPersona?.id}>
-          {resultPersona ? <MergeItem persona={resultPersona} /> : <MergeEmptyItem />}
+          {resultPersona ? (
+            <PersonaBanner level={resultPersona.level} personaType={resultPersona.type} />
+          ) : (
+            <PersonaBannerUnknown />
+          )}
         </ResultItemAnimation>
       </div>
     </div>
@@ -70,58 +84,11 @@ const iconStyle = css({
   marginBottom: '34px',
 });
 
-const itemStyle = css({
-  position: 'relative',
-  padding: '8px',
-});
-
 const flashEffectStyle = css({
   position: 'absolute',
   inset: 0,
   backgroundColor: 'white',
   borderRadius: '8px',
-});
-
-function MergeEmptyItem() {
-  return (
-    <div className={itemStyle}>
-      <img src="/mypage/merge/merge-empty.svg" alt="empty" className={imageStyle} />
-      <div className={cx(levelTextStyle, levelEmptyTextStyle)}>Level ?</div>
-    </div>
-  );
-}
-
-function MergeItem({ persona }: PropsWithChildren<{ persona: Persona }>) {
-  return (
-    <div className={itemStyle}>
-      <div className={mergeItemStyle}>
-        <img src={getPersonaImage(persona.type)} alt="Level 3 Fish" className={imageStyle} />
-      </div>
-      <div className={levelTextStyle}>Level {persona.level}</div>
-    </div>
-  );
-}
-const imageStyle = css({
-  objectFit: 'contain',
-  width: '120px',
-  height: '120px',
-});
-
-const levelTextStyle = css({
-  textAlign: 'center',
-  marginTop: '12px',
-  textStyle: 'glyph18.bold',
-  color: 'white.white_100',
-});
-
-const levelEmptyTextStyle = css({
-  color: 'white.white_75',
-});
-
-const mergeItemStyle = css({
-  borderRadius: '16px',
-  border: '2px solid rgba(255, 255, 255, 0.25)',
-  background: 'rgba(255, 255, 255, 0.25)',
 });
 
 function ResultItemAnimation({ isVisible, children }: PropsWithChildren<{ isVisible: boolean }>) {
