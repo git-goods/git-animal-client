@@ -7,10 +7,10 @@ import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { flex } from '_panda/patterns';
 import { dropPet, type Persona } from '@gitanimals/api';
-import { userQueries } from '@gitanimals/react-query';
+import { evolutionQueries, userQueries } from '@gitanimals/react-query';
 import { Button, Checkbox, Dialog, Label } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
@@ -31,6 +31,13 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
   const t = useTranslations('Shop');
   const [sellPersonaId, setSellPersonaId] = useState<string | null>(null);
   const { setDoNotShowAgain, isChecked: isDoNotShowAgain } = useDoNotShowAgain();
+
+  const { data: isEvolutionAble } = useQuery({
+    ...evolutionQueries.checkPersonaEvolution(currentPersona?.id as string),
+    enabled: !!currentPersona?.id,
+    select: (data) => data.evolutionAble,
+  });
+  console.log('isEvolutionAble', isEvolutionAble);
 
   const { mutate: dropPetMutation } = useMutation({
     mutationFn: (personaId: string) => dropPet({ personaId }),
@@ -109,7 +116,7 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
               <Button variant="secondary" onClick={onMergeClick}>
                 {t('merge')}
               </Button>
-              {currentPersona.grade === 'EVOLUTION' && (
+              {isEvolutionAble && (
                 <Button variant="secondary" onClick={onEvolutionClick}>
                   {t('evolution')}
                 </Button>

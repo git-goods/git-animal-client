@@ -27,7 +27,7 @@ const mergePersona = ({ targetPersona, materialPersona }: MergePersonaProps) => 
   };
 };
 
-export const MergePreview = ({ materialPersona, targetPersona }: MergePersonaProps) => {
+export const EvolutionPreview = ({ materialPersona, targetPersona }: MergePersonaProps) => {
   const resultPersona = mergePersona({ targetPersona, materialPersona });
 
   return (
@@ -35,8 +35,6 @@ export const MergePreview = ({ materialPersona, targetPersona }: MergePersonaPro
       <div className={itemContainerStyle}>
         {targetPersona ? <MergeItem persona={targetPersona} /> : <MergeEmptyItem />}
         <PlusIcon width={24} height={24} className={iconStyle} color="#FFFFFFBF" />
-        {materialPersona ? <MergeItem persona={materialPersona} /> : <MergeEmptyItem />}
-
         <EqualIcon width={24} height={24} className={iconStyle} color="#FFFFFFBF" />
         <ResultItemAnimation isVisible={Boolean(resultPersona)} key={resultPersona?.id}>
           {resultPersona ? <MergeItem persona={resultPersona} /> : <MergeEmptyItem />}
@@ -66,21 +64,11 @@ const itemContainerStyle = flex({
   maxWidth: '612px',
 });
 
-const iconStyle = css({
-  marginBottom: '34px',
-});
+const iconStyle = css({ marginBottom: '34px' });
 
-const itemStyle = css({
-  position: 'relative',
-  padding: '8px',
-});
+const itemStyle = css({ position: 'relative', padding: '8px' });
 
-const flashEffectStyle = css({
-  position: 'absolute',
-  inset: 0,
-  backgroundColor: 'white',
-  borderRadius: '8px',
-});
+const flashEffectStyle = css({ position: 'absolute', inset: 0, backgroundColor: 'white', borderRadius: '8px' });
 
 function MergeEmptyItem() {
   return (
@@ -101,11 +89,7 @@ function MergeItem({ persona }: PropsWithChildren<{ persona: Persona }>) {
     </div>
   );
 }
-const imageStyle = css({
-  objectFit: 'contain',
-  width: '120px',
-  height: '120px',
-});
+const imageStyle = css({ objectFit: 'contain', width: '120px', height: '120px' });
 
 const levelTextStyle = css({
   textAlign: 'center',
@@ -114,9 +98,7 @@ const levelTextStyle = css({
   color: 'white.white_100',
 });
 
-const levelEmptyTextStyle = css({
-  color: 'white.white_75',
-});
+const levelEmptyTextStyle = css({ color: 'white.white_75' });
 
 const mergeItemStyle = css({
   borderRadius: '16px',
