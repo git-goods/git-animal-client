@@ -1,15 +1,19 @@
-'use client';
-
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
 
 import { Background } from '@/app/[locale]/game/quiz/_components/BackGround';
-import { TabBar } from '@/components/Layout/TabBar';
+import { parseDevModeFromSearchParams } from '@/lib/devtools/constants';
 
 import SelectQuizType from './_components/CreateOrSolve/SelectQuizType';
 
-function QuizPage() {
-  const t = useTranslations('Quiz');
+async function QuizPage({ searchParams }: { searchParams: { devMode?: string } }) {
+  const t = await getTranslations('Quiz');
+
+  const isDevMode = parseDevModeFromSearchParams(searchParams.devMode ?? '');
+
+  if (!isDevMode) {
+    return null;
+  }
 
   return (
     <>
@@ -19,7 +23,6 @@ function QuizPage() {
         <p className={descriptionStyle}>{t('quiz-solve-description')}</p>
         <SelectQuizType />
       </div>
-      <TabBar />
     </>
   );
 }

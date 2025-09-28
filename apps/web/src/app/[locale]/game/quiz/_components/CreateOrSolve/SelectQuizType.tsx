@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
