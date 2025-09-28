@@ -165,6 +165,9 @@ importers:
       '@gitanimals/asset-font':
         specifier: workspace:*
         version: link:../../packages/asset/font
+      '@gitanimals/dayjs':
+        specifier: workspace:*
+        version: link:../../packages/lib/dayjs
       '@gitanimals/exception':
         specifier: workspace:*
         version: link:../../packages/exception

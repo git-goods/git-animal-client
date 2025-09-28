@@ -19,6 +19,7 @@
     "@egjs/react-flicking": "^4.11.3",
     "@gitanimals/api": "workspace:*",
     "@gitanimals/asset-font": "workspace:*",
+    "@gitanimals/dayjs": "workspace:*",
     "@gitanimals/exception": "workspace:*",
     "@gitanimals/react": "workspace:*",
     "@gitanimals/react-query": "workspace:*",
