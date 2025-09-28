@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 import { ClientProvider, GlobalComponent, Monitoring } from '@/components/Global';
 import { config } from '@/constants/config';
@@ -45,11 +46,13 @@ export default async function LocaleLayout({
         <Monitoring />
 
         <NextIntlClientProvider messages={messages}>
-          <ClientProvider>
-            {children}
+          <NuqsAdapter>
+            <ClientProvider>
+              {children}
 
-            <GlobalComponent />
-          </ClientProvider>
+              <GlobalComponent />
+            </ClientProvider>
+          </NuqsAdapter>
         </NextIntlClientProvider>
       </body>
     </html>

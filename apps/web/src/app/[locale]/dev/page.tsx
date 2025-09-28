@@ -3,10 +3,17 @@ import { Box } from '_panda/jsx';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@gitanimals/ui-panda';
 
 import GNB from '@/components/GNB/GNB';
+import { parseDevModeFromSearchParams } from '@/lib/devtools/constants';
 
 import DevClient from './Client';
 
-async function DevPage() {
+async function DevPage({ searchParams }: { searchParams: { devMode?: string } }) {
+  const isDevMode = parseDevModeFromSearchParams(searchParams.devMode ?? '');
+
+  if (!isDevMode) {
+    return null;
+  }
+
   return (
     <Box p={32}>
       <GNB />
