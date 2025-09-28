@@ -14,6 +14,7 @@ import Tabs from '@/components/Tabs/Tabs';
 import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';
 import useTabs from '@/components/Tabs/useTabs';
+import { ROUTE } from '@/constants/route';
 import type { Locale } from '@/i18n/routing';
 
 import type { QuizCategory, QuizLevel } from '../../_constants/quiz.constants';
@@ -81,7 +82,7 @@ const QuizCreateForm = () => {
 
       if (result === QUIZ_RESULT.SUCCESS) {
         toast.success(message);
-        router.back();
+        router.push(ROUTE.GAME.QUIZ.MAIN());
       } else {
         toast.error(message);
       }
