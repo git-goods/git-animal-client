@@ -8,8 +8,5 @@ export const useDevMode = () => {
     parseAsStringLiteral(['true', 'false']).withDefault('false'),
   );
 
-  return {
-    isDevMode,
-    setIsDevMode,
-  };
+  return { isDevMode: isDevMode === 'true' || process.env.NODE_ENV === 'development', setIsDevMode };
 };

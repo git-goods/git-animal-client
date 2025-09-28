@@ -86,6 +86,7 @@
     "sell-confirm-description": "판매 후 펫은 사라집니다.",
     "sell-confirm-checkbox": "메시지 다시 보지 않기",
     "sell-price-modal-title": "판매하고 싶은 가격을 입력해주세요.",
+    "evolution": "진화",
     "Background": {
       "buy-success": "배경 구매 완료!",
       "buy-fail": "배경 구매에 실패했습니다.",
@@ -123,7 +124,8 @@
     "invalid-size-error": "유효하지 않은 사이즈",
     "farm-type-select-pet": "Farm Type에 사용할 펫을 선택해주세요.",
     "line-type-select-pet": "Line Type에 사용할 펫을 선택해주세요.",
-
+    "evolution": "진화",
+    "evolution-result": "진화 성공!",
     "Merge": {
       "merge": "합치기",
       "merge-result": "합치기 결과",

@@ -11,12 +11,15 @@ import { userQueries } from '@gitanimals/react-query';
 import { Button, Checkbox, Dialog, Label } from '@gitanimals/ui-panda';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import { LOCAL_STORAGE_KEY } from '@/constants/storage';
+import { useDevMode } from '@/lib/devtools/devtools';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
+import { EvolutionPersona } from './(evolution)';
 import { MergePersona } from './(merge)';
 
 interface SelectedPetTableProps {
@@ -26,10 +29,18 @@ interface SelectedPetTableProps {
 
 export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProps) {
   const queryClient = useQueryClient();
+
+  const { isDevMode } = useDevMode();
+
   const t = useTranslations('Shop');
-  const [isMergeOpen, setIsMergeOpen] = useState(false);
   const [sellPersonaId, setSellPersonaId] = useState<string | null>(null);
   const { setDoNotShowAgain, isChecked: isDoNotShowAgain } = useDoNotShowAgain();
+
+  // const { data: isEvolutionAble } = useQuery({
+  //   ...evolutionQueries.checkPersonaEvolution(currentPersona?.id as string),
+  //   enabled: !!currentPersona?.id,
+  //   select: (data) => data.evolutionAble,
+  // });
 
   const { mutate: dropPetMutation } = useMutation({
     mutationFn: (personaId: string) => dropPet({ personaId }),
@@ -43,6 +54,8 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
       toast.error(t('sell-product-fail'));
     },
   });
+
+  const isEvolutionAble = currentPersona?.isEvolutionable;
 
   const onSellClick = async () => {
     if (!currentPersona) return;
@@ -59,6 +72,27 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
     if (isDoNotShowAgain) {
       setDoNotShowAgain(true);
     }
+  };
+
+  const onMergeClick = () => {
+    if (!currentPersona) return;
+    // setIsMergeOpen(true);
+    overlay.open(({ isOpen, close }) => (
+      <MergePersona key={currentPersona.id} isOpen={isOpen} onClose={() => close()} targetPersona={currentPersona} />
+    ));
+  };
+
+  const onEvolutionClick = () => {
+    if (!currentPersona) return;
+    // setIsEvolutionOpen(true);
+    overlay.open(({ isOpen, close }) => (
+      <EvolutionPersona
+        key={currentPersona.id}
+        isOpen={isOpen}
+        onClose={() => close()}
+        targetPersona={currentPersona}
+      />
+    ));
   };
 
   return (
@@ -84,22 +118,19 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
               <Button variant="secondary" onClick={onSellClick}>
                 {t('sell')} (100P)
               </Button>
-              <Button variant="secondary" onClick={() => setIsMergeOpen(true)}>
+              <Button variant="secondary" onClick={onMergeClick}>
                 {t('merge')}
               </Button>
+              {isEvolutionAble && isDevMode && (
+                <Button variant="secondary" onClick={onEvolutionClick}>
+                  {t('evolution')}
+                </Button>
+              )}
             </div>
           </>
         )}
       </div>
 
-      {currentPersona && (
-        <MergePersona
-          key={currentPersona.id}
-          isOpen={isMergeOpen}
-          onClose={() => setIsMergeOpen(false)}
-          targetPersona={currentPersona}
-        />
-      )}
       <SellConfirmDialog
         isOpen={Boolean(sellPersonaId)}
         onConfirm={onSellAction}

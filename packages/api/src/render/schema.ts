@@ -1,4 +1,5 @@
 import z from 'zod';
+export const PersonaGradeSchema = z.enum(['DEFAULT', 'EVOLUTION', 'COLLABORATOR']);
 
 export const PersonaSchema = z.object({
   id: z.string(),
@@ -6,11 +7,14 @@ export const PersonaSchema = z.object({
   level: z.string(),
   visible: z.boolean(),
   dropRate: z.string(),
+  grade: PersonaGradeSchema,
+  isEvolutionable: z.boolean().optional(),
 });
 
 export const PersonaInfoSchema = PersonaSchema.pick({
   type: true,
   dropRate: true,
+  grade: true,
 });
 
 export type Persona = z.infer<typeof PersonaSchema>;

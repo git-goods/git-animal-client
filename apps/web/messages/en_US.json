@@ -85,6 +85,7 @@
     "sell-confirm-description": "After selling, the pet will disappear.",
     "sell-confirm-checkbox": "Do not show this message again",
     "sell-price-modal-title": "Enter the price you want to sell",
+    "evolution": "Evolution",
     "Background": {
       "buy-success": "Background purchased successfully",
       "buy-fail": "Failed to purchase background",
@@ -122,6 +123,8 @@
     "invalid-size-error": "Invalid size",
     "farm-type-select-pet": "Select a pet for Farm Type",
     "line-type-select-pet": "Select a pet for Line Type",
+    "evolution": "Evolution",
+    "evolution-result": "Evolution Success!",
     "Merge": {
       "merge": "Merge",
       "merge-result": "Merge result",

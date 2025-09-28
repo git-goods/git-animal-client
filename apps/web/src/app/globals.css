@@ -88,3 +88,41 @@
   width: fit-content;
   gap: 12px;
 }
+
+.evolution-rainbow-gradient-text {
+  /* Level 1 */
+
+  /* gradient-rainbow */
+  background: linear-gradient(132.51deg, #fffdc9 2.19%, #96e6d8 49.24%, #7dabf1 98.21%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.gradient-move {
+  background: linear-gradient(
+    -45deg,
+    rgba(255, 192, 192, 0.7),
+    rgba(78, 205, 196, 0.7),
+    rgba(69, 183, 209, 0.7),
+    rgba(150, 206, 180, 0.7)
+  );
+  background-size: 400% 400%;
+  animation: gradientMove 3s ease infinite;
+}

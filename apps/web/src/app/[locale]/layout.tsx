@@ -44,15 +44,16 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body>
         <Monitoring />
-        <NuqsAdapter>
-          <ClientProvider>
-            <NextIntlClientProvider messages={messages}>
+
+        <NextIntlClientProvider messages={messages}>
+          <NuqsAdapter>
+            <ClientProvider>
               {children}
 
               <GlobalComponent />
-            </NextIntlClientProvider>
-          </ClientProvider>
-        </NuqsAdapter>
+            </ClientProvider>
+          </NuqsAdapter>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

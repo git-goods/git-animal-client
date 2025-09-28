@@ -252,6 +252,9 @@ importers:
       nuqs:
         specifier: ^2.5.2
         version: 2.5.2(@remix-run/react@2.10.3(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(next@14.2.3(@babel/core@7.28.0)(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react-router-dom@7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react-router@7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react@18.2.0)
+      overlay-kit:
+        specifier: ^1.8.5
+        version: 1.8.5(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       react:
         specifier: ^18
         version: 18.2.0
@@ -9157,6 +9160,12 @@ packages:
 
   outdent@0.8.0:
     resolution: {integrity: sha512-KiOAIsdpUTcAXuykya5fnVVT+/5uS0Q1mrkRHcF89tpieSmY33O/tmc54CqwA+bfhbtEfZUNLHaPUiB9X3jt1A==}
+
+  overlay-kit@1.8.5:
+    resolution: {integrity: sha512-BNtfOsfMNzo22x+uMNtV8nix53VTbA0XMENtwdvaEUmtXCjUE6go2xK4XSlNnSGyQfmB6c04uUCuFQtS5ZAAEQ==}
+    peerDependencies:
+      react: ^18
+      react-dom: ^18.3.1
 
   p-limit@2.3.0:
     resolution: {integrity: sha512-//88mFWSJx8lxCzwdAABTJL2MyWB12+eIY7MDL2SqLmAkeKU9qxRvWuSyTjm3FUmpBEMuFfckAIqEaVGUDxb6w==}
@@ -22243,6 +22252,11 @@ snapshots:
   os-tmpdir@1.0.2: {}
 
   outdent@0.8.0: {}
+
+  overlay-kit@1.8.5(react-dom@18.3.1(react@18.2.0))(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.3.1(react@18.2.0)
 
   p-limit@2.3.0:
     dependencies:

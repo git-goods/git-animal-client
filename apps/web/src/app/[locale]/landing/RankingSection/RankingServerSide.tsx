@@ -33,7 +33,6 @@ export async function RankingServerSide({
     };
 
     const currentPage = searchParams.page ? Number(searchParams.page) : await getStartPageNumber();
-    console.log('currentPage', currentPage);
     const startRankNumber = currentPage * RANKS_PER_PAGE + 4;
 
     const rankType = type === 'people' ? 'WEEKLY_USER_CONTRIBUTIONS' : 'WEEKLY_GUILD_CONTRIBUTIONS';

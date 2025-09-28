@@ -3,6 +3,7 @@
 import { type PropsWithChildren } from 'react';
 import { SessionProvider } from 'next-auth/react';
 import { domMax, LazyMotion } from 'framer-motion';
+import { OverlayProvider } from 'overlay-kit';
 
 import QueryClientProvider from '@/apis/QueryClientProvider';
 import Monitoring from '@/components/Global/Monitoring';
@@ -15,7 +16,9 @@ function ClientProvider({ children }: PropsWithChildren) {
       <LazyMotion features={domMax}>
         <SessionProvider>
           <Monitoring />
-          <SessionLoader>{children}</SessionLoader>
+          <SessionLoader>
+            <OverlayProvider>{children}</OverlayProvider>
+          </SessionLoader>
         </SessionProvider>
       </LazyMotion>
     </QueryClientProvider>
