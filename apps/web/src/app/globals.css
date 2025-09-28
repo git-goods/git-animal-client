@@ -92,15 +92,6 @@
 .evolution-rainbow-gradient-text {
   /* Level 1 */
 
-  /* glyph18 bold */
-  /* font-family: 'Product Sans';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 120%;
-  text-align: center;
-  letter-spacing: -0.3px; */
-
   /* gradient-rainbow */
   background: linear-gradient(132.51deg, #fffdc9 2.19%, #96e6d8 49.24%, #7dabf1 98.21%);
   -webkit-background-clip: text;
@@ -112,4 +103,26 @@
   flex: none;
   order: 1;
   flex-grow: 0;
+}
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.gradient-move {
+  background: linear-gradient(
+    -45deg,
+    rgba(255, 192, 192, 0.7),
+    rgba(78, 205, 196, 0.7),
+    rgba(69, 183, 209, 0.7),
+    rgba(150, 206, 180, 0.7)
+  );
+  background-size: 400% 400%;
+  animation: gradientMove 3s ease infinite;
 }

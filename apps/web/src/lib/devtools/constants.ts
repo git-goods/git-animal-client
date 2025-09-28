@@ -7,5 +7,5 @@ export const DEV_MODE_KEY = 'devMode';
  * @returns boolean 
  */
 export const parseDevModeFromSearchParams = (devMode: string) => {
-  return devMode === 'true';
+  return devMode === 'true' || process.env.NODE_ENV === 'development';
 };

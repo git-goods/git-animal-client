@@ -1,7 +1,7 @@
 'use client';
 
 import React, { memo, useEffect, useMemo, useRef } from 'react';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
 import { Banner } from '@gitanimals/ui-panda';
@@ -17,6 +17,8 @@ interface Props {
   onSelectPersona: (persona: Persona) => void;
   initSelectPersonas?: (list: Persona[]) => void;
   loadingPersona?: string[];
+
+  isSpecialEffect?: boolean;
 }
 
 export const SelectPersonaList = wrap
@@ -34,7 +36,13 @@ export const SelectPersonaList = wrap
     ),
   })
 
-  .on(function SelectPersonaList({ selectPersona, onSelectPersona, initSelectPersonas, loadingPersona }: Props) {
+  .on(function SelectPersonaList({
+    selectPersona,
+    isSpecialEffect,
+    onSelectPersona,
+    initSelectPersonas,
+    loadingPersona,
+  }: Props) {
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
     const hasInitialized = useRef(false);
@@ -48,15 +56,27 @@ export const SelectPersonaList = wrap
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
+    console.log('data.personas', data.personas);
+
+    const gradeSortedList = useMemo(() => {
+      // COLLABORATOR, EVOLUTION, DEFAULT 순으로 정렬
+      return data.personas.sort((a, b) => {
+        if (a.grade === 'COLLABORATOR') return -1;
+        if (a.grade === 'EVOLUTION') return 1;
+        return 0;
+      });
+    }, [data]);
+
     const viewList = useMemo(() => {
-      const viewListSorted = data.personas.sort((a, b) => {
+      const viewListSorted = gradeSortedList.sort((a, b) => {
         if (a.visible && !b.visible) return -1;
         if (!a.visible && b.visible) return 1;
         return parseInt(b.level) - parseInt(a.level);
       });
 
       return viewListSorted;
-    }, [data]);
+    }, [gradeSortedList]);
+
     return (
       <>
         {viewList.map((persona) => (
@@ -66,6 +86,7 @@ export const SelectPersonaList = wrap
             isSelected={selectPersona.includes(persona.id)}
             onClick={() => onSelectPersona(persona)}
             isLoading={loadingPersona?.includes(persona.id) ?? false}
+            isSpecialEffect={isSpecialEffect}
           />
         ))}
       </>
@@ -77,15 +98,20 @@ interface PersonaItemProps {
   isSelected: boolean;
   onClick: () => void;
   isLoading: boolean;
+
+  isSpecialEffect?: boolean;
 }
 
-function PersonaItem({ persona, isSelected, onClick, isLoading }: PersonaItemProps) {
+function PersonaItem({ persona, isSelected, onClick, isSpecialEffect, isLoading }: PersonaItemProps) {
   return (
     <button
       key={`${persona.id}-${persona.visible}`}
       onClick={onClick}
       disabled={isLoading}
-      className={css({ outline: 'none' })}
+      className={cx(
+        css({ outline: 'none', borderRadius: '12px' }),
+        isSpecialEffect && persona.isEvolutionable && 'gradient-move',
+      )}
     >
       <Banner
         loading={isLoading}

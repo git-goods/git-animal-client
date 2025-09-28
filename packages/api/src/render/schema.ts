@@ -8,7 +8,7 @@ export const PersonaSchema = z.object({
   visible: z.boolean(),
   dropRate: z.string(),
   grade: PersonaGradeSchema,
-  isEvolution: z.boolean().optional(),
+  isEvolutionable: z.boolean().optional(),
 });
 
 export const PersonaInfoSchema = PersonaSchema.pick({

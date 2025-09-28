@@ -36,6 +36,7 @@ function MypageMyPets() {
             selectPersona={selectPersona ? [selectPersona.id] : []}
             onSelectPersona={(persona) => setSelectPersona(persona)}
             initSelectPersonas={initSelectPersonas}
+            isSpecialEffect
           />
         </div>
       </section>
