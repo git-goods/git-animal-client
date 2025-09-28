@@ -47,6 +47,7 @@
     "next-auth": "^4.24.7",
     "next-intl": "^3.5.0",
     "next-pwa": "^5.6.0",
+    "nuqs": "^2.5.2",
     "react": "*",
     "react-dom": "*",
     "sonner": "^1.5.0",

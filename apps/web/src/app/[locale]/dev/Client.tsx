@@ -5,14 +5,17 @@ import { flex } from '_panda/patterns';
 import { Button } from '@gitanimals/ui-panda';
 
 import { Link } from '@/i18n/routing';
+import { useDevMode } from '@/lib/devtools/devtools';
 import { useClientSession } from '@/utils/clientAuth';
 import { getIsOnLoadSheet, sendLog } from '@/utils/log';
 
 function DevClient() {
+  const { isDevMode } = useDevMode();
   const { data: session, status } = useClientSession();
 
   return (
     <Box>
+      <li>devMode: {isDevMode}</li>
       <ul className={listStyle}>
         <li>client session status : {status}</li>
         <li>

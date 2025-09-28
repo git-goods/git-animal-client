@@ -249,6 +249,9 @@ importers:
       next-pwa:
         specifier: ^5.6.0
         version: 5.6.0(@babel/core@7.28.0)(@types/babel__core@7.20.5)(esbuild@0.20.2)(next@14.2.3(@babel/core@7.28.0)(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(webpack@5.92.0(esbuild@0.20.2))
+      nuqs:
+        specifier: ^2.5.2
+        version: 2.5.2(@remix-run/react@2.10.3(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(next@14.2.3(@babel/core@7.28.0)(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react-router-dom@7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react-router@7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react@18.2.0)
       react:
         specifier: ^18
         version: 18.2.0
@@ -22067,6 +22070,16 @@ snapshots:
   nth-check@2.1.1:
     dependencies:
       boolbase: 1.0.0
+
+  nuqs@2.5.2(@remix-run/react@2.10.3(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(next@14.2.3(@babel/core@7.28.0)(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react-router-dom@7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react-router@7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react@18.2.0):
+    dependencies:
+      '@standard-schema/spec': 1.0.0
+      react: 18.2.0
+    optionalDependencies:
+      '@remix-run/react': 2.10.3(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5)
+      next: 14.2.3(@babel/core@7.28.0)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      react-router: 7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      react-router-dom: 7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
 
   nuqs@2.5.2(@remix-run/react@2.10.3(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(next@14.2.3(@babel/core@7.28.3)(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react-router-dom@7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react-router@7.8.2(react-dom@18.3.1(react@18.2.0))(react@18.2.0))(react@18.2.0):
     dependencies:
