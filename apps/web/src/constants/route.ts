@@ -5,6 +5,14 @@ const GUILD = {
   JOIN: (id: string) => `/guild/detail/${id}/join`,
 };
 
+const GAME = {
+  QUIZ: {
+    MAIN: () => '/game/quiz',
+    CREATE: () => '/game/quiz/create',
+    SOLVE: () => '/game/quiz/solve',
+  },
+};
+
 const AUTH = {
   SIGN_OUT: () => '/auth/signOut',
 };
@@ -13,6 +21,7 @@ export const ROUTE = {
   HOME: () => '/',
   GUILD,
   AUTH,
+  GAME,
 };
 
 export const ORIGIN_URL = 'https://www.gitanimals.org/en_US';
