@@ -37,6 +37,7 @@
   },
   "HomePage": {
     "title": "Hello world!",
+    "description": "깃허브 활동으로 펫을 키우세요!",
     "about": "Go to the about page"
   },
   "Landing": {
