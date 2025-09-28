@@ -1,6 +1,4 @@
-'use client';
-
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
 import { ChevronLeft } from 'lucide-react';
 
@@ -9,8 +7,8 @@ import { Link } from '@/i18n/routing';
 
 import QuizCreateForm from './_components/QuizCreateForm';
 
-function CreateQuizPage() {
-  const t = useTranslations('Quiz');
+async function CreateQuizPage() {
+  const t = await getTranslations('Quiz');
 
   return (
     <div className={containerStyle}>
@@ -31,7 +29,8 @@ export default CreateQuizPage;
 
 const containerStyle = css({
   width: '100%',
-  height: '100vh',
+  height: '100%',
+  minHeight: 'calc(100vh - var(--mobile-header-height))',
   padding: '12px 16px',
   backgroundColor: 'gray.gray_050',
 });

@@ -20,6 +20,7 @@
   },
   "HomePage": {
     "title": "Hello world!",
+    "description": "Have your pet in GITHUB!",
     "about": "Go to the about page"
   },
   "Landing": {

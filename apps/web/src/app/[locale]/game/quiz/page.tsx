@@ -1,15 +1,12 @@
-'use client';
-
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
 
 import { Background } from '@/app/[locale]/game/quiz/_components/BackGround';
-import { TabBar } from '@/components/Layout/TabBar';
 
 import SelectQuizType from './_components/CreateOrSolve/SelectQuizType';
 
-function QuizPage() {
-  const t = useTranslations('Quiz');
+async function QuizPage() {
+  const t = await getTranslations('Quiz');
 
   return (
     <>
@@ -19,7 +16,6 @@ function QuizPage() {
         <p className={descriptionStyle}>{t('quiz-solve-description')}</p>
         <SelectQuizType />
       </div>
-      <TabBar />
     </>
   );
 }
