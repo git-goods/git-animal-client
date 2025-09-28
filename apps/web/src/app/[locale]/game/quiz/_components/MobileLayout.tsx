@@ -1,11 +1,12 @@
-'use client';
-
 import React from 'react';
 import { css } from '_panda/css';
+
+import GNB from '@/components/GNB/GNB';
 
 export const MobileLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className={layoutStyle}>
+      <GNB />
       <div className={contentStyle}>{children}</div>
     </div>
   );
@@ -28,7 +29,7 @@ const contentStyle = css({
   width: '100%',
   maxWidth: '475px',
   height: '100%',
-  minHeight: '100vh',
+  minHeight: 'calc(100vh - var(--mobile-header-height))',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-start',
