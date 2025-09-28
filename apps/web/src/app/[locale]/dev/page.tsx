@@ -7,9 +7,9 @@ import GNB from '@/components/GNB/GNB';
 
 import DevClient from './Client';
 
-async function DevPage({ searchParams }: { searchParams: { devMode?: string } }) {
+async function DevPage() {
   return (
-    <DevModePage devMode={searchParams.devMode}>
+    <DevModePage>
       <Box p={32}>
         <GNB />
         <h1>server</h1>

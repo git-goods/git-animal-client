@@ -2,29 +2,26 @@ import { getTranslations } from 'next-intl/server';
 import { css } from '_panda/css';
 import { ChevronLeft } from 'lucide-react';
 
-import DevModePage from '@/components/DevMode/DevModePage';
 import { ROUTE } from '@/constants/route';
 import { Link } from '@/i18n/routing';
 
 import QuizCreateForm from './_components/QuizCreateForm';
 
-async function CreateQuizPage({ searchParams }: { searchParams: { devMode?: string } }) {
+async function CreateQuizPage() {
   const t = await getTranslations('Quiz');
 
   return (
-    <DevModePage devMode={searchParams.devMode}>
-      <div className={containerStyle}>
-        <div className={headingStyle}>
-          <h1 className={titleStyle}>
-            <Link href={ROUTE.GAME.QUIZ.MAIN()}>
-              <ChevronLeft className={headingPrevButtonStyle} size={24} color="white" />
-            </Link>
-            {t('create-quiz-card-title')}
-          </h1>
-        </div>
-        <QuizCreateForm />
+    <div className={containerStyle}>
+      <div className={headingStyle}>
+        <h1 className={titleStyle}>
+          <Link href={ROUTE.GAME.QUIZ.MAIN()}>
+            <ChevronLeft className={headingPrevButtonStyle} size={24} color="white" />
+          </Link>
+          {t('create-quiz-card-title')}
+        </h1>
       </div>
-    </DevModePage>
+      <QuizCreateForm />
+    </div>
   );
 }
 
