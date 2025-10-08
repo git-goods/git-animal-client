@@ -56,8 +56,6 @@ export const SelectPersonaList = wrap
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
-    console.log('data.personas', data.personas);
-
     const gradeSortedList = useMemo(() => {
       // COLLABORATOR, EVOLUTION, DEFAULT 순으로 정렬
       return data.personas.sort((a, b) => {

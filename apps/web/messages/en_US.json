@@ -16,7 +16,8 @@
     "github": "Github",
     "dev": "Dev",
     "language": "Language",
-    "notification": "Notification"
+    "notification": "Notification",
+    "game": "Game"
   },
   "HomePage": {
     "title": "Hello world!",

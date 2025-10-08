@@ -16,7 +16,8 @@
     "dev": "Dev",
     "language": "언어",
     "notification": "알림",
-    "guild": "길드"
+    "guild": "길드",
+    "game": "게임"
   },
   "Common": {
     "pet": "펫",
