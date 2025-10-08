@@ -15,7 +15,6 @@ import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import { LOCAL_STORAGE_KEY } from '@/constants/storage';
-import { useDevMode } from '@/lib/devtools/devtools';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
@@ -30,17 +29,9 @@ interface SelectedPetTableProps {
 export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProps) {
   const queryClient = useQueryClient();
 
-  const { isDevMode } = useDevMode();
-
   const t = useTranslations('Shop');
   const [sellPersonaId, setSellPersonaId] = useState<string | null>(null);
   const { setDoNotShowAgain, isChecked: isDoNotShowAgain } = useDoNotShowAgain();
-
-  // const { data: isEvolutionAble } = useQuery({
-  //   ...evolutionQueries.checkPersonaEvolution(currentPersona?.id as string),
-  //   enabled: !!currentPersona?.id,
-  //   select: (data) => data.evolutionAble,
-  // });
 
   const { mutate: dropPetMutation } = useMutation({
     mutationFn: (personaId: string) => dropPet({ personaId }),
@@ -121,7 +112,7 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
               <Button variant="secondary" onClick={onMergeClick}>
                 {t('merge')}
               </Button>
-              {isEvolutionAble && isDevMode && (
+              {isEvolutionAble && (
                 <Button variant="secondary" onClick={onEvolutionClick}>
                   {t('evolution')}
                 </Button>

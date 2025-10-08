@@ -1,4 +1,4 @@
-export type CardTierType = 'EX' | 'S_PLUS' | 'A_PLUS' | 'B_MINUS';
+export type CardTierType = 'EX' | 'S_PLUS' | 'A_PLUS' | 'B_MINUS' | 'EVOLUTION';
 
 export const CARD_INFO: Record<CardTierType, { bg: string; thumbnail: string }> = {
   EX: {
@@ -16,6 +16,10 @@ export const CARD_INFO: Record<CardTierType, { bg: string; thumbnail: string }> 
   B_MINUS: {
     bg: 'card-bg-B_MINUS.webp',
     thumbnail: 'card-thumbnail-B_MINUS.webp',
+  },
+  EVOLUTION: {
+    bg: 'card-bg-EVOLUTION.webp',
+    thumbnail: 'card-thumbnail-EVOLUTION.webp',
   },
 };
 

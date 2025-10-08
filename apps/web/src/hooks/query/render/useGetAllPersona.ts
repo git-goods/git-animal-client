@@ -6,6 +6,6 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 export const useGetAllPersona = (options?: Omit<UseQueryOptions<GetAllPersonaResponse>, 'queryKey' | 'queryFn'>) =>
   useSuspenseQuery<GetAllPersonaResponse>({
     queryKey: ['persona', 'info', 'all'],
-    queryFn: getAllPersona,
+    queryFn: () => getAllPersona(),
     ...options,
   });

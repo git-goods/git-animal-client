@@ -1,6 +1,7 @@
 'use client';
 
 import { css, cx } from '_panda/css';
+import type { PersonaInfo } from '@gitanimals/api';
 
 import { AnimalCard } from '@/components/AnimalCard';
 import { MediaQuery } from '@/components/MediaQuery';
@@ -10,12 +11,7 @@ import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
 import * as styles from './AnimalSlider.style';
 import AnimalSliderContainerMobile from './AnimalSliderContainerMobile';
 
-interface Animal {
-  type: string;
-  dropRate: string;
-}
-
-function shuffle(array: Animal[]): Animal[] {
+function shuffle(array: PersonaInfo[]): PersonaInfo[] {
   return array.sort(() => Math.random() - 0.5);
 }
 
@@ -26,7 +22,7 @@ function AnimalSlider() {
 
   const ANIMAL_LIST = shuffle(data.personas);
 
-  const animalList: Animal[][] = data.personas.reduce<Animal[][]>((acc, _, idx) => {
+  const animalList: PersonaInfo[][] = data.personas.reduce<PersonaInfo[][]>((acc, _, idx) => {
     if (idx % 12 === 0) {
       acc.push(ANIMAL_LIST.slice(idx, idx + 12));
     }
@@ -39,12 +35,12 @@ function AnimalSlider() {
       <MediaQuery
         desktop={
           <PerspectiveCenterSlider>
-            {animalList.map((animalList: Animal[], idx) => {
+            {animalList.map((animalList: PersonaInfo[], idx) => {
               return (
                 <div key={idx}>
                   <div className={styles.cardContainer}>
-                    {animalList.map((animal: Animal, index: number) => (
-                      <AnimalCard key={index} type={animal.type} dropRate={animal.dropRate} />
+                    {animalList.map((animal: PersonaInfo, index: number) => (
+                      <AnimalCard key={index} {...animal} />
                     ))}
                   </div>
                 </div>
@@ -54,10 +50,10 @@ function AnimalSlider() {
         }
         mobile={
           <AnimalSliderContainerMobile>
-            {data.personas.map((animalList: Animal, idx) => {
+            {data.personas.map((animalList: PersonaInfo, idx) => {
               return (
                 <div key={idx} className={styles.cardContainerMobile}>
-                  <AnimalCard type={animalList.type} dropRate={animalList.dropRate} />
+                  <AnimalCard {...animalList} />
                 </div>
               );
             })}
