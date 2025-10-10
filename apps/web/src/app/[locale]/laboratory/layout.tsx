@@ -6,7 +6,7 @@ export default function LaboratoryLayout({ children }: { children: React.ReactNo
 const containerStyle = css({
   minHeight: '100vh',
   height: 'fit-content',
-  backgroundColor: '#019C5A',
+  background: 'gray.gray_150',
   padding: '120px 200px',
   color: 'white.white_100',
 
