@@ -25,9 +25,6 @@ export const modalContainerStyle = css({
 
 // Header 스타일
 export const headerStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
   padding: '24px 32px',
 });
 
@@ -35,6 +32,7 @@ export const titleStyle = css({
   fontSize: '30px',
   fontWeight: 'bold',
   color: 'white.white_100',
+  textAlign: 'center',
 });
 
 export const closeButtonStyle = css({

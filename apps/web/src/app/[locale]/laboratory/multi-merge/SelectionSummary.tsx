@@ -104,9 +104,6 @@ export function SelectionSummary({
           {targetPet ? 'Target' : 'No Target'} • Materials:{' '}
           <span style={{ color: '#60a5fa', fontWeight: 'bold' }}>{materialPets.length}</span>
         </span>
-        <button className={clearButtonStyle} onClick={onClearAll}>
-          Clear All
-        </button>
       </div>
       <div className={selectedPetsContainerStyle}>
         {targetPet && (

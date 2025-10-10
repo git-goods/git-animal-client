@@ -1,31 +1,21 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
+import { Flex } from '_panda/jsx';
+import { Button, ScrollArea } from '@gitanimals/ui-panda';
+
+import { Link } from '@/i18n/routing';
 
 import { MergeSlots } from './MergeSlots';
 import { PetGrid } from './PetGrid';
 import { SelectionSummary } from './SelectionSummary';
-import {
-  closeButtonStyle,
-  contentSectionStyle,
-  filterSectionStyle,
-  headerStyle,
-  instructionStyle,
-  instructionTextStyle,
-  mergeButtonStyle,
-  modalContainerStyle,
-  modalOverlayStyle,
-  selectStyle,
-  titleStyle,
-} from './styles';
+import { contentSectionStyle, headerStyle, instructionStyle, instructionTextStyle, titleStyle } from './styles';
 import type { Persona } from './types';
 import { getEmojiByType, samplePets } from './types';
 
 function PetMergeUI() {
   const [targetPet, setTargetPet] = useState<Persona | null>(null);
   const [materialPets, setMaterialPets] = useState<Persona[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(true);
 
   const handlePetClick = (pet: Persona) => {
     if (!targetPet) {
@@ -74,72 +64,67 @@ function PetMergeUI() {
   // 타겟이 선택된 경우 리스트에서 제외
   const availablePets = samplePets.filter((pet) => pet.visible && pet.id !== targetPet?.id);
 
-  if (!isModalOpen) return null;
-
   return (
-    <div className={modalOverlayStyle}>
-      <div className={modalContainerStyle}>
-        {/* Header */}
-        <div className={headerStyle}>
-          <h2 className={titleStyle}>Merge Persona Level</h2>
-          <button className={closeButtonStyle} onClick={() => setIsModalOpen(false)}>
-            <X size={28} />
-          </button>
-        </div>
+    <div>
+      {/* Header */}
+      <div className={headerStyle}>
+        <h2 className={titleStyle}>Merge Persona Level</h2>
+      </div>
 
-        {/* Merge Slots Section */}
-        <div className={contentSectionStyle}>
-          <MergeSlots
-            targetPet={targetPet}
-            materialPets={materialPets}
-            totalLevel={totalLevel}
-            resultLevel={resultLevel}
-            getEmojiByType={getEmojiByType}
-          />
+      {/* Merge Slots Section */}
+      <div className={contentSectionStyle}>
+        <MergeSlots
+          targetPet={targetPet}
+          materialPets={materialPets}
+          totalLevel={totalLevel}
+          resultLevel={resultLevel}
+          getEmojiByType={getEmojiByType}
+        />
 
-          <SelectionSummary
-            targetPet={targetPet}
-            materialPets={materialPets}
-            onPetClick={handlePetClick}
-            onClearAll={handleClearAll}
-            getEmojiByType={getEmojiByType}
-          />
+        <SelectionSummary
+          targetPet={targetPet}
+          materialPets={materialPets}
+          onPetClick={handlePetClick}
+          onClearAll={handleClearAll}
+          getEmojiByType={getEmojiByType}
+        />
 
-          {/* Merge Button */}
-          <button className={mergeButtonStyle} disabled={!targetPet || materialPets.length === 0}>
-            {!targetPet
-              ? 'Select Target Pet'
-              : materialPets.length === 0
-                ? 'Select Materials'
-                : `Merge ${materialPets.length + 1} Pets`}
-          </button>
-        </div>
+        {/* Merge Button */}
+        <Flex gap="16px" justify="center">
+          {!targetPet && <Button disabled={!targetPet}>Select Target Pet</Button>}
+          {targetPet && materialPets.length === 0 && (
+            <Button disabled={targetPet && materialPets.length === 0}>Select Materials</Button>
+          )}
+          {targetPet && materialPets.length > 0 && (
+            <Button disabled={targetPet && materialPets.length === 0}>Merge ${materialPets.length + 1} Pets</Button>
+          )}
+          {targetPet && materialPets.length > 0 && (
+            <Button disabled={!targetPet && materialPets.length === 0}>Merge ${materialPets.length + 1} Pets</Button>
+          )}
+          {(targetPet || materialPets.length > 0) && (
+            <Button variant="secondary" onClick={handleClearAll}>
+              Clear All
+            </Button>
+          )}
+          <Button variant="secondary">
+            <Link href="/laboratory">Exit</Link>
+          </Button>
+        </Flex>
+      </div>
 
-        {/* Instruction Text */}
-        <div className={instructionTextStyle}>
-          <p className={instructionStyle}>
-            {!targetPet
-              ? 'First, select a target pet to level up.'
-              : materialPets.length === 0
-                ? 'Now select material pets to merge with the target. You can click individual pets or drag to select multiple pets.'
-                : `${materialPets.length} materials selected. Click pets to deselect, drag to select more, or click Merge to continue.`}
-          </p>
-        </div>
+      {/* Instruction Text */}
+      <div className={instructionTextStyle}>
+        <p className={instructionStyle}>
+          {!targetPet
+            ? 'First, select a target pet to level up.'
+            : materialPets.length === 0
+              ? 'Now select material pets to merge with the target. You can click individual pets or drag to select multiple pets.'
+              : `${materialPets.length} materials selected. Click pets to deselect, drag to select more, or click Merge to continue.`}
+        </p>
+      </div>
 
-        {/* Filter Section */}
-        <div className={filterSectionStyle}>
-          <select className={selectStyle}>
-            <option>Price</option>
-            <option>Level</option>
-            <option>Name</option>
-          </select>
-          <select className={selectStyle}>
-            <option>Ascending</option>
-            <option>Descending</option>
-          </select>
-        </div>
-
-        {/* Pets Grid */}
+      {/* Pets Grid */}
+      <ScrollArea h="calc(100vh - 440px)">
         <PetGrid
           pets={availablePets}
           onPetClick={handlePetClick}
@@ -149,7 +134,7 @@ function PetMergeUI() {
           targetPet={targetPet}
           materialPets={materialPets}
         />
-      </div>
+      </ScrollArea>
     </div>
   );
 }

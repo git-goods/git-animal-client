@@ -7,10 +7,10 @@ const containerStyle = css({
   minHeight: '100vh',
   height: 'fit-content',
   background: 'gray.gray_150',
-  padding: '120px 200px',
+  padding: '24px ',
   color: 'white.white_100',
 
   '@media (max-width: 1400px)': {
-    padding: '120px 100px',
+    padding: '24px ',
   },
 });

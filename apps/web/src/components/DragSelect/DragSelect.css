@@ -1,0 +1,39 @@
+/* 드래그 선택 컨테이너 - 텍스트 선택 완전 차단 */
+.drag-select-container {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* 드래그 선택 컨테이너 내부의 모든 요소들 */
+.drag-select-container * {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* 드래그 선택 중일 때 커서 변경 */
+.drag-select-container.dragging {
+  cursor: crosshair !important;
+}
+
+/* 드래그 선택 중일 때 포인터 이벤트 최적화 */
+.drag-select-container.dragging * {
+  pointer-events: none !important;
+}
+
+/* 선택된 아이템은 포인터 이벤트 허용 */
+.drag-select-container.dragging [data-item-id] {
+  pointer-events: auto !important;
+}
+
+/* 드래그 선택 박스가 최상단에 표시되도록 z-index 설정 */
+.drag-select-container > div[style*='position: absolute'] {
+  z-index: 9999 !important;
+}
