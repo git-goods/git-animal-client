@@ -10,29 +10,36 @@ on:
     workflow_dispatch:
 
 env:
-    FORK_REPO: "git-good-w/git-animal-client" # Upstream 저장소 파일에만
+    FORK_REPO: "git-good-w/git-animal-client"
     UPSTREAM_REPO: "git-goods/git-animal-client"
+
 jobs:
     trigger-sync:
-        if: vars.IS_FORK_REPO != ''
+        if: vars.IS_FORK_REPO == ''
         runs-on: ubuntu-latest
         steps:
             - name: Trigger fork repository sync
               run: |
+                  echo "🚀 Triggering sync for fork: ${{ env.FORK_REPO }}"
+                  echo "📌 Branch pushed: ${{ github.ref_name }}"
+
                   curl -X POST \
                     -H "Accept: application/vnd.github.v3+json" \
                     -H "Authorization: token ${{ secrets.FORK_SYNC_TOKEN }}" \
                     https://api.github.com/repos/${{ env.FORK_REPO }}/dispatches \
-                    -d '{"event_type":"upstream-update"}'
+                    -d '{"event_type":"upstream-update","client_payload":{"branch":"${{ github.ref_name }}","commit":"${{ github.sha }}"}}'
+
+                  echo "✅ Fork sync triggered"
 
     sync-upstream:
-        if: vars.IS_FORK_REPO == ''
+        if: vars.IS_FORK_REPO != ''
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
               uses: actions/checkout@v4
               with:
                   fetch-depth: 0
+                  token: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Setup Git
               run: |
@@ -41,13 +48,25 @@ jobs:
 
             - name: Sync with upstream
               run: |
+                  echo "🔄 Syncing from upstream: ${{ env.UPSTREAM_REPO }}"
                   git remote add upstream https://github.com/${{ env.UPSTREAM_REPO }}.git
                   git fetch upstream
 
-                  git checkout main
+                  # main 브랜치 동기화
+                  echo "📦 Syncing main branch..."
+                  git checkout -B main origin/main
                   git merge upstream/main --no-edit
                   git push origin main
+                  echo "✅ main branch synced"
 
-                  git checkout dev 2>/dev/null || git checkout -b dev upstream/dev
+                  # dev 브랜치 동기화
+                  echo "📦 Syncing dev branch..."
+                  git checkout -B dev origin/dev 2>/dev/null || git checkout -b dev upstream/dev
                   git merge upstream/dev --no-edit
                   git push origin dev
+                  echo "✅ dev branch synced"
+
+            - name: Summary
+              run: |
+                  echo "✨ Sync completed successfully!"
+                  echo "Upstream: ${{ env.UPSTREAM_REPO }}"
