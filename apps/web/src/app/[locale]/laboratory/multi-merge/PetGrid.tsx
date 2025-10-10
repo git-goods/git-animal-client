@@ -1,5 +1,8 @@
-import { useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { css } from '_panda/css';
+import { LevelBanner } from '@gitanimals/ui-panda';
+
+import { getPersonaImage } from '@/utils/image';
 
 import { DragSelectContainer } from '../../../../components/DragSelect';
 
@@ -23,24 +26,10 @@ interface PetGridProps {
   materialPets: Persona[];
 }
 
-// PetGrid 스타일
-const petsGridStyle = css({
-  flex: '1',
-  padding: '0 32px 24px',
-  maxHeight: '300px',
-});
-
 const gridStyle = css({
   display: 'grid',
   gap: '8px',
-  gridTemplateColumns: 'repeat(7, 1fr)',
-  // gap: '8px',
-  // '@media (min-width: 640px)': {
-  //   gridTemplateColumns: 'repeat(10, 1fr)',
-  // },
-  // '@media (min-width: 768px)': {
-  //   gridTemplateColumns: 'repeat(13, 1fr)',
-  // },
+  gridTemplateColumns: 'repeat(auto-fill, minmax(80px, auto))',
 });
 
 const petCardStyle = css({
@@ -59,38 +48,6 @@ const petCardStyle = css({
   _hover: {
     borderColor: 'gray.gray_400',
   },
-});
-
-const petCardSelectedStyle = css({
-  background: 'brand.sky_dark',
-  borderColor: 'brand.sky',
-  transform: 'scale(0.95)',
-});
-
-const checkIconStyle = css({
-  position: 'absolute',
-  top: '4px',
-  left: '4px',
-  background: 'brand.sky',
-  color: 'white.white_100',
-  fontSize: '10px',
-  borderRadius: '50%',
-  width: '16px',
-  height: '16px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontWeight: 'bold',
-  zIndex: '10',
-});
-
-const petLevelStyle = css({
-  color: 'white.white_100',
-  fontSize: '10px',
-  fontWeight: 'medium',
-  background: 'black.black_50',
-  padding: '2px 8px',
-  borderRadius: '4px',
 });
 
 export function PetGrid({
@@ -145,26 +102,43 @@ export function PetGrid({
       className={gridStyle}
       itemClassName={`${petCardStyle}`}
       renderItem={(pet, { isSelected: isDraggingThisPet }) => {
-        const selected = isSelected(pet.id);
-        return (
-          <div
-            className={`${selected ? petCardSelectedStyle : ''} ${isDraggingThisPet ? petCardSelectedStyle : ''}`}
-            onClick={() => onPetClick(pet)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                onPetClick(pet);
-              }
-            }}
-            role="button"
-            tabIndex={0}
-          >
-            {(selected || isDraggingThisPet) && <div className={checkIconStyle}>✓</div>}
-            <span style={{ fontSize: '24px', marginBottom: '4px' }}>{getEmojiByType(pet.type)}</span>
-            <span className={petLevelStyle}>Lv.{pet.level}</span>
-          </div>
-        );
+        const selected = pet.id === targetPet?.id || materialPets.some((material) => material.id === pet.id);
+        return <MemoizedPersonaItem persona={pet} isSelected={selected} onClick={() => onPetClick(pet)} />;
       }}
     />
   );
 }
+
+interface PersonaItemProps {
+  persona: Persona;
+  isSelected: boolean;
+  onClick: () => void;
+}
+
+function PersonaItem({ persona, isSelected, onClick }: PersonaItemProps) {
+  return (
+    <button
+      onClick={onClick}
+      className={css({ outline: 'none', bg: 'transparent', width: '100%', height: '100%' })}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick();
+        }
+      }}
+      tabIndex={0}
+    >
+      <LevelBanner
+        image={getPersonaImage(persona.type)}
+        status={isSelected ? 'selected' : 'default'}
+        level={Number(persona.level)}
+        className={css({ width: '100%', height: '100%' })}
+        size="full"
+      />
+    </button>
+  );
+}
+
+const MemoizedPersonaItem = memo(PersonaItem, (prev, next) => {
+  return prev.isSelected === next.isSelected && prev.persona.level === next.persona.level;
+});

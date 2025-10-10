@@ -1,15 +1,16 @@
 import { ReactNode } from 'react';
 import { bannerStyle, BannerStyleProps } from './cva';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 
 type Props = BannerStyleProps & {
   image: string | ReactNode;
   level: number;
+  className?: string;
 };
 
-export function LevelBanner({ image, level, ...styleProps }: Props) {
+export function LevelBanner({ image, level, className, ...styleProps }: Props) {
   return (
-    <div className={bannerStyle(styleProps)}>
+    <div className={cx(bannerStyle(styleProps), className)}>
       {typeof image === 'string' ? <img src={image} width={160} height={160} alt={image} draggable={false} /> : image}
       <p className={levelTagStyle}>Lv.{level}</p>
     </div>
