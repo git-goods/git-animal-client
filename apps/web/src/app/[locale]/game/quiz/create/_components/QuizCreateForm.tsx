@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { createQuiz } from '@gitanimals/api';
@@ -16,6 +15,7 @@ import TabsTrigger from '@/components/Tabs/TabsTrigger';
 import useTabs from '@/components/Tabs/useTabs';
 import { ROUTE } from '@/constants/route';
 import type { Locale } from '@/i18n/routing';
+import { useRouter } from '@/i18n/routing';
 
 import type { QuizCategory, QuizLevel } from '../../_constants/quiz.constants';
 import { QUIZ_ANSWER, QUIZ_CATEGORY, QUIZ_LEVEL, QUIZ_RESULT } from '../../_constants/quiz.constants';
