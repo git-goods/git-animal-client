@@ -1,0 +1,53 @@
+name: Sync Fork
+
+on:
+    push:
+        branches:
+            - main
+            - dev
+    repository_dispatch:
+        types: [upstream-update]
+    workflow_dispatch:
+
+env:
+    FORK_REPO: "git-good-w/git-animal-client" # Upstream 저장소 파일에만
+    UPSTREAM_REPO: "git-goods/git-animal-client"
+jobs:
+    trigger-sync:
+        if: vars.IS_FORK_REPO != ''
+        runs-on: ubuntu-latest
+        steps:
+            - name: Trigger fork repository sync
+              run: |
+                  curl -X POST \
+                    -H "Accept: application/vnd.github.v3+json" \
+                    -H "Authorization: token ${{ secrets.FORK_SYNC_TOKEN }}" \
+                    https://api.github.com/repos/${{ env.FORK_REPO }}/dispatches \
+                    -d '{"event_type":"upstream-update"}'
+
+    sync-upstream:
+        if: vars.IS_FORK_REPO == ''
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Setup Git
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+
+            - name: Sync with upstream
+              run: |
+                  git remote add upstream https://github.com/${{ env.UPSTREAM_REPO }}.git
+                  git fetch upstream
+
+                  git checkout main
+                  git merge upstream/main --no-edit
+                  git push origin main
+
+                  git checkout dev 2>/dev/null || git checkout -b dev upstream/dev
+                  git merge upstream/dev --no-edit
+                  git push origin dev
