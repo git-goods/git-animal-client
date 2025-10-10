@@ -197,6 +197,7 @@
     "quiz-contents-description": "퀴즈의 내용을 작성해주세요...",
     "answer-title": "정답",
     "answer-description": "퀴즈의 정답을 선택해주세요.",
+    "creating-quiz-button": "생성중...",
     "create-quiz-button": "생성",
     "solve-quiz-card-title": {
       "not-started": "퀴즈 풀기",

@@ -151,7 +151,7 @@ const QuizCreateForm = () => {
         }
       />
       <Button className={buttonStyle} disabled={!enabledToCreate || isCreating} onClick={handleCreateQuiz}>
-        {t('create-quiz-button')}
+        {isCreating ? t('creating-quiz-button') : t('create-quiz-button')}
       </Button>
     </form>
   );

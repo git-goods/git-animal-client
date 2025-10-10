@@ -196,6 +196,7 @@
     "quiz-contents-description": "Write down the contents of the quiz...",
     "answer-title": "Answer",
     "answer-description": "Choose the correct answer for the quiz.",
+    "creating-quiz-button": "Creating...",
     "create-quiz-button": "Create",
     "solve-quiz-card-title": {
       "not-started": "Solve Quiz",
