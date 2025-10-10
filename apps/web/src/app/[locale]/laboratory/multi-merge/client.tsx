@@ -49,6 +49,15 @@ function PetMergeUI() {
     }
   };
 
+  const handleMultiplePetSelect = (pets: Persona[]) => {
+    // 타겟이 선택된 경우에만 다중 선택 허용
+    if (!targetPet) return;
+
+    // 타겟 펫을 제외한 펫들만 재료로 설정
+    const materialPetsOnly = pets.filter((pet) => pet.id !== targetPet.id);
+    setMaterialPets(materialPetsOnly);
+  };
+
   const handleClearAll = () => {
     setTargetPet(null);
     setMaterialPets([]);
@@ -112,8 +121,8 @@ function PetMergeUI() {
             {!targetPet
               ? 'First, select a target pet to level up.'
               : materialPets.length === 0
-                ? 'Now select material pets to merge with the target.'
-                : `${materialPets.length} materials selected. Click pets to deselect or click Merge to continue.`}
+                ? 'Now select material pets to merge with the target. You can click individual pets or drag to select multiple pets.'
+                : `${materialPets.length} materials selected. Click pets to deselect, drag to select more, or click Merge to continue.`}
           </p>
         </div>
 
@@ -134,8 +143,11 @@ function PetMergeUI() {
         <PetGrid
           pets={availablePets}
           onPetClick={handlePetClick}
+          onMultiplePetSelect={handleMultiplePetSelect}
           isSelected={isSelected}
           getEmojiByType={getEmojiByType}
+          targetPet={targetPet}
+          materialPets={materialPets}
         />
       </div>
     </div>

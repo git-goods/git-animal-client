@@ -15,6 +15,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@air/react-drag-to-select": "^5.0.11",
     "@egjs/flicking-plugins": "^4.7.1",
     "@egjs/react-flicking": "^4.11.3",
     "@gitanimals/api": "workspace:*",
@@ -47,8 +48,8 @@
     "next-auth": "^4.24.7",
     "next-intl": "^3.5.0",
     "next-pwa": "^5.6.0",
-    "overlay-kit": "^1.8.5",
     "nuqs": "^2.5.2",
+    "overlay-kit": "^1.8.5",
     "react": "*",
     "react-dom": "*",
     "sonner": "^1.5.0",

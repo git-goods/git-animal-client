@@ -153,6 +153,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@air/react-drag-to-select':
+        specifier: ^5.0.11
+        version: 5.0.11(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       '@egjs/flicking-plugins':
         specifier: ^4.7.1
         version: 4.7.1(@egjs/flicking@4.11.3)
@@ -990,6 +993,12 @@ packages:
 
   '@adobe/css-tools@4.4.0':
     resolution: {integrity: sha512-Ff9+ksdQQB3rMncgqDK78uLznstjyfIf2Arnh22pW8kBpLs6rpKDwgnZT46hin5Hl1WzazzK64DOrhSwYpS7bQ==}
+
+  '@air/react-drag-to-select@5.0.11':
+    resolution: {integrity: sha512-y45tfrYnbInjpWv6cOVWy2XWy+kfZBuYd3aoS+CVjQSbM6FM7j/J7I4cWThJhQ3XmZ6KULJXeB8Mg0yLgQxH2A==}
+    peerDependencies:
+      react: ^18
+      react-dom: ^18.3.1
 
   '@ampproject/remapping@2.2.1':
     resolution: {integrity: sha512-lFMjJTrFL3j7L9yBxwYfCq2k6qqwHyzuUl/XBnif78PWTJYyL/dfowQHWE3sp6U6ZzqWiiIZnpTMO96zhkjwtg==}
@@ -9871,6 +9880,9 @@ packages:
     peerDependencies:
       react: ^18
 
+  react-style-object-to-css@1.1.2:
+    resolution: {integrity: sha512-+5MFULqCCj7wwJJ/ISKFP91ZlHVF1Rv8o0neiTKvt21XDTU5e34tc8hy+XPLeYWYOupdHt25HxxwocvYm3HM6A==}
+
   react-style-singleton@2.2.1:
     resolution: {integrity: sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g==}
     engines: {node: '>=10'}
@@ -11614,6 +11626,12 @@ snapshots:
   '@aashutoshrathi/word-wrap@1.2.6': {}
 
   '@adobe/css-tools@4.4.0': {}
+
+  '@air/react-drag-to-select@5.0.11(react-dom@18.3.1(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.3.1(react@18.2.0)
+      react-style-object-to-css: 1.1.2
 
   '@ampproject/remapping@2.2.1':
     dependencies:
@@ -22991,6 +23009,8 @@ snapshots:
   react-side-effect@2.1.2(react@18.2.0):
     dependencies:
       react: 18.2.0
+
+  react-style-object-to-css@1.1.2: {}
 
   react-style-singleton@2.2.1(@types/react@18.2.61)(react@18.2.0):
     dependencies:
