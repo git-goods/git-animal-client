@@ -1,4 +1,4 @@
-name: Sync Fork Repository
+name: Sync Fork
 
 on:
     push:
@@ -34,15 +34,12 @@ jobs:
     sync-upstream:
         if: vars.IS_FORK_REPO != ''
         runs-on: ubuntu-latest
-        permissions:
-            contents: write
-            actions: write
         steps:
             - name: Checkout
               uses: actions/checkout@v4
               with:
                   fetch-depth: 0
-                  token: ${{ secrets.GITHUB_TOKEN }}
+                  token: ${{ secrets.SYNC_TOKEN }} # ← GITHUB_TOKEN 대신 SYNC_TOKEN
 
             - name: Setup Git
               run: |
