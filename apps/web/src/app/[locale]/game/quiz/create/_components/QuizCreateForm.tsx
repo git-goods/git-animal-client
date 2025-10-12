@@ -5,28 +5,56 @@ import { useLocale, useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { createQuiz } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-panda';
+import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import QuizField from '@/app/[locale]/game/quiz/create/_components/QuizField';
 import QuizTextArea from '@/app/[locale]/game/quiz/create/_components/QuizTextArea';
+import { ConfirmDialog } from '@/app/[locale]/laboratory/_component/ConfirmDialog';
 import Tabs from '@/components/Tabs/Tabs';
 import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';
 import useTabs from '@/components/Tabs/useTabs';
 import { ROUTE } from '@/constants/route';
 import type { Locale } from '@/i18n/routing';
-import { useRouter } from '@/i18n/routing';
+import { LOCALE, useRouter } from '@/i18n/routing';
+import useToggleLocale from '@/i18n/useToggleLocale';
 
 import type { QuizCategory, QuizLevel } from '../../_constants/quiz.constants';
 import { QUIZ_ANSWER, QUIZ_CATEGORY, QUIZ_LEVEL, QUIZ_RESULT } from '../../_constants/quiz.constants';
 import type { QuizAnswer } from '../../solve/_constants/solveQuiz.constants';
 
 const QuizCreateForm = () => {
+  const locale = useLocale() as Locale;
+  const { toggleLocale } = useToggleLocale();
   const [quizContents, setQuizContents] = useState<string>('');
   const handleChangeQuizContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuizContents(e.target.value);
   };
   const t = useTranslations('Quiz');
+
+  const { tabsTriggerProps: languageRadioProps, selected: language } = useTabs<Locale>({
+    initialSelectedValue: locale,
+    options: [
+      { label: t('english'), value: LOCALE.EN_US },
+      { label: t('korean'), value: LOCALE.KO_KR },
+    ],
+  });
+
+  const handleCheckToggleLanguage = () => {
+    overlay.open(({ isOpen, close }) => (
+      <ConfirmDialog
+        title={t('toggle-language-title')}
+        description={t('toggle-language-description')}
+        isOpen={isOpen}
+        onClose={close}
+        onConfirm={() => {
+          toggleLocale();
+          close();
+        }}
+      />
+    ));
+  };
 
   const {
     tabsTriggerProps: levelRadioProps,
@@ -66,7 +94,6 @@ const QuizCreateForm = () => {
   const enabledToCreate = quizContents.length > 0 && level && category && expectedAnswer;
 
   const [isCreating, setIsCreating] = useState(false);
-  const locale = useLocale() as Locale;
   const handleCreateQuiz = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -96,6 +123,20 @@ const QuizCreateForm = () => {
 
   return (
     <form className={contentStyle}>
+      <QuizField
+        title={t('language')}
+        content={
+          <Tabs value={language}>
+            <TabsList>
+              {languageRadioProps.map((item) => (
+                <TabsTrigger key={item.value} value={item.value} onClick={handleCheckToggleLanguage}>
+                  {item.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+        }
+      />
       <QuizField
         title={t('difficulty-level')}
         content={
