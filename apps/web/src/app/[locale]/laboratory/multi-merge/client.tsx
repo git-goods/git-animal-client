@@ -2,14 +2,18 @@
 
 import React, { Suspense, useState } from 'react';
 import { Flex } from '_panda/jsx';
+import type { MergePersonasResponse } from '@gitanimals/api';
 import { mergePersonas, type MergePersonasRequest, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
 import { Button, ScrollArea } from '@gitanimals/ui-panda';
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
+import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import { Link } from '@/i18n/routing';
 import { useClientUser } from '@/utils/clientAuth';
+
+import { MergeResultModal } from '../../mypage/my-pet/(merge)/MergeResult';
 
 import { MergeSlots } from './MergeSlots';
 import { PetGrid } from './PetGrid';
@@ -17,23 +21,33 @@ import { SelectionSummary } from './SelectionSummary';
 import { contentSectionStyle, headerStyle, instructionStyle, instructionTextStyle, titleStyle } from './styles';
 
 function PetMergeUI() {
+  const queryClient = useQueryClient();
+
   const [targetPet, setTargetPet] = useState<Persona | null>(null);
   const [materialPets, setMaterialPets] = useState<Persona[]>([]);
 
   const { mutate: mutateMergePersonas, isPending: isMerging } = useMutation({
     mutationFn: (request: MergePersonasRequest) => mergePersonas(request),
     onSuccess: (data) => {
-      console.log('data', data);
-      toast.success('Merge successful');
+      setTargetPet(data as Persona);
+      setMaterialPets([]);
+      queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
+
+      overlay.open(({ isOpen, close }) => (
+        <MergeResultModal
+          key={data.id}
+          isOpen={isOpen}
+          onClose={() => close()}
+          result={data as MergePersonasResponse}
+        />
+      ));
     },
-    onError: (error) => {
-      console.log('error', error);
+    onError: () => {
       toast.error('Merge failed');
     },
   });
 
   const onMergeClick = () => {
-    console.log('onMergeClick', targetPet, materialPets);
     if (!targetPet) return;
     if (materialPets.length === 0) return;
 
@@ -70,8 +84,21 @@ function PetMergeUI() {
     setMaterialPets([]);
   };
 
+  const calcResultLevel = () => {
+    if (!targetPet || !materialPets.length) return 0;
+
+    const materialLevel = materialPets.reduce((sum, pet) => sum + parseInt(pet.level), 0);
+
+    // 재료 레벨이 1 이하면 1로 처리
+    // 재료 레벨의 /2 만큼 합쳐진다.
+    const plusLevel = Number(materialLevel) <= 1 ? 1 : Math.floor(Number(materialLevel) / 2);
+    const resultLevel = Number(targetPet.level) + plusLevel;
+
+    return resultLevel ?? 0;
+  };
+
   const totalLevel = materialPets.reduce((sum, pet) => sum + parseInt(pet.level), 0);
-  const resultLevel = targetPet && materialPets.length > 0 ? parseInt(targetPet.level) + totalLevel + 1 : 0;
+  const resultLevel = calcResultLevel();
 
   return (
     <div>
