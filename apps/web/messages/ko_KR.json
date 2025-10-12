@@ -19,6 +19,13 @@
     "guild": "길드",
     "game": "게임"
   },
+  "NotFound": {
+    "title": "Not Found 🤔",
+    "main-description": "찾고 계신 페이지가 없거나 사라졌습니다.",
+    "description-line-1": "문제 상황에 대한 제보는 다음 링크에서 추가해주세요.",
+    "description-line-2": "버그 수정에 큰 도움이 됩니다!",
+    "home-button-text": "홈으로 가기"
+  },
   "Common": {
     "pet": "펫",
     "name": "이름",
