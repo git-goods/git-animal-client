@@ -12,13 +12,28 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+const list = [
+  {
+    title: '레벨, 타입 같은 펫 한번에 팔기',
+    description: '펫 레벨, 타입 등 펫 속성을 선택하여 한번에 팔 수 있어요.',
+    href: '/laboratory/property-pet-sell',
+  },
+  {
+    title: '펫 합치기',
+    description: '펫을 선택하여 한번에 합칠 수 있어요.',
+    href: '/laboratory/multi-merge',
+  },
+];
+
 export default function LaboratoryPage() {
   return (
     <div className={contentStyle}>
-      <Card href="/laboratory/property-pet-sell">
-        <h2>레벨, 타입 같은 펫 한번에 팔기</h2>
-        <p>펫 레벨, 타입 등 펫 속성을 선택하여 한번에 팔 수 있어요.</p>
-      </Card>
+      {list.map((item) => (
+        <Card key={item.href} href={item.href}>
+          <h2>{item.title}</h2>
+          <p>{item.description}</p>
+        </Card>
+      ))}
     </div>
   );
 }

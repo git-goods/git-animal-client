@@ -15,6 +15,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@air/react-drag-to-select": "^5.0.11",
     "@egjs/flicking-plugins": "^4.7.1",
     "@egjs/react-flicking": "^4.11.3",
     "@gitanimals/api": "workspace:*",
@@ -29,6 +30,7 @@
     "@next/third-parties": "^14.2.5",
     "@octokit/core": "^6.1.2",
     "@radix-ui/react-dropdown-menu": "^2.1.1",
+    "@radix-ui/react-scroll-area": "^1.2.10",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.6",
     "@shadow-panda/style-context": "^0.7.1",
@@ -47,8 +49,8 @@
     "next-auth": "^4.24.7",
     "next-intl": "^3.5.0",
     "next-pwa": "^5.6.0",
-    "overlay-kit": "^1.8.5",
     "nuqs": "^2.5.2",
+    "overlay-kit": "^1.8.5",
     "react": "*",
     "react-dom": "*",
     "sonner": "^1.5.0",

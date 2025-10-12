@@ -24,7 +24,7 @@ export const MergeResultModal = ({ isOpen, onClose, result }: MergeResultModalPr
 
   return (
     <MotionContainer onClose={onClose}>
-      <h3 className={css({ textStyle: 'glyph24.bold' })}>{t('merge-result')}</h3>
+      <h3 className={css({ textStyle: 'glyph24.bold', color: 'white' })}>{t('merge-result')}</h3>
       <div className={mergeItemStyle}>
         <img src={getPersonaImage(result.type)} alt={result.type} width={100} height={100} />
       </div>
@@ -45,7 +45,7 @@ const mergeItemStyle = css({
 
 const resultTextStyle = css({
   textStyle: 'glyph18.bold',
-
+  color: 'white',
   '& > span': {
     marginTop: '4px',
   },
