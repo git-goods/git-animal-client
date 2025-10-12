@@ -1,4 +1,7 @@
 import { css } from '_panda/css';
+import { ScrollArea } from '@gitanimals/ui-panda';
+
+import { MemoizedPersonaBannerItem } from './PersonaItem';
 
 type Persona = {
   id: string;
@@ -14,8 +17,6 @@ interface SelectionSummaryProps {
   targetPet: Persona | null;
   materialPets: Persona[];
   onPetClick: (pet: Persona) => void;
-  onClearAll: () => void;
-  getEmojiByType: (type: string) => string;
 }
 
 // SelectionSummary 스타일
@@ -30,28 +31,19 @@ const summaryHeaderStyle = css({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  marginBottom: '12px',
+  marginBottom: '4px',
 });
 
 const summaryTextStyle = css({
   color: 'white.white_100',
-  fontSize: '14px',
-});
-
-const clearButtonStyle = css({
-  fontSize: '12px',
-  color: 'gray.gray_400',
-  transition: 'colors',
-  cursor: 'pointer',
-  _hover: {
-    color: 'white.white_100',
-  },
+  textStyle: 'glyph14.regular',
 });
 
 const selectedPetsContainerStyle = css({
   display: 'flex',
   flexWrap: 'wrap',
   gap: '8px',
+  py: '6px',
 });
 
 const selectedPetItemStyle = css({
@@ -67,86 +59,35 @@ const selectedPetItemStyle = css({
   borderColor: 'brand.sky',
   cursor: 'pointer',
   transition: 'colors',
+  color: 'gray.gray_400',
   _hover: {
     borderColor: 'brand.sky_light',
   },
 });
 
-const petIndexStyle = css({
-  position: 'absolute',
-  top: '-4px',
-  right: '-4px',
-  background: 'brand.sky',
-  color: 'white.white_100',
-  fontSize: '10px',
-  borderRadius: '50%',
-  width: '16px',
-  height: '16px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontWeight: 'bold',
-});
-
-export function SelectionSummary({
-  targetPet,
-  materialPets,
-  onPetClick,
-  onClearAll,
-  getEmojiByType,
-}: SelectionSummaryProps) {
-  if (!targetPet && materialPets.length === 0) return null;
-
+export function SelectionSummary({ targetPet, materialPets, onPetClick }: SelectionSummaryProps) {
   return (
     <div className={selectionSummaryStyle}>
       <div className={summaryHeaderStyle}>
         <span className={summaryTextStyle}>
           {targetPet ? 'Target' : 'No Target'} • Materials:{' '}
-          <span style={{ color: '#60a5fa', fontWeight: 'bold' }}>{materialPets.length}</span>
+          <span className={css({ color: 'brand.sky', fontWeight: 'bold' })}>{materialPets.length}</span>
         </span>
       </div>
-      <div className={selectedPetsContainerStyle}>
-        {targetPet && (
-          <div
-            className={selectedPetItemStyle}
-            onClick={() => onPetClick(targetPet)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                onPetClick(targetPet);
-              }
-            }}
-            role="button"
-            tabIndex={0}
-            title={`Target: ${targetPet.type} Lv.${targetPet.level}`}
-            style={{ borderColor: '#ef4444' }}
-          >
-            <span style={{ fontSize: '20px' }}>{getEmojiByType(targetPet.type)}</span>
-            <div className={petIndexStyle} style={{ background: '#ef4444' }}>
-              T
+      <ScrollArea h="60px">
+        <div className={selectedPetsContainerStyle}>
+          {materialPets.map((pet) => (
+            <div key={pet.id} className={selectedPetItemStyle}>
+              <MemoizedPersonaBannerItem
+                persona={pet}
+                isSelected={false}
+                onClick={() => onPetClick(pet)}
+                className={css({ borderRadius: '2px' })}
+              />
             </div>
-          </div>
-        )}
-        {materialPets.map((pet, index) => (
-          <div
-            key={pet.id}
-            className={selectedPetItemStyle}
-            onClick={() => onPetClick(pet)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                onPetClick(pet);
-              }
-            }}
-            role="button"
-            tabIndex={0}
-            title={`Material: ${pet.type} Lv.${pet.level}`}
-          >
-            <span style={{ fontSize: '20px' }}>{getEmojiByType(pet.type)}</span>
-            <div className={petIndexStyle}>{index + 1}</div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </ScrollArea>
     </div>
   );
 }

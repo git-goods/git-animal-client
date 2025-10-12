@@ -1,5 +1,7 @@
 import { css } from '_panda/css';
 
+import { MemoizedPersonaItem } from './PersonaItem';
+
 type Persona = {
   id: string;
   type: string;
@@ -15,7 +17,6 @@ interface MergeSlotsProps {
   materialPets: Persona[];
   totalLevel: number;
   resultLevel: number;
-  getEmojiByType: (type: string) => string;
 }
 
 // MergeSlots 스타일
@@ -24,7 +25,6 @@ const mergeSlotsContainerStyle = css({
   alignItems: 'center',
   justifyContent: 'center',
   gap: '16px',
-  marginBottom: '24px',
 });
 
 const slotContainerStyle = css({
@@ -57,15 +57,15 @@ const operatorStyle = css({
   marginBottom: '24px',
 });
 
-export function MergeSlots({ targetPet, materialPets, totalLevel, resultLevel, getEmojiByType }: MergeSlotsProps) {
+export function MergeSlots({ targetPet, materialPets, totalLevel, resultLevel }: MergeSlotsProps) {
   return (
     <div className={mergeSlotsContainerStyle}>
-      {/* Target Slot */}
       <div className={slotContainerStyle}>
         <div className={slotStyle}>
           {targetPet ? (
-            <span style={{ fontSize: '48px' }}>{getEmojiByType(targetPet.type)}</span>
+            <MemoizedPersonaItem persona={targetPet} isSelected={false} onClick={() => {}} />
           ) : (
+            // <span style={{ fontSize: '48px' }}>{getEmojiByType(targetPet.type)}</span>
             <span style={{ fontSize: '60px', color: '#6b7280' }}>?</span>
           )}
         </div>
@@ -79,11 +79,20 @@ export function MergeSlots({ targetPet, materialPets, totalLevel, resultLevel, g
         <div className={slotStyle}>
           {materialPets.length > 0 ? (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ fontSize: '24px', color: '#60a5fa', fontWeight: 'bold' }}>{materialPets.length}</span>
-              <span style={{ fontSize: '12px', color: '#9ca3af', marginTop: '4px' }}>materials</span>
+              <span className={css({ color: 'brand.sky' })} style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                {materialPets.length}
+              </span>
+              <span
+                className={css({
+                  color: 'gray.gray_500',
+                })}
+                style={{ fontSize: '12px', marginTop: '4px' }}
+              >
+                materials
+              </span>
             </div>
           ) : (
-            <span style={{ fontSize: '60px', color: '#6b7280' }}>?</span>
+            <span className={css({ fontSize: '60px', color: 'gray.gray_500' })}>?</span>
           )}
         </div>
         <span className={slotLabelStyle}>{materialPets.length > 0 ? `Total Lv. ${totalLevel}` : 'Materials'}</span>
@@ -95,7 +104,12 @@ export function MergeSlots({ targetPet, materialPets, totalLevel, resultLevel, g
       <div className={slotContainerStyle}>
         <div className={slotStyle}>
           {targetPet && materialPets.length > 0 ? (
-            <span style={{ fontSize: '32px', color: '#4ade80', fontWeight: 'bold' }}>✨</span>
+            // <span style={{ fontSize: '32px', color: '#4ade80', fontWeight: 'bold' }}>✨</span>
+            <MemoizedPersonaItem
+              persona={{ ...targetPet, level: resultLevel.toString() }}
+              isSelected={false}
+              onClick={() => {}}
+            />
           ) : (
             <span style={{ fontSize: '60px', color: '#6b7280' }}>?</span>
           )}

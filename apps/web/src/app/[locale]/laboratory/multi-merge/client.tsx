@@ -2,6 +2,7 @@
 
 import React, { Suspense, useState } from 'react';
 import { Flex } from '_panda/jsx';
+import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
 import { Button, ScrollArea } from '@gitanimals/ui-panda';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -13,8 +14,6 @@ import { MergeSlots } from './MergeSlots';
 import { PetGrid } from './PetGrid';
 import { SelectionSummary } from './SelectionSummary';
 import { contentSectionStyle, headerStyle, instructionStyle, instructionTextStyle, titleStyle } from './styles';
-import type { Persona } from './types';
-import { getEmojiByType } from './types';
 
 function PetMergeUI() {
   const [targetPet, setTargetPet] = useState<Persona | null>(null);
@@ -42,15 +41,6 @@ function PetMergeUI() {
     }
   };
 
-  // const handleMultiplePetSelect = (pets: Persona[]) => {
-  //   // 타겟이 선택된 경우에만 다중 선택 허용
-  //   if (!targetPet) return;
-
-  //   // 타겟 펫을 제외한 펫들만 재료로 설정
-  //   const materialPetsOnly = pets.filter((pet) => pet.id !== targetPet.id);
-  //   setMaterialPets(materialPetsOnly);
-  // };
-
   const handleClearAll = () => {
     setTargetPet(null);
     setMaterialPets([]);
@@ -59,40 +49,22 @@ function PetMergeUI() {
   const totalLevel = materialPets.reduce((sum, pet) => sum + parseInt(pet.level), 0);
   const resultLevel = targetPet && materialPets.length > 0 ? parseInt(targetPet.level) + totalLevel + 1 : 0;
 
-  // const isSelected = (petId: string) => {
-  //   if (petId === targetPet?.id) return 'target';
-  //   return materialPets.some((p) => p.id === petId) ? 'material' : false;
-  // };
-
-  // // 타겟이 선택된 경우 리스트에서 제외
-  // const availablePets = samplePets.filter((pet) => pet.visible && pet.id !== targetPet?.id);
-
   return (
     <div>
-      {/* Header */}
       <div className={headerStyle}>
         <h2 className={titleStyle}>Merge Persona Level</h2>
       </div>
 
-      {/* Merge Slots Section */}
       <div className={contentSectionStyle}>
         <MergeSlots
           targetPet={targetPet}
           materialPets={materialPets}
           totalLevel={totalLevel}
           resultLevel={resultLevel}
-          getEmojiByType={getEmojiByType}
         />
 
-        <SelectionSummary
-          targetPet={targetPet}
-          materialPets={materialPets}
-          onPetClick={handlePetClick}
-          onClearAll={handleClearAll}
-          getEmojiByType={getEmojiByType}
-        />
+        <SelectionSummary targetPet={targetPet} materialPets={materialPets} onPetClick={handlePetClick} />
 
-        {/* Merge Button */}
         <Flex gap="16px" justify="center">
           {!targetPet && <Button disabled={!targetPet}>Select Target Pet</Button>}
           {targetPet && materialPets.length === 0 && (
@@ -100,9 +72,6 @@ function PetMergeUI() {
           )}
           {targetPet && materialPets.length > 0 && (
             <Button disabled={targetPet && materialPets.length === 0}>Merge ${materialPets.length + 1} Pets</Button>
-          )}
-          {targetPet && materialPets.length > 0 && (
-            <Button disabled={!targetPet && materialPets.length === 0}>Merge ${materialPets.length + 1} Pets</Button>
           )}
           {(targetPet || materialPets.length > 0) && (
             <Button variant="secondary" onClick={handleClearAll}>
@@ -173,13 +142,12 @@ function PetList({
   };
 
   return (
-    <ScrollArea h="calc(100vh - 440px)">
+    <ScrollArea h="calc(100vh - 560px)">
       <PetGrid
         pets={availablePets}
         onPetClick={handlePetClick}
         onMultiplePetSelect={handleMultiplePetSelect}
         isSelected={isSelected}
-        getEmojiByType={getEmojiByType}
         targetPet={targetPet}
         materialPets={materialPets}
       />

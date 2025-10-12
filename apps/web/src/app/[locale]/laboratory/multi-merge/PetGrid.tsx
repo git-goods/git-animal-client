@@ -1,10 +1,9 @@
-import { memo, useCallback } from 'react';
+import { useCallback } from 'react';
 import { css } from '_panda/css';
-import { LevelBanner } from '@gitanimals/ui-panda';
-
-import { getPersonaImage } from '@/utils/image';
 
 import { DragSelectContainer } from '../../../../components/DragSelect';
+
+import { MemoizedPersonaItem } from './PersonaItem';
 
 type Persona = {
   id: string;
@@ -21,7 +20,6 @@ interface PetGridProps {
   onPetClick: (pet: Persona) => void;
   onMultiplePetSelect: (pets: Persona[]) => void;
   isSelected: (petId: string) => string | false;
-  getEmojiByType: (type: string) => string;
   targetPet: Persona | null;
   materialPets: Persona[];
 }
@@ -50,15 +48,7 @@ const petCardStyle = css({
   },
 });
 
-export function PetGrid({
-  pets,
-  onPetClick,
-  onMultiplePetSelect,
-  isSelected,
-  getEmojiByType,
-  targetPet,
-  materialPets,
-}: PetGridProps) {
+export function PetGrid({ pets, onPetClick, onMultiplePetSelect, targetPet, materialPets }: PetGridProps) {
   const handleSelectionEnd = useCallback(
     (selectedPets: Persona[]) => {
       if (!targetPet || selectedPets.length === 0) return;
@@ -101,44 +91,10 @@ export function PetGrid({
       isEnabled={!!targetPet}
       className={gridStyle}
       itemClassName={`${petCardStyle}`}
-      renderItem={(pet, { isSelected: isDraggingThisPet }) => {
+      renderItem={(pet) => {
         const selected = pet.id === targetPet?.id || materialPets.some((material) => material.id === pet.id);
         return <MemoizedPersonaItem persona={pet} isSelected={selected} onClick={() => onPetClick(pet)} />;
       }}
     />
   );
 }
-
-interface PersonaItemProps {
-  persona: Persona;
-  isSelected: boolean;
-  onClick: () => void;
-}
-
-function PersonaItem({ persona, isSelected, onClick }: PersonaItemProps) {
-  return (
-    <button
-      onClick={onClick}
-      className={css({ outline: 'none', bg: 'transparent', width: '100%', height: '100%' })}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onClick();
-        }
-      }}
-      tabIndex={0}
-    >
-      <LevelBanner
-        image={getPersonaImage(persona.type)}
-        status={isSelected ? 'selected' : 'default'}
-        level={Number(persona.level)}
-        className={css({ width: '100%', height: '100%' })}
-        size="full"
-      />
-    </button>
-  );
-}
-
-const MemoizedPersonaItem = memo(PersonaItem, (prev, next) => {
-  return prev.isSelected === next.isSelected && prev.persona.level === next.persona.level;
-});
