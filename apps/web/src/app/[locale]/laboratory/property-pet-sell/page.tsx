@@ -1,6 +1,7 @@
 'use client';
 
 import { memo, useMemo, useState } from 'react';
+import { LaboratoryLayout } from '../_component/LaboratoryLayout';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
@@ -18,9 +19,13 @@ import { getPersonaImage } from '@/utils/image';
 
 export default function PropertyPetSellPage() {
   return (
-    <div>
+    <LaboratoryLayout
+      title="레벨, 타입 같은 펫 한번에 팔기"
+      description="펫 레벨, 타입 등 펫 속성을 선택하여 한번에 팔 수 있어요. 같은 속성의 펫들을 쉽게 관리해보세요!"
+      laboratoryId="property-pet-sell"
+    >
       <PersonaList />
-    </div>
+    </LaboratoryLayout>
   );
 }
 

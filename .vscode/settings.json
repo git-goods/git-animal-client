@@ -11,5 +11,5 @@
     }
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.words": ["hyesungoh"]
+  "cSpell.words": ["hyesungoh", "supabase"]
 }

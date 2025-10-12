@@ -1,4 +1,4 @@
-import { type NextRequest } from 'next/server';
+import { NextRequest } from 'next/server';
 import withAuth from 'next-auth/middleware';
 import createMiddleware from 'next-intl/middleware';
 
@@ -27,10 +27,20 @@ export default async function middleware(req: NextRequest) {
 
   const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname);
 
+  // URL 정보를 헤더에 추가한 새로운 요청 생성
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set('x-pathname', req.nextUrl.pathname);
+
+  const modifiedRequest = new NextRequest(req.url, {
+    headers: requestHeaders,
+  });
+
   if (isPublicPage) {
-    return intlMiddleware(req);
+    const response = intlMiddleware(modifiedRequest);
+    return response;
   } else {
-    return (authMiddleware as any)(req);
+    const response = (authMiddleware as any)(modifiedRequest);
+    return response;
   }
 }
 

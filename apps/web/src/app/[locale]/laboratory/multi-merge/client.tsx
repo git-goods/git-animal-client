@@ -18,7 +18,7 @@ import { MergeResultModal } from '../../mypage/my-pet/(merge)/MergeResult';
 import { MergeSlots } from './MergeSlots';
 import { PetGrid } from './PetGrid';
 import { SelectionSummary } from './SelectionSummary';
-import { contentSectionStyle, headerStyle, instructionStyle, instructionTextStyle, titleStyle } from './styles';
+import { contentSectionStyle, instructionStyle, instructionTextStyle } from './styles';
 
 function PetMergeUI() {
   const queryClient = useQueryClient();
@@ -102,10 +102,6 @@ function PetMergeUI() {
 
   return (
     <div>
-      <div className={headerStyle}>
-        <h2 className={titleStyle}>Merge Persona Level</h2>
-      </div>
-
       <div className={contentSectionStyle}>
         <MergeSlots
           targetPet={targetPet}
@@ -194,7 +190,7 @@ function PetList({
   };
 
   return (
-    <ScrollArea h="calc(100vh - 560px)">
+    <ScrollArea h="calc(100vh - 580px)">
       <PetGrid
         pets={availablePets}
         onPetClick={handlePetClick}

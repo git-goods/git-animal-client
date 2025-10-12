@@ -1,8 +1,11 @@
 import { css } from '_panda/css';
 
-export default function LaboratoryLayout({ children }: { children: React.ReactNode }) {
+import { FeedbackUpvote } from '@/app/[locale]/laboratory/_component/FeedbackUpvote';
+
+export default async function LaboratoryLayout({ children }: { children: React.ReactNode }) {
   return <div className={containerStyle}>{children}</div>;
 }
+
 const containerStyle = css({
   minHeight: '100vh',
   height: 'fit-content',
