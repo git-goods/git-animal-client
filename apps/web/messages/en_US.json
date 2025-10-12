@@ -19,6 +19,13 @@
     "notification": "Notification",
     "game": "Game"
   },
+  "NotFound": {
+    "title": "Not Found 🤔",
+    "main-description": "The page you are looking for does not exist.",
+    "description-line-1": "If you have anything to report about the problem, please add it to the link here.",
+    "description-line-2": "It's a great help to fix the bug",
+    "home-button-text": "Go To Home"
+  },
   "HomePage": {
     "title": "Hello world!",
     "description": "Have your pet in GITHUB!",

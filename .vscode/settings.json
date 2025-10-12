@@ -11,5 +11,13 @@
     }
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.words": ["hyesungoh"]
+  "cSpell.words": ["hyesungoh"],
+
+  "i18n-ally.localesPaths": ["apps/web/messages"], // 다국어 파일이 위치한 경로를 설정
+  "i18n-ally.keystyle": "nested", // 번역 키의 스타일을 설정 (nested: 중첩)
+  "i18n-ally.enabledParsers": ["json"],
+  "i18n-ally.enabledFrameworks": ["react", "next-intl"],
+  "i18n-ally.sourceLanguage": "ko_KR", // 기본 소스 언어를 설정
+  "i18n-ally.displayLanguage": "ko_KR", // VSCode에서 표시할 언어를 설정
+  "i18n-ally.pathMatcher": "{locale}.json"
 }
