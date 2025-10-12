@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase/client';
 
-export interface LaboratoryFeedback {
+export interface LaboratoryUpvote {
   id: string;
   user_id: string;
   username: string;
@@ -9,118 +9,108 @@ export interface LaboratoryFeedback {
   updated_at: string;
 }
 
-export interface CreateFeedbackRequest {
+export interface CreateUpvoteRequest {
   user_id: string;
   username: string;
-  description?: string;
 }
 
-export interface CheckFeedbackResponse {
+export interface CheckUpvoteResponse {
   hasUpvoted: boolean;
-  feedback?: LaboratoryFeedback;
+  upvote?: LaboratoryUpvote;
 }
 
 /**
- * Create or update laboratory feedback (upvote)
+ * Create or update laboratory upvote
  */
-export async function createOrUpdateFeedback(
-  request: CreateFeedbackRequest,
-): Promise<LaboratoryFeedback> {
-  // Check if feedback already exists for this user
-  const { data: existingFeedback, error: checkError } = await supabase
+export async function createOrUpdateUpvote(request: CreateUpvoteRequest): Promise<LaboratoryUpvote> {
+  // Check if upvote already exists for this user
+  const { data: existingUpvote, error: checkError } = await supabase
     .from('laboratory_feedback')
     .select('*')
     .eq('user_id', request.user_id)
     .maybeSingle();
 
   if (checkError) {
-    throw new Error(`Failed to check existing feedback: ${checkError.message}`);
+    throw new Error(`Failed to check existing upvote: ${checkError.message}`);
   }
 
-  // If feedback exists, update it
-  if (existingFeedback) {
-    const typedFeedback = existingFeedback as LaboratoryFeedback;
+  // If upvote exists, update timestamp
+  if (existingUpvote) {
+    const typedUpvote = existingUpvote as LaboratoryUpvote;
     const { data, error } = await supabase
       .from('laboratory_feedback')
       .update({
-        description: request.description,
         updated_at: new Date().toISOString(),
       })
-      .eq('id', typedFeedback.id)
+      .eq('id', typedUpvote.id)
       .select()
       .single();
 
     if (error || !data) {
-      throw new Error(`Failed to update feedback: ${error?.message ?? 'No data returned'}`);
+      throw new Error(`Failed to update upvote: ${error?.message ?? 'No data returned'}`);
     }
 
-    return data as LaboratoryFeedback;
+    return data as LaboratoryUpvote;
   }
 
-  // Otherwise, create new feedback
+  // Otherwise, create new upvote
   const { data, error } = await supabase
     .from('laboratory_feedback')
     .insert({
       user_id: request.user_id,
       username: request.username,
-      description: request.description,
+      description: null,
     })
     .select()
     .single();
 
   if (error || !data) {
-    throw new Error(`Failed to create feedback: ${error?.message ?? 'No data returned'}`);
+    throw new Error(`Failed to create upvote: ${error?.message ?? 'No data returned'}`);
   }
 
-  return data as LaboratoryFeedback;
+  return data as LaboratoryUpvote;
 }
 
 /**
  * Check if user has already upvoted
  */
-export async function checkUserFeedback(userId: string): Promise<CheckFeedbackResponse> {
-  const { data, error } = await supabase
-    .from('laboratory_feedback')
-    .select('*')
-    .eq('user_id', userId)
-    .maybeSingle();
+export async function checkUserUpvote(userId: string): Promise<CheckUpvoteResponse> {
+  const { data, error } = await supabase.from('laboratory_feedback').select('*').eq('user_id', userId).maybeSingle();
 
   if (error) {
-    throw new Error(`Failed to check user feedback: ${error.message}`);
+    throw new Error(`Failed to check user upvote: ${error.message}`);
   }
 
   return {
     hasUpvoted: !!data,
-    feedback: data ? (data as LaboratoryFeedback) : undefined,
+    upvote: data ? (data as LaboratoryUpvote) : undefined,
   };
 }
 
 /**
- * Get all laboratory feedback
+ * Get all laboratory upvotes
  */
-export async function getAllFeedback(): Promise<LaboratoryFeedback[]> {
+export async function getAllUpvotes(): Promise<LaboratoryUpvote[]> {
   const { data, error } = await supabase
     .from('laboratory_feedback')
     .select('*')
     .order('created_at', { ascending: false });
 
   if (error || !data) {
-    throw new Error(`Failed to get feedback: ${error?.message ?? 'No data returned'}`);
+    throw new Error(`Failed to get upvotes: ${error?.message ?? 'No data returned'}`);
   }
 
-  return data as LaboratoryFeedback[];
+  return data as LaboratoryUpvote[];
 }
 
 /**
- * Get feedback count
+ * Get upvote count
  */
-export async function getFeedbackCount(): Promise<number> {
-  const { count, error } = await supabase
-    .from('laboratory_feedback')
-    .select('*', { count: 'exact', head: true });
+export async function getUpvoteCount(): Promise<number> {
+  const { count, error } = await supabase.from('laboratory_feedback').select('*', { count: 'exact', head: true });
 
   if (error) {
-    throw new Error(`Failed to get feedback count: ${error.message}`);
+    throw new Error(`Failed to get upvote count: ${error.message}`);
   }
 
   return count ?? 0;

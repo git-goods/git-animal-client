@@ -1,7 +1,7 @@
 import { headers } from 'next/headers';
 import { css } from '_panda/css';
 
-import { FeedbackUpvote } from '@/components/Laboratory/FeedbackUpvote';
+import { FeedbackUpvote } from '@/app/[locale]/laboratory/_component/FeedbackUpvote';
 
 export default async function LaboratoryLayout({ children }: { children: React.ReactNode }) {
   const headersList = headers();
@@ -11,7 +11,7 @@ export default async function LaboratoryLayout({ children }: { children: React.R
   return (
     <div className={containerStyle}>
       {children}
-      <FeedbackUpvote />
+      <FeedbackUpvote laboratoryId={pathname} />
     </div>
   );
 }

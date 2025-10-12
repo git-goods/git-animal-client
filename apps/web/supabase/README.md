@@ -1,4 +1,8 @@
-# Supabase Setup Guide
+# Supabase Laboratory Upvote Setup Guide
+
+## Overview
+
+Laboratory upvote 기능은 사용자가 실험실 기능의 정식 출시를 요청할 수 있도록 합니다. 간단한 클릭 한 번으로 업보트할 수 있습니다.
 
 ## 1. 환경 변수 설정
 
@@ -45,10 +49,10 @@ supabase db push
 | 컬럼명 | 타입 | 설명 |
 |--------|------|------|
 | id | UUID | Primary Key (자동 생성) |
-| user_id | TEXT | 사용자 ID (필수) |
-| username | TEXT | 사용자 이름 (필수) |
-| description | TEXT | 추가 설명 (선택) |
-| created_at | TIMESTAMP | 생성 시각 (자동 생성) |
+| user_id | TEXT | GitHub 사용자 ID (필수) |
+| username | TEXT | GitHub 사용자 이름 (필수) |
+| description | TEXT | 추가 설명 (현재 미사용, NULL) |
+| created_at | TIMESTAMP | 업보트 시각 (자동 생성) |
 | updated_at | TIMESTAMP | 수정 시각 (자동 업데이트) |
 
 ### 인덱스
@@ -59,65 +63,76 @@ supabase db push
 
 ### RLS (Row Level Security) 정책
 
-- **읽기**: 누구나 피드백을 조회할 수 있음
-- **쓰기**: 인증된 사용자만 자신의 피드백을 생성/수정할 수 있음
+- **읽기**: 누구나 업보트를 조회할 수 있음
+- **쓰기**: 모든 사용자가 업보트를 생성/수정할 수 있음 (사용자당 1회)
 
 ## 4. 기능 테스트
 
 1. 로컬 개발 서버 실행: `pnpm dev:web`
 2. `/laboratory` 페이지로 이동
-3. 하단 피드백 섹션에서 "UP!!" 버튼 클릭
-4. 추가 설명 입력 (선택) 후 제출
+3. 하단에서 "↑ 업보트" 버튼 클릭
+4. 성공 메시지 확인
 
 ## 5. API 사용법
 
-### React Query Hooks
+### Tanstack Query v5 with queryOptions Pattern
 
 ```typescript
 import {
-  useCreateLaboratoryFeedback,
-  useCheckUserFeedback,
-  useGetFeedbackCount,
+  checkUserUpvoteOptions,
+  getUpvoteCountOptions,
+  useCreateLaboratoryUpvote,
+  useCheckUserUpvote,
+  useGetUpvoteCount,
 } from '@/apis/laboratory/useLaboratoryFeedback';
 
-// 피드백 생성/업데이트
-const { mutate } = useCreateLaboratoryFeedback();
+// 1. React Query Hooks 사용 (권장)
+// 업보트 생성
+const { mutate } = useCreateLaboratoryUpvote();
 mutate({
-  user_id: 'user-123',
+  user_id: 'github-123',
   username: 'johndoe',
-  description: '좋은 기능입니다!',
 });
 
 // 사용자가 이미 업보트했는지 확인
-const { data } = useCheckUserFeedback('user-123');
+const { data } = useCheckUserUpvote('github-123');
 console.log(data?.hasUpvoted); // true/false
 
-// 전체 피드백 개수 조회
-const { data: count } = useGetFeedbackCount();
+// 전체 업보트 개수 조회
+const { data: count } = useGetUpvoteCount();
 console.log(count); // 숫자
+
+// 2. queryOptions 직접 사용 (SSR, prefetching)
+import { useQuery, queryClient } from '@tanstack/react-query';
+
+// Server Component에서 prefetch
+await queryClient.prefetchQuery(checkUserUpvoteOptions('github-123'));
+await queryClient.prefetchQuery(getUpvoteCountOptions());
+
+// Client Component에서 사용
+const { data } = useQuery(checkUserUpvoteOptions('github-123'));
 ```
 
 ### 직접 API 호출
 
 ```typescript
 import {
-  createOrUpdateFeedback,
-  checkUserFeedback,
-  getFeedbackCount,
+  createOrUpdateUpvote,
+  checkUserUpvote,
+  getUpvoteCount,
 } from '@/apis/laboratory/feedback';
 
-// 피드백 생성
-const feedback = await createOrUpdateFeedback({
-  user_id: 'user-123',
+// 업보트 생성
+const upvote = await createOrUpdateUpvote({
+  user_id: 'github-123',
   username: 'johndoe',
-  description: '좋은 기능입니다!',
 });
 
 // 사용자 확인
-const result = await checkUserFeedback('user-123');
+const result = await checkUserUpvote('github-123');
 
 // 카운트 조회
-const count = await getFeedbackCount();
+const count = await getUpvoteCount();
 ```
 
 ## 문제 해결
