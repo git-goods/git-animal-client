@@ -4,6 +4,7 @@ export interface LaboratoryUpvote {
   id: string;
   user_id: string;
   username: string;
+  laboratory_id: string;
   description: string | null;
   created_at: string;
   updated_at: string;
@@ -12,6 +13,7 @@ export interface LaboratoryUpvote {
 export interface CreateUpvoteRequest {
   user_id: string;
   username: string;
+  laboratory_id: string;
 }
 
 export interface CheckUpvoteResponse {
@@ -23,11 +25,12 @@ export interface CheckUpvoteResponse {
  * Create or update laboratory upvote
  */
 export async function createOrUpdateUpvote(request: CreateUpvoteRequest): Promise<LaboratoryUpvote> {
-  // Check if upvote already exists for this user
+  // Check if upvote already exists for this user + laboratory combination
   const { data: existingUpvote, error: checkError } = await supabase
     .from('laboratory_feedback')
     .select('*')
     .eq('user_id', request.user_id)
+    .eq('laboratory_id', request.laboratory_id)
     .maybeSingle();
 
   if (checkError) {
@@ -59,6 +62,7 @@ export async function createOrUpdateUpvote(request: CreateUpvoteRequest): Promis
     .insert({
       user_id: request.user_id,
       username: request.username,
+      laboratory_id: request.laboratory_id,
       description: null,
     })
     .select()
@@ -72,10 +76,15 @@ export async function createOrUpdateUpvote(request: CreateUpvoteRequest): Promis
 }
 
 /**
- * Check if user has already upvoted
+ * Check if user has already upvoted for a specific laboratory
  */
-export async function checkUserUpvote(userId: string): Promise<CheckUpvoteResponse> {
-  const { data, error } = await supabase.from('laboratory_feedback').select('*').eq('user_id', userId).maybeSingle();
+export async function checkUserUpvote(userId: string, laboratoryId: string): Promise<CheckUpvoteResponse> {
+  const { data, error } = await supabase
+    .from('laboratory_feedback')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('laboratory_id', laboratoryId)
+    .maybeSingle();
 
   if (error) {
     throw new Error(`Failed to check user upvote: ${error.message}`);
@@ -88,12 +97,13 @@ export async function checkUserUpvote(userId: string): Promise<CheckUpvoteRespon
 }
 
 /**
- * Get all laboratory upvotes
+ * Get all laboratory upvotes for a specific laboratory
  */
-export async function getAllUpvotes(): Promise<LaboratoryUpvote[]> {
+export async function getAllUpvotes(laboratoryId: string): Promise<LaboratoryUpvote[]> {
   const { data, error } = await supabase
     .from('laboratory_feedback')
     .select('*')
+    .eq('laboratory_id', laboratoryId)
     .order('created_at', { ascending: false });
 
   if (error || !data) {
@@ -104,10 +114,13 @@ export async function getAllUpvotes(): Promise<LaboratoryUpvote[]> {
 }
 
 /**
- * Get upvote count
+ * Get upvote count for a specific laboratory
  */
-export async function getUpvoteCount(): Promise<number> {
-  const { count, error } = await supabase.from('laboratory_feedback').select('*', { count: 'exact', head: true });
+export async function getUpvoteCount(laboratoryId: string): Promise<number> {
+  const { count, error } = await supabase
+    .from('laboratory_feedback')
+    .select('*', { count: 'exact', head: true })
+    .eq('laboratory_id', laboratoryId);
 
   if (error) {
     throw new Error(`Failed to get upvote count: ${error.message}`);

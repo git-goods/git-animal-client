@@ -8,20 +8,26 @@ import { toast } from 'sonner';
 
 import { createOrUpdateUpvote } from '@/apis/laboratory/feedback';
 import { LABORATORY_FEEDBACK_QUERY_KEYS, upvoteQueryOptions } from '@/apis/laboratory/useLaboratoryFeedback';
+import { usePathname } from '@/i18n/routing';
 import { useClientUser } from '@/utils/clientAuth';
 
-export function FeedbackUpvote({ laboratoryId }: { laboratoryId: string }) {
+export function FeedbackUpvote() {
+  const pathname = usePathname();
+
+  const laboratoryId = pathname.split('/').pop() || 'laboratory';
+  console.log('laboratoryId', laboratoryId);
+
   const queryClient = useQueryClient();
   const { id: userId, name: username } = useClientUser();
 
-  // Check if user has already upvoted
+  // Check if user has already upvoted for this laboratory
   const { data: checkData, isLoading: isCheckingUpvote } = useQuery({
-    ...upvoteQueryOptions.checkUserUpvote(userId?.toString() ?? ''),
-    enabled: !!userId,
+    ...upvoteQueryOptions.checkUserUpvote(userId?.toString() ?? '', laboratoryId),
+    enabled: !!userId && !!laboratoryId,
   });
   const hasUpvoted = checkData?.hasUpvoted ?? false;
 
-  const { data: upvoteCount } = useQuery(upvoteQueryOptions.getUpvoteCount());
+  const { data: upvoteCount } = useQuery(upvoteQueryOptions.getUpvoteCount(laboratoryId));
 
   const { mutate: upvoteMutate, isPending: isUpvoting } = useMutation({
     mutationFn: createOrUpdateUpvote,
@@ -60,10 +66,15 @@ export function FeedbackUpvote({ laboratoryId }: { laboratoryId: string }) {
     upvoteMutate({
       user_id: userId.toString(),
       username,
+      laboratory_id: laboratoryId,
     });
   };
 
   if (isCheckingUpvote) {
+    return null;
+  }
+
+  if (laboratoryId === 'laboratory') {
     return null;
   }
 
