@@ -1,8 +1,56 @@
 'use client';
 
-import Error from 'next/error';
+import { useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
+import { css } from '_panda/css';
+
+import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
+import { ErrorPage } from '@/components/Error/ErrorPage';
+import { isDev } from '@/constants/env';
+import { GITHUB_ISSUE_URL } from '@/constants/outlink';
 
 export default function NotFound() {
-  console.log('Not Found -------------------------------');
-  return <Error statusCode={404} title="Not Found" />;
+  const locale = useLocale();
+  const pathname = usePathname();
+  const t = useTranslations('NotFound');
+
+  useEffect(() => {
+    if (isDev) return;
+
+    sendMessageToErrorChannel(`<!here>
+🌌 Not Found 🌌
+Path: ${pathname}
+`);
+  }, [pathname]);
+
+  const router = useRouter();
+
+  const onClickButton = () => {
+    router.push('/');
+  };
+
+  return (
+    <html lang={locale}>
+      <body>
+        <ErrorPage
+          heading={t('title')}
+          paragraph={
+            <div className={css({ textAlign: 'center' })}>
+              {t('main-description')}
+              <br />
+              <br />
+              <div className={css({ color: 'gray.500' })}>
+                {t('description-line-1')} [<a href={GITHUB_ISSUE_URL}>GitHub</a>]
+                <br />
+                {t('description-line-2')}
+              </div>
+            </div>
+          }
+          onClickButton={onClickButton}
+          buttonText={t('home-button-text')}
+        />
+      </body>
+    </html>
+  );
 }
