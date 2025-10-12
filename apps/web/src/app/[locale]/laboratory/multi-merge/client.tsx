@@ -2,10 +2,11 @@
 
 import React, { Suspense, useState } from 'react';
 import { Flex } from '_panda/jsx';
-import type { Persona } from '@gitanimals/api';
+import { mergePersonas, type MergePersonasRequest, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
 import { Button, ScrollArea } from '@gitanimals/ui-panda';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { Link } from '@/i18n/routing';
 import { useClientUser } from '@/utils/clientAuth';
@@ -18,6 +19,29 @@ import { contentSectionStyle, headerStyle, instructionStyle, instructionTextStyl
 function PetMergeUI() {
   const [targetPet, setTargetPet] = useState<Persona | null>(null);
   const [materialPets, setMaterialPets] = useState<Persona[]>([]);
+
+  const { mutate: mutateMergePersonas, isPending: isMerging } = useMutation({
+    mutationFn: (request: MergePersonasRequest) => mergePersonas(request),
+    onSuccess: (data) => {
+      console.log('data', data);
+      toast.success('Merge successful');
+    },
+    onError: (error) => {
+      console.log('error', error);
+      toast.error('Merge failed');
+    },
+  });
+
+  const onMergeClick = () => {
+    console.log('onMergeClick', targetPet, materialPets);
+    if (!targetPet) return;
+    if (materialPets.length === 0) return;
+
+    mutateMergePersonas({
+      increasePersonaId: targetPet.id,
+      deletePersonaId: materialPets.map((pet) => pet.id),
+    });
+  };
 
   const handlePetClick = (pet: Persona) => {
     if (!targetPet) {
@@ -71,7 +95,9 @@ function PetMergeUI() {
             <Button disabled={targetPet && materialPets.length === 0}>Select Materials</Button>
           )}
           {targetPet && materialPets.length > 0 && (
-            <Button disabled={targetPet && materialPets.length === 0}>Merge ${materialPets.length + 1} Pets</Button>
+            <Button disabled={(targetPet && materialPets.length === 0) || isMerging} onClick={onMergeClick}>
+              Merge {materialPets.length + 1} Pets
+            </Button>
           )}
           {(targetPet || materialPets.length > 0) && (
             <Button variant="secondary" onClick={handleClearAll}>
