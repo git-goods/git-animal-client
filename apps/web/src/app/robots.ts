@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 import { config } from '@/constants/config';
-import { LOCALES } from '@/i18n/routing';
+import { LOCALE_LIST } from '@/i18n/routing';
 
 export default function robots(): MetadataRoute.Robots {
   const baseUrl = config.url;
@@ -13,7 +13,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: LOCALES.map((locale) => `${baseUrl}/${locale}/sitemap.xml`),
+    sitemap: LOCALE_LIST.map((locale) => `${baseUrl}/${locale}/sitemap.xml`),
     host: baseUrl,
   };
 }
