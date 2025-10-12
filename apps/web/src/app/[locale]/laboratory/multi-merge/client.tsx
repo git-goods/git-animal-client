@@ -125,7 +125,6 @@ function PetList({
   const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
 
   const availablePets = data.personas.filter((pet) => !pet.visible && pet.id !== targetPet?.id);
-  console.log('availablePets', availablePets);
 
   const handleMultiplePetSelect = (pets: Persona[]) => {
     // 타겟이 선택된 경우에만 다중 선택 허용

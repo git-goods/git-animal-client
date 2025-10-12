@@ -47,13 +47,11 @@ export function useDragSelect<T>({
   );
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [startPos, setStartPos] = useState<{ x: number; y: number } | null>(null);
+  const dragThresholdExceeded = useRef(false);
 
   const handleMouseDown = useCallback(
     (e: MouseEvent) => {
       if (!isEnabled || !containerRef.current) return;
-
-      // 텍스트 선택 방지
-      e.preventDefault();
 
       const rect = containerRef.current.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -61,23 +59,39 @@ export function useDragSelect<T>({
 
       setIsMouseDown(true);
       setStartPos({ x, y });
-      setIsDragging(true);
-      setDraggingItemIds([]);
-      onSelectionStart?.();
+      dragThresholdExceeded.current = false;
+      // 드래그 상태는 실제로 움직임이 감지될 때 설정
     },
-    [isEnabled, onSelectionStart],
+    [isEnabled],
   );
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
       if (!isMouseDown || !startPos || !containerRef.current) return;
 
-      // 드래그 중 기본 동작 방지
-      e.preventDefault();
-
       const rect = containerRef.current.getBoundingClientRect();
       const currentX = e.clientX - rect.left;
       const currentY = e.clientY - rect.top;
+
+      const deltaX = Math.abs(currentX - startPos.x);
+      const deltaY = Math.abs(currentY - startPos.y);
+      const DRAG_THRESHOLD = 5; // 5px 이상 움직여야 드래그로 인식
+
+      // 드래그 임계값을 넘었는지 확인
+      if (!dragThresholdExceeded.current && (deltaX > DRAG_THRESHOLD || deltaY > DRAG_THRESHOLD)) {
+        dragThresholdExceeded.current = true;
+        setIsDragging(true);
+        setDraggingItemIds([]);
+        onSelectionStart?.();
+        // 이제부터 기본 동작 방지
+        e.preventDefault();
+      }
+
+      // 드래그 임계값을 넘지 않았으면 아무것도 하지 않음 (클릭으로 처리)
+      if (!dragThresholdExceeded.current) return;
+
+      // 드래그 중 기본 동작 방지
+      e.preventDefault();
 
       const left = Math.min(startPos.x, currentX);
       const top = Math.min(startPos.y, currentY);
@@ -113,30 +127,38 @@ export function useDragSelect<T>({
       const draggedItems = items.filter((item) => draggedItemIds.includes(getItemId(item)));
       onSelectionChange?.(draggedItems);
     },
-    [isMouseDown, startPos, items, getItemId, onSelectionChange],
+    [isMouseDown, startPos, items, getItemId, onSelectionChange, onSelectionStart],
   );
 
   const handleMouseUp = useCallback(() => {
     if (!isMouseDown) return;
 
+    const wasActuallyDragging = dragThresholdExceeded.current;
+
     setIsMouseDown(false);
     setStartPos(null);
     setSelectionBox(null);
 
-    if (draggingItemIds.length === 0) {
+    // 실제로 드래그한 경우에만 처리
+    if (wasActuallyDragging) {
+      if (draggingItemIds.length === 0) {
+        setIsDragging(false);
+        setDraggingItemIds([]);
+        onSelectionEnd?.([]);
+        return;
+      }
+
+      // 드래그된 아이템들을 찾아서 콜백 호출
+      const draggedItems = items.filter((item) => draggingItemIds.includes(getItemId(item)));
+      onSelectionEnd?.(draggedItems);
+
+      // 드래그 상태 초기화
       setIsDragging(false);
       setDraggingItemIds([]);
-      onSelectionEnd?.([]);
-      return;
     }
 
-    // 드래그된 아이템들을 찾아서 콜백 호출
-    const draggedItems = items.filter((item) => draggingItemIds.includes(getItemId(item)));
-    onSelectionEnd?.(draggedItems);
-
-    // 드래그 상태 초기화
-    setIsDragging(false);
-    setDraggingItemIds([]);
+    // 임계값 초기화
+    dragThresholdExceeded.current = false;
   }, [isMouseDown, draggingItemIds, items, getItemId, onSelectionEnd]);
 
   useEffect(() => {

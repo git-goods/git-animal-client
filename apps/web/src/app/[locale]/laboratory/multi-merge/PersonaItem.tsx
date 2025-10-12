@@ -62,7 +62,12 @@ function PersonaBannerItem({ persona, isSelected, onClick, size = 'full', classN
 }
 
 export const MemoizedPersonaItem = memo(PersonaItem, (prev, next) => {
-  return prev.isSelected === next.isSelected && prev.persona.level === next.persona.level;
+  return (
+    prev.isSelected === next.isSelected &&
+    prev.persona.id === next.persona.id &&
+    prev.persona.level === next.persona.level &&
+    prev.onClick === next.onClick
+  );
 });
 
 export const MemoizedPersonaBannerItem = memo(PersonaBannerItem, (prev, next) => {
