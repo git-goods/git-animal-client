@@ -46,7 +46,7 @@ export const closeButtonStyle = css({
 
 // Content 스타일
 export const contentSectionStyle = css({
-  padding: '24px 32px',
+  padding: '12px 32px',
 });
 
 export const instructionTextStyle = css({
