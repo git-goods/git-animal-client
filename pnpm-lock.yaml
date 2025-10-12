@@ -210,6 +210,9 @@ importers:
       '@shadow-panda/style-context':
         specifier: ^0.7.1
         version: 0.7.1(@types/react-dom@18.2.19)(@types/react@18.2.61)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      '@supabase/supabase-js':
+        specifier: ^2.75.0
+        version: 2.75.0
       '@suspensive/react':
         specifier: ^2.17.1
         version: 2.17.1(react@18.2.0)
@@ -4570,6 +4573,28 @@ packages:
   '@storybook/types@8.1.9':
     resolution: {integrity: sha512-temr7cNoBwu/+EF0jZ7aIfHtqwMqyevPLRfl/emkZM2t751NxbTkP1kxvfk9I0L8wF7mvVHXWn2iIM3QBqzWDw==}
 
+  '@supabase/auth-js@2.75.0':
+    resolution: {integrity: sha512-J8TkeqCOMCV4KwGKVoxmEBuDdHRwoInML2vJilthOo7awVCro2SM+tOcpljORwuBQ1vHUtV62Leit+5wlxrNtw==}
+
+  '@supabase/functions-js@2.75.0':
+    resolution: {integrity: sha512-18yk07Moj/xtQ28zkqswxDavXC3vbOwt1hDuYM3/7xPnwwpKnsmPyZ7bQ5th4uqiJzQ135t74La9tuaxBR6e7w==}
+
+  '@supabase/node-fetch@2.6.15':
+    resolution: {integrity: sha512-1ibVeYUacxWYi9i0cf5efil6adJ9WRyZBLivgjs+AUpewx1F3xPi7gLgaASI2SmIQxPoCEjAsLAzKPgMJVgOUQ==}
+    engines: {node: 4.x || >=6.0.0}
+
+  '@supabase/postgrest-js@2.75.0':
+    resolution: {integrity: sha512-YfBz4W/z7eYCFyuvHhfjOTTzRrQIvsMG2bVwJAKEVVUqGdzqfvyidXssLBG0Fqlql1zJFgtsPpK1n4meHrI7tg==}
+
+  '@supabase/realtime-js@2.75.0':
+    resolution: {integrity: sha512-B4Xxsf2NHd5cEnM6MGswOSPSsZKljkYXpvzKKmNxoUmNQOfB7D8HOa6NwHcUBSlxcjV+vIrYKcYXtavGJqeGrw==}
+
+  '@supabase/storage-js@2.75.0':
+    resolution: {integrity: sha512-wpJMYdfFDckDiHQaTpK+Ib14N/O2o0AAWWhguKvmmMurB6Unx17GGmYp5rrrqCTf8S1qq4IfIxTXxS4hzrUySg==}
+
+  '@supabase/supabase-js@2.75.0':
+    resolution: {integrity: sha512-8UN/vATSgS2JFuJlMVr51L3eUDz+j1m7Ww63wlvHLKULzCDaVWYzvacCjBTLW/lX/vedI2LBI4Vg+01G9ufsJQ==}
+
   '@surma/rollup-plugin-off-main-thread@2.2.3':
     resolution: {integrity: sha512-lR8q/9W7hZpMWweNiAKU7NQerBnzQQLvi8qnTDU/fxItPhtZVMbPV3lbCwjhIlNBe9Bbr5V+KHshvWmVSG9cxQ==}
 
@@ -4855,6 +4880,9 @@ packages:
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
 
+  '@types/phoenix@1.6.6':
+    resolution: {integrity: sha512-PIzZZlEppgrpoT2QgbnDU+MMzuR6BbCjllj0bM70lWoejMeNJAxCchxnv7J3XFkI8MpygtRpzXrIlmWUBclP5A==}
+
   '@types/pretty-hrtime@1.0.3':
     resolution: {integrity: sha512-nj39q0wAIdhwn7DGUyT9irmsKK1tV0bd5WFEhgpqNTMFZ8cE+jieuTphCW0tfdm47S2zVT5mr09B28b1chmQMA==}
 
@@ -4911,6 +4939,9 @@ packages:
 
   '@types/uuid@9.0.8':
     resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
+
+  '@types/ws@8.18.1':
+    resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
 
   '@types/yargs-parser@21.0.3':
     resolution: {integrity: sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==}
@@ -11646,6 +11677,18 @@ packages:
       utf-8-validate:
         optional: true
 
+  ws@8.18.3:
+    resolution: {integrity: sha512-PEIGCY5tSlUt50cqyMXfCzX+oOPqN0vuGqWzbcJ2xvnkzkq46oOpz7dQaTDBdfICb4N14+GARUDw2XV2N4tvzg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
   xml-name-validator@4.0.0:
     resolution: {integrity: sha512-ICP2e+jsHvAj2E2lIHxa5tjXRlKDJo4IdvPvCXbXQGdzSfmSpNVyIKMvoZHjDY9DP0zV17iI85o90vRFXNccRw==}
     engines: {node: '>=12'}
@@ -16245,6 +16288,48 @@ snapshots:
       '@types/express': 4.17.21
       file-system-cache: 2.3.0
 
+  '@supabase/auth-js@2.75.0':
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
+
+  '@supabase/functions-js@2.75.0':
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
+
+  '@supabase/node-fetch@2.6.15':
+    dependencies:
+      whatwg-url: 5.0.0
+
+  '@supabase/postgrest-js@2.75.0':
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
+
+  '@supabase/realtime-js@2.75.0':
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
+      '@types/phoenix': 1.6.6
+      '@types/ws': 8.18.1
+      ws: 8.18.3
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
+  '@supabase/storage-js@2.75.0':
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
+
+  '@supabase/supabase-js@2.75.0':
+    dependencies:
+      '@supabase/auth-js': 2.75.0
+      '@supabase/functions-js': 2.75.0
+      '@supabase/node-fetch': 2.6.15
+      '@supabase/postgrest-js': 2.75.0
+      '@supabase/realtime-js': 2.75.0
+      '@supabase/storage-js': 2.75.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   '@surma/rollup-plugin-off-main-thread@2.2.3':
     dependencies:
       ejs: 3.1.10
@@ -16576,6 +16661,8 @@ snapshots:
 
   '@types/parse-json@4.0.2': {}
 
+  '@types/phoenix@1.6.6': {}
+
   '@types/pretty-hrtime@1.0.3': {}
 
   '@types/prop-types@15.7.5': {}
@@ -16631,6 +16718,10 @@ snapshots:
   '@types/unist@3.0.2': {}
 
   '@types/uuid@9.0.8': {}
+
+  '@types/ws@8.18.1':
+    dependencies:
+      '@types/node': 20.11.24
 
   '@types/yargs-parser@21.0.3':
     optional: true
@@ -25123,6 +25214,8 @@ snapshots:
   ws@7.5.10: {}
 
   ws@8.17.0: {}
+
+  ws@8.18.3: {}
 
   xml-name-validator@4.0.0:
     optional: true

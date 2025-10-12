@@ -1,6 +1,8 @@
 import { headers } from 'next/headers';
 import { css } from '_panda/css';
 
+import { FeedbackUpvote } from '@/components/Laboratory/FeedbackUpvote';
+
 export default async function LaboratoryLayout({ children }: { children: React.ReactNode }) {
   const headersList = headers();
   const pathname = headersList.get('x-pathname') || '';
@@ -9,11 +11,7 @@ export default async function LaboratoryLayout({ children }: { children: React.R
   return (
     <div className={containerStyle}>
       {children}
-      <footer>
-        <p>
-          실험실 기능이 마음에 드셨나요? 정식 출시를 원하시면 피드백을 남겨주세요! <button>[피드백 남기기]</button>
-        </p>
-      </footer>
+      <FeedbackUpvote />
     </div>
   );
 }
