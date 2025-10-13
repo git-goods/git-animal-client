@@ -49,8 +49,14 @@ const laboButtonStyle = css({
   top: '64px',
   right: '200px',
 
-  '@media (max-width: 1400px)': {
-    right: '100px',
+  _pc: {
+    top: '12px',
+    right: '50px',
+    p: '8px 12px',
+    '& > svg': {
+      width: '18px',
+      height: '18px',
+    },
   },
   _mobile: {
     display: 'none',
@@ -63,11 +69,10 @@ const mainStyle = grid({
   position: 'relative',
   zIndex: 'aboveDefault',
   padding: '120px 200px',
-  minHeight: 'calc(100vh - 60px)',
-  // minHeight: 'fit-content',
+  minHeight: 'var(--main-min-height)',
 
-  '@media (max-width: 1400px)': {
-    padding: '120px 100px',
+  _pc: {
+    padding: '60px 50px',
   },
 
   // TODO : 중간 태블릿 정도도 대응하면 좋을 듯
@@ -90,7 +95,15 @@ const rightSectionStyle = css({
   flexDirection: 'column',
   position: 'relative',
 
+  gap: '40px',
+
+  _pc: {
+    gap: '24px',
+    padding: '24px',
+  },
+
   _mobile: {
+    gap: '12px',
     background: 'none',
     p: 0,
     maxHeight: 'auto',

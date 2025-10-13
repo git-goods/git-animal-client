@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { Button, TextField } from '@gitanimals/ui-panda';
+import { ClipboardIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
@@ -41,10 +42,26 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
       <section>
         <div className={lineContainerStyle} style={{ width: sizes.width, height: sizes.height }}>
           <GitanimalsLine sizes={[sizes.width, sizes.height]} petId={selectPersona} />
+
+          <button
+            className={css({
+              width: '28px',
+              height: '28px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'black.black_25',
+              borderRadius: '6px',
+              position: 'absolute',
+              top: '12px',
+              right: '12px',
+              color: 'white.white_100',
+            })}
+            onClick={onLinkCopy}
+          >
+            <ClipboardIcon size={16} />
+          </button>
         </div>
-        <Button onClick={onLinkCopy} mt={4} size="m">
-          {t('copy-link-title')}
-        </Button>
       </section>
     </div>
   );
@@ -66,6 +83,7 @@ const lineContainerStyle = css({
   transition: 'all 0.3s',
   maxWidth: '1000px',
   borderRadius: '12px',
+  position: 'relative',
 
   '& img': {
     maxWidth: '100%',
