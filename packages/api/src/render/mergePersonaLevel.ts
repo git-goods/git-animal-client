@@ -1,5 +1,6 @@
 import z from 'zod';
 import { safeRenderPut } from '../_instance/safe';
+import { PersonaSchema } from './schema';
 
 const MergePersonaLevelRequestSchema = z.object({
   increasePersonaId: z.string(),
@@ -25,5 +26,28 @@ export const mergePersonaLevelByToken = async (request: MergePersonaLevelRequest
   safeRenderPut(MergePersonaLevelResponseSchema)(`/personas/merges`, request, {
     headers: {
       Authorization: `Bearer ${token}`,
+    },
+  });
+
+const MergePersonasRequestSchema = z.object({
+  increasePersonaId: z.string(),
+  deletePersonaId: z.array(z.string()),
+});
+
+const MergePersonasResponseSchema = PersonaSchema.pick({
+  id: true,
+  type: true,
+  level: true,
+  visible: true,
+  dropRate: true,
+});
+
+export type MergePersonasRequest = z.infer<typeof MergePersonasRequestSchema>;
+export type MergePersonasResponse = z.infer<typeof MergePersonasResponseSchema>;
+
+export const mergePersonas = async (request: MergePersonasRequest) =>
+  safeRenderPut(MergePersonasResponseSchema)(`/personas/merges`, request, {
+    headers: {
+      'Api-Version': '2',
     },
   });

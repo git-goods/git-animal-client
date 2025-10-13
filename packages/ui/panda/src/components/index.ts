@@ -12,3 +12,4 @@ export * from './SearchBar';
 export * from './Chip';
 export * from './DropdownMenu';
 export * from './Tooltip';
+export * from './ScrollArea';

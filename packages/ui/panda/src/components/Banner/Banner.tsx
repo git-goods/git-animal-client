@@ -8,11 +8,13 @@ type BannerProps = BannerStyleProps & {
   label?: string;
   image: string | ReactNode;
   loading?: boolean;
+  className?: string;
 };
 
 export function Banner({ image, label, loading, ...styleProps }: BannerProps) {
+  const { className, ...rest } = styleProps;
   return (
-    <div className={bannerStyle(styleProps)}>
+    <div className={cx(bannerStyle(rest), className)}>
       {typeof image === 'string' ? <img draggable="false" src={image} width={160} height={160} alt={image} /> : image}
       {label && <p className={labelStyle}>{label}</p>}
       {loading && (

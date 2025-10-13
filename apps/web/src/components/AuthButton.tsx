@@ -6,13 +6,20 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@gitanimals/ui-panda';
 
 import { getGithubOauthUrl } from '@/apis/auth/getGithubOauth';
-import { LOCAL_STORAGE_KEY } from '@/constants/storage';
+import { COOKIE_KEY, LOCAL_STORAGE_KEY } from '@/constants/storage';
 
 /**
  * client용 로그인 함수
  */
 export const login = (callbackUrl: string = '/mypage') => {
   localStorage.setItem(LOCAL_STORAGE_KEY.callbackUrl, callbackUrl);
+
+  // cookie set (client)
+  const currentLocale = window.location.pathname.split('/')[1];
+  document.cookie = `${COOKIE_KEY.locale}=${currentLocale}; path=/; max-age=3600`;
+
+  // sessionStorage.setItem(SESSION_STORAGE_KEY.locale, currentLocale);
+
   getGithubOauthUrl();
 };
 

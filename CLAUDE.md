@@ -79,9 +79,64 @@ pnpm --filter @gitanimals/ui-panda storybook # Start Storybook
 - Shared utilities from `@gitanimals/util-common`
 
 **State Management:**
-- Server state: Tanstack Query with custom hooks in `src/apis/`
+- Server state: Tanstack Query v5 with `queryOptions` pattern in `src/apis/`
 - Client state: Jotai for atomic state, Zustand for stores
 - Auth state managed through NextAuth.js
+
+**Tanstack Query v5 Best Practices:**
+- Always use `queryOptions` factory pattern for reusable query definitions
+- Group related queryOptions into a single exported object
+- Use `useQuery` directly with queryOptions in components (no custom hooks needed)
+- Example pattern:
+  ```typescript
+  // src/apis/user/queries.ts
+  import { queryOptions } from '@tanstack/react-query';
+
+  export const USER_QUERY_KEYS = {
+    all: ['user'] as const,
+    detail: (userId: string) => ['user', userId] as const,
+    list: () => ['user', 'list'] as const,
+  };
+
+  // Define queryOptions factories
+  const getUserOptions = (userId: string) =>
+    queryOptions({
+      queryKey: USER_QUERY_KEYS.detail(userId),
+      queryFn: () => fetchUser(userId),
+      enabled: !!userId,
+    });
+
+  const getUserListOptions = () =>
+    queryOptions({
+      queryKey: USER_QUERY_KEYS.list(),
+      queryFn: fetchUserList,
+    });
+
+  // Export grouped queryOptions
+  export const userQueryOptions = {
+    getUser: getUserOptions,
+    getUserList: getUserListOptions,
+  };
+
+  // Usage in component
+  import { useQuery } from '@tanstack/react-query';
+  import { userQueryOptions } from '@/apis/user/queries';
+
+  function UserProfile({ userId }: { userId: string }) {
+    const { data: user } = useQuery(userQueryOptions.getUser(userId));
+    const { data: users } = useQuery(userQueryOptions.getUserList());
+    // ...
+  }
+
+  // Usage in Server Components (prefetching)
+  await queryClient.prefetchQuery(userQueryOptions.getUser('123'));
+  ```
+- Benefits:
+  - Type safety with auto-completion
+  - Reusability in components, prefetching, SSR
+  - Easier testing and mocking
+  - Centralized query key management
+  - No need for custom hooks unless adding extra logic
 
 **Styling Approach:**
 - PandaCSS with `styled-system` generation
