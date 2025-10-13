@@ -28,27 +28,23 @@ Path: ${pathname}
   };
 
   return (
-    <html lang="en">
-      <body>
-        <ErrorPage
-          heading="Not Found 🤔"
-          paragraph={
-            <div className={css({ textAlign: 'center' })}>
-              The page you are looking for does not exist.
-              <br />
-              <br />
-              <div className={css({ color: 'gray.500' })}>
-                If you have anything to report about the problem, please add it to the link here. [
-                <a href={GITHUB_ISSUE_URL}>Github</a>]
-                <br />
-                It's a great help to fix the bug
-              </div>
-            </div>
-          }
-          onClickButton={onClickButton}
-          buttonText="Go to Home"
-        />
-      </body>
-    </html>
+    <ErrorPage
+      heading="Not Found 🤔"
+      paragraph={
+        <div className={css({ textAlign: 'center' })}>
+          The page you are looking for does not exist.
+          <br />
+          <br />
+          <div className={css({ color: 'gray.500' })}>
+            If you have anything to report about the problem, please add it to the link here. [
+            <a href={GITHUB_ISSUE_URL}>Github</a>]
+            <br />
+            It's a great help to fix the bug
+          </div>
+        </div>
+      }
+      onClickButton={onClickButton}
+      buttonText="Go to Home"
+    />
   );
 }
