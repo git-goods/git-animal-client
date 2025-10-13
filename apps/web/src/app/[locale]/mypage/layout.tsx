@@ -14,7 +14,6 @@ async function MypageLayout({ children }: { children: React.ReactNode }) {
       <GNB />
       <div className={mainStyle}>
         <ProfileSection />
-        <LaboButton />
         <div className={rightSectionStyle}>{children}</div>
       </div>
     </div>
@@ -51,7 +50,7 @@ const laboButtonStyle = css({
 
   _pc: {
     top: '12px',
-    right: '50px',
+    right: '40px',
     p: '8px 12px',
     '& > svg': {
       width: '18px',
@@ -72,7 +71,7 @@ const mainStyle = grid({
   minHeight: 'var(--main-min-height)',
 
   _pc: {
-    padding: '60px 50px',
+    padding: '32px 40px',
   },
 
   // TODO : 중간 태블릿 정도도 대응하면 좋을 듯

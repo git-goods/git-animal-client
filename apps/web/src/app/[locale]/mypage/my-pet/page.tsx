@@ -30,7 +30,7 @@ function MypageMyPets() {
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('pet-list')}</h2>
 
-        <ScrollArea height="calc(100vh - 542px)">
+        <ScrollArea height="calc(100vh - 424px)">
           <SelectPersonaList
             selectPersona={selectPersona ? [selectPersona.id] : []}
             onSelectPersona={(persona) => setSelectPersona(persona)}

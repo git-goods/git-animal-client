@@ -10,7 +10,7 @@ import { userQueries } from '@gitanimals/react-query';
 import { Skeleton } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, FlaskConical } from 'lucide-react';
 
 import { Link, usePathname } from '@/i18n/routing';
 import { addNumberComma } from '@/utils/number';
@@ -66,10 +66,46 @@ export const ProfileSection = memo(
               <span>{t('my-pet')}</span>
             </Link>
           </div>
+          <Link href="/laboratory" className={laboButtonStyle}>
+            <FlaskConical />
+            {t('laboratory')}
+          </Link>
         </section>
       );
     }),
 );
+
+const laboButtonStyle = css({
+  background: 'white.white_10',
+  backdropFilter: 'blur(7px)',
+  borderRadius: '8px',
+  p: '10px 20px',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+  textStyle: 'glyph16.regular',
+  color: 'white.white_100',
+
+  marginTop: '24px',
+  animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+  transition: 'background 0.3s ease',
+
+  _hover: {
+    background: 'linear-gradient(150.51deg, #016EDB 11.25%, #16B7CD 61.95%, #5CCA69 94.01%)',
+    animation: 'pulse 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+  },
+
+  _pc: {
+    p: '8px 12px',
+    '& > svg': {
+      width: '18px',
+      height: '18px',
+    },
+  },
+  _mobile: {
+    display: 'none',
+  },
+});
 
 const profileSectionStyle = css({
   _mobile: {
