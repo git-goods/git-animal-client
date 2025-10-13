@@ -2,11 +2,10 @@
 
 import React, { useCallback, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
+import { css } from '_panda/css';
 import { flex } from '_panda/patterns';
 import { type Persona } from '@gitanimals/api';
-
-import { customScrollStyle } from '@/styles/scrollStyle';
+import { ScrollArea } from '@gitanimals/ui-panda';
 
 import { SelectPersonaList } from '../PersonaList';
 
@@ -31,14 +30,14 @@ function MypageMyPets() {
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('pet-list')}</h2>
 
-        <div className={listStyle}>
+        <ScrollArea height="calc(100vh - 542px)">
           <SelectPersonaList
             selectPersona={selectPersona ? [selectPersona.id] : []}
             onSelectPersona={(persona) => setSelectPersona(persona)}
             initSelectPersonas={initSelectPersonas}
             isSpecialEffect
           />
-        </div>
+        </ScrollArea>
       </section>
 
       <p className={captionMessageStyle}>{t('sell-to-other')}</p>
@@ -47,21 +46,6 @@ function MypageMyPets() {
 }
 
 export default MypageMyPets;
-
-const listStyle = cx(
-  flex({
-    maxHeight: 'calc(100vh - 542px)',
-    overflow: 'auto',
-    gap: '4px',
-    w: '100%',
-    h: '100%',
-    minH: '0',
-    overflowY: 'auto',
-    display: 'flex',
-    flexWrap: 'wrap',
-  }),
-  customScrollStyle,
-);
 
 const captionMessageStyle = css({
   textStyle: 'glyph18.regular',

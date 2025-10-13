@@ -61,9 +61,6 @@ export function FarmType() {
             <ClipboardIcon size={16} />
           </button>
         </div>
-        {/* <Button onClick={onLinkCopy} mt={4} size="m">
-          {t('copy-link-title')}
-        </Button> */}
       </div>
       <div>
         <FarmPersonaSelect onChangeStatus={setStatus} />
