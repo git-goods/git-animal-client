@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
-import { answerQuiz, getRoundResult } from '@gitanimals/api';
+import { answerQuiz, getRoundResult, stopQuizContext } from '@gitanimals/api';
 import { toast } from 'sonner';
 
 import type { QuizAnswer } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
@@ -55,10 +55,17 @@ const useQuizAction = ({ contextId, quizDialog, prize, refetchQuiz }: UseQuizAct
     }
   };
 
+  const stopQuiz = async () => {
+    await stopQuizContext({
+      contextId,
+      locale,
+    });
+  };
+
   const router = useRouter();
-  const terminateQuiz = () => {
+  const terminateQuiz = async () => {
     toast.success(customT(t('quiz-finished'), { point: prize }));
-    moveToQuizMain();
+    await moveToQuizMain();
   };
 
   const moveToNextStage = () => {
@@ -66,7 +73,8 @@ const useQuizAction = ({ contextId, quizDialog, prize, refetchQuiz }: UseQuizAct
     correctDialog.close();
   };
 
-  const moveToQuizMain = () => {
+  const moveToQuizMain = async () => {
+    await stopQuiz();
     router.push(ROUTE.GAME.QUIZ.MAIN());
   };
 
