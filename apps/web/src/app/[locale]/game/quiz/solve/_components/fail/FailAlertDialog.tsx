@@ -24,7 +24,12 @@ const FailAlertDialog = ({ onClose, isOpen }: FailAlertDialogProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content className={contentStyle} isShowClose={false}>
+      <Dialog.Content
+        className={contentStyle}
+        isShowClose={false}
+        onInteractOutside={(e) => e.preventDefault()}
+        onEscapeKeyDown={(e) => e.preventDefault()}
+      >
         <Flex flexDirection="column" alignItems="center" gap="12px" width="100%">
           <Dialog.Title className={titleStyle}>{t('fail-dialog.title')}</Dialog.Title>
           <Dialog.Description className={descriptionStyle}>{t('fail-dialog.description')}</Dialog.Description>
