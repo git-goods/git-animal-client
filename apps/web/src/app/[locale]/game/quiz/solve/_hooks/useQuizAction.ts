@@ -56,16 +56,20 @@ const useQuizAction = ({ contextId, quizDialog, prize, refetchQuiz }: UseQuizAct
   };
 
   const stopQuiz = async () => {
-    await stopQuizContext({
-      contextId,
-      locale,
-    });
+    try {
+      await stopQuizContext({
+        contextId,
+        locale,
+      });
+    } catch (error) {
+      console.error('Failed to stop quiz', error);
+    }
   };
 
   const router = useRouter();
-  const terminateQuiz = async () => {
+  const terminateQuiz = () => {
     toast.success(customT(t('quiz-finished'), { point: prize }));
-    await moveToQuizMain();
+    moveToQuizMain();
   };
 
   const moveToNextStage = () => {
@@ -73,7 +77,7 @@ const useQuizAction = ({ contextId, quizDialog, prize, refetchQuiz }: UseQuizAct
     correctDialog.close();
   };
 
-  const moveToQuizMain = async () => {
+  const moveToQuizMain = () => {
     router.push(ROUTE.GAME.QUIZ.MAIN());
   };
 
