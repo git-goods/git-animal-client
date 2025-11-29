@@ -74,7 +74,6 @@ const useQuizAction = ({ contextId, quizDialog, prize, refetchQuiz }: UseQuizAct
   };
 
   const moveToQuizMain = async () => {
-    await stopQuiz();
     router.push(ROUTE.GAME.QUIZ.MAIN());
   };
 
@@ -83,6 +82,7 @@ const useQuizAction = ({ contextId, quizDialog, prize, refetchQuiz }: UseQuizAct
     terminateQuiz,
     moveToNextStage,
     moveToQuizMain,
+    stopQuiz,
   };
 };
 
