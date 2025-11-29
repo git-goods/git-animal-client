@@ -43,7 +43,7 @@ const SolvingQuizSection = wrap
     });
 
     const { correctDialog, failDialog, completeDialog } = quizDialog;
-    const { submit, terminateQuiz, moveToNextStage, moveToQuizMain } = quizAction;
+    const { submit, terminateQuiz, moveToNextStage, moveToQuizMain, stopQuiz } = quizAction;
 
     // round 바뀌면 타이머 정지 해제
     useEffect(() => {
@@ -77,7 +77,10 @@ const SolvingQuizSection = wrap
         <CorrectConfirmDialog
           isOpen={correctDialog.isOpen}
           onClose={correctDialog.close}
-          onStop={terminateQuiz}
+          onStop={async () => {
+            await stopQuiz();
+            await terminateQuiz();
+          }}
           onConfirm={moveToNextStage}
           correctPoint={prize}
         />

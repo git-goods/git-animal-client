@@ -39,7 +39,12 @@ const CorrectConfirmDialog = ({ correctPoint, onConfirm, onStop, onClose, isOpen
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content className={contentStyle} isShowClose={false}>
+      <Dialog.Content
+        className={contentStyle}
+        isShowClose={false}
+        onInteractOutside={(e) => e.preventDefault()}
+        onEscapeKeyDown={(e) => e.preventDefault()}
+      >
         <Flex flexDirection="column" alignItems="center" gap="12px" width="100%">
           <Dialog.Title className={titleStyle}>{t('correct-dialog.title')}</Dialog.Title>
           <Dialog.Description className={descriptionStyle}>{t('correct-dialog.description')}</Dialog.Description>
