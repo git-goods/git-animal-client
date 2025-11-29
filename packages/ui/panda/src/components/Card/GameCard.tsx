@@ -70,7 +70,7 @@ export function GameCard({ title, percentage, tier, imageUrl, size = 'medium' }:
       <div className={textWrapperStyle} style={{ fontSize: `${fontSize.title}px`, padding: positions }}>
         <div className={titleStyle}>{title}</div>
 
-        <div className={percentageStyle}>{percentage}</div>
+        <div className={percentageStyle}>{percentage}%</div>
       </div>
     </div>
   );
