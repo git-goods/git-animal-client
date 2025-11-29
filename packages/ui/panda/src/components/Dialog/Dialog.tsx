@@ -23,7 +23,6 @@ type DialogContentProps = {
 const Content = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
   ({ children, isShowClose = true, ...props }, ref) => (
     <DialogPortal>
-      <DialogOverlay className={overlayStyle} />
       <DialogPrimitive.Content
         ref={ref}
         {...props}
@@ -37,13 +36,13 @@ const Content = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Content
           </DialogClose>
         )}
       </DialogPrimitive.Content>
+      <DialogOverlay className={overlayStyle} />
     </DialogPortal>
   ),
 );
 
 Content.displayName = DialogPrimitive.Content.displayName;
 
-// TODO: z-index 수정 필요
 const overlayStyle = css({ background: 'black.black_75', zIndex: 3000 });
 const closeStyle = css({ background: 'transparent', outline: 'none', padding: '0' });
 
