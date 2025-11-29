@@ -31,7 +31,7 @@ const CompleteAlertDialog = ({ completePoint, onClose, isOpen }: CompleteAlertDi
         className={contentStyle}
         isShowClose={false}
         onInteractOutside={(e) => e.preventDefault()}
-        onKeyDown={(e) => e.preventDefault()}
+        onEscapeKeyDown={(e) => e.preventDefault()}
       >
         <Flex flexDirection="column" alignItems="center" gap="12px" width="100%">
           <Dialog.Title className={titleStyle}>{t('complete-dialog.title')}</Dialog.Title>
