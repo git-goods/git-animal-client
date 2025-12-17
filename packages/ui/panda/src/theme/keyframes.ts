@@ -88,4 +88,31 @@ export const keyframes = defineKeyframes({
       transform: 'rotate(360deg)',
     },
   },
+  shake: {
+    '0%, 100%': { transform: 'translateX(0) rotate(0deg)' },
+    '10%': { transform: 'translateX(-8px) rotate(-2deg)' },
+    '20%': { transform: 'translateX(8px) rotate(2deg)' },
+    '30%': { transform: 'translateX(-6px) rotate(-1.5deg)' },
+    '40%': { transform: 'translateX(6px) rotate(1.5deg)' },
+    '50%': { transform: 'translateX(-4px) rotate(-1deg)' },
+    '60%': { transform: 'translateX(4px) rotate(1deg)' },
+    '70%': { transform: 'translateX(-2px) rotate(-0.5deg)' },
+    '80%': { transform: 'translateX(2px) rotate(0.5deg)' },
+    '90%': { transform: 'translateX(-1px) rotate(0deg)' },
+  },
+  fadeInOut: {
+    '0%, 100%': { opacity: '0.3' },
+    '50%': { opacity: '0.7' },
+  },
+  pulse: {
+    '0%, 100%': { opacity: '1' },
+    '50%': { opacity: '0.5' },
+  },
+  heartbeat: {
+    '0%': { transform: 'scale(1)' },
+    '14%': { transform: 'scale(1.3)' },
+    '28%': { transform: 'scale(1)' },
+    '42%': { transform: 'scale(1.3)' },
+    '70%': { transform: 'scale(1)' },
+  },
 });

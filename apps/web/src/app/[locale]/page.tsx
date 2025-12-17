@@ -13,6 +13,7 @@ import { AvailablePetSection, HavePetWaySection, MainSection } from './landing';
 
 import '@egjs/react-flicking/dist/flicking.css';
 import '@egjs/react-flicking/dist/flicking-inline.css';
+import LogoBg from './LogoBg';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('page');
@@ -26,6 +27,7 @@ export default function HomePage({ searchParams }: { searchParams: { [key: strin
   return (
     <div>
       <GNB />
+      <LogoBg />
       <MainSection />
       <ErrorBoundary
         fallback={<ErrorSection title="랭킹 정보를 불러올 수 없습니다" description="잠시 후 다시 시도해주세요" />}
