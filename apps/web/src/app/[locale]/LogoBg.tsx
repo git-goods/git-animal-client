@@ -19,27 +19,26 @@ interface Particle {
   state: 'falling' | 'accumulated' | 'scattered';
 }
 
-interface MousePosition {
+// Accumulated snow block that preserves original snowflake size
+interface AccumulatedSnow {
   x: number;
   y: number;
+  size: number; // Original snowflake size (2, 3, or 4)
 }
 
 // ============================================================================
 // Constants
 // ============================================================================
 
-const PARTICLE_COUNT = 350;
-const GRAVITY = 0.02;
-const WIND_FORCE = 0.2;
-const SWAY_SPEED = 0.02;
-const MOUSE_REPEL_RADIUS = 80;
-const MOUSE_REPEL_FORCE = 0.6;
-const SNOW_ACCUMULATION_RATE = 0.15;
-const MAX_SNOW_HEIGHT_ON_TEXT = 25;
-const MAX_SNOW_HEIGHT_ON_GROUND = 50;
-const TEXT_FONT = 'bold 72px "Arial Black", Arial, sans-serif';
-const TEXT_COLOR = '#FFEA7B';
-const TEXT_CONTENT = 'Git Animals';
+const PARTICLE_COUNT = 200; // Increased particle count for more snow
+const GRAVITY = 0.02; // Gravity strength
+const WIND_FORCE = 0.2; // Wind force
+const SWAY_SPEED = 0.02; // Sway speed
+const MAX_SNOW_HEIGHT_ON_TEXT = 15; // Maximum snow height on text
+const MAX_SNOW_HEIGHT_ON_GROUND = 30; // Maximum snow height on ground
+const TEXT_FONT = 'bold 72px "Arial Black", Arial, sans-serif'; // Text font
+const TEXT_COLOR = '#FFEA7B'; // Text color
+const TEXT_CONTENT = 'Git Animals'; // Text content
 
 // ============================================================================
 // Utility Functions
@@ -47,12 +46,6 @@ const TEXT_CONTENT = 'Git Animals';
 
 function randomRange(min: number, max: number): number {
   return Math.random() * (max - min) + min;
-}
-
-function distance(x1: number, y1: number, x2: number, y2: number): number {
-  const dx = x2 - x1;
-  const dy = y2 - y1;
-  return Math.sqrt(dx * dx + dy * dy);
 }
 
 // ============================================================================
@@ -63,9 +56,10 @@ export default function LogoBg() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const topEdgeMapRef = useRef<number[]>([]); // y position of text top edge for each x
-  const snowHeightMapRef = useRef<number[]>([]); // accumulated snow height for each x
-  const groundSnowHeightRef = useRef<number[]>([]); // ground snow height for each x
-  const mouseRef = useRef<MousePosition>({ x: -1000, y: -1000 });
+  const textSnowBlocksRef = useRef<AccumulatedSnow[]>([]); // Individual snow blocks on text
+  const groundSnowBlocksRef = useRef<AccumulatedSnow[]>([]); // Individual snow blocks on ground
+  const textSnowSurfaceRef = useRef<number[]>([]); // Highest snow surface for each x on text
+  const groundSnowSurfaceRef = useRef<number[]>([]); // Highest snow surface for each x on ground
   const animationFrameRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(0);
   const textBoundsRef = useRef<{ x: number; y: number; width: number; height: number } | null>(null);
@@ -73,24 +67,23 @@ export default function LogoBg() {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const shakeOffsetRef = useRef({ x: 0, y: 0 });
 
-  // Create a single particle
-  const createParticle = useCallback(
-    (canvasWidth: number, canvasHeight: number, fromTop = true): Particle => {
-      const radius = randomRange(2, 4);
-      return {
-        x: randomRange(-50, canvasWidth + 50),
-        y: fromTop ? randomRange(-100, -10) : randomRange(0, canvasHeight),
-        vx: randomRange(-0.3, 0.3),
-        vy: randomRange(0.5, 1.5),
-        radius,
-        opacity: randomRange(0.5, 1),
-        swayPhase: randomRange(0, Math.PI * 2),
-        swayAmplitude: randomRange(0.3, 0.8),
-        state: 'falling',
-      };
-    },
-    []
-  );
+  // Create a single particle (pixel style - integer sizes)
+  const createParticle = useCallback((canvasWidth: number, canvasHeight: number, fromTop = true): Particle => {
+    // Pixel sizes: 2, 3, or 4
+    const pixelSizes = [2, 2, 2, 3, 3, 4];
+    const radius = pixelSizes[Math.floor(Math.random() * pixelSizes.length)];
+    return {
+      x: randomRange(-50, canvasWidth + 50),
+      y: fromTop ? randomRange(-100, -10) : randomRange(0, canvasHeight),
+      vx: randomRange(-0.3, 0.3),
+      vy: randomRange(0.5, 1.5),
+      radius,
+      opacity: randomRange(0.7, 1), // Higher opacity for pixel look
+      swayPhase: randomRange(0, Math.PI * 2),
+      swayAmplitude: randomRange(0.3, 0.8),
+      state: 'falling',
+    };
+  }, []);
 
   // Initialize particles
   const initParticles = useCallback(
@@ -101,7 +94,7 @@ export default function LogoBg() {
       }
       particlesRef.current = particles;
     },
-    [createParticle]
+    [createParticle],
   );
 
   // Calculate text top edge map using pixel detection
@@ -140,8 +133,8 @@ export default function LogoBg() {
 
     // Initialize maps
     const topEdgeMap: number[] = new Array(width).fill(-1);
-    const snowHeightMap: number[] = new Array(width).fill(0);
-    const groundSnowHeight: number[] = new Array(width).fill(0);
+    const textSnowSurface: number[] = new Array(width).fill(-1); // -1 means no snow yet
+    const groundSnowSurface: number[] = new Array(width).fill(-1); // -1 means no snow yet
 
     // Scan each column to find the topmost opaque pixel (text top edge)
     for (let x = 0; x < width; x++) {
@@ -157,8 +150,10 @@ export default function LogoBg() {
     }
 
     topEdgeMapRef.current = topEdgeMap;
-    snowHeightMapRef.current = snowHeightMap;
-    groundSnowHeightRef.current = groundSnowHeight;
+    textSnowSurfaceRef.current = textSnowSurface;
+    groundSnowSurfaceRef.current = groundSnowSurface;
+    textSnowBlocksRef.current = [];
+    groundSnowBlocksRef.current = [];
   }, []);
 
   // Handle resize
@@ -191,25 +186,6 @@ export default function LogoBg() {
     };
   }, [initParticles, calculateTopEdgeMap]);
 
-  // Mouse tracking
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
-    };
-
-    const handleMouseLeave = () => {
-      mouseRef.current = { x: -1000, y: -1000 };
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseleave', handleMouseLeave);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
-
   // Logo click handler - shake off snow
   const handleLogoClick = useCallback(() => {
     if (isShaking) return;
@@ -233,28 +209,25 @@ export default function LogoBg() {
       }
     }, 16);
 
-    // Scatter snow from text
-    const snowHeightMap = snowHeightMapRef.current;
-    for (let i = 0; i < snowHeightMap.length; i++) {
-      if (snowHeightMap[i] > 0) {
-        // Create scattered particles
-        const numParticles = Math.floor(snowHeightMap[i] / 3);
-        for (let j = 0; j < numParticles; j++) {
-          particlesRef.current.push({
-            x: i,
-            y: topEdgeMapRef.current[i] - snowHeightMap[i] + randomRange(0, snowHeightMap[i]),
-            vx: randomRange(-3, 3),
-            vy: randomRange(-2, 1),
-            radius: randomRange(2, 4),
-            opacity: randomRange(0.6, 1),
-            swayPhase: 0,
-            swayAmplitude: 0,
-            state: 'scattered',
-          });
-        }
-        snowHeightMap[i] = 0;
-      }
+    // Scatter snow blocks from text
+    const textSnowBlocks = textSnowBlocksRef.current;
+    for (const block of textSnowBlocks) {
+      // Create scattered particle from each block
+      particlesRef.current.push({
+        x: block.x,
+        y: block.y,
+        vx: randomRange(-3, 3),
+        vy: randomRange(-2, 1),
+        radius: block.size / 2, // Convert size back to radius
+        opacity: randomRange(0.6, 1),
+        swayPhase: 0,
+        swayAmplitude: 0,
+        state: 'scattered',
+      });
     }
+    // Clear text snow
+    textSnowBlocksRef.current = [];
+    textSnowSurfaceRef.current = textSnowSurfaceRef.current.map(() => -1);
   }, [isShaking]);
 
   // Check if click is on text area
@@ -280,7 +253,7 @@ export default function LogoBg() {
         handleLogoClick();
       }
     },
-    [handleLogoClick]
+    [handleLogoClick],
   );
 
   // Animation loop
@@ -312,18 +285,6 @@ export default function LogoBg() {
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
 
-      // Draw watermark text (faded background)
-      ctx.save();
-      ctx.globalAlpha = 0.08;
-      ctx.font = TEXT_FONT;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillStyle = TEXT_COLOR;
-      ctx.filter = 'blur(2px)';
-      ctx.scale(1.2, 1.2);
-      ctx.fillText(TEXT_CONTENT, width / 2 / 1.2, height / 2 / 1.2);
-      ctx.restore();
-
       // Draw main text with shake offset
       ctx.save();
       ctx.font = TEXT_FONT;
@@ -337,67 +298,25 @@ export default function LogoBg() {
 
       const particles = particlesRef.current;
       const topEdgeMap = topEdgeMapRef.current;
-      const snowHeightMap = snowHeightMapRef.current;
-      const groundSnowHeight = groundSnowHeightRef.current;
-      const mouse = mouseRef.current;
+      const textSnowBlocks = textSnowBlocksRef.current;
+      const groundSnowBlocks = groundSnowBlocksRef.current;
+      const textSnowSurface = textSnowSurfaceRef.current;
+      const groundSnowSurface = groundSnowSurfaceRef.current;
       const groundY = height - 5;
 
-      // Draw accumulated snow on text
-      if (topEdgeMap.length > 0) {
-        ctx.beginPath();
-        let inSnow = false;
+      // Draw accumulated snow blocks on text (with shake offset)
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+      const offsetX = Math.floor(shakeOffsetRef.current.x);
+      const offsetY = Math.floor(shakeOffsetRef.current.y);
 
-        for (let x = 0; x < width; x++) {
-          const topY = topEdgeMap[x];
-          const snowH = snowHeightMap[x];
-
-          if (topY > 0 && snowH > 0) {
-            const snowTop = topY - snowH + shakeOffsetRef.current.y;
-            if (!inSnow) {
-              ctx.moveTo(x + shakeOffsetRef.current.x, topY + shakeOffsetRef.current.y);
-              inSnow = true;
-            }
-            // Create wavy top
-            const waveOffset = Math.sin(x * 0.1) * 2;
-            ctx.lineTo(x + shakeOffsetRef.current.x, snowTop + waveOffset);
-          } else if (inSnow) {
-            // Close the snow shape
-            ctx.lineTo(x - 1 + shakeOffsetRef.current.x, topEdgeMap[x - 1] + shakeOffsetRef.current.y);
-            ctx.closePath();
-            inSnow = false;
-          }
-        }
-
-        if (inSnow) {
-          ctx.lineTo(width - 1 + shakeOffsetRef.current.x, topEdgeMap[width - 1] + shakeOffsetRef.current.y);
-          ctx.closePath();
-        }
-
-        // Fill snow
-        const snowGradient = ctx.createLinearGradient(0, height / 2 - 50, 0, height / 2);
-        snowGradient.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
-        snowGradient.addColorStop(1, 'rgba(220, 235, 250, 0.9)');
-        ctx.fillStyle = snowGradient;
-        ctx.fill();
+      for (const block of textSnowBlocks) {
+        ctx.fillRect(Math.floor(block.x) + offsetX, Math.floor(block.y) + offsetY, block.size, block.size);
       }
 
-      // Draw ground snow
-      ctx.beginPath();
-      ctx.moveTo(0, height);
-      for (let x = 0; x < width; x += 3) {
-        const snowH = groundSnowHeight[x] || 0;
-        const waveOffset = Math.sin(x * 0.05 + currentTime * 0.0005) * 3;
-        ctx.lineTo(x, groundY - snowH + waveOffset);
+      // Draw accumulated snow blocks on ground
+      for (const block of groundSnowBlocks) {
+        ctx.fillRect(Math.floor(block.x), Math.floor(block.y), block.size, block.size);
       }
-      ctx.lineTo(width, height);
-      ctx.closePath();
-
-      const groundSnowGradient = ctx.createLinearGradient(0, height - MAX_SNOW_HEIGHT_ON_GROUND, 0, height);
-      groundSnowGradient.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
-      groundSnowGradient.addColorStop(0.5, 'rgba(240, 248, 255, 0.9)');
-      groundSnowGradient.addColorStop(1, 'rgba(220, 235, 250, 0.85)');
-      ctx.fillStyle = groundSnowGradient;
-      ctx.fill();
 
       // Update and render particles
       for (let i = particles.length - 1; i >= 0; i--) {
@@ -417,15 +336,6 @@ export default function LogoBg() {
             p.x += sway * 0.3;
           }
 
-          // Mouse repulsion
-          const distToMouse = distance(p.x, p.y, mouse.x, mouse.y);
-          if (distToMouse < MOUSE_REPEL_RADIUS && distToMouse > 0) {
-            const force = (1 - distToMouse / MOUSE_REPEL_RADIUS) * MOUSE_REPEL_FORCE;
-            const angle = Math.atan2(p.y - mouse.y, p.x - mouse.x);
-            p.vx += Math.cos(angle) * force * deltaTime;
-            p.vy += Math.sin(angle) * force * deltaTime;
-          }
-
           // Apply velocity
           p.x += p.vx * deltaTime;
           p.y += p.vy * deltaTime;
@@ -439,35 +349,64 @@ export default function LogoBg() {
             }
           }
 
-          // Check collision with text top edge
+          // Check collision with text top edge or accumulated snow on text
           const px = Math.floor(p.x);
+          const snowSize = p.radius * 2; // Convert radius to size
           if (px >= 0 && px < topEdgeMap.length && p.state === 'falling') {
             const textTopY = topEdgeMap[px];
             if (textTopY > 0) {
-              const currentSnowSurface = textTopY - snowHeightMap[px];
-              if (p.y >= currentSnowSurface - p.radius && snowHeightMap[px] < MAX_SNOW_HEIGHT_ON_TEXT) {
-                // Accumulate on text
-                snowHeightMap[px] = Math.min(snowHeightMap[px] + SNOW_ACCUMULATION_RATE, MAX_SNOW_HEIGHT_ON_TEXT);
-                // Spread to neighbors for smoother piles
-                if (px > 0) snowHeightMap[px - 1] = Math.min(snowHeightMap[px - 1] + SNOW_ACCUMULATION_RATE * 0.3, MAX_SNOW_HEIGHT_ON_TEXT);
-                if (px < width - 1) snowHeightMap[px + 1] = Math.min(snowHeightMap[px + 1] + SNOW_ACCUMULATION_RATE * 0.3, MAX_SNOW_HEIGHT_ON_TEXT);
+              // Check current snow surface (either text top or accumulated snow)
+              const currentSurface = textSnowSurface[px] > 0 ? textSnowSurface[px] : textTopY;
+              const snowHeight = textTopY - currentSurface;
+
+              if (p.y + p.radius >= currentSurface && snowHeight < MAX_SNOW_HEIGHT_ON_TEXT) {
+                // Add snow block at exact landing position with original size
+                const blockY = currentSurface - snowSize;
+                textSnowBlocks.push({
+                  x: px,
+                  y: blockY,
+                  size: snowSize,
+                });
+
+                // Update snow surface for this column and neighbors
+                textSnowSurface[px] = blockY;
+                // Slight spread effect to neighbors
+                if (px > 0 && topEdgeMap[px - 1] > 0) {
+                  const neighborSurface = textSnowSurface[px - 1] > 0 ? textSnowSurface[px - 1] : topEdgeMap[px - 1];
+                  if (blockY < neighborSurface - snowSize * 0.5) {
+                    textSnowSurface[px - 1] = Math.max(textSnowSurface[px - 1], blockY + snowSize * 0.7);
+                  }
+                }
+                if (px < width - 1 && topEdgeMap[px + 1] > 0) {
+                  const neighborSurface = textSnowSurface[px + 1] > 0 ? textSnowSurface[px + 1] : topEdgeMap[px + 1];
+                  if (blockY < neighborSurface - snowSize * 0.5) {
+                    textSnowSurface[px + 1] = Math.max(textSnowSurface[px + 1], blockY + snowSize * 0.7);
+                  }
+                }
 
                 p.state = 'accumulated';
                 particles.splice(i, 1);
-                // Add new particle
                 particles.push(createParticle(width, height, true));
                 continue;
               }
             }
           }
 
-          // Check collision with ground
-          const groundSurface = groundY - (groundSnowHeight[px] || 0);
-          if (p.y >= groundSurface - p.radius && p.state === 'falling') {
-            if ((groundSnowHeight[px] || 0) < MAX_SNOW_HEIGHT_ON_GROUND) {
-              groundSnowHeight[px] = Math.min((groundSnowHeight[px] || 0) + SNOW_ACCUMULATION_RATE * 0.5, MAX_SNOW_HEIGHT_ON_GROUND);
-              if (px > 0) groundSnowHeight[px - 1] = Math.min((groundSnowHeight[px - 1] || 0) + SNOW_ACCUMULATION_RATE * 0.2, MAX_SNOW_HEIGHT_ON_GROUND);
-              if (px < width - 1) groundSnowHeight[px + 1] = Math.min((groundSnowHeight[px + 1] || 0) + SNOW_ACCUMULATION_RATE * 0.2, MAX_SNOW_HEIGHT_ON_GROUND);
+          // Check collision with ground or accumulated snow on ground
+          const currentGroundSurface = groundSnowSurface[px] > 0 ? groundSnowSurface[px] : groundY;
+          const groundSnowHeight = groundY - currentGroundSurface;
+          if (p.y + p.radius >= currentGroundSurface && p.state === 'falling') {
+            if (groundSnowHeight < MAX_SNOW_HEIGHT_ON_GROUND) {
+              // Add snow block at exact landing position
+              const blockY = currentGroundSurface - snowSize;
+              groundSnowBlocks.push({
+                x: px,
+                y: blockY,
+                size: snowSize,
+              });
+
+              // Update ground snow surface
+              groundSnowSurface[px] = blockY;
             }
             p.state = 'accumulated';
             particles.splice(i, 1);
@@ -482,23 +421,26 @@ export default function LogoBg() {
             continue;
           }
 
-          // Render particle
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          // Render particle as pixel (square)
+          const size = p.radius * 2;
           ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
-          ctx.fill();
+          ctx.fillRect(Math.floor(p.x), Math.floor(p.y), size, size);
         }
       }
 
-      // Add sparkle effect
+      // Add sparkle effect (pixel style)
       if (Math.random() < 0.1) {
         for (let i = 0; i < 2; i++) {
           const sparkleParticle = particles[Math.floor(Math.random() * particles.length)];
           if (sparkleParticle && sparkleParticle.state === 'falling') {
-            ctx.beginPath();
-            ctx.arc(sparkleParticle.x, sparkleParticle.y, sparkleParticle.radius * 1.5, 0, Math.PI * 2);
+            const sparkleSize = sparkleParticle.radius * 3;
             ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-            ctx.fill();
+            ctx.fillRect(
+              Math.floor(sparkleParticle.x) - 1,
+              Math.floor(sparkleParticle.y) - 1,
+              sparkleSize,
+              sparkleSize,
+            );
           }
         }
       }
