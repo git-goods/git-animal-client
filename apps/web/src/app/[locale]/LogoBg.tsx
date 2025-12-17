@@ -444,15 +444,16 @@ export default function LogoBg() {
                 // Update snow surface - main position
                 textSnowSurface[px] = blockY;
 
-                // Aggressive horizontal spreading (like gravity/liquid)
+                // Horizontal spreading (like gravity/liquid) - spread wide but thin
                 const spreadRadius = 15 + snowSize * 2;
                 for (let sx = -spreadRadius; sx <= spreadRadius; sx++) {
                   const nx = px + sx;
                   if (nx >= 0 && nx < width && topEdgeMap[nx] > 0) {
                     const distance = Math.abs(sx);
-                    // Very gradual falloff - snow spreads almost evenly
-                    const spreadFactor = Math.pow(1 - distance / (spreadRadius + 1), 0.3);
-                    const spreadAmount = snowSize * spreadFactor * 1.2;
+                    // Gradual falloff
+                    const spreadFactor = Math.pow(1 - distance / (spreadRadius + 1), 0.5);
+                    // Divide by spread area to keep total volume constant
+                    const spreadAmount = (snowSize * spreadFactor * 0.3) / (spreadRadius * 0.5);
 
                     const neighborTextTop = topEdgeMap[nx];
                     const neighborCurrentSurface = textSnowSurface[nx] > 0 ? textSnowSurface[nx] : neighborTextTop;
@@ -507,14 +508,14 @@ export default function LogoBg() {
               // Update ground snow surface with spreading
               groundSnowSurface[px] = blockY;
 
-              // Spread snow to neighbors (wider spread)
-              const groundSpreadRadius = 10 + snowSize;
+              // Horizontal spreading (like gravity/liquid) - spread wide but thin
+              const groundSpreadRadius = 15 + snowSize * 2;
               for (let sx = -groundSpreadRadius; sx <= groundSpreadRadius; sx++) {
                 const nx = px + sx;
                 if (nx >= 0 && nx < width) {
                   const distance = Math.abs(sx);
                   const spreadFactor = Math.pow(1 - distance / (groundSpreadRadius + 1), 0.5);
-                  const spreadAmount = snowSize * spreadFactor * 0.6;
+                  const spreadAmount = (snowSize * spreadFactor * 0.3) / (groundSpreadRadius * 0.5);
 
                   const neighborCurrentSurface = groundSnowSurface[nx] > 0 ? groundSnowSurface[nx] : groundY;
                   const newSurface = neighborCurrentSurface - spreadAmount;
@@ -524,6 +525,21 @@ export default function LogoBg() {
                       groundSnowSurface[nx] > 0 ? groundSnowSurface[nx] : groundY,
                       newSurface,
                     );
+                  }
+                }
+              }
+
+              // Smoothing pass - level out snow surface
+              for (let pass = 0; pass < 3; pass++) {
+                for (let sx = -groundSpreadRadius; sx < groundSpreadRadius; sx++) {
+                  const nx = px + sx;
+                  const nx2 = px + sx + 1;
+                  if (nx >= 0 && nx2 < width) {
+                    const surf1 = groundSnowSurface[nx] > 0 ? groundSnowSurface[nx] : groundY;
+                    const surf2 = groundSnowSurface[nx2] > 0 ? groundSnowSurface[nx2] : groundY;
+                    const avg = (surf1 + surf2) / 2;
+                    if (groundSnowSurface[nx] > 0) groundSnowSurface[nx] = groundSnowSurface[nx] * 0.7 + avg * 0.3;
+                    if (groundSnowSurface[nx2] > 0) groundSnowSurface[nx2] = groundSnowSurface[nx2] * 0.7 + avg * 0.3;
                   }
                 }
               }
