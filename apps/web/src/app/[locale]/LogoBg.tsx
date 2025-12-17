@@ -24,6 +24,7 @@ interface AccumulatedSnow {
   x: number;
   y: number;
   size: number; // Original snowflake size (2, 3, or 4)
+  opacity: number; // Varying opacity for natural look
 }
 
 // ============================================================================
@@ -34,8 +35,8 @@ const PARTICLE_COUNT = 200; // Increased particle count for more snow
 const GRAVITY = 0.02; // Gravity strength
 const WIND_FORCE = 0.2; // Wind force
 const SWAY_SPEED = 0.02; // Sway speed
-const MAX_SNOW_HEIGHT_ON_TEXT = 15; // Maximum snow height on text
-const MAX_SNOW_HEIGHT_ON_GROUND = 30; // Maximum snow height on ground
+const MAX_SNOW_HEIGHT_ON_TEXT = 5; // Maximum snow height on text (covers letters more)
+const MAX_SNOW_HEIGHT_ON_GROUND = 50; // Maximum snow height on ground
 const TEXT_FONT = 'bold 72px "Arial Black", Arial, sans-serif'; // Text font
 const TEXT_COLOR = '#FFEA7B'; // Text color
 const TEXT_CONTENT = 'Git Animals'; // Text content
@@ -305,17 +306,88 @@ export default function LogoBg() {
       const groundY = height - 5;
 
       // Draw accumulated snow blocks on text (with shake offset)
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
       const offsetX = Math.floor(shakeOffsetRef.current.x);
       const offsetY = Math.floor(shakeOffsetRef.current.y);
 
-      for (const block of textSnowBlocks) {
-        ctx.fillRect(Math.floor(block.x) + offsetX, Math.floor(block.y) + offsetY, block.size, block.size);
+      // Draw accumulated snow on text - fills between text surface and snow surface
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+
+      // Collect continuous snow regions
+      const snowRegions: { startX: number; endX: number }[] = [];
+      let regionStart = -1;
+
+      for (let x = 0; x < width; x++) {
+        const textTopY = topEdgeMap[x];
+        const snowSurface = textSnowSurface[x];
+        const hasSnow = textTopY > 0 && snowSurface > 0 && snowSurface < textTopY;
+
+        if (hasSnow && regionStart === -1) {
+          regionStart = x;
+        } else if (!hasSnow && regionStart !== -1) {
+          snowRegions.push({ startX: regionStart, endX: x - 1 });
+          regionStart = -1;
+        }
+      }
+      if (regionStart !== -1) {
+        snowRegions.push({ startX: regionStart, endX: width - 1 });
       }
 
-      // Draw accumulated snow blocks on ground
-      for (const block of groundSnowBlocks) {
-        ctx.fillRect(Math.floor(block.x), Math.floor(block.y), block.size, block.size);
+      // Draw each snow region
+      for (const region of snowRegions) {
+        ctx.beginPath();
+
+        // Overlap text by 3px so snow covers the letters slightly
+        const SNOW_OVERLAP = 3;
+
+        // Start from left side, at text surface (with overlap)
+        const startTextY = topEdgeMap[region.startX];
+        ctx.moveTo(region.startX + offsetX, startTextY + offsetY + SNOW_OVERLAP);
+
+        // Draw along text surface (left to right) - this is the BOTTOM of the snow
+        for (let x = region.startX; x <= region.endX; x++) {
+          const textY = topEdgeMap[x];
+          if (textY > 0) {
+            ctx.lineTo(x + offsetX, textY + offsetY + SNOW_OVERLAP);
+          }
+        }
+
+        // Draw along snow surface (right to left) - this is the TOP of the snow
+        for (let x = region.endX; x >= region.startX; x--) {
+          const snowY = textSnowSurface[x];
+          if (snowY > 0) {
+            const wave = Math.sin(x * 0.08) * 1.5;
+            ctx.lineTo(x + offsetX, snowY + offsetY + wave);
+          }
+        }
+
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // Draw accumulated snow on ground as smooth natural shape
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+      ctx.beginPath();
+      let hasGroundSnow = false;
+
+      for (let x = 0; x < width; x++) {
+        const snowSurface = groundSnowSurface[x];
+        if (snowSurface > 0 && snowSurface < groundY) {
+          if (!hasGroundSnow) {
+            hasGroundSnow = true;
+            ctx.moveTo(x, height);
+            ctx.lineTo(x, snowSurface + Math.sin(x * 0.05) * 2); // Slight wave
+          } else {
+            ctx.lineTo(x, snowSurface + Math.sin(x * 0.05) * 2);
+          }
+        } else if (hasGroundSnow) {
+          ctx.lineTo(x, groundY);
+        }
+      }
+
+      if (hasGroundSnow) {
+        ctx.lineTo(width, height);
+        ctx.closePath();
+        ctx.fill();
       }
 
       // Update and render particles
@@ -360,27 +432,54 @@ export default function LogoBg() {
               const snowHeight = textTopY - currentSurface;
 
               if (p.y + p.radius >= currentSurface && snowHeight < MAX_SNOW_HEIGHT_ON_TEXT) {
-                // Add snow block at exact landing position with original size
+                // Add snow block for shake animation tracking
                 const blockY = currentSurface - snowSize;
                 textSnowBlocks.push({
                   x: px,
                   y: blockY,
                   size: snowSize,
+                  opacity: randomRange(0.75, 1),
                 });
 
-                // Update snow surface for this column and neighbors
+                // Update snow surface - main position
                 textSnowSurface[px] = blockY;
-                // Slight spread effect to neighbors
-                if (px > 0 && topEdgeMap[px - 1] > 0) {
-                  const neighborSurface = textSnowSurface[px - 1] > 0 ? textSnowSurface[px - 1] : topEdgeMap[px - 1];
-                  if (blockY < neighborSurface - snowSize * 0.5) {
-                    textSnowSurface[px - 1] = Math.max(textSnowSurface[px - 1], blockY + snowSize * 0.7);
+
+                // Aggressive horizontal spreading (like gravity/liquid)
+                const spreadRadius = 15 + snowSize * 2;
+                for (let sx = -spreadRadius; sx <= spreadRadius; sx++) {
+                  const nx = px + sx;
+                  if (nx >= 0 && nx < width && topEdgeMap[nx] > 0) {
+                    const distance = Math.abs(sx);
+                    // Very gradual falloff - snow spreads almost evenly
+                    const spreadFactor = Math.pow(1 - distance / (spreadRadius + 1), 0.3);
+                    const spreadAmount = snowSize * spreadFactor * 1.2;
+
+                    const neighborTextTop = topEdgeMap[nx];
+                    const neighborCurrentSurface = textSnowSurface[nx] > 0 ? textSnowSurface[nx] : neighborTextTop;
+                    const newSurface = neighborCurrentSurface - spreadAmount;
+
+                    if (neighborTextTop - newSurface < MAX_SNOW_HEIGHT_ON_TEXT) {
+                      textSnowSurface[nx] = Math.min(
+                        textSnowSurface[nx] > 0 ? textSnowSurface[nx] : neighborTextTop,
+                        newSurface,
+                      );
+                    }
                   }
                 }
-                if (px < width - 1 && topEdgeMap[px + 1] > 0) {
-                  const neighborSurface = textSnowSurface[px + 1] > 0 ? textSnowSurface[px + 1] : topEdgeMap[px + 1];
-                  if (blockY < neighborSurface - snowSize * 0.5) {
-                    textSnowSurface[px + 1] = Math.max(textSnowSurface[px + 1], blockY + snowSize * 0.7);
+
+                // Smoothing pass - level out snow surface (flow from high to low)
+                for (let pass = 0; pass < 3; pass++) {
+                  for (let sx = -spreadRadius; sx < spreadRadius; sx++) {
+                    const nx = px + sx;
+                    const nx2 = px + sx + 1;
+                    if (nx >= 0 && nx2 < width && topEdgeMap[nx] > 0 && topEdgeMap[nx2] > 0) {
+                      const surf1 = textSnowSurface[nx] > 0 ? textSnowSurface[nx] : topEdgeMap[nx];
+                      const surf2 = textSnowSurface[nx2] > 0 ? textSnowSurface[nx2] : topEdgeMap[nx2];
+                      const avg = (surf1 + surf2) / 2;
+                      // Move toward average (smoothing)
+                      if (textSnowSurface[nx] > 0) textSnowSurface[nx] = textSnowSurface[nx] * 0.7 + avg * 0.3;
+                      if (textSnowSurface[nx2] > 0) textSnowSurface[nx2] = textSnowSurface[nx2] * 0.7 + avg * 0.3;
+                    }
                   }
                 }
 
@@ -394,19 +493,40 @@ export default function LogoBg() {
 
           // Check collision with ground or accumulated snow on ground
           const currentGroundSurface = groundSnowSurface[px] > 0 ? groundSnowSurface[px] : groundY;
-          const groundSnowHeight = groundY - currentGroundSurface;
+          const currentGroundSnowHeight = groundY - currentGroundSurface;
           if (p.y + p.radius >= currentGroundSurface && p.state === 'falling') {
-            if (groundSnowHeight < MAX_SNOW_HEIGHT_ON_GROUND) {
-              // Add snow block at exact landing position
+            if (currentGroundSnowHeight < MAX_SNOW_HEIGHT_ON_GROUND) {
               const blockY = currentGroundSurface - snowSize;
               groundSnowBlocks.push({
                 x: px,
                 y: blockY,
                 size: snowSize,
+                opacity: randomRange(0.75, 1),
               });
 
-              // Update ground snow surface
+              // Update ground snow surface with spreading
               groundSnowSurface[px] = blockY;
+
+              // Spread snow to neighbors (wider spread)
+              const groundSpreadRadius = 10 + snowSize;
+              for (let sx = -groundSpreadRadius; sx <= groundSpreadRadius; sx++) {
+                const nx = px + sx;
+                if (nx >= 0 && nx < width) {
+                  const distance = Math.abs(sx);
+                  const spreadFactor = Math.pow(1 - distance / (groundSpreadRadius + 1), 0.5);
+                  const spreadAmount = snowSize * spreadFactor * 0.6;
+
+                  const neighborCurrentSurface = groundSnowSurface[nx] > 0 ? groundSnowSurface[nx] : groundY;
+                  const newSurface = neighborCurrentSurface - spreadAmount;
+
+                  if (groundY - newSurface < MAX_SNOW_HEIGHT_ON_GROUND) {
+                    groundSnowSurface[nx] = Math.min(
+                      groundSnowSurface[nx] > 0 ? groundSnowSurface[nx] : groundY,
+                      newSurface,
+                    );
+                  }
+                }
+              }
             }
             p.state = 'accumulated';
             particles.splice(i, 1);
