@@ -31,15 +31,24 @@ interface AccumulatedSnow {
 // Constants
 // ============================================================================
 
-const PARTICLE_COUNT = 200; // Increased particle count for more snow
-const GRAVITY = 0.02; // Gravity strength
-const WIND_FORCE = 0.2; // Wind force
-const SWAY_SPEED = 0.02; // Sway speed
-const MAX_SNOW_HEIGHT_ON_TEXT = 5; // Maximum snow height on text (covers letters more)
-const MAX_SNOW_HEIGHT_ON_GROUND = 50; // Maximum snow height on ground
-const TEXT_FONT = 'bold 72px "Arial Black", Arial, sans-serif'; // Text font
-const TEXT_COLOR = '#FFEA7B'; // Text color
-const TEXT_CONTENT = 'Git Animals'; // Text content
+// === Snow Configuration ===
+const PARTICLE_COUNT = 200; // 눈송이 개수
+const GRAVITY = 0.02; // 중력
+const WIND_FORCE = 0.2; // 바람
+const SWAY_SPEED = 0.02; // 흔들림 속도
+
+// === Accumulation Configuration ===
+const SNOW_ACCUMULATION_RATE = 0.5; // 눈송이당 쌓이는 양 (px) - 높을수록 빨리 쌓임
+const SNOW_SPREAD_RADIUS = 12; // 퍼짐 반경 (px)
+const SNOW_SPREAD_FACTOR = 0.1; // 퍼짐 양 (0~1)
+const MAX_SNOW_HEIGHT_ON_TEXT = 10; // 글자 위 최대 눈 높이
+const MAX_SNOW_HEIGHT_ON_GROUND = 50; // 바닥 최대 눈 높이
+const SNOW_OVERLAP = 3; // 글자를 덮는 정도 (px)
+
+// === Text Configuration ===
+const TEXT_FONT = 'bold 72px "Arial Black", Arial, sans-serif';
+const TEXT_COLOR = '#FFEA7B';
+const TEXT_CONTENT = 'Git Animals';
 
 // ============================================================================
 // Utility Functions
@@ -336,8 +345,7 @@ export default function LogoBg() {
       for (const region of snowRegions) {
         ctx.beginPath();
 
-        // Overlap text by 3px so snow covers the letters slightly
-        const SNOW_OVERLAP = 3;
+        // Overlap text so snow covers the letters slightly
 
         // Start from left side, at text surface (with overlap)
         const startTextY = topEdgeMap[region.startX];
@@ -432,8 +440,9 @@ export default function LogoBg() {
               const snowHeight = textTopY - currentSurface;
 
               if (p.y + p.radius >= currentSurface && snowHeight < MAX_SNOW_HEIGHT_ON_TEXT) {
+                const blockY = currentSurface - SNOW_ACCUMULATION_RATE;
+
                 // Add snow block for shake animation tracking
-                const blockY = currentSurface - snowSize;
                 textSnowBlocks.push({
                   x: px,
                   y: blockY,
@@ -444,16 +453,13 @@ export default function LogoBg() {
                 // Update snow surface - main position
                 textSnowSurface[px] = blockY;
 
-                // Horizontal spreading (like gravity/liquid) - spread wide but thin
-                const spreadRadius = 15 + snowSize * 2;
-                for (let sx = -spreadRadius; sx <= spreadRadius; sx++) {
+                // Horizontal spreading
+                for (let sx = -SNOW_SPREAD_RADIUS; sx <= SNOW_SPREAD_RADIUS; sx++) {
                   const nx = px + sx;
                   if (nx >= 0 && nx < width && topEdgeMap[nx] > 0) {
                     const distance = Math.abs(sx);
-                    // Gradual falloff
-                    const spreadFactor = Math.pow(1 - distance / (spreadRadius + 1), 0.5);
-                    // Divide by spread area to keep total volume constant
-                    const spreadAmount = (snowSize * spreadFactor * 0.3) / (spreadRadius * 0.5);
+                    const distanceFactor = Math.pow(1 - distance / (SNOW_SPREAD_RADIUS + 1), 0.7);
+                    const spreadAmount = SNOW_ACCUMULATION_RATE * distanceFactor * SNOW_SPREAD_FACTOR;
 
                     const neighborTextTop = topEdgeMap[nx];
                     const neighborCurrentSurface = textSnowSurface[nx] > 0 ? textSnowSurface[nx] : neighborTextTop;
@@ -470,7 +476,7 @@ export default function LogoBg() {
 
                 // Smoothing pass - level out snow surface (flow from high to low)
                 for (let pass = 0; pass < 3; pass++) {
-                  for (let sx = -spreadRadius; sx < spreadRadius; sx++) {
+                  for (let sx = -SNOW_SPREAD_RADIUS; sx < SNOW_SPREAD_RADIUS; sx++) {
                     const nx = px + sx;
                     const nx2 = px + sx + 1;
                     if (nx >= 0 && nx2 < width && topEdgeMap[nx] > 0 && topEdgeMap[nx2] > 0) {
@@ -497,7 +503,8 @@ export default function LogoBg() {
           const currentGroundSnowHeight = groundY - currentGroundSurface;
           if (p.y + p.radius >= currentGroundSurface && p.state === 'falling') {
             if (currentGroundSnowHeight < MAX_SNOW_HEIGHT_ON_GROUND) {
-              const blockY = currentGroundSurface - snowSize;
+              const blockY = currentGroundSurface - SNOW_ACCUMULATION_RATE;
+
               groundSnowBlocks.push({
                 x: px,
                 y: blockY,
@@ -508,14 +515,13 @@ export default function LogoBg() {
               // Update ground snow surface with spreading
               groundSnowSurface[px] = blockY;
 
-              // Horizontal spreading (like gravity/liquid) - spread wide but thin
-              const groundSpreadRadius = 15 + snowSize * 2;
-              for (let sx = -groundSpreadRadius; sx <= groundSpreadRadius; sx++) {
+              // Horizontal spreading
+              for (let sx = -SNOW_SPREAD_RADIUS; sx <= SNOW_SPREAD_RADIUS; sx++) {
                 const nx = px + sx;
                 if (nx >= 0 && nx < width) {
                   const distance = Math.abs(sx);
-                  const spreadFactor = Math.pow(1 - distance / (groundSpreadRadius + 1), 0.5);
-                  const spreadAmount = (snowSize * spreadFactor * 0.3) / (groundSpreadRadius * 0.5);
+                  const distanceFactor = Math.pow(1 - distance / (SNOW_SPREAD_RADIUS + 1), 0.7);
+                  const spreadAmount = SNOW_ACCUMULATION_RATE * distanceFactor * SNOW_SPREAD_FACTOR;
 
                   const neighborCurrentSurface = groundSnowSurface[nx] > 0 ? groundSnowSurface[nx] : groundY;
                   const newSurface = neighborCurrentSurface - spreadAmount;
@@ -531,7 +537,7 @@ export default function LogoBg() {
 
               // Smoothing pass - level out snow surface
               for (let pass = 0; pass < 3; pass++) {
-                for (let sx = -groundSpreadRadius; sx < groundSpreadRadius; sx++) {
+                for (let sx = -SNOW_SPREAD_RADIUS; sx < SNOW_SPREAD_RADIUS; sx++) {
                   const nx = px + sx;
                   const nx2 = px + sx + 1;
                   if (nx >= 0 && nx2 < width) {
