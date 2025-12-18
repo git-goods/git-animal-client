@@ -1,32 +1,32 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { css } from '_panda/css';
 import { Button } from '@gitanimals/ui-panda';
 import { AnimatePresence, motion } from 'framer-motion';
 
-type ChristmasIcon = {
+import { getPersonaImage } from '@/utils/image';
+import ChristmasGameCompleted from '@/components/ChristmasGameCompleted';
+
+type AnimalType = {
   id: string;
   type: string;
-  emoji: string;
+  dropRate: string;
   matchId: string;
 };
 
-type GameCard = ChristmasIcon & {
+type GameCard = AnimalType & {
   isFlipped: boolean;
   isMatched: boolean;
 };
 
-const CHRISTMAS_ICONS: Omit<ChristmasIcon, 'id' | 'matchId'>[] = [
-  { type: 'SANTA', emoji: '🎅' },
-  { type: 'TREE', emoji: '🎄' },
-  { type: 'GIFT', emoji: '🎁' },
-  { type: 'SNOWFLAKE', emoji: '❄️' },
-  { type: 'REINDEER', emoji: '🦌' },
-  { type: 'BELL', emoji: '🔔' },
-  { type: 'STOCKING', emoji: '🧦' },
-  { type: 'SNOWMAN', emoji: '⛄' },
+const CHRISTMAS_ANIMALS: Omit<AnimalType, 'id' | 'matchId'>[] = [
+  { type: 'PENGUIN', dropRate: '5%' },
+  { type: 'CAT', dropRate: '8%' },
+  { type: 'DOG', dropRate: '10%' },
+  { type: 'RABBIT', dropRate: '7%' },
+  { type: 'BEAR', dropRate: '4%' },
+  { type: 'FOX', dropRate: '6%' },
 ];
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -39,21 +39,21 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 function generateCards(): GameCard[] {
-  const selectedIcons = shuffleArray(CHRISTMAS_ICONS).slice(0, 6); // 6 pairs = 12 cards
+  const selectedAnimals = shuffleArray(CHRISTMAS_ANIMALS).slice(0, 6); // 6 pairs = 12 cards
   const cards: GameCard[] = [];
 
-  selectedIcons.forEach((icon, index) => {
+  selectedAnimals.forEach((animal, index) => {
     const matchId = `match-${index}`;
     cards.push(
       {
-        ...icon,
+        ...animal,
         id: `${matchId}-1`,
         matchId,
         isFlipped: false,
         isMatched: false,
       },
       {
-        ...icon,
+        ...animal,
         id: `${matchId}-2`,
         matchId,
         isFlipped: false,
@@ -66,7 +66,6 @@ function generateCards(): GameCard[] {
 }
 
 export default function ChristmasMemoryPage() {
-  const router = useRouter();
   const [cards, setCards] = useState<GameCard[]>([]);
   const [selectedCards, setSelectedCards] = useState<string[]>([]);
   const [moves, setMoves] = useState(0);
@@ -134,7 +133,7 @@ export default function ChristmasMemoryPage() {
   return (
     <div
       className={css({
-        minHeight: '100vh',
+        height: '100vh',
         maxWidth: '600px',
         width: '100%',
         margin: '0 auto',
@@ -144,6 +143,8 @@ export default function ChristmasMemoryPage() {
         color: '#FFFFFF',
         display: 'flex',
         flexDirection: 'column',
+        overflow: 'hidden',
+        boxSizing: 'border-box',
       })}
     >
       {/* Header */}
@@ -151,27 +152,28 @@ export default function ChristmasMemoryPage() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className={css({
-          minHeight: '60px',
+          height: '50px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          marginBottom: '8px',
+          marginBottom: '6px',
           background: 'rgba(139, 69, 19, 0.3)',
-          borderRadius: '8px',
+          borderRadius: '6px',
           border: '2px solid #FFD700',
           textShadow: '2px 2px 0px #1A0F0A',
-          padding: '8px',
+          padding: '4px 8px',
+          flex: 'none',
         })}
       >
         <h1
           className={css({
-            fontSize: { base: '18px', sm: '20px' },
+            fontSize: { base: '16px', sm: '18px' },
             fontWeight: 'bold',
             color: '#FFFFFF',
-            marginBottom: '4px',
+            marginBottom: gameStarted ? '2px' : '0',
             textAlign: 'center',
-            lineHeight: '1.1',
+            lineHeight: '1',
           })}
         >
           🎄 Christmas Memory 🎄
@@ -179,11 +181,12 @@ export default function ChristmasMemoryPage() {
         {gameStarted && (
           <div
             className={css({
-              fontSize: '12px',
+              fontSize: '10px',
               color: '#FFD700',
               display: 'flex',
-              gap: '12px',
+              gap: '8px',
               justifyContent: 'center',
+              marginTop: '2px',
             })}
           >
             <span>Moves: {moves}</span>
@@ -199,33 +202,33 @@ export default function ChristmasMemoryPage() {
           animate={{ opacity: 1 }}
           className={css({
             textAlign: 'center',
-            marginBottom: '12px',
+            marginBottom: '8px',
             flex: 'none',
           })}
         >
           <Button
             onClick={startGame}
             className={css({
-              minHeight: '44px',
-              padding: '10px 20px',
-              fontSize: '14px',
+              minHeight: '40px',
+              padding: '8px 16px',
+              fontSize: '12px',
               fontWeight: 'bold',
               background: '#C41E3A',
               color: '#FFFFFF',
-              border: '3px solid #FFD700',
-              borderRadius: '8px',
+              border: '2px solid #FFD700',
+              borderRadius: '6px',
               cursor: 'pointer',
               fontFamily: 'monospace',
               textShadow: '1px 1px 0px #1A0F0A',
-              boxShadow: '0 4px 8px rgba(26, 15, 10, 0.4)',
+              boxShadow: '0 2px 4px rgba(26, 15, 10, 0.4)',
               transition: 'all 0.2s ease',
               '&:hover': {
                 brightness: '1.1',
-                transform: 'translateY(-2px)',
+                transform: 'translateY(-1px)',
               },
               '&:active': {
                 transform: 'translateY(1px)',
-                boxShadow: '0 2px 4px rgba(26, 15, 10, 0.4)',
+                boxShadow: '0 1px 2px rgba(26, 15, 10, 0.4)',
               },
             })}
           >
@@ -242,11 +245,13 @@ export default function ChristmasMemoryPage() {
           className={css({
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: { base: '6px', sm: '8px' },
+            gridTemplateRows: 'repeat(4, 1fr)',
+            gap: { base: '4px', sm: '6px' },
             padding: '0',
             flex: '1',
-            alignContent: 'center',
-            justifyContent: 'center',
+            alignContent: 'stretch',
+            justifyContent: 'stretch',
+            minHeight: '0',
           })}
         >
           {cards.map((card, index) => (
@@ -257,13 +262,15 @@ export default function ChristmasMemoryPage() {
               transition={{ delay: index * 0.05 }}
               className={css({
                 position: 'relative',
-                aspectRatio: '200/272',
+                width: '100%',
+                height: '100%',
                 cursor: card.isMatched ? 'default' : 'pointer',
                 perspective: '1000px',
+                minHeight: '0',
               })}
               onClick={() => !card.isMatched && handleCardClick(card.id)}
-              whileHover={!card.isMatched ? { scale: 1.05 } : {}}
-              whileTap={!card.isMatched ? { scale: 0.95 } : {}}
+              whileHover={!card.isMatched ? { scale: 1.02 } : {}}
+              whileTap={!card.isMatched ? { scale: 0.98 } : {}}
             >
               {/* Card Container */}
               <div
@@ -271,53 +278,70 @@ export default function ChristmasMemoryPage() {
                   position: 'absolute',
                   width: '100%',
                   height: '100%',
-                  transformStyle: 'preserve-3d',
-                  transition: 'transform 0.5s ease-in-out',
-                  transform: card.isFlipped || card.isMatched ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                  borderRadius: '6px',
+                  overflow: 'hidden',
                 })}
               >
-                {/* Card Back */}
-                <div
-                  className={css({
+                {/* Card Back - visible when not flipped */}
+                <motion.div
+                  initial={false}
+                  animate={{
+                    opacity: card.isFlipped || card.isMatched ? 0 : 1,
+                    rotateY: card.isFlipped || card.isMatched ? 90 : 0,
+                  }}
+                  transition={{ duration: 0.3 }}
+                  style={{
                     position: 'absolute',
                     width: '100%',
                     height: '100%',
-                    backfaceVisibility: 'hidden',
-                    background: '#C41E3A',
-                    border: '2px solid #FFD700',
-                    borderRadius: '6px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: { base: '24px', sm: '28px' },
-                    boxShadow: '0 2px 6px rgba(26, 15, 10, 0.3)',
-                  })}
+                    pointerEvents: card.isFlipped || card.isMatched ? 'none' : 'auto',
+                  }}
                 >
-                  ❄️
-                </div>
+                  <div
+                    className={css({
+                      width: '100%',
+                      height: '100%',
+                      background: '#C41E3A',
+                      border: '2px solid #FFD700',
+                      borderRadius: '4px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: { base: '16px', sm: '20px' },
+                      boxShadow: '0 1px 3px rgba(26, 15, 10, 0.3)',
+                    })}
+                  >
+                    ❄️
+                  </div>
+                </motion.div>
 
-                {/* Card Front */}
-                <div
-                  className={css({
+                {/* Card Front - visible when flipped */}
+                <motion.div
+                  initial={false}
+                  animate={{
+                    opacity: card.isFlipped || card.isMatched ? 1 : 0,
+                    rotateY: card.isFlipped || card.isMatched ? 0 : -90,
+                  }}
+                  transition={{ duration: 0.3 }}
+                  style={{
                     position: 'absolute',
                     width: '100%',
                     height: '100%',
-                    backfaceVisibility: 'hidden',
-                    transform: 'rotateY(180deg)',
-                    background: card.isMatched ? '#228B22' : '#FFF8DC',
+                    filter: card.isMatched ? 'brightness(1.2)' : 'brightness(1)',
+                    pointerEvents: card.isFlipped || card.isMatched ? 'auto' : 'none',
+                  }}
+                  className={css({
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    backgroundColor: '#C41E3A',
+                    borderRadius: '4px',
                     border: '2px solid #FFD700',
-                    borderRadius: '6px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: { base: '36px', sm: '42px' },
-                    boxShadow: '0 2px 6px rgba(26, 15, 10, 0.3)',
-                    brightness: card.isMatched ? '1.2' : '1',
-                    transition: 'brightness 0.3s ease',
+                    boxShadow: '0 1px 3px rgba(26, 15, 10, 0.3)',
                   })}
                 >
-                  {card.emoji}
-                </div>
+                  <img src={getPersonaImage(card.type)} alt={card.type} />
+                </motion.div>
               </div>
 
               {/* Match Effect */}
@@ -350,101 +374,17 @@ export default function ChristmasMemoryPage() {
 
       {/* Game Completed */}
       {gameCompleted && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
+        <div
           className={css({
-            textAlign: 'center',
-            padding: '32px',
-            background: 'rgba(139, 69, 19, 0.5)',
-            border: '3px solid #FFD700',
-            borderRadius: '12px',
-            boxShadow: '0 8px 16px rgba(26, 15, 10, 0.4)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flex: '1',
+            padding: '16px 0',
           })}
         >
-          <motion.div
-            animate={{ rotate: [0, 10, -10, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-            className={css({ fontSize: '64px', marginBottom: '16px' })}
-          >
-            🎉
-          </motion.div>
-
-          <h2
-            className={css({
-              fontSize: '24px',
-              fontWeight: 'bold',
-              color: '#FFD700',
-              marginBottom: '16px',
-              textShadow: '2px 2px 0px #1A0F0A',
-            })}
-          >
-            Merry Christmas! 🎄
-          </h2>
-
-          <p
-            className={css({
-              fontSize: '18px',
-              color: '#FFF8DC',
-              marginBottom: '8px',
-            })}
-          >
-            You completed the game in <span className={css({ color: '#FFD700', fontWeight: 'bold' })}>{moves}</span> moves!
-          </p>
-
-          <div
-            className={css({
-              display: 'flex',
-              gap: '16px',
-              justifyContent: 'center',
-              marginTop: '24px',
-            })}
-          >
-            <Button
-              onClick={startGame}
-              className={css({
-                minHeight: '44px',
-                padding: '10px 18px',
-                fontSize: '14px',
-                fontWeight: 'bold',
-                background: '#C41E3A',
-                color: '#FFFFFF',
-                border: '2px solid #FFD700',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontFamily: 'monospace',
-                textShadow: '1px 1px 0px #1A0F0A',
-                '&:hover': {
-                  brightness: '1.1',
-                },
-              })}
-            >
-              🔄 Play Again
-            </Button>
-
-            <Button
-              onClick={() => router.push('/game/mini/memory')}
-              className={css({
-                minHeight: '44px',
-                padding: '10px 18px',
-                fontSize: '14px',
-                fontWeight: 'bold',
-                background: '#228B22',
-                color: '#FFFFFF',
-                border: '2px solid #FFD700',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontFamily: 'monospace',
-                textShadow: '1px 1px 0px #1A0F0A',
-                '&:hover': {
-                  brightness: '1.1',
-                },
-              })}
-            >
-              🔙 Back to Animals
-            </Button>
-          </div>
-        </motion.div>
+          <ChristmasGameCompleted moves={moves} onPlayAgain={startGame} />
+        </div>
       )}
 
       {/* Instructions */}
@@ -455,22 +395,22 @@ export default function ChristmasMemoryPage() {
           transition={{ delay: 0.3 }}
           className={css({
             textAlign: 'center',
-            padding: '16px',
+            padding: '12px',
             background: 'rgba(139, 69, 19, 0.3)',
             border: '2px solid #FFD700',
-            borderRadius: '8px',
-            fontSize: '12px',
+            borderRadius: '6px',
+            fontSize: '10px',
             color: '#FFF8DC',
-            lineHeight: '1.4',
+            lineHeight: '1.3',
             marginTop: 'auto',
             flex: 'none',
           })}
         >
-          <p className={css({ marginBottom: '6px', fontSize: '13px' })}>
+          <p className={css({ marginBottom: '4px', fontSize: '11px' })}>
             🎯 <strong>How to Play:</strong>
           </p>
-          <p className={css({ marginBottom: '3px' })}>• Tap cards to flip them over</p>
-          <p className={css({ marginBottom: '3px' })}>• Find matching Christmas pairs</p>
+          <p className={css({ marginBottom: '2px' })}>• Tap cards to flip them over</p>
+          <p className={css({ marginBottom: '2px' })}>• Find matching animal pairs</p>
           <p>• Complete all 6 pairs to win!</p>
         </motion.div>
       )}
