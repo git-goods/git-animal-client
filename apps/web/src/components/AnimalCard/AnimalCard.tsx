@@ -12,7 +12,6 @@ interface AnimalCardProps extends Partial<PersonaInfo> {
 }
 
 function AnimalCard(props: AnimalCardProps) {
-  props.type.includes('WHITE') && console.log('props', props);
   const tier = getAnimalTierInfo(Number(props.dropRate.replace('%', '')));
 
   if (props.grade === 'EVOLUTION') {
