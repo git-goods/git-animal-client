@@ -1,12 +1,12 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { css } from '_panda/css';
+import { css, cx } from '_panda/css';
 import { Button } from '@gitanimals/ui-panda';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { getPersonaImage } from '@/utils/image';
 import ChristmasGameCompleted from '@/components/ChristmasGameCompleted';
+import { getPersonaImage } from '@/utils/image';
 
 type AnimalType = {
   id: string;
@@ -255,119 +255,7 @@ export default function ChristmasMemoryPage() {
           })}
         >
           {cards.map((card, index) => (
-            <motion.div
-              key={card.id}
-              initial={{ opacity: 0, rotateY: 0 }}
-              animate={{ opacity: 1, rotateY: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className={css({
-                position: 'relative',
-                width: '100%',
-                height: '100%',
-                cursor: card.isMatched ? 'default' : 'pointer',
-                perspective: '1000px',
-                minHeight: '0',
-              })}
-              onClick={() => !card.isMatched && handleCardClick(card.id)}
-              whileHover={!card.isMatched ? { scale: 1.02 } : {}}
-              whileTap={!card.isMatched ? { scale: 0.98 } : {}}
-            >
-              {/* Card Container */}
-              <div
-                className={css({
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '6px',
-                  overflow: 'hidden',
-                })}
-              >
-                {/* Card Back - visible when not flipped */}
-                <motion.div
-                  initial={false}
-                  animate={{
-                    opacity: card.isFlipped || card.isMatched ? 0 : 1,
-                    rotateY: card.isFlipped || card.isMatched ? 90 : 0,
-                  }}
-                  transition={{ duration: 0.3 }}
-                  style={{
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                    pointerEvents: card.isFlipped || card.isMatched ? 'none' : 'auto',
-                  }}
-                >
-                  <div
-                    className={css({
-                      width: '100%',
-                      height: '100%',
-                      background: '#C41E3A',
-                      border: '2px solid #FFD700',
-                      borderRadius: '4px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: { base: '16px', sm: '20px' },
-                      boxShadow: '0 1px 3px rgba(26, 15, 10, 0.3)',
-                    })}
-                  >
-                    ❄️
-                  </div>
-                </motion.div>
-
-                {/* Card Front - visible when flipped */}
-                <motion.div
-                  initial={false}
-                  animate={{
-                    opacity: card.isFlipped || card.isMatched ? 1 : 0,
-                    rotateY: card.isFlipped || card.isMatched ? 0 : -90,
-                  }}
-                  transition={{ duration: 0.3 }}
-                  style={{
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                    filter: card.isMatched ? 'brightness(1.2)' : 'brightness(1)',
-                    pointerEvents: card.isFlipped || card.isMatched ? 'auto' : 'none',
-                  }}
-                  className={css({
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    backgroundColor: '#C41E3A',
-                    borderRadius: '4px',
-                    border: '2px solid #FFD700',
-                    boxShadow: '0 1px 3px rgba(26, 15, 10, 0.3)',
-                  })}
-                >
-                  <img src={getPersonaImage(card.type)} alt={card.type} />
-                </motion.div>
-              </div>
-
-              {/* Match Effect */}
-              <AnimatePresence>
-                {card.isMatched && (
-                  <motion.div
-                    initial={{ scale: 1, opacity: 0 }}
-                    animate={{ scale: [1, 1.3, 1], opacity: [0, 1, 0] }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className={css({
-                      position: 'absolute',
-                      inset: 0,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '24px',
-                      pointerEvents: 'none',
-                      zIndex: 10,
-                    })}
-                  >
-                    ✨
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
+            <GameCard key={card.id} card={card} index={index} handleCardClick={handleCardClick} />
           ))}
         </motion.div>
       )}
@@ -417,3 +305,120 @@ export default function ChristmasMemoryPage() {
     </div>
   );
 }
+
+function GameCard({
+  card,
+  index,
+  handleCardClick,
+}: {
+  card: GameCard;
+  index: number;
+  handleCardClick: (cardId: string) => void;
+}) {
+  return (
+    <motion.div
+      key={card.id}
+      initial={{ opacity: 0, rotateY: 0 }}
+      animate={{ opacity: 1, rotateY: 0 }}
+      transition={{ delay: index * 0.05 }}
+      className={css({
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        cursor: card.isMatched ? 'default' : 'pointer',
+        perspective: '1000px',
+        minHeight: '0',
+      })}
+      onClick={() => !card.isMatched && handleCardClick(card.id)}
+      whileHover={!card.isMatched ? { scale: 1.02 } : {}}
+      whileTap={!card.isMatched ? { scale: 0.98 } : {}}
+    >
+      {/* Card Container */}
+      <div
+        className={css({
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          borderRadius: '6px',
+          overflow: 'hidden',
+        })}
+      >
+        {/* Card Back - visible when not flipped */}
+        <motion.div
+          initial={false}
+          animate={{
+            opacity: card.isFlipped || card.isMatched ? 0 : 1,
+            rotateY: card.isFlipped || card.isMatched ? 90 : 0,
+          }}
+          transition={{ duration: 0.3 }}
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            pointerEvents: card.isFlipped || card.isMatched ? 'none' : 'auto',
+          }}
+        >
+          <div className={cardCss}>❄️</div>
+        </motion.div>
+
+        {/* Card Front - visible when flipped */}
+        <motion.div
+          initial={false}
+          animate={{
+            opacity: card.isFlipped || card.isMatched ? 1 : 0,
+            rotateY: card.isFlipped || card.isMatched ? 0 : -90,
+          }}
+          transition={{ duration: 0.3 }}
+          className={cx(
+            cardCss,
+            css({
+              position: 'absolute',
+              filter: card.isMatched ? 'brightness(1.2)' : 'brightness(1)',
+              pointerEvents: card.isFlipped || card.isMatched ? 'auto' : 'none',
+              objectFit: 'cover',
+            }),
+          )}
+        >
+          <img src={getPersonaImage(card.type)} alt={card.type} />
+        </motion.div>
+      </div>
+
+      {/* Match Effect */}
+      <AnimatePresence>
+        {card.isMatched && (
+          <motion.div
+            initial={{ scale: 1, opacity: 0 }}
+            animate={{ scale: [1, 1.3, 1], opacity: [0, 1, 0] }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6 }}
+            className={css({
+              position: 'absolute',
+              inset: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '24px',
+              pointerEvents: 'none',
+              zIndex: 10,
+            })}
+          >
+            ✨
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+const cardCss = css({
+  background: '#C41E3A',
+  border: '2px solid #FFD700',
+  borderRadius: '4px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: { base: '16px', sm: '20px' },
+  boxShadow: '0 1px 3px rgba(26, 15, 10, 0.3)',
+  width: '100%',
+  height: '100%',
+});
