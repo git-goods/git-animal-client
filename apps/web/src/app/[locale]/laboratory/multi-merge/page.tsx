@@ -1,4 +1,5 @@
 import { LaboratoryLayout } from '../_component/LaboratoryLayout';
+
 import PetMergeUI from './client';
 
 export default function MultiMergePage() {

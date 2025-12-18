@@ -11,7 +11,7 @@
     }
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.words": ["hyesungoh"],
+  "cSpell.words": ["embla", "hyesungoh"],
 
   "i18n-ally.localesPaths": ["apps/web/messages"], // 다국어 파일이 위치한 경로를 설정
   "i18n-ally.keystyle": "nested", // 번역 키의 스타일을 설정 (nested: 중첩)

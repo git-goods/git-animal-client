@@ -11,12 +11,11 @@ import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-quer
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
+import EmblaCarousel from '@/components/EmblaCarousel';
 import { trackEvent } from '@/lib/analytics';
 import { useClientUser } from '@/utils/clientAuth';
 import { getBackgroundImage } from '@/utils/image';
 import { addNumberComma } from '@/utils/number';
-
-import BackgroundSlider from './BackgroundSlider/BackgroundSlider';
 
 interface BackgroundSectionProps {
   possibleBgTypes: string[];
@@ -79,7 +78,7 @@ export const BackgroundSection = wrap
     return (
       <div className={sectionCss}>
         <h2 className={h2Css}>Background</h2>
-        <BackgroundSlider>
+        <EmblaCarousel>
           {backgroundList?.map((item) => (
             <BackgroundItem
               key={item.type}
@@ -89,7 +88,7 @@ export const BackgroundSection = wrap
               isLoggedIn={isLoggedIn}
             />
           ))}
-        </BackgroundSlider>
+        </EmblaCarousel>
       </div>
     );
   });

@@ -12,13 +12,12 @@ import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
+import EmblaCarousel from '@/components/EmblaCarousel';
 import { trackEvent } from '@/lib/analytics';
 import { getQueryClient } from '@/lib/react-query/queryClient';
 import { useClientUser } from '@/utils/clientAuth';
 import { getBackgroundImage } from '@/utils/image';
 import { addNumberComma } from '@/utils/number';
-
-import BackgroundSlider from '../../event/(common)/BackgroundSlider/BackgroundSlider';
 
 export const BackgroundSection = wrap
   .ErrorBoundary({
@@ -71,7 +70,7 @@ export const BackgroundSection = wrap
         <h2 ref={backgroundRef} className={h2Css}>
           Background
         </h2>
-        <BackgroundSlider>
+        <EmblaCarousel>
           {backgroundList?.map((item) => (
             <BackgroundItem
               key={item.type}
@@ -80,7 +79,7 @@ export const BackgroundSection = wrap
               isPurchased={item.isPurchased ?? false}
             />
           ))}
-        </BackgroundSlider>
+        </EmblaCarousel>
       </div>
     );
   });

@@ -1,7 +1,6 @@
 'use client';
 
 import { memo, useMemo, useState } from 'react';
-import { LaboratoryLayout } from '../_component/LaboratoryLayout';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
@@ -16,6 +15,8 @@ import { trackEvent } from '@/lib/analytics';
 import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
+
+import { LaboratoryLayout } from '../_component/LaboratoryLayout';
 
 export default function PropertyPetSellPage() {
   return (
