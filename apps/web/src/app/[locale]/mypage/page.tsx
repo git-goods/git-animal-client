@@ -1,9 +1,8 @@
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { css, cx } from '_panda/css';
+import { cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import { updateUrlSearchParams } from '@gitanimals/util-common';
 
 import { Link } from '@/i18n/routing';
 
@@ -27,7 +26,7 @@ async function Mypage({
     type?: TabType;
   };
 }) {
-  const selectedType = searchParams?.type ?? 'line-type';
+  const selectedType = searchParams?.type ?? 'farm-type';
 
   const MYPAGE_TAB_INNER_MAP: Record<TabType, ReactNode> = {
     'line-type': <LineType />,
@@ -37,23 +36,18 @@ async function Mypage({
   return (
     <>
       <div className={tabListStyle}>
-        <Link href={`/mypage?${updateUrlSearchParams(searchParams, 'type', 'line-type')}`}>
-          <button className={cx('tab-item', selectedType === 'line-type' && 'selected')}>Single Type</button>
-        </Link>
-        <Link href={`/mypage?${updateUrlSearchParams(searchParams, 'type', 'farm-type')}`}>
+        <Link href="/mypage?type=farm-type">
           <button className={cx('tab-item', selectedType === 'farm-type' && 'selected')}>Farm Type</button>
         </Link>
+        <Link href="/mypage?type=line-type">
+          <button className={cx('tab-item', selectedType === 'line-type' && 'selected')}>1 Type</button>
+        </Link>
       </div>
-      <div className={tabItemStyle}>{MYPAGE_TAB_INNER_MAP[selectedType]}</div>
+      {MYPAGE_TAB_INNER_MAP[selectedType]}
     </>
   );
 }
 export default Mypage;
-
-const tabItemStyle = css({
-  flex: 1,
-  // overflow: 'hidden',
-});
 
 const tabListStyle = flex({
   gap: '12px',

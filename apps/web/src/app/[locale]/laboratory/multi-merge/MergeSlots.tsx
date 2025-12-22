@@ -95,7 +95,7 @@ export function MergeSlots({ targetPet, materialPets, totalLevel, resultLevel }:
             <span className={css({ fontSize: '60px', color: 'gray.gray_500' })}>?</span>
           )}
         </div>
-        <span className={slotLabelStyle}>{materialPets.length > 0 ? `Total Lv. ${totalLevel}` : 'Materials'}</span>
+        <span className={slotLabelStyle}>Materials</span>
       </div>
 
       <span className={operatorStyle}>=</span>

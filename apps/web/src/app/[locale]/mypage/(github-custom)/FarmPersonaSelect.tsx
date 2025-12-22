@@ -1,16 +1,15 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
-import { flex } from '_panda/patterns';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Dialog } from '@gitanimals/ui-panda';
+import { Dialog, ScrollArea } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
 import { ExpandIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
-import { customScrollHorizontalStyle, customScrollStyle } from '@/styles/scrollStyle';
+import { customScrollHorizontalStyle } from '@/styles/scrollStyle';
 
 import { SelectPersonaList } from '../PersonaList';
 
@@ -81,14 +80,14 @@ export function FarmPersonaSelect({
           <ExpandIcon color="white" size={20} />
         </button>
       </section>
-      <section className={listStyle}>
+      <ScrollArea height="160px">
         <SelectPersonaList
           loadingPersona={loadingPersona}
           selectPersona={selectPersona}
           onSelectPersona={onSelectPersona}
           initSelectPersonas={initSelectPersonas}
         />
-      </section>
+      </ScrollArea>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <Dialog.Content size="large">
           <Dialog.Title>{t('farm-type-select-pet')}</Dialog.Title>
@@ -105,21 +104,6 @@ export function FarmPersonaSelect({
     </div>
   );
 }
-const listStyle = cx(
-  flex({
-    gap: '4px',
-    w: '100%',
-    h: '100%',
-    minH: '0',
-    overflowX: 'auto',
-    overflowY: 'hidden',
-    display: 'grid',
-    gridTemplateRows: 'repeat(2, 1fr)',
-    gridAutoColumns: 'max-content',
-    gridAutoFlow: 'column',
-  }),
-  customScrollStyle,
-);
 
 const flexOverflowStyle = cx(
   css({

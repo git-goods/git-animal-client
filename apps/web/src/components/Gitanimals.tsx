@@ -2,6 +2,8 @@
 
 /* eslint-disable @next/next/no-img-element */
 
+import { css, cx } from '_panda/css';
+
 import { useClientUser } from '@/utils/clientAuth';
 
 const GITANIMALS_URL = 'https://www.gitanimals.org/en_US';
@@ -58,19 +60,18 @@ interface FarmImageProps extends GitanimalsFarmProps {
    * @description 이미지를 최신화하기 위함
    */
   imageKey?: string;
+  className?: string;
 }
 
-export function GitanimalsFarm({ sizes = [600, 300], imageKey }: FarmImageProps) {
+export function GitanimalsFarm({ imageKey, className }: FarmImageProps) {
   const { name: username } = useClientUser();
   return (
     <img
       src={`https://render.gitanimals.org/farms/${username}?${imageKey}`}
-      width={sizes[0]}
-      height={sizes[1]}
+      width={600}
+      height={300}
       alt="preview farm"
-      style={{
-        backgroundColor: '#fff',
-      }}
+      className={cx(css({ backgroundColor: '#fff' }), className)}
       draggable={false}
     />
   );

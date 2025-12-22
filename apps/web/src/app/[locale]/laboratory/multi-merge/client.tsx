@@ -85,20 +85,22 @@ function PetMergeUI() {
   };
 
   const calcResultLevel = () => {
-    if (!targetPet || !materialPets.length) return 0;
-
-    const materialLevel = materialPets.reduce((sum, pet) => sum + parseInt(pet.level), 0);
+    if (!targetPet || !materialPets.length) return { resultLevel: 0, plusLevel: 0 };
 
     // 재료 레벨이 1 이하면 1로 처리
     // 재료 레벨의 /2 만큼 합쳐진다.
-    const plusLevel = Number(materialLevel) <= 1 ? 1 : Math.floor(Number(materialLevel) / 2);
+    const materialLevel = materialPets.reduce((sum, pet) => {
+      if (parseInt(pet.level) == 0) return sum + 1;
+      return sum + Math.floor(Number(pet.level) / 2);
+    }, 0);
+
+    const plusLevel = Number(materialLevel) <= 1 ? 1 : materialLevel;
     const resultLevel = Number(targetPet.level) + plusLevel;
 
-    return resultLevel ?? 0;
+    return { resultLevel, plusLevel };
   };
 
-  const totalLevel = materialPets.reduce((sum, pet) => sum + parseInt(pet.level), 0);
-  const resultLevel = calcResultLevel();
+  const { resultLevel, plusLevel } = calcResultLevel();
 
   return (
     <div>
@@ -106,7 +108,7 @@ function PetMergeUI() {
         <MergeSlots
           targetPet={targetPet}
           materialPets={materialPets}
-          totalLevel={totalLevel}
+          totalLevel={plusLevel}
           resultLevel={resultLevel}
         />
 
@@ -190,7 +192,7 @@ function PetList({
   };
 
   return (
-    <ScrollArea h="calc(100vh - 580px)">
+    <ScrollArea h="calc(100vh - 530px)">
       <PetGrid
         pets={availablePets}
         onPetClick={handlePetClick}

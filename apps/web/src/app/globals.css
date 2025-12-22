@@ -55,7 +55,25 @@
 @layer base {
   :root {
     --mobile-header-height: 60px;
+    --header-height: 60px;
+
+    --main-min-height: calc(100vh - var(--header-height));
   }
+}
+
+.dialog__content[data-state='open'] {
+  animation: fadeIn !important;
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) !important;
+}
+.dialog__content[data-state='closed'] {
+  animation: fadeIn !important;
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) !important;
 }
 
 /* toast */
@@ -140,7 +158,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {

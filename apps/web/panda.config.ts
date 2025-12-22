@@ -27,6 +27,8 @@ export default defineConfig({
     extend: {
       mobile: media.mobile,
       desktop: media.desktop,
+      tablet: media.tablet,
+      pc: media.pc,
     },
   },
   syntax: 'object-literal',

@@ -143,7 +143,7 @@ const headerTopStyle = css({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'flex-start',
-  marginBottom: '20px',
+  marginBottom: '12px',
   gap: '16px',
 });
 
@@ -151,13 +151,12 @@ const backButtonStyle = css({
   display: 'inline-flex',
   alignItems: 'center',
   gap: '8px',
-  padding: '10px 16px',
-  borderRadius: '12px',
+  padding: '4px 12px',
+  borderRadius: '8px',
   background: 'rgba(255, 255, 255, 0.05)',
   border: '1px solid rgba(255, 255, 255, 0.1)',
   color: 'white.white_100',
-  fontSize: '14px',
-  fontWeight: '500',
+  textStyle: 'glyph12.regular',
   cursor: 'pointer',
   transition: 'all 0.3s ease',
 
@@ -186,24 +185,23 @@ const titleContainerStyle = css({
 });
 
 const experimentBadgeStyle = css({
-  fontSize: '14px',
-  fontWeight: 'bold',
-  padding: '6px 14px',
-  borderRadius: '12px',
+  textStyle: 'glyph12.bold',
+  padding: '4px 8px',
+  borderRadius: '8px',
   background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  color: 'white',
+  color: 'white.white_100',
   whiteSpace: 'nowrap',
   animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
   boxShadow: '0 0 20px rgba(102, 126, 234, 0.5)',
 });
 
 const titleStyle = css({
-  textStyle: 'glyph24.bold',
+  textStyle: 'glyph22.bold',
   color: 'white.white_100',
   lineHeight: '1.2',
 
   '@media (min-width: 768px)': {
-    textStyle: 'glyph28.bold',
+    textStyle: 'glyph24.bold',
   },
 });
 
@@ -221,13 +219,12 @@ const upvoteButtonStyle = css({
   display: 'flex',
   alignItems: 'center',
   gap: '8px',
-  padding: '12px 20px',
-  borderRadius: '12px',
+  padding: '4px 12px',
+  borderRadius: '8px',
   background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
   border: '1px solid rgba(255, 255, 255, 0.2)',
   color: 'white.white_100',
-  fontSize: '14px',
-  fontWeight: '600',
+  textStyle: 'glyph12.regular',
   cursor: 'pointer',
   transition: 'all 0.3s ease',
   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
