@@ -2,8 +2,15 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Coins, Minus, Plus } from "lucide-react";
 
-import { Alert, Button, Card, Input, StatCard, Textarea } from "@/components/ds";
-import { decreaseUserPoint, increaseUserPoint, type PointChangeRequest } from "@/lib/api/points";
+import ComingSoon from "@/components/ComingSoon";
+import { Alert, Button, Card, StatCard, Textarea } from "@/components/ds";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  decreaseUserPoint,
+  increaseUserPointAdmin,
+  type PointChangeRequest,
+} from "@/lib/api/points";
 
 export default function PointAdjustmentPage() {
   const [username, setUsername] = useState("");
@@ -13,7 +20,10 @@ export default function PointAdjustmentPage() {
 
   const increasePointMutation = useMutation({
     mutationFn: ({ username, data }: { username: string; data: PointChangeRequest }) =>
-      increaseUserPoint(username, data),
+      increaseUserPointAdmin(username, data),
+    onError: (error) => {
+      console.error("포인트 증가 실패:", error);
+    },
   });
 
   const decreasePointMutation = useMutation({
@@ -55,16 +65,16 @@ export default function PointAdjustmentPage() {
       },
       {
         onSuccess: () => {
-          alert(
-            `포인트 ${actionText} 요청이 성공했습니다.\n\n승인 절차를 거친 후 처리됩니다.`,
-          );
+          alert(`포인트 ${actionText} 요청이 성공했습니다.\n\n승인 절차를 거친 후 처리됩니다.`);
           setUsername("");
           setPoint("");
           setReason("");
         },
         onError: (error) => {
           console.error("포인트 변경 실패:", error);
-          alert(`포인트 ${actionText} 실패:\n${error instanceof Error ? error.message : "알 수 없는 오류"}`);
+          alert(
+            `포인트 ${actionText} 실패:\n${error instanceof Error ? error.message : "알 수 없는 오류"}`,
+          );
         },
       },
     );
@@ -85,34 +95,6 @@ export default function PointAdjustmentPage() {
           포인트 증감 관리
         </h1>
         <p className="text-slate-600 text-xs">사용자의 포인트를 증가하거나 감소시킬 수 있습니다.</p>
-      </div>
-
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-        <StatCard
-          title="총 요청"
-          value="248"
-          description="전체 요청 건수"
-          icon={Coins}
-          color="blue"
-          trend="+12"
-        />
-        <StatCard
-          title="승인 대기"
-          value="15"
-          description="처리 대기 중"
-          icon={Plus}
-          color="amber"
-          trend="+5"
-        />
-        <StatCard
-          title="완료"
-          value="233"
-          description="처리 완료"
-          icon={Minus}
-          color="green"
-          trend="+7"
-        />
       </div>
 
       {/* Alert */}
@@ -156,30 +138,28 @@ export default function PointAdjustmentPage() {
           </div>
 
           {/* 사용자명 */}
+          <Label>사용자명 (username)</Label>
           <Input
-            label="사용자명 (username)"
             placeholder="예: sumi-0011"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            helperText="GitHub 사용자명을 입력하세요."
             required
-            fullWidth
             disabled={isLoading}
           />
+          <p className="text-xs text-slate-500">GitHub 사용자명을 입력하세요.</p>
 
           {/* 포인트 */}
+          <Label>포인트</Label>
           <Input
-            label="포인트"
             type="number"
             placeholder="예: 1000"
             value={point}
             onChange={(e) => setPoint(e.target.value)}
-            helperText={`${operationType === "increase" ? "증가" : "감소"}시킬 포인트를 입력하세요. (양수)`}
             required
-            fullWidth
             disabled={isLoading}
             min="1"
           />
+          <p className="text-xs text-slate-500">{`${operationType === "increase" ? "증가" : "감소"}시킬 포인트를 입력하세요. (양수)`}</p>
 
           {/* 사유 */}
           <Textarea
@@ -212,6 +192,34 @@ export default function PointAdjustmentPage() {
           </div>
         </form>
       </Card>
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 relative">
+        <ComingSoon type="icon" />
+        <StatCard
+          title="총 요청"
+          value="248"
+          description="전체 요청 건수"
+          icon={Coins}
+          color="blue"
+          trend="+12"
+        />
+        <StatCard
+          title="승인 대기"
+          value="15"
+          description="처리 대기 중"
+          icon={Plus}
+          color="amber"
+          trend="+5"
+        />
+        <StatCard
+          title="완료"
+          value="233"
+          description="처리 완료"
+          icon={Minus}
+          color="green"
+          trend="+7"
+        />
+      </div>
     </div>
   );
 }

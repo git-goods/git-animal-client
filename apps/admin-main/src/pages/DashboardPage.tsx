@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
+import ComingSoon from "@/components/ComingSoon";
 import { DataTable } from "@/components/DataTable";
 import { HeroPanel } from "@/components/HeroPanel";
 import { SummaryCards } from "@/components/SummaryCards";
@@ -24,6 +25,7 @@ export default function DashboardPage() {
 
   return (
     <>
+      <ComingSoon />
       <HeroPanel />
 
       <div className="mt-3">

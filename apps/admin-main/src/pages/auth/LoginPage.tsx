@@ -1,9 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
+import { Button } from "@/components/ds";
+import { Input } from "@/components/ui/input";
 import { authUtils } from "@/lib/auth";
 
 export default function LoginPage() {
   const isProduction = import.meta.env.PROD;
+  const [isLoginAuth, setIsLoginAuth] = useState(false);
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     // URL에서 JWT 토큰 확인
@@ -26,6 +30,14 @@ export default function LoginPage() {
     }
   };
 
+  const onClickAdminPasswordInput = () => {
+    if (token === import.meta.env.VITE_APP_ADMIN_PASSWORD) {
+      setIsLoginAuth(true);
+    } else {
+      alert("비밀번호가 일치하지 않습니다.");
+    }
+  };
+
   const setTokenAndNavigate = (token: string) => {
     authUtils.setTokensFromParent(token);
     window.location.href = "/";
@@ -43,19 +55,32 @@ export default function LoginPage() {
             <h1 className="text-2xl text-slate-900">Dashboard</h1>
             <p className="text-sm text-slate-600">관리자 패널</p>
           </div>
+          {!isLoginAuth && (
+            <div className="flex w-full gap-2">
+              <div className="flex-1">
+                <Input
+                  placeholder="어드민 비밀번호 입력"
+                  value={token}
+                  onChange={(e) => setToken(e.target.value)}
+                  className="flex-1"
+                />
+              </div>
+              <Button onClick={onClickAdminPasswordInput}>완료</Button>
+            </div>
+          )}
 
-          {/* 로그인 버튼 */}
-          <div className="space-y-3">
-            <button
-              onClick={onClickGithubLogin}
-              className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-blue-950 text-white rounded-lg hover:bg-blue-800 transition-colors shadow-md"
-            >
-              <GithubIcon />
-              <span className="text-sm">GitHub로 계속하기</span>
-            </button>
-          </div>
+          {isLoginAuth && (
+            <div className="space-y-3">
+              <button
+                onClick={onClickGithubLogin}
+                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-blue-950 text-white rounded-lg hover:bg-blue-800 transition-colors shadow-md"
+              >
+                <GithubIcon />
+                <span className="text-sm">GitHub로 계속하기</span>
+              </button>
+            </div>
+          )}
 
-          {/* 안내 메시지 */}
           <div className="text-center">
             <p className="text-xs text-slate-500">
               GitHub 계정으로 로그인하여 관리자 패널에 접근하세요

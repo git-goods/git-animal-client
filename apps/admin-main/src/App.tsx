@@ -67,7 +67,7 @@ function ProtectedLayout() {
       <Sidebar />
 
       <main className="flex-1 ml-64">
-        <div className="max-w-[1600px] mx-auto px-3 py-3">
+        <div className="max-w-[1600px] mx-auto px-3 py-3 relative">
           <Outlet />
         </div>
       </main>
