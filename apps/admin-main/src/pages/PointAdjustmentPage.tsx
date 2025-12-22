@@ -52,32 +52,19 @@ export default function PointAdjustmentPage() {
       return;
     }
 
-    const mutation = operationType === "increase" ? increasePointMutation : decreasePointMutation;
-    const actionText = operationType === "increase" ? "증가" : "감소";
+    const mutationPayload = {
+      username: username.trim(),
+      data: {
+        point: pointNumber,
+        reason: reason.trim(),
+      },
+    };
 
-    mutation.mutate(
-      {
-        username: username.trim(),
-        data: {
-          point: pointNumber,
-          reason: reason.trim(),
-        },
-      },
-      {
-        onSuccess: () => {
-          alert(`포인트 ${actionText} 요청이 성공했습니다.\n\n승인 절차를 거친 후 처리됩니다.`);
-          setUsername("");
-          setPoint("");
-          setReason("");
-        },
-        onError: (error) => {
-          console.error("포인트 변경 실패:", error);
-          alert(
-            `포인트 ${actionText} 실패:\n${error instanceof Error ? error.message : "알 수 없는 오류"}`,
-          );
-        },
-      },
-    );
+    if (operationType === "increase") {
+      increasePointMutation.mutate(mutationPayload);
+    } else {
+      decreasePointMutation.mutate(mutationPayload);
+    }
   };
 
   const handleReset = () => {
