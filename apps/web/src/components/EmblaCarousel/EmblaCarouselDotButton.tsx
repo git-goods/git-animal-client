@@ -86,7 +86,7 @@ const dotButtonStyle = css({
     content: '""',
   },
 
-  '&.embla__dot--selected': {
+  '&.selected': {
     _after: {
       bg: 'white.white_75',
     },

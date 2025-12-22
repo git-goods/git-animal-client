@@ -23,36 +23,6 @@ function EmblaCarousel({ children }: EmblaCarouselProps) {
     skipSnaps: false,
   });
 
-  // const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
-  // const [nextBtnDisabled, setNextBtnDisabled] = useState(false);
-
-  // const scrollPrev = useCallback(() => {
-  //   if (emblaApi) emblaApi.scrollPrev();
-  // }, [emblaApi]);
-
-  // const scrollNext = useCallback(() => {
-  //   if (emblaApi) emblaApi.scrollNext();
-  // }, [emblaApi]);
-
-  // const onSelect = useCallback(() => {
-  //   if (!emblaApi) return;
-  //   setPrevBtnDisabled(!emblaApi.canScrollPrev());
-  //   setNextBtnDisabled(!emblaApi.canScrollNext());
-  // }, [emblaApi]);
-
-  // useEffect(() => {
-  //   if (!emblaApi) return;
-
-  //   onSelect();
-  //   emblaApi.on('select', onSelect);
-  //   emblaApi.on('reInit', onSelect);
-
-  //   return () => {
-  //     emblaApi.off('select', onSelect);
-  //     emblaApi.off('reInit', onSelect);
-  //   };
-  // }, [emblaApi, onSelect]);
-
   const childrenArray = Children.toArray(children);
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
 
@@ -60,7 +30,7 @@ function EmblaCarousel({ children }: EmblaCarouselProps) {
 
   return (
     <div className={containerStyle}>
-      <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
+      <div className={css({ display: 'flex', mb: '8px', justifyContent: 'space-between', alignItems: 'center' })}>
         <div className={arrowContainerStyle}>
           <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
@@ -75,7 +45,7 @@ function EmblaCarousel({ children }: EmblaCarouselProps) {
             <DotButton
               key={index}
               onClick={() => onDotButtonClick(index)}
-              className={cx(index === selectedIndex ? ' embla__dot--selected' : '')}
+              className={cx(index === selectedIndex && 'selected')}
             />
           ))}
         </div>

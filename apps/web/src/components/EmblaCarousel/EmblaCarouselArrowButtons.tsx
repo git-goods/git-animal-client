@@ -65,6 +65,11 @@ const arrowButtonStyle = css({
   alignItems: 'center',
   justifyContent: 'center',
   bg: 'white.white_75',
+
+  '&.disabled': {
+    opacity: 0.5,
+    cursor: 'not-allowed',
+  },
 });
 
 const arrowIconStyle = css({
@@ -73,10 +78,10 @@ const arrowIconStyle = css({
 });
 
 export const PrevButton: React.FC<PropType> = (props) => {
-  const { children, ...restProps } = props;
+  const { children, disabled, className, ...restProps } = props;
 
   return (
-    <button className={cx(arrowButtonStyle, 'embla__button embla__button--prev')} type="button" {...restProps}>
+    <button className={cx(arrowButtonStyle, className, disabled && 'disabled')} type="button" {...restProps}>
       <svg className={arrowIconStyle} viewBox="0 0 532 532">
         <path
           fill="currentColor"
@@ -89,10 +94,10 @@ export const PrevButton: React.FC<PropType> = (props) => {
 };
 
 export const NextButton: React.FC<PropType> = (props) => {
-  const { children, ...restProps } = props;
+  const { children, className, disabled, ...restProps } = props;
 
   return (
-    <button className={cx(arrowButtonStyle, 'embla__button embla__button--next')} type="button" {...restProps}>
+    <button className={cx(arrowButtonStyle, className, disabled && 'disabled')} type="button" {...restProps}>
       <svg className={arrowIconStyle} viewBox="0 0 532 532">
         <path
           fill="currentColor"
