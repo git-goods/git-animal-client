@@ -39,7 +39,7 @@ export function ArrowButton({
 const arrowStyle = css({
   position: 'absolute',
   top: '0',
-  bottom: '0',
+  bottom: '64px',
   margin: 'auto',
   zIndex: 'floating',
 

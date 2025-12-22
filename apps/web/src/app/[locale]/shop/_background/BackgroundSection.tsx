@@ -175,7 +175,6 @@ const cardCss = css({
 const cardImageCss = css({
   width: '100%',
   aspectRatio: '2 / 1',
-  bg: 'white',
   position: 'relative',
 });
 
