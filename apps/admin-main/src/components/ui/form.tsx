@@ -9,9 +9,9 @@ import {
   FormProvider,
   useFormContext,
   useFormState,
-} from "react-hook-form@7.55.0";
-import type * as LabelPrimitive from "@radix-ui/react-label@2.1.2";
-import { Slot } from "@radix-ui/react-slot@1.1.2";
+} from "react-hook-form";
+import type * as LabelPrimitive from "@radix-ui/react-label";
+import { Slot } from "@radix-ui/react-slot";
 
 import { Label } from "./label";
 import { cn } from "./utils";
