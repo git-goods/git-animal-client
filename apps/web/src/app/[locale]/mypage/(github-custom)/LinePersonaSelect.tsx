@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { flex } from '_panda/patterns';
-import { Dialog } from '@gitanimals/ui-panda';
+import { Dialog, ScrollArea } from '@gitanimals/ui-panda';
 import { ExpandIcon } from 'lucide-react';
 
 import { customScrollStyle } from '@/styles/scrollStyle';
@@ -29,12 +29,12 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
           <ExpandIcon color="white" size={20} />
         </button>
       </section>
-      <section className={listStyle}>
+      <ScrollArea height="160px">
         <SelectPersonaList
           selectPersona={selectPersona ? [selectPersona] : []}
           onSelectPersona={(persona) => onChangePersona(persona.id)}
         />
-      </section>
+      </ScrollArea>
       <Dialog open={isExtend} onOpenChange={() => setIsExtend(false)}>
         <Dialog.Content size="large">
           <Dialog.Title>{t('line-type-select-pet')}</Dialog.Title>

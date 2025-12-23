@@ -55,6 +55,9 @@
 @layer base {
   :root {
     --mobile-header-height: 60px;
+    --header-height: 60px;
+
+    --main-min-height: calc(100vh - var(--header-height));
   }
 }
 

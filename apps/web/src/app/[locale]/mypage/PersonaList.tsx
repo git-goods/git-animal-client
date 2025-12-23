@@ -12,6 +12,15 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
+const listStyle = css({
+  gap: '4px',
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(64px, auto))',
+  _mobile: {
+    gridTemplateColumns: 'repeat(auto-fill, minmax(52px, auto))',
+  },
+});
+
 interface Props {
   selectPersona: string[];
   onSelectPersona: (persona: Persona) => void;
@@ -28,11 +37,11 @@ export const SelectPersonaList = wrap
   })
   .Suspense({
     fallback: (
-      <>
+      <div className={cx(listStyle, css({ minH: '64px' }))}>
         {Array.from({ length: 6 }).map((_, index) => (
-          <BannerSkeleton key={index} size="small" />
+          <BannerSkeleton key={index} size="full" />
         ))}
-      </>
+      </div>
     ),
   })
 
@@ -76,7 +85,7 @@ export const SelectPersonaList = wrap
     }, [gradeSortedList]);
 
     return (
-      <>
+      <div className={listStyle}>
         {viewList.map((persona) => (
           <MemoizedPersonaItem
             key={persona.id}
@@ -87,7 +96,7 @@ export const SelectPersonaList = wrap
             isSpecialEffect={isSpecialEffect}
           />
         ))}
-      </>
+      </div>
     );
   });
 
@@ -114,7 +123,7 @@ function PersonaItem({ persona, isSelected, onClick, isSpecialEffect, isLoading 
       <Banner
         loading={isLoading}
         image={getPersonaImage(persona.type)}
-        size="small"
+        size="full"
         status={isSelected ? 'selected' : 'default'}
       />
     </button>

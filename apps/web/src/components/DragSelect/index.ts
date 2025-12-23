@@ -1,2 +1,2 @@
-export * from './useDragSelect';
 export * from './DragSelectContainer';
+export * from './useDragSelect';

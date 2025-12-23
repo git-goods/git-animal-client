@@ -1,7 +1,5 @@
 import { css } from '_panda/css';
 
-import { FeedbackUpvote } from '@/app/[locale]/laboratory/_component/FeedbackUpvote';
-
 export default async function LaboratoryLayout({ children }: { children: React.ReactNode }) {
   return <div className={containerStyle}>{children}</div>;
 }

@@ -6,7 +6,8 @@ export const LABORATORY_FEEDBACK_QUERY_KEYS = {
   all: ['laboratory-upvote'] as const,
   byLab: (laboratoryId: string) => ['laboratory-upvote', 'lab', laboratoryId] as const,
   count: (laboratoryId: string) => ['laboratory-upvote', 'count', laboratoryId] as const,
-  userCheck: (userId: string, laboratoryId: string) => ['laboratory-upvote', 'user', userId, 'lab', laboratoryId] as const,
+  userCheck: (userId: string, laboratoryId: string) =>
+    ['laboratory-upvote', 'user', userId, 'lab', laboratoryId] as const,
 };
 
 /**

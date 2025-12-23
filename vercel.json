@@ -3,6 +3,10 @@
     {
       "source": "/(.*)",
       "destination": "/apps/webview/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/apps/admin-main/$1"
     }
   ]
 }
