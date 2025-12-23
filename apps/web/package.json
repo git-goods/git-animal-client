@@ -26,6 +26,8 @@
     "@gitanimals/react-query": "workspace:*",
     "@gitanimals/ui-icon": "workspace:*",
     "@gitanimals/ui-panda": "workspace:*",
+    "@gitanimals/ui-tailwind": "workspace:*",
+    "@gitanimals/ui-token": "workspace:*",
     "@gitanimals/util-common": "workspace:*",
     "@next/third-parties": "^14.2.5",
     "@octokit/core": "^6.1.2",
@@ -85,11 +87,14 @@
     "@types/react": "*",
     "@types/react-dom": "^18",
     "@typescript-eslint/parser": "^7.7.1",
+    "autoprefixer": "^10.4.23",
     "eslint": "^8",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
+    "postcss": "^8.5.6",
     "prettier": "*",
     "storybook": "^8.0.9",
+    "tailwindcss": "^3.4.0",
     "typescript": "*"
   }
 }

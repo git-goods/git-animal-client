@@ -8,7 +8,7 @@ import {
   interceptorResponseRejected,
 } from '@/apis/interceptor';
 
-import './globals.css';
+import './globals.css'; // 글로벌 CSS (PandaCSS와 Tailwind 모두 포함)
 import '@gitanimals/asset-font/product-sans/index.css';
 
 export const metadata: Metadata = {
