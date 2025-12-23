@@ -3,13 +3,13 @@ import type { Config } from 'tailwindcss';
 
 const config = createGitAnimalsConfig([
   './src/**/*.{js,ts,jsx,tsx,mdx}',
-]) as Config;
-
-// PandaCSS와 공존하기 위한 추가 설정
-config.corePlugins = {
-  // PandaCSS가 처리하는 부분은 비활성화
-  preflight: false, // reset은 PandaCSS에서 처리
-};
-config.important = '.tailwind-scope'; // Tailwind를 특정 스코프에서만 활성화
+], {
+  // PandaCSS와 공존하기 위한 설정
+  corePlugins: {
+    preflight: false, // reset은 PandaCSS에서 처리
+  },
+  // CSS 우선순위 조정
+  important: false, // 전역적으로 important 사용 안함
+}) as Config;
 
 export default config;

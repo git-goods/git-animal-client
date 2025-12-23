@@ -1,18 +1,10 @@
 /* PandaCSS layers - 기존 시스템 유지 */
 @layer reset, base, tokens, recipes, utilities;
 
-/* Tailwind CSS - 조건부 적용 */
-@layer tailwind-base {
-  @tailwind base;
-}
-
-@layer tailwind-components {
-  @tailwind components;
-}
-
-@layer tailwind-utilities {
-  @tailwind utilities;
-}
+/* Tailwind CSS - PandaCSS와 공존 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @font-face {
   font-family: 'DNFBitBitv2';
