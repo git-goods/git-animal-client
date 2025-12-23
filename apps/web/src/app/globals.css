@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer reset, base, tokens, recipes, utilities;
-
 @font-face {
   font-family: 'DNFBitBitv2';
   font-style: normal;

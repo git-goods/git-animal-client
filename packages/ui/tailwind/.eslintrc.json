@@ -1,0 +1,6 @@
+{
+  "extends": ["@gitanimals/eslint-config/react.js"],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "warn"
+  }
+}

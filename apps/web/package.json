@@ -26,6 +26,8 @@
     "@gitanimals/react-query": "workspace:*",
     "@gitanimals/ui-icon": "workspace:*",
     "@gitanimals/ui-panda": "workspace:*",
+    "@gitanimals/ui-tailwind": "workspace:*",
+    "@gitanimals/ui-token": "workspace:*",
     "@gitanimals/util-common": "workspace:*",
     "@next/third-parties": "^14.2.5",
     "@octokit/core": "^6.1.2",
@@ -75,7 +77,6 @@
     "@storybook/nextjs": "^8.0.9",
     "@storybook/react": "^8.0.9",
     "@storybook/test": "^8.0.9",
-    "@tailwindcss/postcss": "^4.1.18",
     "@tanstack/eslint-plugin-query": "^5.28.11",
     "@tanstack/react-query-devtools": "^5.32.0",
     "@types/google-spreadsheet": "^4.0.0",
@@ -93,7 +94,7 @@
     "postcss": "^8.5.6",
     "prettier": "*",
     "storybook": "^8.0.9",
-    "tailwindcss": "^4.1.18",
+    "tailwindcss": "^3.4.0",
     "typescript": "*"
   }
 }
