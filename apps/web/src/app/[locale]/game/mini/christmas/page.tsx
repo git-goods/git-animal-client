@@ -132,52 +132,20 @@ export default function ChristmasMemoryPage() {
 
   return (
     <div
-      className={css({
-        height: '100vh',
-        maxWidth: '600px',
-        width: '100%',
-        margin: '0 auto',
-        padding: '8px',
-        background: 'linear-gradient(to bottom, #2D1B14 0%, #8B4513 100%)',
-        fontFamily: 'monospace', // Pixel-style font fallback
-        color: '#FFFFFF',
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-        boxSizing: 'border-box',
-      })}
+      className="h-full text-white flex flex-col overflow-hidden box-border"
+      // className={css({
+      //   // background: 'linear-gradient(to bottom, #2D1B14 0%, #8B4513 100%)',
+      //   fontFamily: 'monospace', // Pixel-style font fallback
+      //   color: '#FFFFFF',
+      //   display: 'flex',
+      //   flexDirection: 'column',
+      //   overflow: 'hidden',
+      //   boxSizing: 'border-box',
+      //   height: '100%',
+      // })}
     >
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className={css({
-          height: '50px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: '6px',
-          background: 'rgba(139, 69, 19, 0.3)',
-          borderRadius: '6px',
-          border: '2px solid #FFD700',
-          textShadow: '2px 2px 0px #1A0F0A',
-          padding: '4px 8px',
-          flex: 'none',
-        })}
-      >
-        <h1
-          className={css({
-            fontSize: { base: '16px', sm: '18px' },
-            fontWeight: 'bold',
-            color: '#FFFFFF',
-            marginBottom: gameStarted ? '2px' : '0',
-            textAlign: 'center',
-            lineHeight: '1',
-          })}
-        >
-          🎄 Christmas Memory 🎄
-        </h1>
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         {gameStarted && (
           <div
             className={css({
@@ -239,25 +207,41 @@ export default function ChristmasMemoryPage() {
 
       {/* Game Grid */}
       {gameStarted && !gameCompleted && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+        <div
           className={css({
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gridTemplateRows: 'repeat(4, 1fr)',
-            gap: { base: '4px', sm: '6px' },
-            padding: '0',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
             flex: '1',
-            alignContent: 'stretch',
-            justifyContent: 'stretch',
             minHeight: '0',
           })}
         >
-          {cards.map((card, index) => (
-            <GameCard key={card.id} card={card} index={index} handleCardClick={handleCardClick} />
-          ))}
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className={css({
+              display: 'grid',
+              maxWidth: '70%',
+              maxHeight: '70%',
+
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gridTemplateRows: 'repeat(4, 1fr)',
+              gap: { base: '4px', sm: '6px' },
+              padding: '0',
+              flex: '1',
+              alignContent: 'center',
+              justifyContent: 'center',
+              alignItems: 'center',
+              justifyItems: 'center',
+              minHeight: '0',
+              height: '100%',
+            })}
+          >
+            {cards.map((card, index) => (
+              <GameCard key={card.id} card={card} index={index} handleCardClick={handleCardClick} />
+            ))}
+          </motion.div>
+        </div>
       )}
 
       {/* Game Completed */}
@@ -358,7 +342,10 @@ function GameCard({
             pointerEvents: card.isFlipped || card.isMatched ? 'none' : 'auto',
           }}
         >
-          <div className={cardCss}>❄️</div>
+          <div className={cardCss}>
+            ❄️
+            {card.type}
+          </div>
         </motion.div>
 
         {/* Card Front - visible when flipped */}
