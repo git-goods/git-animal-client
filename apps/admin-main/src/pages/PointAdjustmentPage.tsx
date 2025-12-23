@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Coins, Minus, Plus } from "lucide-react";
+import { toast } from "sonner";
 
 import ComingSoon from "@/components/ComingSoon";
 import { Alert, Button, Card, StatCard, Textarea } from "@/components/ds";
@@ -24,11 +25,20 @@ export default function PointAdjustmentPage() {
     onError: (error) => {
       console.error("포인트 증가 실패:", error);
     },
+    onSuccess: () => {
+      toast.success("포인트 증가 요청이 성공적으로 전송되었습니다.");
+    },
   });
 
   const decreasePointMutation = useMutation({
     mutationFn: ({ username, data }: { username: string; data: PointChangeRequest }) =>
       decreaseUserPoint(username, data),
+    onError: (error) => {
+      console.error("포인트 감소 실패:", error);
+    },
+    onSuccess: () => {
+      toast.success("포인트 감소 요청이 성공적으로 전송되었습니다.");
+    },
   });
 
   const isLoading = increasePointMutation.isPending || decreasePointMutation.isPending;
@@ -86,8 +96,10 @@ export default function PointAdjustmentPage() {
 
       {/* Alert */}
       <Alert variant="warning" title="승인 절차 안내">
-        포인트 증감 요청은 별도의 승인 절차를 거쳐야 합니다. 요청 후 승인이 완료되면 실제 포인트가
-        변경됩니다.
+        <p className="line-through">
+          포인트 증감 요청은 별도의 승인 절차를 거쳐야 합니다. 요청 후 승인이 완료되면 실제 포인트가
+          변경됩니다.
+        </p>
       </Alert>
 
       {/* Form */}
