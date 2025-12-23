@@ -75,6 +75,7 @@
     "@storybook/nextjs": "^8.0.9",
     "@storybook/react": "^8.0.9",
     "@storybook/test": "^8.0.9",
+    "@tailwindcss/postcss": "^4.1.18",
     "@tanstack/eslint-plugin-query": "^5.28.11",
     "@tanstack/react-query-devtools": "^5.32.0",
     "@types/google-spreadsheet": "^4.0.0",
@@ -85,11 +86,14 @@
     "@types/react": "*",
     "@types/react-dom": "^18",
     "@typescript-eslint/parser": "^7.7.1",
+    "autoprefixer": "^10.4.23",
     "eslint": "^8",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
+    "postcss": "^8.5.6",
     "prettier": "*",
     "storybook": "^8.0.9",
+    "tailwindcss": "^4.1.18",
     "typescript": "*"
   }
 }
