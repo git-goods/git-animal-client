@@ -22,10 +22,10 @@ async function ChoosePetSection() {
         <LoginButton label="Get a Pet" />
       ) : (
         <Link href="/mypage">
-          <Button className="desktop" size="l">
+          <Button className="max-mobile:hidden" size="l">
             Go To Mypage
           </Button>
-          <Button className="mobile" size="m">
+          <Button className="hidden max-mobile:block" size="m">
             Go To Mypage
           </Button>
         </Link>

@@ -54,10 +54,10 @@ function AvailablePetSection() {
         </div>
 
         <div className={styles.buttonWrapper}>
-          <AnchorButton size="m" className="mobile" target="_blank" href={MORE_PET_GITHUB_URL}>
+          <AnchorButton size="m" className="hidden max-mobile:block" target="_blank" href={MORE_PET_GITHUB_URL}>
             Show More Pets
           </AnchorButton>
-          <AnchorButton size="l" className="desktop" target="_blank" href={MORE_PET_GITHUB_URL}>
+          <AnchorButton size="l" className="max-mobile:hidden" target="_blank" href={MORE_PET_GITHUB_URL}>
             Show More Pets
           </AnchorButton>
         </div>

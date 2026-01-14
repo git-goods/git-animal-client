@@ -4,8 +4,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
-import { Button, Dialog } from '@gitanimals/ui-tailwind';
-import { CommonDialog } from '@gitanimals/ui-panda';
+import { Button, Dialog, CommonDialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useClientSession } from '@/utils/clientAuth';

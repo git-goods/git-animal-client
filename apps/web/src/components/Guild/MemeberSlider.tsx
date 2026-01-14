@@ -1,9 +1,8 @@
 'use client';
 
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn, BannerPetSelectMedium } from '@gitanimals/ui-tailwind';
 import Flicking from '@egjs/react-flicking';
 import type { GuildMember } from '@gitanimals/api';
-import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
 
 import { getPersonaImage } from '@/utils/image';
 

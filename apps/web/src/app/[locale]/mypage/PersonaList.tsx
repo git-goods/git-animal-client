@@ -1,10 +1,9 @@
 'use client';
 
 import React, { memo, useEffect, useMemo, useRef } from 'react';
-import { cn, Skeleton } from '@gitanimals/ui-tailwind';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Banner } from '@gitanimals/ui-panda';
+import { Banner, cn, Skeleton } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -13,7 +12,7 @@ import { getPersonaImage } from '@/utils/image';
 
 const listStyle = cn(
   'gap-1 grid grid-cols-[repeat(auto-fill,minmax(64px,auto))]',
-  'max-mobile:grid-cols-[repeat(auto-fill,minmax(52px,auto))]'
+  'max-mobile:grid-cols-[repeat(auto-fill,minmax(52px,auto))]',
 );
 
 interface Props {
@@ -110,10 +109,7 @@ function PersonaItem({ persona, isSelected, onClick, isSpecialEffect, isLoading 
       key={`${persona.id}-${persona.visible}`}
       onClick={onClick}
       disabled={isLoading}
-      className={cn(
-        'outline-none rounded-xl',
-        isSpecialEffect && persona.isEvolutionable && 'gradient-move'
-      )}
+      className={cn('outline-none rounded-xl', isSpecialEffect && persona.isEvolutionable && 'gradient-move')}
     >
       <Banner
         loading={isLoading}

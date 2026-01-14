@@ -4,8 +4,7 @@ import { memo } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { cn, Skeleton } from '@gitanimals/ui-tailwind';
-import { LevelBanner } from '@gitanimals/ui-panda';
+import { cn, Skeleton, LevelBanner } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 

@@ -4,8 +4,7 @@ import { memo, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { dropPets } from '@gitanimals/api/src/shop/dropPet';
 import { userQueries } from '@gitanimals/react-query/src/user';
-import { cn, Button } from '@gitanimals/ui-tailwind';
-import { LevelBanner } from '@gitanimals/ui-panda';
+import { cn, Button, LevelBanner } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 

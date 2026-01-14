@@ -37,24 +37,6 @@
     padding: 0;
     outline: none;
   }
-
-  .mobile {
-    display: none;
-  }
-
-  .desktop {
-    display: block;
-  }
-
-  @media (max-width: 768px) {
-    .mobile {
-      display: block;
-    }
-
-    .desktop {
-      display: none;
-    }
-  }
 }
 
 @layer base {
