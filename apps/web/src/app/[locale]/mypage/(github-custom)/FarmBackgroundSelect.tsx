@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import type { RenderBackground } from '@gitanimals/api';
 import { renderUserQueries, useChangeMyBackgroundByToken } from '@gitanimals/react-query';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 

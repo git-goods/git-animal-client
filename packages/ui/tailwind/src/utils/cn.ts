@@ -1,5 +1,17 @@
 import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { extendTailwindMerge } from 'tailwind-merge';
+
+const customTwMerge = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      'font-size': [
+        {
+          'text-glyph': ['12', '14', '15', '16', '18', '20', '22', '24', '28', '32', '36', '40', '48', '82'],
+        },
+      ],
+    },
+  },
+});
 
 /**
  * Utility function for merging Tailwind CSS classes
@@ -10,5 +22,5 @@ import { twMerge } from 'tailwind-merge';
  * cn('text-sm', className) // className can override defaults
  */
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return customTwMerge(clsx(inputs));
 }

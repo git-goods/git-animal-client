@@ -1,4 +1,4 @@
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import { MemoizedPersonaItem } from './PersonaItem';
 

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 interface QuizTypeCardProps {
   title: string;

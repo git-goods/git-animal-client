@@ -18,7 +18,11 @@ export const Background = memo(function Background() {
               <Image width={188} height={191} src="/shop/coin.webp" alt="coin" />
             </motion.div>
 
-            <motion.div className="absolute w-fit top-[300px] right-[86px]" variants={carrotVariants} animate="floating">
+            <motion.div
+              className="absolute w-fit top-[300px] right-[86px]"
+              variants={carrotVariants}
+              animate="floating"
+            >
               <Image width={313} height={316} src="/shop/carrot.webp" alt="carrot" />
             </motion.div>
           </div>
@@ -27,23 +31,27 @@ export const Background = memo(function Background() {
 
       <MediaQuery
         desktop={
-          <div className={cn(
-            'absolute z-base bottom-0 left-0 w-full h-[354px] overflow-hidden',
-            '[&_img]:absolute [&_img]:max-w-none [&_img]:h-full [&_img]:object-contain',
-            '[&_img:first-of-type]:animate-slide',
-            '[&_img:last-of-type]:left-[454px] [&_img:last-of-type]:animate-slide'
-          )}>
+          <div
+            className={cn(
+              'absolute z-base bottom-0 left-0 w-full h-[354px] overflow-hidden',
+              '[&_img]:absolute [&_img]:max-w-none [&_img]:h-full [&_img]:object-contain',
+              '[&_img:first-of-type]:animate-slide',
+              '[&_img:last-of-type]:left-[454px] [&_img:last-of-type]:animate-slide',
+            )}
+          >
             <Image width={2802} height={354} src="/shop/land.webp" alt="land" />
             <Image width={2802} height={354} src="/shop/land.webp" alt="land" />
           </div>
         }
         mobile={
-          <div className={cn(
-            'absolute z-base bottom-0 left-0 w-full h-[70px] overflow-hidden',
-            '[&_img]:absolute [&_img]:max-w-none [&_img]:h-[70px] [&_img]:w-auto',
-            '[&_img:first-of-type]:animate-slide',
-            '[&_img:last-of-type]:left-[454px] [&_img:last-of-type]:animate-slide'
-          )}>
+          <div
+            className={cn(
+              'absolute z-base bottom-0 left-0 w-full h-[70px] overflow-hidden',
+              '[&_img]:absolute [&_img]:max-w-none [&_img]:h-[70px] [&_img]:w-auto',
+              '[&_img:first-of-type]:animate-slide',
+              '[&_img:last-of-type]:left-[454px] [&_img:last-of-type]:animate-slide',
+            )}
+          >
             <Image width={750} height={140} src="/shop/land-m.webp" alt="land" />
             <Image width={750} height={140} src="/shop/land-m.webp" alt="land" />
           </div>

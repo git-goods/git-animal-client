@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { dayjs } from '@gitanimals/dayjs';
 
 interface QuizProgressBarProps {

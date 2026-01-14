@@ -1,5 +1,5 @@
 import type { ComponentProps, PropsWithChildren } from 'react';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 interface TabsListProps extends ComponentProps<'div'> {
   gap?: string;

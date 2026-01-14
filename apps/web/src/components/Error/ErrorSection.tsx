@@ -1,4 +1,4 @@
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 export function ErrorSection(props: { title: string; description: string }) {
   return (

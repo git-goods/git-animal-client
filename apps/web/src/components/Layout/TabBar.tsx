@@ -1,4 +1,4 @@
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { wrap } from '@suspensive/react';
 import { GamepadIcon, HouseIcon, StoreIcon, UserRoundIcon } from 'lucide-react';
 

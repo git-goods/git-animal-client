@@ -1,7 +1,7 @@
 import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import type { RankType } from '@gitanimals/api';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { getNewUrl } from '@gitanimals/util-common';
 
 import { PaginationServer } from '@/components/Pagination/PaginationServer';

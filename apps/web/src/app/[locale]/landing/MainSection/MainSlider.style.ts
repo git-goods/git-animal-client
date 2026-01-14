@@ -1,4 +1,4 @@
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 export const container = cn(
   'w-fit h-fit mx-auto rounded-2xl bg-white/10'

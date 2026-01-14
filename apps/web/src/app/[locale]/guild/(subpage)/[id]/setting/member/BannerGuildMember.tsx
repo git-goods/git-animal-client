@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import type { ReactNode } from 'react';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 export function BannerGuildMember({
   image,

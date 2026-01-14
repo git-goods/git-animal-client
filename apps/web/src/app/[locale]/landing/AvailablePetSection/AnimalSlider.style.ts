@@ -1,4 +1,4 @@
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 export const cardContainer = cn(
   'grid gap-5 justify-center grid-cols-[repeat(4,1fr)] grid-rows-[repeat(3,1fr)] w-[1120px] h-[1024px] px-px',

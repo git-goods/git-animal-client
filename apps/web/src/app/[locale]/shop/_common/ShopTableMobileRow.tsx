@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { ReactNode } from 'react';
 import type { Product } from '@gitanimals/api';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 
 import { useGetPersonaTier } from '@/hooks/persona/useGetPersonaDropRate';

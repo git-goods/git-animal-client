@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import { AnimalCard } from '@/components/AnimalCard';
 

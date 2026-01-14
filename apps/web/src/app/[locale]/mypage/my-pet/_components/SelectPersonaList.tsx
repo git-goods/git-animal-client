@@ -1,15 +1,27 @@
+'use client';
+
 import { memo } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { cn, LevelBanner } from '@gitanimals/ui-tailwind';
-import { BannerSkeletonList } from '@gitanimals/ui-tailwind/src/components/Banner/Banner';
+import { cn, Skeleton } from '@gitanimals/ui-tailwind';
+import { LevelBanner } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
+
+function BannerSkeletonList({ length }: { length: number }) {
+  return (
+    <>
+      {Array.from({ length }).map((_, index) => (
+        <Skeleton key={index} className="w-[80px] h-[100px] rounded-lg" />
+      ))}
+    </>
+  );
+}
 
 interface SelectPersonaListProps {
   selectPersona: string[];
@@ -19,7 +31,7 @@ interface SelectPersonaListProps {
 }
 export const SelectPersonaList = wrap
   .ErrorBoundary({ fallback: <div>error</div> })
-  .Suspense({ fallback: <BannerSkeletonList length={6} size="small" /> })
+  .Suspense({ fallback: <BannerSkeletonList length={6} /> })
   .on(function SelectPersonaList({ selectPersona, onSelectPersona }: SelectPersonaListProps) {
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));

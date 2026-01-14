@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { getGuildById } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-tailwind';
 import { SearchIcon } from 'lucide-react';

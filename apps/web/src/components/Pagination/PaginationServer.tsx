@@ -1,4 +1,4 @@
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Link } from '@/i18n/routing';

@@ -1,4 +1,4 @@
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 export const wrapperCss = cn(
   'w-[calc(25%-24px)] flex flex-col',

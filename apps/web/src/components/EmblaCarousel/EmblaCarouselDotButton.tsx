@@ -1,6 +1,6 @@
 import type { ComponentPropsWithRef } from 'react';
 import React, { useCallback, useEffect, useState } from 'react';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import type { EmblaCarouselType } from 'embla-carousel';
 
 type UseDotButtonType = {

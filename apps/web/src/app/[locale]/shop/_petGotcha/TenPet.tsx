@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import type { GotchaResult } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { usePostGotcha, userQueries } from '@gitanimals/react-query';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';

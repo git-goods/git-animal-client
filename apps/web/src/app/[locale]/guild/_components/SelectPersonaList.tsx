@@ -1,11 +1,10 @@
 'use client';
 
 import { memo } from 'react';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn, Skeleton } from '@gitanimals/ui-tailwind';
+import { LevelBanner } from '@gitanimals/ui-panda';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { LevelBanner } from '@gitanimals/ui-tailwind';
-import { BannerSkeletonList } from '@gitanimals/ui-tailwind/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -17,6 +16,16 @@ const flexOverflowStyle = cn(
   'flex overflow-y-auto overflow-x-hidden w-full gap-1 h-full min-h-0 flex-wrap max-h-full',
   customScrollStyle,
 );
+
+function BannerSkeletonList({ length }: { length: number }) {
+  return (
+    <>
+      {Array.from({ length }).map((_, index) => (
+        <Skeleton key={index} className="w-[80px] h-[100px] rounded-lg" />
+      ))}
+    </>
+  );
+}
 
 interface SelectPersonaListProps {
   selectPersona: string[];
@@ -30,7 +39,7 @@ export const SelectPersonaList = wrap
   .Suspense({
     fallback: (
       <div className={flexOverflowStyle}>
-        <BannerSkeletonList length={6} size="small" />
+        <BannerSkeletonList length={6} />
       </div>
     ),
   })

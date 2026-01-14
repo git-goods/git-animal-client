@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import * as styles from './HavePetWaySection.style';
 

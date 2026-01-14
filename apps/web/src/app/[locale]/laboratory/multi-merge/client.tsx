@@ -191,7 +191,7 @@ function PetList({
   };
 
   return (
-    <ScrollArea h="calc(100vh - 530px)">
+    <ScrollArea className="h-[calc(100vh-530px)]">
       <PetGrid
         pets={availablePets}
         onPetClick={handlePetClick}

@@ -1,11 +1,10 @@
 'use client';
 
 import React, { memo, useEffect, useMemo, useRef } from 'react';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn, Skeleton } from '@gitanimals/ui-tailwind';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Banner } from '@gitanimals/ui-tailwind';
-import { BannerSkeleton } from '@gitanimals/ui-tailwind';
+import { Banner } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -35,7 +34,7 @@ export const SelectPersonaList = wrap
     fallback: (
       <div className={cn(listStyle, 'min-h-16')}>
         {Array.from({ length: 6 }).map((_, index) => (
-          <BannerSkeleton key={index} size="full" />
+          <Skeleton key={index} className="w-16 h-20 rounded-lg" />
         ))}
       </div>
     ),

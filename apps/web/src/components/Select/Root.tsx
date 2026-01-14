@@ -1,6 +1,6 @@
 import type { Dispatch, PropsWithChildren, SetStateAction } from 'react';
 import { createContext, useContext, useMemo, useState } from 'react';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 interface SelectOpenContextProps {
   isOpen: boolean;

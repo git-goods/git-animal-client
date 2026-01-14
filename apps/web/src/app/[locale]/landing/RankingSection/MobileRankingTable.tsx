@@ -3,7 +3,7 @@ import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Flicking from '@egjs/react-flicking';
 import type { RankType } from '@gitanimals/api';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { getNewUrl } from '@gitanimals/util-common';
 
 import { RankingLink } from './RankingLink';

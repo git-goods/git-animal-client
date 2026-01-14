@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 export default function GuildLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
   return (

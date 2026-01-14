@@ -3,7 +3,7 @@
 import { cn } from '@gitanimals/ui-tailwind';
 import Flicking from '@egjs/react-flicking';
 import type { GuildMember } from '@gitanimals/api';
-import { BannerPetSelectMedium } from '@gitanimals/ui-tailwind';
+import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
 
 import { getPersonaImage } from '@/utils/image';
 

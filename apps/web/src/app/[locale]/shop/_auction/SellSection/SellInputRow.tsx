@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import type { Persona } from '@gitanimals/api';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries, userQueries } from '@gitanimals/react-query';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { Button, Dialog } from '@gitanimals/ui-tailwind';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useQueryClient } from '@tanstack/react-query';

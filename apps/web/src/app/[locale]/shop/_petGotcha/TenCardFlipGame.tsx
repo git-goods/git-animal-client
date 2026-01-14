@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import type { GotchaResult } from '@gitanimals/api';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { motion } from 'framer-motion';
 
 import { AnimalCard } from '@/components/AnimalCard';

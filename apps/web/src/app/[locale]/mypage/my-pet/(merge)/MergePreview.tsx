@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { PropsWithChildren } from 'react';
 import type { Persona } from '@gitanimals/api';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { motion } from 'framer-motion';
 import { EqualIcon, PlusIcon } from 'lucide-react';
 

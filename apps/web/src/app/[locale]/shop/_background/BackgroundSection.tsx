@@ -117,35 +117,26 @@ const eventLabelCss = cn(
   'absolute top-3 left-3 z-floating',
   'inline-flex py-1.5 px-3 items-center gap-0.5',
   'rounded-lg bg-[#FF3030]',
-  'font-product text-glyph-18 font-bold text-white'
+  'font-product text-glyph-18 font-bold text-white',
 );
 
 const sectionCss = cn(
   'relative flex flex-col items-center',
   'py-[120px] px-5 w-full bg-[#6DE575]',
   "before:content-[''] before:absolute before:top-[-2px] before:left-0 before:right-0 before:h-0.5 before:bg-[#6DE575]",
-  'max-mobile:py-10 max-mobile:px-4'
+  'max-mobile:py-10 max-mobile:px-4',
 );
 
-const h2Css = cn(
-  'font-product text-glyph-82 font-bold text-black mb-20',
-  'max-mobile:mb-10 max-mobile:text-glyph-40'
-);
+const h2Css = cn('font-product text-glyph-82 font-bold text-black mb-20', 'max-mobile:mb-10 max-mobile:text-glyph-40');
 
-const cardCss = cn(
-  'w-full flex flex-col items-center justify-center relative'
-);
+const cardCss = cn('w-full flex flex-col items-center justify-center relative');
 
-const cardImageCss = cn(
-  'w-full aspect-[2/1] relative'
-);
+const cardImageCss = cn('w-full aspect-[2/1] relative');
 
-const purchasedCardImageCss = cn(
-  'brightness-50 cursor-not-allowed'
-);
+const purchasedCardImageCss = cn('brightness-50 cursor-not-allowed');
 
 const cardPointStyle = cn(
   'font-product text-glyph-18 font-bold text-black/75',
   'border border-[#3FB458] bg-[#56CA6F]',
-  'mt-1 mb-6 py-1 px-[25px] w-full'
+  'mt-1 mb-6 py-1 px-[25px] w-full',
 );

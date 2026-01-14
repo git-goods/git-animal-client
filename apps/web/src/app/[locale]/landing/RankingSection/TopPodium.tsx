@@ -1,5 +1,5 @@
 import type { RankType } from '@gitanimals/api';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { RankingLink } from './RankingLink';

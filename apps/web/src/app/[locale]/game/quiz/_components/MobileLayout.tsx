@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import GNB from '@/components/GNB/GNB';
 

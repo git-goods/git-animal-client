@@ -4,7 +4,7 @@
 import type { PropsWithChildren } from 'react';
 import { useTranslations } from 'next-intl';
 import type { MergePersonaLevelResponse } from '@gitanimals/api';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';

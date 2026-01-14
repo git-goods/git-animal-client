@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { cn } from '@gitanimals/ui-tailwind';
-import { SearchBar } from '@gitanimals/ui-tailwind';
+import { SearchBar } from '@gitanimals/ui-panda';
 import { ChevronLeftIcon } from 'lucide-react';
 
 import { useGetNextUrl } from '@/hooks/useGetNewUrl';

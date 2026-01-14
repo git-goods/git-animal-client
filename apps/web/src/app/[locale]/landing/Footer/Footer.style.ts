@@ -1,4 +1,4 @@
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 export const footer = cn(
   'flex flex-col gap-[120px] w-full text-white-white py-[120px] px-0',

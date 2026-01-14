@@ -1,5 +1,5 @@
 import type { ComponentProps } from 'react';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 interface InputProps extends ComponentProps<'input'> {}
 

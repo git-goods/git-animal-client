@@ -1,4 +1,4 @@
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 export const section = cn(
   'relative flex flex-col items-center justify-center py-[120px] px-0 overflow-hidden gap-[60px]',

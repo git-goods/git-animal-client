@@ -1,4 +1,4 @@
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { getGuildById } from '@gitanimals/api';
 
 import { GuildModalPageTitle } from '@/app/[locale]/guild/_components/GuildModalPageLayout';

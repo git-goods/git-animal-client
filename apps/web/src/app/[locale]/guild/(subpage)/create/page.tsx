@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@gitanimals/ui-tailwind';
 
 import { GuildModalPageLayout } from '@/app/[locale]/guild/_components/GuildModalPageLayout';

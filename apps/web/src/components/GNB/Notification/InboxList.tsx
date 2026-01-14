@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useTranslations } from 'next-intl';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import type { Inbox } from '@gitanimals/api';
 import { inboxQueries, useReadInbox } from '@gitanimals/react-query';
 import { useQueryClient } from '@tanstack/react-query';

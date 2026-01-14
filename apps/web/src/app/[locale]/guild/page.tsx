@@ -2,7 +2,7 @@
 import type { FilterType } from '@gitanimals/api';
 import { getAllJoinGuilds, getUser, searchGuild } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-tailwind';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { getNewUrl } from '@gitanimals/util-common';
 import { ChevronLeftIcon } from 'lucide-react';
 import Image from 'next/image';
@@ -128,7 +128,7 @@ async function GuildMain({ searchParams, isSearchMode }: GuildMainProps) {
 
           <SortSelect />
           <Link href="/guild/create">
-            <Button minWidth="126px" size="m" px="20px">
+            <Button size="m" className="min-w-[126px] px-5">
               Create Guild
             </Button>
           </Link>

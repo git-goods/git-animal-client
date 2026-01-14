@@ -2,8 +2,7 @@ import Image from 'next/image';
 import type { Persona } from '@gitanimals/api';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { userQueries } from '@gitanimals/react-query';
-import { cn } from '@gitanimals/ui-tailwind';
-import { Banner } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { useQuery } from '@tanstack/react-query';
 
 import { customScrollStyle } from '@/styles/scrollStyle';
@@ -30,20 +29,21 @@ function PetList(props: Props) {
       customScrollStyle
     )}>
       {personas.map((persona) => {
+        const isSelected = props.selectedPersona?.id === persona.id;
         return (
           <button key={persona.id} onClick={() => props.onProductClick(persona)}>
-            <Banner
-              size="small"
-              status={props.selectedPersona?.id === persona.id ? 'selected' : 'default'}
-              image={
-                <Image
-                  src={getPersonaImage(persona.type)}
-                  width={isMobile ? 52 : 82}
-                  height={isMobile ? 52 : 82}
-                  alt={persona.type}
-                />
-              }
-            />
+            <div className={cn(
+              'flex items-center justify-center rounded-lg border-2 border-transparent bg-white/10',
+              isMobile ? 'w-[60px] h-[72px]' : 'w-[80px] h-[100px]',
+              isSelected && 'border-brand-canary bg-white/20'
+            )}>
+              <Image
+                src={getPersonaImage(persona.type)}
+                width={isMobile ? 52 : 82}
+                height={isMobile ? 52 : 82}
+                alt={persona.type}
+              />
+            </div>
           </button>
         );
       })}

@@ -1,4 +1,4 @@
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 export const container = cn(
   'flex flex-col items-center justify-center relative py-[120px] px-0 gap-[60px] bg-[#171717]',

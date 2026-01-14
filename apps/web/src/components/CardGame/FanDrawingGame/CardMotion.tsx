@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { motion } from 'framer-motion';
 
 interface CardMotionProps {

@@ -1,4 +1,4 @@
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import { OrderTypeSelect, useOrderTypeSelect } from './OrderTypeSelect';
 import { SortDirectionSelect, useSortDirectionSelect } from './SortDirectionSelect';

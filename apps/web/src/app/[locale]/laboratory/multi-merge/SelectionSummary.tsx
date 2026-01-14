@@ -1,4 +1,4 @@
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { ScrollArea } from '@gitanimals/ui-tailwind';
 
 import { MemoizedPersonaBannerItem } from './PersonaItem';
@@ -49,7 +49,7 @@ export function SelectionSummary({ targetPet, materialPets, onPetClick }: Select
           <span className="text-brand-sky font-bold">{materialPets.length}</span>
         </span>
       </div>
-      <ScrollArea h="60px">
+      <ScrollArea className="h-[60px]">
         <div className={selectedPetsContainerStyle}>
           {materialPets.map((pet) => (
             <div key={pet.id} className={selectedPetItemStyle}>

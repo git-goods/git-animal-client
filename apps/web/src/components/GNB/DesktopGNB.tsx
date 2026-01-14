@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { GithubIcon } from '@gitanimals/ui-icon';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { ChevronRightIcon } from 'lucide-react';
 
 import { getServerAuth } from '@/auth';
