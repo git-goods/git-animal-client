@@ -93,10 +93,6 @@ export function DialogComponent() {
   );
 }
 
-const titleStyle = cn(
-  'font-product text-glyph-20 text-left'
-);
+const titleStyle = cn('font-product text-glyph-20 text-left');
 
-const descriptionStyle = cn(
-  'font-product text-glyph-16 text-left text-white-white/75 w-full'
-);
+const descriptionStyle = cn('font-product text-glyph-16 text-left text-white/75 w-full');

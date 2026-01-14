@@ -64,13 +64,9 @@ export function PaginationServer(props: { generateMoveLink: (props: { page: numb
 
 const paginationContainerStyle = cn(
   'flex items-center justify-center gap-1.5',
-  '[&_button]:min-w-[15px] [&_button]:h-[26px] [&_button]:rounded [&_button]:inline-flex [&_button]:items-center [&_button]:justify-center'
+  '[&_button]:min-w-[15px] [&_button]:h-[26px] [&_button]:rounded [&_button]:inline-flex [&_button]:items-center [&_button]:justify-center',
 );
 
-const nonSelectedCss = cn(
-  'font-product text-glyph-16 leading-[10px] text-white-white/50'
-);
+const nonSelectedCss = cn('font-product text-glyph-16 leading-[10px] text-white/50');
 
-const selectedCss = cn(
-  'font-product text-glyph-16 font-bold leading-[10px] text-white-white'
-);
+const selectedCss = cn('font-product text-glyph-16 font-bold leading-[10px] text-white');

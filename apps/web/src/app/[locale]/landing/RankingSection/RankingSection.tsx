@@ -66,7 +66,12 @@ export default function RankingSection({
       <MediaQuery
         desktop={
           <GameConsole>
-            <div className={cn('p-[60px_130px] text-[#4ADE80] h-full font-dnf flex flex-col', 'max-mobile:p-[40px_0_0] max-mobile:w-full')}>
+            <div
+              className={cn(
+                'p-[60px_130px] text-[#4ADE80] h-full font-dnf flex flex-col',
+                'max-mobile:p-[40px_0_0] max-mobile:w-full',
+              )}
+            >
               <RankingTab selectedTab={selectedTab} />
               <TopPodium ranks={queries[0].data} />
               <RankingTable ranks={queries[1].data} page={currentPage} totalPage={totalPage} />
@@ -74,7 +79,12 @@ export default function RankingSection({
           </GameConsole>
         }
         mobile={
-          <div className={cn('p-[60px_130px] text-[#4ADE80] h-full font-dnf flex flex-col', 'max-mobile:p-[40px_0_0] max-mobile:w-full')}>
+          <div
+            className={cn(
+              'p-[60px_130px] text-[#4ADE80] h-full font-dnf flex flex-col',
+              'max-mobile:p-[40px_0_0] max-mobile:w-full',
+            )}
+          >
             <RankingTab selectedTab={selectedTab} />
             <TopPodium ranks={queries[0].data} />
             <MobileRankingTable ranks={queries[1].data} page={currentPage} totalPage={totalPage} />
@@ -108,7 +118,9 @@ function RankingTab({ selectedTab }: { selectedTab: string }) {
         className={cn(
           'font-product text-glyph-18 font-bold p-[4px_10px]',
           'max-mobile:px-3 max-mobile:inline-flex max-mobile:text-glyph-16 max-mobile:font-bold max-mobile:h-8 max-mobile:rounded-[32px] max-mobile:leading-8',
-          selectedTab === 'people' ? 'text-white-100 max-mobile:text-white-75 max-mobile:bg-white-10' : 'text-white-50 max-mobile:text-white-25',
+          selectedTab === 'people'
+            ? 'text-white-100 max-mobile:text-white-75 max-mobile:bg-white-10'
+            : 'text-white-50 max-mobile:text-white-25',
         )}
       >
         People
@@ -121,7 +133,9 @@ function RankingTab({ selectedTab }: { selectedTab: string }) {
         className={cn(
           'font-product text-glyph-18 font-bold p-[4px_10px]',
           'max-mobile:px-3 max-mobile:inline-flex max-mobile:text-glyph-16 max-mobile:font-bold max-mobile:h-8 max-mobile:rounded-[32px] max-mobile:leading-8',
-          selectedTab === 'guild' ? 'text-white-100 max-mobile:text-white-75 max-mobile:bg-white-10' : 'text-white-50 max-mobile:text-white-25',
+          selectedTab === 'guild'
+            ? 'text-white-100 max-mobile:text-white-75 max-mobile:bg-white-10'
+            : 'text-white-50 max-mobile:text-white-25',
         )}
       >
         Guild

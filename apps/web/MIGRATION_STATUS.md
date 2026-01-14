@@ -110,7 +110,7 @@ const style = css({
 });
 
 // After (Tailwind)
-const style = cn('flex items-center gap-2', 'font-product text-glyph-16 text-white-white/75', 'max-mobile:p-2');
+const style = cn('flex items-center gap-2', 'font-product text-glyph-16 text-white/75', 'max-mobile:p-2');
 ```
 
 ### 색상 토큰 매핑

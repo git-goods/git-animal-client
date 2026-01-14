@@ -2,8 +2,26 @@ import { COLORS } from '@gitanimals/ui-token';
 
 export const colors = {
   // Black & White
-  black: COLORS.black,
-  white: COLORS.white,
+  black: {
+    DEFAULT: COLORS.black,
+    '100': COLORS.black_100,
+    '90': COLORS.black_90,
+    '75': COLORS.black_75,
+    '50': COLORS.black_50,
+    '25': COLORS.black_25,
+    '10': COLORS.black_10,
+    '5': COLORS.black_5,
+  },
+  white: {
+    DEFAULT: COLORS.white,
+    '100': COLORS.white_100,
+    '90': COLORS.white_90,
+    '75': COLORS.white_75,
+    '50': COLORS.white_50,
+    '25': COLORS.white_25,
+    '10': COLORS.white_10,
+    '5': COLORS.white_5,
+  },
 
   // Gray scale (mapped from GitAnimals naming)
   gray: {

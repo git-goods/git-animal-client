@@ -43,10 +43,7 @@ export interface GitAnimalsConfigOptions {
  *   { theme: { extend: { colors: { custom: '#123456' } } } }
  * );
  */
-export function createGitAnimalsConfig(
-  contentPaths: string[] = [],
-  options: GitAnimalsConfigOptions = {}
-): Config {
+export function createGitAnimalsConfig(contentPaths: string[] = [], options: GitAnimalsConfigOptions = {}): Config {
   return {
     content: [
       ...contentPaths,

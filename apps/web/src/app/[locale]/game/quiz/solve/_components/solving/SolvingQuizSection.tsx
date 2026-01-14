@@ -59,7 +59,12 @@ const SolvingQuizSection = wrap
           <span className="w-fit mb-3 p-[6px_12px] bg-white-10 rounded-md font-product text-glyph-12 font-normal text-white-50">
             {t(level.toLowerCase())} {t('level')}
           </span>
-          <p className={cn('flex-1 flex-shrink h-full font-product text-glyph-16 font-normal text-white-75 overflow-y-auto', customScrollStyle)}>
+          <p
+            className={cn(
+              'flex-1 flex-shrink h-full font-product text-glyph-16 font-normal text-white-75 overflow-y-auto',
+              customScrollStyle,
+            )}
+          >
             {problem}
           </p>
           <div className="flex flex-col flex-shrink-0 w-full">
