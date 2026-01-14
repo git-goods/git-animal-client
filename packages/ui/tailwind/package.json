@@ -41,7 +41,9 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "type-check": "tsc --noEmit",
-    "clean": "rm -rf dist node_modules .turbo"
+    "clean": "rm -rf dist node_modules .turbo",
+    "storybook": "storybook dev -p 6002",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@gitanimals/ui-token": "workspace:*",
@@ -62,14 +64,25 @@
   "devDependencies": {
     "@gitanimals/eslint-config": "workspace:*",
     "@gitanimals/typescript-config": "workspace:*",
+    "@storybook/addon-essentials": "^8.4.7",
+    "@storybook/addon-interactions": "^8.4.7",
+    "@storybook/addon-links": "^8.4.7",
+    "@storybook/blocks": "^8.4.7",
+    "@storybook/react": "^8.4.7",
+    "@storybook/react-vite": "^8.4.7",
+    "@storybook/test": "^8.4.7",
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.3.7",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
     "react": "^18.2.0",
     "react-dom": "^18.3.1",
+    "storybook": "^8.4.7",
     "tailwindcss": "^3.4.17",
     "tsup": "^8.5.1",
-    "typescript": "*"
+    "typescript": "*",
+    "vite": "^5.4.11"
   },
   "peerDependencies": {
     "react": "^18.0.0",
