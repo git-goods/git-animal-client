@@ -1,22 +1,22 @@
-import { css } from '_panda/css';
-import { Box } from '_panda/jsx';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@gitanimals/ui-panda';
+'use client';
+
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@gitanimals/ui-tailwind';
 
 import DevModePage from '@/components/DevMode/DevModePage';
 import GNB from '@/components/GNB/GNB';
 
 import DevClient from './Client';
 
-async function DevPage() {
+function DevPage() {
   return (
     <DevModePage>
-      <Box p={32}>
+      <div className="p-8">
         <GNB />
         <h1>server</h1>
-        <hr className={dividerStyle} />
+        <hr className="my-6" />
         <h1>client</h1>
         <DevClient />
-        <Accordion type="single" collapsible w="full">
+        <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1">
             <AccordionTrigger>Is it accessible?</AccordionTrigger>
             <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
@@ -34,13 +34,9 @@ async function DevPage() {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-      </Box>
+      </div>
     </DevModePage>
   );
 }
 
 export default DevPage;
-
-const dividerStyle = css({
-  margin: '24px 0',
-});

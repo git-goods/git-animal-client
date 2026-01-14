@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { Button, Dialog } from '@gitanimals/ui-panda';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
 
 interface SolveQuizConfirmDialogProps {
   onConfirm: () => void;
@@ -26,23 +24,21 @@ const SolveQuizConfirmDialog = ({ onConfirm, onClose, isOpen }: SolveQuizConfirm
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content isShowClose={false}>
-        <Dialog.Title>{t('solve-todays-quiz')}</Dialog.Title>
-        <Flex alignItems="center" gap="8px" width="100%">
-          <Button className={buttonStyle} onClick={onClose} variant="secondary" size="m">
+      <Dialog.Content size="default" isShowClose={false} className="min-w-[300px]">
+        <Dialog.Title className="font-product font-medium text-glyph-20 text-left">
+          {t('solve-todays-quiz')}
+        </Dialog.Title>
+        <div className="flex items-center gap-2 w-full">
+          <Button className="w-full" onClick={onClose} variant="secondary" size="m">
             {t('cancel')}
           </Button>
-          <Button className={buttonStyle} onClick={handleConfirm} variant="primary" size="m" disabled={isLoading}>
+          <Button className="w-full" onClick={handleConfirm} variant="primary" size="m" disabled={isLoading}>
             {t('yes')}
           </Button>
-        </Flex>
+        </div>
       </Dialog.Content>
     </Dialog>
   );
 };
 
 export default SolveQuizConfirmDialog;
-
-const buttonStyle = css({
-  width: '100%',
-});

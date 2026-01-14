@@ -1,5 +1,4 @@
-import { css } from '_panda/css';
-import { Flex } from '_panda/jsx';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { getGuildById } from '@gitanimals/api';
 
 import { GuildModalPageTitle } from '@/app/[locale]/guild/_components/GuildModalPageLayout';
@@ -11,38 +10,36 @@ export default async function GuildMemberSetting({ params }: { params: { id: str
   const guild = await getGuildById({ guildId: params.id });
 
   return (
-    <div className={css({ minH: 'calc(100vh - 300px)' })}>
-      <GuildModalPageTitle className={css({ mb: '40px' })}>Manage members</GuildModalPageTitle>
+    <div className="min-h-[calc(100vh-300px)]">
+      <GuildModalPageTitle className="mb-10">Manage members</GuildModalPageTitle>
 
       {guild?.waitMembers.length === 0 ? null : (
         <>
           <h3 className={subHeadingStyle}>Request</h3>
-          <Flex gap="1" flexWrap="wrap" mb="24px">
+          <div className="flex gap-1 flex-wrap mb-6">
             {guild.waitMembers.map((member) => (
               <WaitMemberCard member={member} guildId={guild.id} key={member.id} />
             ))}
-          </Flex>
+          </div>
         </>
       )}
 
       {guild?.members.length === 0 ? (
-        <p className={css({ textAlign: 'center', py: '40px', color: 'white.white_50' })}>No members</p>
+        <p className="text-center py-10 text-white/50">No members</p>
       ) : (
         <>
           <h3 className={subHeadingStyle}>Members</h3>
-          <Flex gap="1" flexWrap="wrap">
+          <div className="flex gap-1 flex-wrap">
             {guild.members.map((member) => (
               <MemberCard member={member} key={member.id} guildId={guild.id} />
             ))}
-          </Flex>
+          </div>
         </>
       )}
     </div>
   );
 }
 
-const subHeadingStyle = css({
-  textStyle: 'glyph14.regular',
-  color: 'white',
-  mb: '8px',
-});
+const subHeadingStyle = cn(
+  'font-product text-glyph-14 text-white mb-2'
+);

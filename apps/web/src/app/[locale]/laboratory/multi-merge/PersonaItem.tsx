@@ -1,8 +1,7 @@
 import type { ComponentProps } from 'react';
 import { memo } from 'react';
-import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
-import { Banner, LevelBanner } from '@gitanimals/ui-panda';
+import { cn, Banner, LevelBanner } from '@gitanimals/ui-tailwind';
 
 import { getPersonaImage } from '@/utils/image';
 
@@ -18,7 +17,7 @@ function PersonaItem({ persona, isSelected, onClick, size = 'full', className }:
   return (
     <button
       onClick={onClick}
-      className={css({ outline: 'none', bg: 'transparent', width: '100%', height: '100%' })}
+      className="outline-none bg-transparent w-full h-full"
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -31,7 +30,7 @@ function PersonaItem({ persona, isSelected, onClick, size = 'full', className }:
         image={getPersonaImage(persona.type)}
         status={isSelected ? 'selected' : 'default'}
         level={Number(persona.level)}
-        className={cx(css({ width: '100%', height: '100%' }), className)}
+        className={cn('w-full h-full', className)}
         size={size}
       />
     </button>
@@ -42,7 +41,7 @@ function PersonaBannerItem({ persona, isSelected, onClick, size = 'full', classN
   return (
     <button
       onClick={onClick}
-      className={css({ outline: 'none', bg: 'transparent', width: '100%', height: '100%' })}
+      className="outline-none bg-transparent w-full h-full"
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -54,7 +53,7 @@ function PersonaBannerItem({ persona, isSelected, onClick, size = 'full', classN
       <Banner
         image={getPersonaImage(persona.type)}
         status={isSelected ? 'selected' : 'default'}
-        className={cx(css({ width: '100%', height: '100%' }), className)}
+        className={cn('w-full h-full', className)}
         size={size}
       />
     </button>

@@ -1,107 +1,59 @@
-import { css } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 // Modal 스타일
-export const modalOverlayStyle = css({
-  position: 'fixed',
-  inset: '0',
-  background: 'black.black_95',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '16px',
-  zIndex: 'modal',
-});
+export const modalOverlayStyle = cn(
+  'fixed inset-0 bg-black/95',
+  'flex items-center justify-center',
+  'p-4 z-modal'
+);
 
-export const modalContainerStyle = css({
-  background: 'black.black_100',
-  borderRadius: '16px',
-  width: '100%',
-  maxWidth: '80rem',
-  maxHeight: '95vh',
-  overflow: 'hidden',
-  display: 'flex',
-  flexDirection: 'column',
-});
+export const modalContainerStyle = cn(
+  'bg-black rounded-2xl',
+  'w-full max-w-[80rem] max-h-[95vh]',
+  'overflow-hidden flex flex-col'
+);
 
 // Header 스타일
-export const headerStyle = css({
-  padding: '24px 32px',
-});
+export const headerStyle = 'px-8 py-6';
 
-export const titleStyle = css({
-  fontSize: '30px',
-  fontWeight: 'bold',
-  color: 'white.white_100',
-  textAlign: 'center',
-});
+export const titleStyle = cn(
+  'text-[30px] font-bold text-white text-center'
+);
 
-export const closeButtonStyle = css({
-  color: 'gray.gray_400',
-  transition: 'colors',
-  cursor: 'pointer',
-  _hover: {
-    color: 'white.white_100',
-  },
-});
+export const closeButtonStyle = cn(
+  'text-gray-400 transition-colors cursor-pointer',
+  'hover:text-white'
+);
 
 // Content 스타일
-export const contentSectionStyle = css({
-  padding: '12px 32px',
-});
+export const contentSectionStyle = 'px-8 py-3';
 
-export const instructionTextStyle = css({
-  padding: '0 32px 16px',
-});
+export const instructionTextStyle = 'px-8 pb-4';
 
-export const instructionStyle = css({
-  color: 'gray.gray_400',
-  fontSize: '14px',
-  textAlign: 'center',
-});
+export const instructionStyle = cn(
+  'text-gray-400 text-sm text-center'
+);
 
 // Filter 스타일
-export const filterSectionStyle = css({
-  padding: '0 32px 16px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  gap: '12px',
-});
+export const filterSectionStyle = cn(
+  'px-8 pb-4',
+  'flex items-center justify-end gap-3'
+);
 
-export const selectStyle = css({
-  background: 'gray.gray_200',
-  color: 'gray.gray_400',
-  padding: '8px 16px',
-  borderRadius: '8px',
-  fontSize: '14px',
-  border: '1px solid',
-  borderColor: 'gray.gray_300',
-  outline: 'none',
-  _focus: {
-    borderColor: 'gray.gray_400',
-  },
-});
+export const selectStyle = cn(
+  'bg-gray-200 text-gray-400',
+  'px-4 py-2 rounded-lg text-sm',
+  'border border-gray-300 outline-none',
+  'focus:border-gray-400'
+);
 
 // Button 스타일
-export const mergeButtonStyle = css({
-  width: '100%',
-  padding: '16px',
-  background: 'gray.gray_400',
-  color: 'gray.gray_600',
-  fontWeight: 'bold',
-  borderRadius: '12px',
-  fontSize: '18px',
-  transition: 'all',
-  cursor: 'pointer',
-  _hover: {
-    background: 'gray.gray_300',
-  },
-  _disabled: {
-    background: 'gray.gray_300',
-    color: 'gray.gray_500',
-    cursor: 'not-allowed',
-    _hover: {
-      background: 'gray.gray_300',
-    },
-  },
-});
+export const mergeButtonStyle = cn(
+  'w-full p-4',
+  'bg-gray-400 text-gray-600',
+  'font-bold rounded-xl text-lg',
+  'transition-all cursor-pointer',
+  'hover:bg-gray-300',
+  'disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed',
+  'disabled:hover:bg-gray-300'
+);

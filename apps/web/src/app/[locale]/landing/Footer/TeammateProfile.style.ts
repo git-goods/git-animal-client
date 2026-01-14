@@ -1,59 +1,22 @@
-import { css } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
-export const wrapperCss = css({
-  width: 'calc(25% - 24px)',
-  display: 'flex',
-  flexDir: 'column',
+export const wrapperCss = cn(
+  'w-[calc(25%-24px)] flex flex-col',
+  'max-mobile:w-[calc(50%-6px)] max-mobile:flex-row max-mobile:gap-[5px]',
+);
 
-  _mobile: {
-    width: 'calc(50% - 6px)',
-    flexDir: 'row',
-    gap: '5px',
-  },
-});
+export const imageCss = cn(
+  'mb-2',
+  'max-mobile:w-8 max-mobile:h-6 max-mobile:mb-0 max-mobile:object-contain max-mobile:object-[left_50%]',
+);
 
-export const imageCss = css({
-  marginBottom: '8px',
+export const textWrapperCss = cn('flex flex-col');
 
-  _mobile: {
-    width: '32px',
-    height: '24px',
-    marginBottom: '0px',
-    objectFit: 'contain',
-    objectPosition: 'left 50%',
-  },
-});
+export const nicknameWrapperCss = cn(
+  'flex items-center gap-[5px] mb-1',
+  '[&_span]:font-product [&_span]:text-glyph-18 [&_span]:font-bold [&_span]:text-white/90',
+  'max-mobile:mb-px',
+  'max-mobile:[&_span]:text-glyph-15 max-mobile:[&_span]:font-bold',
+);
 
-export const textWrapperCss = css({
-  display: 'flex',
-  flexDir: 'column',
-});
-
-export const nicknameWrapperCss = css({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '5px',
-  marginBottom: '4px',
-
-  '& span': {
-    textStyle: 'glyph18.bold',
-    color: 'white.white_90',
-  },
-
-  _mobile: {
-    marginBottom: '1px',
-    '& span': {
-      textStyle: 'glyph15.bold',
-      fontWeight: 'bold',
-    },
-  },
-});
-
-export const roleCss = css({
-  textStyle: 'glyph16.regular',
-  color: 'white.white_75',
-
-  _mobile: {
-    textStyle: 'glyph12.regular',
-  },
-});
+export const roleCss = cn('font-product text-glyph-16 text-white/75', 'max-mobile:text-glyph-12');

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { css } from '_panda/css';
 import { motion } from 'framer-motion';
 
 export function MobileGameConsole() {
@@ -14,7 +13,7 @@ export function MobileGameConsole() {
   };
 
   return (
-    <div className={containerStyle}>
+    <div className="w-screen -translate-x-4 h-auto flex items-center justify-center">
       <svg
         width="100%"
         height="100%"
@@ -104,12 +103,3 @@ export function MobileGameConsole() {
     </div>
   );
 }
-
-const containerStyle = css({
-  width: '100vw',
-  transform: 'translateX(-16px)',
-  height: 'auto',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-});

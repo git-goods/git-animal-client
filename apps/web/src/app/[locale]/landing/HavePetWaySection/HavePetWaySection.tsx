@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import * as styles from './HavePetWaySection.style';
 
@@ -9,7 +9,7 @@ function HavePetWaySection() {
     <section className={styles.section}>
       <h2 className={styles.heading}>Two Ways to Have Pets</h2>
       <div className={styles.wayContainer}>
-        <div className={cx(styles.wayItem, css({ background: 'brand.coral' }))}>
+        <div className={cn(styles.wayItem, 'bg-brand-coral')}>
           <div>
             <h3 className={styles.wayItemHeading}>
               <span>1</span>
@@ -29,7 +29,7 @@ function HavePetWaySection() {
             height={360}
           />
         </div>
-        <div className={cx(styles.wayItem, css({ background: 'brand.turquoise' }))}>
+        <div className={cn(styles.wayItem, 'bg-brand-turquoise')}>
           <div>
             <h3 className={styles.wayItemHeading}>
               <span>2</span>

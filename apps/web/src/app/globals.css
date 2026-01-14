@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* PandaCSS layers - will be removed after migration */
 @layer reset, base, tokens, recipes, utilities;
 
 @font-face {
@@ -31,24 +36,6 @@
     background-color: transparent;
     padding: 0;
     outline: none;
-  }
-
-  .mobile {
-    display: none;
-  }
-
-  .desktop {
-    display: block;
-  }
-
-  @media (max-width: 768px) {
-    .mobile {
-      display: block;
-    }
-
-    .desktop {
-      display: none;
-    }
   }
 }
 
@@ -136,13 +123,13 @@
 .gradient-move {
   background: linear-gradient(
     -45deg,
-    rgba(255, 192, 192, 0.7),
-    rgba(78, 205, 196, 0.7),
-    rgba(69, 183, 209, 0.7),
-    rgba(150, 206, 180, 0.7)
+    rgba(255, 220, 220, 0.35),
+    rgba(180, 230, 225, 0.35),
+    rgba(180, 215, 235, 0.35),
+    rgba(200, 230, 210, 0.35)
   );
-  background-size: 400% 400%;
-  animation: gradientMove 3s ease infinite;
+  background-size: 300% 300%;
+  animation: gradientMove 5s ease-in-out infinite;
 }
 
 /* Laboratory page animations */

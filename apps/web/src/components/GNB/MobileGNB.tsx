@@ -5,8 +5,7 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
+import { cn } from '@gitanimals/ui-tailwind';
 import type { Transition, Variants } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronRight, Globe, LogOutIcon, Menu } from 'lucide-react';
@@ -36,9 +35,20 @@ export const MobileGNB = () => {
 
   return (
     <>
-      <div className={css({ h: '60px' })} />
-      <header className={mobileHeaderStyle}>
-        <div className={mobileHeaderContentStyle}>
+      <div className="h-[60px]" />
+      <header
+        className={cn(
+          'justify-between items-center z-header fixed px-5 top-0 h-[60px] bg-white',
+          'w-screen hidden max-mobile:flex'
+        )}
+      >
+        <div
+          className={cn(
+            'flex items-center justify-between relative w-full h-11',
+            '[&_.center-title]:w-fit [&_.center-title]:absolute [&_.center-title]:left-1/2 [&_.center-title]:-translate-x-1/2',
+            '[&_.profile-image]:w-7 [&_.profile-image]:h-7 [&_.profile-image]:rounded-full [&_.profile-image]:overflow-hidden'
+          )}
+        >
           <button onClick={toggleMenu}>
             <Menu size={24} color="black" />
           </button>
@@ -65,7 +75,12 @@ export const MobileGNB = () => {
             exit="exit"
             variants={menuVariant}
             transition={menuTransition}
-            className={mobileMenuStyle}
+            className={cn(
+              'fixed left-0 right-0 bg-white top-[60px] max-h-[calc(100vh-60px)] overflow-y-auto',
+              'shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] z-drawer',
+              'max-mobile:flex',
+              '[&_.menu-list]:w-full [&_.menu-list>*]:w-full'
+            )}
           >
             <ul className="menu-list">
               {menuList.map((menu) => (
@@ -104,7 +119,13 @@ export const MobileGNB = () => {
 
 function MenuItem({ icon, label, isArrow = true }: { icon: ReactNode; label: string; isArrow?: boolean }) {
   return (
-    <motion.li className={menuItemStyle}>
+    <motion.li
+      className={cn(
+        'flex justify-between font-product text-glyph-16 capitalize text-black/75',
+        'py-[18px] pr-[22px] pl-5 border-b border-gray-900',
+        '[&_div]:flex [&_div]:items-center [&_div]:gap-2.5'
+      )}
+    >
       <div>
         {icon}
         <p>{label}</p>
@@ -113,80 +134,6 @@ function MenuItem({ icon, label, isArrow = true }: { icon: ReactNode; label: str
     </motion.li>
   );
 }
-
-const mobileHeaderContentStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  position: 'relative',
-  width: '100%',
-  height: '44px',
-  '& .center-title': { width: 'fit-content', position: 'absolute', left: '50%', transform: 'translateX(-50%)' },
-  '& .profile-image': {
-    width: '28px',
-    height: '28px',
-    borderRadius: '50%',
-    overflow: 'hidden',
-  },
-});
-
-const mobileHeaderStyle = css({
-  // common
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  zIndex: 'header',
-  position: 'fixed',
-  padding: '0 20px',
-  top: 0,
-  height: '60px',
-  backgroundColor: 'white',
-
-  // mobile
-  width: '100vw',
-  display: 'none',
-  _mobile: {
-    display: 'flex',
-  },
-});
-
-const mobileMenuStyle = css({
-  position: 'fixed',
-  left: 0,
-  right: 0,
-  backgroundColor: '#fff',
-  top: '60px',
-  maxHeight: 'calc(100vh - 60px)',
-  overflowY: 'auto',
-  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-  zIndex: 'drawer',
-
-  _mobile: {
-    display: 'flex',
-  },
-
-  '& .menu-list': {
-    width: '100%',
-    '& >  *': {
-      width: '100%',
-    },
-  },
-});
-
-const menuItemStyle = flex({
-  justifyContent: 'space-between',
-  textStyle: 'glyph16.regular',
-  textTransform: 'capitalize',
-  color: 'black.black_75',
-  padding: '18px 22px 18px 20px',
-  borderBottom: '1px solid',
-  borderColor: 'gray.gray_900',
-
-  '& div': {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-  },
-});
 
 const menuVariant: Variants = {
   initial: { opacity: 1, y: '-100%' },

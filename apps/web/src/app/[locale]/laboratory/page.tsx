@@ -1,6 +1,6 @@
 'use client';
 
-import { css } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Heart } from 'lucide-react';
 import { toast } from 'sonner';
@@ -36,12 +36,14 @@ const list: LaboratoryItem[] = [
 
 export default function LaboratoryPage() {
   return (
-    <div className={containerStyle}>
-      <header className={headerStyle}>
-        <h1 className={titleStyle}>🧪 실험실</h1>
-        <p className={subtitleStyle}>새로운 기능을 먼저 경험하고 피드백을 남겨주세요</p>
+    <div className="p-6 max-w-[1200px] mx-auto pb-20">
+      <header className="text-center mb-10 animate-fade-in">
+        <h1 className="font-product text-glyph-36 font-bold mb-3 bg-gradient-to-r from-[#016EDB] via-[#16B7CD] to-[#5CCA69] bg-clip-text text-transparent">
+          🧪 실험실
+        </h1>
+        <p className="text-base text-white">새로운 기능을 먼저 경험하고 피드백을 남겨주세요</p>
       </header>
-      <div className={contentStyle}>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {list.map((item) => (
           <Card key={item.id} item={item} />
         ))}
@@ -107,219 +109,69 @@ function Card({ item }: { item: LaboratoryItem }) {
   };
 
   return (
-    <Link href={item.href} className={cardStyle}>
-      <div className={cardContentStyle}>
-        <div className={cardHeaderStyle}>
-          <h2 className={cardTitleStyle}>{item.title}</h2>
-          <div className={badgeStyle}>실험중</div>
+    <Link
+      href={item.href}
+      className={cn(
+        'relative p-6 flex flex-col gap-2 rounded-[20px] cursor-pointer overflow-hidden',
+        'bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-[10px]',
+        'border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.1)]',
+        'transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]',
+        'before:content-[""] before:absolute before:top-0 before:left-0 before:right-0 before:h-px',
+        'before:bg-gradient-to-r before:from-[#016EDB] before:via-[#16B7CD] before:to-[#5CCA69]',
+        'before:opacity-0 before:transition-opacity before:duration-300',
+        'hover:-translate-y-0.5 hover:scale-[1.02]',
+        'hover:shadow-[0_20px_40px_rgba(82,209,109,0.3)]',
+        'hover:border-[rgba(82,209,109,0.5)]',
+        'hover:before:opacity-100',
+        'active:-translate-y-1 active:scale-[1.01]'
+      )}
+    >
+      <div className="flex-1 flex flex-col gap-2">
+        <div className="flex justify-between items-start gap-2">
+          <h2 className="font-product text-glyph-18 font-bold text-white flex-1">{item.title}</h2>
+          <div
+            className={cn(
+              'text-xs font-bold px-3 py-1 rounded-xl text-white whitespace-nowrap animate-pulse',
+              'bg-gradient-to-r from-[#016EDB] via-[#16B7CD] to-[#5CCA69]',
+              'shadow-[0_0_20px_rgba(82,209,109,0.5)]'
+            )}
+          >
+            실험중
+          </div>
         </div>
-        <p className={cardDescriptionStyle}>{item.description}</p>
+        <p className="font-product text-glyph-14 text-white/75">{item.description}</p>
       </div>
 
-      <div className={cardFooterStyle}>
+      <div className="flex justify-end pt-2 border-t border-white/5">
         <button
-          className={upvoteButtonStyle}
+          className={cn(
+            'flex items-center gap-2 px-4 py-2.5 rounded-xl',
+            'bg-white/5 border border-white/10 text-white',
+            'text-sm font-semibold cursor-pointer transition-all duration-300',
+            'hover:bg-gradient-to-r hover:from-[#016EDB] hover:to-[#16B7CD]',
+            'hover:border-transparent hover:scale-[1.03]',
+            'hover:shadow-[0_4px_12px_rgba(82,209,109,0.5)]',
+            'active:scale-[0.98]',
+            'data-[upvoted=true]:bg-gradient-to-r data-[upvoted=true]:from-[#d9b9f9] data-[upvoted=true]:to-[#e56997]',
+            'data-[upvoted=true]:border-transparent data-[upvoted=true]:cursor-default',
+            'disabled:opacity-70 disabled:cursor-not-allowed'
+          )}
           onClick={handleUpvote}
           disabled={isUpvoting || hasUpvoted}
           data-upvoted={hasUpvoted}
         >
-          <Heart className={hasUpvoted ? heartFilledStyle : heartStyle} />
-          <span className={upvoteTextStyle}>{hasUpvoted ? '업보트 완료' : '업보트'}</span>
+          <Heart
+            className={cn(
+              'w-[18px] h-[18px] stroke-2 transition-all duration-300',
+              hasUpvoted && 'fill-current animate-[heartbeat_1s_ease-in-out]'
+            )}
+          />
+          <span className="font-semibold">{hasUpvoted ? '업보트 완료' : '업보트'}</span>
           {typeof upvoteCount === 'number' && upvoteCount > 0 && (
-            <span className={upvoteCountStyle}>{upvoteCount}</span>
+            <span className="text-[13px] font-bold px-2 py-0.5 rounded-lg bg-white/15 text-white">{upvoteCount}</span>
           )}
         </button>
       </div>
     </Link>
   );
 }
-
-const containerStyle = css({
-  padding: '24px',
-  maxWidth: '1200px',
-  margin: '0 auto',
-  paddingBottom: '80px',
-});
-
-const headerStyle = css({
-  textAlign: 'center',
-  marginBottom: '40px',
-  animation: 'fadeIn 0.6s ease-out',
-});
-
-const titleStyle = css({
-  textStyle: 'glyph36.bold',
-  marginBottom: '12px',
-  backgroundImage: 'linear-gradient(150.51deg, #016EDB 11.25%, #16B7CD 61.95%, #5CCA69 94.01%)',
-  backgroundClip: 'text',
-  color: 'transparent',
-});
-
-const subtitleStyle = css({
-  fontSize: '16px',
-  color: 'white.white_100',
-});
-
-const contentStyle = css({
-  display: 'grid',
-  gridTemplateColumns: '1fr',
-  gap: '24px',
-  '@media (min-width: 768px)': {
-    gridTemplateColumns: 'repeat(2, 1fr)',
-  },
-});
-
-const cardStyle = css({
-  position: 'relative',
-  background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
-  backdropFilter: 'blur(10px)',
-  borderRadius: '20px',
-  padding: '24px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '8px',
-  border: '1px solid rgba(255, 255, 255, 0.1)',
-  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  cursor: 'pointer',
-  overflow: 'hidden',
-
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '1px',
-
-    background: 'linear-gradient(150.51deg, #016EDB 11.25%, #16B7CD 61.95%, #5CCA69 94.01%)',
-    opacity: 0,
-    transition: 'opacity 0.3s ease',
-  },
-
-  _hover: {
-    transform: 'translateY(-2px) scale(1.02)',
-    // 초록
-    boxShadow: '0 20px 40px rgba(82, 209, 109, 0.3)',
-    borderColor: 'rgba(82, 209, 109, 0.5)',
-
-    '&::before': {
-      opacity: 1,
-    },
-  },
-
-  _active: {
-    transform: 'translateY(-4px) scale(1.01)',
-  },
-});
-
-const cardContentStyle = css({
-  flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '8px',
-});
-
-const cardHeaderStyle = css({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'flex-start',
-  gap: '8px',
-});
-
-const cardTitleStyle = css({
-  textStyle: 'glyph18.bold',
-  color: 'white.white_100',
-  flex: 1,
-});
-
-const badgeStyle = css({
-  fontSize: '12px',
-  fontWeight: 'bold',
-  padding: '4px 12px',
-  borderRadius: '12px',
-  // background: linear-gradient(150.51deg, #016EDB 11.25%, #16B7CD 61.95%, #5CCA69 94.01%);
-
-  background: 'linear-gradient(150.51deg, #016EDB 11.25%, #16B7CD 61.95%, #5CCA69 94.01%)',
-  color: 'white',
-  whiteSpace: 'nowrap',
-  animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-  boxShadow: '0 0 20px rgba(82, 209, 109, 0.5)',
-});
-
-const cardDescriptionStyle = css({
-  textStyle: 'glyph14.regular',
-  color: 'white.white_75',
-});
-
-const cardFooterStyle = css({
-  display: 'flex',
-  justifyContent: 'flex-end',
-  paddingTop: '8px',
-  borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-});
-
-const upvoteButtonStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-  padding: '10px 16px',
-  borderRadius: '12px',
-  background: 'rgba(255, 255, 255, 0.05)',
-  border: '1px solid rgba(255, 255, 255, 0.1)',
-  color: 'white.white_100',
-  fontSize: '14px',
-  fontWeight: '600',
-  cursor: 'pointer',
-  transition: 'all 0.3s ease',
-
-  '&:hover:not(:disabled)': {
-    background: 'linear-gradient(135deg, #016EDB 0%, #16B7CD 100%)',
-    borderColor: 'transparent',
-    transform: 'scale(1.03)',
-    boxShadow: '0 4px 12px rgba(82, 209, 109, 0.5)',
-  },
-
-  '&:active:not(:disabled)': {
-    transform: 'scale(0.98)',
-  },
-
-  '&[data-upvoted="true"]': {
-    background: 'linear-gradient(135deg, #d9b9f9 0%, #e56997 100%)',
-    borderColor: 'transparent',
-    cursor: 'default',
-  },
-
-  '&:disabled': {
-    opacity: 0.7,
-    cursor: 'not-allowed',
-  },
-});
-
-const heartStyle = css({
-  width: '18px',
-  height: '18px',
-  strokeWidth: '2',
-  transition: 'all 0.3s ease',
-});
-
-const heartFilledStyle = css({
-  width: '18px',
-  height: '18px',
-  fill: 'currentColor',
-  strokeWidth: '2',
-  animation: 'heartbeat 1s ease-in-out',
-});
-
-const upvoteTextStyle = css({
-  fontWeight: '600',
-});
-
-const upvoteCountStyle = css({
-  fontSize: '13px',
-  fontWeight: 'bold',
-  padding: '2px 8px',
-  borderRadius: '8px',
-  background: 'rgba(255, 255, 255, 0.15)',
-  color: 'white',
-});

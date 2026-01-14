@@ -2,10 +2,9 @@
 
 import React, { useCallback, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
+import { cn } from '@gitanimals/ui-tailwind';
 import { type Persona } from '@gitanimals/api';
-import { ScrollArea } from '@gitanimals/ui-panda';
+import { ScrollArea } from '@gitanimals/ui-tailwind';
 
 import { SelectPersonaList } from '../PersonaList';
 
@@ -25,12 +24,18 @@ function MypageMyPets() {
   );
 
   return (
-    <div className={flex({ flexDir: 'column' })}>
+    <div className="flex flex-col">
       <SelectedPetTable currentPersona={selectPersona} reset={() => setSelectPersona(null)} />
-      <section className={selectPetContainerStyle}>
+      <section
+        className={cn(
+          'relative',
+          '[&_.heading]:font-product [&_.heading]:text-glyph-18 [&_.heading]:font-bold',
+          '[&_.heading]:text-white [&_.heading]:mb-4'
+        )}
+      >
         <h2 className="heading">{t('pet-list')}</h2>
 
-        <ScrollArea height="calc(100vh - 424px)">
+        <ScrollArea className="h-[calc(100vh-424px)]">
           <SelectPersonaList
             selectPersona={selectPersona ? [selectPersona.id] : []}
             onSelectPersona={(persona) => setSelectPersona(persona)}
@@ -40,29 +45,16 @@ function MypageMyPets() {
         </ScrollArea>
       </section>
 
-      <p className={captionMessageStyle}>{t('sell-to-other')}</p>
+      <p
+        className={cn(
+          'font-product text-glyph-18 text-white/75 mt-4',
+          'opacity-0 animate-[fadeIn_0.5s_ease-in-out_5s_forwards]'
+        )}
+      >
+        {t('sell-to-other')}
+      </p>
     </div>
   );
 }
 
 export default MypageMyPets;
-
-const captionMessageStyle = css({
-  textStyle: 'glyph18.regular',
-  color: 'white_75',
-  marginTop: '16px',
-
-  // 안내 멘트 5초 뒤에 등장
-  opacity: 0,
-  animation: `fadeIn 0.5s ease-in-out 5s forwards`,
-});
-
-const selectPetContainerStyle = css({
-  position: 'relative',
-
-  '& .heading': {
-    textStyle: 'glyph18.bold',
-    color: 'white',
-    marginBottom: '16px',
-  },
-});

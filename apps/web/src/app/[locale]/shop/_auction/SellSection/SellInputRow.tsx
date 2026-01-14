@@ -2,11 +2,11 @@
 import type { ChangeEventHandler } from 'react';
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries, userQueries } from '@gitanimals/react-query';
-import { Button, Dialog } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind/utils';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -102,7 +102,7 @@ function SellInputRow({ item, initPersona }: Props) {
         <span></span>
       </div>
 
-      <div className={cx(rowStyle, 'row')}>
+      <div className={cn(rowStyle, 'row')}>
         {item && personaTier && (
           <>
             <div>
@@ -113,7 +113,13 @@ function SellInputRow({ item, initPersona }: Props) {
             <div>{item.level}</div>
             <div>
               <input
-                className={inputStyle}
+                className={cn(
+                  'font-product text-glyph-20',
+                  'w-full h-full min-h-16 text-xl font-bold',
+                  'border-none outline-none',
+                  'placeholder:text-glyph-20 placeholder:text-white/25',
+                  '[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0'
+                )}
                 inputMode="numeric"
                 placeholder={t('price-you-want')}
                 value={price}
@@ -149,13 +155,20 @@ function SellPriceModal({
       <Dialog.Content>
         <Dialog.Title>{t('sell-price-modal-title')}</Dialog.Title>
         <input
-          className={mobilePriceinputStyle}
+          className={cn(
+            'flex h-[55px] py-3.5 pl-5 pr-3.5',
+            'items-start gap-2 w-full outline-none',
+            'rounded-lg border border-white/25',
+            'font-product text-glyph-16 text-white',
+            'placeholder:text-glyph-16 placeholder:text-white/75',
+            '[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0'
+          )}
           placeholder="Type price..."
           type="number"
           value={Boolean(sellPrice) ? sellPrice : ''}
           onChange={(e) => setSellPrice(Number(e.target.value))}
         />
-        <div className={buttonWrapperStyle}>
+        <div className="flex justify-end gap-2 w-full">
           <Button onClick={onClose} variant="secondary" size="m">
             Cancle
           </Button>
@@ -167,57 +180,6 @@ function SellPriceModal({
     </Dialog>
   );
 }
-
-const mobilePriceinputStyle = css({
-  display: 'flex',
-  height: '55px',
-  padding: '14px 14px 13px 20px',
-  alignItems: 'flex-start',
-  gap: '8px',
-  width: '100%',
-  outline: 'none',
-  borderRadius: '8px',
-  border: '1px solid rgba(255, 255, 255, 0.25)',
-  textStyle: 'glyph16.regular',
-  color: 'white.white_100',
-  '&::placeholder': {
-    textStyle: 'glyph16.regular',
-    color: 'white.white_75',
-  },
-  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-    WebkitAppearance: 'none',
-    margin: 0,
-  },
-});
-
-const buttonWrapperStyle = css({
-  display: 'flex',
-  justifyContent: 'flex-end',
-  gap: '8px',
-  width: '100%',
-});
-
-const inputStyle = css({
-  textStyle: 'glyph20.regular',
-
-  width: '100%',
-  height: '100%',
-  minHeight: '64px',
-  fontSize: '20px',
-  fontWeight: 700,
-  border: 'none',
-  outline: 'none',
-
-  '&::placeholder': {
-    textStyle: 'glyph20.regular',
-    color: 'white.white_25',
-  },
-
-  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-    WebkitAppearance: 'none',
-    margin: 0,
-  },
-});
 
 function usePrice() {
   const [price, setPrice] = useState<number | undefined>();

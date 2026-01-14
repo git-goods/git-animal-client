@@ -3,12 +3,9 @@
 import { useCallback, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { flex } from '_panda/patterns';
 import { dropPet, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Button, Checkbox, Dialog, Label } from '@gitanimals/ui-panda';
+import { Button, Checkbox, cn, Dialog, Label } from '@gitanimals/ui-tailwind';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
@@ -88,8 +85,8 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
   };
 
   return (
-    <div className={tableCss}>
-      <div className={theadCss}>
+    <div className="w-full mb-8">
+      <div className="grid grid-cols-[1fr_2.5fr_1fr_1fr_5.7fr] gap-4 py-1 px-8 rounded-xl bg-white/50 items-center h-[46px] font-product-bold text-glyph-18 text-white mb-1 [&>span:first-child]:text-center max-mobile:text-base">
         <span>{t('pet')}</span>
         <span>{t('name')}</span>
         <span>{t('grade')}</span>
@@ -97,7 +94,7 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
         <span></span>
       </div>
 
-      <div className={cx(rowStyle, 'row')}>
+      <div className="w-full h-20 bg-white/10 rounded-xl grid grid-cols-[1fr_2.5fr_1fr_1fr_5.7fr] items-center py-0 px-8 gap-4 font-product text-glyph-20 text-white [&_button]:text-black [&_button]:w-full [&_button]:px-1.5 [&_*]:overflow-hidden [&_*]:text-ellipsis max-mobile:text-base">
         {currentPersona && (
           <>
             <div>
@@ -106,7 +103,7 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
             <div>{snakeToTitleCase(currentPersona.type)}</div>
             <div>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</div>
             <div>{currentPersona.level}</div>
-            <div className={flex({ gap: '8px' })}>
+            <div className="flex gap-2">
               <Button variant="secondary" onClick={onSellClick}>
                 {t('sell')} (100P)
               </Button>
@@ -131,66 +128,6 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
     </div>
   );
 }
-
-const tableCss = css({
-  width: '100%',
-  marginBottom: '32px',
-});
-
-const theadCss = css({
-  display: 'grid',
-  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 5.7fr',
-  gap: '16px',
-  padding: '4px 32px',
-  borderRadius: '12px',
-  backgroundColor: 'white_50',
-  alignItems: 'center',
-
-  height: '46px',
-  textStyle: 'glyph18.bold',
-  color: 'white_100',
-
-  '& > span:nth-child(1)': {
-    textAlign: 'center',
-  },
-
-  marginBottom: '4px',
-
-  _mobile: {
-    fontSize: '16px',
-  },
-});
-
-const rowStyle = css({
-  width: '100%',
-  height: '80px',
-  backgroundColor: 'white_10',
-  borderRadius: '12px',
-
-  display: 'grid',
-  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 5.7fr',
-  alignItems: 'center',
-  padding: '0 32px',
-  gap: '16px',
-
-  textStyle: 'glyph20.regular',
-  color: 'white.white_100',
-
-  '& button': {
-    color: 'black.black',
-    width: '100%',
-    paddingX: '6px',
-  },
-
-  '& *': {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-
-  _mobile: {
-    fontSize: '16px',
-  },
-});
 
 const DO_NOT_SHOW_AGAIN_KEY = LOCAL_STORAGE_KEY.isDoNotShowAgain;
 
@@ -239,32 +176,26 @@ function SellConfirmDialog({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content>
         <Dialog.Title>{t('Shop.sell-confirm')}</Dialog.Title>
-        <Dialog.Description className={descriptionStyle}>
+        <Dialog.Description className="text-left text-white/75 w-full">
           <p>{t('Shop.sell-confirm-description')}</p>
         </Dialog.Description>
-        <Flex alignItems="center" justifyContent="space-between" width="100%">
-          <Flex alignItems="center" gap="2">
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-2">
             <Checkbox id="do-not-show-again" onClick={() => setIsDoNotShowAgain(!isDoNotShowAgain)} />
-            <Label htmlFor="do-not-show-again" whiteSpace="nowrap">
+            <Label htmlFor="do-not-show-again" className="whitespace-nowrap">
               {t('Shop.sell-confirm-checkbox')}
             </Label>
-          </Flex>
-          <Flex gap="8px" justifyContent="flex-end" width="100%">
+          </div>
+          <div className="flex gap-2 justify-end w-full">
             <Button onClick={onClose} variant="secondary" size="m">
               {t('Common.close')}
             </Button>
             <Button onClick={confirmDialog} variant="primary" size="m" disabled={isLoading}>
               {isLoading ? t('Common.processing') : t('Common.confirm')}
             </Button>
-          </Flex>
-        </Flex>
+          </div>
+        </div>
       </Dialog.Content>
     </Dialog>
   );
 }
-
-const descriptionStyle = css({
-  textAlign: 'left',
-  color: 'white.white_75',
-  width: '100%',
-});

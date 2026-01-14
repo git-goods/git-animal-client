@@ -2,9 +2,8 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { TextArea, TextField, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind';
+import { TextArea, TextField, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@gitanimals/ui-tailwind';
 import { InfoIcon } from 'lucide-react';
 
 import { getBackgroundImage } from '@/utils/image';
@@ -33,10 +32,10 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
 
   return (
     <>
-      <Flex flexDirection="column" gap="24px">
+      <div className="flex flex-col gap-6">
         <div>
           <p className={headingStyle}>Guild Information</p>
-          <div className={css({ position: 'relative' })}>
+          <div className="relative">
             <TextField
               placeholder="Enter guild name"
               value={props.fields.title}
@@ -72,7 +71,7 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
             placeholder="Enter guild description"
             value={props.fields.body}
             onChange={(e) => props.onFieldChange('body', e.target.value)}
-            className={css({ mt: '6px' })}
+            className="mt-1.5"
           />
         </div>
         <div className={joinSettingStyle}>
@@ -82,7 +81,7 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
           </div>
           <div>
             <button
-              className={cx(
+              className={cn(
                 joinSettingButtonStyle,
                 !props.fields.autoJoin ? joinSettingButtonSelectedStyle : joinSettingButtonNotSelectedStyle,
               )}
@@ -91,7 +90,7 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
               Approval Required
             </button>
             <button
-              className={cx(
+              className={cn(
                 joinSettingButtonStyle,
                 props.fields.autoJoin ? joinSettingButtonSelectedStyle : joinSettingButtonNotSelectedStyle,
               )}
@@ -103,7 +102,7 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
         </div>
         <div>
           <p className={headingStyle}>Guild Icon</p>
-          <Flex gap="6px" className={css({ _mobile: { flexWrap: 'wrap' } })}>
+          <div className={cn('flex gap-1.5', 'max-mobile:flex-wrap')}>
             {props.icons?.map((icon) => (
               <button
                 onClick={() => props.onFieldChange('guildIcon', icon)}
@@ -113,11 +112,11 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
                 <img src={icon} className={itemStyle} width={70} height={70} key={icon} alt={icon} />
               </button>
             ))}
-          </Flex>
+          </div>
         </div>
         <div>
           <p className={headingStyle}>Guild background</p>
-          <Flex gap="6px" className={css({ _mobile: { flexWrap: 'wrap' } })}>
+          <div className={cn('flex gap-1.5', 'max-mobile:flex-wrap')}>
             {props.backgrounds?.map((background) => (
               <button
                 onClick={() => props.onFieldChange('farmType', background)}
@@ -134,70 +133,49 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
                 />
               </button>
             ))}
-          </Flex>
+          </div>
         </div>
-      </Flex>
+      </div>
     </>
   );
 }
 
-const headingStyle = css({
-  textStyle: 'glyph14.bold',
-  mb: 2,
-});
+const headingStyle = cn(
+  'font-product text-glyph-14 font-bold mb-2'
+);
 
-const itemStyle = css({
-  borderColor: 'white.white_90',
-  borderRadius: '8px',
-  border: 'none',
-});
+const itemStyle = cn(
+  'border-white/90 rounded-lg border-none'
+);
 
-const tooltipStyle = css({
-  position: 'absolute',
-  top: '18px',
-  right: '14px  ',
-  height: 'fit-content',
-});
+const tooltipStyle = cn(
+  'absolute top-[18px] right-3.5 h-fit'
+);
 
-const selectedStyle = css({
-  border: '1.5px solid',
-  borderRadius: '8px',
-  opacity: 1,
-});
+const selectedStyle = cn(
+  'border border-solid rounded-lg opacity-100'
+);
 
-const unselectedStyle = css({
-  border: 'none',
-  borderRadius: '8px',
-  opacity: 0.4,
-  transition: 'opacity 0.1s ease-in-out',
-});
+const unselectedStyle = cn(
+  'border-none rounded-lg opacity-40',
+  'transition-opacity duration-100 ease-in-out'
+);
 
-const joinSettingStyle = css({
-  display: 'flex',
-  gap: '10px',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-});
+const joinSettingStyle = cn(
+  'flex gap-2.5 items-center justify-between'
+);
 
-const joinSettingButtonStyle = css({
-  border: '1px solid',
-  borderRadius: '6px',
-  padding: '8px 16px',
-  textStyle: 'glyph14.regular',
-  transition: 'all 0.1s ease-in-out',
-  _last: {
-    ml: 1,
-  },
-});
+const joinSettingButtonStyle = cn(
+  'border border-solid rounded-md px-4 py-2',
+  'font-product text-glyph-14',
+  'transition-all duration-100 ease-in-out',
+  'last:ml-1'
+);
 
-const joinSettingButtonNotSelectedStyle = css({
-  background: 'white.white_10',
-  borderColor: 'white.white_10',
-  color: 'white.white_25',
-});
+const joinSettingButtonNotSelectedStyle = cn(
+  'bg-white/10 border-white/10 text-white/25'
+);
 
-const joinSettingButtonSelectedStyle = css({
-  background: 'white.white_25',
-  borderColor: 'white.white_50',
-  color: 'white',
-});
+const joinSettingButtonSelectedStyle = cn(
+  'bg-white/25 border-white/50 text-white'
+);

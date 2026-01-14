@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import Image from 'next/image';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import { Arrow, Fade, Perspective } from '@egjs/flicking-plugins';
 import type { FlickingOptions, FlickingProps } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
@@ -31,11 +31,23 @@ export function PerspectiveCenterSlider({ children }: { children: React.ReactNod
 
   return (
     <div>
-      <div className={cx(sliderContainer, 'slider-container')} ref={wrapperRef}>
-        <span className={cx('flicking-arrow-prev', 'is-outside', prevArrowStyle)}>
+      <div className={cn('mt-20', 'slider-container')} ref={wrapperRef}>
+        <span
+          className={cn(
+            'absolute top-0 bottom-0 m-auto z-floating cursor-pointer w-10 h-10 [&_img]:w-full [&_img]:h-full max-mobile:bottom-0 max-mobile:w-[26px] max-mobile:h-[26px]',
+            'rotate-180 -left-[62px] max-mobile:left-2',
+            'flicking-arrow-prev is-outside',
+          )}
+        >
           <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
         </span>
-        <span className={cx('flicking-arrow-next', 'is-outside', nextArrowStyle)}>
+        <span
+          className={cn(
+            'absolute top-0 bottom-0 m-auto z-floating cursor-pointer w-10 h-10 [&_img]:w-full [&_img]:h-full max-mobile:bottom-0 max-mobile:w-[26px] max-mobile:h-[26px]',
+            '-right-[62px] max-mobile:right-2',
+            'flicking-arrow-next is-outside',
+          )}
+        >
           <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
         </span>
         <Flicking ref={flicking} {...sliderOptions}>
@@ -45,50 +57,3 @@ export function PerspectiveCenterSlider({ children }: { children: React.ReactNod
     </div>
   );
 }
-
-const sliderContainer = css({
-  marginTop: '80px',
-});
-
-const arrowStyle = css({
-  position: 'absolute',
-  top: '0',
-  bottom: '0',
-  margin: 'auto',
-  zIndex: 'floating',
-  cursor: 'pointer',
-  width: '40px',
-  height: '40px',
-
-  '& img': {
-    width: '100%',
-    height: '100%',
-  },
-
-  _mobile: {
-    bottom: '0',
-    width: '26px',
-    height: '26px',
-  },
-});
-
-const prevArrowStyle = cx(
-  arrowStyle,
-  css({
-    rotate: '180deg',
-    left: '-62px',
-    _mobile: {
-      left: '8px',
-    },
-  }),
-);
-
-const nextArrowStyle = cx(
-  arrowStyle,
-  css({
-    right: '-62px',
-    _mobile: {
-      right: '8px',
-    },
-  }),
-);

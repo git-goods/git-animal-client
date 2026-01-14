@@ -1,4 +1,4 @@
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 
 import { getServerAuth } from '@/auth';
 import { LoginButton } from '@/components/AuthButton';
@@ -17,15 +17,14 @@ async function MainSection() {
       <p className={styles.desc}>
         You can acquire and grow pets through GitHub activities. Choose from over 50 different pets and raise them.
       </p>
-      {/* TODO: button 반응형 처리 */}
       {!session ? (
         <LoginButton label="Get a Pet" />
       ) : (
         <Link href="/mypage">
-          <Button className="desktop" size="l">
+          <Button className="max-mobile:hidden" size="l">
             Go To Mypage
           </Button>
-          <Button className="mobile" size="m">
+          <Button className="hidden max-mobile:block" size="m">
             Go To Mypage
           </Button>
         </Link>

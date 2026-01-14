@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { css } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import { changeMainPet } from '@gitanimals/api';
 
 import { GuildModalPageTitle } from '@/app/[locale]/guild/_components/GuildModalPageLayout';
@@ -31,9 +31,6 @@ export default function GuildSettingPetPage() {
   );
 }
 
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '60px',
-});
+const containerStyle = cn(
+  'flex flex-col items-center gap-[60px]'
+);

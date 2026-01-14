@@ -1,10 +1,9 @@
-import { css } from '_panda/css';
 import { motion } from 'framer-motion';
 
 export function PixelNoiseEffect({ isPowered }: { isPowered: boolean }) {
   return (
     <motion.div
-      className={noiseContainerStyle}
+      className="absolute inset-0 z-10"
       initial={false}
       animate={{
         opacity: isPowered ? [1, 0] : [0, 1, 0],
@@ -14,11 +13,11 @@ export function PixelNoiseEffect({ isPowered }: { isPowered: boolean }) {
         times: isPowered ? [0, 1] : [0, 0.5, 1],
       }}
     >
-      <div className={noiseGridStyle}>
+      <div className="w-full h-full grid grid-cols-12 grid-rows-[repeat(12,1fr)]">
         {Array.from({ length: 144 }).map((_, i) => (
           <div
             key={i}
-            className={noiseCellStyle}
+            className="bg-[#4ADE80]"
             style={{
               opacity: Math.random() * 0.5,
             }}
@@ -28,21 +27,3 @@ export function PixelNoiseEffect({ isPowered }: { isPowered: boolean }) {
     </motion.div>
   );
 }
-
-const noiseContainerStyle = css({
-  position: 'absolute',
-  inset: 0,
-  zIndex: 10,
-});
-
-const noiseGridStyle = css({
-  width: '100%',
-  height: '100%',
-  display: 'grid',
-  gridTemplateColumns: 'repeat(12, 1fr)',
-  gridTemplateRows: 'repeat(12, 1fr)',
-});
-
-const noiseCellStyle = css({
-  backgroundColor: '#4ADE80',
-});

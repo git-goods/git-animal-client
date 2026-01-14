@@ -1,11 +1,11 @@
 import React from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
 import { postGotcha } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { userQueries } from '@gitanimals/react-query';
-import { Dialog } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind/utils';
+import { Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -82,7 +82,7 @@ function OnePet({ onClose }: Props) {
 Error Message: ${JSON.stringify(error)}
 \`\`\`
 User: ${data?.user.name}
-Token: ${data?.user.accessToken} 
+Token: ${data?.user.accessToken}
       `);
     }
   };
@@ -104,23 +104,12 @@ Token: ${data?.user.accessToken}
 
 export default OnePet;
 
-const dialogContentStyle = css({
-  height: 'fit-content',
+const dialogContentStyle = cn(
+  'h-fit',
+  'max-mobile:flex max-mobile:flex-col max-mobile:items-center max-mobile:justify-center'
+);
 
-  _mobile: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-const headingStyle = css({
-  textStyle: 'glyph48.bold',
-  color: 'white',
-  textAlign: 'center',
-
-  _mobile: {
-    textStyle: 'glyph28.bold',
-  },
-});
+const headingStyle = cn(
+  'font-product text-glyph-48 font-bold text-white text-center',
+  'max-mobile:text-glyph-28'
+);

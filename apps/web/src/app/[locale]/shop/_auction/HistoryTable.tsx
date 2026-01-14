@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries } from '@gitanimals/react-query';
 import { useQuery } from '@tanstack/react-query';
@@ -63,7 +62,7 @@ function HistoryTable() {
                   personaLevel={product.persona.personaLevel}
                   price={product.price}
                   rightElement={
-                    <span className={css({ textStyle: 'glyph15.regular', color: 'white.white' })}>
+                    <span className="font-product text-glyph-15 text-white">
                       {getHistoryActionLabel(product?.receipt.soldAt)}
                     </span>
                   }

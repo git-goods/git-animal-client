@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { Button, Dialog } from '@gitanimals/ui-panda';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
 
 import { customT } from '../../../_utils/quiz.intl';
 
@@ -39,62 +37,34 @@ const CorrectConfirmDialog = ({ correctPoint, onConfirm, onStop, onClose, isOpen
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content className={contentStyle} isShowClose={false}>
-        <Flex flexDirection="column" alignItems="center" gap="12px" width="100%">
-          <Dialog.Title className={titleStyle}>{t('correct-dialog.title')}</Dialog.Title>
-          <Dialog.Description className={descriptionStyle}>{t('correct-dialog.description')}</Dialog.Description>
-        </Flex>
+      <Dialog.Content className="flex flex-col items-center gap-3 w-full" isShowClose={false}>
+        <div className="flex flex-col items-center gap-3 w-full">
+          <Dialog.Title className="!font-product !text-glyph-24 !font-bold !text-center">
+            {t('correct-dialog.title')}
+          </Dialog.Title>
+          <Dialog.Description className="font-product text-glyph-16 font-normal text-center text-white-75 break-keep">
+            {t('correct-dialog.description')}
+          </Dialog.Description>
+        </div>
         <Image
-          className={imageStyle}
+          className="my-1"
           src="/assets/game/quiz/quiz-coin.svg"
           alt="quiz-coin"
           width={160}
           height={160}
           draggable={false}
         />
-        <Flex flexDirection="column" gap="8px" width="100%">
-          <Button className={buttonStyle} onClick={handleConfirm} variant="primary" size="m" disabled={isLoading}>
+        <div className="flex flex-col gap-2 w-full">
+          <Button className="w-full" onClick={handleConfirm} variant="primary" size="m" disabled={isLoading}>
             {t('correct-dialog.challenge-button')}
           </Button>
-          <Button className={buttonStyle} onClick={handleStop} variant="secondary" size="m">
+          <Button className="w-full" onClick={handleStop} variant="secondary" size="m">
             {customT(t('correct-dialog.stop-button'), { point: correctPoint })}
           </Button>
-        </Flex>
+        </div>
       </Dialog.Content>
     </Dialog>
   );
 };
 
 export default CorrectConfirmDialog;
-
-const buttonStyle = css({
-  width: '100%',
-});
-
-const contentStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '12px',
-  width: '100%',
-});
-
-const titleStyle = css({
-  textStyle: 'glyph24.bold !important',
-  fontFamily: 'Product Sans',
-  fontWeight: 700,
-  textAlign: 'center !important',
-});
-
-const descriptionStyle = css({
-  textStyle: 'glyph16.regular',
-  fontFamily: 'Product Sans',
-  fontWeight: 400,
-  textAlign: 'center',
-  color: 'white.white_75',
-  wordBreak: 'keep-all',
-});
-
-const imageStyle = css({
-  marginBlock: '4px',
-});

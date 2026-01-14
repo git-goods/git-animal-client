@@ -27,9 +27,6 @@ export const checkIsLeader = async (guildId: string): Promise<boolean> => {
 export const checkIsMyGuild = async (guildId: string): Promise<boolean> => {
   const guild = await getGuildById({ guildId: guildId });
   const user = await getUser();
-  console.log('user: ', user);
-  console.log('guild.leader.userId: ', guild.leader.userId);
-  console.log('user.id: ', user.id);
-  console.log('guild.members: ', guild.members);
+
   return guild.leader.userId === user.id || guild.members.some((member) => member.userId === user.id);
 };

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { css } from '_panda/css';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { PerspectiveCenterSlider } from '@/components/Slider';
@@ -34,9 +33,9 @@ export function CardList({ renderCard, persona }: CardListProps) {
   }, []);
 
   return (
-    <div className={cardContainerStyle}>
+    <div className="flex justify-between w-[1000px] max-w-[80vw] mx-auto">
       {[0, 1, 2].map((index) => (
-        <div key={index} className={slotContainerStyle}>
+        <div key={index} className="relative w-[265px] h-[328px] overflow-hidden">
           <AnimatePresence initial={false}>
             <motion.div
               key={visibleCards[index].key}
@@ -44,7 +43,7 @@ export function CardList({ renderCard, persona }: CardListProps) {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -50, opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className={slotItemStyle}
+              className="absolute w-full h-full"
             >
               {visibleCards[index].Element}
             </motion.div>
@@ -55,38 +54,14 @@ export function CardList({ renderCard, persona }: CardListProps) {
   );
 }
 
-const cardContainerStyle = css({
-  display: 'flex',
-  justifyContent: 'space-between',
-  width: '1000px',
-  maxWidth: '80vw',
-  margin: '0 auto',
-});
-
-const slotContainerStyle = css({ position: 'relative', width: '265px', height: '328px', overflow: 'hidden' });
-
-const slotItemStyle = css({
-  position: 'absolute',
-  width: '100%',
-  height: '100%',
-});
-
 export function MobileCardList({ renderCard, persona }: CardListProps) {
   return (
-    <div className={mobileCardListContainer}>
+    <div className="[&_.slider-container]:w-full">
       <PerspectiveCenterSlider>
         {persona.map((type) => (
-          <div key={type} className={css({})}>
-            {renderCard(type)}
-          </div>
+          <div key={type}>{renderCard(type)}</div>
         ))}
       </PerspectiveCenterSlider>
     </div>
   );
 }
-
-const mobileCardListContainer = css({
-  '& .slider-container': {
-    width: '100%',
-  },
-});

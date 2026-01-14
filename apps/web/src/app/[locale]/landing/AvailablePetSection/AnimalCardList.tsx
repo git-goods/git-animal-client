@@ -1,5 +1,5 @@
 import React from 'react';
-import { grid } from '_panda/patterns';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import { AnimalCard } from '@/components/AnimalCard';
 
@@ -66,10 +66,6 @@ function AnimalCardContainer() {
 
 export default AnimalCardContainer;
 
-const container = grid({
-  gap: '20px',
-  justifyContent: 'center',
-  gridTemplateColumns: 'repeat(4, 1fr)',
-  width: '1120px',
-  height: '1024px',
-});
+const container = cn(
+  'grid gap-5 justify-center grid-cols-[repeat(4,1fr)] w-[1120px] h-[1024px]'
+);

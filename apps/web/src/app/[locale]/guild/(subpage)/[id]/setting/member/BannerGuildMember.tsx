@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import type { ReactNode } from 'react';
-import { css } from '_panda/css';
-import { Flex } from '_panda/jsx';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 export function BannerGuildMember({
   image,
@@ -21,28 +20,20 @@ export function BannerGuildMember({
         <p className={nameStyle}>{name}</p>
         <p className={countStyle}>{count}</p>
       </div>
-      <Flex gap="2">{bottomElement}</Flex>
+      <div className="flex gap-2">{bottomElement}</div>
     </div>
   );
 }
 
-const bannerStyle = css({
-  display: 'inline-flex',
-  padding: '8px 16px 16px 16px',
-  flexDirection: 'column',
-  alignItems: 'center',
-  backgroundColor: 'white.white_10',
-  borderRadius: '8px',
-  textAlign: 'center',
-  gap: '12px',
-});
+const bannerStyle = cn(
+  'inline-flex p-[8px_16px_16px_16px] flex-col items-center',
+  'bg-white/10 rounded-lg text-center gap-3'
+);
 
-const nameStyle = css({
-  textStyle: 'glyph16.regular',
-  color: 'white',
-});
+const nameStyle = cn(
+  'font-product text-glyph-16 text-white'
+);
 
-const countStyle = css({
-  textStyle: 'glyph14.regular',
-  color: 'white.white_50',
-});
+const countStyle = cn(
+  'font-product text-glyph-14 text-white/50'
+);

@@ -1,7 +1,6 @@
 import type { ComponentProps } from 'react';
 import type { PersonaInfo } from '@gitanimals/api';
-import { CardBack, GameCard } from '@gitanimals/ui-panda';
-import type { CardTierType } from '@gitanimals/ui-panda/src/components/Card/constants';
+import { CardBack, GameCard, type CardTierType } from '@gitanimals/ui-tailwind';
 
 import { getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';

@@ -1,25 +1,19 @@
 'use client';
 
 import React, { memo, useEffect, useMemo, useRef } from 'react';
-import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Banner } from '@gitanimals/ui-panda';
-import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banner';
+import { Banner, cn, Skeleton } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
-const listStyle = css({
-  gap: '4px',
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(64px, auto))',
-  _mobile: {
-    gridTemplateColumns: 'repeat(auto-fill, minmax(52px, auto))',
-  },
-});
+const listStyle = cn(
+  'gap-1 grid grid-cols-[repeat(auto-fill,minmax(64px,auto))]',
+  'max-mobile:grid-cols-[repeat(auto-fill,minmax(52px,auto))]',
+);
 
 interface Props {
   selectPersona: string[];
@@ -37,9 +31,9 @@ export const SelectPersonaList = wrap
   })
   .Suspense({
     fallback: (
-      <div className={cx(listStyle, css({ minH: '64px' }))}>
+      <div className={cn(listStyle, 'min-h-16')}>
         {Array.from({ length: 6 }).map((_, index) => (
-          <BannerSkeleton key={index} size="full" />
+          <Skeleton key={index} className="w-16 h-16 rounded-lg" />
         ))}
       </div>
     ),
@@ -115,10 +109,7 @@ function PersonaItem({ persona, isSelected, onClick, isSpecialEffect, isLoading 
       key={`${persona.id}-${persona.visible}`}
       onClick={onClick}
       disabled={isLoading}
-      className={cx(
-        css({ outline: 'none', borderRadius: '12px' }),
-        isSpecialEffect && persona.isEvolutionable && 'gradient-move',
-      )}
+      className={cn('outline-none rounded-xl', isSpecialEffect && persona.isEvolutionable && 'gradient-move')}
     >
       <Banner
         loading={isLoading}

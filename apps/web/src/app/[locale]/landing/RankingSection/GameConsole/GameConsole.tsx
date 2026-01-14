@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { css } from '_panda/css';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { GameScreen } from './GameScreen';
@@ -63,8 +62,8 @@ export default function GameConsole({ children }: { children: React.ReactNode })
   };
 
   return (
-    <div className={containerStyle}>
-      <div className={svgContainerStyle}>
+    <div className="flex items-center justify-center w-full bg-[#111827] overflow-hidden">
+      <div className="w-full h-auto">
         <GameConsoleSvgContainer>
           <MotionButton
             isPressed={isPowered}
@@ -105,7 +104,7 @@ export default function GameConsole({ children }: { children: React.ReactNode })
                 },
               }}
             >
-              <div className={screenContainerStyle}>
+              <div className="w-full h-full relative overflow-hidden">
                 <PixelNoiseEffect isPowered={isPowered} />
                 <GameScreen isPowered={isPowered}>hello</GameScreen>
               </div>
@@ -120,7 +119,7 @@ export default function GameConsole({ children }: { children: React.ReactNode })
               initial={false}
               animate={{ transition: { duration: 0.15, ease: 'easeInOut' } }}
             >
-              <div className={screenContainerStyle}>{!isPowered && children}</div>
+              <div className="w-full h-full relative overflow-hidden">{!isPowered && children}</div>
             </motion.foreignObject>
           </AnimatePresence>
         </GameConsoleSvgContainer>
@@ -128,24 +127,3 @@ export default function GameConsole({ children }: { children: React.ReactNode })
     </div>
   );
 }
-
-const containerStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '100%',
-  backgroundColor: '#111827',
-  overflow: 'hidden',
-});
-
-const svgContainerStyle = css({
-  width: '100%',
-  height: 'auto',
-});
-
-const screenContainerStyle = css({
-  width: '100%',
-  height: '100%',
-  position: 'relative',
-  overflow: 'hidden',
-});
