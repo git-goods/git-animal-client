@@ -24,8 +24,10 @@ const SolveQuizConfirmDialog = ({ onConfirm, onClose, isOpen }: SolveQuizConfirm
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content isShowClose={false}>
-        <Dialog.Title>{t('solve-todays-quiz')}</Dialog.Title>
+      <Dialog.Content size="default" isShowClose={false} className="min-w-[300px]">
+        <Dialog.Title className="font-product font-medium text-glyph-20 text-left">
+          {t('solve-todays-quiz')}
+        </Dialog.Title>
         <div className="flex items-center gap-2 w-full">
           <Button className="w-full" onClick={onClose} variant="secondary" size="m">
             {t('cancel')}

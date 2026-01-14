@@ -2,16 +2,15 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { cn } from '@gitanimals/ui-tailwind';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
+import { cn } from '@gitanimals/ui-tailwind';
 import { Dialog, ScrollArea } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { ExpandIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
-import { customScrollHorizontalStyle } from '@/styles/scrollStyle';
 
 import { SelectPersonaList } from '../PersonaList';
 
@@ -79,7 +78,7 @@ export function FarmPersonaSelect({
       <section
         className={cn(
           'relative flex items-center justify-between mb-4',
-          '[&_.heading]:font-product [&_.heading]:text-glyph-18 [&_.heading]:font-bold [&_.heading]:text-white'
+          '[&_.heading]:font-product [&_.heading]:text-glyph-18 [&_.heading]:font-bold [&_.heading]:text-white',
         )}
       >
         <h2 className="heading">{t('change-pet')}</h2>
@@ -96,22 +95,18 @@ export function FarmPersonaSelect({
         />
       </ScrollArea>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <Dialog.Content size="large">
+        <Dialog.Content size="large" className="overflow-hidden flex flex-col gap-4">
           <Dialog.Title>{t('farm-type-select-pet')}</Dialog.Title>
-          <div
-            className={cn(
-              customScrollHorizontalStyle,
-              'flex overflow-y-auto overflow-x-hidden w-full gap-1',
-              'h-full min-h-0 flex-wrap justify-center max-h-full mt-6'
-            )}
-          >
-            <SelectPersonaList
-              loadingPersona={loadingPersona}
-              selectPersona={selectPersona}
-              onSelectPersona={onSelectPersona}
-              initSelectPersonas={initSelectPersonas}
-            />
-          </div>
+          <ScrollArea className="max-h-full min-h-0 flex-1">
+            <div className="grid grid-auto-fit-fill gap-1">
+              <SelectPersonaList
+                loadingPersona={loadingPersona}
+                selectPersona={selectPersona}
+                onSelectPersona={onSelectPersona}
+                initSelectPersonas={initSelectPersonas}
+              />
+            </div>
+          </ScrollArea>
         </Dialog.Content>
       </Dialog>
     </div>

@@ -23,4 +23,3 @@ export function CommonDialog({ isOpen, onClose, title, description, children, si
     </Dialog>
   );
 }
-

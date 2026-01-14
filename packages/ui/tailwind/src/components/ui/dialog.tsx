@@ -20,7 +20,7 @@ const DialogOverlay = React.forwardRef<
     className={cn(
       'fixed inset-0 z-[3000] bg-black/75',
       'data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
-      className
+      className,
     )}
     {...props}
   />
@@ -31,13 +31,13 @@ const dialogContentVariants = cva(
   [
     'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
     'bg-gray-150 rounded-2xl border border-gray-150',
-    'z-[3001] text-white',
+    'z-[3001] text-white flex flex-col',
   ].join(' '),
   {
     variants: {
       size: {
         default: [
-          'flex flex-col items-center justify-center gap-7 w-full p-6',
+          'flex flex-col items-center justify-center gap-7 p-6 max-w-fit min-w-[300px]',
           'max-mobile:max-w-[calc(100vw-48px)]',
         ].join(' '),
         large: [
@@ -57,7 +57,7 @@ const dialogContentVariants = cva(
     defaultVariants: {
       size: 'default',
     },
-  }
+  },
 );
 
 export interface DialogContentProps
@@ -66,54 +66,31 @@ export interface DialogContentProps
   isShowClose?: boolean;
 }
 
-const DialogContent = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Content>,
-  DialogContentProps
->(({ className, children, size, isShowClose = true, ...props }, ref) => (
-  <DialogPortal>
-    <DialogOverlay />
-    <DialogPrimitive.Content
-      ref={ref}
-      className={cn(dialogContentVariants({ size }), className)}
-      {...props}
-    >
-      {children}
-      {isShowClose && (
-        <DialogClose className="absolute right-4 top-4 bg-transparent p-0 outline-none">
-          <X className="h-6 w-6 text-white" />
-          <span className="sr-only">Close</span>
-        </DialogClose>
-      )}
-    </DialogPrimitive.Content>
-  </DialogPortal>
-));
+const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
+  ({ className, children, size, isShowClose = true, ...props }, ref) => (
+    <DialogPortal>
+      <DialogOverlay />
+      <DialogPrimitive.Content ref={ref} className={cn(dialogContentVariants({ size }), className)} {...props}>
+        {children}
+        {isShowClose && (
+          <DialogClose className="absolute right-4 top-4 bg-transparent p-0 outline-none">
+            <X className="h-6 w-6 text-white" />
+            <span className="sr-only">Close</span>
+          </DialogClose>
+        )}
+      </DialogPrimitive.Content>
+    </DialogPortal>
+  ),
+);
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
-const DialogHeader = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn(
-      'flex flex-col space-y-1.5 text-center sm:text-left',
-      className
-    )}
-    {...props}
-  />
+const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn('flex flex-col space-y-1.5 text-center sm:text-left', className)} {...props} />
 );
 DialogHeader.displayName = 'DialogHeader';
 
-const DialogFooter = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn(
-      'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
-      className
-    )}
-    {...props}
-  />
+const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2', className)} {...props} />
 );
 DialogFooter.displayName = 'DialogFooter';
 
@@ -124,10 +101,10 @@ const DialogTitle = React.forwardRef<
   <DialogPrimitive.Title
     ref={ref}
     className={cn(
-      'font-product text-glyph-48 font-bold text-white text-center',
+      'font-product text-glyph-32 font-bold text-white text-center',
       'max-[1200px]:text-glyph-32',
       'max-mobile:text-glyph-24',
-      className
+      className,
     )}
     {...props}
   />

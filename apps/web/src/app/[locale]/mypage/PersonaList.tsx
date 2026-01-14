@@ -33,7 +33,7 @@ export const SelectPersonaList = wrap
     fallback: (
       <div className={cn(listStyle, 'min-h-16')}>
         {Array.from({ length: 6 }).map((_, index) => (
-          <Skeleton key={index} className="w-16 h-20 rounded-lg" />
+          <Skeleton key={index} className="w-16 h-16 rounded-lg" />
         ))}
       </div>
     ),
