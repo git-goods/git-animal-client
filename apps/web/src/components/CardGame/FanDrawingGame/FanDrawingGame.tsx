@@ -4,8 +4,8 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { CardBack as CardBackUi } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind';
+import { CardBack as CardBackUi } from '@gitanimals/ui-tailwind';
 import { motion } from 'framer-motion';
 
 import { AnimalCard } from '@/components/AnimalCard';
@@ -109,10 +109,10 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
   }, []);
 
   return (
-    <div className={containerStyle}>
-      <div className={gameAreaStyle}>
+    <div className="w-full mx-auto">
+      <div className="relative h-[360px] flex items-center justify-center">
         {gameState === 'drawing' && (
-          <div className={cardContainerStyle}>
+          <div className="relative z-0 w-full h-full flex items-center justify-center">
             {selectedCards.map((cardId, index) => {
               const { x, y, rotate } = getFanPosition(index, selectedCards.length);
 
@@ -133,7 +133,7 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
         )}
 
         {gameState === 'revealing' && selectedCardIndex !== null && (
-          <div className={cardContainerStyle}>
+          <div className="relative z-0 w-full h-full flex items-center justify-center">
             {selectedCards.map((cardId, index) => {
               const isSelected = index === selectedCardIndex;
               const { x, y, rotate } = getFanPosition(index, selectedCards.length);
@@ -156,7 +156,7 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
         )}
 
         {gameState === 'selected' && selectedCardIndex !== null && (
-          <div className={cardContainerStyle}>
+          <div className="relative z-0 w-full h-full flex items-center justify-center">
             {selectedCards.map((cardId, index) => {
               const isSelected = index === selectedCardIndex;
               const { x, y, rotate } = getFanPosition(index, selectedCards.length);
@@ -164,11 +164,16 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
               if (isSelected && cardData) {
                 return (
                   <Portal key={`selected-card-${cardId}`}>
-                    <div className={overlayStyle} onClick={closeGame}>
+                    <div
+                      className="fixed top-0 left-0 w-full h-full bg-black-50 flex items-center justify-center backdrop-blur-[10px] flex-col gap-[100px] z-[3001]"
+                      onClick={closeGame}
+                    >
                       <SelectedCardMotion key={`selected-card-${cardId}`} x={x} y={y} rotate={rotate} index={index}>
                         <DetailedCard cardData={cardData} />
                       </SelectedCardMotion>
-                      <p className={noticeMessageStyle}>{t('click-to-close')}</p>
+                      <p className="font-product text-glyph-22 text-white text-center max-mobile:font-product max-mobile:text-glyph-16">
+                        {t('click-to-close')}
+                      </p>
                     </div>
                   </Portal>
                 );
@@ -189,7 +194,7 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
 
 function CardBack() {
   return (
-    <div className={cardBackStyle} style={{ backfaceVisibility: 'hidden' }}>
+    <div className="w-[220px] h-[272px] overflow-hidden" style={{ backfaceVisibility: 'hidden' }}>
       <CardBackUi tier="S_PLUS" />
     </div>
   );
@@ -204,7 +209,10 @@ function DetailedCard({ cardData }: { cardData: { type: string; dropRate: string
   };
 
   return (
-    <div className={detailedCardStyle} style={{ backfaceVisibility: 'hidden' }}>
+    <div
+      className="h-auto overflow-hidden relative [transform-style:preserve-3d] aspect-[220/272]"
+      style={{ backfaceVisibility: 'hidden' }}
+    >
       <AnimalCard type={getPersona.type} dropRate={getPersona.dropRate} />
     </div>
   );
@@ -225,7 +233,7 @@ function RevealingCardMotion({
 }) {
   return (
     <motion.div
-      className={revealingCardMotionStyle}
+      className="absolute z-10 [transform-style:preserve-3d] cursor-pointer"
       initial={{ x, y, rotateZ: rotate }}
       animate={{
         x: [x, x + 5, x - 5, x + 5, x - 5, x],
@@ -242,72 +250,3 @@ function RevealingCardMotion({
     </motion.div>
   );
 }
-
-const containerStyle = css({
-  width: '100%',
-  mx: 'auto',
-});
-
-const gameAreaStyle = css({
-  position: 'relative',
-  height: '360px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
-
-const cardContainerStyle = css({
-  position: 'relative',
-  zIndex: 0,
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
-
-const overlayStyle = css({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  bg: 'black.black_50',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  backdropFilter: 'blur(10px)',
-  flexDirection: 'column',
-  gap: '100px',
-  zIndex: 3001,
-});
-
-const revealingCardMotionStyle = css({
-  position: 'absolute',
-  zIndex: 10,
-  transformStyle: 'preserve-3d',
-  cursor: 'pointer',
-});
-
-const cardBackStyle = css({
-  width: '220px',
-  height: '272px',
-  overflow: 'hidden',
-});
-
-const detailedCardStyle = css({
-  height: 'auto',
-  overflow: 'hidden',
-  position: 'relative',
-  transformStyle: 'preserve-3d',
-  aspectRatio: '220/272',
-});
-
-const noticeMessageStyle = css({
-  textStyle: 'glyph22.regular',
-  color: 'white',
-  textAlign: 'center',
-  _mobile: {
-    textStyle: 'glyph16.regular',
-  },
-});

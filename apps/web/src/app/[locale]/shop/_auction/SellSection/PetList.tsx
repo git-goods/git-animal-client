@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { userQueries } from '@gitanimals/react-query';
-import { Banner } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind';
+import { Banner } from '@gitanimals/ui-tailwind';
 import { useQuery } from '@tanstack/react-query';
 
 import { customScrollStyle } from '@/styles/scrollStyle';
@@ -24,7 +24,11 @@ function PetList(props: Props) {
   const personas = data?.personas || [];
 
   return (
-    <div className={cx(listContainerStyle, customScrollStyle)}>
+    <div className={cn(
+      'flex flex-wrap max-h-[582px] overflow-y-scroll gap-1',
+      'max-mobile:max-h-[347px]',
+      customScrollStyle
+    )}>
       {personas.map((persona) => {
         return (
           <button key={persona.id} onClick={() => props.onProductClick(persona)}>
@@ -48,15 +52,3 @@ function PetList(props: Props) {
 }
 
 export default PetList;
-
-const listContainerStyle = css({
-  display: 'flex',
-  flexWrap: 'wrap',
-  maxHeight: '582px',
-  overflowY: 'scroll',
-  gap: '4px',
-
-  _mobile: {
-    maxHeight: '347px',
-  },
-});

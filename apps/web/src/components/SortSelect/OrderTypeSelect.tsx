@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Select } from '@gitanimals/ui-panda';
+import { Select } from '@gitanimals/ui-tailwind';
 
 type OrderOptionType = 'CREATED_AT' | 'PRICE' | 'LEVEL';
 

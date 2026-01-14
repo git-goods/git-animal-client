@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { css } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 
 export default function GuildLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
   return (
@@ -20,41 +20,16 @@ export default function GuildLayout({ children, modal }: { children: React.React
   );
 }
 
-const containerStyle = css({
-  position: 'relative',
-  width: '100%',
-  maxW: '880px',
-  m: 'auto',
-  minH: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  paddingY: '120px',
-  _mobile: {
-    paddingY: '0',
-    minHeight: 'fit-content',
-    height: 'calc(100vh - var(--mobile-header-height))',
-    padding: 4,
-  },
-});
+const containerStyle = cn(
+  'relative w-full max-w-[880px] m-auto min-h-full',
+  'flex flex-col justify-center py-[120px]',
+  'max-mobile:py-0 max-mobile:min-h-fit',
+  'max-mobile:h-[calc(100vh-var(--mobile-header-height))] max-mobile:p-4'
+);
 
-const bottomBgStyle = css({
-  position: 'absolute',
-  width: '100vw',
-  bottom: 0,
-  left: '50%',
-  transform: 'translateX(-50%)',
-
-  '& .bg-bottom': {
-    height: '228px',
-    objectFit: 'cover',
-  },
-  '& .bg-bottom-house': {
-    position: 'absolute',
-    bottom: '32px',
-    right: '62px',
-    height: '202px',
-    width: 'auto',
-    objectFit: 'contain',
-  },
-});
+const bottomBgStyle = cn(
+  'absolute w-screen bottom-0 left-1/2 -translate-x-1/2',
+  '[&_.bg-bottom]:h-[228px] [&_.bg-bottom]:object-cover',
+  '[&_.bg-bottom-house]:absolute [&_.bg-bottom-house]:bottom-8 [&_.bg-bottom-house]:right-[62px]',
+  '[&_.bg-bottom-house]:h-[202px] [&_.bg-bottom-house]:w-auto [&_.bg-bottom-house]:object-contain'
+);

@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
 import { auctionQueries, useChangeProductPrice, useDeleteProduct, userQueries } from '@gitanimals/react-query';
-import { Button, Dialog } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -83,38 +83,19 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
 
 export default EditModal;
 
-const titleStyle = css({
-  textStyle: 'glyph20.regular',
-  textAlign: 'left',
-  color: 'white.white_100',
-  width: '100%',
-});
+const titleStyle = cn(
+  'font-product text-glyph-20 text-left text-white w-full'
+);
 
-const inputStyle = css({
-  display: 'flex',
-  height: '55px',
-  padding: '14px 14px 13px 20px',
-  alignItems: 'flex-start',
-  gap: '8px',
-  width: '100%',
-  outline: 'none',
-  borderRadius: '8px',
-  border: '1px solid rgba(255, 255, 255, 0.25)',
-  textStyle: 'glyph16.regular',
-  color: 'white.white_100',
-  '&::placeholder': {
-    textStyle: 'glyph16.regular',
-    color: 'white.white_75',
-  },
-  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-    WebkitAppearance: 'none',
-    margin: 0,
-  },
-});
+const inputStyle = cn(
+  'flex h-[55px] py-3.5 pl-5 pr-3.5',
+  'items-start gap-2 w-full outline-none',
+  'rounded-lg border border-white/25',
+  'font-product text-glyph-16 text-white',
+  'placeholder:text-glyph-16 placeholder:text-white/75',
+  '[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0'
+);
 
-const buttonWrapperStyle = css({
-  display: 'flex',
-  justifyContent: 'flex-end',
-  gap: '8px',
-  width: '100%',
-});
+const buttonWrapperStyle = cn(
+  'flex justify-end gap-2 w-full'
+);

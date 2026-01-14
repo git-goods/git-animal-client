@@ -1,15 +1,13 @@
 'use client';
 
-import { css } from '_panda/css';
-
 export function GameConsoleSvgContainer({ children }: { children: React.ReactNode }) {
   return (
-    <div className={svgContainerStyle}>
+    <div className="w-full h-auto">
       <svg
         viewBox="0 0 1660 1714"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={svgStyle}
+        className="w-full h-auto"
         preserveAspectRatio="xMidYMid meet"
       >
         <rect
@@ -31,7 +29,7 @@ export function GameConsoleSvgContainer({ children }: { children: React.ReactNod
         {/* Power Button - Interactive */}
 
         <foreignObject x="187" y="33" width="1286" height="1148">
-          <div className={blurContainerStyle} />
+          <div className="backdrop-blur-[20px] [clip-path:url(#bgblur_0_2620_81262_clip_path)] h-full w-full" />
         </foreignObject>
 
         <path
@@ -214,20 +212,3 @@ export function GameConsoleSvgContainer({ children }: { children: React.ReactNod
     </div>
   );
 }
-
-const svgContainerStyle = css({
-  width: '100%',
-  height: 'auto',
-});
-
-const svgStyle = css({
-  width: '100%',
-  height: 'auto',
-});
-
-const blurContainerStyle = css({
-  backdropFilter: 'blur(20px)',
-  clipPath: 'url(#bgblur_0_2620_81262_clip_path)',
-  height: '100%',
-  width: '100%',
-});

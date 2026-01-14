@@ -1,5 +1,5 @@
 import type { ComponentProps } from 'react';
-import { cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import { LinkMonoIcon } from '@gitanimals/ui-icon';
 
 import * as styles from './Footer.style';
@@ -96,7 +96,7 @@ export function Footer() {
   ] as const;
 
   return (
-    <footer className={cx(styles.footer, 'footer')}>
+    <footer className={cn(styles.footer, 'footer')}>
       <article className={styles.article}>
         <h2 className={styles.title}>Teams</h2>
         <div className={styles.teamContentWrapper}>

@@ -1,41 +1,28 @@
 import type { PropsWithChildren } from 'react';
-import { css, cx } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { dialogTitleStyle } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind';
+import { dialogTitleStyle } from '@gitanimals/ui-tailwind';
 import { XIcon } from 'lucide-react';
 
 import { BackTrigger } from '@/components/Trigger';
 
 export function GuildModalPageLayout({ children }: PropsWithChildren) {
   return (
-    <div className={css({ minH: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' })}>
+    <div className={cn('min-h-full flex justify-center items-center')}>
       <div
-        className={css({
-          maxWidth: '880px',
-          mx: 'auto',
-          background: 'gray.gray_150',
-          p: '40px',
-          borderRadius: '16px',
-          color: 'white.white',
-          w: '100%',
-          position: 'relative',
-          _mobile: {
-            p: 5,
-            borderRadius: 0,
-          },
-        })}
+        className={cn(
+          'max-w-[880px] mx-auto bg-gray-150 p-10 rounded-2xl text-white w-full relative',
+          'max-mobile:p-5 max-mobile:rounded-none',
+        )}
       >
-        <BackTrigger className={css({ position: 'absolute', top: '16px', right: '16px' })}>
+        <BackTrigger className={cn('absolute top-4 right-4')}>
           <XIcon />
         </BackTrigger>
-        <Flex flexDirection="column" gap="24px">
-          {children}
-        </Flex>
+        <div className="flex flex-col gap-6">{children}</div>
       </div>
     </div>
   );
 }
 
 export const GuildModalPageTitle = ({ children, className }: PropsWithChildren<{ className?: string }>) => (
-  <h2 className={cx(dialogTitleStyle, className)}>{children}</h2>
+  <h2 className={cn(dialogTitleStyle, className)}>{children}</h2>
 );

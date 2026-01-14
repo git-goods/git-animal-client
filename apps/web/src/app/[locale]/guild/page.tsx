@@ -1,10 +1,9 @@
 /* eslint-disable simple-import-sort/imports */
 import type { FilterType } from '@gitanimals/api';
 import { getAllJoinGuilds, getUser, searchGuild } from '@gitanimals/api';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind';
 import { getNewUrl } from '@gitanimals/util-common';
-import { css } from '_panda/css';
-import { flex, grid } from '_panda/patterns';
 import { ChevronLeftIcon } from 'lucide-react';
 import Image from 'next/image';
 
@@ -16,7 +15,6 @@ import { Link, redirect } from '@/i18n/routing';
 import { GuildCard } from './_components/GuildCard';
 import { GuildSearch } from './_components/GuildSearch';
 import { SortSelect } from './_components/SortSelect';
-import { Box } from '_panda/jsx';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { getServerSession } from 'next-auth';
@@ -119,14 +117,14 @@ async function GuildMain({ searchParams, isSearchMode }: GuildMainProps) {
     <>
       <div className={containerStyle}>
         <div className={topStyle}>
-          <Box flex="1">
+          <div className="flex-1">
             {isSearchMode && (
               <BackTrigger>
                 <ChevronLeftIcon size="28px" color="#FFFFFF80" />
               </BackTrigger>
             )}
             <GuildSearch />
-          </Box>
+          </div>
 
           <SortSelect />
           <Link href="/guild/create">
@@ -159,79 +157,26 @@ async function GuildMain({ searchParams, isSearchMode }: GuildMainProps) {
   );
 }
 
-const topStyle = flex({
-  gap: 2,
-  alignItems: 'center',
-  '& > *': {
-    height: '40px',
-    display: 'flex',
-    gap: 2,
-    alignItems: 'center',
-  },
-  _mobile: {
-    flexWrap: 'wrap-reverse',
-    justifyContent: 'flex-end',
-  },
-});
+const topStyle = cn(
+  'flex gap-2 items-center',
+  '[&>*]:h-10 [&>*]:flex [&>*]:gap-2 [&>*]:items-center',
+  'max-mobile:flex-wrap-reverse max-mobile:justify-end',
+);
 
-const containerStyle = flex({
-  width: '100%',
-  height: '100%',
-  padding: '120px 0',
-  flexDirection: 'column',
-  maxWidth: '880px',
-  mx: 'auto',
-  gap: 4,
-  position: 'relative',
-  minH: 'fit-content',
-  zIndex: 'floating',
+const containerStyle = cn(
+  'flex w-full h-full py-[120px] flex-col max-w-[880px] mx-auto gap-4 relative min-h-fit z-floating',
+  'max-mobile:px-5 max-mobile:py-8',
+);
 
-  _mobile: {
-    paddingX: 5,
-    py: 8,
-  },
-});
+const cardListStyle = cn('grid grid-cols-3 gap-2 w-full', 'max-mobile:grid-cols-1');
 
-const cardListStyle = grid({
-  // gridTemplateRows: 'repeat(3, 210px)',
-  columns: 3,
-  gap: '8px',
-  w: 'full',
-  _mobile: {
-    gridTemplateColumns: '1fr',
-  },
-});
-const cardListEmptyStyle = css({
-  width: '100%',
-  height: '100%',
-  gridColumn: '1 / -1',
-  gridRow: '1 / -1',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderRadius: '16px',
-  background: 'white.white_10',
-  backdropFilter: 'blur(7px)',
-});
+const cardListEmptyStyle = cn(
+  'w-full h-full col-span-full row-span-full flex items-center justify-center rounded-2xl bg-white/10 backdrop-blur-[7px]',
+);
 
-const emptyStyle = flex({
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: 'white.white_50',
-  textStyle: 'glyph16.regular',
-});
+const emptyStyle = cn('flex flex-col items-center justify-center text-white/50 font-product text-glyph-16');
 
-const bottomBgStyle = css({
-  position: 'absolute',
-  width: '100vw',
-  bottom: 0,
-  left: '50%',
-  transform: 'translateX(-50%)',
-  height: '228px',
-  objectFit: 'cover',
-  zIndex: 'base',
-});
+const bottomBgStyle = cn('absolute w-screen bottom-0 left-1/2 -translate-x-1/2 h-[228px] object-cover z-base');
 
 function EmptyGuild() {
   return (

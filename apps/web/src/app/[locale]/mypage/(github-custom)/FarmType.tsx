@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import { ClipboardIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -31,31 +31,22 @@ export function FarmType() {
   return (
     <>
       <div>
-        <div className={farmStyle}>
+        <div className="rounded-xl relative overflow-hidden w-fit">
           <GitanimalsFarm
             imageKey={status}
-            className={css({
-              width: '600px',
-              aspectRatio: '2/1',
-              _pc: { width: '400px' },
-              _tablet: { width: '300px' },
-              _mobile: { width: '100%' },
-            })}
+            className={cn(
+              'w-[600px] aspect-[2/1]',
+              'max-pc:w-[400px]',
+              'max-tablet:w-[300px]',
+              'max-mobile:w-full'
+            )}
           />
           <button
-            className={css({
-              width: '28px',
-              height: '28px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: 'white.white_25',
-              borderRadius: '6px',
-              position: 'absolute',
-              top: '12px',
-              right: '12px',
-              color: 'white',
-            })}
+            className={cn(
+              'w-7 h-7 flex items-center justify-center',
+              'bg-white/25 rounded-md',
+              'absolute top-3 right-3 text-white'
+            )}
             onClick={onLinkCopy}
           >
             <ClipboardIcon size={16} />
@@ -69,5 +60,3 @@ export function FarmType() {
     </>
   );
 }
-
-const farmStyle = css({ borderRadius: '12px', position: 'relative', overflow: 'hidden', width: 'fit-content' });

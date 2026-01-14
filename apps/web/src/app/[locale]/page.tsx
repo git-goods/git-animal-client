@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { css } from '_panda/css';
 import { ErrorBoundary } from '@suspensive/react';
 
 import { ErrorSection } from '@/components/Error/ErrorSection';
@@ -35,7 +34,7 @@ export default function HomePage({ searchParams }: { searchParams: { [key: strin
       <AvailablePetSection />
       <HavePetWaySection />
       <ChoosePetSection />
-      <div className={css({ bg: 'black' })}>
+      <div className="bg-black">
         <Footer />
       </div>
     </div>

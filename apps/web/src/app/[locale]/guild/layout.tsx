@@ -1,4 +1,4 @@
-import { css } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 
 import GNB from '@/components/GNB/GNB';
 
@@ -12,18 +12,8 @@ export default function GuildLayout({ children, modal }: { children: React.React
   );
 }
 
-const containerStyle = css({
-  width: '100%',
-  background: 'linear-gradient(180deg, #000 0%, #004875 38.51%, #005B93 52.46%, #006FB3 73.8%, #0187DB 100%)',
-  minHeight: 'fit-content',
-  height: 'calc(100vh - 60px)',
-  overflow: 'hidden',
-  position: 'relative',
-  px: 5,
-
-  _mobile: {
-    minHeight: 'calc(100vh - var(--mobile-header-height))',
-    height: '100%',
-    p: 0,
-  },
-});
+const containerStyle = cn(
+  'w-full bg-[linear-gradient(180deg,#000_0%,#004875_38.51%,#005B93_52.46%,#006FB3_73.8%,#0187DB_100%)]',
+  'min-h-fit h-[calc(100vh-60px)] overflow-hidden relative px-5',
+  'max-mobile:min-h-[calc(100vh-var(--mobile-header-height))] max-mobile:h-full max-mobile:p-0',
+);

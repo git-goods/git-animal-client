@@ -2,11 +2,11 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
 import type { Background } from '@gitanimals/api';
 import { useScrollHeading } from '@gitanimals/react';
 import { renderUserQueries, shopQueries, useBuyBackground } from '@gitanimals/react-query';
-import { Button } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind';
+import { Button } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
@@ -102,7 +102,7 @@ function BackgroundItem({
   return (
     <div className={cardCss} key={item.type}>
       {isEvent && <div className={eventLabelCss}>{t('event-sale')}</div>}
-      <div className={cx(cardImageCss, isPurchased && purchasedCardImageCss)}>
+      <div className={cn(cardImageCss, isPurchased && purchasedCardImageCss)}>
         <img src={getBackgroundImage(item.type)} alt={item.type} width={550} height={275} />
       </div>
       <div className={cardPointStyle}>{addNumberComma(item.price)} P</div>
@@ -113,83 +113,39 @@ function BackgroundItem({
   );
 }
 
-const eventLabelCss = css({
-  position: 'absolute',
-  top: '12px',
-  left: '12px',
-  zIndex: 'floating',
-  display: 'inline-flex',
-  padding: '6px 12px',
-  alignItems: 'center',
-  gap: '2px',
-  borderRadius: '8px',
-  background: '#FF3030',
-  textStyle: 'glyph18.bold',
-  color: 'white',
-});
+const eventLabelCss = cn(
+  'absolute top-3 left-3 z-floating',
+  'inline-flex py-1.5 px-3 items-center gap-0.5',
+  'rounded-lg bg-[#FF3030]',
+  'font-product text-glyph-18 font-bold text-white'
+);
 
-const sectionCss = css({
-  position: 'relative',
-  display: 'flex',
-  flexDir: 'column',
-  alignItems: 'center',
-  padding: '120px 20px',
-  width: '100%',
-  bg: '#6DE575',
+const sectionCss = cn(
+  'relative flex flex-col items-center',
+  'py-[120px] px-5 w-full bg-[#6DE575]',
+  "before:content-[''] before:absolute before:top-[-2px] before:left-0 before:right-0 before:h-0.5 before:bg-[#6DE575]",
+  'max-mobile:py-10 max-mobile:px-4'
+);
 
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: '-2px',
-    left: '0',
-    right: '0',
-    height: '2px',
-    bg: '#6DE575',
-  },
+const h2Css = cn(
+  'font-product text-glyph-82 font-bold text-black mb-20',
+  'max-mobile:mb-10 max-mobile:text-glyph-40'
+);
 
-  _mobile: {
-    padding: '40px 16px',
-  },
-});
+const cardCss = cn(
+  'w-full flex flex-col items-center justify-center relative'
+);
 
-const h2Css = css({
-  textStyle: 'glyph82.bold',
-  color: 'black',
-  marginBottom: '80px',
+const cardImageCss = cn(
+  'w-full aspect-[2/1] relative'
+);
 
-  _mobile: {
-    marginBottom: '40px',
-    textStyle: 'glyph40.bold',
-  },
-});
+const purchasedCardImageCss = cn(
+  'brightness-50 cursor-not-allowed'
+);
 
-const cardCss = css({
-  width: '100%',
-  display: 'flex',
-  flexDir: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  position: 'relative',
-});
-
-const cardImageCss = css({
-  width: '100%',
-  aspectRatio: '2 / 1',
-  position: 'relative',
-});
-
-const purchasedCardImageCss = css({
-  filter: 'brightness(0.5)',
-  cursor: 'not-allowed',
-});
-
-const cardPointStyle = css({
-  textStyle: 'glyph18.bold',
-  color: 'black.black_75',
-  border: '1px solid #3FB458',
-  background: '#56CA6F',
-  mt: '4px',
-  mb: '24px',
-  p: '4px 25px',
-  w: '100%',
-});
+const cardPointStyle = cn(
+  'font-product text-glyph-18 font-bold text-black/75',
+  'border border-[#3FB458] bg-[#56CA6F]',
+  'mt-1 mb-6 py-1 px-[25px] w-full'
+);

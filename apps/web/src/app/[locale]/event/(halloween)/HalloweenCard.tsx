@@ -1,8 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { css } from '_panda/css';
-import { NoRatingCard } from '@gitanimals/ui-panda';
+import { NoRatingCard } from '@gitanimals/ui-tailwind';
 
 import { getPersonaImage } from '@/utils/image';
 
@@ -12,7 +11,7 @@ interface HalloweenCardProps {
 
 export function HalloweenCard({ type }: HalloweenCardProps) {
   return (
-    <div className={containerStyle}>
+    <div className="[&_.animal-card-type]:text-white [&_.animal-card-rating]:text-white">
       <NoRatingCard
         tier="EX"
         type={type}
@@ -24,12 +23,3 @@ export function HalloweenCard({ type }: HalloweenCardProps) {
     </div>
   );
 }
-
-const containerStyle = css({
-  '& .animal-card-type': {
-    color: '#fff',
-  },
-  '& .animal-card-rating': {
-    color: '#fff',
-  },
-});

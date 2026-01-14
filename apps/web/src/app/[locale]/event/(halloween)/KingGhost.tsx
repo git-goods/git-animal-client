@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { css } from '_panda/css';
 import { motion } from 'framer-motion';
 
 export function KingGhost() {
@@ -44,40 +43,18 @@ export function KingGhost() {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={handleClick}
-        className={css({
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
-          position: 'absolute',
-          right: '10',
-          zIndex: 100,
-        })}
+        className="flex items-center justify-center cursor-pointer absolute right-10 z-[100]"
       >
-        <motion.div
-          animate={floatingAnimation}
-          className={css({
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          })}
-        >
+        <motion.div animate={floatingAnimation} className="w-full h-full flex items-center justify-center">
           <Image
             src="/event/halloween/king-ghost.svg"
             width={96}
             height={99}
             alt="king ghost"
-            className={kingGhostStyle}
+            className="w-full h-auto"
           />
         </motion.div>
       </motion.div>
     </div>
   );
 }
-
-const kingGhostStyle = css({
-  width: '100%',
-  height: 'auto',
-});

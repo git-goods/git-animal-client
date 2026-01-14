@@ -2,11 +2,9 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
 import { evolutionPersona, type MergePersonaLevelResponse, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Button, CommonDialog } from '@gitanimals/ui-panda';
+import { Button, CommonDialog } from '@gitanimals/ui-tailwind';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { MoveRight } from 'lucide-react';
 import { overlay } from 'overlay-kit';
@@ -51,7 +49,7 @@ export function EvolutionPersona({ isOpen, onClose, targetPersona }: EvolutionPe
   return (
     <CommonDialog isOpen={isOpen} onClose={onClose} title="GitAnimals Evolution" size="large">
       <EvolutionPreview targetPersona={targetPersona} />
-      <div className={css({ display: 'flex', justifyContent: 'center' })}>
+      <div className="flex justify-center">
         <Button onClick={onMergeAction}>{t('evolution')}</Button>
       </div>
       <MergeResultModal
@@ -67,38 +65,16 @@ export function EvolutionPersona({ isOpen, onClose, targetPersona }: EvolutionPe
 
 const EvolutionPreview = ({ targetPersona }: { targetPersona: Persona }) => {
   return (
-    <div className={containerStyle}>
-      <div className={itemContainerStyle}>
+    <div className="relative flex justify-center py-8 px-8 pb-3 overflow-hidden min-h-fit max-mobile:p-0">
+      <div className="flex items-center justify-center w-full gap-6">
         {targetPersona ? (
           <PersonaBanner level={targetPersona.level} personaType={targetPersona.type} />
         ) : (
           <PersonaBannerUnknown />
         )}
-        <MoveRight width={24} height={24} className={iconStyle} color="#FFFFFFBF" />
+        <MoveRight width={24} height={24} className="mb-[34px]" color="#FFFFFFBF" />
         <PersonaGradientBanner level={Number(targetPersona.level) - 100 + 1} />
       </div>
     </div>
   );
 };
-
-const containerStyle = css({
-  position: 'relative',
-  display: 'flex',
-  justifyContent: 'center',
-  padding: '32px 32px 12px',
-  overflow: 'hidden',
-  minHeight: 'fit-content',
-
-  _mobile: {
-    padding: 0,
-  },
-});
-
-const itemContainerStyle = flex({
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '100%',
-  gap: '24px',
-});
-
-const iconStyle = css({ marginBottom: '34px' });

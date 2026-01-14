@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
-import { css, cx } from '_panda/css';
 import type { RenderBackground } from '@gitanimals/api';
 import { renderUserQueries, useChangeMyBackgroundByToken } from '@gitanimals/react-query';
+import { cn } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -47,8 +47,8 @@ export const FarmBackgroundSelect = wrap
 
     // TODO: 마우스로도 스크롤 움직일 수 있도록 개선 필요
     return (
-      <div className={backgroundContainerStyle}>
-        <div className={backgroundListStyle}>
+      <div className={cn('overflow-x-auto', customScrollStyle)}>
+        <div className="w-fit flex flex-nowrap gap-1">
           {backgrounds.map((background) => (
             <BackgroundItem
               key={background.type}
@@ -69,35 +69,11 @@ interface BackgroundItemProps extends RenderBackground {
 
 function BackgroundItem({ type, isSelected, onClick }: BackgroundItemProps) {
   return (
-    <button className={cx(backgroundItemStyle, isSelected && backgroundItemSelectedStyle)} onClick={onClick}>
+    <button
+      className={cn('border border-transparent w-[248px] rounded-lg overflow-hidden', isSelected && 'border-white/90')}
+      onClick={onClick}
+    >
       <img src={getBackgroundImage(type)} alt={type} width={248} height={124} draggable={false} />
     </button>
   );
 }
-
-const backgroundListStyle = cx(
-  css({
-    width: 'fit-content',
-    display: 'flex',
-    flexWrap: 'nowrap',
-    gap: '4px',
-  }),
-);
-
-const backgroundContainerStyle = cx(
-  css({
-    overflowX: 'auto',
-  }),
-  customScrollStyle,
-);
-
-const backgroundItemStyle = css({
-  border: '1px solid transparent',
-  width: '248px',
-  borderRadius: '8px',
-  overflow: 'hidden',
-});
-
-const backgroundItemSelectedStyle = css({
-  borderColor: 'white.white_90',
-});

@@ -1,6 +1,6 @@
 import type { Dispatch, PropsWithChildren, SetStateAction } from 'react';
 import { createContext, useContext, useMemo, useState } from 'react';
-import { css } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 
 interface SelectOpenContextProps {
   isOpen: boolean;
@@ -44,7 +44,7 @@ function SelectRoot(props: PropsWithChildren) {
   return (
     <SelectOpenContext.Provider value={openValues}>
       <SelectValueContext.Provider value={valueValues}>
-        <div className={containerStyle}>{props.children}</div>
+        <div className="relative w-fit min-w-[190px]">{props.children}</div>
       </SelectValueContext.Provider>
     </SelectOpenContext.Provider>
   );
@@ -52,11 +52,6 @@ function SelectRoot(props: PropsWithChildren) {
 
 export default SelectRoot;
 
-const containerStyle = css({
-  position: 'relative',
-  width: 'fit-content',
-  minWidth: '190px',
-});
 export const useSelectOpenContext = () => {
   const context = useContext(SelectOpenContext);
   if (!context) {

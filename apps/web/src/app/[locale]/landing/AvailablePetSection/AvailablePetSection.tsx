@@ -2,7 +2,7 @@
 
 import React, { Suspense } from 'react';
 import Image from 'next/image';
-import { AnchorButton } from '@gitanimals/ui-panda';
+import { AnchorButton } from '@gitanimals/ui-tailwind';
 
 import { useGetTotalProductCount } from '@/hooks/query/auction/useGetTotalProductCount';
 import { useGetTotalIdentityUserCount } from '@/hooks/query/identity/useGetTotalIdentityUserCount';

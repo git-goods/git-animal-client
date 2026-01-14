@@ -1,5 +1,4 @@
 import { getTranslations } from 'next-intl/server';
-import { css } from '_panda/css';
 import { ChevronLeft } from 'lucide-react';
 
 import { ROUTE } from '@/constants/route';
@@ -11,11 +10,11 @@ async function CreateQuizPage() {
   const t = await getTranslations('Quiz');
 
   return (
-    <div className={containerStyle}>
-      <div className={headingStyle}>
-        <h1 className={titleStyle}>
+    <div className="w-full h-full min-h-[calc(100vh-var(--mobile-header-height))] p-[12px_16px] bg-gray-050">
+      <div className="relative flex flex-col justify-center items-center w-full h-[44px]">
+        <h1 className="font-product text-glyph-18 font-bold text-white">
           <Link href={ROUTE.GAME.QUIZ.MAIN()}>
-            <ChevronLeft className={headingPrevButtonStyle} size={24} color="white" />
+            <ChevronLeft className="absolute top-[10px] left-0 cursor-pointer" size={24} color="white" />
           </Link>
           {t('create-quiz-card-title')}
         </h1>
@@ -26,35 +25,3 @@ async function CreateQuizPage() {
 }
 
 export default CreateQuizPage;
-
-const containerStyle = css({
-  width: '100%',
-  height: '100%',
-  minHeight: 'calc(100vh - var(--mobile-header-height))',
-  padding: '12px 16px',
-  backgroundColor: 'gray.gray_050',
-});
-
-const headingStyle = css({
-  position: 'relative',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
-  height: '44px',
-});
-
-const headingPrevButtonStyle = css({
-  position: 'absolute',
-  top: '10px',
-  left: '0',
-  cursor: 'pointer',
-});
-
-const titleStyle = css({
-  textStyle: 'glyph18.bold',
-  fontFamily: 'Product Sans',
-  fontWeight: 700,
-  color: 'white',
-});

@@ -1,9 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
-import { css, cx } from '_panda/css';
-import { center, flex } from '_panda/patterns';
 import { GithubIcon } from '@gitanimals/ui-icon';
+import { cn } from '@gitanimals/ui-tailwind';
 import { ChevronRightIcon } from 'lucide-react';
 
 import { getServerAuth } from '@/auth';
@@ -26,12 +25,18 @@ export async function DesktopGNB() {
 
   return (
     <>
-      <header className={cx(headerBaseStyle, headerStyle)}>
+      <header
+        className={cn(
+          'flex justify-between items-center z-header fixed px-5 top-0 h-[60px] w-full bg-white',
+          'shadow-[0_1px_4px_0_rgba(0,0,0,0.1)]',
+          'max-mobile:hidden'
+        )}
+      >
         <Link href="/">
           <Image src="/main/gnb_right_logo.svg" width={154} height={42} alt="logo" />
         </Link>
-        <div className={flex({ alignItems: 'center' })}>
-          <ul className={navStyle}>
+        <div className="flex items-center">
+          <ul className="flex gap-8 items-center uppercase font-product text-glyph-16">
             {isLogin && LOGIN_NAV_MENU_LIST.map((item) => <NavMenuItem key={item.label} item={item} />)}
             {NON_LOGIN_NAV_MENU_LIST.map((item) => (
               <NavMenuItem key={item.label} item={item} />
@@ -40,19 +45,27 @@ export async function DesktopGNB() {
             <li>{isLogin ? <LogoutButton /> : <LoginButton />}</li>
           </ul>
           {session && (
-            <Link href="/mypage" className={profileStyle}>
+            <Link
+              href="/mypage"
+              className={cn(
+                'pl-8 flex items-center',
+                '[&_.profile-image]:w-[45px] [&_.profile-image]:h-[45px] [&_.profile-image]:rounded-full [&_.profile-image]:bg-white [&_.profile-image]:overflow-hidden',
+                '[&_.profile-image_img]:w-full [&_.profile-image_img]:h-full',
+                '[&_.profile-name]:text-black/75 [&_.profile-name]:font-product [&_.profile-name]:text-glyph-16 [&_.profile-name]:mr-1 [&_.profile-name]:ml-3'
+              )}
+            >
               <>
                 <div className="profile-image">
                   <img src={session.user.image} alt="profile" width={160} height={160} />
                 </div>
-                <button className={center()}>
+                <button className="flex items-center justify-center">
                   <span className="profile-name">{session.user.name}</span>
                   <ChevronRightIcon size={16} color="#000" />
                 </button>
               </>
             </Link>
           )}
-          <div className={iconWrapperStyle}>
+          <div className="flex items-center gap-8 mx-8 [&>*]:h-6">
             <Notification />
             <DesktopLanguageSelector />
             <a href={GIT_ANIMALS_MAIN_URL} target="_blank">
@@ -61,7 +74,7 @@ export async function DesktopGNB() {
           </div>
         </div>
       </header>
-      <div className={headerBlockStyle} />
+      <div className="h-[60px]" />
     </>
   );
 }
@@ -74,29 +87,6 @@ async function NavMenuItem({ item }: { item: NavMenu }) {
     </li>
   );
 }
-
-const headerBaseStyle = flex({
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  zIndex: 'header',
-  position: 'fixed',
-  padding: '0 20px',
-  top: 0,
-  height: '60px',
-  width: '100%',
-  backgroundColor: 'white',
-});
-
-const iconWrapperStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '32px',
-  margin: '0 32px',
-
-  '& > *': {
-    height: '24px',
-  },
-});
 
 async function DevMenu() {
   const session = await getServerAuth();
@@ -111,46 +101,3 @@ async function DevMenu() {
     </li>
   );
 }
-
-const headerStyle = flex({
-  backgroundColor: 'white',
-  boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.1)',
-  width: '100%',
-  _mobile: {
-    display: 'none',
-  },
-});
-
-const headerBlockStyle = css({
-  height: '60px',
-});
-
-const navStyle = flex({
-  textStyle: 'glyph16.regular',
-  gap: '32px',
-  alignItems: 'center',
-  textTransform: 'uppercase',
-});
-
-const profileStyle = css({
-  pl: '32px',
-  display: 'flex',
-  alignItems: 'center',
-  '& .profile-image': {
-    width: '45px',
-    height: '45px',
-    borderRadius: '50%',
-    backgroundColor: '#fff',
-    overflow: 'hidden',
-    '& img': {
-      width: '100%',
-      height: '100%',
-    },
-  },
-  '& .profile-name': {
-    color: 'black.black_75',
-    textStyle: 'glyph16.regular',
-    marginRight: '4px',
-    marginLeft: '12px',
-  },
-});

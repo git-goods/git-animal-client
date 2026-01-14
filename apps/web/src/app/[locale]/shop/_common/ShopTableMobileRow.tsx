@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { ReactNode } from 'react';
-import { css, cx } from '_panda/css';
-import { Box } from '_panda/jsx';
 import type { Product } from '@gitanimals/api';
+import { cn } from '@gitanimals/ui-tailwind';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 
 import { useGetPersonaTier } from '@/hooks/persona/useGetPersonaDropRate';
@@ -35,54 +34,40 @@ export function ShopTableDesktopRow({ rightElement, ...item }: Props) {
 }
 
 export function ShopTableRowViewSkeleton() {
-  return <div className={cx(rowStyle, skeletonStyle)} />;
+  return <div className={cn(rowStyle, skeletonStyle)} />;
 }
 
-const skeletonStyle = css({
-  background:
-    'linear-gradient(90deg, token(colors.gray.800) 25%, token(colors.gray.600) 50%, token(colors.gray.200) 75%, token(colors.gray.800) 100%)',
-  backgroundSize: '200% 100%',
-  animation: `skeletonLoading 1.5s infinite linear`,
-});
+const skeletonStyle = cn(
+  'bg-gradient-to-r from-gray-800 via-gray-600 via-gray-200 to-gray-800',
+  'bg-[length:200%_100%]',
+  'animate-skeleton-loading'
+);
 
-export const rowStyle = css({
-  width: '100%',
-  height: '80px',
-  backgroundColor: 'white_10',
-  borderRadius: '12px',
-
-  display: 'grid',
-  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 4.2fr 1.5fr',
-  alignItems: 'center',
-  padding: '0 32px',
-  gap: '16px',
-
-  textStyle: 'glyph20.regular',
-  color: 'white.white_100',
-
-  '& button': {
-    color: 'black.black',
-    width: '100%',
-    paddingX: '6px',
-  },
-
-  '& *': {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-});
+export const rowStyle = cn(
+  'w-full h-20 bg-white/10 rounded-xl',
+  'grid grid-cols-[1fr_2.5fr_1fr_1fr_4.2fr_1.5fr]',
+  'items-center px-8 gap-4',
+  'font-product text-glyph-20 text-white',
+  '[&_button]:text-black [&_button]:w-full [&_button]:px-1.5',
+  '[&_*]:overflow-hidden [&_*]:text-ellipsis'
+);
 
 export function ShopTableMobileRow({ personaType, personaLevel, price, rightElement }: Props) {
   const tier = useGetPersonaTier(personaType);
 
   return (
-    <div className={contentStyle}>
+    <div className={cn(
+      'flex gap-1 items-center',
+      'text-white/50 font-product text-glyph-14',
+      'bg-white/10 rounded-md',
+      'py-1 pl-2 pr-4'
+    )}>
       <div>
         <img src={getPersonaImage(personaType)} width={60} height={67} alt="animal1" />
       </div>
-      <Box flex="1">
-        <span className={personaTypeStyle}>{snakeToTitleCase(personaType)}</span>
-        <div className={personaContentStyle}>
+      <div className="flex-1">
+        <span className="font-product text-glyph-15 text-white">{snakeToTitleCase(personaType)}</span>
+        <div className="flex gap-2 items-center text-white/50 font-product text-glyph-14">
           <span>{ANIMAL_TIER_TEXT_MAP[tier]}</span>
           {personaLevel && (
             <>
@@ -97,32 +82,8 @@ export function ShopTableMobileRow({ personaType, personaLevel, price, rightElem
             </>
           )}
         </div>
-      </Box>
+      </div>
       <div>{rightElement}</div>
     </div>
   );
 }
-
-const personaTypeStyle = css({
-  textStyle: 'glyph15.regular',
-  color: 'white.white',
-});
-
-const personaContentStyle = css({
-  display: 'flex',
-  gap: '8px',
-  alignItems: 'center',
-  color: 'white.white_50',
-  textStyle: 'glyph14regular',
-});
-
-const contentStyle = css({
-  display: 'flex',
-  gap: '4px',
-  alignItems: 'center',
-  color: 'white.white_50',
-  textStyle: 'glyph14regular',
-  bg: 'white.white_10',
-  borderRadius: '6px',
-  padding: '4px 16px 4px 8px',
-});

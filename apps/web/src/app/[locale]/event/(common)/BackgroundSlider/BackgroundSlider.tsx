@@ -1,7 +1,6 @@
 'use client';
 
 import { Children, useRef, useState } from 'react';
-import { css } from '_panda/css';
 import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
@@ -44,13 +43,13 @@ function BackgroundSlider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className={containerStyle}>
-      <div className={sliderContainerStyle}>
+    <div className="w-full max-w-[1200px] mx-auto px-[60px] relative max-mobile:px-[35px]">
+      <div className="relative w-full mt-5 max-mobile:mt-0">
         <ArrowButton onClick={moveToPrevPanel} direction="prev" disabled={isFirstPanel} />
         <ArrowButton onClick={moveToNextPanel} direction="next" disabled={isLastPanel} />
         <Flicking ref={flicking} {...sliderOptions}>
           {Children.map(children, (child, idx) => (
-            <div className={sliderItemStyle} key={idx}>
+            <div className="w-[calc(50%-10px)] p-[10px] text-center [&_img]:w-full [&_img]:h-auto [&_img]:rounded-lg [&_p]:mt-[10px] [&_p]:text-base" key={idx}>
               {child}
             </div>
           ))}
@@ -59,44 +58,5 @@ function BackgroundSlider({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-
-const containerStyle = css({
-  width: '100%',
-  maxWidth: '1200px',
-  margin: '0 auto',
-  padding: '0 60px',
-  position: 'relative',
-
-  _mobile: {
-    padding: '0 35px',
-  },
-});
-
-const sliderContainerStyle = css({
-  position: 'relative',
-  width: '100%',
-  marginTop: '20px',
-
-  _mobile: {
-    marginTop: '0px',
-  },
-});
-
-const sliderItemStyle = css({
-  width: 'calc(50% - 10px)', // gap을 고려한 너비
-  padding: '10px',
-  textAlign: 'center',
-
-  '& img': {
-    width: '100%',
-    height: 'auto',
-    borderRadius: '8px',
-  },
-
-  '& p': {
-    marginTop: '10px',
-    fontSize: '16px',
-  },
-});
 
 export default BackgroundSlider;

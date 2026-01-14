@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { css, cx } from '_panda/css';
 import type { GotchaResult } from '@gitanimals/api';
+import { cn } from '@gitanimals/ui-tailwind';
 import { motion } from 'framer-motion';
 
 import { AnimalCard } from '@/components/AnimalCard';
@@ -23,10 +23,10 @@ const Card = ({
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ duration: 0.6, ease: 'easeInOut' }}
       >
-        <div className={cx(cardFaceStyle, cardBackFaceStyle)}>
+        <div className={cn(cardFaceStyle, cardBackFaceStyle)}>
           {persona && <AnimalCard type={persona.name} dropRate={persona.dropRate} />}
         </div>
-        <div className={cx(cardFaceStyle, cardFrontFaceStyle)}>
+        <div className={cn(cardFaceStyle, cardFrontFaceStyle)}>
           <AnimalCardBack tier="S_PLUS" />
         </div>
       </motion.div>
@@ -34,36 +34,24 @@ const Card = ({
   );
 };
 
-const cardStyle = css({
-  position: 'relative',
-  cursor: 'pointer',
-  width: '20%',
-  perspective: '1000px',
-  aspectRatio: '109/135',
-  height: 'auto',
+const cardStyle = cn(
+  'relative cursor-pointer w-[20%] aspect-[109/135] h-auto',
+  '[perspective:1000px]',
+  'max-mobile:w-[30%]'
+);
 
-  _mobile: {
-    width: '30%',
-  },
-});
+const cardInnerStyle = cn(
+  'w-full h-full relative',
+  '[transform-style:preserve-3d]'
+);
 
-const cardInnerStyle = css({
-  width: '100%',
-  height: '100%',
-  position: 'relative',
-  transformStyle: 'preserve-3d',
-});
+const cardFaceStyle = cn(
+  'absolute w-full h-full rounded-xl',
+  'shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)]'
+);
 
-const cardFaceStyle = css({
-  position: 'absolute',
-  width: '100%',
-  height: '100%',
-  borderRadius: 'xl',
-  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-});
-
-const cardFrontFaceStyle = css({ backfaceVisibility: 'hidden' });
-const cardBackFaceStyle = css({ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' });
+const cardFrontFaceStyle = cn('[backface-visibility:hidden]');
+const cardBackFaceStyle = cn('[backface-visibility:hidden] [transform:rotateY(180deg)]');
 
 export const TenCardFlipGame = ({
   onGetPersona,
@@ -138,41 +126,16 @@ export const TenCardFlipGame = ({
   );
 };
 
-const gameContainerStyle = css({
-  width: '100%',
-});
+const gameContainerStyle = cn('w-full');
 
-const cardGridStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '6',
-});
+const cardGridStyle = cn('flex flex-col gap-6');
 
-const rowStyle = css({
-  display: 'grid',
-  gridTemplateRows: '2',
-  gap: '12px',
+const rowStyle = cn(
+  'grid grid-rows-2 gap-3',
+  'max-mobile:w-full max-mobile:gap-2 max-mobile:flex max-mobile:flex-wrap max-mobile:justify-center max-mobile:items-center'
+);
 
-  _mobile: {
-    width: '100%',
-    gap: '8px',
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-const cardRowStyle = css({
-  display: 'flex',
-  gap: '12px',
-  justifyContent: 'center',
-
-  _mobile: {
-    width: '100%',
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+const cardRowStyle = cn(
+  'flex gap-3 justify-center',
+  'max-mobile:w-full max-mobile:flex max-mobile:flex-wrap max-mobile:justify-center max-mobile:items-center'
+);

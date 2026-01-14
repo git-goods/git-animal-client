@@ -2,9 +2,7 @@
 
 import { type ReactNode, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { Button, Dialog } from '@gitanimals/ui-panda';
+import { cn, Button, Dialog } from '@gitanimals/ui-tailwind';
 import { atom, useAtom } from 'jotai';
 
 interface DialogState {
@@ -80,7 +78,7 @@ export function DialogComponent() {
         {dialog.description && (
           <Dialog.Description className={descriptionStyle}>{dialog.description}</Dialog.Description>
         )}
-        <Flex gap="8px" justifyContent="flex-end" width="100%">
+        <div className="flex gap-2 justify-end w-full">
           <Button onClick={closeDialog} variant="secondary" size="m">
             {dialog.cancelText ? t(dialog.cancelText) : t('close')}
           </Button>
@@ -89,20 +87,16 @@ export function DialogComponent() {
               {isLoading ? t('processing') : dialog.confirmText ? t(dialog.confirmText) : t('confirm')}
             </Button>
           )}
-        </Flex>
+        </div>
       </Dialog.Content>
     </Dialog>
   );
 }
 
-const titleStyle = css({
-  textStyle: 'glyph20.regular',
-  textAlign: 'left',
-});
+const titleStyle = cn(
+  'font-product text-glyph-20 text-left'
+);
 
-const descriptionStyle = css({
-  textStyle: 'glyph16.regular',
-  textAlign: 'left',
-  color: 'white.white_75',
-  width: '100%',
-});
+const descriptionStyle = cn(
+  'font-product text-glyph-16 text-left text-white-white/75 w-full'
+);

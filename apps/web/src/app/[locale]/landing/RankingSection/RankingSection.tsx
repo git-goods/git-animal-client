@@ -1,8 +1,8 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { css, cx } from '_panda/css';
 import { rankQueries } from '@gitanimals/react-query';
+import { cn } from '@gitanimals/ui-tailwind';
 import { useQueries } from '@tanstack/react-query';
 
 import { MediaQuery } from '@/components/MediaQuery';
@@ -41,13 +41,32 @@ export default function RankingSection({
   }
 
   return (
-    <div className={containerStyle}>
-      <h2 className={titleStyle}>Ranking</h2>
-      <p className={descriptionStyle}>You can get up to 10000P depending on your ranking!</p>
+    <div
+      className={cn(
+        'w-full bg-[#111827] p-[130px] overflow-hidden',
+        'max-mobile:p-[80px_16px_0] max-mobile:w-full max-mobile:bg-[linear-gradient(180deg,#000_0%,#001420_16.5%,#002943_36.5%,#008FE8_100%)]',
+      )}
+    >
+      <h2
+        className={cn(
+          'font-product text-glyph-82 font-bold text-white-100 text-center mb-4',
+          'max-mobile:mb-2 max-mobile:text-glyph-40 max-mobile:font-bold',
+        )}
+      >
+        Ranking
+      </h2>
+      <p
+        className={cn(
+          'font-product text-glyph-18 text-white-90 text-center mb-[120px]',
+          'max-mobile:mb-0 max-mobile:text-glyph-16',
+        )}
+      >
+        You can get up to 10000P depending on your ranking!
+      </p>
       <MediaQuery
         desktop={
           <GameConsole>
-            <div className={screenContentStyle}>
+            <div className={cn('p-[60px_130px] text-[#4ADE80] h-full font-dnf flex flex-col', 'max-mobile:p-[40px_0_0] max-mobile:w-full')}>
               <RankingTab selectedTab={selectedTab} />
               <TopPodium ranks={queries[0].data} />
               <RankingTable ranks={queries[1].data} page={currentPage} totalPage={totalPage} />
@@ -55,7 +74,7 @@ export default function RankingSection({
           </GameConsole>
         }
         mobile={
-          <div className={screenContentStyle}>
+          <div className={cn('p-[60px_130px] text-[#4ADE80] h-full font-dnf flex flex-col', 'max-mobile:p-[40px_0_0] max-mobile:w-full')}>
             <RankingTab selectedTab={selectedTab} />
             <TopPodium ranks={queries[0].data} />
             <MobileRankingTable ranks={queries[1].data} page={currentPage} totalPage={totalPage} />
@@ -72,62 +91,25 @@ const calcTotalPage = (totalCount: number) => {
   return Math.ceil((totalCount - 3) / 5) - 1;
 };
 
-const titleStyle = css({
-  textStyle: 'glyph82.bold',
-  color: 'white.white_100',
-  textAlign: 'center',
-  mb: '16px',
-  _mobile: {
-    mb: '8px',
-    textStyle: 'glyph40.bold',
-  },
-});
-
-const descriptionStyle = css({
-  textStyle: 'glyph18.regular',
-  color: 'white.white_90',
-  textAlign: 'center',
-  mb: '120px',
-  _mobile: {
-    mb: '0',
-    textStyle: 'glyph16.regular',
-  },
-});
-const containerStyle = css({
-  width: '100%',
-  backgroundColor: '#111827',
-  padding: '130px',
-  overflow: 'hidden',
-  _mobile: {
-    padding: '80px 16px 0',
-    width: '100%',
-    background: 'linear-gradient(180deg, #000 0%, #001420 16.5%, #002943 36.5%, #008FE8 100%)',
-  },
-});
-
-const screenContentStyle = css({
-  padding: '60px 130px',
-  color: '#4ADE80',
-  height: '100%',
-  fontFamily: 'token(fonts.dnf)',
-  display: 'flex',
-  flexDirection: 'column',
-  _mobile: {
-    padding: '40px 0 0',
-    width: '100%',
-  },
-});
-
 // TODO: tab 공통화 필요
 function RankingTab({ selectedTab }: { selectedTab: string }) {
   return (
-    <div className={tabsStyle}>
+    <div
+      className={cn(
+        'flex justify-center mb-[60px]',
+        'max-mobile:bg-black-25 max-mobile:w-fit max-mobile:m-[0_auto_60px] max-mobile:rounded-[20px] max-mobile:p-1',
+      )}
+    >
       <Link
         href="/?ranking=people"
         // href="/test/ranking/?ranking=people"
         shallow
         scroll={false}
-        className={cx(tabStyle, selectedTab === 'people' ? selectedTabStyle : nonSelectedTabStyle)}
+        className={cn(
+          'font-product text-glyph-18 font-bold p-[4px_10px]',
+          'max-mobile:px-3 max-mobile:inline-flex max-mobile:text-glyph-16 max-mobile:font-bold max-mobile:h-8 max-mobile:rounded-[32px] max-mobile:leading-8',
+          selectedTab === 'people' ? 'text-white-100 max-mobile:text-white-75 max-mobile:bg-white-10' : 'text-white-50 max-mobile:text-white-25',
+        )}
       >
         People
       </Link>
@@ -136,48 +118,14 @@ function RankingTab({ selectedTab }: { selectedTab: string }) {
         // href="/test/ranking/?ranking=guild"
         shallow
         scroll={false}
-        className={cx(tabStyle, selectedTab === 'guild' ? selectedTabStyle : nonSelectedTabStyle)}
+        className={cn(
+          'font-product text-glyph-18 font-bold p-[4px_10px]',
+          'max-mobile:px-3 max-mobile:inline-flex max-mobile:text-glyph-16 max-mobile:font-bold max-mobile:h-8 max-mobile:rounded-[32px] max-mobile:leading-8',
+          selectedTab === 'guild' ? 'text-white-100 max-mobile:text-white-75 max-mobile:bg-white-10' : 'text-white-50 max-mobile:text-white-25',
+        )}
       >
         Guild
       </Link>
     </div>
   );
 }
-
-const tabsStyle = css({
-  display: 'flex',
-  justifyContent: 'center',
-  mb: '60px',
-
-  _mobile: {
-    backgroundColor: 'black.black_25',
-    width: 'fit-content',
-    margin: '0 auto 60px',
-    borderRadius: '20px',
-    p: '4px',
-  },
-});
-
-const tabStyle = css({
-  textStyle: 'glyph18.bold',
-  p: '4px 10px',
-
-  _mobile: {
-    padding: '0 12px',
-    display: 'inline-flex',
-    textStyle: 'glyph16.bold',
-    height: '32px',
-    borderRadius: '32px',
-    lineHeight: '32px',
-  },
-});
-
-const nonSelectedTabStyle = css({
-  color: 'white.white_50',
-  _mobile: { color: 'white.white_25' },
-});
-
-const selectedTabStyle = css({
-  color: 'white.white_100',
-  _mobile: { color: 'white.white_75', backgroundColor: 'white.white_10' },
-});

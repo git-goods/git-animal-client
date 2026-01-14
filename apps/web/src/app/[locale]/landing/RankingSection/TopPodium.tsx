@@ -1,5 +1,5 @@
-import { css, cx } from '_panda/css';
 import type { RankType } from '@gitanimals/api';
+import { cn } from '@gitanimals/ui-tailwind';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { RankingLink } from './RankingLink';
@@ -10,7 +10,12 @@ export function TopPodium({ ranks }: { ranks: RankType[] }) {
       rank: 2,
       height: 148,
       crownElement: (
-        <div className={subCrownStyle}>
+        <div
+          className={cn(
+            'absolute top-[-29px] left-1/2 -translate-x-1/2 w-9 h-9 [&>img]:w-full [&>img]:h-full',
+            'max-mobile:w-7 max-mobile:h-7 max-mobile:top-[-28px]',
+          )}
+        >
           <img src="/rank/icon_crown_2.svg" alt="2nd place crown" width={36} height={36} />
         </div>
       ),
@@ -19,7 +24,12 @@ export function TopPodium({ ranks }: { ranks: RankType[] }) {
       rank: 1,
       height: 200,
       crownElement: (
-        <div className={winnerCrownStyle}>
+        <div
+          className={cn(
+            'absolute top-[-46px] left-1/2 -translate-x-1/2 w-[60px] h-[60px] [&>img]:w-full [&>img]:h-full',
+            'max-mobile:w-10 max-mobile:h-10 max-mobile:top-[-40px]',
+          )}
+        >
           <img src="/rank/icon_crown_1.svg" alt="1st place crown" width={60} height={60} />
         </div>
       ),
@@ -28,7 +38,12 @@ export function TopPodium({ ranks }: { ranks: RankType[] }) {
       rank: 3,
       height: 120,
       crownElement: (
-        <div className={subCrownStyle}>
+        <div
+          className={cn(
+            'absolute top-[-29px] left-1/2 -translate-x-1/2 w-9 h-9 [&>img]:w-full [&>img]:h-full',
+            'max-mobile:w-7 max-mobile:h-7 max-mobile:top-[-28px]',
+          )}
+        >
           <img src="/rank/icon_crown_3.svg" alt="3rd place crown" width={36} height={36} />
         </div>
       ),
@@ -39,18 +54,43 @@ export function TopPodium({ ranks }: { ranks: RankType[] }) {
 
   return (
     <AnimatePresence>
-      <div className={podiumStyle}>
+      <div className={cn('flex justify-center items-end gap-3 flex-1', 'max-mobile:min-h-[300px]')}>
         {RANK.map((item) => {
           const currentRank = ranks[item.rank - 1];
           return (
-            <RankingLink id={currentRank.name} className={runnerUpStyle} key={`${item.rank}`}>
-              <div className={profileStyle}>
+            <RankingLink
+              id={currentRank.name}
+              className={cn('flex flex-col items-center text-xl min-h-[170px]', 'max-mobile:min-h-20')}
+              key={`${item.rank}`}
+            >
+              <div
+                className={cn(
+                  'relative w-[100px] h-[100px]',
+                  '[&>img]:w-full [&>img]:h-full [&>img]:rounded-full [&>img]:object-cover [&>img]:relative [&>img]:z-aboveDefault',
+                  'max-mobile:w-10 max-mobile:h-10',
+                )}
+              >
                 <img src={currentRank.image} alt={`${item.rank}등`} />
                 {item.crownElement}
-                <div className={brightBgStyle} />
+                <div
+                  className={cn(
+                    'w-[130px] h-[130px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-base opacity-50',
+                    'bg-[radial-gradient(50%_50%_at_50%_50%,#FFED86_0%,rgba(255,237,134,0.17)_81%,rgba(255,237,134,0.00)_100%)]',
+                    'max-mobile:w-[60px] max-mobile:h-[60px]',
+                  )}
+                />
               </div>
-              <div className={nameStyle}>{currentRank.name}</div>
-              <div className={contributionStyle}>{currentRank.contributions}</div>
+              <div
+                className={cn(
+                  'font-product text-glyph-18 font-bold mt-3 text-white-90 max-w-full overflow-visible flex justify-center whitespace-nowrap',
+                  'max-mobile:text-glyph-15 max-mobile:font-bold max-mobile:max-w-20 max-mobile:mt-1.5',
+                )}
+              >
+                {currentRank.name}
+              </div>
+              <div className={cn('font-product text-glyph-14 text-white-50', 'max-mobile:text-glyph-12')}>
+                {currentRank.contributions}
+              </div>
               <motion.div
                 key={`rostrum-${item.rank}`}
                 initial={{ height: 0 }}
@@ -61,7 +101,14 @@ export function TopPodium({ ranks }: { ranks: RankType[] }) {
                   damping: 20,
                   delay: (item.rank || 1) * 0.3,
                 }}
-                className={cx(rostrumStyle)}
+                className={cn(
+                  'w-[140px] rounded-lg text-white-100 text-center',
+                  'bg-[linear-gradient(180deg,#B9FFBD_0%,rgba(195,255,199,0.85)_24.5%,rgba(203,255,206,0.74)_43%,rgba(255,255,255,0.00)_100%)]',
+                  '[font-feature-settings:liga_off,clig_off] [text-shadow:0px_0px_40px_rgba(0,201,50,0.70)]',
+                  'text-[60px] font-normal leading-[140%] tracking-[-5.961px] font-dnf',
+                  'pt-4 mt-3 relative overflow-hidden',
+                  'max-mobile:w-20 max-mobile:text-4xl max-mobile:pt-3 max-mobile:mt-2 max-mobile:pr-1',
+                )}
               >
                 <motion.p
                   initial={{ opacity: 0, scale: 0.5 }}
@@ -83,151 +130,3 @@ export function TopPodium({ ranks }: { ranks: RankType[] }) {
     </AnimatePresence>
   );
 }
-
-const podiumStyle = css({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'flex-end',
-  gap: '12px',
-  flex: 1,
-
-  _mobile: {
-    minH: '300px',
-  },
-});
-
-const rostrumStyle = css({
-  width: '140px',
-  borderRadius: '8px',
-  background:
-    'linear-gradient(180deg, #B9FFBD 0%, rgba(195, 255, 199, 0.85) 24.5%, rgba(203, 255, 206, 0.74) 43%, rgba(255, 255, 255, 0.00) 100%)',
-  color: 'white.white_100',
-  textAlign: 'center',
-  fontFeatureSettings: 'liga off, clig off',
-  textShadow: '0px 0px 40px rgba(0, 201, 50, 0.70)',
-  fontSize: '60px',
-  fontStyle: 'normal',
-  fontWeight: '400',
-  lineHeight: '140%',
-  letterSpacing: '-5.961px',
-  fontFamily: 'token(fonts.dnf)',
-  pt: '16px',
-  mt: '12px',
-  position: 'relative',
-  overflow: 'hidden',
-  _mobile: {
-    width: '80px',
-    fontSize: '36px',
-    pt: '12px',
-    mt: '8px',
-    pr: '4px',
-  },
-});
-
-const runnerUpStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  fontSize: '20px',
-  minHeight: '170px',
-  _mobile: {
-    minH: '80px',
-  },
-});
-
-const brightBgStyle = css({
-  width: '130px',
-  height: '130px',
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  zIndex: 'base',
-  opacity: 0.5,
-  background:
-    'radial-gradient(50% 50% at 50% 50%, #FFED86 0%, rgba(255, 237, 134, 0.17) 81%, rgba(255, 237, 134, 0.00) 100%)',
-  _mobile: {
-    width: '60px',
-    height: '60px',
-  },
-});
-
-const profileStyle = css({
-  position: 'relative',
-  width: '100px',
-  height: '100px',
-  '& > img': {
-    width: '100%',
-    height: '100%',
-    borderRadius: '50%',
-    objectFit: 'cover',
-    position: 'relative',
-    zIndex: 'aboveDefault',
-  },
-  _mobile: {
-    width: '40px',
-    height: '40px',
-  },
-});
-
-const subCrownStyle = css({
-  position: 'absolute',
-  top: '-29px',
-  left: '50%',
-  transform: 'translateX(-50%)',
-  width: '36px',
-  height: '36px',
-  '& > img': {
-    width: '100%',
-    height: '100%',
-  },
-  _mobile: {
-    width: '28px',
-    height: '28px',
-    top: '-28px',
-  },
-});
-
-const winnerCrownStyle = css({
-  position: 'absolute',
-  top: '-46px',
-  left: '50%',
-  transform: 'translateX(-50%)',
-  width: '60px',
-  height: '60px',
-
-  '& > img': {
-    width: '100%',
-    height: '100%',
-  },
-  _mobile: {
-    width: '40px',
-    height: '40px',
-    top: '-40px',
-  },
-});
-
-const nameStyle = css({
-  textStyle: 'glyph18.bold',
-  mt: '12px',
-  color: 'white.white_90',
-  maxWidth: '100%',
-  overflow: 'visible',
-  display: 'flex',
-  justifyContent: 'center',
-  whiteSpace: 'nowrap',
-
-  _mobile: {
-    fontSize: 'glyph15.bold',
-    maxWidth: '80px',
-    mt: '6px',
-  },
-});
-
-const contributionStyle = css({
-  textStyle: 'glyph14.regular',
-  color: 'white.white_50',
-  _mobile: {
-    fontSize: 'glyph12.regular',
-  },
-});

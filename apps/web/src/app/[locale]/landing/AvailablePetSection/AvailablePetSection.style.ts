@@ -1,97 +1,40 @@
-import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
+import { cn } from '@gitanimals/ui-tailwind';
 
-export const container = flex({
-  padding: '120px 0',
-  flexDirection: 'column',
-  gap: '60px',
-  alignItems: 'center',
-  justifyContent: 'center',
-  position: 'relative',
-  background: '#171717',
+export const container = cn(
+  'flex flex-col items-center justify-center relative py-[120px] px-0 gap-[60px] bg-[#171717]',
+  'max-mobile:py-[80px] max-mobile:gap-10',
+);
 
-  _mobile: {
-    padding: '80px 0',
-    gap: '40px',
-  },
-});
+export const content = cn(
+  'relative z-floating flex flex-col items-center justify-center gap-[60px]',
+  'max-mobile:gap-10',
+);
 
-export const content = flex({
-  position: 'relative',
-  zIndex: 'floating',
-  flexDirection: 'column',
-  gap: '60px',
-  alignItems: 'center',
-  justifyContent: 'center',
+export const heading = cn(
+  'font-product text-glyph-82 font-bold text-white',
+  'max-mobile:text-glyph-32 max-mobile:font-bold',
+);
 
-  _mobile: {
-    gap: '40px',
-  },
-});
+export const infoContainer = cn(
+  'flex flex-row justify-between gap-[60px] py-10 px-[52px] max-w-[766px] w-full bg-white/10 rounded-2xl',
+  'max-mobile:flex-col max-mobile:max-w-[calc(100%-40px)] max-mobile:gap-3 max-mobile:p-6',
+);
 
-export const heading = css({
-  textStyle: 'glyph82.bold',
-  color: 'white',
-  _mobile: {
-    textStyle: 'glyph32.bold',
-  },
-});
+export const infoItem = cn(
+  'w-fit',
+  '[&_p:first-child]:font-product [&_p:first-child]:text-glyph-48 [&_p:first-child]:font-bold [&_p:first-child]:text-[#FDFAFF]',
+  'max-mobile:[&_p:first-child]:text-glyph-24 max-mobile:[&_p:first-child]:font-bold',
+  '[&_p:last-child]:font-product [&_p:last-child]:text-glyph-18 [&_p:last-child]:font-bold [&_p:last-child]:text-white/50',
+  'max-mobile:[&_p:last-child]:text-glyph-14',
+);
 
-export const infoContainer = flex({
-  gap: '60px',
-  padding: '40px 52px',
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  maxWidth: '766px',
-  w: '100%',
-  background: 'white_10',
-  borderRadius: '16px',
+export const buttonWrapper = cn(
+  'pt-5',
+  'max-mobile:pt-0',
+);
 
-  _mobile: {
-    flexDir: 'column',
-    maxWidth: 'calc(100% - 40px)',
-    gap: '12px',
-    padding: '24px',
-  },
-});
+const bgPicture = 'absolute left-0 right-0 z-0';
 
-export const infoItem = css({
-  width: 'fit-content',
+export const bgPictureTop = cn(bgPicture, 'top-0');
 
-  '& p': {
-    _first: {
-      textStyle: 'glyph48.bold',
-      color: '#FDFAFF',
-      _mobile: {
-        textStyle: 'glyph24.bold',
-      },
-    },
-
-    _last: {
-      textStyle: 'glyph18.bold',
-      color: 'white_50',
-      _mobile: {
-        textStyle: 'glyph14.regular',
-      },
-    },
-  },
-});
-
-export const buttonWrapper = css({
-  paddingTop: '20px',
-
-  _mobile: {
-    paddingTop: 0,
-  },
-});
-
-const bgPicture = {
-  position: 'absolute',
-  left: 0,
-  right: 0,
-  zIndex: 0,
-};
-
-export const bgPictureTop = css(bgPicture, { top: 0 });
-
-export const bgPictureBottom = css(bgPicture, { bottom: 0 });
+export const bgPictureBottom = cn(bgPicture, 'bottom-0');

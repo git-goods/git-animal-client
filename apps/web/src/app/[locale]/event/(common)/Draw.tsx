@@ -4,11 +4,10 @@ import { useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
 import { CustomException } from '@gitanimals/exception';
 import { useOutsideClick } from '@gitanimals/react';
 import { couponQueries, renderQueries, useUsingCoupon } from '@gitanimals/react-query';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import type { Variants } from 'framer-motion';
@@ -112,7 +111,7 @@ export const Draw = wrap.Suspense().on(({ renderCard, bonusEventCode, baseEventC
     <>
       <Button
         disabled={isPending || isLoadingUsedCoupons || isUsedCoupon}
-        className={buttonStyle}
+        className="w-[230px] h-[76px] mx-auto mt-[63px] font-product text-glyph-28 font-bold"
         onClick={onClickDraw}
       >
         {drawButtonText}
@@ -120,12 +119,18 @@ export const Draw = wrap.Suspense().on(({ renderCard, bonusEventCode, baseEventC
 
       <AnimatePresence mode="wait">
         {drawedPet && (
-          <div className={fixedStyle} ref={modalRef}>
-            <motion.div className={modalStyle} variants={modalVariants} initial="initial" animate="animate" exit="exit">
-              <span className={resultTitleStyle}>{t('result-title')}</span>
+          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-drawer" ref={modalRef}>
+            <motion.div
+              className="p-6 bg-gray-150 rounded-2xl text-white min-w-[400px] h-auto flex flex-col justify-center items-center"
+              variants={modalVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <span className="font-product text-glyph-28 font-bold mb-5">{t('result-title')}</span>
               {renderCard(drawedPet)}
 
-              <Link href="/mypage" className={resultAnchorStyle}>
+              <Link href="/mypage" className="font-product text-glyph-16 font-bold mt-6 mb-3 cursor-pointer underline">
                 {t('result-apply')}
               </Link>
 
@@ -153,40 +158,6 @@ const modalVariants: Variants = {
   },
   exit: { opacity: 0, scale: 0.9 },
 };
-
-const buttonStyle = css({ width: '230px', height: '76px', margin: '63px auto 0', textStyle: 'glyph28.bold' });
-
-const fixedStyle = css({
-  position: 'fixed',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  zIndex: 'drawer',
-});
-
-const modalStyle = css({
-  padding: '24px',
-  backgroundColor: 'gray.gray_150',
-  borderRadius: '16px',
-  color: 'white',
-
-  minWidth: '400px',
-  height: 'auto',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-});
-
-const resultTitleStyle = css({ textStyle: 'glyph28.bold', marginBottom: '20px' });
-
-const resultAnchorStyle = css({
-  textStyle: 'glyph16.bold',
-  marginTop: '24px',
-  marginBottom: '12px',
-  cursor: 'pointer',
-  textDecoration: 'underline',
-});
 
 const StarAnchor = wrap
   .ErrorBoundary({ fallback: null })

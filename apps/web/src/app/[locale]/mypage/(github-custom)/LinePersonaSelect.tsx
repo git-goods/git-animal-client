@@ -2,9 +2,8 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
-import { flex } from '_panda/patterns';
-import { Dialog, ScrollArea } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind';
+import { Dialog, ScrollArea } from '@gitanimals/ui-tailwind';
 import { ExpandIcon } from 'lucide-react';
 
 import { customScrollStyle } from '@/styles/scrollStyle';
@@ -23,13 +22,18 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
 
   return (
     <div>
-      <section className={selectPetContainerStyle}>
+      <section
+        className={cn(
+          'relative flex items-center justify-between mb-4',
+          '[&_.heading]:font-product [&_.heading]:text-glyph-18 [&_.heading]:font-bold [&_.heading]:text-white'
+        )}
+      >
         <h2 className="heading">{t('change-pet')}</h2>
         <button onClick={() => setIsExtend(true)}>
           <ExpandIcon color="white" size={20} />
         </button>
       </section>
-      <ScrollArea height="160px">
+      <ScrollArea className="h-40">
         <SelectPersonaList
           selectPersona={selectPersona ? [selectPersona] : []}
           onSelectPersona={(persona) => onChangePersona(persona.id)}
@@ -38,7 +42,13 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
       <Dialog open={isExtend} onOpenChange={() => setIsExtend(false)}>
         <Dialog.Content size="large">
           <Dialog.Title>{t('line-type-select-pet')}</Dialog.Title>
-          <div className={flexOverflowStyle}>
+          <div
+            className={cn(
+              customScrollStyle,
+              'flex overflow-y-auto overflow-x-hidden w-full gap-1',
+              'h-full min-h-0 flex-wrap justify-center max-h-full mt-6'
+            )}
+          >
             <SelectPersonaList
               selectPersona={selectPersona ? [selectPersona] : []}
               onSelectPersona={(persona) => onChangePersona(persona.id)}
@@ -49,49 +59,3 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
     </div>
   );
 };
-
-const flexOverflowStyle = cx(
-  css({
-    display: 'flex',
-    overflowY: 'auto',
-    overflowX: 'hidden',
-    width: '100%',
-    gap: '4px',
-    height: '100%',
-    minHeight: '0',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    maxHeight: 'calc(100%)',
-    marginTop: '24px',
-  }),
-  customScrollStyle,
-);
-
-const listStyle = cx(
-  flex({
-    gap: '4px',
-    w: '100%',
-    h: '100%',
-    minH: '0',
-    overflowX: 'auto',
-    overflowY: 'hidden',
-    display: 'grid',
-    gridTemplateRows: 'repeat(2, 1fr)',
-    gridAutoColumns: 'max-content',
-    gridAutoFlow: 'column',
-  }),
-  customScrollStyle,
-);
-
-const selectPetContainerStyle = css({
-  position: 'relative',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  marginBottom: '16px',
-
-  '& .heading': {
-    textStyle: 'glyph18.bold',
-    color: 'white',
-  },
-});

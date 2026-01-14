@@ -1,9 +1,9 @@
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { css, cx } from '_panda/css';
 import Flicking from '@egjs/react-flicking';
 import type { RankType } from '@gitanimals/api';
+import { cn } from '@gitanimals/ui-tailwind';
 import { getNewUrl } from '@gitanimals/util-common';
 
 import { RankingLink } from './RankingLink';
@@ -44,9 +44,9 @@ export function MobileRankingTable({ ranks, page, totalPage }: { page: number; r
   }, []);
 
   return (
-    <div className={rankingListStyle}>
+    <div className="w-full">
       <Flicking
-        className={flickingStyle}
+        className="w-full h-auto m-[0_auto] relative overflow-hidden"
         defaultIndex={page - 1}
         circular={false}
         moveType="strict"
@@ -55,10 +55,30 @@ export function MobileRankingTable({ ranks, page, totalPage }: { page: number; r
         onMoveEnd={handleMoveEnd}
       >
         {groupedRanks.map((group, index) => (
-          <div key={index} className={slideStyle}>
-            <table className={tableStyle}>
+          <div key={index} className="w-full h-auto flex items-center justify-center">
+            <table className="w-full border-separate text-left [border-spacing:0_4px]">
               <thead>
-                <tr className={theadTrStyle}>
+                <tr
+                  className={cn(
+                    'rounded-lg',
+                    '[&_img]:rounded-full [&_img]:overflow-hidden',
+                    '[&_td]:border-none [&_td]:p-[0_16px] [&_th]:border-none [&_th]:p-[0_16px]',
+                    '[&_td:first-child]:pl-10 [&_td:first-child]:rounded-l-lg [&_td:first-child]:w-[120px]',
+                    '[&_th:first-child]:pl-10 [&_th:first-child]:rounded-l-lg [&_th:first-child]:w-[120px]',
+                    '[&_td:last-child]:pr-10 [&_td:last-child]:rounded-r-lg [&_td:last-child]:text-right',
+                    '[&_th:last-child]:pr-10 [&_th:last-child]:rounded-r-lg [&_th:last-child]:text-right',
+                    '[&_td:nth-child(2)]:text-center [&_td:nth-child(2)]:w-[72px] [&_td:nth-child(2)]:p-[0_8px]',
+                    '[&_th:nth-child(2)]:text-center [&_th:nth-child(2)]:w-[72px] [&_th:nth-child(2)]:p-[0_8px]',
+                    'max-mobile:rounded-md',
+                    'max-mobile:[&_td]:border-none max-mobile:[&_td]:p-[0_8px] max-mobile:[&_th]:border-none max-mobile:[&_th]:p-[0_8px]',
+                    'max-mobile:[&_td:first-child]:pl-4 max-mobile:[&_td:first-child]:w-[54px]',
+                    'max-mobile:[&_th:first-child]:pl-4 max-mobile:[&_th:first-child]:w-[54px]',
+                    'max-mobile:[&_td:last-child]:pr-4 max-mobile:[&_th:last-child]:pr-4',
+                    'max-mobile:[&_td:nth-child(2)]:w-7 max-mobile:[&_td:nth-child(2)]:pl-0',
+                    'max-mobile:[&_th:nth-child(2)]:w-7 max-mobile:[&_th:nth-child(2)]:pl-0',
+                    'font-product text-glyph-16 font-bold bg-white-50 text-white-100 h-10',
+                  )}
+                >
                   <th>Rank</th>
                   <th>Pet</th>
                   <th>Name</th>
@@ -67,7 +87,33 @@ export function MobileRankingTable({ ranks, page, totalPage }: { page: number; r
               </thead>
               <tbody>
                 {group.map((item) => (
-                  <tr key={item.rank} className={cx(trStyle, item.name === currentUsername && currentUserTrStyle)}>
+                  <tr
+                    key={item.rank}
+                    className={cn(
+                      'rounded-lg',
+                      '[&_img]:rounded-full [&_img]:overflow-hidden',
+                      '[&_td]:border-none [&_td]:p-[0_16px] [&_th]:border-none [&_th]:p-[0_16px]',
+                      '[&_td:first-child]:pl-10 [&_td:first-child]:rounded-l-lg [&_td:first-child]:w-[120px]',
+                      '[&_th:first-child]:pl-10 [&_th:first-child]:rounded-l-lg [&_th:first-child]:w-[120px]',
+                      '[&_td:last-child]:pr-10 [&_td:last-child]:rounded-r-lg [&_td:last-child]:text-right',
+                      '[&_th:last-child]:pr-10 [&_th:last-child]:rounded-r-lg [&_th:last-child]:text-right',
+                      '[&_td:nth-child(2)]:text-center [&_td:nth-child(2)]:w-[72px] [&_td:nth-child(2)]:p-[0_8px]',
+                      '[&_th:nth-child(2)]:text-center [&_th:nth-child(2)]:w-[72px] [&_th:nth-child(2)]:p-[0_8px]',
+                      'max-mobile:rounded-md',
+                      'max-mobile:[&_td]:border-none max-mobile:[&_td]:p-[0_8px] max-mobile:[&_th]:border-none max-mobile:[&_th]:p-[0_8px]',
+                      'max-mobile:[&_td:first-child]:pl-4 max-mobile:[&_td:first-child]:w-[54px]',
+                      'max-mobile:[&_th:first-child]:pl-4 max-mobile:[&_th:first-child]:w-[54px]',
+                      'max-mobile:[&_td:last-child]:pr-4 max-mobile:[&_th:last-child]:pr-4',
+                      'max-mobile:[&_td:nth-child(2)]:w-7 max-mobile:[&_td:nth-child(2)]:pl-0',
+                      'max-mobile:[&_th:nth-child(2)]:w-7 max-mobile:[&_th:nth-child(2)]:pl-0',
+                      'font-product text-glyph-18 text-white-100 bg-white-10 h-[60px]',
+                      '[&_td:first-child]:text-xl [&_td:first-child]:leading-7 [&_td:first-child]:font-dnf [&_td:first-child]:text-white-50',
+                      'max-mobile:h-12 max-mobile:text-glyph-15',
+                      'max-mobile:[&_td:first-child]:text-base',
+                      item.name === currentUsername &&
+                        'bg-[linear-gradient(133deg,rgba(255,253,201,0.30)_2.19%,rgba(150,230,216,0.30)_49.24%,rgba(125,171,241,0.30)_98.21%)]',
+                    )}
+                  >
                     <td>{item.rank}</td>
                     <td>
                       <RankingLink id={item.name}>
@@ -85,154 +131,20 @@ export function MobileRankingTable({ ranks, page, totalPage }: { page: number; r
           </div>
         ))}
       </Flicking>
-      <div className={paginationStyle}>
+      <div className="mt-5 relative h-[30px] flex items-center justify-center gap-0.5">
         {[0, 1, 2].map((group, index) => {
           const isActive =
             (page === 0 && index === 0) ||
             (page !== 0 && page !== totalPage && index === 1) ||
             (page === totalPage && index === 2);
-          return <div key={index} className={cx(paginationBulletStyle, isActive && 'active')}></div>;
+          return (
+            <div
+              key={index}
+              className={cn('w-2 h-2 rounded-full bg-white-50 cursor-pointer', isActive && 'bg-white-100')}
+            ></div>
+          );
         })}
       </div>
     </div>
   );
 }
-
-const flickingStyle = css({
-  width: '100%',
-  height: 'auto',
-  margin: '0 auto',
-  position: 'relative',
-  overflow: 'hidden',
-});
-
-const slideStyle = css({
-  width: '100%',
-  height: 'auto',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
-
-const paginationStyle = css({
-  marginTop: '20px',
-  position: 'relative',
-  height: '30px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: 2,
-});
-
-const paginationBulletStyle = css({
-  width: '8px',
-  height: '8px',
-  borderRadius: '50%',
-  backgroundColor: 'white.white_50',
-  cursor: 'pointer',
-
-  '&.active': {
-    backgroundColor: 'white.white_100',
-  },
-});
-
-const rankingListStyle = css({
-  width: '100%',
-});
-
-const tableStyle = css({
-  width: '100%',
-  borderCollapse: 'separate',
-  textAlign: 'left',
-  borderSpacing: '0 4px',
-});
-
-const trBaseStyle = css({
-  borderRadius: '8px',
-
-  '& img': {
-    borderRadius: '50%',
-    overflow: 'hidden',
-  },
-
-  '& td, & th': {
-    border: 'none',
-    padding: '0 16px',
-  },
-
-  '& td:first-child, & th:first-child': {
-    paddingLeft: '40px',
-    borderRadius: '8px 0 0 8px',
-    width: '120px',
-  },
-  '& td:last-child, & th:last-child': {
-    paddingRight: '40px',
-    borderRadius: '0 8px 8px 0',
-    textAlign: 'right',
-  },
-  '& td:nth-child(2), & th:nth-child(2)': {
-    textAlign: 'center',
-    width: '72px',
-    padding: '0 8px',
-  },
-
-  _mobile: {
-    borderRadius: '6px',
-    '& td, & th': {
-      border: 'none',
-      padding: '0 8px',
-    },
-
-    '& td:first-child, & th:first-child': {
-      paddingLeft: '16px',
-      width: '54px',
-    },
-    '& td:last-child, & th:last-child': {
-      paddingRight: '16px',
-    },
-    '& td:nth-child(2), & th:nth-child(2)': {
-      width: '28px',
-      paddingLeft: '0px',
-    },
-  },
-});
-
-const theadTrStyle = cx(
-  trBaseStyle,
-  css({
-    textStyle: 'glyph16.bold',
-    backgroundColor: 'white.white_50',
-    color: 'white.white_100',
-    height: '40px',
-  }),
-);
-
-const trStyle = cx(
-  trBaseStyle,
-  css({
-    textStyle: 'glyph18.regular',
-    color: 'white.white_100',
-    backgroundColor: 'white.white_10',
-    height: '60px',
-
-    '& td:first-child': {
-      fontSize: '20px',
-      lineHeight: '28px',
-      fontFamily: 'token(fonts.dnf)',
-      color: 'white.white_50',
-    },
-    _mobile: {
-      height: '48px',
-      fontSize: 'glyph15.regular',
-
-      '& td:first-child': {
-        fontSize: '16px',
-      },
-    },
-  }),
-);
-
-const currentUserTrStyle = css({
-  background:
-    'linear-gradient(133deg, rgba(255, 253, 201, 0.30) 2.19%, rgba(150, 230, 216, 0.30) 49.24%, rgba(125, 171, 241, 0.30) 98.21%)',
-});

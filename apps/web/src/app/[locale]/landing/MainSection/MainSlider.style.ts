@@ -1,55 +1,20 @@
-import { css } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 
-export const container = css({
-  width: 'fit-content',
-  height: 'fit-content',
-  margin: 'auto',
-  borderRadius: '16px',
-  background: 'rgba(255, 255, 255, 0.10)',
-});
+export const container = cn(
+  'w-fit h-fit mx-auto rounded-2xl bg-white/10'
+);
 
-export const tab = css({
-  display: 'flex',
-  gap: '0',
-  alignItems: 'center',
-  justifyContent: 'center',
-  paddingTop: '40px',
+export const tab = cn(
+  'flex gap-0 items-center justify-center pt-10',
+  '[&_button]:py-1 [&_button]:px-2.5 [&_button]:text-white [&_button]:font-product [&_button]:text-glyph-18 [&_button]:opacity-50',
+  '[&_button.active]:opacity-100 [&_button.active]:font-bold',
+  'max-mobile:pt-[26px]',
+  'max-mobile:[&_button]:py-0.5 max-mobile:[&_button]:px-2 max-mobile:[&_button]:text-glyph-16'
+);
 
-  '& button': {
-    padding: '4px 10px',
-    color: '#fff',
-    textStyle: 'glyph18.regular',
-    opacity: '0.5',
+export const sliderContainer = cn(
+  'relative w-[1120px] h-[800px]',
+  'max-mobile:w-[calc(100vw-40px)] max-mobile:h-auto'
+);
 
-    '&.active': {
-      opacity: '1',
-      textStyle: 'glyph18.bold',
-    },
-  },
-
-  _mobile: {
-    paddingTop: '26px',
-    '& button': {
-      padding: '2px 8px',
-      textStyle: 'glyph16.regular',
-      '&.active': {
-        textStyle: 'glyph16.bold',
-      },
-    },
-  },
-});
-
-export const sliderContainer = css({
-  position: 'relative',
-  width: '1120px',
-  height: '800px',
-  _mobile: {
-    width: 'calc(100vw - 40px)',
-    height: 'auto',
-  },
-});
-
-export const sliderItem = css({
-  width: 'fit-content',
-  height: 'fit-content',
-});
+export const sliderItem = cn('w-fit h-fit');

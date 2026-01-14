@@ -1,35 +1,14 @@
-import { css } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 
-export const itemImage = css({
-  padding: '0 24px',
-});
+export const itemImage = cn('px-6');
 
-export const itemContainer = css({
-  padding: '40px 40px 60px 40px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '40px',
-  _mobile: {
-    gap: '28px',
-    padding: '20px 20px 28px 20px',
-  },
-});
+export const itemContainer = cn(
+  'p-[40px_40px_60px_40px] flex flex-col gap-10',
+  'max-mobile:gap-7 max-mobile:p-[20px_20px_28px_20px]'
+);
 
-export const itemHgroup = css({
-  padding: '0 20px',
-  color: '#fff',
-  textAlign: 'left',
-  '& h2': {
-    textStyle: 'glyph32.bold',
-    _mobile: {
-      textStyle: 'glyph18.bold',
-    },
-  },
-  '& p': {
-    marginTop: '8px',
-    textStyle: 'glyph18.regular',
-    _mobile: {
-      textStyle: 'glyph14.regular',
-    },
-  },
-});
+export const itemHgroup = cn(
+  'px-5 text-white text-left',
+  '[&_h2]:font-product [&_h2]:text-glyph-32 [&_h2]:font-bold [&_h2]:max-mobile:text-glyph-18',
+  '[&_p]:mt-2 [&_p]:font-product [&_p]:text-glyph-18 [&_p]:max-mobile:text-glyph-14'
+);

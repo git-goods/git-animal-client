@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRef } from 'react';
 import Image from 'next/image';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import { Arrow } from '@egjs/flicking-plugins';
 import type { FlickingOptions, FlickingProps } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
@@ -30,10 +30,10 @@ function AnimalSliderContainer({ children }: { children: React.ReactNode }) {
         <Flicking ref={flicking} {...sliderOptions}>
           {children}
         </Flicking>
-        <span className={cx('flicking-arrow-prev', 'is-outside', sliderArrowStyle, prevArrowStyle)}>
+        <span className={cn('flicking-arrow-prev', 'is-outside', sliderArrowStyle, prevArrowStyle)}>
           <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
         </span>
-        <span className={cx('flicking-arrow-next', 'is-outside', sliderArrowStyle, nextArrowStyle)}>
+        <span className={cn('flicking-arrow-next', 'is-outside', sliderArrowStyle, nextArrowStyle)}>
           <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
         </span>
       </div>
@@ -43,43 +43,18 @@ function AnimalSliderContainer({ children }: { children: React.ReactNode }) {
 
 export default AnimalSliderContainer;
 
-const sliderArrowStyle = css({
-  transform: 'translateX(40px)',
-  width: '40px',
-  height: '40px',
+const sliderArrowStyle = cn(
+  'translate-x-10 w-10 h-10',
+  'absolute block top-0 bottom-0 my-auto z-floating',
+  '[&.flicking-arrow-disabled]:translate-x-9 [&.flicking-arrow-disabled]:w-9 [&.flicking-arrow-disabled]:h-9',
+  '[&.flicking-arrow-disabled]:cursor-not-allowed [&.flicking-arrow-disabled]:brightness-50'
+);
 
-  position: 'absolute',
-  display: 'block',
-  top: '0',
-  bottom: 0,
-  margin: 'auto',
-  zIndex: 'floating',
+const prevArrowStyle = cn('rotate-180 -left-6');
 
-  '&.flicking-arrow-disabled': {
-    transform: 'translateX(36px)',
-    width: '36px',
-    height: '36px',
+const nextArrowStyle = cn('-right-6');
 
-    cursor: 'not-allowed',
-    filter: 'brightness(0.5)',
-  },
-});
-
-const prevArrowStyle = css({
-  rotate: '180deg',
-  left: '-24px',
-});
-
-const nextArrowStyle = css({
-  right: '-24px',
-});
-
-const sliderContainer = css({
-  position: 'relative',
-  width: '100%',
-  height: '100%',
-  _mobile: {
-    width: '100%',
-    height: 'auto',
-  },
-});
+const sliderContainer = cn(
+  'relative w-full h-full',
+  'max-mobile:w-full max-mobile:h-auto'
+);

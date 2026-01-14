@@ -1,36 +1,23 @@
 import type { ComponentProps } from 'react';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 
 interface InputProps extends ComponentProps<'input'> {}
 
 function Input(props: InputProps) {
-  return <input {...props} className={cx(inputStyle, props.className)} />;
+  return (
+    <input
+      {...props}
+      className={cn(
+        'border border-black/10 bg-transparent text-black/75',
+        'py-[14px] pb-[13px] pl-5 pr-[14px]',
+        'font-product text-glyph-16',
+        'rounded-lg outline-none w-full',
+        'focus:border-[#00894d]',
+        'placeholder:text-black/50 placeholder:font-product placeholder:text-glyph-16',
+        props.className
+      )}
+    />
+  );
 }
 
 export default Input;
-
-const inputStyle = css({
-  border: '1px solid rgba(0, 0, 0, 0.1)',
-  background: 'transparent',
-  color: 'rgba(0, 0, 0, 0.75)',
-  padding: '14px 14px 13px 20px',
-  fontFamily: 'Product Sans',
-  fontSize: '16px',
-  fontWeight: 400,
-  lineHeight: '150%',
-  letterSpacing: '-0.3px',
-  borderRadius: '8px',
-  outline: 'none',
-  width: '100%',
-  '&:focus': {
-    border: '1px solid #00894d',
-  },
-  '&::placeholder': {
-    color: 'rgba(0, 0, 0, 0.5)',
-    fontFamily: 'Product Sans',
-    fontSize: '16px',
-    fontWeight: 400,
-    lineHeight: '150%',
-    letterSpacing: '-0.3px',
-  },
-});

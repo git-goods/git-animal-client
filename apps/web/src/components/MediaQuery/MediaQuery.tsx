@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { mediaBreakpoints } from '@gitanimals/ui-panda';
+import { mediaBreakpoints } from '@gitanimals/ui-tailwind';
 
 interface MediaQueryProps {
   mobile?: React.ReactNode | null;

@@ -1,94 +1,40 @@
-import { css } from '_panda/css';
-import type { SystemStyleObject } from '_panda/types';
+import { cn } from '@gitanimals/ui-tailwind';
 
-export const footer = css({
-  display: 'flex',
-  flexDir: 'column',
-  gap: '120px',
-  // bg: 'black.black',
-  width: '100%',
-  color: 'white.white',
-  padding: '120px 0',
+export const footer = cn(
+  'flex flex-col gap-[120px] w-full text-white-white py-[120px] px-0',
+  'max-mobile:py-[80px] max-mobile:px-4 max-mobile:gap-[60px]',
+);
 
-  _mobile: {
-    padding: '80px 16px',
-    gap: '60px',
-  },
-});
+export const article = cn(
+  'flex w-full max-w-[1120px] mx-auto',
+  'max-mobile:flex-col max-mobile:gap-6',
+);
 
-export const article = css({
-  display: 'flex',
-  width: '100%',
-  maxWidth: '1120px',
-  margin: '0 auto',
+export const title = cn(
+  'w-[348px] shrink font-product text-glyph-28 font-bold text-white-white',
+  'max-mobile:text-glyph-18 max-mobile:font-bold',
+);
 
-  _mobile: {
-    flexDir: 'column',
-    gap: '24px',
-  },
-});
+export const teamContentWrapper = cn(
+  'w-full flex gap-6 flex-wrap',
+  'max-mobile:gap-3',
+);
 
-export const title = css({
-  width: '348px',
-  flexShrink: 1,
-  textStyle: 'glyph28.bold',
-  color: 'white.white',
+export const repoContentWrapper = cn(
+  'w-full flex flex-col gap-4',
+);
 
-  _mobile: {
-    textStyle: 'glyph18.bold',
-  },
-});
+export const repoLi = cn(
+  'flex gap-2',
+  'max-mobile:flex-col max-mobile:gap-px',
+);
 
-const defaultContentWrapper: SystemStyleObject = {
-  width: '100%',
-};
+export const repoLiTitle = cn(
+  'flex items-center gap-2 w-[226px] font-product text-glyph-18 font-bold',
+  'max-mobile:text-glyph-15 max-mobile:font-bold max-mobile:gap-[17px]',
+);
 
-export const teamContentWrapper = css(defaultContentWrapper, {
-  display: 'flex',
-  gap: '24px',
-  flexWrap: 'wrap',
-
-  _mobile: {
-    gap: '12px',
-  },
-});
-
-export const repoContentWrapper = css(defaultContentWrapper, {
-  display: 'flex',
-  flexDir: 'column',
-  gap: '16px',
-});
-
-export const repoLi = css({
-  display: 'flex',
-  gap: '8px',
-
-  _mobile: {
-    flexDir: 'column',
-    gap: '1px',
-  },
-});
-
-export const repoLiTitle = css({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-  width: '226px',
-  textStyle: 'glyph18.bold',
-
-  _mobile: {
-    textStyle: 'glyph15.bold',
-    gap: '17px',
-  },
-});
-
-export const repoLiLink = css({
-  textStyle: 'glyph16.regular',
-  color: 'white.white_75',
-  textDecoration: 'underline',
-
-  _mobile: {
-    textStyle: 'glyph12.regular',
-    marginLeft: '37px',
-  },
-});
+export const repoLiLink = cn(
+  'font-product text-glyph-16 text-white-white/75 underline',
+  'max-mobile:text-glyph-12 max-mobile:ml-[37px]',
+);

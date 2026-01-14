@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* PandaCSS layers - will be removed after migration */
 @layer reset, base, tokens, recipes, utilities;
 
 @font-face {

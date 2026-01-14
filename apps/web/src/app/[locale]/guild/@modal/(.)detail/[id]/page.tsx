@@ -1,6 +1,6 @@
-import { css } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import { checkIsMyGuild, getGuildById } from '@gitanimals/api';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 
 import RouteModal from '@/components/RouteModal';
 import { Link } from '@/i18n/routing';
@@ -17,7 +17,7 @@ export default async function GuildDetailModal({ params }: { params: { id: strin
         <GuildDetail guildId={params.id} details={details} />
         {!isMyGuild && (
           <Link href={`/guild/detail/${params.id}/join`} style={{ margin: 'auto' }}>
-            <Button w="100px">Join</Button>
+            <Button className="w-[100px]">Join</Button>
           </Link>
         )}
       </div>
@@ -25,10 +25,6 @@ export default async function GuildDetailModal({ params }: { params: { id: strin
   );
 }
 
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  gap: '32px',
-  height: 'fit-content',
-});
+const containerStyle = cn(
+  'flex flex-col justify-center gap-8 h-fit'
+);

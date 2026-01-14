@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
-import { center } from '_panda/patterns';
+import { cn } from '@gitanimals/ui-tailwind';
 import type { Inbox } from '@gitanimals/api';
 import { inboxQueries, useReadInbox } from '@gitanimals/react-query';
 import { useQueryClient } from '@tanstack/react-query';
@@ -16,9 +15,26 @@ export const InboxList = ({ isOpen, list }: { isOpen: boolean; list: Inbox[] }) 
 
   return (
     <AnimatePortal isShowing={isOpen}>
-      <article className={inboxContainerStyle}>
-        <h3 className={headingStyle}>{t('notification')}</h3>
-        <ul className={inboxListStyle}>{list?.map((item) => <InboxItem key={item.id + item.status} {...item} />)}</ul>
+      <article
+        className={cn(
+          'flex flex-col fixed top-[calc(24px+68px)] right-6 min-h-[400px] max-h-[600px]',
+          'overflow-hidden rounded-lg z-popover',
+          'bg-white/20 shadow-[0px_4px_24px_0px_rgba(0,0,0,0.25)] backdrop-blur-[20px]',
+          'text-left w-[375px]'
+        )}
+      >
+        <h3 className="flex items-center justify-center font-product text-glyph-20 font-bold h-20 bg-white/25 text-white shrink-0">
+          {t('notification')}
+        </h3>
+        <ul
+          className={cn(
+            'flex flex-col overflow-auto',
+            '[&>*:not(:last-child)]:border-b [&>*:not(:last-child)]:border-white/25',
+            customScrollStyle
+          )}
+        >
+          {list?.map((item) => <InboxItem key={item.id + item.status} {...item} />)}
+        </ul>
       </article>
     </AnimatePortal>
   );
@@ -37,101 +53,24 @@ function InboxItem({ image, title, body, redirectTo, status, id }: Inbox) {
 
   return (
     <Comp href={redirectTo} onClick={() => readInbox({ inboxId: id })}>
-      <div className={cx(inboxStyle, css({ backgroundColor: status === 'UNREAD' ? 'black.black_10' : 'transparent' }))}>
+      <div
+        className={cn(
+          'grid grid-cols-[36px_1fr] py-6 pr-5 pl-[23px] gap-3 items-start',
+          'text-white relative border-b border-white/25 last:border-b-0',
+          status === 'UNREAD' ? 'bg-black/10' : 'bg-transparent',
+          '[&_.unread-indicator]:w-[5px] [&_.unread-indicator]:h-[5px] [&_.unread-indicator]:bg-white/75',
+          '[&_.unread-indicator]:rounded-full [&_.unread-indicator]:absolute [&_.unread-indicator]:top-[39.5px] [&_.unread-indicator]:left-3',
+          '[&_.image]:w-9 [&_.image]:h-9 [&_.image]:overflow-hidden [&_.image]:rounded-full',
+          '[&_.body]:text-left [&_.body]:font-product [&_.body]:text-glyph-15 [&_.body]:text-white/90'
+        )}
+      >
         {status === 'UNREAD' && <div className="unread-indicator" />}
         <img className="image" src={image} alt={title} width={36} height={36} />
         <div>
-          <span className={titleStyle}>{title}</span>
+          <span className="block text-left font-product text-glyph-16 font-bold">{title}</span>
           <p className="body">{body}</p>
         </div>
       </div>
     </Comp>
   );
 }
-
-const inboxContainerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  position: 'fixed',
-  top: 'calc(24px + 68px)',
-  right: '24px',
-  minHeight: '400px',
-  maxHeight: '600px',
-  overflow: 'hidden',
-  borderRadius: '8px',
-  zIndex: 'popover',
-  background: 'rgba(255, 255, 255, 0.20)',
-  boxShadow: '0px 4px 24px 0px rgba(0, 0, 0, 0.25)',
-  backdropFilter: 'blur(20px)',
-  textAlign: 'left',
-  width: '375px',
-});
-
-const headingStyle = center({
-  textStyle: 'glyph20.bold',
-  height: '80px',
-  backgroundColor: 'white.white_25',
-  color: 'white',
-  flexShrink: 0,
-});
-
-const inboxListStyle = cx(
-  css({
-    display: 'flex',
-    flexDirection: 'column',
-    overflow: 'auto',
-    '& > *:not(:last-child)': {
-      borderBottom: '1px solid',
-      borderColor: 'white.white_25',
-    },
-  }),
-  customScrollStyle,
-);
-
-const inboxStyle = css({
-  display: 'grid',
-  gridTemplateColumns: '36px 1fr',
-  padding: '24px 20px 24px 23px',
-  gap: '12px',
-  alignItems: 'flex-start',
-  color: 'white',
-  position: 'relative',
-  borderBottom: '1px solid',
-  borderColor: 'white.white_25',
-  '&:last-child': {
-    borderBottom: 'none',
-  },
-
-  '& .unread-indicator': {
-    width: '5px',
-    height: '5px',
-    backgroundColor: 'white.white_75',
-    borderRadius: '50%',
-    position: 'absolute',
-    top: '39.5px',
-    left: '12px',
-  },
-
-  '& .image': {
-    width: '36px',
-    height: '36px',
-    overflow: 'hidden',
-    borderRadius: '50%',
-  },
-
-  '& .title': {
-    textAlign: 'left',
-    textStyle: 'glyph16.bold',
-  },
-  '& .body': {
-    textAlign: 'left',
-    textStyle: 'glyph15.regular',
-    color: 'white.white_90',
-  },
-});
-
-const titleStyle = css({
-  display: 'block',
-  textAlign: 'left',
-  textStyle: 'glyph16.bold',
-});

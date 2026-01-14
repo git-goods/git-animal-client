@@ -1,6 +1,4 @@
 import Image from 'next/image';
-import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
 
 import { BackgroundSection } from '../(common)/BackgroundSection';
 
@@ -12,7 +10,7 @@ const bgTypes = ['GRASS_CHRISTMAS_TREE_FIELD', 'SNOW_GRASS_FIELD', 'SNOW_HOUSE_F
 export function ChristmasContent() {
   return (
     <>
-      <div className={bgContainerStyle}>
+      <div className="relative w-full min-h-[calc(100vh-60px)] overflow-hidden">
         {[...Array(20)].map((_, i) => (
           <Snowflake
             key={i}
@@ -28,20 +26,20 @@ export function ChristmasContent() {
           alt="christmas bg"
           layout="fill"
           objectFit="cover"
-          className={bgImageStyle}
+          className="pointer-events-none"
         />
 
-        <div className={containerStyle}>
+        <div className="relative w-full h-full pt-[211px] z-[2] flex flex-col pb-[280px] max-mobile:pt-[110px] max-mobile:pb-[200px]">
           <Image
             src="/event/christmas/christmas-logo.svg"
             alt="gitanimals christmas event"
             width={1357}
             height={199}
             objectFit="contain"
-            className={logoImageStyle}
+            className="object-contain mx-auto max-w-[80vw] h-auto max-mobile:max-w-[90vw]"
             draggable={false}
           />
-          <p className={descriptionStyle}>
+          <p className="text-white-90 font-product text-glyph-32 font-bold font-normal text-center whitespace-pre-line mt-[60px] mb-[100px] max-mobile:font-product max-mobile:text-glyph-16 max-mobile:text-base max-mobile:mt-5 max-mobile:mb-10">
             Christmas has come to Gitanimals
             <br />
             Draw Christmas pet for free!
@@ -54,54 +52,3 @@ export function ChristmasContent() {
     </>
   );
 }
-
-const descriptionStyle = css({
-  color: 'white.white_90',
-  textStyle: 'glyph32.bold',
-  fontWeight: 400,
-  textAlign: 'center',
-  whiteSpace: 'pre-line',
-  marginTop: '60px',
-  marginBottom: '100px',
-  _mobile: {
-    textStyle: 'glyph16.regular',
-    fontSize: '16px',
-    marginTop: '20px',
-    marginBottom: '40px',
-  },
-});
-
-const bgImageStyle = css({
-  pointerEvents: 'none',
-});
-
-const containerStyle = flex({
-  position: 'relative',
-  width: '100%',
-  height: '100%',
-  paddingTop: '211px',
-  zIndex: 2,
-  flexDirection: 'column',
-  paddingBottom: '280px',
-  _mobile: {
-    paddingTop: '110px',
-    paddingBottom: '200px',
-  },
-});
-
-const logoImageStyle = css({
-  objectFit: 'contain',
-  margin: '0 auto',
-  maxWidth: '80vw',
-  height: 'auto',
-  _mobile: {
-    maxWidth: '90vw',
-  },
-});
-
-const bgContainerStyle = css({
-  position: 'relative',
-  width: '100%',
-  minHeight: 'calc(100vh - 60px)',
-  overflow: 'hidden',
-});

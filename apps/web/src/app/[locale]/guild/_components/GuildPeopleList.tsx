@@ -1,11 +1,9 @@
 'use client';
 
-import { css, cx } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { flex, grid } from '_panda/patterns';
+import { cn } from '@gitanimals/ui-tailwind';
 import Flicking from '@egjs/react-flicking';
 import type { GuildLeader, GuildMember } from '@gitanimals/api';
-import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
+import { BannerPetSelectMedium } from '@gitanimals/ui-tailwind';
 import { UsersRoundIcon } from 'lucide-react';
 
 import { USER_GITHUB_URL } from '@/constants/route';
@@ -27,19 +25,16 @@ export function GuildPeopleList({ members, leader }: { members: GuildMember[]; l
       </div>
       {members.length > 0 && (
         <div className={membersStyle}>
-          <Flex mb="1" justifyContent="space-between">
+          <div className="flex mb-1 justify-between">
             <p>Members</p>
-            <Flex gap="6px" alignItems="center">
+            <div className="flex gap-1.5 items-center">
               <UsersRoundIcon size={16} color="#FFFFFF80" />
               <span>{members.length + 1}/ 15</span>
-            </Flex>
-          </Flex>
+            </div>
+          </div>
           <Flicking moveType="freeScroll" align="prev" bound={true}>
             {members.map((member) => (
-              <div
-                className={cx('flicking-panel', css({ height: 'fit-content', _first: { ml: 0 }, marginLeft: 1 }))}
-                key={member.id}
-              >
+              <div className={cn('flicking-panel h-fit first:ml-0 ml-1')} key={member.id}>
                 <a href={USER_GITHUB_URL(member.name)} target="_blank" draggable={false}>
                   <BannerPetSelectMedium
                     key={member.id}
@@ -57,34 +52,16 @@ export function GuildPeopleList({ members, leader }: { members: GuildMember[]; l
   );
 }
 
-const listStyle = grid({
-  gridTemplateColumns: '120px 1fr',
-  gap: 4,
-  overflowX: 'hidden',
-  minH: '180px',
-  color: 'white.white_100',
-  _mobile: {
-    maxW: 'calc(100vw - 40px)',
-  },
-});
+const listStyle = cn(
+  'grid grid-cols-[120px_1fr] gap-4 overflow-x-hidden min-h-[180px] text-white',
+  'max-mobile:max-w-[calc(100vw-40px)]',
+);
 
-const leaderStyle = css({
-  '& > p': {
-    mb: 1,
-  },
-});
+const leaderStyle = cn('[&>p]:mb-1');
 
-const membersStyle = css({
-  overflow: 'hidden',
-  flex: 1,
-});
+const membersStyle = cn('overflow-hidden flex-1');
 
-const titleStyle = flex({
-  alignItems: 'center',
-  gap: 4,
-  textStyle: 'glyph36.bold',
-  color: 'white.white_100',
-  '& img': {
-    borderRadius: '8px',
-  },
-});
+const titleStyle = cn(
+  'flex items-center gap-4 font-product text-glyph-36 font-bold text-white',
+  '[&_img]:rounded-lg',
+);

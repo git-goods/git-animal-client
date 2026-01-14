@@ -1,9 +1,11 @@
+'use client';
+
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Dialog, ScrollArea } from '@gitanimals/ui-panda';
+import { Dialog, ScrollArea } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { ExpandIcon } from 'lucide-react';
 import { toast } from 'sonner';
@@ -74,13 +76,18 @@ export function FarmPersonaSelect({
 
   return (
     <div>
-      <section className={selectPetContainerStyle}>
+      <section
+        className={cn(
+          'relative flex items-center justify-between mb-4',
+          '[&_.heading]:font-product [&_.heading]:text-glyph-18 [&_.heading]:font-bold [&_.heading]:text-white'
+        )}
+      >
         <h2 className="heading">{t('change-pet')}</h2>
         <button onClick={() => setIsOpen(true)}>
           <ExpandIcon color="white" size={20} />
         </button>
       </section>
-      <ScrollArea height="160px">
+      <ScrollArea className="h-40">
         <SelectPersonaList
           loadingPersona={loadingPersona}
           selectPersona={selectPersona}
@@ -91,7 +98,13 @@ export function FarmPersonaSelect({
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <Dialog.Content size="large">
           <Dialog.Title>{t('farm-type-select-pet')}</Dialog.Title>
-          <div className={flexOverflowStyle}>
+          <div
+            className={cn(
+              customScrollHorizontalStyle,
+              'flex overflow-y-auto overflow-x-hidden w-full gap-1',
+              'h-full min-h-0 flex-wrap justify-center max-h-full mt-6'
+            )}
+          >
             <SelectPersonaList
               loadingPersona={loadingPersona}
               selectPersona={selectPersona}
@@ -104,33 +117,3 @@ export function FarmPersonaSelect({
     </div>
   );
 }
-
-const flexOverflowStyle = cx(
-  css({
-    display: 'flex',
-    overflowY: 'auto',
-    overflowX: 'hidden',
-    width: '100%',
-    gap: '4px',
-    height: '100%',
-    minHeight: '0',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    maxHeight: 'calc(100%)',
-    marginTop: '24px',
-  }),
-  customScrollHorizontalStyle,
-);
-
-const selectPetContainerStyle = css({
-  position: 'relative',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  marginBottom: '16px',
-
-  '& .heading': {
-    textStyle: 'glyph18.bold',
-    color: 'white',
-  },
-});

@@ -1,11 +1,10 @@
 'use client';
 
 import React, { Suspense, useState } from 'react';
-import { Flex } from '_panda/jsx';
 import type { MergePersonasResponse } from '@gitanimals/api';
 import { mergePersonas, type MergePersonasRequest, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Button, ScrollArea } from '@gitanimals/ui-panda';
+import { Button, ScrollArea } from '@gitanimals/ui-tailwind';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
@@ -114,7 +113,7 @@ function PetMergeUI() {
 
         <SelectionSummary targetPet={targetPet} materialPets={materialPets} onPetClick={handlePetClick} />
 
-        <Flex gap="16px" justify="center">
+        <div className="flex gap-4 justify-center">
           {!targetPet && <Button disabled={!targetPet}>Select Target Pet</Button>}
           {targetPet && materialPets.length === 0 && (
             <Button disabled={targetPet && materialPets.length === 0}>Select Materials</Button>
@@ -132,7 +131,7 @@ function PetMergeUI() {
           <Button variant="secondary">
             <Link href="/laboratory">Exit</Link>
           </Button>
-        </Flex>
+        </div>
       </div>
 
       {/* Instruction Text */}

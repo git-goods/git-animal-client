@@ -1,13 +1,20 @@
-import type { ComponentProps } from 'react';
-import { Flex } from '_panda/jsx';
+import type { ComponentProps, PropsWithChildren } from 'react';
+import { cn } from '@gitanimals/ui-tailwind';
 
-interface TabsListProps extends ComponentProps<typeof Flex> {}
+interface TabsListProps extends ComponentProps<'div'> {
+  gap?: string;
+  width?: string;
+}
 
-const TabsList = ({ children, gap = '6px', width = '100%', ...props }: TabsListProps) => {
+const TabsList = ({ children, gap = '6px', width = '100%', className, style, ...props }: PropsWithChildren<TabsListProps>) => {
   return (
-    <Flex {...props} gap={gap} width={width}>
+    <div
+      className={cn('flex', className)}
+      style={{ gap, width, ...style }}
+      {...props}
+    >
       {children}
-    </Flex>
+    </div>
   );
 };
 

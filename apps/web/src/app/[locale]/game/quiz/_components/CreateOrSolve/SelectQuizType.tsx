@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
 import { wrap } from '@suspensive/react';
 
 import { ROUTE } from '@/constants/route';
@@ -28,7 +27,7 @@ const SelectQuizType = wrap
     const t = useTranslations('Quiz');
 
     return (
-      <div className={containerStyle}>
+      <div className="flex flex-col gap-2 w-full">
         <QuizTypeCard
           title={t('create-quiz-card-title')}
           description={customT(t('create-quiz-card-description'), { point: QUIZ_REGISTER_POINT })}
@@ -54,10 +53,3 @@ const SelectQuizType = wrap
   });
 
 export default SelectQuizType;
-
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '8px',
-  width: '100%',
-});

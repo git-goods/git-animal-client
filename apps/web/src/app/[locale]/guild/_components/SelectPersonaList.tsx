@@ -1,11 +1,11 @@
 'use client';
 
 import { memo } from 'react';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { LevelBanner } from '@gitanimals/ui-panda';
-import { BannerSkeletonList } from '@gitanimals/ui-panda/src/components/Banner/Banner';
+import { LevelBanner } from '@gitanimals/ui-tailwind';
+import { BannerSkeletonList } from '@gitanimals/ui-tailwind/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -13,18 +13,8 @@ import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
-const flexOverflowStyle = cx(
-  css({
-    display: 'flex',
-    overflowY: 'auto',
-    overflowX: 'hidden',
-    width: '100%',
-    gap: '4px',
-    height: '100%',
-    minHeight: '0',
-    flexWrap: 'wrap',
-    maxHeight: '100%',
-  }),
+const flexOverflowStyle = cn(
+  'flex overflow-y-auto overflow-x-hidden w-full gap-1 h-full min-h-0 flex-wrap max-h-full',
   customScrollStyle,
 );
 
@@ -65,14 +55,7 @@ export const SelectPersonaList = wrap
     );
   });
 
-const sectionStyle = css({
-  height: '100%',
-  maxHeight: '50vh',
-  minHeight: '164px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '16px',
-});
+const sectionStyle = cn('h-full max-h-[50vh] min-h-[164px] flex flex-col gap-4');
 
 interface PersonaItemProps {
   persona: Persona;
@@ -82,7 +65,7 @@ interface PersonaItemProps {
 
 function PersonaItem({ persona, isSelected, onClick }: PersonaItemProps) {
   return (
-    <button onClick={onClick} className={css({ outline: 'none', bg: 'transparent' })}>
+    <button onClick={onClick} className={cn('outline-none bg-transparent')}>
       <LevelBanner
         image={getPersonaImage(persona.type)}
         status={isSelected ? 'selected' : 'default'}

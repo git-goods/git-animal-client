@@ -2,7 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 
 import { useClientUser } from '@/utils/clientAuth';
 
@@ -71,7 +71,7 @@ export function GitanimalsFarm({ imageKey, className }: FarmImageProps) {
       width={600}
       height={300}
       alt="preview farm"
-      className={cx(css({ backgroundColor: '#fff' }), className)}
+      className={cn('bg-white', className)}
       draggable={false}
     />
   );
