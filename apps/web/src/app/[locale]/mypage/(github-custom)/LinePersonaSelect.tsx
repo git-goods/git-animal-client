@@ -25,7 +25,7 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
       <section
         className={cn(
           'relative flex items-center justify-between mb-4',
-          '[&_.heading]:font-product [&_.heading]:text-glyph-18 [&_.heading]:font-bold [&_.heading]:text-white'
+          '[&_.heading]:font-product [&_.heading]:text-glyph-18 [&_.heading]:font-bold [&_.heading]:text-white',
         )}
       >
         <h2 className="heading">{t('change-pet')}</h2>
@@ -46,7 +46,7 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
             className={cn(
               customScrollStyle,
               'flex overflow-y-auto overflow-x-hidden w-full gap-1',
-              'h-full min-h-0 flex-wrap justify-center max-h-full mt-6'
+              'h-full min-h-0 flex-wrap justify-center max-h-full mt-6',
             )}
           >
             <SelectPersonaList

@@ -43,7 +43,7 @@ export const TabBar = wrap.Suspense().on(() => {
         'grid grid-cols-4 gap-[18px] pt-3 pb-1 px-10',
         'fixed bottom-0 left-0 right-0 z-[100]',
         'bg-[#212429] rounded-t-2xl',
-        'w-full max-w-[var(--container-max-width)] mx-auto'
+        'w-full max-w-[var(--container-max-width)] mx-auto',
       )}
     >
       {TAB_LIST.map((tab) => (
@@ -53,7 +53,7 @@ export const TabBar = wrap.Suspense().on(() => {
           className={cn(
             'flex flex-col items-center justify-center gap-0.5',
             'text-white/25 font-product text-glyph-12',
-            isActiveTab(pathname, tab.href) && 'text-white'
+            isActiveTab(pathname, tab.href) && 'text-white',
           )}
         >
           <tab.Icon />

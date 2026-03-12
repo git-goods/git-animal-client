@@ -3,10 +3,10 @@
 import React, { Children, useState } from 'react';
 import { useRef } from 'react';
 import Image from 'next/image';
-import { cn } from '@gitanimals/ui-tailwind';
 import { Fade, Perspective } from '@egjs/flicking-plugins';
 import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
+import { cn } from '@gitanimals/ui-tailwind';
 
 import { sliderContainer } from '../MainSection/MainSlider.style';
 
@@ -80,7 +80,7 @@ function ArrowButton({
         direction === 'prev' ? prevArrowStyle : nextArrowStyle,
         direction === 'prev' ? 'rotate-180' : 'rotate-0',
         disabled ? 'cursor-not-allowed w-9 h-9' : 'cursor-pointer w-10 h-10',
-        disabled ? 'max-mobile:w-6 max-mobile:h-6' : 'max-mobile:w-[26px] max-mobile:h-[26px]'
+        disabled ? 'max-mobile:w-6 max-mobile:h-6' : 'max-mobile:w-[26px] max-mobile:h-[26px]',
       )}
     >
       {disabled ? (
@@ -95,17 +95,9 @@ function ArrowButton({
 const arrowStyle = cn(
   'absolute top-0 bottom-0 my-auto z-floating',
   '[&_img]:w-full [&_img]:h-full',
-  'max-mobile:bottom-0'
+  'max-mobile:bottom-0',
 );
 
-const prevArrowStyle = cn(
-  arrowStyle,
-  '-left-[62px]',
-  'max-mobile:left-2'
-);
+const prevArrowStyle = cn(arrowStyle, '-left-[62px]', 'max-mobile:left-2');
 
-const nextArrowStyle = cn(
-  arrowStyle,
-  '-right-[62px]',
-  'max-mobile:right-2'
-);
+const nextArrowStyle = cn(arrowStyle, '-right-[62px]', 'max-mobile:right-2');

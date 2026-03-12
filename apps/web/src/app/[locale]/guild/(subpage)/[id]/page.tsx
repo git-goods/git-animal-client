@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import { cn } from '@gitanimals/ui-tailwind/utils';
 import { getGuildById } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { SearchIcon } from 'lucide-react';
 
 import { GitanimalsGuild } from '@/components/Gitanimals';
@@ -52,33 +52,19 @@ export default async function GuildPage({ params }: { params: { id: string } }) 
   );
 }
 
-const guildPreviewStyle = cn(
-  'aspect-[1/0.5] w-full rounded-lg overflow-hidden',
-  '[&_img]:w-full [&_img]:h-full'
-);
+const guildPreviewStyle = cn('aspect-[1/0.5] w-full rounded-lg overflow-hidden', '[&_img]:w-full [&_img]:h-full');
 
-const topStyle = cn(
-  'flex gap-2 items-center justify-end',
-  '[&>*]:h-10 w-full mb-4'
-);
+const topStyle = cn('flex gap-2 items-center justify-end', '[&>*]:h-10 w-full mb-4');
 
-const containerStyle = cn(
-  'flex flex-col gap-8 p-10 rounded-2xl',
-  'bg-white/10 backdrop-blur-[7px]'
-);
+const containerStyle = cn('flex flex-col gap-8 p-10 rounded-2xl', 'bg-white/10 backdrop-blur-[7px]');
 
 const titleStyle = cn(
   'flex items-center gap-4',
   'font-product text-glyph-36 font-bold text-white',
   '[&_img]:rounded-lg',
-  '[&_h2]:flex-1'
+  '[&_h2]:flex-1',
 );
 
-const bodyStyle = cn(
-  'font-product text-glyph-16 text-white/75 mt-3'
-);
+const bodyStyle = cn('font-product text-glyph-16 text-white/75 mt-3');
 
-const buttonWrapperStyle = cn(
-  'flex items-center justify-center',
-  'w-10 h-10 bg-white/25 rounded-[10px]'
-);
+const buttonWrapperStyle = cn('flex items-center justify-center', 'w-10 h-10 bg-white/25 rounded-[10px]');

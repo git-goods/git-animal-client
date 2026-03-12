@@ -2,8 +2,8 @@
 
 import { type PropsWithChildren } from 'react';
 import Image from 'next/image';
-import { cn } from '@gitanimals/ui-tailwind';
 import { guildQueries } from '@gitanimals/react-query';
+import { cn } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useQuery } from '@tanstack/react-query';
 
@@ -42,35 +42,22 @@ export const GuildSliderContainer = wrap.ErrorBoundary({ fallback: <>{}</> }).on
   },
 );
 
-const containerStyle = cn(
-  'w-full h-fit relative'
-);
+const containerStyle = cn('w-full h-fit relative');
 
 function CarouselButton({ direction, disabled }: { direction: 'left' | 'right'; disabled?: boolean }) {
   const imgSrc = disabled ? '/common/carousel-inner-right-disabled.png' : '/common/carousel-inner-right.png';
   return (
     <button
       disabled={disabled}
-      className={cn(
-        buttonStyle,
-        direction === 'left' && leftButtonStyle,
-        direction === 'right' && rightButtonStyle
-      )}
+      className={cn(buttonStyle, direction === 'left' && leftButtonStyle, direction === 'right' && rightButtonStyle)}
     >
       <Image width={40} height={40} src={imgSrc} alt={direction} />
     </button>
   );
 }
 
-const buttonStyle = cn(
-  'absolute top-0 bottom-0 m-auto',
-  'disabled:cursor-not-allowed'
-);
+const buttonStyle = cn('absolute top-0 bottom-0 m-auto', 'disabled:cursor-not-allowed');
 
-const leftButtonStyle = cn(
-  'left-[-66px] rotate-180'
-);
+const leftButtonStyle = cn('left-[-66px] rotate-180');
 
-const rightButtonStyle = cn(
-  'right-[-66px]'
-);
+const rightButtonStyle = cn('right-[-66px]');

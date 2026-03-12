@@ -18,7 +18,7 @@ function TextArea({ maxLength = 300, ...props }: TextAreaProps) {
     <div
       className={cn(
         'relative border border-black/10 rounded-lg',
-        'focus-within:border-[#00894d] [&:focus-within_strong]:text-[#00894d]'
+        'focus-within:border-[#00894d] [&:focus-within_strong]:text-[#00894d]',
       )}
     >
       <textarea
@@ -28,7 +28,7 @@ function TextArea({ maxLength = 300, ...props }: TextAreaProps) {
           'p-4 px-5 font-product text-glyph-16',
           'rounded-lg outline-none w-full resize-none',
           'placeholder:text-black/50 placeholder:font-product placeholder:text-glyph-16',
-          props.className
+          props.className,
         )}
         onChange={onChange}
         maxLength={maxLength}

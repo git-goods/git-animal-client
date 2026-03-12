@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { cn } from '@gitanimals/ui-tailwind';
 import { RadioButtonOff, RadioButtonOn } from '@gitanimals/ui-icon';
+import { cn } from '@gitanimals/ui-tailwind';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, Globe } from 'lucide-react';
 
@@ -37,7 +37,7 @@ export const DesktopLanguageSelector = () => {
               'shadow-[0px_3px_5px_2px_rgba(0,0,0,0.25)] py-2',
               '[&_.option]:w-full [&_.option]:text-center [&_.option]:px-4 [&_.option]:py-2',
               '[&_.option]:transition-colors [&_.option]:text-black [&_.option]:whitespace-nowrap',
-              '[&_.option]:font-product [&_.option]:text-glyph-16 [&_.option:hover]:underline'
+              '[&_.option]:font-product [&_.option]:text-glyph-16 [&_.option:hover]:underline',
             )}
           >
             {Object.keys(LOCALE_MAP).map((lang) => (
@@ -64,7 +64,7 @@ export function MobileLanguageSelector({ onBack }: { onBack: () => void }) {
       <div
         className={cn(
           'px-4 font-product text-glyph-18 flex items-center justify-between relative w-full h-11',
-          '[&_.center-title]:w-fit [&_.center-title]:absolute [&_.center-title]:left-1/2 [&_.center-title]:-translate-x-1/2'
+          '[&_.center-title]:w-fit [&_.center-title]:absolute [&_.center-title]:left-1/2 [&_.center-title]:-translate-x-1/2',
         )}
       >
         <button onClick={onBack}>
@@ -78,7 +78,7 @@ export function MobileLanguageSelector({ onBack }: { onBack: () => void }) {
           'w-full font-product text-glyph-16',
           '[&_li]:flex [&_li]:items-center [&_li]:justify-between',
           '[&_li]:py-[18px] [&_li]:pr-[22px] [&_li]:pl-5',
-          '[&_li]:border-b [&_li]:border-gray-900 [&_li]:bg-white'
+          '[&_li]:border-b [&_li]:border-gray-900 [&_li]:bg-white',
         )}
       >
         {Object.keys(LOCALE_MAP).map((lang) => (

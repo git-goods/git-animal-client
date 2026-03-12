@@ -99,31 +99,17 @@ const ButtonWrapper = wrap
     );
   });
 
-const containerStyle = cn(
-  'relative py-[120px] flex flex-col items-center justify-center',
-  'max-mobile:py-[100px]'
-);
+const containerStyle = cn('relative py-[120px] flex flex-col items-center justify-center', 'max-mobile:py-[100px]');
 
-const bgStyle = cn(
-  'absolute top-0 left-0 w-full h-full z-hide object-cover'
-);
+const bgStyle = cn('absolute top-0 left-0 w-full h-full z-hide object-cover');
 
-const headingStyle = cn(
-  'font-product text-glyph-82 font-bold text-white',
-  'max-mobile:text-glyph-40'
-);
+const headingStyle = cn('font-product text-glyph-82 font-bold text-white', 'max-mobile:text-glyph-40');
 
-const descStyle = cn(
-  'font-product text-glyph-24 text-white mt-4',
-  'max-mobile:mt-2 max-mobile:text-glyph-16'
-);
+const descStyle = cn('font-product text-glyph-24 text-white mt-4', 'max-mobile:mt-2 max-mobile:text-glyph-16');
 
-const buttonContainerStyle = cn(
-  'flex gap-4 mt-20',
-  'max-mobile:gap-2 max-mobile:px-4 max-mobile:mt-5'
-);
+const buttonContainerStyle = cn('flex gap-4 mt-20', 'max-mobile:gap-2 max-mobile:px-4 max-mobile:mt-5');
 
 const petContainerStyle = cn(
   'mt-[150px] w-[60%] [&_img]:object-contain [&_img]:mx-auto',
-  'max-mobile:w-full max-mobile:px-4 max-mobile:mt-20'
+  'max-mobile:w-full max-mobile:px-4 max-mobile:mt-20',
 );

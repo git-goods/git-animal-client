@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import { useSelectOpenContext, useSelectValueContext } from './Root';
 

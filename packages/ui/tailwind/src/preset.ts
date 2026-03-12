@@ -4,6 +4,7 @@ import { fontSize, fontFamily } from './theme/typography';
 import { keyframes, animation } from './theme/keyframes';
 import { screens } from './theme/screens';
 import { zIndex } from './theme/zIndex';
+import { glyphFontPlugin } from './plugins/glyphFont';
 
 /**
  * GitAnimals Tailwind Preset
@@ -29,7 +30,7 @@ export const gitAnimalsPreset: Partial<Config> = {
       animation,
     },
   },
-  plugins: [],
+  plugins: [glyphFontPlugin],
 };
 
 export default gitAnimalsPreset;

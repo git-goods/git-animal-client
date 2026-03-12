@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { cn } from '@gitanimals/ui-tailwind';
 import { type Guild, updateGuild } from '@gitanimals/api';
+import { cn } from '@gitanimals/ui-tailwind';
 import { Button } from '@gitanimals/ui-tailwind';
 
 import { useRouter } from '@/i18n/routing';

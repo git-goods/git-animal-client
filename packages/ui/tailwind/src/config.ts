@@ -4,6 +4,7 @@ import { fontSize, fontFamily } from './theme/typography';
 import { keyframes, animation } from './theme/keyframes';
 import { screens } from './theme/screens';
 import { zIndex } from './theme/zIndex';
+import { glyphFontPlugin } from './plugins/glyphFont';
 
 /**
  * Base GitAnimals Tailwind Config
@@ -22,7 +23,7 @@ export const gitAnimalsConfig = {
       animation,
     },
   },
-  plugins: [],
+  plugins: [glyphFontPlugin],
 } satisfies Config;
 
 export interface GitAnimalsConfigOptions {
@@ -62,6 +63,6 @@ export function createGitAnimalsConfig(contentPaths: string[] = [], options: Git
         ...options.theme?.extend,
       },
     },
-    plugins: [...(options.plugins || [])],
+    plugins: [glyphFontPlugin, ...(options.plugins || [])],
   };
 }

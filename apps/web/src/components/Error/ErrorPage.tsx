@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { cn } from '@gitanimals/ui-tailwind/utils';
 import { Button } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 interface Props {
   heading: string;
@@ -19,7 +19,7 @@ export function ErrorPage({ heading, paragraph, onClickButton, buttonText = 'Ret
     <main
       className={cn(
         'bg-white w-dvw h-dvh font-product text-glyph-16 px-4',
-        'flex flex-col items-center justify-center'
+        'flex flex-col items-center justify-center',
       )}
     >
       <h1 className="font-product text-glyph-40 font-bold mb-3">{heading}</h1>

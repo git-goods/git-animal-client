@@ -39,14 +39,14 @@ export const MobileGNB = () => {
       <header
         className={cn(
           'justify-between items-center z-header fixed px-5 top-0 h-[60px] bg-white',
-          'w-screen hidden max-mobile:flex'
+          'w-screen hidden max-mobile:flex',
         )}
       >
         <div
           className={cn(
             'flex items-center justify-between relative w-full h-11',
             '[&_.center-title]:w-fit [&_.center-title]:absolute [&_.center-title]:left-1/2 [&_.center-title]:-translate-x-1/2',
-            '[&_.profile-image]:w-7 [&_.profile-image]:h-7 [&_.profile-image]:rounded-full [&_.profile-image]:overflow-hidden'
+            '[&_.profile-image]:w-7 [&_.profile-image]:h-7 [&_.profile-image]:rounded-full [&_.profile-image]:overflow-hidden',
           )}
         >
           <button onClick={toggleMenu}>
@@ -79,7 +79,7 @@ export const MobileGNB = () => {
               'fixed left-0 right-0 bg-white top-[60px] max-h-[calc(100vh-60px)] overflow-y-auto',
               'shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] z-drawer',
               'max-mobile:flex',
-              '[&_.menu-list]:w-full [&_.menu-list>*]:w-full'
+              '[&_.menu-list]:w-full [&_.menu-list>*]:w-full',
             )}
           >
             <ul className="menu-list">
@@ -123,7 +123,7 @@ function MenuItem({ icon, label, isArrow = true }: { icon: ReactNode; label: str
       className={cn(
         'flex justify-between font-product text-glyph-16 capitalize text-black/75',
         'py-[18px] pr-[22px] pl-5 border-b border-gray-900',
-        '[&_div]:flex [&_div]:items-center [&_div]:gap-2.5'
+        '[&_div]:flex [&_div]:items-center [&_div]:gap-2.5',
       )}
     >
       <div>

@@ -80,12 +80,7 @@ export function FeedbackUpvote() {
 
   return (
     <footer className="fixed bottom-0 left-0 right-0 border-t border-white/10 py-4 px-6 z-10 bg-gray-150">
-      <div
-        className={cn(
-          'mx-auto flex flex-col gap-3 items-center',
-          'md:flex-row md:justify-start'
-        )}
-      >
+      <div className={cn('mx-auto flex flex-col gap-3 items-center', 'md:flex-row md:justify-start')}>
         <p className="text-white text-sm leading-relaxed flex-1 text-center md:text-left">
           실험실 기능이 마음에 드셨나요? 정식 출시를 원하시면 업보트를 눌러주세요!
           {typeof upvoteCount === 'number' && (

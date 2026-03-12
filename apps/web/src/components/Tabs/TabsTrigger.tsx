@@ -24,7 +24,7 @@ const TabsTrigger = ({ children, className, ...props }: PropsWithChildren<TabsTr
         'transition-all duration-100 ease-in-out',
         'focus:border-white/50',
         isSelected && 'bg-white/50 text-white border-white/50 focus:border-white',
-        className
+        className,
       )}
       onClick={() => handleChangeValue(props.value)}
       {...props}

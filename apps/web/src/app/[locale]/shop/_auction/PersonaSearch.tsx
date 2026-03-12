@@ -4,7 +4,7 @@ import { useState } from 'react';
 import React from 'react';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries } from '@gitanimals/react-query';
-import { cn, Dialog, Banner } from '@gitanimals/ui-tailwind';
+import { Banner, cn, Dialog } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { LoaderIcon, SearchIcon, XIcon } from 'lucide-react';
@@ -35,10 +35,7 @@ interface PersonaSearchProps {
   selected?: string;
 }
 
-const buttonWrapperStyle = cn(
-  'flex items-center justify-center',
-  'w-9 h-9 bg-white/25 rounded-[10px]'
-);
+const buttonWrapperStyle = cn('flex items-center justify-center', 'w-9 h-9 bg-white/25 rounded-[10px]');
 
 export const PersonaSearch = wrap
   .ErrorBoundary({ fallback: <></> })
@@ -73,18 +70,17 @@ export const PersonaSearch = wrap
         <Dialog open={isOpen} onOpenChange={() => setIsOpen(false)}>
           <Dialog.Content size="large" className="flex flex-col items-center justify-center">
             <Dialog.Title>Select Find Persona</Dialog.Title>
-            <div className={cn(
-              'flex justify-start w-full mb-4',
-              'max-mobile:mb-0 max-mobile:my-6'
-            )}>
+            <div className={cn('flex justify-start w-full mb-4', 'max-mobile:mb-0 max-mobile:my-6')}>
               {selected && (
-                <div className={cn(
-                  'font-product text-glyph-16 font-bold text-white/90',
-                  'rounded-lg bg-white/25 h-9',
-                  'flex gap-0.5 items-center px-2',
-                  'max-mobile:text-glyph-12 max-mobile:font-normal max-mobile:text-white/50',
-                  'max-mobile:h-[30px] max-mobile:px-3'
-                )}>
+                <div
+                  className={cn(
+                    'font-product text-glyph-16 font-bold text-white/90',
+                    'rounded-lg bg-white/25 h-9',
+                    'flex gap-0.5 items-center px-2',
+                    'max-mobile:text-glyph-12 max-mobile:font-normal max-mobile:text-white/50',
+                    'max-mobile:h-[30px] max-mobile:px-3',
+                  )}
+                >
                   <span>Selected Persona</span>
                   <span>{selected}</span>
                   <button onClick={() => onSelect('')}>
@@ -96,10 +92,12 @@ export const PersonaSearch = wrap
             <div className={cn('flex-1 overflow-auto gap-1 justify-center', customScrollStyle)}>
               {Object.values(EVENT).map((event) => (
                 <React.Fragment key={event.label}>
-                  <h4 className={cn(
-                    'font-product text-glyph-18 font-bold text-white text-left my-3',
-                    'max-mobile:text-glyph-16'
-                  )}>
+                  <h4
+                    className={cn(
+                      'font-product text-glyph-18 font-bold text-white text-left my-3',
+                      'max-mobile:text-glyph-16',
+                    )}
+                  >
                     {event.label}
                   </h4>
                   <div className="flex flex-wrap gap-1">
@@ -117,10 +115,12 @@ export const PersonaSearch = wrap
               ))}
               {filteredPersonaTypeList && (
                 <>
-                  <h4 className={cn(
-                    'font-product text-glyph-18 font-bold text-white text-left my-3',
-                    'max-mobile:text-glyph-16'
-                  )}>
+                  <h4
+                    className={cn(
+                      'font-product text-glyph-18 font-bold text-white text-left my-3',
+                      'max-mobile:text-glyph-16',
+                    )}
+                  >
                     Other
                   </h4>
                   <div className="flex flex-wrap gap-1">

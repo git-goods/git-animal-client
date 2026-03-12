@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { useTranslations } from 'next-intl';
-import { cn } from '@gitanimals/ui-tailwind/utils';
 import type { Inbox } from '@gitanimals/api';
 import { inboxQueries, useReadInbox } from '@gitanimals/react-query';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { Link } from '@/i18n/routing';
@@ -20,7 +20,7 @@ export const InboxList = ({ isOpen, list }: { isOpen: boolean; list: Inbox[] }) 
           'flex flex-col fixed top-[calc(24px+68px)] right-6 min-h-[400px] max-h-[600px]',
           'overflow-hidden rounded-lg z-popover',
           'bg-white/20 shadow-[0px_4px_24px_0px_rgba(0,0,0,0.25)] backdrop-blur-[20px]',
-          'text-left w-[375px]'
+          'text-left w-[375px]',
         )}
       >
         <h3 className="flex items-center justify-center font-product text-glyph-20 font-bold h-20 bg-white/25 text-white shrink-0">
@@ -30,7 +30,7 @@ export const InboxList = ({ isOpen, list }: { isOpen: boolean; list: Inbox[] }) 
           className={cn(
             'flex flex-col overflow-auto',
             '[&>*:not(:last-child)]:border-b [&>*:not(:last-child)]:border-white/25',
-            customScrollStyle
+            customScrollStyle,
           )}
         >
           {list?.map((item) => <InboxItem key={item.id + item.status} {...item} />)}
@@ -61,7 +61,7 @@ function InboxItem({ image, title, body, redirectTo, status, id }: Inbox) {
           '[&_.unread-indicator]:w-[5px] [&_.unread-indicator]:h-[5px] [&_.unread-indicator]:bg-white/75',
           '[&_.unread-indicator]:rounded-full [&_.unread-indicator]:absolute [&_.unread-indicator]:top-[39.5px] [&_.unread-indicator]:left-3',
           '[&_.image]:w-9 [&_.image]:h-9 [&_.image]:overflow-hidden [&_.image]:rounded-full',
-          '[&_.body]:text-left [&_.body]:font-product [&_.body]:text-glyph-15 [&_.body]:text-white/90'
+          '[&_.body]:text-left [&_.body]:font-product [&_.body]:text-glyph-15 [&_.body]:text-white/90',
         )}
       >
         {status === 'UNREAD' && <div className="unread-indicator" />}

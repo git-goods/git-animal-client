@@ -27,13 +27,9 @@ export function BannerGuildMember({
 
 const bannerStyle = cn(
   'inline-flex p-[8px_16px_16px_16px] flex-col items-center',
-  'bg-white/10 rounded-lg text-center gap-3'
+  'bg-white/10 rounded-lg text-center gap-3',
 );
 
-const nameStyle = cn(
-  'font-product text-glyph-16 text-white'
-);
+const nameStyle = cn('font-product text-glyph-16 text-white');
 
-const countStyle = cn(
-  'font-product text-glyph-14 text-white/50'
-);
+const countStyle = cn('font-product text-glyph-14 text-white/50');

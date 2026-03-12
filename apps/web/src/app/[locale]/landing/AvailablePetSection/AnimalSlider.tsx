@@ -1,7 +1,7 @@
 'use client';
 
-import { cn } from '@gitanimals/ui-tailwind';
 import type { PersonaInfo } from '@gitanimals/api';
+import { cn } from '@gitanimals/ui-tailwind';
 
 import { AnimalCard } from '@/components/AnimalCard';
 import { MediaQuery } from '@/components/MediaQuery';
@@ -70,5 +70,5 @@ const containerStyle = cn(
   'w-[1120px] h-[1024px]',
   'max-[1200px]:w-[835px]',
   'max-[900px]:w-[530px]',
-  'max-[600px]:w-[calc(100vw-40px)] max-[600px]:h-[325px] max-[600px]:relative'
+  'max-[600px]:w-[calc(100vw-40px)] max-[600px]:h-[325px] max-[600px]:relative',
 );

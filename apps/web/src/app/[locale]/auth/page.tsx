@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect } from 'react';
-import { cn } from '@gitanimals/ui-tailwind';
 import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
 import { setRenderRequestInterceptor, setRenderResponseInterceptor } from '@gitanimals/api/src/_instance';
+import { cn } from '@gitanimals/ui-tailwind';
 
 import {
   interceptorRequestFulfilled,
@@ -42,7 +42,4 @@ function JWTPage({
 
 export default JWTPage;
 
-const loadingContainerStyle = cn(
-  'fixed inset-0 bg-white/80 z-loading',
-  'flex items-center justify-center text-[36px]'
-);
+const loadingContainerStyle = cn('fixed inset-0 bg-white/80 z-loading', 'flex items-center justify-center text-[36px]');

@@ -3,7 +3,6 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { cn } from '@gitanimals/ui-tailwind';
 import { XIcon } from '@gitanimals/ui-icon';
 import { Button } from '@gitanimals/ui-tailwind';
 import { toast } from 'sonner';

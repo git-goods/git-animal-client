@@ -1,6 +1,6 @@
-import { cn } from '@gitanimals/ui-tailwind/utils';
 import { checkIsMyGuild, getGuildById } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import RouteModal from '@/components/RouteModal';
 import { Link } from '@/i18n/routing';
@@ -25,6 +25,4 @@ export default async function GuildDetailModal({ params }: { params: { id: strin
   );
 }
 
-const containerStyle = cn(
-  'flex flex-col justify-center gap-8 h-fit'
-);
+const containerStyle = cn('flex flex-col justify-center gap-8 h-fit');

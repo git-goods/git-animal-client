@@ -4,7 +4,6 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { cn } from '@gitanimals/ui-tailwind';
 import { CardBack as CardBackUi } from '@gitanimals/ui-tailwind';
 import { motion } from 'framer-motion';
 

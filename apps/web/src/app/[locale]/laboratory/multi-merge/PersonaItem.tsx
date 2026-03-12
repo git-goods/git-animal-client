@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react';
 import { memo } from 'react';
 import type { Persona } from '@gitanimals/api';
-import { cn, Banner, LevelBanner } from '@gitanimals/ui-tailwind';
+import { Banner, cn, LevelBanner } from '@gitanimals/ui-tailwind';
 
 import { getPersonaImage } from '@/utils/image';
 

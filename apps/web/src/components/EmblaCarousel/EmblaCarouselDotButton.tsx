@@ -57,7 +57,7 @@ export const DotButton: React.FC<PropType> = (props) => {
         'border-0 p-0 m-0 w-[26px] h-[26px] items-center justify-center rounded-full',
         'after:border after:border-[#EAEAEA] after:w-[14px] after:h-[14px] after:rounded-full after:flex after:items-center after:content-[""]',
         '[&.selected]:after:bg-white/75',
-        className
+        className,
       )}
       {...restProps}
     >

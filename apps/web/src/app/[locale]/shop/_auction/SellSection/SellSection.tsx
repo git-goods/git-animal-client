@@ -13,10 +13,12 @@ function SellSection() {
   return (
     <div className="max-mobile:mt-8">
       {selectPersona && <SellInputRow item={selectPersona} initPersona={() => setSelectPersona(null)} />}
-      <h3 className={cn(
-        'font-product text-glyph-18 font-bold mb-4 text-white',
-        'max-mobile:text-glyph-15 max-mobile:mb-2 max-mobile:mt-7'
-      )}>
+      <h3
+        className={cn(
+          'font-product text-glyph-18 font-bold mb-4 text-white',
+          'max-mobile:text-glyph-15 max-mobile:mb-2 max-mobile:mt-7',
+        )}
+      >
         My Pets
       </h3>
       <PetList selectedPersona={selectPersona} onProductClick={setSelectPersona} />

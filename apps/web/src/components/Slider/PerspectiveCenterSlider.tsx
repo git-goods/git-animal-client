@@ -2,10 +2,10 @@
 
 import { useRef } from 'react';
 import Image from 'next/image';
-import { cn } from '@gitanimals/ui-tailwind';
 import { Arrow, Fade, Perspective } from '@egjs/flicking-plugins';
 import type { FlickingOptions, FlickingProps } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
+import { cn } from '@gitanimals/ui-tailwind';
 
 import { useIsMounted } from '@/hooks/useIsMounted';
 

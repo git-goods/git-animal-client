@@ -140,42 +140,25 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
   );
 }
 
-const headingStyle = cn(
-  'font-product text-glyph-14 font-bold mb-2'
-);
+const headingStyle = cn('font-product text-glyph-14 font-bold mb-2');
 
-const itemStyle = cn(
-  'border-white/90 rounded-lg border-none'
-);
+const itemStyle = cn('border-white/90 rounded-lg border-none');
 
-const tooltipStyle = cn(
-  'absolute top-[18px] right-3.5 h-fit'
-);
+const tooltipStyle = cn('absolute top-[18px] right-3.5 h-fit');
 
-const selectedStyle = cn(
-  'border border-solid rounded-lg opacity-100'
-);
+const selectedStyle = cn('border border-solid rounded-lg opacity-100');
 
-const unselectedStyle = cn(
-  'border-none rounded-lg opacity-40',
-  'transition-opacity duration-100 ease-in-out'
-);
+const unselectedStyle = cn('border-none rounded-lg opacity-40', 'transition-opacity duration-100 ease-in-out');
 
-const joinSettingStyle = cn(
-  'flex gap-2.5 items-center justify-between'
-);
+const joinSettingStyle = cn('flex gap-2.5 items-center justify-between');
 
 const joinSettingButtonStyle = cn(
   'border border-solid rounded-md px-4 py-2',
   'font-product text-glyph-14',
   'transition-all duration-100 ease-in-out',
-  'last:ml-1'
+  'last:ml-1',
 );
 
-const joinSettingButtonNotSelectedStyle = cn(
-  'bg-white/10 border-white/10 text-white/25'
-);
+const joinSettingButtonNotSelectedStyle = cn('bg-white/10 border-white/10 text-white/25');
 
-const joinSettingButtonSelectedStyle = cn(
-  'bg-white/25 border-white/50 text-white'
-);
+const joinSettingButtonSelectedStyle = cn('bg-white/25 border-white/50 text-white');

@@ -83,9 +83,7 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
 
 export default EditModal;
 
-const titleStyle = cn(
-  'font-product text-glyph-20 text-left text-white w-full'
-);
+const titleStyle = cn('font-product text-glyph-20 text-left text-white w-full');
 
 const inputStyle = cn(
   'flex h-[55px] py-3.5 pl-5 pr-3.5',
@@ -93,9 +91,7 @@ const inputStyle = cn(
   'rounded-lg border border-white/25',
   'font-product text-glyph-16 text-white',
   'placeholder:text-glyph-16 placeholder:text-white/75',
-  '[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0'
+  '[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0',
 );
 
-const buttonWrapperStyle = cn(
-  'flex justify-end gap-2 w-full'
-);
+const buttonWrapperStyle = cn('flex justify-end gap-2 w-full');

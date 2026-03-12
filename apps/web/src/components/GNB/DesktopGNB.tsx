@@ -29,7 +29,7 @@ export async function DesktopGNB() {
         className={cn(
           'flex justify-between items-center z-header fixed px-5 top-0 h-[60px] w-full bg-white',
           'shadow-[0_1px_4px_0_rgba(0,0,0,0.1)]',
-          'max-mobile:hidden'
+          'max-mobile:hidden',
         )}
       >
         <Link href="/">
@@ -51,7 +51,7 @@ export async function DesktopGNB() {
                 'pl-8 flex items-center',
                 '[&_.profile-image]:w-[45px] [&_.profile-image]:h-[45px] [&_.profile-image]:rounded-full [&_.profile-image]:bg-white [&_.profile-image]:overflow-hidden',
                 '[&_.profile-image_img]:w-full [&_.profile-image_img]:h-full',
-                '[&_.profile-name]:text-black/75 [&_.profile-name]:font-product [&_.profile-name]:text-glyph-16 [&_.profile-name]:mr-1 [&_.profile-name]:ml-3'
+                '[&_.profile-name]:text-black/75 [&_.profile-name]:font-product [&_.profile-name]:text-glyph-16 [&_.profile-name]:mr-1 [&_.profile-name]:ml-3',
               )}
             >
               <>

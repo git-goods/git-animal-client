@@ -2,7 +2,7 @@
 
 import { type ReactNode, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { cn, Button, Dialog } from '@gitanimals/ui-tailwind';
+import { Button, cn, Dialog } from '@gitanimals/ui-tailwind';
 import { atom, useAtom } from 'jotai';
 
 interface DialogState {

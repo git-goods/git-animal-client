@@ -4,7 +4,7 @@ import { memo, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { dropPets } from '@gitanimals/api/src/shop/dropPet';
 import { userQueries } from '@gitanimals/react-query/src/user';
-import { cn, Button, LevelBanner } from '@gitanimals/ui-tailwind';
+import { Button, cn, LevelBanner } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 
@@ -180,12 +180,14 @@ const PersonaList = wrap
             개수 내림차순
           </Button>
         </div>
-        <div className={cn(
-          'flex overflow-y-auto overflow-x-hidden w-full',
-          'gap-x-1 gap-y-3 h-full min-h-0 flex-wrap',
-          'max-h-[calc(100%-24px)]',
-          customScrollStyle
-        )}>
+        <div
+          className={cn(
+            'flex overflow-y-auto overflow-x-hidden w-full',
+            'gap-x-1 gap-y-3 h-full min-h-0 flex-wrap',
+            'max-h-[calc(100%-24px)]',
+            customScrollStyle,
+          )}
+        >
           {petList.map((petItem) => (
             <div key={petItem.type + petItem.level}>
               <MemoizedPersonaItem
@@ -212,11 +214,9 @@ function PersonaItem({ type, level, onClick, count }: PersonaItemProps) {
   const t = useTranslations('Laboratory.property-pet-sell');
   return (
     <button onClick={onClick} className="outline-none bg-transparent">
-      <div className={cn(
-        'rounded bg-black/25 px-2',
-        'text-white/75 font-product font-bold',
-        'text-[10px] leading-5 mb-1'
-      )}>
+      <div
+        className={cn('rounded bg-black/25 px-2', 'text-white/75 font-product font-bold', 'text-[10px] leading-5 mb-1')}
+      >
         {count}
         {t('count')}
       </div>

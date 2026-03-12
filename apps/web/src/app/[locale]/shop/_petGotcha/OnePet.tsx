@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl';
 import { postGotcha } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { userQueries } from '@gitanimals/react-query';
-import { cn } from '@gitanimals/ui-tailwind/utils';
 import { Dialog } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -106,10 +106,7 @@ export default OnePet;
 
 const dialogContentStyle = cn(
   'h-fit',
-  'max-mobile:flex max-mobile:flex-col max-mobile:items-center max-mobile:justify-center'
+  'max-mobile:flex max-mobile:flex-col max-mobile:items-center max-mobile:justify-center',
 );
 
-const headingStyle = cn(
-  'font-product text-glyph-48 font-bold text-white text-center',
-  'max-mobile:text-glyph-28'
-);
+const headingStyle = cn('font-product text-glyph-48 font-bold text-white text-center', 'max-mobile:text-glyph-28');

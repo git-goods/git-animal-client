@@ -1,7 +1,7 @@
 'use client';
 
-import { cn } from '@gitanimals/ui-tailwind';
 import { inboxQueries } from '@gitanimals/react-query';
+import { cn } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { GuildJoinPetSelectDialog } from '@/app/[locale]/guild/_components/GuildPetSelectDialog';
@@ -11,7 +11,7 @@ import { joinGuildAction } from '@/serverActions/guild';
 const dialogTitleStyle = cn(
   'font-product text-glyph-48 font-bold text-white text-center',
   'max-[1200px]:text-glyph-32',
-  'max-mobile:text-glyph-24'
+  'max-mobile:text-glyph-24',
 );
 
 export default function GuildJoinPage({ params }: { params: { id: string } }) {
@@ -44,6 +44,4 @@ export default function GuildJoinPage({ params }: { params: { id: string } }) {
   );
 }
 
-const dialogDescriptionStyle = cn(
-  'font-product text-glyph-20 text-white/50 mt-3 text-center'
-);
+const dialogDescriptionStyle = cn('font-product text-glyph-20 text-white/50 mt-3 text-center');

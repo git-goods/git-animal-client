@@ -1,8 +1,8 @@
 'use client';
 
-import { cn, BannerPetSelectMedium } from '@gitanimals/ui-tailwind';
 import Flicking from '@egjs/react-flicking';
 import type { GuildLeader, GuildMember } from '@gitanimals/api';
+import { BannerPetSelectMedium, cn } from '@gitanimals/ui-tailwind';
 import { UsersRoundIcon } from 'lucide-react';
 
 import { USER_GITHUB_URL } from '@/constants/route';
@@ -60,7 +60,4 @@ const leaderStyle = cn('[&>p]:mb-1');
 
 const membersStyle = cn('overflow-hidden flex-1');
 
-const titleStyle = cn(
-  'flex items-center gap-4 font-product text-glyph-36 font-bold text-white',
-  '[&_img]:rounded-lg',
-);
+const titleStyle = cn('flex items-center gap-4 font-product text-glyph-36 font-bold text-white', '[&_img]:rounded-lg');

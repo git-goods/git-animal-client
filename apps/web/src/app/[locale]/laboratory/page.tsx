@@ -123,7 +123,7 @@ function Card({ item }: { item: LaboratoryItem }) {
         'hover:shadow-[0_20px_40px_rgba(82,209,109,0.3)]',
         'hover:border-[rgba(82,209,109,0.5)]',
         'hover:before:opacity-100',
-        'active:-translate-y-1 active:scale-[1.01]'
+        'active:-translate-y-1 active:scale-[1.01]',
       )}
     >
       <div className="flex-1 flex flex-col gap-2">
@@ -133,7 +133,7 @@ function Card({ item }: { item: LaboratoryItem }) {
             className={cn(
               'text-xs font-bold px-3 py-1 rounded-xl text-white whitespace-nowrap animate-pulse',
               'bg-gradient-to-r from-[#016EDB] via-[#16B7CD] to-[#5CCA69]',
-              'shadow-[0_0_20px_rgba(82,209,109,0.5)]'
+              'shadow-[0_0_20px_rgba(82,209,109,0.5)]',
             )}
           >
             실험중
@@ -154,7 +154,7 @@ function Card({ item }: { item: LaboratoryItem }) {
             'active:scale-[0.98]',
             'data-[upvoted=true]:bg-gradient-to-r data-[upvoted=true]:from-[#d9b9f9] data-[upvoted=true]:to-[#e56997]',
             'data-[upvoted=true]:border-transparent data-[upvoted=true]:cursor-default',
-            'disabled:opacity-70 disabled:cursor-not-allowed'
+            'disabled:opacity-70 disabled:cursor-not-allowed',
           )}
           onClick={handleUpvote}
           disabled={isUpvoting || hasUpvoted}
@@ -163,7 +163,7 @@ function Card({ item }: { item: LaboratoryItem }) {
           <Heart
             className={cn(
               'w-[18px] h-[18px] stroke-2 transition-all duration-300',
-              hasUpvoted && 'fill-current animate-[heartbeat_1s_ease-in-out]'
+              hasUpvoted && 'fill-current animate-[heartbeat_1s_ease-in-out]',
             )}
           />
           <span className="font-semibold">{hasUpvoted ? '업보트 완료' : '업보트'}</span>
