@@ -8,6 +8,8 @@ import type { RankType } from '@gitanimals/api';
 import { rankQueries } from '@gitanimals/react-query';
 import { useQuery } from '@tanstack/react-query';
 
+import { Skeleton } from '@gitanimals/ui-panda';
+
 import { RankingLink } from './RankingLink';
 
 const RANKS_PER_PAGE = 5;
@@ -112,8 +114,6 @@ function RankingTableView({
   ranks: RankType[] | undefined;
   currentUsername: string | null | undefined;
 }) {
-  if (!ranks) return null;
-
   return (
     <table className={tableStyle}>
       <thead>
@@ -125,20 +125,37 @@ function RankingTableView({
         </tr>
       </thead>
       <tbody>
-        {ranks.map((item) => (
-          <tr key={item.rank} className={cx(trStyle, item.name === currentUsername && currentUserTrStyle)}>
-            <td>{item.rank}</td>
-            <td>
-              <RankingLink id={item.name}>
-                <img src={item.image} alt={item.name} width={60} height={60} />
-              </RankingLink>
-            </td>
-            <td>
-              <RankingLink id={item.name}>{item.name}</RankingLink>
-            </td>
-            <td>{item.contributions}</td>
-          </tr>
-        ))}
+        {ranks
+          ? ranks.map((item) => (
+              <tr key={item.rank} className={cx(trStyle, item.name === currentUsername && currentUserTrStyle)}>
+                <td>{item.rank}</td>
+                <td>
+                  <RankingLink id={item.name}>
+                    <img src={item.image} alt={item.name} width={60} height={60} />
+                  </RankingLink>
+                </td>
+                <td>
+                  <RankingLink id={item.name}>{item.name}</RankingLink>
+                </td>
+                <td>{item.contributions}</td>
+              </tr>
+            ))
+          : Array.from({ length: RANKS_PER_PAGE }).map((_, i) => (
+              <tr key={i} className={trStyle}>
+                <td>
+                  <Skeleton style={{ width: 20, height: 20, borderRadius: 4 }} />
+                </td>
+                <td>
+                  <Skeleton style={{ width: 40, height: 40, borderRadius: '50%' }} />
+                </td>
+                <td>
+                  <Skeleton style={{ width: 80, height: 16, borderRadius: 4 }} />
+                </td>
+                <td>
+                  <Skeleton style={{ width: 40, height: 16, borderRadius: 4 }} />
+                </td>
+              </tr>
+            ))}
       </tbody>
     </table>
   );
