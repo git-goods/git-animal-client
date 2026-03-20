@@ -11,11 +11,12 @@ const RANKS_TOP_3 = 3 as const;
 const RANKS_PER_PAGE = TOTAL_VIEW_RANKS - RANKS_TOP_3;
 
 export async function RankingServerSide({
-  searchParams,
+  searchParams: searchParamsPromise,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   try {
+    const searchParams = await searchParamsPromise;
     const type = searchParams.ranking ?? 'people';
 
     const session = await getServerSession();

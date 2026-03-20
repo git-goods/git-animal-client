@@ -245,6 +245,8 @@
   "Error": {
     "global-error-message": "Something went wrong 😭",
     "want-to-report-error": "The gitanimals development team is currently tracking this error.\nIf you have a moment, we would greatly appreciate it if you could report the circumstances that led to this error.",
-    "report-error-button": "Report Error"
+    "report-error-button": "Report Error",
+    "ranking-error-title": "Unable to load ranking information",
+    "ranking-error-description": "Please try again later"
   }
 }
