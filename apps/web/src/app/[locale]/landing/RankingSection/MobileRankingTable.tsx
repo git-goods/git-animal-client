@@ -17,19 +17,19 @@ export function MobileRankingTable({ ranks, page, totalPage }: { page: number; r
   const { data: session } = useSession();
   const searchParams = useSearchParams();
   const currentUsername = session?.user?.name;
-  const touchStartXRef = useRef(0);
+  const pointerStartXRef = useRef(0);
 
   const getRankingPageUrl = (params: Record<string, unknown>) => {
     const oldParams = Object.fromEntries(searchParams.entries());
     return getNewUrl({ baseUrl: '/', newParams: params, oldParams });
   };
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartXRef.current = e.touches[0].clientX;
+  const handlePointerDown = (e: React.PointerEvent) => {
+    pointerStartXRef.current = e.clientX;
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    const diff = touchStartXRef.current - e.changedTouches[0].clientX;
+  const handlePointerUp = (e: React.PointerEvent) => {
+    const diff = pointerStartXRef.current - e.clientX;
     if (Math.abs(diff) < SWIPE_THRESHOLD) return;
 
     // 원래 Flicking 매핑 유지: swipe left(NEXT) → page - 1, swipe right(PREV) → page + 1
@@ -43,7 +43,7 @@ export function MobileRankingTable({ ranks, page, totalPage }: { page: number; r
   };
 
   return (
-    <div className={rankingListStyle} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+    <div className={rankingListStyle} onPointerDown={handlePointerDown} onPointerUp={handlePointerUp}>
       <table className={tableStyle}>
         <thead>
           <tr className={theadTrStyle}>
@@ -71,7 +71,7 @@ export function MobileRankingTable({ ranks, page, totalPage }: { page: number; r
         </tbody>
       </table>
       <div className={paginationStyle}>
-        {[0, 1, 2].map((group, index) => {
+        {[0, 1, 2].map((_, index) => {
           const isActive =
             (page === 0 && index === 0) ||
             (page !== 0 && page !== totalPage && index === 1) ||
