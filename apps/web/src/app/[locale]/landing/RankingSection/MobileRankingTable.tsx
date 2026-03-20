@@ -1,107 +1,73 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { css, cx } from '_panda/css';
-import useEmblaCarousel from 'embla-carousel-react';
 import type { RankType } from '@gitanimals/api';
 import { rankQueries } from '@gitanimals/react-query';
-import { useQuery } from '@tanstack/react-query';
-
 import { Skeleton } from '@gitanimals/ui-panda';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { RankingLink } from './RankingLink';
 
 const RANKS_PER_PAGE = 5;
-const CURRENT_SLIDE_INDEX = 1;
+const SWIPE_THRESHOLD = 50;
 
 interface MobileRankingTableProps {
-  ranks: RankType[];
-  page: number;
+  initialRanks: RankType[];
+  initialPage: number;
   totalPage: number;
   type: 'WEEKLY_USER_CONTRIBUTIONS' | 'WEEKLY_GUILD_CONTRIBUTIONS';
 }
 
-export function MobileRankingTable({ ranks: initialRanks, page: initialPage, totalPage, type }: MobileRankingTableProps) {
+export function MobileRankingTable({ initialRanks, initialPage, totalPage, type }: MobileRankingTableProps) {
   const { data: session } = useSession();
   const currentUsername = session?.user?.name;
-
   const [page, setPage] = useState(initialPage);
+  const touchStartX = useRef(0);
 
-  const hasPrev = page > 0;
-  const hasNext = page < totalPage;
+  const rankStart = page * RANKS_PER_PAGE + 4;
 
-  const currentRankStart = page * RANKS_PER_PAGE + 4;
-  const prevRankStart = (page - 1) * RANKS_PER_PAGE + 4;
-  const nextRankStart = (page + 1) * RANKS_PER_PAGE + 4;
-
-  const { data: currentRanks } = useQuery({
-    ...rankQueries.getRanksOptions({ rank: currentRankStart, size: RANKS_PER_PAGE, type }),
+  const { data: ranks, isPlaceholderData } = useQuery({
+    ...rankQueries.getRanksOptions({ rank: rankStart, size: RANKS_PER_PAGE, type }),
     initialData: page === initialPage ? initialRanks : undefined,
+    placeholderData: keepPreviousData,
   });
 
-  const { data: prevRanks } = useQuery({
-    ...rankQueries.getRanksOptions({ rank: prevRankStart, size: RANKS_PER_PAGE, type }),
-    enabled: hasPrev,
+  // Prefetch adjacent pages
+  useQuery({
+    ...rankQueries.getRanksOptions({ rank: (page - 1) * RANKS_PER_PAGE + 4, size: RANKS_PER_PAGE, type }),
+    enabled: page > 0,
+  });
+  useQuery({
+    ...rankQueries.getRanksOptions({ rank: (page + 1) * RANKS_PER_PAGE + 4, size: RANKS_PER_PAGE, type }),
+    enabled: page < totalPage,
   });
 
-  const { data: nextRanks } = useQuery({
-    ...rankQueries.getRanksOptions({ rank: nextRankStart, size: RANKS_PER_PAGE, type }),
-    enabled: hasNext,
-  });
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({ startIndex: CURRENT_SLIDE_INDEX });
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) < SWIPE_THRESHOLD) return;
 
-  useEffect(() => {
-    if (!emblaApi) return;
-
-    const onSettle = () => {
-      const selectedIndex = emblaApi.selectedScrollSnap();
-      if (selectedIndex === CURRENT_SLIDE_INDEX) return;
-
-      const newPage = selectedIndex < CURRENT_SLIDE_INDEX ? page + 1 : page - 1;
-
-      if (newPage < 0 || newPage > totalPage) {
-        emblaApi.scrollTo(CURRENT_SLIDE_INDEX, true);
-        return;
-      }
-
-      setPage(newPage);
-    };
-
-    emblaApi.on('settle', onSettle);
-    return () => {
-      emblaApi.off('settle', onSettle);
-    };
-  }, [emblaApi, page, totalPage]);
+    if (diff > 0 && page < totalPage) {
+      setPage((p) => p + 1);
+    } else if (diff < 0 && page > 0) {
+      setPage((p) => p - 1);
+    }
+  };
 
   return (
-    <div className={rankingListStyle}>
-      <div key={page} className={emblaViewportStyle} ref={emblaRef}>
-        <div className={emblaContainerStyle}>
-          {hasPrev && (
-            <div className={emblaSlideStyle}>
-              <RankingTableView ranks={prevRanks} currentUsername={currentUsername} />
-            </div>
-          )}
-          <div className={emblaSlideStyle}>
-            <RankingTableView ranks={currentRanks} currentUsername={currentUsername} />
-          </div>
-          {hasNext && (
-            <div className={emblaSlideStyle}>
-              <RankingTableView ranks={nextRanks} currentUsername={currentUsername} />
-            </div>
-          )}
-        </div>
+    <div className={containerStyle} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+      <div className={cx(tableWrapperStyle, isPlaceholderData && fetchingStyle)}>
+        <RankingTableView ranks={ranks} currentUsername={currentUsername} />
       </div>
       <div className={paginationStyle}>
-        {[0, 1, 2].map((_, index) => {
-          const isActive =
-            (page === 0 && index === 0) ||
-            (page !== 0 && page !== totalPage && index === 1) ||
-            (page === totalPage && index === 2);
-          return <div key={index} className={cx(paginationBulletStyle, isActive && 'active')}></div>;
-        })}
+        <span className={paginationTextStyle}>
+          {page + 1} / {totalPage + 1}
+        </span>
       </div>
     </div>
   );
@@ -161,34 +127,26 @@ function RankingTableView({
   );
 }
 
-const emblaViewportStyle = css({ overflow: 'hidden', width: '100%' });
-const emblaContainerStyle = css({ display: 'flex' });
-const emblaSlideStyle = css({ flex: '0 0 100%', minWidth: 0 });
+const containerStyle = css({ width: '100%' });
+
+const tableWrapperStyle = css({
+  transition: 'opacity 0.15s ease',
+});
+
+const fetchingStyle = css({
+  opacity: 0.5,
+});
 
 const paginationStyle = css({
-  marginTop: '20px',
-  position: 'relative',
-  height: '30px',
+  marginTop: '16px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: 2,
 });
 
-const paginationBulletStyle = css({
-  width: '8px',
-  height: '8px',
-  borderRadius: '50%',
-  backgroundColor: 'white.white_50',
-  cursor: 'pointer',
-
-  '&.active': {
-    backgroundColor: 'white.white_100',
-  },
-});
-
-const rankingListStyle = css({
-  width: '100%',
+const paginationTextStyle = css({
+  textStyle: 'glyph14.regular',
+  color: 'white.white_50',
 });
 
 const tableStyle = css({
@@ -199,7 +157,7 @@ const tableStyle = css({
 });
 
 const trBaseStyle = css({
-  borderRadius: '8px',
+  borderRadius: '6px',
 
   '& img': {
     borderRadius: '50%',
@@ -208,43 +166,23 @@ const trBaseStyle = css({
 
   '& td, & th': {
     border: 'none',
-    padding: '0 16px',
+    padding: '0 8px',
   },
 
   '& td:first-child, & th:first-child': {
-    paddingLeft: '40px',
-    borderRadius: '8px 0 0 8px',
-    width: '120px',
+    paddingLeft: '16px',
+    borderRadius: '6px 0 0 6px',
+    width: '54px',
   },
   '& td:last-child, & th:last-child': {
-    paddingRight: '40px',
-    borderRadius: '0 8px 8px 0',
+    paddingRight: '16px',
+    borderRadius: '0 6px 6px 0',
     textAlign: 'right',
   },
   '& td:nth-child(2), & th:nth-child(2)': {
     textAlign: 'center',
-    width: '72px',
-    padding: '0 8px',
-  },
-
-  _mobile: {
-    borderRadius: '6px',
-    '& td, & th': {
-      border: 'none',
-      padding: '0 8px',
-    },
-
-    '& td:first-child, & th:first-child': {
-      paddingLeft: '16px',
-      width: '54px',
-    },
-    '& td:last-child, & th:last-child': {
-      paddingRight: '16px',
-    },
-    '& td:nth-child(2), & th:nth-child(2)': {
-      width: '28px',
-      paddingLeft: '0px',
-    },
+    width: '28px',
+    paddingLeft: '0px',
   },
 });
 
@@ -264,21 +202,14 @@ const trStyle = cx(
     textStyle: 'glyph18.regular',
     color: 'white.white_100',
     backgroundColor: 'white.white_10',
-    height: '60px',
+    height: '48px',
+    fontSize: 'glyph15.regular',
 
     '& td:first-child': {
-      fontSize: '20px',
+      fontSize: '16px',
       lineHeight: '28px',
       fontFamily: 'token(fonts.dnf)',
       color: 'white.white_50',
-    },
-    _mobile: {
-      height: '48px',
-      fontSize: 'glyph15.regular',
-
-      '& td:first-child': {
-        fontSize: '16px',
-      },
     },
   }),
 );
