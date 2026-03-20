@@ -1,75 +1,96 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { css, cx } from '_panda/css';
+import useEmblaCarousel from 'embla-carousel-react';
 import type { RankType } from '@gitanimals/api';
 import { getNewUrl } from '@gitanimals/util-common';
 
 import { RankingLink } from './RankingLink';
 
-const SWIPE_THRESHOLD = 50;
+const CURRENT_SLIDE_INDEX = 1;
 
 export function MobileRankingTable({ ranks, page, totalPage }: { page: number; ranks: RankType[]; totalPage: number }) {
   const router = useRouter();
   const { data: session } = useSession();
   const searchParams = useSearchParams();
   const currentUsername = session?.user?.name;
-  const pointerStartXRef = useRef(0);
+
+  const hasPrev = page > 0;
+  const hasNext = page < totalPage;
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({ startIndex: CURRENT_SLIDE_INDEX });
 
   const getRankingPageUrl = (params: Record<string, unknown>) => {
     const oldParams = Object.fromEntries(searchParams.entries());
     return getNewUrl({ baseUrl: '/', newParams: params, oldParams });
   };
 
-  const handlePointerDown = (e: React.PointerEvent) => {
-    pointerStartXRef.current = e.clientX;
-  };
+  useEffect(() => {
+    if (!emblaApi) return;
 
-  const handlePointerUp = (e: React.PointerEvent) => {
-    const diff = pointerStartXRef.current - e.clientX;
-    if (Math.abs(diff) < SWIPE_THRESHOLD) return;
+    const onSettle = () => {
+      const selectedIndex = emblaApi.selectedScrollSnap();
+      if (selectedIndex === CURRENT_SLIDE_INDEX) return;
 
-    // 원래 Flicking 매핑 유지: swipe left(NEXT) → page - 1, swipe right(PREV) → page + 1
-    const newPage = diff > 0 ? page - 1 : page + 1;
+      const newPage = selectedIndex < CURRENT_SLIDE_INDEX ? page + 1 : page - 1;
 
-    if (newPage < 0) return;
-    if (newPage > totalPage) return;
+      if (newPage < 0 || newPage > totalPage) {
+        emblaApi.scrollTo(CURRENT_SLIDE_INDEX, true);
+        return;
+      }
 
-    const newUrl = getRankingPageUrl({ page: newPage });
-    router.push(newUrl);
-  };
+      const newUrl = getRankingPageUrl({ page: newPage });
+      router.push(newUrl);
+    };
+
+    emblaApi.on('settle', onSettle);
+    return () => {
+      emblaApi.off('settle', onSettle);
+    };
+  }, [emblaApi, page, totalPage]);
+
+  const renderTable = () => (
+    <table className={tableStyle}>
+      <thead>
+        <tr className={theadTrStyle}>
+          <th>Rank</th>
+          <th>Pet</th>
+          <th>Name</th>
+          <th>Contribution</th>
+        </tr>
+      </thead>
+      <tbody>
+        {ranks.map((item) => (
+          <tr key={item.rank} className={cx(trStyle, item.name === currentUsername && currentUserTrStyle)}>
+            <td>{item.rank}</td>
+            <td>
+              <RankingLink id={item.name}>
+                <img src={item.image} alt={item.name} width={60} height={60} />
+              </RankingLink>
+            </td>
+            <td>
+              <RankingLink id={item.name}>{item.name}</RankingLink>
+            </td>
+            <td>{item.contributions}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 
   return (
-    <div className={rankingListStyle} onPointerDown={handlePointerDown} onPointerUp={handlePointerUp}>
-      <table className={tableStyle}>
-        <thead>
-          <tr className={theadTrStyle}>
-            <th>Rank</th>
-            <th>Pet</th>
-            <th>Name</th>
-            <th>Contribution</th>
-          </tr>
-        </thead>
-        <tbody>
-          {ranks.map((item) => (
-            <tr key={item.rank} className={cx(trStyle, item.name === currentUsername && currentUserTrStyle)}>
-              <td>{item.rank}</td>
-              <td>
-                <RankingLink id={item.name}>
-                  <img src={item.image} alt={item.name} width={60} height={60} />
-                </RankingLink>
-              </td>
-              <td>
-                <RankingLink id={item.name}>{item.name}</RankingLink>
-              </td>
-              <td>{item.contributions}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className={rankingListStyle}>
+      <div className={emblaViewportStyle} ref={emblaRef}>
+        <div className={emblaContainerStyle}>
+          {hasPrev && <div className={emblaSlideStyle} />}
+          <div className={emblaSlideStyle}>{renderTable()}</div>
+          {hasNext && <div className={emblaSlideStyle} />}
+        </div>
+      </div>
       <div className={paginationStyle}>
         {[0, 1, 2].map((_, index) => {
           const isActive =
@@ -82,6 +103,10 @@ export function MobileRankingTable({ ranks, page, totalPage }: { page: number; r
     </div>
   );
 }
+
+const emblaViewportStyle = css({ overflow: 'hidden', width: '100%' });
+const emblaContainerStyle = css({ display: 'flex' });
+const emblaSlideStyle = css({ flex: '0 0 100%', minWidth: 0 });
 
 const paginationStyle = css({
   marginTop: '20px',
