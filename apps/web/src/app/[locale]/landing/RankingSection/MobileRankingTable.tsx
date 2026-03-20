@@ -78,7 +78,7 @@ export function MobileRankingTable({ ranks, page, totalPage, type }: MobileRanki
 
   return (
     <div className={rankingListStyle}>
-      <div className={emblaViewportStyle} ref={emblaRef}>
+      <div key={page} className={emblaViewportStyle} ref={emblaRef}>
         <div className={emblaContainerStyle}>
           {hasPrev && (
             <div className={emblaSlideStyle}>
