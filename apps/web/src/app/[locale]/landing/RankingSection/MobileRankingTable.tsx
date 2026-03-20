@@ -1,99 +1,75 @@
-import { useEffect, useRef } from 'react';
+'use client';
+
+import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { css, cx } from '_panda/css';
-import useEmblaCarousel from 'embla-carousel-react';
 import type { RankType } from '@gitanimals/api';
 import { getNewUrl } from '@gitanimals/util-common';
 
 import { RankingLink } from './RankingLink';
+
+const SWIPE_THRESHOLD = 50;
 
 export function MobileRankingTable({ ranks, page, totalPage }: { page: number; ranks: RankType[]; totalPage: number }) {
   const router = useRouter();
   const { data: session } = useSession();
   const searchParams = useSearchParams();
   const currentUsername = session?.user?.name;
-  const prevIndexRef = useRef(page - 1);
-
-  const [emblaRef, emblaApi] = useEmblaCarousel({ startIndex: page - 1 });
+  const touchStartXRef = useRef(0);
 
   const getRankingPageUrl = (params: Record<string, unknown>) => {
     const oldParams = Object.fromEntries(searchParams.entries());
     return getNewUrl({ baseUrl: '/', newParams: params, oldParams });
   };
 
-  useEffect(() => {
-    if (!emblaApi) return;
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+  };
 
-    const onSelect = () => {
-      const currentIndex = emblaApi.selectedScrollSnap();
-      const previousIndex = prevIndexRef.current;
-      if (currentIndex === previousIndex) return;
-      prevIndexRef.current = currentIndex;
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const diff = touchStartXRef.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) < SWIPE_THRESHOLD) return;
 
-      // Flicking NEXT(index 증가) → page - 1, PREV(index 감소) → page + 1
-      const newPage = currentIndex > previousIndex ? page - 1 : page + 1;
+    // 원래 Flicking 매핑 유지: swipe left(NEXT) → page - 1, swipe right(PREV) → page + 1
+    const newPage = diff > 0 ? page - 1 : page + 1;
 
-      if (newPage < 0) return;
-      if (newPage > totalPage) return;
+    if (newPage < 0) return;
+    if (newPage > totalPage) return;
 
-      const newUrl = getRankingPageUrl({ page: newPage });
-      router.push(newUrl);
-    };
-
-    emblaApi.on('select', onSelect);
-    return () => {
-      emblaApi.off('select', onSelect);
-    };
-  }, [emblaApi, page, totalPage]);
-
-  // 페이지 데이터를 10개씩 그룹화
-  const groupedRanks = ranks.reduce((acc: RankType[][], rank, index) => {
-    const groupIndex = Math.floor(index / 10);
-    if (!acc[groupIndex]) {
-      acc[groupIndex] = [];
-    }
-    acc[groupIndex].push(rank);
-    return acc;
-  }, []);
+    const newUrl = getRankingPageUrl({ page: newPage });
+    router.push(newUrl);
+  };
 
   return (
-    <div className={rankingListStyle}>
-      <div className={emblaViewportStyle} ref={emblaRef}>
-        <div className={emblaContainerStyle}>
-          {groupedRanks.map((group, index) => (
-            <div key={index} className={cx(slideStyle, emblaSlideStyle)}>
-              <table className={tableStyle}>
-                <thead>
-                  <tr className={theadTrStyle}>
-                    <th>Rank</th>
-                    <th>Pet</th>
-                    <th>Name</th>
-                    <th>Contribution</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {group.map((item) => (
-                    <tr key={item.rank} className={cx(trStyle, item.name === currentUsername && currentUserTrStyle)}>
-                      <td>{item.rank}</td>
-                      <td>
-                        <RankingLink id={item.name}>
-                          <img src={item.image} alt={item.name} width={60} height={60} />
-                        </RankingLink>
-                      </td>
-                      <td>
-                        <RankingLink id={item.name}>{item.name}</RankingLink>
-                      </td>
-                      <td>{item.contributions}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+    <div className={rankingListStyle} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+      <table className={tableStyle}>
+        <thead>
+          <tr className={theadTrStyle}>
+            <th>Rank</th>
+            <th>Pet</th>
+            <th>Name</th>
+            <th>Contribution</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ranks.map((item) => (
+            <tr key={item.rank} className={cx(trStyle, item.name === currentUsername && currentUserTrStyle)}>
+              <td>{item.rank}</td>
+              <td>
+                <RankingLink id={item.name}>
+                  <img src={item.image} alt={item.name} width={60} height={60} />
+                </RankingLink>
+              </td>
+              <td>
+                <RankingLink id={item.name}>{item.name}</RankingLink>
+              </td>
+              <td>{item.contributions}</td>
+            </tr>
           ))}
-        </div>
-      </div>
+        </tbody>
+      </table>
       <div className={paginationStyle}>
         {[0, 1, 2].map((group, index) => {
           const isActive =
@@ -106,22 +82,6 @@ export function MobileRankingTable({ ranks, page, totalPage }: { page: number; r
     </div>
   );
 }
-
-const emblaViewportStyle = css({
-  width: '100%',
-  overflow: 'hidden',
-});
-
-const emblaContainerStyle = css({ display: 'flex' });
-const emblaSlideStyle = css({ flex: '0 0 100%', minWidth: 0 });
-
-const slideStyle = css({
-  width: '100%',
-  height: 'auto',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
 
 const paginationStyle = css({
   marginTop: '20px',
