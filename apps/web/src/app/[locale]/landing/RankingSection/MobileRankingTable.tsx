@@ -65,9 +65,15 @@ export function MobileRankingTable({ initialRanks, initialPage, totalPage, type 
         <RankingTableView ranks={ranks} currentUsername={currentUsername} />
       </div>
       <div className={paginationStyle}>
+        <button className={arrowButtonStyle} onClick={() => setPage((p) => p - 1)} disabled={page <= 0} aria-label="이전 페이지">
+          ‹
+        </button>
         <span className={paginationTextStyle}>
           {page + 1} / {totalPage + 1}
         </span>
+        <button className={arrowButtonStyle} onClick={() => setPage((p) => p + 1)} disabled={page >= totalPage} aria-label="다음 페이지">
+          ›
+        </button>
       </div>
     </div>
   );
@@ -147,6 +153,23 @@ const paginationStyle = css({
 const paginationTextStyle = css({
   textStyle: 'glyph14.regular',
   color: 'white.white_50',
+});
+
+const arrowButtonStyle = css({
+  width: '32px',
+  height: '32px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  border: 'none',
+  background: 'none',
+  color: 'white.white_75',
+  fontSize: '20px',
+  cursor: 'pointer',
+  _disabled: {
+    opacity: 0.25,
+    cursor: 'default',
+  },
 });
 
 const tableStyle = css({
