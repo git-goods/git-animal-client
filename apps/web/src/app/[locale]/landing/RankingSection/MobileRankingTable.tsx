@@ -7,13 +7,23 @@ import { useSession } from 'next-auth/react';
 import { css, cx } from '_panda/css';
 import useEmblaCarousel from 'embla-carousel-react';
 import type { RankType } from '@gitanimals/api';
+import { rankQueries } from '@gitanimals/react-query';
 import { getNewUrl } from '@gitanimals/util-common';
+import { useQuery } from '@tanstack/react-query';
 
 import { RankingLink } from './RankingLink';
 
+const RANKS_PER_PAGE = 5;
 const CURRENT_SLIDE_INDEX = 1;
 
-export function MobileRankingTable({ ranks, page, totalPage }: { page: number; ranks: RankType[]; totalPage: number }) {
+interface MobileRankingTableProps {
+  ranks: RankType[];
+  page: number;
+  totalPage: number;
+  type: 'WEEKLY_USER_CONTRIBUTIONS' | 'WEEKLY_GUILD_CONTRIBUTIONS';
+}
+
+export function MobileRankingTable({ ranks, page, totalPage, type }: MobileRankingTableProps) {
   const router = useRouter();
   const { data: session } = useSession();
   const searchParams = useSearchParams();
@@ -21,6 +31,19 @@ export function MobileRankingTable({ ranks, page, totalPage }: { page: number; r
 
   const hasPrev = page > 0;
   const hasNext = page < totalPage;
+
+  const prevRankStart = (page - 1) * RANKS_PER_PAGE + 4;
+  const nextRankStart = (page + 1) * RANKS_PER_PAGE + 4;
+
+  const { data: prevRanks } = useQuery({
+    ...rankQueries.getRanksOptions({ rank: prevRankStart, size: RANKS_PER_PAGE, type }),
+    enabled: hasPrev,
+  });
+
+  const { data: nextRanks } = useQuery({
+    ...rankQueries.getRanksOptions({ rank: nextRankStart, size: RANKS_PER_PAGE, type }),
+    enabled: hasNext,
+  });
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ startIndex: CURRENT_SLIDE_INDEX });
 
@@ -53,7 +76,48 @@ export function MobileRankingTable({ ranks, page, totalPage }: { page: number; r
     };
   }, [emblaApi, page, totalPage]);
 
-  const renderTable = () => (
+  return (
+    <div className={rankingListStyle}>
+      <div className={emblaViewportStyle} ref={emblaRef}>
+        <div className={emblaContainerStyle}>
+          {hasPrev && (
+            <div className={emblaSlideStyle}>
+              <RankingTableView ranks={prevRanks} currentUsername={currentUsername} />
+            </div>
+          )}
+          <div className={emblaSlideStyle}>
+            <RankingTableView ranks={ranks} currentUsername={currentUsername} />
+          </div>
+          {hasNext && (
+            <div className={emblaSlideStyle}>
+              <RankingTableView ranks={nextRanks} currentUsername={currentUsername} />
+            </div>
+          )}
+        </div>
+      </div>
+      <div className={paginationStyle}>
+        {[0, 1, 2].map((_, index) => {
+          const isActive =
+            (page === 0 && index === 0) ||
+            (page !== 0 && page !== totalPage && index === 1) ||
+            (page === totalPage && index === 2);
+          return <div key={index} className={cx(paginationBulletStyle, isActive && 'active')}></div>;
+        })}
+      </div>
+    </div>
+  );
+}
+
+function RankingTableView({
+  ranks,
+  currentUsername,
+}: {
+  ranks: RankType[] | undefined;
+  currentUsername: string | null | undefined;
+}) {
+  if (!ranks) return null;
+
+  return (
     <table className={tableStyle}>
       <thead>
         <tr className={theadTrStyle}>
@@ -80,27 +144,6 @@ export function MobileRankingTable({ ranks, page, totalPage }: { page: number; r
         ))}
       </tbody>
     </table>
-  );
-
-  return (
-    <div className={rankingListStyle}>
-      <div className={emblaViewportStyle} ref={emblaRef}>
-        <div className={emblaContainerStyle}>
-          {hasPrev && <div className={emblaSlideStyle} />}
-          <div className={emblaSlideStyle}>{renderTable()}</div>
-          {hasNext && <div className={emblaSlideStyle} />}
-        </div>
-      </div>
-      <div className={paginationStyle}>
-        {[0, 1, 2].map((_, index) => {
-          const isActive =
-            (page === 0 && index === 0) ||
-            (page !== 0 && page !== totalPage && index === 1) ||
-            (page === totalPage && index === 2);
-          return <div key={index} className={cx(paginationBulletStyle, isActive && 'active')}></div>;
-        })}
-      </div>
-    </div>
   );
 }
 

@@ -58,7 +58,7 @@ export default function RankingSection({
           <div className={screenContentStyle}>
             <RankingTab selectedTab={selectedTab} />
             <TopPodium ranks={queries[0].data} />
-            <MobileRankingTable ranks={queries[1].data} page={currentPage} totalPage={totalPage} />
+            <MobileRankingTable ranks={queries[1].data} page={currentPage} totalPage={totalPage} type={type} />
             <MobileGameConsole />
           </div>
         }
