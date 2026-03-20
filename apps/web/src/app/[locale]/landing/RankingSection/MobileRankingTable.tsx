@@ -24,7 +24,13 @@ export function MobileRankingTable({ initialRanks, initialPage, totalPage, type 
   const { data: session } = useSession();
   const currentUsername = session?.user?.name;
   const [page, setPage] = useState(initialPage);
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
   const touchStartX = useRef(0);
+
+  const goToPage = (next: number) => {
+    setSlideDirection(next > page ? 'left' : 'right');
+    setPage(next);
+  };
 
   const rankStart = page * RANKS_PER_PAGE + 4;
 
@@ -53,25 +59,28 @@ export function MobileRankingTable({ initialRanks, initialPage, totalPage, type 
     if (Math.abs(diff) < SWIPE_THRESHOLD) return;
 
     if (diff > 0 && page < totalPage) {
-      setPage((p) => p + 1);
+      goToPage(page + 1);
     } else if (diff < 0 && page > 0) {
-      setPage((p) => p - 1);
+      goToPage(page - 1);
     }
   };
 
   return (
     <div className={containerStyle} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-      <div className={cx(tableWrapperStyle, isPlaceholderData && fetchingStyle)}>
+      <div
+        key={page}
+        className={cx(tableWrapperStyle, isPlaceholderData && fetchingStyle, slideDirection === 'left' && slideInFromRight, slideDirection === 'right' && slideInFromLeft)}
+      >
         <RankingTableView ranks={ranks} currentUsername={currentUsername} />
       </div>
       <div className={paginationStyle}>
-        <button className={arrowButtonStyle} onClick={() => setPage((p) => p - 1)} disabled={page <= 0} aria-label="이전 페이지">
+        <button className={arrowButtonStyle} onClick={() => goToPage(page - 1)} disabled={page <= 0} aria-label="이전 페이지">
           ‹
         </button>
         <span className={paginationTextStyle}>
           {page + 1} / {totalPage + 1}
         </span>
-        <button className={arrowButtonStyle} onClick={() => setPage((p) => p + 1)} disabled={page >= totalPage} aria-label="다음 페이지">
+        <button className={arrowButtonStyle} onClick={() => goToPage(page + 1)} disabled={page >= totalPage} aria-label="다음 페이지">
           ›
         </button>
       </div>
@@ -133,7 +142,7 @@ function RankingTableView({
   );
 }
 
-const containerStyle = css({ width: '100%' });
+const containerStyle = css({ width: '100%', overflow: 'hidden' });
 
 const tableWrapperStyle = css({
   transition: 'opacity 0.15s ease',
@@ -141,6 +150,14 @@ const tableWrapperStyle = css({
 
 const fetchingStyle = css({
   opacity: 0.5,
+});
+
+const slideInFromRight = css({
+  animation: 'slideFromRight 0.2s ease-out',
+});
+
+const slideInFromLeft = css({
+  animation: 'slideFromLeft 0.2s ease-out',
 });
 
 const paginationStyle = css({
