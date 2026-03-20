@@ -1,14 +1,11 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { css, cx } from '_panda/css';
 import useEmblaCarousel from 'embla-carousel-react';
 import type { RankType } from '@gitanimals/api';
 import { rankQueries } from '@gitanimals/react-query';
-import { getNewUrl } from '@gitanimals/util-common';
 import { useQuery } from '@tanstack/react-query';
 
 import { RankingLink } from './RankingLink';
@@ -23,17 +20,23 @@ interface MobileRankingTableProps {
   type: 'WEEKLY_USER_CONTRIBUTIONS' | 'WEEKLY_GUILD_CONTRIBUTIONS';
 }
 
-export function MobileRankingTable({ ranks, page, totalPage, type }: MobileRankingTableProps) {
-  const router = useRouter();
+export function MobileRankingTable({ ranks: initialRanks, page: initialPage, totalPage, type }: MobileRankingTableProps) {
   const { data: session } = useSession();
-  const searchParams = useSearchParams();
   const currentUsername = session?.user?.name;
+
+  const [page, setPage] = useState(initialPage);
 
   const hasPrev = page > 0;
   const hasNext = page < totalPage;
 
+  const currentRankStart = page * RANKS_PER_PAGE + 4;
   const prevRankStart = (page - 1) * RANKS_PER_PAGE + 4;
   const nextRankStart = (page + 1) * RANKS_PER_PAGE + 4;
+
+  const { data: currentRanks } = useQuery({
+    ...rankQueries.getRanksOptions({ rank: currentRankStart, size: RANKS_PER_PAGE, type }),
+    initialData: page === initialPage ? initialRanks : undefined,
+  });
 
   const { data: prevRanks } = useQuery({
     ...rankQueries.getRanksOptions({ rank: prevRankStart, size: RANKS_PER_PAGE, type }),
@@ -46,11 +49,6 @@ export function MobileRankingTable({ ranks, page, totalPage, type }: MobileRanki
   });
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ startIndex: CURRENT_SLIDE_INDEX });
-
-  const getRankingPageUrl = (params: Record<string, unknown>) => {
-    const oldParams = Object.fromEntries(searchParams.entries());
-    return getNewUrl({ baseUrl: '/', newParams: params, oldParams });
-  };
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -66,8 +64,7 @@ export function MobileRankingTable({ ranks, page, totalPage, type }: MobileRanki
         return;
       }
 
-      const newUrl = getRankingPageUrl({ page: newPage });
-      router.push(newUrl);
+      setPage(newPage);
     };
 
     emblaApi.on('settle', onSettle);
@@ -86,7 +83,7 @@ export function MobileRankingTable({ ranks, page, totalPage, type }: MobileRanki
             </div>
           )}
           <div className={emblaSlideStyle}>
-            <RankingTableView ranks={ranks} currentUsername={currentUsername} />
+            <RankingTableView ranks={currentRanks} currentUsername={currentUsername} />
           </div>
           {hasNext && (
             <div className={emblaSlideStyle}>
