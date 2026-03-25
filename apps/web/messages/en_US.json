@@ -141,7 +141,28 @@
       "please-choose-pet": "Select a pet to merge. The selected pet will be consumed and disappear."
     },
     "laboratory": "Laboratory",
-    "maximum-pet-count-error": "You can have a maximum of 30 pets."
+    "maximum-pet-count-error": "You can have a maximum of 30 pets.",
+    "Filter": {
+      "search-placeholder": "Search pet name",
+      "grade": "Grade",
+      "tier": "Tier",
+      "visibility": "Status",
+      "sort": "Sort",
+      "filter-all": "All",
+      "filter-grade-collaborator": "Collab",
+      "filter-grade-default": "Default",
+      "filter-grade-evolution": "Evolution",
+      "filter-visible": "Visible",
+      "filter-hidden": "Hidden",
+      "evolvable-only": "Evolvable",
+      "sort-grade": "By Grade",
+      "sort-level-desc": "Level (High)",
+      "sort-level-asc": "Level (Low)",
+      "sort-tier": "By Rarity",
+      "sort-name": "By Name",
+      "reset": "Reset filters",
+      "no-results": "No pets match the criteria."
+    }
   },
   "Event": {
     "event-end": "Event has ended.",
