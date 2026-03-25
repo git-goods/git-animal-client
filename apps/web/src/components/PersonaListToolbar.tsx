@@ -169,6 +169,11 @@ const toolbarContainerStyle = css({
   flexDirection: 'column',
   gap: '8px',
   marginBottom: '8px',
+  position: 'sticky',
+  top: 0,
+  zIndex: 1,
+  backgroundColor: 'gray.gray_150',
+  paddingBottom: '8px',
 });
 
 const filterRowStyle = flex({
