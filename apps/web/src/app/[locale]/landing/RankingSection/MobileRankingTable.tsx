@@ -1,16 +1,16 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { css, cx } from '_panda/css';
 import type { RankType } from '@gitanimals/api';
 import { rankQueries } from '@gitanimals/react-query';
 import { Skeleton } from '@gitanimals/ui-panda';
-import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { getRankStart, RANKS_PER_PAGE } from './constants';
 import { RankingLink } from './RankingLink';
 
+const RANKS_PER_PAGE = 5;
 const SWIPE_THRESHOLD = 50;
 
 interface MobileRankingTableProps {
@@ -22,20 +22,15 @@ interface MobileRankingTableProps {
 
 export function MobileRankingTable({ initialRanks, initialPage, totalPage, type }: MobileRankingTableProps) {
   const { data: session } = useSession();
-  const queryClient = useQueryClient();
   const currentUsername = session?.user?.name;
   const [page, setPage] = useState(initialPage);
-  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
   const touchStartX = useRef(0);
 
   const goToPage = (next: number) => {
-    const clamped = Math.max(0, Math.min(next, totalPage));
-    if (clamped === page) return;
-    setSlideDirection(clamped > page ? 'left' : 'right');
-    setPage(clamped);
+    setPage(next);
   };
 
-  const rankStart = getRankStart(page);
+  const rankStart = page * RANKS_PER_PAGE + 4;
 
   const { data: ranks, isPlaceholderData } = useQuery({
     ...rankQueries.getRanksOptions({ rank: rankStart, size: RANKS_PER_PAGE, type }),
@@ -43,14 +38,15 @@ export function MobileRankingTable({ initialRanks, initialPage, totalPage, type 
     placeholderData: keepPreviousData,
   });
 
-  useEffect(() => {
-    if (page > 0) {
-      queryClient.prefetchQuery(rankQueries.getRanksOptions({ rank: getRankStart(page - 1), size: RANKS_PER_PAGE, type }));
-    }
-    if (page < totalPage) {
-      queryClient.prefetchQuery(rankQueries.getRanksOptions({ rank: getRankStart(page + 1), size: RANKS_PER_PAGE, type }));
-    }
-  }, [page, totalPage, type, queryClient]);
+  // Prefetch adjacent pages
+  useQuery({
+    ...rankQueries.getRanksOptions({ rank: (page - 1) * RANKS_PER_PAGE + 4, size: RANKS_PER_PAGE, type }),
+    enabled: page > 0,
+  });
+  useQuery({
+    ...rankQueries.getRanksOptions({ rank: (page + 1) * RANKS_PER_PAGE + 4, size: RANKS_PER_PAGE, type }),
+    enabled: page < totalPage,
+  });
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -69,10 +65,7 @@ export function MobileRankingTable({ initialRanks, initialPage, totalPage, type 
 
   return (
     <div className={containerStyle} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-      <div
-        key={page}
-        className={cx(tableWrapperStyle, isPlaceholderData && fetchingStyle, slideDirection === 'left' && slideInFromRight, slideDirection === 'right' && slideInFromLeft)}
-      >
+      <div className={cx(tableWrapperStyle, isPlaceholderData && fetchingStyle)}>
         <RankingTableView ranks={ranks} currentUsername={currentUsername} />
       </div>
       <div className={paginationStyle}>
@@ -152,14 +145,6 @@ const tableWrapperStyle = css({
 
 const fetchingStyle = css({
   opacity: 0.5,
-});
-
-const slideInFromRight = css({
-  animation: 'slideFromRight 0.2s ease-out',
-});
-
-const slideInFromLeft = css({
-  animation: 'slideFromLeft 0.2s ease-out',
 });
 
 const paginationStyle = css({
