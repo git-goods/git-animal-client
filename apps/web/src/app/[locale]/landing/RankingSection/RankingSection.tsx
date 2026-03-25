@@ -8,6 +8,7 @@ import { useQueries } from '@tanstack/react-query';
 import { MediaQuery } from '@/components/MediaQuery';
 import { Link } from '@/i18n/routing';
 
+import { calcTotalPage, RANKS_PER_PAGE, RANKS_TOP_3 } from './constants';
 import GameConsole from './GameConsole/GameConsole';
 import { MobileGameConsole } from './MobileGameConsole/MobileGameConsole';
 import { MobileRankingTable } from './MobileRankingTable';
@@ -28,8 +29,8 @@ export default function RankingSection({
 
   const queries = useQueries({
     queries: [
-      rankQueries.getRanksOptions({ rank: 1, size: 3, type }),
-      rankQueries.getRanksOptions({ rank: startRankNumber, size: 5, type }),
+      rankQueries.getRanksOptions({ rank: 1, size: RANKS_TOP_3, type }),
+      rankQueries.getRanksOptions({ rank: startRankNumber, size: RANKS_PER_PAGE, type }),
       rankQueries.getTotalRankOptions({ type }),
     ],
   });
@@ -67,10 +68,6 @@ export default function RankingSection({
   );
 }
 
-const calcTotalPage = (totalCount: number) => {
-  if (totalCount <= 3) return 0;
-  return Math.ceil((totalCount - 3) / 5) - 1;
-};
 
 const titleStyle = css({
   textStyle: 'glyph82.bold',

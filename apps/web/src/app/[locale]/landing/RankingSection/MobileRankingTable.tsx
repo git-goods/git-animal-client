@@ -1,16 +1,16 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { css, cx } from '_panda/css';
 import type { RankType } from '@gitanimals/api';
 import { rankQueries } from '@gitanimals/react-query';
 import { Skeleton } from '@gitanimals/ui-panda';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { getRankStart, RANKS_PER_PAGE } from './constants';
 import { RankingLink } from './RankingLink';
 
-const RANKS_PER_PAGE = 5;
 const SWIPE_THRESHOLD = 50;
 
 interface MobileRankingTableProps {
@@ -22,17 +22,20 @@ interface MobileRankingTableProps {
 
 export function MobileRankingTable({ initialRanks, initialPage, totalPage, type }: MobileRankingTableProps) {
   const { data: session } = useSession();
+  const queryClient = useQueryClient();
   const currentUsername = session?.user?.name;
   const [page, setPage] = useState(initialPage);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
   const touchStartX = useRef(0);
 
   const goToPage = (next: number) => {
-    setSlideDirection(next > page ? 'left' : 'right');
-    setPage(next);
+    const clamped = Math.max(0, Math.min(next, totalPage));
+    if (clamped === page) return;
+    setSlideDirection(clamped > page ? 'left' : 'right');
+    setPage(clamped);
   };
 
-  const rankStart = page * RANKS_PER_PAGE + 4;
+  const rankStart = getRankStart(page);
 
   const { data: ranks, isPlaceholderData } = useQuery({
     ...rankQueries.getRanksOptions({ rank: rankStart, size: RANKS_PER_PAGE, type }),
@@ -40,15 +43,14 @@ export function MobileRankingTable({ initialRanks, initialPage, totalPage, type 
     placeholderData: keepPreviousData,
   });
 
-  // Prefetch adjacent pages
-  useQuery({
-    ...rankQueries.getRanksOptions({ rank: (page - 1) * RANKS_PER_PAGE + 4, size: RANKS_PER_PAGE, type }),
-    enabled: page > 0,
-  });
-  useQuery({
-    ...rankQueries.getRanksOptions({ rank: (page + 1) * RANKS_PER_PAGE + 4, size: RANKS_PER_PAGE, type }),
-    enabled: page < totalPage,
-  });
+  useEffect(() => {
+    if (page > 0) {
+      queryClient.prefetchQuery(rankQueries.getRanksOptions({ rank: getRankStart(page - 1), size: RANKS_PER_PAGE, type }));
+    }
+    if (page < totalPage) {
+      queryClient.prefetchQuery(rankQueries.getRanksOptions({ rank: getRankStart(page + 1), size: RANKS_PER_PAGE, type }));
+    }
+  }, [page, totalPage, type, queryClient]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
