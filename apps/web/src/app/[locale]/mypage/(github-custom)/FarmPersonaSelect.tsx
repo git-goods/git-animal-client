@@ -14,9 +14,9 @@ import { customScrollHorizontalStyle } from '@/styles/scrollStyle';
 import { SelectPersonaList } from '../PersonaList';
 
 export function FarmPersonaSelect({
-  onChangeStatus,
+  onImageRefresh,
 }: {
-  onChangeStatus: (status: 'loading' | 'success' | 'error') => void;
+  onImageRefresh: () => void;
 }) {
   const queryClient = useQueryClient();
   const t = useTranslations('Mypage');
@@ -27,15 +27,7 @@ export function FarmPersonaSelect({
 
   const { mutate } = useChangePersonaVisible({
     throwOnError: false,
-    onMutate: () => {
-      onChangeStatus('loading');
-    },
-    onSuccess: () => {
-      onChangeStatus('success');
-    },
     onError: (error) => {
-      onChangeStatus('error');
-
       if (error.response?.status === 400) {
         toast.error(t('maximum-pet-count-error'));
       } else {
@@ -45,6 +37,7 @@ export function FarmPersonaSelect({
     onSettled: async (_, __, variables) => {
       await queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
       setLoadingPersona((prev) => prev.filter((id) => id !== variables.personaId));
+      onImageRefresh();
     },
   });
 

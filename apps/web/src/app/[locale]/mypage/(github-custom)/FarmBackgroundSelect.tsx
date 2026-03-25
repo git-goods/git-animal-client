@@ -16,9 +16,9 @@ export const FarmBackgroundSelect = wrap
     fallback: <></>,
   })
   .on(function FarmBackgroundSelect({
-    onChangeStatus,
+    onImageRefresh,
   }: {
-    onChangeStatus: (status: 'loading' | 'success' | 'error') => void;
+    onImageRefresh: () => void;
   }) {
     const session = useClientSession();
     const { name } = useClientUser();
@@ -29,16 +29,10 @@ export const FarmBackgroundSelect = wrap
       data: { backgrounds },
     } = useSuspenseQuery(renderUserQueries.getMyBackground(name));
     const { mutate: changeMyBackground } = useChangeMyBackgroundByToken(session.data?.user.accessToken ?? '', {
-      onMutate: () => {
-        onChangeStatus('loading');
+      onSettled: () => {
+        onImageRefresh();
       },
-      onSuccess: () => {
-        onChangeStatus('success');
-      },
-      onError: () => {
-        onChangeStatus('error');
-      },
-    }); // TODO: 추후 수정
+    });
 
     const handleChangeBackground = (background: RenderBackground) => {
       changeMyBackground({ type: background.type });
