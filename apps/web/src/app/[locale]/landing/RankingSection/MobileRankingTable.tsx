@@ -24,11 +24,9 @@ export function MobileRankingTable({ initialRanks, initialPage, totalPage, type 
   const { data: session } = useSession();
   const currentUsername = session?.user?.name;
   const [page, setPage] = useState(initialPage);
-  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
   const touchStartX = useRef(0);
 
   const goToPage = (next: number) => {
-    setSlideDirection(next > page ? 'left' : 'right');
     setPage(next);
   };
 
@@ -68,8 +66,7 @@ export function MobileRankingTable({ initialRanks, initialPage, totalPage, type 
   return (
     <div className={containerStyle} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
       <div
-        key={page}
-        className={cx(tableWrapperStyle, isPlaceholderData && fetchingStyle, slideDirection === 'left' && slideInFromRight, slideDirection === 'right' && slideInFromLeft)}
+        className={cx(tableWrapperStyle, isPlaceholderData && fetchingStyle)}
       >
         <RankingTableView ranks={ranks} currentUsername={currentUsername} />
       </div>
@@ -150,14 +147,6 @@ const tableWrapperStyle = css({
 
 const fetchingStyle = css({
   opacity: 0.5,
-});
-
-const slideInFromRight = css({
-  animation: 'slideFromRight 0.2s ease-out',
-});
-
-const slideInFromLeft = css({
-  animation: 'slideFromLeft 0.2s ease-out',
 });
 
 const paginationStyle = css({
