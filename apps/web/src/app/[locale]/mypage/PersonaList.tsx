@@ -4,8 +4,7 @@ import { memo, useEffect, useMemo, useRef } from 'react';
 import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Banner } from '@gitanimals/ui-panda';
-import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banner';
+import { Banner, BannerSkeleton } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -58,17 +57,17 @@ export const SelectPersonaList = wrap
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
     const hasInitialized = useRef(false);
 
-    // 초기 선택 로직, 외부에서 초기화 함수 전달
+    // 초기 선택 로직, 외부에서 초기화 함수 전달 (마운트 시 한 번만 호출)
     useEffect(() => {
       if (initSelectPersonas && !hasInitialized.current && data.personas.length > 0) {
         hasInitialized.current = true;
         initSelectPersonas(data.personas);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);
+    }, []);
 
     const selectedIds = useMemo(
-      () => selectPersona ?? data.personas.filter((p) => p.visible).map((p) => p.id),
+      () => new Set(selectPersona ?? data.personas.filter((p) => p.visible).map((p) => p.id)),
       [selectPersona, data],
     );
 
@@ -90,7 +89,7 @@ export const SelectPersonaList = wrap
           <MemoizedPersonaItem
             key={persona.id}
             persona={persona}
-            isSelected={selectedIds.includes(persona.id)}
+            isSelected={selectedIds.has(persona.id)}
             onClick={() => onSelectPersona(persona)}
             isLoading={loadingPersona?.includes(persona.id) ?? false}
             isSpecialEffect={isSpecialEffect}
@@ -112,7 +111,6 @@ interface PersonaItemProps {
 function PersonaItem({ persona, isSelected, onClick, isSpecialEffect, isLoading }: PersonaItemProps) {
   return (
     <button
-      key={`${persona.id}-${persona.visible}`}
       onClick={onClick}
       disabled={isLoading}
       className={cx(

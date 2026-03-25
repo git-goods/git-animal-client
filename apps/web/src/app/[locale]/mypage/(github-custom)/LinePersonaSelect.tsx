@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
-import { flex } from '_panda/patterns';
+
 import { Dialog, ScrollArea } from '@gitanimals/ui-panda';
 import { ExpandIcon } from 'lucide-react';
 
@@ -63,22 +63,6 @@ const flexOverflowStyle = cx(
     justifyContent: 'center',
     maxHeight: 'calc(100%)',
     marginTop: '24px',
-  }),
-  customScrollStyle,
-);
-
-const listStyle = cx(
-  flex({
-    gap: '4px',
-    w: '100%',
-    h: '100%',
-    minH: '0',
-    overflowX: 'auto',
-    overflowY: 'hidden',
-    display: 'grid',
-    gridTemplateRows: 'repeat(2, 1fr)',
-    gridAutoColumns: 'max-content',
-    gridAutoFlow: 'column',
   }),
   customScrollStyle,
 );
