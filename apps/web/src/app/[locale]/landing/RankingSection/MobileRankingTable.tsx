@@ -65,9 +65,7 @@ export function MobileRankingTable({ initialRanks, initialPage, totalPage, type 
 
   return (
     <div className={containerStyle} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-      <div
-        className={cx(tableWrapperStyle, isPlaceholderData && fetchingStyle)}
-      >
+      <div className={cx(tableWrapperStyle, isPlaceholderData && fetchingStyle)}>
         <RankingTableView ranks={ranks} currentUsername={currentUsername} />
       </div>
       <div className={paginationStyle}>
