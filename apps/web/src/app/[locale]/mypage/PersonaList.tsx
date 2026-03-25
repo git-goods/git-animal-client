@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo, useEffect, useMemo, useRef } from 'react';
+import { memo, useEffect, useMemo, useRef } from 'react';
 import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
@@ -65,24 +65,22 @@ export const SelectPersonaList = wrap
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
-    const gradeSortedList = useMemo(() => {
-      // COLLABORATOR, EVOLUTION, DEFAULT 순으로 정렬
-      return data.personas.sort((a, b) => {
-        if (a.grade === 'COLLABORATOR') return -1;
-        if (a.grade === 'EVOLUTION') return 1;
-        return 0;
-      });
-    }, [data]);
-
     const viewList = useMemo(() => {
-      const viewListSorted = gradeSortedList.sort((a, b) => {
+      return [...data.personas].sort((a, b) => {
+        // COLLABORATOR > DEFAULT > EVOLUTION 순으로 정렬
+        if (a.grade === 'COLLABORATOR' && b.grade !== 'COLLABORATOR') return -1;
+        if (a.grade !== 'COLLABORATOR' && b.grade === 'COLLABORATOR') return 1;
+        if (a.grade === 'EVOLUTION' && b.grade !== 'EVOLUTION') return 1;
+        if (a.grade !== 'EVOLUTION' && b.grade === 'EVOLUTION') return -1;
+
+        // visible 우선
         if (a.visible && !b.visible) return -1;
         if (!a.visible && b.visible) return 1;
+
+        // 레벨 내림차순
         return parseInt(b.level) - parseInt(a.level);
       });
-
-      return viewListSorted;
-    }, [gradeSortedList]);
+    }, [data]);
 
     return (
       <div className={listStyle}>
