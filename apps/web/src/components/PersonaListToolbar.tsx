@@ -10,7 +10,7 @@ import { ANIMAL_TIER_INFO } from '@/components/AnimalCard/AnimalCard.constant';
 
 import type { GradeFilter, PersonaFilterState, SortBy, TierFilter, VisibilityFilter } from '@/hooks/persona/usePersonaListFilter';
 
-interface PersonaListToolbarProps {
+export interface PersonaListToolbarProps {
   filterState: PersonaFilterState;
   onFilterChange: (partial: Partial<PersonaFilterState>) => void;
   onReset: () => void;
@@ -169,11 +169,6 @@ const toolbarContainerStyle = css({
   flexDirection: 'column',
   gap: '8px',
   marginBottom: '8px',
-  position: 'sticky',
-  top: 0,
-  zIndex: 1,
-  backgroundColor: 'gray.gray_150',
-  paddingBottom: '8px',
 });
 
 const filterRowStyle = flex({

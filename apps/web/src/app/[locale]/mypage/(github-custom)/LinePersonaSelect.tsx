@@ -7,6 +7,8 @@ import { css } from '_panda/css';
 import { Dialog, ScrollArea } from '@gitanimals/ui-panda';
 import { ExpandIcon } from 'lucide-react';
 
+import { PersonaListToolbar } from '@/components/PersonaListToolbar';
+
 import { SelectPersonaList } from '../PersonaList';
 
 interface Props {
@@ -36,14 +38,16 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
       <Dialog open={isExtend} onOpenChange={() => setIsExtend(false)}>
         <Dialog.Content size="large" scrollable>
           <Dialog.Title>{t('line-type-select-pet')}</Dialog.Title>
-          <Dialog.Body>
-            <SelectPersonaList
-              selectPersona={selectPersona ? [selectPersona] : []}
-              onSelectPersona={(persona) => onChangePersona(persona.id)}
-              showToolbar
-              showSearch
-            />
-          </Dialog.Body>
+          <SelectPersonaList
+            selectPersona={selectPersona ? [selectPersona] : []}
+            onSelectPersona={(persona) => onChangePersona(persona.id)}
+            gridWrapper={Dialog.Body}
+            renderToolbar={(toolbarProps) => (
+              <Dialog.TopSlot>
+                <PersonaListToolbar {...toolbarProps} showSearch />
+              </Dialog.TopSlot>
+            )}
+          />
         </Dialog.Content>
       </Dialog>
     </div>

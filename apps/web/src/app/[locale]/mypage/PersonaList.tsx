@@ -10,9 +10,11 @@ import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { MemoizedBannerPersonaItem } from '@/components/PersonaItem';
-import { PersonaListToolbar } from '@/components/PersonaListToolbar';
+import { PersonaListToolbar, type PersonaListToolbarProps } from '@/components/PersonaListToolbar';
 import { usePersonaListFilter } from '@/hooks/persona/usePersonaListFilter';
 import { useClientUser } from '@/utils/clientAuth';
+
+export type RenderToolbarProps = Pick<PersonaListToolbarProps, 'filterState' | 'onFilterChange' | 'onReset' | 'counts' | 'isFiltering'>;
 
 const listStyle = css({
   gap: '4px',
@@ -40,6 +42,10 @@ interface Props {
   showVisibilityFilter?: boolean;
   /** 진화 가능 필터 표시 여부 */
   showEvolvableFilter?: boolean;
+  /** 툴바를 외부에서 렌더링하기 위한 render prop. 전달 시 내부 툴바 대신 이 함수로 위임 */
+  renderToolbar?: (props: RenderToolbarProps) => React.ReactNode;
+  /** 그리드 영역을 감싸는 wrapper. renderToolbar와 함께 사용하여 스크롤 영역 분리에 활용 */
+  gridWrapper?: React.ComponentType<{ children: React.ReactNode }>;
 }
 
 export const SelectPersonaList = wrap
@@ -67,6 +73,8 @@ export const SelectPersonaList = wrap
     showSearch = false,
     showVisibilityFilter = false,
     showEvolvableFilter = false,
+    renderToolbar,
+    gridWrapper: GridWrapper,
   }: Props) {
     const t = useTranslations('Mypage.Filter');
     const { name } = useClientUser();
@@ -91,37 +99,46 @@ export const SelectPersonaList = wrap
       [selectPersona, data],
     );
 
+    const toolbarProps: RenderToolbarProps = { filterState, onFilterChange: updateFilter, onReset: resetFilter, counts, isFiltering };
+
+    const grid = filteredList.length === 0 ? (
+      <p className={emptyStyle}>{t('no-results')}</p>
+    ) : (
+      <div className={listStyle}>
+        {filteredList.map((persona) => (
+          <MemoizedBannerPersonaItem
+            key={persona.id}
+            persona={persona}
+            isSelected={selectedIds.has(persona.id)}
+            onClick={() => onSelectPersona(persona)}
+            loading={loadingPersona?.includes(persona.id) ?? false}
+            isSpecialEffect={isSpecialEffect}
+          />
+        ))}
+      </div>
+    );
+
+    if (renderToolbar) {
+      const wrappedGrid = GridWrapper ? <GridWrapper>{grid}</GridWrapper> : grid;
+      return (
+        <>
+          {renderToolbar(toolbarProps)}
+          {wrappedGrid}
+        </>
+      );
+    }
+
     return (
       <div>
         {showToolbar && (
           <PersonaListToolbar
-            filterState={filterState}
-            onFilterChange={updateFilter}
-            onReset={resetFilter}
-            counts={counts}
-            isFiltering={isFiltering}
+            {...toolbarProps}
             showSearch={showSearch}
             showVisibilityFilter={showVisibilityFilter}
             showEvolvableFilter={showEvolvableFilter}
           />
         )}
-
-        {filteredList.length === 0 ? (
-          <p className={emptyStyle}>{t('no-results')}</p>
-        ) : (
-          <div className={listStyle}>
-            {filteredList.map((persona) => (
-              <MemoizedBannerPersonaItem
-                key={persona.id}
-                persona={persona}
-                isSelected={selectedIds.has(persona.id)}
-                onClick={() => onSelectPersona(persona)}
-                loading={loadingPersona?.includes(persona.id) ?? false}
-                isSpecialEffect={isSpecialEffect}
-              />
-            ))}
-          </div>
-        )}
+        {grid}
       </div>
     );
   });
