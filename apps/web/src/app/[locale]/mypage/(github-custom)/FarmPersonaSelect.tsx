@@ -9,7 +9,6 @@ import { ExpandIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
-import { PersonaListToolbar } from '@/components/PersonaListToolbar';
 
 import { SelectPersonaList } from '../PersonaList';
 
@@ -61,15 +60,14 @@ export function FarmPersonaSelect({ onImageRefresh }: { onImageRefresh: () => vo
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <Dialog.Content size="large" scrollable>
           <Dialog.Title>{t('farm-type-select-pet')}</Dialog.Title>
-          <SelectPersonaList
-            {...personaListProps}
-            gridWrapper={Dialog.Body}
-            renderToolbar={(toolbarProps) => (
-              <Dialog.TopSlot>
-                <PersonaListToolbar {...toolbarProps} showSearch showVisibilityFilter />
-              </Dialog.TopSlot>
-            )}
-          />
+          <SelectPersonaList {...personaListProps}>
+            <Dialog.TopSlot>
+              <SelectPersonaList.Toolbar showSearch showVisibilityFilter />
+            </Dialog.TopSlot>
+            <Dialog.Body>
+              <SelectPersonaList.Grid />
+            </Dialog.Body>
+          </SelectPersonaList>
         </Dialog.Content>
       </Dialog>
     </div>

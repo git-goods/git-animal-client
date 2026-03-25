@@ -7,8 +7,6 @@ import { css } from '_panda/css';
 import { Dialog, ScrollArea } from '@gitanimals/ui-panda';
 import { ExpandIcon } from 'lucide-react';
 
-import { PersonaListToolbar } from '@/components/PersonaListToolbar';
-
 import { SelectPersonaList } from '../PersonaList';
 
 interface Props {
@@ -41,13 +39,14 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
           <SelectPersonaList
             selectPersona={selectPersona ? [selectPersona] : []}
             onSelectPersona={(persona) => onChangePersona(persona.id)}
-            gridWrapper={Dialog.Body}
-            renderToolbar={(toolbarProps) => (
-              <Dialog.TopSlot>
-                <PersonaListToolbar {...toolbarProps} showSearch />
-              </Dialog.TopSlot>
-            )}
-          />
+          >
+            <Dialog.TopSlot>
+              <SelectPersonaList.Toolbar showSearch />
+            </Dialog.TopSlot>
+            <Dialog.Body>
+              <SelectPersonaList.Grid />
+            </Dialog.Body>
+          </SelectPersonaList>
         </Dialog.Content>
       </Dialog>
     </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
@@ -10,11 +10,35 @@ import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { MemoizedBannerPersonaItem } from '@/components/PersonaItem';
-import { PersonaListToolbar, type PersonaListToolbarProps } from '@/components/PersonaListToolbar';
+import { PersonaListToolbar } from '@/components/PersonaListToolbar';
+import type { PersonaFilterState } from '@/hooks/persona/usePersonaListFilter';
 import { usePersonaListFilter } from '@/hooks/persona/usePersonaListFilter';
 import { useClientUser } from '@/utils/clientAuth';
 
-export type RenderToolbarProps = Pick<PersonaListToolbarProps, 'filterState' | 'onFilterChange' | 'onReset' | 'counts' | 'isFiltering'>;
+// ─── Context ────────────────────────────────────────────────────────
+
+interface SelectPersonaListContextValue {
+  filterState: PersonaFilterState;
+  updateFilter: (partial: Partial<PersonaFilterState>) => void;
+  resetFilter: () => void;
+  counts: { filtered: number; total: number };
+  isFiltering: boolean;
+  filteredList: Persona[];
+  selectedIds: Set<string>;
+  onSelectPersona: (persona: Persona) => void;
+  loadingPersona?: string[];
+  isSpecialEffect?: boolean;
+}
+
+const SelectPersonaListContext = createContext<SelectPersonaListContextValue | null>(null);
+
+function useSelectPersonaListContext() {
+  const ctx = useContext(SelectPersonaListContext);
+  if (!ctx) throw new Error('SelectPersonaList compound components must be used within <SelectPersonaList>');
+  return ctx;
+}
+
+// ─── Styles ─────────────────────────────────────────────────────────
 
 const listStyle = css({
   gap: '4px',
@@ -25,32 +49,76 @@ const listStyle = css({
   },
 });
 
+const emptyStyle = css({
+  textStyle: 'glyph14.regular',
+  color: 'white.white_50',
+  textAlign: 'center',
+  padding: '24px 0',
+});
+
+// ─── Sub-components ─────────────────────────────────────────────────
+
+interface ToolbarProps {
+  showSearch?: boolean;
+  showVisibilityFilter?: boolean;
+  showEvolvableFilter?: boolean;
+}
+
+function Toolbar({ showSearch, showVisibilityFilter, showEvolvableFilter }: ToolbarProps) {
+  const { filterState, updateFilter, resetFilter, counts, isFiltering } = useSelectPersonaListContext();
+
+  return (
+    <PersonaListToolbar
+      filterState={filterState}
+      onFilterChange={updateFilter}
+      onReset={resetFilter}
+      counts={counts}
+      isFiltering={isFiltering}
+      showSearch={showSearch}
+      showVisibilityFilter={showVisibilityFilter}
+      showEvolvableFilter={showEvolvableFilter}
+    />
+  );
+}
+
+function Grid() {
+  const t = useTranslations('Mypage.Filter');
+  const { filteredList, selectedIds, onSelectPersona, loadingPersona, isSpecialEffect } =
+    useSelectPersonaListContext();
+
+  if (filteredList.length === 0) {
+    return <p className={emptyStyle}>{t('no-results')}</p>;
+  }
+
+  return (
+    <div className={listStyle}>
+      {filteredList.map((persona) => (
+        <MemoizedBannerPersonaItem
+          key={persona.id}
+          persona={persona}
+          isSelected={selectedIds.has(persona.id)}
+          onClick={() => onSelectPersona(persona)}
+          loading={loadingPersona?.includes(persona.id) ?? false}
+          isSpecialEffect={isSpecialEffect}
+        />
+      ))}
+    </div>
+  );
+}
+
+// ─── Root ───────────────────────────────────────────────────────────
+
 interface Props {
-  /** 선택된 페르소나 ID 목록. 미전달 시 서버 데이터의 visible 필드를 사용 */
   selectPersona?: string[];
   onSelectPersona: (persona: Persona) => void;
   initSelectPersonas?: (list: Persona[]) => void;
   loadingPersona?: string[];
-
   isSpecialEffect?: boolean;
-
-  /** 툴바 표시 여부 (기본: false) */
-  showToolbar?: boolean;
-  /** 검색바 표시 여부 */
-  showSearch?: boolean;
-  /** 가시성 필터 표시 여부 */
-  showVisibilityFilter?: boolean;
-  /** 진화 가능 필터 표시 여부 */
-  showEvolvableFilter?: boolean;
-  /** 툴바를 외부에서 렌더링하기 위한 render prop. 전달 시 내부 툴바 대신 이 함수로 위임 */
-  renderToolbar?: (props: RenderToolbarProps) => React.ReactNode;
-  /** 그리드 영역을 감싸는 wrapper. renderToolbar와 함께 사용하여 스크롤 영역 분리에 활용 */
-  gridWrapper?: React.ComponentType<{ children: React.ReactNode }>;
+  children?: React.ReactNode;
 }
 
-export const SelectPersonaList = wrap
+const Root = wrap
   .ErrorBoundary({
-    // TODO: 공통 에러 컴포넌트로 대체
     fallback: <div>error</div>,
   })
   .Suspense({
@@ -62,21 +130,14 @@ export const SelectPersonaList = wrap
       </div>
     ),
   })
-
   .on(function SelectPersonaList({
     selectPersona,
     isSpecialEffect,
     onSelectPersona,
     initSelectPersonas,
     loadingPersona,
-    showToolbar = false,
-    showSearch = false,
-    showVisibilityFilter = false,
-    showEvolvableFilter = false,
-    renderToolbar,
-    gridWrapper: GridWrapper,
+    children,
   }: Props) {
-    const t = useTranslations('Mypage.Filter');
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
     const hasInitialized = useRef(false);
@@ -85,7 +146,6 @@ export const SelectPersonaList = wrap
       data.personas,
     );
 
-    // 초기 선택 로직, 외부에서 초기화 함수 전달 (마운트 시 한 번만 호출)
     useEffect(() => {
       if (initSelectPersonas && !hasInitialized.current && data.personas.length > 0) {
         hasInitialized.current = true;
@@ -99,53 +159,32 @@ export const SelectPersonaList = wrap
       [selectPersona, data],
     );
 
-    const toolbarProps: RenderToolbarProps = { filterState, onFilterChange: updateFilter, onReset: resetFilter, counts, isFiltering };
-
-    const grid = filteredList.length === 0 ? (
-      <p className={emptyStyle}>{t('no-results')}</p>
-    ) : (
-      <div className={listStyle}>
-        {filteredList.map((persona) => (
-          <MemoizedBannerPersonaItem
-            key={persona.id}
-            persona={persona}
-            isSelected={selectedIds.has(persona.id)}
-            onClick={() => onSelectPersona(persona)}
-            loading={loadingPersona?.includes(persona.id) ?? false}
-            isSpecialEffect={isSpecialEffect}
-          />
-        ))}
-      </div>
+    const contextValue: SelectPersonaListContextValue = useMemo(
+      () => ({
+        filterState,
+        updateFilter,
+        resetFilter,
+        counts,
+        isFiltering,
+        filteredList,
+        selectedIds,
+        onSelectPersona,
+        loadingPersona,
+        isSpecialEffect,
+      }),
+      [filterState, updateFilter, resetFilter, counts, isFiltering, filteredList, selectedIds, onSelectPersona, loadingPersona, isSpecialEffect],
     );
 
-    if (renderToolbar) {
-      const wrappedGrid = GridWrapper ? <GridWrapper>{grid}</GridWrapper> : grid;
-      return (
-        <>
-          {renderToolbar(toolbarProps)}
-          {wrappedGrid}
-        </>
-      );
-    }
-
     return (
-      <div>
-        {showToolbar && (
-          <PersonaListToolbar
-            {...toolbarProps}
-            showSearch={showSearch}
-            showVisibilityFilter={showVisibilityFilter}
-            showEvolvableFilter={showEvolvableFilter}
-          />
-        )}
-        {grid}
-      </div>
+      <SelectPersonaListContext.Provider value={contextValue}>
+        {children ?? <Grid />}
+      </SelectPersonaListContext.Provider>
     );
   });
 
-const emptyStyle = css({
-  textStyle: 'glyph14.regular',
-  color: 'white.white_50',
-  textAlign: 'center',
-  padding: '24px 0',
+// ─── Export ─────────────────────────────────────────────────────────
+
+export const SelectPersonaList = Object.assign(Root, {
+  Toolbar,
+  Grid,
 });
