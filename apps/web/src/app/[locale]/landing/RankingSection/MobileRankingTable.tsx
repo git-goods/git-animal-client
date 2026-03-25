@@ -69,13 +69,23 @@ export function MobileRankingTable({ initialRanks, initialPage, totalPage, type 
         <RankingTableView ranks={ranks} currentUsername={currentUsername} />
       </div>
       <div className={paginationStyle}>
-        <button className={arrowButtonStyle} onClick={() => goToPage(page - 1)} disabled={page <= 0} aria-label="이전 페이지">
+        <button
+          className={arrowButtonStyle}
+          onClick={() => goToPage(page - 1)}
+          disabled={page <= 0}
+          aria-label="이전 페이지"
+        >
           ‹
         </button>
         <span className={paginationTextStyle}>
           {page + 1} / {totalPage + 1}
         </span>
-        <button className={arrowButtonStyle} onClick={() => goToPage(page + 1)} disabled={page >= totalPage} aria-label="다음 페이지">
+        <button
+          className={arrowButtonStyle}
+          onClick={() => goToPage(page + 1)}
+          disabled={page >= totalPage}
+          aria-label="다음 페이지"
+        >
           ›
         </button>
       </div>

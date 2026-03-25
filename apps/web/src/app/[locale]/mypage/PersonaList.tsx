@@ -83,8 +83,7 @@ function Toolbar({ showSearch, showVisibilityFilter, showEvolvableFilter }: Tool
 
 function Grid() {
   const t = useTranslations('Mypage.Filter');
-  const { filteredList, selectedIds, onSelectPersona, loadingPersona, isSpecialEffect } =
-    useSelectPersonaListContext();
+  const { filteredList, selectedIds, onSelectPersona, loadingPersona, isSpecialEffect } = useSelectPersonaListContext();
 
   if (filteredList.length === 0) {
     return <p className={emptyStyle}>{t('no-results')}</p>;
@@ -172,13 +171,22 @@ const Root = wrap
         loadingPersona,
         isSpecialEffect,
       }),
-      [filterState, updateFilter, resetFilter, counts, isFiltering, filteredList, selectedIds, onSelectPersona, loadingPersona, isSpecialEffect],
+      [
+        filterState,
+        updateFilter,
+        resetFilter,
+        counts,
+        isFiltering,
+        filteredList,
+        selectedIds,
+        onSelectPersona,
+        loadingPersona,
+        isSpecialEffect,
+      ],
     );
 
     return (
-      <SelectPersonaListContext.Provider value={contextValue}>
-        {children ?? <Grid />}
-      </SelectPersonaListContext.Provider>
+      <SelectPersonaListContext.Provider value={contextValue}>{children ?? <Grid />}</SelectPersonaListContext.Provider>
     );
   });
 

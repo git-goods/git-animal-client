@@ -3,9 +3,9 @@
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { grid } from '_panda/patterns';
-import useEmblaCarousel from 'embla-carousel-react';
 import type { GuildLeader, GuildMember } from '@gitanimals/api';
 import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
+import useEmblaCarousel from 'embla-carousel-react';
 import { UsersRoundIcon } from 'lucide-react';
 
 import { USER_GITHUB_URL } from '@/constants/route';
