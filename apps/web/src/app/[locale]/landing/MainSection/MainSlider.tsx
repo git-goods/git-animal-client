@@ -1,10 +1,9 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
-import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
-import Flicking from '@egjs/react-flicking';
+import useEmblaCarousel from 'embla-carousel-react';
 
 import * as styles from './MainSlider.style';
 import SliderItem from './SliderItem';
@@ -26,47 +25,26 @@ const MODE_ITEM_LIST = [
 ];
 
 function MainSlider() {
-  const flicking = useRef<Flicking | null>(null);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'start', containScroll: 'trimSnaps' });
   const [currentPanelIndex, setCurrentPanelIndex] = useState(0);
 
   const isFirstPanel = currentPanelIndex === 0;
   const isLastPanel = currentPanelIndex === MODE_ITEM_LIST.length - 1;
 
-  const onPanelIndexChange = (index: number) => {
-    if (!flicking.current) return;
-    if (flicking.current.animating) return;
-    flicking.current?.moveTo(index);
-  };
+  useEffect(() => {
+    if (!emblaApi) return;
 
-  const moveToNextPanel = async () => {
-    if (!flicking.current) return;
-    if (isLastPanel) return;
-    if (flicking.current.animating) return;
+    const onSelect = () => setCurrentPanelIndex(emblaApi.selectedScrollSnap());
+    onSelect();
+    emblaApi.on('select', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
+  }, [emblaApi]);
 
-    try {
-      flicking.current.next();
-    } catch (error) {}
-  };
-
-  const moveToPrevPanel = async () => {
-    if (!flicking.current) return;
-    if (isFirstPanel) return;
-    if (flicking.current.animating) return;
-
-    try {
-      flicking.current.prev();
-    } catch (error) {}
-  };
-
-  const onPanelChanged = (e: ChangedEvent<Flicking>) => {
-    setCurrentPanelIndex(e.index);
-  };
-
-  // TODO: arrow plugin 으로 변경
-  const sliderOptions: Partial<FlickingProps & FlickingOptions> = {
-    panelsPerView: 1,
-    onChanged: onPanelChanged,
-  };
+  const onPanelIndexChange = (index: number) => emblaApi?.scrollTo(index);
+  const moveToNextPanel = () => emblaApi?.scrollNext();
+  const moveToPrevPanel = () => emblaApi?.scrollPrev();
 
   return (
     <div className={styles.container}>
@@ -85,13 +63,15 @@ function MainSlider() {
       <div className={styles.sliderContainer}>
         <ArrowButton onClick={moveToPrevPanel} direction="prev" disabled={isFirstPanel} />
         <ArrowButton onClick={moveToNextPanel} direction="next" disabled={isLastPanel} />
-        <Flicking ref={flicking} {...sliderOptions}>
-          {MODE_ITEM_LIST.map((item) => (
-            <div key={item.title} className={styles.sliderItem}>
-              <SliderItem item={item} />
-            </div>
-          ))}
-        </Flicking>
+        <div className={emblaViewportStyle} ref={emblaRef}>
+          <div className={emblaContainerStyle}>
+            {MODE_ITEM_LIST.map((item) => (
+              <div key={item.title} className={cx(styles.sliderItem, emblaSlideStyle)}>
+                <SliderItem item={item} />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -170,3 +150,7 @@ const nextArrowStyle = cx(
     },
   }),
 );
+
+const emblaViewportStyle = css({ overflow: 'hidden', width: '100%' });
+const emblaContainerStyle = css({ display: 'flex' });
+const emblaSlideStyle = css({ flex: '0 0 100%', minWidth: 0 });
