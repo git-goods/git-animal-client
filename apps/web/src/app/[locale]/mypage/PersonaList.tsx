@@ -1,16 +1,16 @@
 'use client';
 
-import { memo, useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Banner, BannerSkeleton } from '@gitanimals/ui-panda';
+import { BannerSkeleton } from '@gitanimals/ui-panda';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { MemoizedBannerPersonaItem } from '@/components/PersonaItem';
 import { getPersonaGradePriority } from '@/utils/animals';
 import { useClientUser } from '@/utils/clientAuth';
-import { getPersonaImage } from '@/utils/image';
 
 const listStyle = css({
   gap: '4px',
@@ -86,46 +86,15 @@ export const SelectPersonaList = wrap
     return (
       <div className={listStyle}>
         {viewList.map((persona) => (
-          <MemoizedPersonaItem
+          <MemoizedBannerPersonaItem
             key={persona.id}
             persona={persona}
             isSelected={selectedIds.has(persona.id)}
             onClick={() => onSelectPersona(persona)}
-            isLoading={loadingPersona?.includes(persona.id) ?? false}
+            loading={loadingPersona?.includes(persona.id) ?? false}
             isSpecialEffect={isSpecialEffect}
           />
         ))}
       </div>
     );
   });
-
-interface PersonaItemProps {
-  persona: Persona;
-  isSelected: boolean;
-  onClick: () => void;
-  isLoading: boolean;
-
-  isSpecialEffect?: boolean;
-}
-
-function PersonaItem({ persona, isSelected, onClick, isSpecialEffect, isLoading }: PersonaItemProps) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={isLoading}
-      className={cx(
-        css({ outline: 'none', borderRadius: '12px' }),
-        isSpecialEffect && persona.isEvolutionable && 'gradient-move',
-      )}
-    >
-      <Banner
-        loading={isLoading}
-        image={getPersonaImage(persona.type)}
-        size="full"
-        status={isSelected ? 'selected' : 'default'}
-      />
-    </button>
-  );
-}
-
-const MemoizedPersonaItem = memo(PersonaItem);

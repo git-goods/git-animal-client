@@ -1,16 +1,14 @@
-import { memo } from 'react';
 import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { LevelBanner } from '@gitanimals/ui-panda';
 import { BannerSkeletonList } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { MemoizedLevelPersonaItem } from '@/components/PersonaItem';
 import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
-import { getPersonaImage } from '@/utils/image';
 
 interface SelectPersonaListProps {
   selectPersona: string[];
@@ -34,11 +32,12 @@ export const SelectPersonaList = wrap
         </div>
         <div className={flexOverflowStyle}>
           {data.personas.map((persona) => (
-            <MemoizedPersonaItem
+            <MemoizedLevelPersonaItem
               key={persona.id}
               persona={persona}
               isSelected={selectPersona.includes(persona.id)}
               onClick={() => onSelectPersona(persona)}
+              size="small"
             />
           ))}
         </div>
@@ -77,25 +76,3 @@ const flexOverflowStyle = cx(
   customScrollStyle,
 );
 
-interface PersonaItemProps {
-  persona: Persona;
-  isSelected: boolean;
-  onClick: () => void;
-}
-
-function PersonaItem({ persona, isSelected, onClick }: PersonaItemProps) {
-  return (
-    <button onClick={onClick} className={css({ outline: 'none', bg: 'transparent' })}>
-      <LevelBanner
-        image={getPersonaImage(persona.type)}
-        status={isSelected ? 'selected' : 'default'}
-        level={Number(persona.level)}
-        size="small"
-      />
-    </button>
-  );
-}
-
-const MemoizedPersonaItem = memo(PersonaItem, (prev, next) => {
-  return prev.isSelected === next.isSelected && prev.persona.level === next.persona.level;
-});

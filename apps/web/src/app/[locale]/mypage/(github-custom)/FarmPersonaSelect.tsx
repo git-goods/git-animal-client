@@ -13,11 +13,7 @@ import { customScrollHorizontalStyle } from '@/styles/scrollStyle';
 
 import { SelectPersonaList } from '../PersonaList';
 
-export function FarmPersonaSelect({
-  onImageRefresh,
-}: {
-  onImageRefresh: () => void;
-}) {
+export function FarmPersonaSelect({ onImageRefresh }: { onImageRefresh: () => void }) {
   const queryClient = useQueryClient();
   const t = useTranslations('Mypage');
   const tError = useTranslations('Error');
