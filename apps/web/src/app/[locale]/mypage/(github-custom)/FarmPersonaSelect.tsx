@@ -62,7 +62,7 @@ export function FarmPersonaSelect({ onImageRefresh }: { onImageRefresh: () => vo
         <Dialog.Content size="large">
           <Dialog.Title>{t('farm-type-select-pet')}</Dialog.Title>
           <div className={dialogListStyle}>
-            <SelectPersonaList {...personaListProps} />
+            <SelectPersonaList {...personaListProps} showToolbar showSearch showVisibilityFilter />
           </div>
         </Dialog.Content>
       </Dialog>

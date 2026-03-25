@@ -31,6 +31,9 @@ function MypageMyPets() {
             onSelectPersona={(persona) => setSelectPersona(persona)}
             initSelectPersonas={initSelectPersonas}
             isSpecialEffect
+            showToolbar
+            showSearch
+            showEvolvableFilter
           />
         </ScrollArea>
       </section>

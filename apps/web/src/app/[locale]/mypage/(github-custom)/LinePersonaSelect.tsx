@@ -42,6 +42,8 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
             <SelectPersonaList
               selectPersona={selectPersona ? [selectPersona] : []}
               onSelectPersona={(persona) => onChangePersona(persona.id)}
+              showToolbar
+              showSearch
             />
           </div>
         </Dialog.Content>
