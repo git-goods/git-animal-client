@@ -1,4 +1,3 @@
-import { RankingServerSide } from './RankingSection/RankingServerSide';
 import { AvailablePetSection } from './AvailablePetSection';
 import { ChoosePetSection } from './ChoosePetSection';
 import { Footer } from './Footer';

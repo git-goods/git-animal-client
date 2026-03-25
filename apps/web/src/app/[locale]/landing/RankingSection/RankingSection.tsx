@@ -8,9 +8,9 @@ import { useQueries } from '@tanstack/react-query';
 import { MediaQuery } from '@/components/MediaQuery';
 import { Link } from '@/i18n/routing';
 
-import { calcTotalPage, RANKS_PER_PAGE, RANKS_TOP_3 } from './constants';
 import GameConsole from './GameConsole/GameConsole';
 import { MobileGameConsole } from './MobileGameConsole/MobileGameConsole';
+import { calcTotalPage, RANKS_PER_PAGE, RANKS_TOP_3 } from './constants';
 import { MobileRankingTable } from './MobileRankingTable';
 import { RankingTable } from './RankingTable';
 import { TopPodium } from './TopPodium';
@@ -72,8 +72,6 @@ export default function RankingSection({
     </div>
   );
 }
-
-
 const titleStyle = css({
   textStyle: 'glyph82.bold',
   color: 'white.white_100',
