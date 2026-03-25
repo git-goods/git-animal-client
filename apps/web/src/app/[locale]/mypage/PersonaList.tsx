@@ -23,7 +23,8 @@ const listStyle = css({
 });
 
 interface Props {
-  selectPersona: string[];
+  /** 선택된 페르소나 ID 목록. 미전달 시 서버 데이터의 visible 필드를 사용 */
+  selectPersona?: string[];
   onSelectPersona: (persona: Persona) => void;
   initSelectPersonas?: (list: Persona[]) => void;
   loadingPersona?: string[];
@@ -66,6 +67,11 @@ export const SelectPersonaList = wrap
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
+    const selectedIds = useMemo(
+      () => selectPersona ?? data.personas.filter((p) => p.visible).map((p) => p.id),
+      [selectPersona, data],
+    );
+
     const viewList = useMemo(() => {
       return [...data.personas].sort((a, b) => {
         const gradeDiff = getPersonaGradePriority(a.grade) - getPersonaGradePriority(b.grade);
@@ -84,7 +90,7 @@ export const SelectPersonaList = wrap
           <MemoizedPersonaItem
             key={persona.id}
             persona={persona}
-            isSelected={selectPersona.includes(persona.id)}
+            isSelected={selectedIds.includes(persona.id)}
             onClick={() => onSelectPersona(persona)}
             isLoading={loadingPersona?.includes(persona.id) ?? false}
             isSpecialEffect={isSpecialEffect}
