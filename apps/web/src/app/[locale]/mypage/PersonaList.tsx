@@ -9,6 +9,7 @@ import { BannerSkeleton } from '@gitanimals/ui-panda/src/components/Banner/Banne
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { getPersonaGradePriority } from '@/utils/animals';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
@@ -67,17 +68,12 @@ export const SelectPersonaList = wrap
 
     const viewList = useMemo(() => {
       return [...data.personas].sort((a, b) => {
-        // COLLABORATOR > DEFAULT > EVOLUTION 순으로 정렬
-        if (a.grade === 'COLLABORATOR' && b.grade !== 'COLLABORATOR') return -1;
-        if (a.grade !== 'COLLABORATOR' && b.grade === 'COLLABORATOR') return 1;
-        if (a.grade === 'EVOLUTION' && b.grade !== 'EVOLUTION') return 1;
-        if (a.grade !== 'EVOLUTION' && b.grade === 'EVOLUTION') return -1;
+        const gradeDiff = getPersonaGradePriority(a.grade) - getPersonaGradePriority(b.grade);
+        if (gradeDiff !== 0) return gradeDiff;
 
-        // visible 우선
         if (a.visible && !b.visible) return -1;
         if (!a.visible && b.visible) return 1;
 
-        // 레벨 내림차순
         return parseInt(b.level) - parseInt(a.level);
       });
     }, [data]);
