@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
@@ -9,7 +10,8 @@ import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { MemoizedBannerPersonaItem } from '@/components/PersonaItem';
-import { getPersonaGradePriority } from '@/utils/animals';
+import { PersonaListToolbar } from '@/components/PersonaListToolbar';
+import { usePersonaListFilter } from '@/hooks/persona/usePersonaListFilter';
 import { useClientUser } from '@/utils/clientAuth';
 
 const listStyle = css({
@@ -29,6 +31,15 @@ interface Props {
   loadingPersona?: string[];
 
   isSpecialEffect?: boolean;
+
+  /** 툴바 표시 여부 (기본: false) */
+  showToolbar?: boolean;
+  /** 검색바 표시 여부 */
+  showSearch?: boolean;
+  /** 가시성 필터 표시 여부 */
+  showVisibilityFilter?: boolean;
+  /** 진화 가능 필터 표시 여부 */
+  showEvolvableFilter?: boolean;
 }
 
 export const SelectPersonaList = wrap
@@ -52,10 +63,19 @@ export const SelectPersonaList = wrap
     onSelectPersona,
     initSelectPersonas,
     loadingPersona,
+    showToolbar = false,
+    showSearch = false,
+    showVisibilityFilter = false,
+    showEvolvableFilter = false,
   }: Props) {
+    const t = useTranslations('Mypage.Filter');
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
     const hasInitialized = useRef(false);
+
+    const { filteredList, filterState, updateFilter, resetFilter, isFiltering, counts } = usePersonaListFilter(
+      data.personas,
+    );
 
     // 초기 선택 로직, 외부에서 초기화 함수 전달 (마운트 시 한 번만 호출)
     useEffect(() => {
@@ -71,30 +91,44 @@ export const SelectPersonaList = wrap
       [selectPersona, data],
     );
 
-    const viewList = useMemo(() => {
-      return [...data.personas].sort((a, b) => {
-        const gradeDiff = getPersonaGradePriority(a.grade) - getPersonaGradePriority(b.grade);
-        if (gradeDiff !== 0) return gradeDiff;
-
-        if (a.visible && !b.visible) return -1;
-        if (!a.visible && b.visible) return 1;
-
-        return parseInt(b.level) - parseInt(a.level);
-      });
-    }, [data]);
-
     return (
-      <div className={listStyle}>
-        {viewList.map((persona) => (
-          <MemoizedBannerPersonaItem
-            key={persona.id}
-            persona={persona}
-            isSelected={selectedIds.has(persona.id)}
-            onClick={() => onSelectPersona(persona)}
-            loading={loadingPersona?.includes(persona.id) ?? false}
-            isSpecialEffect={isSpecialEffect}
+      <div>
+        {showToolbar && (
+          <PersonaListToolbar
+            filterState={filterState}
+            onFilterChange={updateFilter}
+            onReset={resetFilter}
+            counts={counts}
+            isFiltering={isFiltering}
+            showSearch={showSearch}
+            showVisibilityFilter={showVisibilityFilter}
+            showEvolvableFilter={showEvolvableFilter}
           />
-        ))}
+        )}
+
+        {filteredList.length === 0 ? (
+          <p className={emptyStyle}>{t('no-results')}</p>
+        ) : (
+          <div className={listStyle}>
+            {filteredList.map((persona) => (
+              <MemoizedBannerPersonaItem
+                key={persona.id}
+                persona={persona}
+                isSelected={selectedIds.has(persona.id)}
+                onClick={() => onSelectPersona(persona)}
+                loading={loadingPersona?.includes(persona.id) ?? false}
+                isSpecialEffect={isSpecialEffect}
+              />
+            ))}
+          </div>
+        )}
       </div>
     );
   });
+
+const emptyStyle = css({
+  textStyle: 'glyph14.regular',
+  color: 'white.white_50',
+  textAlign: 'center',
+  padding: '24px 0',
+});

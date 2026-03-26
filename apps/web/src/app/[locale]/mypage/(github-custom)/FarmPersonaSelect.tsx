@@ -59,10 +59,10 @@ export function FarmPersonaSelect({ onImageRefresh }: { onImageRefresh: () => vo
         <SelectPersonaList {...personaListProps} />
       </ScrollArea>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <Dialog.Content size="large">
+        <Dialog.Content size="large" className={dialogFlexStyle}>
           <Dialog.Title>{t('farm-type-select-pet')}</Dialog.Title>
           <div className={dialogListStyle}>
-            <SelectPersonaList {...personaListProps} />
+            <SelectPersonaList {...personaListProps} showToolbar showSearch showVisibilityFilter />
           </div>
         </Dialog.Content>
       </Dialog>
@@ -70,18 +70,18 @@ export function FarmPersonaSelect({ onImageRefresh }: { onImageRefresh: () => vo
   );
 }
 
+const dialogFlexStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+});
+
 const dialogListStyle = cx(
   css({
-    display: 'flex',
+    flex: 1,
+    minHeight: 0,
     overflowY: 'auto',
     overflowX: 'hidden',
     width: '100%',
-    gap: '4px',
-    height: '100%',
-    minHeight: '0',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    maxHeight: '100%',
     marginTop: '24px',
   }),
   customScrollHorizontalStyle,

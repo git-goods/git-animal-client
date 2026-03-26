@@ -7,6 +7,8 @@ import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { MemoizedLevelPersonaItem } from '@/components/PersonaItem';
+import { PersonaListToolbar } from '@/components/PersonaListToolbar';
+import { usePersonaListFilter } from '@/hooks/persona/usePersonaListFilter';
 import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
 
@@ -23,24 +25,40 @@ export const SelectPersonaList = wrap
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
     const t = useTranslations('Mypage.Merge');
+    const tFilter = useTranslations('Mypage.Filter');
 
-    // TODO: 정렬
+    const { filteredList, filterState, updateFilter, resetFilter, isFiltering, counts } = usePersonaListFilter(
+      data.personas,
+    );
+
     return (
       <section className={sectionStyle}>
         <div className={listSectionTitleStyle}>
           <p>{t('please-choose-pet')}</p>
         </div>
-        <div className={flexOverflowStyle}>
-          {data.personas.map((persona) => (
-            <MemoizedLevelPersonaItem
-              key={persona.id}
-              persona={persona}
-              isSelected={selectPersona.includes(persona.id)}
-              onClick={() => onSelectPersona(persona)}
-              size="small"
-            />
-          ))}
-        </div>
+        <PersonaListToolbar
+          filterState={filterState}
+          onFilterChange={updateFilter}
+          onReset={resetFilter}
+          counts={counts}
+          isFiltering={isFiltering}
+          showSearch
+        />
+        {filteredList.length === 0 ? (
+          <p className={emptyStyle}>{tFilter('no-results')}</p>
+        ) : (
+          <div className={flexOverflowStyle}>
+            {filteredList.map((persona) => (
+              <MemoizedLevelPersonaItem
+                key={persona.id}
+                persona={persona}
+                isSelected={selectPersona.includes(persona.id)}
+                onClick={() => onSelectPersona(persona)}
+                size="small"
+              />
+            ))}
+          </div>
+        )}
       </section>
     );
   });
@@ -76,3 +94,9 @@ const flexOverflowStyle = cx(
   customScrollStyle,
 );
 
+const emptyStyle = css({
+  textStyle: 'glyph14.regular',
+  color: 'white.white_50',
+  textAlign: 'center',
+  padding: '24px 0',
+});

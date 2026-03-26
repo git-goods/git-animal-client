@@ -36,12 +36,14 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
         />
       </ScrollArea>
       <Dialog open={isExtend} onOpenChange={() => setIsExtend(false)}>
-        <Dialog.Content size="large">
+        <Dialog.Content size="large" className={dialogFlexStyle}>
           <Dialog.Title>{t('line-type-select-pet')}</Dialog.Title>
           <div className={flexOverflowStyle}>
             <SelectPersonaList
               selectPersona={selectPersona ? [selectPersona] : []}
               onSelectPersona={(persona) => onChangePersona(persona.id)}
+              showToolbar
+              showSearch
             />
           </div>
         </Dialog.Content>
@@ -50,18 +52,18 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
   );
 };
 
+const dialogFlexStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+});
+
 const flexOverflowStyle = cx(
   css({
-    display: 'flex',
+    flex: 1,
+    minHeight: 0,
     overflowY: 'auto',
     overflowX: 'hidden',
     width: '100%',
-    gap: '4px',
-    height: '100%',
-    minHeight: '0',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    maxHeight: 'calc(100%)',
     marginTop: '24px',
   }),
   customScrollStyle,
