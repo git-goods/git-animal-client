@@ -10,7 +10,7 @@ import { ANIMAL_TIER_INFO } from '@/components/AnimalCard/AnimalCard.constant';
 
 import type { GradeFilter, PersonaFilterState, SortBy, TierFilter, VisibilityFilter } from '@/hooks/persona/usePersonaListFilter';
 
-interface PersonaListToolbarProps {
+export interface PersonaListToolbarProps {
   filterState: PersonaFilterState;
   onFilterChange: (partial: Partial<PersonaFilterState>) => void;
   onReset: () => void;

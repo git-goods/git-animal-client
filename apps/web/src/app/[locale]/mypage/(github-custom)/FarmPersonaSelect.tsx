@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
+import { css } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
 import { Dialog, ScrollArea } from '@gitanimals/ui-panda';
@@ -9,7 +9,6 @@ import { ExpandIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
-import { customScrollHorizontalStyle } from '@/styles/scrollStyle';
 
 import { SelectPersonaList } from '../PersonaList';
 
@@ -59,33 +58,21 @@ export function FarmPersonaSelect({ onImageRefresh }: { onImageRefresh: () => vo
         <SelectPersonaList {...personaListProps} />
       </ScrollArea>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <Dialog.Content size="large" className={dialogFlexStyle}>
+        <Dialog.Content size="large" scrollable>
           <Dialog.Title>{t('farm-type-select-pet')}</Dialog.Title>
-          <div className={dialogListStyle}>
-            <SelectPersonaList {...personaListProps} showToolbar showSearch showVisibilityFilter />
-          </div>
+          <SelectPersonaList {...personaListProps}>
+            <Dialog.TopSlot>
+              <SelectPersonaList.Toolbar showSearch showVisibilityFilter />
+            </Dialog.TopSlot>
+            <Dialog.Body>
+              <SelectPersonaList.Grid />
+            </Dialog.Body>
+          </SelectPersonaList>
         </Dialog.Content>
       </Dialog>
     </div>
   );
 }
-
-const dialogFlexStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-});
-
-const dialogListStyle = cx(
-  css({
-    flex: 1,
-    minHeight: 0,
-    overflowY: 'auto',
-    overflowX: 'hidden',
-    width: '100%',
-    marginTop: '24px',
-  }),
-  customScrollHorizontalStyle,
-);
 
 const selectPetContainerStyle = css({
   position: 'relative',

@@ -31,10 +31,10 @@ function MypageMyPets() {
             onSelectPersona={(persona) => setSelectPersona(persona)}
             initSelectPersonas={initSelectPersonas}
             isSpecialEffect
-            showToolbar
-            showSearch
-            showEvolvableFilter
-          />
+          >
+            <SelectPersonaList.Toolbar showSearch showEvolvableFilter />
+            <SelectPersonaList.Grid />
+          </SelectPersonaList>
         </ScrollArea>
       </section>
 

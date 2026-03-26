@@ -2,12 +2,10 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
+import { css } from '_panda/css';
 
 import { Dialog, ScrollArea } from '@gitanimals/ui-panda';
 import { ExpandIcon } from 'lucide-react';
-
-import { customScrollStyle } from '@/styles/scrollStyle';
 
 import { SelectPersonaList } from '../PersonaList';
 
@@ -36,38 +34,24 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
         />
       </ScrollArea>
       <Dialog open={isExtend} onOpenChange={() => setIsExtend(false)}>
-        <Dialog.Content size="large" className={dialogFlexStyle}>
+        <Dialog.Content size="large" scrollable>
           <Dialog.Title>{t('line-type-select-pet')}</Dialog.Title>
-          <div className={flexOverflowStyle}>
-            <SelectPersonaList
-              selectPersona={selectPersona ? [selectPersona] : []}
-              onSelectPersona={(persona) => onChangePersona(persona.id)}
-              showToolbar
-              showSearch
-            />
-          </div>
+          <SelectPersonaList
+            selectPersona={selectPersona ? [selectPersona] : []}
+            onSelectPersona={(persona) => onChangePersona(persona.id)}
+          >
+            <Dialog.TopSlot>
+              <SelectPersonaList.Toolbar showSearch />
+            </Dialog.TopSlot>
+            <Dialog.Body>
+              <SelectPersonaList.Grid />
+            </Dialog.Body>
+          </SelectPersonaList>
         </Dialog.Content>
       </Dialog>
     </div>
   );
 };
-
-const dialogFlexStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-});
-
-const flexOverflowStyle = cx(
-  css({
-    flex: 1,
-    minHeight: 0,
-    overflowY: 'auto',
-    overflowX: 'hidden',
-    width: '100%',
-    marginTop: '24px',
-  }),
-  customScrollStyle,
-);
 
 const selectPetContainerStyle = css({
   position: 'relative',
