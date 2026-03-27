@@ -149,12 +149,17 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
             )}
 
             <Portal>
-              <div className={overlayStyle} onClick={closeGame}>
+              <div className={overlayStyle}>
+                <div className={backdropStyle} onClick={closeGame} />
                 <ShockwaveRing />
                 <ResultCardMotion>
-                  <DetailedCard cardData={cardData} />
+                  <div onClick={closeGame} style={{ cursor: 'pointer' }}>
+                    <DetailedCard cardData={cardData} />
+                  </div>
                 </ResultCardMotion>
-                <p className={noticeMessageStyle}>{t('click-to-close')}</p>
+                <p className={noticeMessageStyle} onClick={closeGame}>
+                  {t('click-to-close')}
+                </p>
               </div>
             </Portal>
           </>
@@ -199,14 +204,20 @@ const overlayStyle = css({
   left: 0,
   width: '100%',
   height: '100%',
-  bg: 'black.black_50',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  backdropFilter: 'blur(10px)',
   flexDirection: 'column',
   gap: '100px',
   zIndex: 3001,
+});
+
+const backdropStyle = css({
+  position: 'absolute',
+  inset: 0,
+  bg: 'black.black_50',
+  backdropFilter: 'blur(10px)',
+  cursor: 'pointer',
 });
 
 const cardBackStyle = css({
