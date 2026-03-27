@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { CardBack as CardBackUi } from '@gitanimals/ui-panda';
@@ -61,6 +61,7 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
   const [shatterDone, setShatterDone] = useState(false);
 
   const radius = isMobile ? CIRCLE_RADIUS_MOBILE : CIRCLE_RADIUS_DESKTOP;
+  const revealTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const positions = useMemo(
     () => characters.map((_, i) => getCirclePosition(i, characters.length, radius)),
@@ -71,6 +72,13 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
   useEffect(() => {
     const timer = setTimeout(() => setGameState('drawing'), 600);
     return () => clearTimeout(timer);
+  }, []);
+
+  // Cleanup reveal timer on unmount
+  useEffect(() => {
+    return () => {
+      if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
+    };
   }, []);
 
   const selectCard = useCallback(
@@ -89,7 +97,7 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
         setCardData(result);
 
         // Brief pause for converge animation, then shatter
-        setTimeout(() => {
+        revealTimerRef.current = setTimeout(() => {
           setGameState('selected');
         }, 800);
       } catch (error) {
@@ -247,6 +255,7 @@ const noticeMessageStyle = css({
   textStyle: 'glyph22.regular',
   color: 'white',
   textAlign: 'center',
+  cursor: 'pointer',
   _mobile: {
     textStyle: 'glyph16.regular',
   },
