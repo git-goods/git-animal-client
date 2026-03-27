@@ -210,21 +210,26 @@ const overlayStyle = css({
 });
 
 const cardBackStyle = css({
-  width: '220px',
-  height: '272px',
+  width: '100px',
+  height: '124px',
   overflow: 'hidden',
   _mobile: {
-    width: '140px',
-    height: '173px',
+    width: '72px',
+    height: '89px',
   },
 });
 
 const detailedCardStyle = css({
+  width: '320px',
+  maxWidth: '80vw',
   height: 'auto',
   overflow: 'hidden',
   position: 'relative',
   transformStyle: 'preserve-3d',
   aspectRatio: '220/272',
+  _mobile: {
+    width: '260px',
+  },
 });
 
 const noticeMessageStyle = css({

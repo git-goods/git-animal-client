@@ -186,8 +186,12 @@ const mergedCardStyle = css({
 
 const shatterContainerStyle = css({
   position: 'absolute',
-  width: '220px',
-  height: '272px',
+  width: '100px',
+  height: '124px',
+  _mobile: {
+    width: '72px',
+    height: '89px',
+  },
 });
 
 const shardStyle = css({
