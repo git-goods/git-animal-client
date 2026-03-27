@@ -10,7 +10,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
-import { CardDrawingGame } from '@/components/CardGame/FanDrawingGame/FanDrawingGame';
+import { CardDrawingGame } from '@/components/CardGame/SummonDrawingGame';
 import { GITHUB_ISSUE_URL } from '@/constants/outlink';
 import { trackEvent } from '@/lib/analytics';
 
