@@ -2,15 +2,18 @@ import React from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
+import type { GotchaResult } from '@gitanimals/api';
 import { postGotcha } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { userQueries } from '@gitanimals/react-query';
 import { Dialog } from '@gitanimals/ui-panda';
 import { useQueryClient } from '@tanstack/react-query';
+import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
-import { CardDrawingGame } from '@/components/CardGame/FanDrawingGame/FanDrawingGame';
+import { SelectedCardMotion } from '@/components/CardGame/FanDrawingGame/CardMotion';
+import { CardDrawingGame, DetailedCard } from '@/components/CardGame/FanDrawingGame/FanDrawingGame';
 import { GITHUB_ISSUE_URL } from '@/constants/outlink';
 import { trackEvent } from '@/lib/analytics';
 
@@ -40,6 +43,9 @@ function OnePet({ onClose }: Props) {
 
       queryClient.invalidateQueries({ queryKey: userQueries.userKey() });
       toast.success(t('get-persona-success'));
+      onClose();
+
+      handleShowResult(resultPersona);
 
       trackEvent('gotcha', {
         type: '1-pet',
@@ -87,6 +93,25 @@ Token: ${data?.user.accessToken}
     }
   };
 
+  const handleShowResult = (resultPersona: GotchaResult) => {
+    overlay.open(
+      ({ isOpen, close }) =>
+        isOpen && (
+          <div
+            className={overlayStyle}
+            onClick={() => {
+              close();
+            }}
+          >
+            <SelectedCardMotion x={0} y={0} rotate={0} index={0}>
+              <DetailedCard cardData={{ type: resultPersona.name, dropRate: resultPersona.dropRate }} />
+            </SelectedCardMotion>
+            <p className={noticeMessageStyle}>{t('click-to-close')}</p>
+          </div>
+        ),
+    );
+  };
+
   return (
     <Dialog open={true} onOpenChange={onClose}>
       <Dialog.Content size="large" className={dialogContentStyle}>
@@ -122,5 +147,31 @@ const headingStyle = css({
 
   _mobile: {
     textStyle: 'glyph28.bold',
+  },
+});
+
+const overlayStyle = css({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  bg: 'black.black_50',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backdropFilter: 'blur(10px)',
+  flexDirection: 'column',
+  gap: '100px',
+  zIndex: 9001,
+  cursor: 'pointer',
+});
+
+const noticeMessageStyle = css({
+  textStyle: 'glyph22.regular',
+  color: 'white',
+  textAlign: 'center',
+  _mobile: {
+    textStyle: 'glyph16.regular',
   },
 });

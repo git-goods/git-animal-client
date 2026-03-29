@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
-import { answerQuiz, getRoundResult } from '@gitanimals/api';
+import { answerQuiz, getRoundResult, stopQuizContext } from '@gitanimals/api';
 import { toast } from 'sonner';
 
 import type { QuizAnswer } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
@@ -55,6 +55,17 @@ const useQuizAction = ({ contextId, quizDialog, prize, refetchQuiz }: UseQuizAct
     }
   };
 
+  const stopQuiz = async () => {
+    try {
+      await stopQuizContext({
+        contextId,
+        locale,
+      });
+    } catch (error) {
+      console.error('Failed to stop quiz', error);
+    }
+  };
+
   const router = useRouter();
   const terminateQuiz = () => {
     toast.success(customT(t('quiz-finished'), { point: prize }));
@@ -75,6 +86,7 @@ const useQuizAction = ({ contextId, quizDialog, prize, refetchQuiz }: UseQuizAct
     terminateQuiz,
     moveToNextStage,
     moveToQuizMain,
+    stopQuiz,
   };
 };
 

@@ -15,11 +15,11 @@ export function ConfirmDialog(props: {
         <Dialog.Title className={titleStyle}>{props.title}</Dialog.Title>
         <Dialog.Description className={descriptionStyle}>{props.description}</Dialog.Description>
         <Flex gap="8px" justifyContent="flex-end" width="100%">
-          <Button onClick={props.onConfirm} variant="secondary" size="m">
-            Ok
-          </Button>
-          <Button onClick={props.onClose} variant="primary" size="m">
+          <Button onClick={props.onClose} variant="secondary" size="m">
             Close
+          </Button>
+          <Button onClick={props.onConfirm} variant="primary" size="m">
+            Ok
           </Button>
         </Flex>
       </Dialog.Content>

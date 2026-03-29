@@ -9,9 +9,8 @@ import { CardBack as CardBackUi } from '@gitanimals/ui-panda';
 import { motion } from 'framer-motion';
 
 import { AnimalCard } from '@/components/AnimalCard';
-import { Portal } from '@/components/Portal';
 
-import { DrawingCardMotion, NonSelectedCardMotion, SelectedCardMotion } from './CardMotion';
+import { DrawingCardMotion, NonSelectedCardMotion } from './CardMotion';
 
 interface CardDrawingGameProps {
   characters: { id: number }[];
@@ -58,6 +57,7 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
   };
 
   const closeGame = () => {
+    console.log('closeGame');
     onClose();
     resetGame();
   };
@@ -162,16 +162,15 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
               const { x, y, rotate } = getFanPosition(index, selectedCards.length);
 
               if (isSelected && cardData) {
-                return (
-                  <Portal key={`selected-card-${cardId}`}>
-                    <div className={overlayStyle} onClick={closeGame}>
-                      <SelectedCardMotion key={`selected-card-${cardId}`} x={x} y={y} rotate={rotate} index={index}>
-                        <DetailedCard cardData={cardData} />
-                      </SelectedCardMotion>
-                      <p className={noticeMessageStyle}>{t('click-to-close')}</p>
-                    </div>
-                  </Portal>
-                );
+                return null;
+                // <Portal key={`selected-card-${cardId}`}>
+                //   <div className={overlayStyle} onClick={closeGame}>
+                //     <SelectedCardMotion key={`selected-card-${cardId}`} x={x} y={y} rotate={rotate} index={index}>
+                //       <DetailedCard cardData={cardData} />
+                //     </SelectedCardMotion>
+                //     <p className={noticeMessageStyle}>{t('click-to-close')}</p>
+                //   </div>
+                // </Portal>
               } else {
                 return (
                   <NonSelectedCardMotion key={`nonselected-card-${cardId}`} x={x} y={y} rotate={rotate} index={index}>
@@ -195,7 +194,7 @@ function CardBack() {
   );
 }
 
-function DetailedCard({ cardData }: { cardData: { type: string; dropRate: string } }) {
+export function DetailedCard({ cardData }: { cardData: { type: string; dropRate: string } }) {
   // cardData가 없으면 기본값 사용
   const getPersona = cardData || {
     tier: 'S_PLUS' as const,
@@ -279,7 +278,7 @@ const overlayStyle = css({
   backdropFilter: 'blur(10px)',
   flexDirection: 'column',
   gap: '100px',
-  zIndex: 3001,
+  zIndex: 9001,
 });
 
 const revealingCardMotionStyle = css({
@@ -301,13 +300,4 @@ const detailedCardStyle = css({
   position: 'relative',
   transformStyle: 'preserve-3d',
   aspectRatio: '220/272',
-});
-
-const noticeMessageStyle = css({
-  textStyle: 'glyph22.regular',
-  color: 'white',
-  textAlign: 'center',
-  _mobile: {
-    textStyle: 'glyph16.regular',
-  },
 });
