@@ -7,8 +7,13 @@ import { CombineChip, SearchBar } from '@gitanimals/ui-panda';
 import { RotateCcwIcon } from 'lucide-react';
 
 import { ANIMAL_TIER_INFO } from '@/components/AnimalCard/AnimalCard.constant';
-
-import type { GradeFilter, PersonaFilterState, SortBy, TierFilter, VisibilityFilter } from '@/hooks/persona/usePersonaListFilter';
+import type {
+  GradeFilter,
+  PersonaFilterState,
+  SortBy,
+  TierFilter,
+  VisibilityFilter,
+} from '@/hooks/persona/usePersonaListFilter';
 
 export interface PersonaListToolbarProps {
   filterState: PersonaFilterState;
@@ -77,7 +82,10 @@ export function PersonaListToolbar({
 
       <div className={filterRowStyle}>
         {/* 등급 필터 */}
-        <CombineChip value={filterState.grade} onValueChange={(v: string) => onFilterChange({ grade: v as GradeFilter })}>
+        <CombineChip
+          value={filterState.grade}
+          onValueChange={(v: string) => onFilterChange({ grade: v as GradeFilter })}
+        >
           <CombineChip.Trigger size="small">
             <CombineChip.Value placeholder={t('grade')} />
           </CombineChip.Trigger>

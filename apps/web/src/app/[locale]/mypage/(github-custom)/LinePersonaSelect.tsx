@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
-
 import { Dialog, ScrollArea } from '@gitanimals/ui-panda';
 import { ExpandIcon } from 'lucide-react';
 

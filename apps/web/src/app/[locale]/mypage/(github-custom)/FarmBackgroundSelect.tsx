@@ -15,11 +15,7 @@ export const FarmBackgroundSelect = wrap
   .Suspense({
     fallback: <></>,
   })
-  .on(function FarmBackgroundSelect({
-    onImageRefresh,
-  }: {
-    onImageRefresh: () => void;
-  }) {
+  .on(function FarmBackgroundSelect({ onImageRefresh }: { onImageRefresh: () => void }) {
     const session = useClientSession();
     const { name } = useClientUser();
 

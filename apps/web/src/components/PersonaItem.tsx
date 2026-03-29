@@ -41,7 +41,11 @@ function LevelPersonaItem({ persona, isSelected, onClick, size = 'full', classNa
 }
 
 export const MemoizedLevelPersonaItem = memo(LevelPersonaItem, (prev, next) => {
-  return prev.isSelected === next.isSelected && prev.persona.id === next.persona.id && prev.persona.level === next.persona.level;
+  return (
+    prev.isSelected === next.isSelected &&
+    prev.persona.id === next.persona.id &&
+    prev.persona.level === next.persona.level
+  );
 });
 
 // --- BannerPersonaItem (Banner 기반) ---
