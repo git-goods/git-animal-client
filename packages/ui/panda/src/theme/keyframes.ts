@@ -72,6 +72,22 @@ export const keyframes = defineKeyframes({
       transform: 'translate3d(-100%, 0, 0)',
     },
   },
+  slideFromRight: {
+    from: {
+      transform: 'translateX(30%)',
+    },
+    to: {
+      transform: 'translateX(0)',
+    },
+  },
+  slideFromLeft: {
+    from: {
+      transform: 'translateX(-30%)',
+    },
+    to: {
+      transform: 'translateX(0)',
+    },
+  },
   skeletonLoading: {
     '0%': {
       backgroundPosition: '200% 0',

@@ -142,7 +142,28 @@
       "please-choose-pet": "합치기에 사용할 펫을 선택해주세요. 합친 펫은 사라집니다."
     },
     "laboratory": "실험실",
-    "maximum-pet-count-error": "펫은 최대 30마리까지 가능합니다."
+    "maximum-pet-count-error": "펫은 최대 30마리까지 가능합니다.",
+    "Filter": {
+      "search-placeholder": "펫 이름 검색",
+      "grade": "등급",
+      "tier": "티어",
+      "visibility": "상태",
+      "sort": "정렬",
+      "filter-all": "전체",
+      "filter-grade-collaborator": "콜라보",
+      "filter-grade-default": "기본",
+      "filter-grade-evolution": "진화",
+      "filter-visible": "표시중",
+      "filter-hidden": "숨김",
+      "evolvable-only": "진화 가능",
+      "sort-grade": "등급순",
+      "sort-level-desc": "레벨 높은순",
+      "sort-level-asc": "레벨 낮은순",
+      "sort-tier": "희귀도순",
+      "sort-name": "이름순",
+      "reset": "필터 초기화",
+      "no-results": "조건에 맞는 펫이 없습니다."
+    }
   },
   "Event": {
     "event-end": "이벤트가 종료되었습니다.",
@@ -255,6 +276,8 @@
   "Error": {
     "global-error-message": "문제가 발생했어요 😭",
     "want-to-report-error": "gitanimals 개발팀은 현재 이 오류를 추적하고 있습니다.\n시간이 되신다면 이 오류가 발생한 상황을 보고해주시면 감사하겠습니다.",
-    "report-error-button": "오류 보고하기"
+    "report-error-button": "오류 보고하기",
+    "ranking-error-title": "랭킹 정보를 불러올 수 없습니다",
+    "ranking-error-description": "잠시 후 다시 시도해주세요"
   }
 }

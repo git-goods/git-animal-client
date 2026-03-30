@@ -14,20 +14,6 @@ export const section = flex({
   _mobile: {
     padding: '80px 12px',
   },
-
-  '& .mobile': {
-    display: 'none',
-    _mobile: {
-      display: 'block',
-    },
-  },
-
-  '& .desktop': {
-    display: 'block',
-    _mobile: {
-      display: 'none',
-    },
-  },
 });
 
 export const heading = css({

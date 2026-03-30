@@ -2,6 +2,7 @@ import { Button } from '@gitanimals/ui-panda';
 
 import { getServerAuth } from '@/auth';
 import { LoginButton } from '@/components/AuthButton';
+import { Responsive } from '@/components/Responsive';
 import { Link } from '@/i18n/routing';
 
 import * as styles from './ChoosePetSection.style';
@@ -22,12 +23,9 @@ async function ChoosePetSection() {
         <LoginButton label="Get a Pet" />
       ) : (
         <Link href="/mypage">
-          <Button className="desktop" size="l">
+          <Responsive component={Button} desktop={{ size: 'l' }} mobile={{ size: 'm' }}>
             Go To Mypage
-          </Button>
-          <Button className="mobile" size="m">
-            Go To Mypage
-          </Button>
+          </Responsive>
         </Link>
       )}
     </section>

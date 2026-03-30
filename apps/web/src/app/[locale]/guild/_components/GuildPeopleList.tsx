@@ -1,17 +1,23 @@
 'use client';
 
-import { css, cx } from '_panda/css';
+import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
-import { flex, grid } from '_panda/patterns';
-import Flicking from '@egjs/react-flicking';
+import { grid } from '_panda/patterns';
 import type { GuildLeader, GuildMember } from '@gitanimals/api';
 import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
+import useEmblaCarousel from 'embla-carousel-react';
 import { UsersRoundIcon } from 'lucide-react';
 
 import { USER_GITHUB_URL } from '@/constants/route';
 import { getPersonaImage } from '@/utils/image';
 
 export function GuildPeopleList({ members, leader }: { members: GuildMember[]; leader: GuildLeader }) {
+  const [emblaRef] = useEmblaCarousel({
+    dragFree: true,
+    align: 'start',
+    containScroll: 'trimSnaps',
+  });
+
   return (
     <div className={listStyle}>
       <div className={leaderStyle}>
@@ -34,23 +40,22 @@ export function GuildPeopleList({ members, leader }: { members: GuildMember[]; l
               <span>{members.length + 1}/ 15</span>
             </Flex>
           </Flex>
-          <Flicking moveType="freeScroll" align="prev" bound={true}>
-            {members.map((member) => (
-              <div
-                className={cx('flicking-panel', css({ height: 'fit-content', _first: { ml: 0 }, marginLeft: 1 }))}
-                key={member.id}
-              >
-                <a href={USER_GITHUB_URL(member.name)} target="_blank" draggable={false}>
-                  <BannerPetSelectMedium
-                    key={member.id}
-                    name={member.name}
-                    count={member.contributions}
-                    image={getPersonaImage(member.personaType)}
-                  />
-                </a>
-              </div>
-            ))}
-          </Flicking>
+          <div ref={emblaRef} className={emblaViewportStyle}>
+            <div className={emblaContainerStyle}>
+              {members.map((member) => (
+                <div className={emblaSlideStyle} key={member.id}>
+                  <a href={USER_GITHUB_URL(member.name)} target="_blank" draggable={false}>
+                    <BannerPetSelectMedium
+                      key={member.id}
+                      name={member.name}
+                      count={member.contributions}
+                      image={getPersonaImage(member.personaType)}
+                    />
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -79,12 +84,17 @@ const membersStyle = css({
   flex: 1,
 });
 
-const titleStyle = flex({
-  alignItems: 'center',
-  gap: 4,
-  textStyle: 'glyph36.bold',
-  color: 'white.white_100',
-  '& img': {
-    borderRadius: '8px',
-  },
+const emblaViewportStyle = css({
+  overflow: 'hidden',
+});
+
+const emblaContainerStyle = css({
+  display: 'flex',
+});
+
+const emblaSlideStyle = css({
+  flex: '0 0 auto',
+  height: 'fit-content',
+  _first: { ml: 0 },
+  marginLeft: 1,
 });

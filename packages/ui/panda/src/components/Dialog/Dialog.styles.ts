@@ -80,6 +80,26 @@ export const dialogContentCva = cva({
 
 export type DialogContentVariants = RecipeVariantProps<typeof dialogContentCva>;
 
+export const dialogScrollableStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+  overflow: 'hidden',
+  '& .dialog-title': { flexShrink: 0 },
+});
+
+export const dialogTopSlotStyle = css({
+  flexShrink: 0,
+  width: '100%',
+});
+
+export const dialogBodyStyle = css({
+  flex: 1,
+  minHeight: 0,
+  overflowY: 'auto',
+  overflowX: 'hidden',
+  width: '100%',
+});
+
 export const dialogTitleStyle = css({
   textStyle: 'glyph48.bold',
   color: 'white.white_100',
