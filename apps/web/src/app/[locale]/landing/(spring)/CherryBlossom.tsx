@@ -12,7 +12,7 @@ interface CherryBlossomProps {
   opacity: number;
 }
 
-function BlossomSVG({ variant, size }: { variant: number; size: number }) {
+export function BlossomSVG({ variant, size }: { variant: number; size: number }) {
   switch (variant) {
     case 0:
       // 9x9 큰 다이아몬드 벚꽃 (variant 1 확장판, 채워진 다이아몬드 + 수술)
