@@ -12,10 +12,10 @@ import { MotionPet } from './MotionPet';
 const BLOSSOM_COUNT = 28;
 
 function getBlossomVariant(index: number): number {
-  // 작은 꽃잎(2,3) 비중 높게
-  if (index % 7 === 0) return 0;
-  if (index % 5 === 0) return 1;
-  if (index % 2 === 0) return 2;
+  // 3번(작은 꽃잎) 비중 높게: 0→3개, 1→3개, 2→4개, 3→나머지(18개)
+  if (index % 9 === 0) return 0;
+  if (index % 7 === 0) return 1;
+  if (index % 5 === 0) return 2;
   return 3;
 }
 
