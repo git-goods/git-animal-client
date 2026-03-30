@@ -6,8 +6,6 @@ import { cn } from '@gitanimals/ui-tailwind';
 import { Dialog, ScrollArea } from '@gitanimals/ui-tailwind';
 import { ExpandIcon } from 'lucide-react';
 
-import { customScrollStyle } from '@/styles/scrollStyle';
-
 import { SelectPersonaList } from '../PersonaList';
 
 interface Props {
@@ -40,20 +38,19 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
         />
       </ScrollArea>
       <Dialog open={isExtend} onOpenChange={() => setIsExtend(false)}>
-        <Dialog.Content size="large">
+        <Dialog.Content size="large" scrollable>
           <Dialog.Title>{t('line-type-select-pet')}</Dialog.Title>
-          <div
-            className={cn(
-              customScrollStyle,
-              'flex overflow-y-auto overflow-x-hidden w-full gap-1',
-              'h-full min-h-0 flex-wrap justify-center max-h-full mt-6',
-            )}
+          <SelectPersonaList
+            selectPersona={selectPersona ? [selectPersona] : []}
+            onSelectPersona={(persona) => onChangePersona(persona.id)}
           >
-            <SelectPersonaList
-              selectPersona={selectPersona ? [selectPersona] : []}
-              onSelectPersona={(persona) => onChangePersona(persona.id)}
-            />
-          </div>
+            <Dialog.TopSlot>
+              <SelectPersonaList.Toolbar showSearch />
+            </Dialog.TopSlot>
+            <Dialog.Body>
+              <SelectPersonaList.Grid />
+            </Dialog.Body>
+          </SelectPersonaList>
         </Dialog.Content>
       </Dialog>
     </div>

@@ -64,13 +64,18 @@ export interface DialogContentProps
   extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
     VariantProps<typeof dialogContentVariants> {
   isShowClose?: boolean;
+  scrollable?: boolean;
 }
 
 const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
-  ({ className, children, size, isShowClose = true, ...props }, ref) => (
+  ({ className, children, size, isShowClose = true, scrollable, ...props }, ref) => (
     <DialogPortal>
       <DialogOverlay />
-      <DialogPrimitive.Content ref={ref} className={cn(dialogContentVariants({ size }), className)} {...props}>
+      <DialogPrimitive.Content
+        ref={ref}
+        className={cn(dialogContentVariants({ size }), scrollable && 'overflow-y-auto', className)}
+        {...props}
+      >
         {children}
         {isShowClose && (
           <DialogClose className="absolute right-4 top-4 bg-transparent p-0 outline-none">
@@ -123,6 +128,16 @@ const DialogDescription = React.forwardRef<
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
+const DialogTopSlot = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<'div'>>(
+  ({ className, ...props }, ref) => <div ref={ref} className={cn('flex-shrink-0', className)} {...props} />,
+);
+DialogTopSlot.displayName = 'DialogTopSlot';
+
+const DialogBody = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<'div'>>(
+  ({ className, ...props }, ref) => <div ref={ref} className={cn('flex-1 overflow-y-auto', className)} {...props} />,
+);
+DialogBody.displayName = 'DialogBody';
+
 // Compound component pattern (Dialog.Content, Dialog.Title, etc.)
 const DialogCompound = Object.assign(Dialog, {
   Root: Dialog,
@@ -135,6 +150,8 @@ const DialogCompound = Object.assign(Dialog, {
   Footer: DialogFooter,
   Title: DialogTitle,
   Description: DialogDescription,
+  TopSlot: DialogTopSlot,
+  Body: DialogBody,
 });
 
 export {
@@ -148,5 +165,7 @@ export {
   DialogFooter,
   DialogTitle,
   DialogDescription,
+  DialogTopSlot,
+  DialogBody,
   dialogContentVariants,
 };

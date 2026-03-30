@@ -44,7 +44,6 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
   });
 
   const isEvolutionAble = currentPersona?.isEvolutionable;
-  console.debug('c', currentPersona);
 
   const onSellClick = async () => {
     if (!currentPersona) return;
@@ -168,8 +167,6 @@ function SellConfirmDialog({
     setIsLoading(true);
     await onConfirm(isDoNotShowAgain);
     setIsLoading(false);
-
-    onClose();
   };
 
   return (

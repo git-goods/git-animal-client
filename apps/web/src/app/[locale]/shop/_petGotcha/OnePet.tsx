@@ -1,16 +1,19 @@
 import React from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
+import type { GotchaResult } from '@gitanimals/api';
 import { postGotcha } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { userQueries } from '@gitanimals/react-query';
 import { Dialog } from '@gitanimals/ui-tailwind';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 import { useQueryClient } from '@tanstack/react-query';
+import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
-import { CardDrawingGame } from '@/components/CardGame/FanDrawingGame/FanDrawingGame';
+import { SelectedCardMotion } from '@/components/CardGame/FanDrawingGame/CardMotion';
+import { CardDrawingGame, DetailedCard } from '@/components/CardGame/FanDrawingGame/FanDrawingGame';
 import { GITHUB_ISSUE_URL } from '@/constants/outlink';
 import { trackEvent } from '@/lib/analytics';
 
@@ -40,6 +43,9 @@ function OnePet({ onClose }: Props) {
 
       queryClient.invalidateQueries({ queryKey: userQueries.userKey() });
       toast.success(t('get-persona-success'));
+      onClose();
+
+      handleShowResult(resultPersona);
 
       trackEvent('gotcha', {
         type: '1-pet',
@@ -87,6 +93,25 @@ Token: ${data?.user.accessToken}
     }
   };
 
+  const handleShowResult = (resultPersona: GotchaResult) => {
+    overlay.open(
+      ({ isOpen, close }) =>
+        isOpen && (
+          <div
+            className={overlayStyle}
+            onClick={() => {
+              close();
+            }}
+          >
+            <SelectedCardMotion x={0} y={0} rotate={0} index={0}>
+              <DetailedCard cardData={{ type: resultPersona.name, dropRate: resultPersona.dropRate }} />
+            </SelectedCardMotion>
+            <p className={noticeMessageStyle}>{t('click-to-close')}</p>
+          </div>
+        ),
+    );
+  };
+
   return (
     <Dialog open={true} onOpenChange={onClose}>
       <Dialog.Content size="large" className={dialogContentStyle}>
@@ -109,4 +134,17 @@ const dialogContentStyle = cn(
   'max-mobile:flex max-mobile:flex-col max-mobile:items-center max-mobile:justify-center',
 );
 
-const headingStyle = cn('font-product text-glyph-48 font-bold text-white text-center', 'max-mobile:text-glyph-28');
+const headingStyle = cn(
+  'font-product text-glyph-48 font-bold text-white text-center',
+  'max-mobile:text-glyph-28'
+);
+
+const overlayStyle = cn(
+  'fixed top-0 left-0 w-full h-full bg-black-50 flex items-center justify-center',
+  'backdrop-blur-[10px] flex-col gap-[100px] z-[9001] cursor-pointer',
+);
+
+const noticeMessageStyle = cn(
+  'font-product text-glyph-22 text-white text-center',
+  'max-mobile:text-glyph-16',
+);

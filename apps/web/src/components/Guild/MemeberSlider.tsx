@@ -1,24 +1,32 @@
 'use client';
 
-import Flicking from '@egjs/react-flicking';
 import type { GuildMember } from '@gitanimals/api';
-import { BannerPetSelectMedium, cn } from '@gitanimals/ui-tailwind';
+import { BannerPetSelectMedium } from '@gitanimals/ui-tailwind';
+import useEmblaCarousel from 'embla-carousel-react';
 
 import { getPersonaImage } from '@/utils/image';
 
 export function GuildMemeberSlider({ members }: { members: GuildMember[] }) {
+  const [emblaRef] = useEmblaCarousel({
+    dragFree: true,
+    align: 'start',
+    containScroll: 'trimSnaps',
+  });
+
   return (
-    <Flicking moveType="freeScroll" align="prev" bound={true}>
-      {members.map((member) => (
-        <div className={cn('flicking-panel', 'h-fit first:ml-0 ml-1')} key={member.id}>
-          <BannerPetSelectMedium
-            key={member.id}
-            name={member.name}
-            count={member.contributions}
-            image={getPersonaImage(member.personaType)}
-          />
-        </div>
-      ))}
-    </Flicking>
+    <div ref={emblaRef} className="overflow-hidden">
+      <div className="flex">
+        {members.map((member) => (
+          <div className="flex-[0_0_auto] h-fit first:ml-0 ml-1" key={member.id}>
+            <BannerPetSelectMedium
+              key={member.id}
+              name={member.name}
+              count={member.contributions}
+              image={getPersonaImage(member.personaType)}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

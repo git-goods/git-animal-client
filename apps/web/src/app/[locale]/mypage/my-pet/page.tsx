@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { type Persona } from '@gitanimals/api';
 import { cn } from '@gitanimals/ui-tailwind';
@@ -14,14 +14,9 @@ function MypageMyPets() {
   const t = useTranslations('Mypage');
   const [selectPersona, setSelectPersona] = useState<Persona | null>(null);
 
-  const initSelectPersonas = useCallback(
-    (list: Persona[]) => {
-      if (!selectPersona && list.length > 0) {
-        setSelectPersona(list[0]);
-      }
-    },
-    [selectPersona],
-  );
+  const initSelectPersonas = useCallback((list: Persona[]) => {
+    setSelectPersona((prev) => (prev ? prev : list[0] ?? null));
+  }, []);
 
   return (
     <div className="flex flex-col">
@@ -41,7 +36,10 @@ function MypageMyPets() {
             onSelectPersona={(persona) => setSelectPersona(persona)}
             initSelectPersonas={initSelectPersonas}
             isSpecialEffect
-          />
+          >
+            <SelectPersonaList.Toolbar showSearch showEvolvableFilter />
+            <SelectPersonaList.Grid />
+          </SelectPersonaList>
         </ScrollArea>
       </section>
 

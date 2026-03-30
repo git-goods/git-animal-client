@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 import { config } from '@/constants/config';
-import { LOCALES } from '@/i18n/routing';
+import { LOCALE_LIST } from '@/i18n/routing';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = config.url;
@@ -15,7 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // 각 로케일별로 정적 페이지 URL 생성
-  const staticRoutes: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
+  const staticRoutes: MetadataRoute.Sitemap = LOCALE_LIST.flatMap((locale) =>
     staticPages.map((page) => ({
       url: `${baseUrl}/${locale}${page}`,
       lastModified: new Date(),
@@ -26,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // 마이페이지 탭 URL 생성
   const mypageTabs = ['line-type', 'farm-type'];
-  const mypageRoutes: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
+  const mypageRoutes: MetadataRoute.Sitemap = LOCALE_LIST.flatMap((locale) =>
     mypageTabs.map((tab) => ({
       url: `${baseUrl}/${locale}/mypage?type=${tab}`,
       lastModified: new Date(),
