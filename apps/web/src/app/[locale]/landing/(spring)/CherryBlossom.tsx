@@ -15,91 +15,111 @@ interface CherryBlossomProps {
 function BlossomSVG({ variant, size }: { variant: number; size: number }) {
   switch (variant) {
     case 0:
-      // 큰 4방향 꽃 (11x11)
+      // 9x9 다섯잎 벚꽃 (variant 1 스타일 확장, 꽃잎 5개 + 노란 수술)
       return (
-        <svg width={size} height={size} viewBox="0 0 11 11" shapeRendering="crispEdges">
-          <rect x="5" y="0" width="1" height="1" fill="#FFB7C5" />
-          <rect x="4" y="1" width="1" height="1" fill="#FF94A8" />
-          <rect x="5" y="1" width="1" height="1" fill="#FFB7C5" />
-          <rect x="6" y="1" width="1" height="1" fill="#FF94A8" />
-          <rect x="3" y="2" width="1" height="1" fill="#FFC0CB" />
-          <rect x="5" y="2" width="1" height="1" fill="#FFB7C5" />
-          <rect x="7" y="2" width="1" height="1" fill="#FFC0CB" />
-          <rect x="1" y="3" width="1" height="1" fill="#FFC0CB" />
-          <rect x="2" y="3" width="1" height="1" fill="#FFB7C5" />
-          <rect x="8" y="3" width="1" height="1" fill="#FFB7C5" />
-          <rect x="9" y="3" width="1" height="1" fill="#FFC0CB" />
+        <svg width={size} height={size} viewBox="0 0 9 9" shapeRendering="crispEdges">
+          {/* 상단 꽃잎 */}
+          <rect x="4" y="0" width="1" height="1" fill="#FF94A8" />
+          <rect x="3" y="1" width="1" height="1" fill="#FFC0CB" />
+          <rect x="4" y="1" width="1" height="1" fill="#FFB7C5" />
+          <rect x="5" y="1" width="1" height="1" fill="#FFC0CB" />
+          {/* 좌우 꽃잎 */}
+          <rect x="1" y="2" width="1" height="1" fill="#FF94A8" />
+          <rect x="2" y="2" width="1" height="1" fill="#FFC0CB" />
+          <rect x="4" y="2" width="1" height="1" fill="#FFB7C5" />
+          <rect x="6" y="2" width="1" height="1" fill="#FFC0CB" />
+          <rect x="7" y="2" width="1" height="1" fill="#FF94A8" />
+          <rect x="0" y="3" width="1" height="1" fill="#FFC0CB" />
+          <rect x="1" y="3" width="1" height="1" fill="#FFB7C5" />
+          <rect x="7" y="3" width="1" height="1" fill="#FFB7C5" />
+          <rect x="8" y="3" width="1" height="1" fill="#FFC0CB" />
+          {/* 중심 + 수술 */}
           <rect x="0" y="4" width="1" height="1" fill="#FF94A8" />
-          <rect x="1" y="4" width="1" height="1" fill="#FFB7C5" />
-          <rect x="9" y="4" width="1" height="1" fill="#FFB7C5" />
-          <rect x="10" y="4" width="1" height="1" fill="#FF94A8" />
-          <rect x="0" y="5" width="1" height="1" fill="#FFB7C5" />
-          <rect x="2" y="5" width="1" height="1" fill="#FFB7C5" />
-          <rect x="5" y="5" width="1" height="1" fill="#FFD700" />
-          <rect x="8" y="5" width="1" height="1" fill="#FFB7C5" />
-          <rect x="10" y="5" width="1" height="1" fill="#FFB7C5" />
-          <rect x="0" y="6" width="1" height="1" fill="#FF94A8" />
-          <rect x="1" y="6" width="1" height="1" fill="#FFB7C5" />
-          <rect x="9" y="6" width="1" height="1" fill="#FFB7C5" />
-          <rect x="10" y="6" width="1" height="1" fill="#FF94A8" />
-          <rect x="1" y="7" width="1" height="1" fill="#FFC0CB" />
-          <rect x="2" y="7" width="1" height="1" fill="#FFB7C5" />
-          <rect x="8" y="7" width="1" height="1" fill="#FFB7C5" />
-          <rect x="9" y="7" width="1" height="1" fill="#FFC0CB" />
-          <rect x="3" y="8" width="1" height="1" fill="#FFC0CB" />
-          <rect x="5" y="8" width="1" height="1" fill="#FFB7C5" />
-          <rect x="7" y="8" width="1" height="1" fill="#FFC0CB" />
-          <rect x="4" y="9" width="1" height="1" fill="#FF94A8" />
-          <rect x="5" y="9" width="1" height="1" fill="#FFB7C5" />
-          <rect x="6" y="9" width="1" height="1" fill="#FF94A8" />
-          <rect x="5" y="10" width="1" height="1" fill="#FFB7C5" />
+          <rect x="2" y="4" width="1" height="1" fill="#FFC0CB" />
+          <rect x="3" y="4" width="1" height="1" fill="#FFD700" />
+          <rect x="4" y="4" width="1" height="1" fill="#FFEC8B" />
+          <rect x="5" y="4" width="1" height="1" fill="#FFD700" />
+          <rect x="6" y="4" width="1" height="1" fill="#FFC0CB" />
+          <rect x="8" y="4" width="1" height="1" fill="#FF94A8" />
+          {/* 하단 좌우 꽃잎 */}
+          <rect x="0" y="5" width="1" height="1" fill="#FFC0CB" />
+          <rect x="1" y="5" width="1" height="1" fill="#FFB7C5" />
+          <rect x="7" y="5" width="1" height="1" fill="#FFB7C5" />
+          <rect x="8" y="5" width="1" height="1" fill="#FFC0CB" />
+          <rect x="1" y="6" width="1" height="1" fill="#FF94A8" />
+          <rect x="2" y="6" width="1" height="1" fill="#FFC0CB" />
+          <rect x="4" y="6" width="1" height="1" fill="#FFB7C5" />
+          <rect x="6" y="6" width="1" height="1" fill="#FFC0CB" />
+          <rect x="7" y="6" width="1" height="1" fill="#FF94A8" />
+          {/* 하단 꽃잎 */}
+          <rect x="3" y="7" width="1" height="1" fill="#FFC0CB" />
+          <rect x="4" y="7" width="1" height="1" fill="#FFB7C5" />
+          <rect x="5" y="7" width="1" height="1" fill="#FFC0CB" />
+          <rect x="4" y="8" width="1" height="1" fill="#FF94A8" />
         </svg>
       );
     case 1:
-      // 중간 다이아몬드 꽃 (7x7)
+      // 7x7 다이아몬드 벚꽃 (기존 variant 1 고도화, 꽃잎 채움 + 수술 강화)
       return (
         <svg width={size} height={size} viewBox="0 0 7 7" shapeRendering="crispEdges">
-          <rect x="3" y="0" width="1" height="1" fill="#FFB7C5" />
-          <rect x="2" y="1" width="1" height="1" fill="#FF94A8" />
+          <rect x="3" y="0" width="1" height="1" fill="#FF94A8" />
+          <rect x="2" y="1" width="1" height="1" fill="#FFB7C5" />
           <rect x="3" y="1" width="1" height="1" fill="#FFC0CB" />
-          <rect x="4" y="1" width="1" height="1" fill="#FF94A8" />
-          <rect x="1" y="2" width="1" height="1" fill="#FFB7C5" />
+          <rect x="4" y="1" width="1" height="1" fill="#FFB7C5" />
+          <rect x="1" y="2" width="1" height="1" fill="#FF94A8" />
+          <rect x="2" y="2" width="1" height="1" fill="#FFC0CB" />
           <rect x="3" y="2" width="1" height="1" fill="#FFB7C5" />
-          <rect x="5" y="2" width="1" height="1" fill="#FFB7C5" />
+          <rect x="4" y="2" width="1" height="1" fill="#FFC0CB" />
+          <rect x="5" y="2" width="1" height="1" fill="#FF94A8" />
           <rect x="0" y="3" width="1" height="1" fill="#FFB7C5" />
-          <rect x="2" y="3" width="1" height="1" fill="#FFC0CB" />
-          <rect x="3" y="3" width="1" height="1" fill="#FFD700" />
-          <rect x="4" y="3" width="1" height="1" fill="#FFC0CB" />
+          <rect x="1" y="3" width="1" height="1" fill="#FFC0CB" />
+          <rect x="2" y="3" width="1" height="1" fill="#FFD700" />
+          <rect x="3" y="3" width="1" height="1" fill="#FFEC8B" />
+          <rect x="4" y="3" width="1" height="1" fill="#FFD700" />
+          <rect x="5" y="3" width="1" height="1" fill="#FFC0CB" />
           <rect x="6" y="3" width="1" height="1" fill="#FFB7C5" />
-          <rect x="1" y="4" width="1" height="1" fill="#FFB7C5" />
+          <rect x="1" y="4" width="1" height="1" fill="#FF94A8" />
+          <rect x="2" y="4" width="1" height="1" fill="#FFC0CB" />
           <rect x="3" y="4" width="1" height="1" fill="#FFB7C5" />
-          <rect x="5" y="4" width="1" height="1" fill="#FFB7C5" />
-          <rect x="2" y="5" width="1" height="1" fill="#FF94A8" />
+          <rect x="4" y="4" width="1" height="1" fill="#FFC0CB" />
+          <rect x="5" y="4" width="1" height="1" fill="#FF94A8" />
+          <rect x="2" y="5" width="1" height="1" fill="#FFB7C5" />
           <rect x="3" y="5" width="1" height="1" fill="#FFC0CB" />
-          <rect x="4" y="5" width="1" height="1" fill="#FF94A8" />
-          <rect x="3" y="6" width="1" height="1" fill="#FFB7C5" />
+          <rect x="4" y="5" width="1" height="1" fill="#FFB7C5" />
+          <rect x="3" y="6" width="1" height="1" fill="#FF94A8" />
         </svg>
       );
     case 2:
-      // 작은 꽃잎 (3x3)
+      // 5x5 소형 벚꽃 (기존 variant 2 고도화, 꽃잎 채움 + 중심점)
       return (
-        <svg width={size} height={size} viewBox="0 0 3 3" shapeRendering="crispEdges">
-          <rect x="1" y="0" width="1" height="1" fill="#FFB7C5" />
-          <rect x="0" y="1" width="1" height="1" fill="#FF94A8" />
-          <rect x="1" y="1" width="1" height="1" fill="#FFC0CB" />
-          <rect x="2" y="1" width="1" height="1" fill="#FF94A8" />
-          <rect x="1" y="2" width="1" height="1" fill="#FFB7C5" />
+        <svg width={size} height={size} viewBox="0 0 5 5" shapeRendering="crispEdges">
+          <rect x="2" y="0" width="1" height="1" fill="#FF94A8" />
+          <rect x="1" y="1" width="1" height="1" fill="#FFB7C5" />
+          <rect x="2" y="1" width="1" height="1" fill="#FFC0CB" />
+          <rect x="3" y="1" width="1" height="1" fill="#FFB7C5" />
+          <rect x="0" y="2" width="1" height="1" fill="#FF94A8" />
+          <rect x="1" y="2" width="1" height="1" fill="#FFC0CB" />
+          <rect x="2" y="2" width="1" height="1" fill="#FFD700" />
+          <rect x="3" y="2" width="1" height="1" fill="#FFC0CB" />
+          <rect x="4" y="2" width="1" height="1" fill="#FF94A8" />
+          <rect x="1" y="3" width="1" height="1" fill="#FFB7C5" />
+          <rect x="2" y="3" width="1" height="1" fill="#FFC0CB" />
+          <rect x="3" y="3" width="1" height="1" fill="#FFB7C5" />
+          <rect x="2" y="4" width="1" height="1" fill="#FF94A8" />
         </svg>
       );
     case 3:
     default:
-      // 아주 작은 점 (2x2)
+      // 3x3 꽃잎 한 장 (variant 2 스타일 축소, 단일 꽃잎 느낌)
       return (
-        <svg width={size} height={size} viewBox="0 0 2 2" shapeRendering="crispEdges">
-          <rect x="0" y="0" width="1" height="1" fill="#FFC0CB" />
-          <rect x="1" y="0" width="1" height="1" fill="#FFB7C5" />
-          <rect x="0" y="1" width="1" height="1" fill="#FFB7C5" />
-          <rect x="1" y="1" width="1" height="1" fill="#FF94A8" />
+        <svg width={size} height={size} viewBox="0 0 3 3" shapeRendering="crispEdges">
+          <rect x="0" y="0" width="1" height="1" fill="#FF94A8" />
+          <rect x="1" y="0" width="1" height="1" fill="#FFC0CB" />
+          <rect x="0" y="1" width="1" height="1" fill="#FFC0CB" />
+          <rect x="1" y="1" width="1" height="1" fill="#FFB7C5" />
+          <rect x="2" y="1" width="1" height="1" fill="#FF94A8" />
+          <rect x="1" y="2" width="1" height="1" fill="#FF94A8" />
+          <rect x="2" y="2" width="1" height="1" fill="#FFC0CB" />
         </svg>
       );
   }
