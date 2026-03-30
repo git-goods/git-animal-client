@@ -145,6 +145,7 @@ const bgContainerStyle = css({
   display: 'grid',
   gridTemplateColumns: '3fr 4fr',
   paddingTop: '10%',
+  overflow: 'hidden',
   background: 'linear-gradient(180deg, #E8F4FD 0%, #FFF0F5 40%, #FFE4EE 70%, #FFDBEE 100%)',
   _mobile: {
     gridTemplateColumns: '1fr',
