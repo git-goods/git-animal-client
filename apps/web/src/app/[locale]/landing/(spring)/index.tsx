@@ -7,7 +7,7 @@ import { LoginButton } from '@/components/AuthButton';
 import { Link } from '@/i18n/routing';
 
 import { CherryBlossom } from './CherryBlossom';
-import { MotionPet } from './MotionPet';
+import { MotionPetSection } from './MotionPet';
 
 const BLOSSOM_COUNT = 28;
 
@@ -36,31 +36,7 @@ export async function SpringContent() {
           />
         ))}
 
-        <div
-          className={css({
-            position: 'relative',
-            width: '100%',
-            height: '100%',
-            maxHeight: 'calc(100vh - 60px)',
-            _mobile: {
-              display: 'none',
-            },
-          })}
-        >
-          <div
-            className={css({
-              position: 'absolute',
-              bottom: '0',
-              right: '0',
-              objectFit: 'contain',
-              height: '100%',
-              userSelect: 'none',
-              cursor: 'pointer',
-            })}
-          >
-            <MotionPet />
-          </div>
-        </div>
+        <MotionPetSection />
         <div className={containerStyle}>
           <h1 className={springLogoStyle}>GITANIMALS</h1>
           <p className={descriptionStyle}>

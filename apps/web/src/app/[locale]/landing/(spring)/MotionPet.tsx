@@ -26,8 +26,7 @@ function createPetals(): Petal[] {
   }));
 }
 
-export function MotionPet() {
-  const [isHovered, setIsHovered] = useState(false);
+export function MotionPetSection() {
   const [petals, setPetals] = useState<Petal[]>([]);
 
   const handleClick = useCallback(() => {
@@ -37,6 +36,45 @@ export function MotionPet() {
   const handlePetalComplete = useCallback((id: number) => {
     setPetals((prev) => prev.filter((p) => p.id !== id));
   }, []);
+
+  return (
+    <>
+      <div className={desktopWrapperStyle}>
+        <div className={petPositionStyle}>
+          <MotionPet onClick={handleClick} />
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {petals.map((petal) => (
+          <motion.div
+            key={petal.id}
+            className={petalStyle}
+            initial={{ opacity: 1, y: 0, x: petal.x * 0.3, scale: 0 }}
+            animate={{
+              opacity: [1, 1, 0],
+              y: [0, 60, 150],
+              x: [petal.x * 0.3, petal.x, petal.x * 0.8],
+              scale: [0, 1, 0.6],
+              rotate: [0, petal.x > 0 ? 180 : -180, petal.x > 0 ? 360 : -360],
+            }}
+            transition={{
+              duration: 1.8,
+              delay: petal.delay,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            }}
+            onAnimationComplete={() => handlePetalComplete(petal.id)}
+          >
+            <BlossomSVG variant={petal.variant} size={petal.size} />
+          </motion.div>
+        ))}
+      </AnimatePresence>
+    </>
+  );
+}
+
+function MotionPet({ onClick }: { onClick: () => void }) {
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div className={containerStyle}>
@@ -67,36 +105,31 @@ export function MotionPet() {
         }}
         onHoverStart={() => setIsHovered(true)}
         onHoverEnd={() => setIsHovered(false)}
-        onClick={handleClick}
+        onClick={onClick}
       />
-
-      <AnimatePresence>
-        {petals.map((petal) => (
-          <motion.div
-            key={petal.id}
-            className={petalStyle}
-            initial={{ opacity: 1, y: 0, x: petal.x * 0.3, scale: 0 }}
-            animate={{
-              opacity: [1, 1, 0],
-              y: [0, 60, 150],
-              x: [petal.x * 0.3, petal.x, petal.x * 0.8],
-              scale: [0, 1, 0.6],
-              rotate: [0, petal.x > 0 ? 180 : -180, petal.x > 0 ? 360 : -360],
-            }}
-            transition={{
-              duration: 1.8,
-              delay: petal.delay,
-              ease: [0.25, 0.46, 0.45, 0.94],
-            }}
-            onAnimationComplete={() => handlePetalComplete(petal.id)}
-          >
-            <BlossomSVG variant={petal.variant} size={petal.size} />
-          </motion.div>
-        ))}
-      </AnimatePresence>
     </div>
   );
 }
+
+const desktopWrapperStyle = css({
+  position: 'relative',
+  width: '100%',
+  height: '100%',
+  maxHeight: 'calc(100vh - 60px)',
+  _mobile: {
+    display: 'none',
+  },
+});
+
+const petPositionStyle = css({
+  position: 'absolute',
+  bottom: '0',
+  right: '0',
+  objectFit: 'contain',
+  height: '100%',
+  userSelect: 'none',
+  cursor: 'pointer',
+});
 
 const containerStyle = css({
   position: 'relative',
@@ -115,7 +148,8 @@ const petStyle = css({
 
 const petalStyle = css({
   position: 'absolute',
-  bottom: '-10%',
-  left: '50%',
+  bottom: '10%',
+  right: '15%',
   pointerEvents: 'none',
+  zIndex: 1,
 });
