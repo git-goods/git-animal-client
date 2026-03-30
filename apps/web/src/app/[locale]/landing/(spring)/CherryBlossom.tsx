@@ -110,16 +110,14 @@ function BlossomSVG({ variant, size }: { variant: number; size: number }) {
       );
     case 3:
     default:
-      // 3x3 꽃잎 한 장 (variant 2 스타일 축소, 단일 꽃잎 느낌)
+      // 3x3 작은 꽃잎 (기존 variant 2 유지)
       return (
         <svg width={size} height={size} viewBox="0 0 3 3" shapeRendering="crispEdges">
-          <rect x="0" y="0" width="1" height="1" fill="#FF94A8" />
-          <rect x="1" y="0" width="1" height="1" fill="#FFC0CB" />
-          <rect x="0" y="1" width="1" height="1" fill="#FFC0CB" />
-          <rect x="1" y="1" width="1" height="1" fill="#FFB7C5" />
+          <rect x="1" y="0" width="1" height="1" fill="#FFB7C5" />
+          <rect x="0" y="1" width="1" height="1" fill="#FF94A8" />
+          <rect x="1" y="1" width="1" height="1" fill="#FFC0CB" />
           <rect x="2" y="1" width="1" height="1" fill="#FF94A8" />
-          <rect x="1" y="2" width="1" height="1" fill="#FF94A8" />
-          <rect x="2" y="2" width="1" height="1" fill="#FFC0CB" />
+          <rect x="1" y="2" width="1" height="1" fill="#FFB7C5" />
         </svg>
       );
   }
