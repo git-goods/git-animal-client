@@ -48,7 +48,7 @@ function Tab({ selectedTab, rightElement }: Props) {
         'max-mobile:flex-col max-mobile:items-start max-mobile:gap-8 max-mobile:mb-3',
       )}
     >
-      <div className={cn('max-mobile:bg-black/25 max-mobile:p-1 max-mobile:mx-auto max-mobile:rounded-2xl')}>
+      <div className={cn('max-mobile:inline-flex max-mobile:bg-black/25 max-mobile:p-1 max-mobile:mx-auto max-mobile:rounded-2xl max-mobile:whitespace-nowrap')}>
         {TAB.map((item) => (
           <TabItem isSelected={item.key === selectedTab} {...item} key={item.key} />
         ))}

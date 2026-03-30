@@ -53,7 +53,7 @@ export function AuctionSection({ selectedTab }: Props) {
           'rounded-2xl bg-white/10 backdrop-blur-[7px]',
           'p-10 max-w-[1120px] w-full z-floating',
           'min-h-[924px] h-auto',
-          'max-mobile:h-auto max-mobile:bg-transparent max-mobile:backdrop-blur-0',
+          'max-mobile:min-h-[auto] max-mobile:h-auto max-mobile:bg-transparent max-mobile:backdrop-blur-0',
           'max-mobile:p-0 max-mobile:pb-3',
         )}
       >
