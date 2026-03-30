@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import { useTranslations } from 'next-intl';
 import { cn } from '@gitanimals/ui-tailwind';
 import { ClipboardIcon } from 'lucide-react';
@@ -18,7 +18,7 @@ export function FarmType() {
 
   const { name } = useClientUser();
 
-  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
+  const [imageKey, refreshImage] = useReducer((x: number) => x + 1, 0);
 
   const onLinkCopy = async () => {
     try {
@@ -33,7 +33,7 @@ export function FarmType() {
       <div>
         <div className="rounded-xl relative overflow-hidden w-fit">
           <GitanimalsFarm
-            imageKey={status}
+            imageKey={String(imageKey)}
             className={cn(
               'w-[600px] aspect-[2/1]',
               'max-pc:w-[400px]',
@@ -54,9 +54,9 @@ export function FarmType() {
         </div>
       </div>
       <div>
-        <FarmPersonaSelect onChangeStatus={setStatus} />
+        <FarmPersonaSelect onImageRefresh={refreshImage} />
       </div>
-      <FarmBackgroundSelect onChangeStatus={setStatus} />
+      <FarmBackgroundSelect onImageRefresh={refreshImage} />
     </>
   );
 }

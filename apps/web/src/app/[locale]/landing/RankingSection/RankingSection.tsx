@@ -10,6 +10,7 @@ import { Link } from '@/i18n/routing';
 
 import GameConsole from './GameConsole/GameConsole';
 import { MobileGameConsole } from './MobileGameConsole/MobileGameConsole';
+import { calcTotalPage, RANKS_PER_PAGE, RANKS_TOP_3 } from './constants';
 import { MobileRankingTable } from './MobileRankingTable';
 import { RankingTable } from './RankingTable';
 import { TopPodium } from './TopPodium';
@@ -28,8 +29,8 @@ export default function RankingSection({
 
   const queries = useQueries({
     queries: [
-      rankQueries.getRanksOptions({ rank: 1, size: 3, type }),
-      rankQueries.getRanksOptions({ rank: startRankNumber, size: 5, type }),
+      rankQueries.getRanksOptions({ rank: 1, size: RANKS_TOP_3, type }),
+      rankQueries.getRanksOptions({ rank: startRankNumber, size: RANKS_PER_PAGE, type }),
       rankQueries.getTotalRankOptions({ type }),
     ],
   });
@@ -87,7 +88,12 @@ export default function RankingSection({
           >
             <RankingTab selectedTab={selectedTab} />
             <TopPodium ranks={queries[0].data} />
-            <MobileRankingTable ranks={queries[1].data} page={currentPage} totalPage={totalPage} />
+            <MobileRankingTable
+              initialRanks={queries[1].data}
+              initialPage={currentPage}
+              totalPage={totalPage}
+              type={type}
+            />
             <MobileGameConsole />
           </div>
         }
@@ -95,11 +101,6 @@ export default function RankingSection({
     </div>
   );
 }
-
-const calcTotalPage = (totalCount: number) => {
-  if (totalCount <= 3) return 0;
-  return Math.ceil((totalCount - 3) / 5) - 1;
-};
 
 // TODO: tab 공통화 필요
 function RankingTab({ selectedTab }: { selectedTab: string }) {

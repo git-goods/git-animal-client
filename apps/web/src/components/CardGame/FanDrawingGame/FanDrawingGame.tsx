@@ -9,9 +9,8 @@ import { CardBack as CardBackUi } from '@gitanimals/ui-tailwind';
 import { motion } from 'framer-motion';
 
 import { AnimalCard } from '@/components/AnimalCard';
-import { Portal } from '@/components/Portal';
 
-import { DrawingCardMotion, NonSelectedCardMotion, SelectedCardMotion } from './CardMotion';
+import { DrawingCardMotion, NonSelectedCardMotion } from './CardMotion';
 
 interface CardDrawingGameProps {
   characters: { id: number }[];
@@ -58,6 +57,7 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
   };
 
   const closeGame = () => {
+    console.log('closeGame');
     onClose();
     resetGame();
   };
@@ -162,21 +162,8 @@ export function CardDrawingGame({ characters, onSelectCard, onClose }: CardDrawi
               const { x, y, rotate } = getFanPosition(index, selectedCards.length);
 
               if (isSelected && cardData) {
-                return (
-                  <Portal key={`selected-card-${cardId}`}>
-                    <div
-                      className="fixed top-0 left-0 w-full h-full bg-black-50 flex items-center justify-center backdrop-blur-[10px] flex-col gap-[100px] z-[3001]"
-                      onClick={closeGame}
-                    >
-                      <SelectedCardMotion key={`selected-card-${cardId}`} x={x} y={y} rotate={rotate} index={index}>
-                        <DetailedCard cardData={cardData} />
-                      </SelectedCardMotion>
-                      <p className="font-product text-glyph-22 text-white text-center max-mobile:font-product max-mobile:text-glyph-16">
-                        {t('click-to-close')}
-                      </p>
-                    </div>
-                  </Portal>
-                );
+                return null;
+                // Result is now shown via overlay in OnePet.tsx
               } else {
                 return (
                   <NonSelectedCardMotion key={`nonselected-card-${cardId}`} x={x} y={y} rotate={rotate} index={index}>
@@ -200,7 +187,7 @@ function CardBack() {
   );
 }
 
-function DetailedCard({ cardData }: { cardData: { type: string; dropRate: string } }) {
+export function DetailedCard({ cardData }: { cardData: { type: string; dropRate: string } }) {
   // cardData가 없으면 기본값 사용
   const getPersona = cardData || {
     tier: 'S_PLUS' as const,

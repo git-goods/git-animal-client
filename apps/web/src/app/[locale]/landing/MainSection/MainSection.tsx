@@ -2,6 +2,7 @@ import { Button } from '@gitanimals/ui-tailwind';
 
 import { getServerAuth } from '@/auth';
 import { LoginButton } from '@/components/AuthButton';
+import { Responsive } from '@/components/Responsive';
 import { Link } from '@/i18n/routing';
 
 import * as styles from './MainSection.style';
@@ -21,12 +22,9 @@ async function MainSection() {
         <LoginButton label="Get a Pet" />
       ) : (
         <Link href="/mypage">
-          <Button className="max-mobile:hidden" size="l">
+          <Responsive component={Button} desktop={{ size: 'l' }} mobile={{ size: 'm' }}>
             Go To Mypage
-          </Button>
-          <Button className="hidden max-mobile:block" size="m">
-            Go To Mypage
-          </Button>
+          </Responsive>
         </Link>
       )}
       <div className={styles.bg} />

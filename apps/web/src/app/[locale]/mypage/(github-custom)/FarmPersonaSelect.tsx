@@ -14,63 +14,38 @@ import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible'
 
 import { SelectPersonaList } from '../PersonaList';
 
-export function FarmPersonaSelect({
-  onChangeStatus,
-}: {
-  onChangeStatus: (status: 'loading' | 'success' | 'error') => void;
-}) {
+export function FarmPersonaSelect({ onImageRefresh }: { onImageRefresh: () => void }) {
   const queryClient = useQueryClient();
   const t = useTranslations('Mypage');
   const tError = useTranslations('Error');
 
-  const [selectPersona, setSelectPersona] = useState<string[]>([]);
   const [loadingPersona, setLoadingPersona] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
   const { mutate } = useChangePersonaVisible({
     throwOnError: false,
-    onMutate: () => {
-      onChangeStatus('loading');
-    },
-    onSuccess: (res) => {
-      if (res.visible) {
-        setSelectPersona((prev) => Array.from(new Set([...prev, res.id])));
-      } else {
-        setSelectPersona((prev) => prev.filter((id) => id !== res.id));
-      }
-      onChangeStatus('success');
-    },
     onError: (error) => {
-      const isMaximumPetCountError = error.response?.status === 400;
-
-      onChangeStatus('error');
-
-      if (isMaximumPetCountError) {
-        // 최대 펫 개수 초과 에러
+      if (error.response?.status === 400) {
         toast.error(t('maximum-pet-count-error'));
       } else {
-        // 기타 에러
         toast.error(tError('global-error-message'));
       }
     },
-    onSettled: async (res, error, variables) => {
+    onSettled: async (_, __, variables) => {
       await queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
       setLoadingPersona((prev) => prev.filter((id) => id !== variables.personaId));
+      onImageRefresh();
     },
   });
 
   const onSelectPersona = (persona: Persona) => {
     setLoadingPersona((prev) => [...prev, persona.id]);
-
-    const isVisible = selectPersona.includes(persona.id);
-
-    // 보이는 상태라면 숨김으로, 숨김 상태라면 보이는 상태로 변경 요청
-    mutate({ personaId: persona.id, visible: !isVisible });
+    mutate({ personaId: persona.id, visible: !persona.visible });
   };
 
-  const initSelectPersonas = (list: Persona[]) => {
-    const visiblePersonaIds = list.filter((persona) => persona.visible).map((persona) => persona.id);
-    setSelectPersona(visiblePersonaIds);
+  const personaListProps = {
+    loadingPersona,
+    onSelectPersona,
   };
 
   return (
@@ -87,26 +62,19 @@ export function FarmPersonaSelect({
         </button>
       </section>
       <ScrollArea className="h-40">
-        <SelectPersonaList
-          loadingPersona={loadingPersona}
-          selectPersona={selectPersona}
-          onSelectPersona={onSelectPersona}
-          initSelectPersonas={initSelectPersonas}
-        />
+        <SelectPersonaList {...personaListProps} />
       </ScrollArea>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <Dialog.Content size="large" className="overflow-hidden flex flex-col gap-4">
           <Dialog.Title>{t('farm-type-select-pet')}</Dialog.Title>
-          <ScrollArea className="max-h-full min-h-0 flex-1">
-            <div className="grid grid-auto-fit-fill gap-1">
-              <SelectPersonaList
-                loadingPersona={loadingPersona}
-                selectPersona={selectPersona}
-                onSelectPersona={onSelectPersona}
-                initSelectPersonas={initSelectPersonas}
-              />
-            </div>
-          </ScrollArea>
+          <SelectPersonaList {...personaListProps}>
+            <Dialog.TopSlot>
+              <SelectPersonaList.Toolbar showSearch showVisibilityFilter />
+            </Dialog.TopSlot>
+            <Dialog.Body>
+              <SelectPersonaList.Grid />
+            </Dialog.Body>
+          </SelectPersonaList>
         </Dialog.Content>
       </Dialog>
     </div>

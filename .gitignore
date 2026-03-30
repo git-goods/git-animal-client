@@ -70,3 +70,7 @@ apps/web/public/sw.js
 
 *storybook.log
 .playwright-mcp
+
+# Local Claude Code instructions
+apps/*/CLAUDE.local.md
+CLAUDE.local.md

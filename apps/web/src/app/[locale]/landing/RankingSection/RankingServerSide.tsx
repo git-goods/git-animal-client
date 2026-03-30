@@ -4,18 +4,16 @@ import { rankQueries } from '@gitanimals/react-query';
 
 import { getDehydratedQueries, Hydrate } from '@/lib/react-query/queryClient';
 
+import { RANKS_PER_PAGE, RANKS_TOP_3 } from './constants';
 import RankingSection from './RankingSection';
 
-const TOTAL_VIEW_RANKS = 8 as const;
-const RANKS_TOP_3 = 3 as const;
-const RANKS_PER_PAGE = TOTAL_VIEW_RANKS - RANKS_TOP_3;
-
 export async function RankingServerSide({
-  searchParams,
+  searchParams: searchParamsPromise,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   try {
+    const searchParams = await searchParamsPromise;
     const type = searchParams.ranking ?? 'people';
 
     const session = await getServerSession();

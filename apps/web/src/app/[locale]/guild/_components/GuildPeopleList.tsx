@@ -1,14 +1,20 @@
 'use client';
 
 import { cn, BannerPetSelectMedium } from '@gitanimals/ui-tailwind';
-import Flicking from '@egjs/react-flicking';
 import type { GuildLeader, GuildMember } from '@gitanimals/api';
+import useEmblaCarousel from 'embla-carousel-react';
 import { UsersRoundIcon } from 'lucide-react';
 
 import { USER_GITHUB_URL } from '@/constants/route';
 import { getPersonaImage } from '@/utils/image';
 
 export function GuildPeopleList({ members, leader }: { members: GuildMember[]; leader: GuildLeader }) {
+  const [emblaRef] = useEmblaCarousel({
+    dragFree: true,
+    align: 'start',
+    containScroll: 'trimSnaps',
+  });
+
   return (
     <div className={listStyle}>
       <div className={leaderStyle}>
@@ -31,20 +37,22 @@ export function GuildPeopleList({ members, leader }: { members: GuildMember[]; l
               <span>{members.length + 1}/ 15</span>
             </div>
           </div>
-          <Flicking moveType="freeScroll" align="prev" bound={true}>
-            {members.map((member) => (
-              <div className={cn('flicking-panel h-fit first:ml-0 ml-1')} key={member.id}>
-                <a href={USER_GITHUB_URL(member.name)} target="_blank" draggable={false}>
-                  <BannerPetSelectMedium
-                    key={member.id}
-                    name={member.name}
-                    count={member.contributions}
-                    image={getPersonaImage(member.personaType)}
-                  />
-                </a>
-              </div>
-            ))}
-          </Flicking>
+          <div ref={emblaRef} className="overflow-hidden">
+            <div className="flex">
+              {members.map((member) => (
+                <div className="flex-[0_0_auto] h-fit first:ml-0 ml-1" key={member.id}>
+                  <a href={USER_GITHUB_URL(member.name)} target="_blank" draggable={false}>
+                    <BannerPetSelectMedium
+                      key={member.id}
+                      name={member.name}
+                      count={member.contributions}
+                      image={getPersonaImage(member.personaType)}
+                    />
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -59,8 +67,3 @@ const listStyle = cn(
 const leaderStyle = cn('[&>p]:mb-1');
 
 const membersStyle = cn('overflow-hidden flex-1');
-
-const titleStyle = cn(
-  'flex items-center gap-4 font-product text-glyph-36 font-bold text-white',
-  '[&_img]:rounded-lg',
-);
