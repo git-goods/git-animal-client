@@ -9,11 +9,13 @@ export function MotionPet() {
       alt="snowman"
       width={100}
       height={100}
+      draggable={false}
       className={css({
         width: 'auto',
         height: '100%',
         objectFit: 'contain',
         userSelect: 'none',
+        pointerEvents: 'auto',
         cursor: 'pointer',
       })}
       whileHover={{ y: [0, -20, 0] }}
