@@ -33,6 +33,8 @@ const SelectQuizType = wrap
           image="/assets/game/quiz/quiz-cat.webp"
           point={`${QUIZ_REGISTER_POINT}P`}
           onClick={() => navigate(ROUTES.GAME.QUIZ.CREATE())}
+          isDisabled
+          disabledLabel={t('prepare', { ns: 'shop' })}
         />
         <QuizTypeCard
           title={quizSolveCard.title}
