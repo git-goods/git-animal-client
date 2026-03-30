@@ -210,6 +210,7 @@
     "invalid-guild-name": "Guild name may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen."
   },
   "Quiz": {
+    "prepare": "Coming Soon",
     "quiz-solve-description": "Create a quiz or solve it to earn points!",
     "solve-todays-quiz-description": "Solve today's quiz and get points!",
     "check-language-for-quiz-dialog-title": "Change Language",
