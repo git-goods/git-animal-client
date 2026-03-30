@@ -75,10 +75,10 @@ export function MotionPet() {
           <motion.div
             key={petal.id}
             className={petalStyle}
-            initial={{ opacity: 1, y: -20, x: petal.x * 0.3, scale: 0 }}
+            initial={{ opacity: 1, y: 0, x: petal.x * 0.3, scale: 0 }}
             animate={{
               opacity: [1, 1, 0],
-              y: [0, 80, 200],
+              y: [0, 60, 150],
               x: [petal.x * 0.3, petal.x, petal.x * 0.8],
               scale: [0, 1, 0.6],
               rotate: [0, petal.x > 0 ? 180 : -180, petal.x > 0 ? 360 : -360],
@@ -115,7 +115,7 @@ const petStyle = css({
 
 const petalStyle = css({
   position: 'absolute',
-  top: '30%',
+  bottom: '-10%',
   left: '50%',
   pointerEvents: 'none',
 });
