@@ -12,6 +12,7 @@ import DashboardPage from "@/pages/DashboardPage";
 import DesignSystemPage from "@/pages/DesignSystemPage";
 import PointAdjustmentPage from "@/pages/PointAdjustmentPage";
 import PointsPage from "@/pages/PointsPage";
+import QuizManagementPage from "@/pages/QuizManagementPage";
 
 import { Sidebar } from "./components/Sidebar";
 
@@ -86,6 +87,7 @@ export default function App() {
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/points" element={<PointsPage />} />
             <Route path="/point-adjustment" element={<PointAdjustmentPage />} />
+            <Route path="/quiz" element={<QuizManagementPage />} />
             <Route path="/users" element={<ComingSoonPage pageName="사용자" />} />
             <Route path="/analytics" element={<ComingSoonPage pageName="분석" />} />
             <Route path="/reports" element={<ComingSoonPage pageName="리포트" />} />
