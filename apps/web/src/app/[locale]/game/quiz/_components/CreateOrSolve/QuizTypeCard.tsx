@@ -9,17 +9,20 @@ interface QuizTypeCardProps {
   point: string;
   onClick: () => void;
   isDisabled?: boolean;
+  disabledLabel?: string;
 }
 
-const QuizTypeCard = ({ title, description, image, point, onClick, isDisabled }: QuizTypeCardProps) => {
+const QuizTypeCard = ({ title, description, image, point, onClick, isDisabled, disabledLabel }: QuizTypeCardProps) => {
   return (
     <button className={cx(cardStyle, isDisabled && disabledStyle)} onClick={onClick} disabled={isDisabled}>
-      <Image className={imageStyle} src={image} alt={title} width={100} height={100} />
-      <Flex direction="column" gap="4px">
+      <Image className={cx(imageStyle, isDisabled && disabledContentStyle)} src={image} alt={title} width={100} height={100} />
+      <Flex className={isDisabled ? disabledContentStyle : undefined} direction="column" gap="4px">
         <h4 className={titleStyle}>{title}</h4>
         <p className={descriptionStyle}>{description}</p>
       </Flex>
-      <p className={pointStyle}>{point}</p>
+      <p className={isDisabled && disabledLabel ? disabledLabelStyle : pointStyle}>
+        {isDisabled && disabledLabel ? disabledLabel : point}
+      </p>
     </button>
   );
 };
@@ -38,8 +41,24 @@ const cardStyle = css({
 });
 
 const disabledStyle = css({
-  opacity: 0.5,
   pointerEvents: 'none',
+});
+
+const disabledContentStyle = css({
+  opacity: 0.4,
+  filter: 'grayscale(1)',
+});
+
+const disabledLabelStyle = css({
+  position: 'absolute',
+  top: '8px',
+  right: '8px',
+  padding: '2px 12px',
+  backgroundColor: 'white.white_50',
+  borderRadius: 'full',
+  textStyle: 'glyph12.regular',
+  fontWeight: 700,
+  color: 'white',
 });
 
 const imageStyle = css({
