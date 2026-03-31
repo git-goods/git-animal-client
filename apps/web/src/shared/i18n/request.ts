@@ -11,7 +11,7 @@ export default getRequestConfig(async ({ locale }) => {
 
   try {
     // Attempt to dynamically import the locale messages
-    const messages = (await import(`../../messages/${locale}.json`)).default;
+    const messages = (await import(`../../../messages/${locale}.json`)).default;
     return { messages };
   } catch (error) {
     sendLog({ locale: locale, error: 'Error loading messages for locale' }, 'Error loading messages for locale');
