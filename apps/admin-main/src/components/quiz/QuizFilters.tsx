@@ -21,12 +21,12 @@ export const QuizFilters = ({
   onLanguageChange,
 }: QuizFiltersProps) => {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       <Select
         value={level ?? ALL_VALUE}
         onValueChange={(v: string) => onLevelChange(v === ALL_VALUE ? undefined : (v as QuizLevel))}
       >
-        <SelectTrigger className="w-[130px]" size="sm">
+        <SelectTrigger className="w-[130px] max-md:flex-1 max-md:w-auto" size="sm">
           <SelectValue placeholder="난이도" />
         </SelectTrigger>
         <SelectContent>
@@ -43,7 +43,7 @@ export const QuizFilters = ({
           onCategoryChange(v === ALL_VALUE ? undefined : (v as QuizCategory))
         }
       >
-        <SelectTrigger className="w-[140px]" size="sm">
+        <SelectTrigger className="w-[140px] max-md:flex-1 max-md:w-auto" size="sm">
           <SelectValue placeholder="카테고리" />
         </SelectTrigger>
         <SelectContent>
@@ -59,7 +59,7 @@ export const QuizFilters = ({
           onLanguageChange(v === ALL_VALUE ? undefined : (v as QuizLanguage))
         }
       >
-        <SelectTrigger className="w-[120px]" size="sm">
+        <SelectTrigger className="w-[120px] max-md:flex-1 max-md:w-auto" size="sm">
           <SelectValue placeholder="언어" />
         </SelectTrigger>
         <SelectContent>

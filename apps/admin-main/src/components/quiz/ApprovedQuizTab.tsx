@@ -10,15 +10,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ds";
+import { useIsMobile } from "@/components/ui/use-mobile";
 import { useDeleteApprovedQuiz } from "@/hooks/mutations/useDeleteApprovedQuiz";
 import { useApprovedQuizs } from "@/hooks/queries/useApprovedQuizs";
 import type { QuizCategory, QuizLanguage, QuizLevel } from "@/lib/api/quiz";
 
 import { QuizActionDialog } from "./QuizActionDialog";
 import { QuizBadge } from "./QuizBadge";
+import { QuizCardContent } from "./QuizCard";
 import { QuizFilters } from "./QuizFilters";
+import { SwipeableCard } from "./SwipeableCard";
 
 export const ApprovedQuizTab = () => {
+  const isMobile = useIsMobile();
+
   const [level, setLevel] = useState<QuizLevel | undefined>();
   const [category, setCategory] = useState<QuizCategory | undefined>();
   const [language, setLanguage] = useState<QuizLanguage | undefined>();
@@ -54,35 +59,43 @@ export const ApprovedQuizTab = () => {
         onLanguageChange={setLanguage}
       />
 
-      <div className="rounded-lg border border-slate-200 bg-white">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>난이도</TableHead>
-              <TableHead>카테고리</TableHead>
-              <TableHead>언어</TableHead>
-              <TableHead className="min-w-[300px]">문제</TableHead>
-              <TableHead>정답</TableHead>
-              <TableHead>등록자</TableHead>
-              <TableHead>등록일</TableHead>
-              <TableHead className="text-right">작업</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {isLoading ? (
+      {isLoading ? (
+        <div className="flex items-center justify-center h-24 text-slate-500">
+          <Loader2 className="h-5 w-5 animate-spin" />
+        </div>
+      ) : quizs.length === 0 ? (
+        <div className="flex items-center justify-center h-24 text-slate-500 text-sm">
+          승인된 퀴즈가 없습니다.
+        </div>
+      ) : isMobile ? (
+        <div className="space-y-2">
+          {quizs.map((quiz) => (
+            <div key={quiz.id} className="rounded-lg border border-slate-200">
+              <SwipeableCard
+                leftAction={{ type: "delete", onAction: () => setDeleteTarget(quiz.id) }}
+              >
+                <QuizCardContent quiz={quiz} />
+              </SwipeableCard>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-lg border border-slate-200 bg-white">
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell colSpan={8} className="h-24 text-center text-slate-500">
-                  <Loader2 className="mx-auto h-5 w-5 animate-spin" />
-                </TableCell>
+                <TableHead>난이도</TableHead>
+                <TableHead>카테고리</TableHead>
+                <TableHead>언어</TableHead>
+                <TableHead className="min-w-[300px]">문제</TableHead>
+                <TableHead>정답</TableHead>
+                <TableHead>등록자</TableHead>
+                <TableHead>등록일</TableHead>
+                <TableHead className="text-right">작업</TableHead>
               </TableRow>
-            ) : quizs.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={8} className="h-24 text-center text-slate-500">
-                  승인된 퀴즈가 없습니다.
-                </TableCell>
-              </TableRow>
-            ) : (
-              quizs.map((quiz) => (
+            </TableHeader>
+            <TableBody>
+              {quizs.map((quiz) => (
                 <TableRow key={quiz.id}>
                   <TableCell>
                     <QuizBadge type="level" value={quiz.level} />
@@ -109,11 +122,11 @@ export const ApprovedQuizTab = () => {
                     </button>
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      )}
 
       {hasNextPage && (
         <div className="flex justify-center">
