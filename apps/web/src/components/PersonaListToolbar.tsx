@@ -1,9 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
-import { CombineChip, SearchBar } from '@gitanimals/ui-panda';
+import { cn, SearchBar, Select } from '@gitanimals/ui-tailwind';
 import { RotateCcwIcon } from 'lucide-react';
 
 import { ANIMAL_TIER_INFO } from '@/components/AnimalCard/AnimalCard.constant';
@@ -58,6 +56,12 @@ const SORT_OPTIONS: { value: SortBy; labelKey: string }[] = [
   { value: 'name', labelKey: 'sort-name' },
 ];
 
+const filterTriggerClassName = cn(
+  'min-w-0 max-w-[9.5rem] shrink-0',
+  'font-product text-glyph-12 text-white/50',
+  'border-white/10',
+);
+
 export function PersonaListToolbar({
   filterState,
   onFilterChange,
@@ -71,7 +75,7 @@ export function PersonaListToolbar({
   const t = useTranslations('Mypage.Filter');
 
   return (
-    <div className={toolbarContainerStyle}>
+    <div className="mb-2 flex flex-col gap-2">
       {showSearch && (
         <SearchBar
           placeholder={t('search-placeholder')}
@@ -80,61 +84,59 @@ export function PersonaListToolbar({
         />
       )}
 
-      <div className={filterRowStyle}>
-        {/* 등급 필터 */}
-        <CombineChip
-          value={filterState.grade}
-          onValueChange={(v: string) => onFilterChange({ grade: v as GradeFilter })}
-        >
-          <CombineChip.Trigger size="small">
-            <CombineChip.Value placeholder={t('grade')} />
-          </CombineChip.Trigger>
-          <CombineChip.Content>
+      <div className="flex flex-wrap items-center gap-1.5">
+        <Select value={filterState.grade} onValueChange={(v) => onFilterChange({ grade: v as GradeFilter })}>
+          <Select.Trigger size="sm" className={filterTriggerClassName}>
+            <Select.Value placeholder={t('grade')} />
+          </Select.Trigger>
+          <Select.Content>
             {GRADE_OPTIONS.map((opt) => (
-              <CombineChip.Item key={opt.value} value={opt.value}>
+              <Select.Item key={opt.value} value={opt.value}>
                 {t(opt.labelKey)}
-              </CombineChip.Item>
+              </Select.Item>
             ))}
-          </CombineChip.Content>
-        </CombineChip>
+          </Select.Content>
+        </Select>
 
-        {/* 티어 필터 */}
-        <CombineChip value={filterState.tier} onValueChange={(v: string) => onFilterChange({ tier: v as TierFilter })}>
-          <CombineChip.Trigger size="small">
-            <CombineChip.Value placeholder={t('tier')} />
-          </CombineChip.Trigger>
-          <CombineChip.Content>
+        <Select value={filterState.tier} onValueChange={(v) => onFilterChange({ tier: v as TierFilter })}>
+          <Select.Trigger size="sm" className={filterTriggerClassName}>
+            <Select.Value placeholder={t('tier')} />
+          </Select.Trigger>
+          <Select.Content>
             {TIER_OPTIONS.map((opt) => (
-              <CombineChip.Item key={opt.value} value={opt.value}>
+              <Select.Item key={opt.value} value={opt.value}>
                 {opt.label}
-              </CombineChip.Item>
+              </Select.Item>
             ))}
-          </CombineChip.Content>
-        </CombineChip>
+          </Select.Content>
+        </Select>
 
-        {/* 가시성 필터 */}
         {showVisibilityFilter && (
-          <CombineChip
+          <Select
             value={filterState.visibility}
-            onValueChange={(v: string) => onFilterChange({ visibility: v as VisibilityFilter })}
+            onValueChange={(v) => onFilterChange({ visibility: v as VisibilityFilter })}
           >
-            <CombineChip.Trigger size="small">
-              <CombineChip.Value placeholder={t('visibility')} />
-            </CombineChip.Trigger>
-            <CombineChip.Content>
+            <Select.Trigger size="sm" className={filterTriggerClassName}>
+              <Select.Value placeholder={t('visibility')} />
+            </Select.Trigger>
+            <Select.Content>
               {VISIBILITY_OPTIONS.map((opt) => (
-                <CombineChip.Item key={opt.value} value={opt.value}>
+                <Select.Item key={opt.value} value={opt.value}>
                   {t(opt.labelKey)}
-                </CombineChip.Item>
+                </Select.Item>
               ))}
-            </CombineChip.Content>
-          </CombineChip>
+            </Select.Content>
+          </Select>
         )}
 
-        {/* 진화 가능 필터 */}
         {showEvolvableFilter && (
           <button
-            className={toggleButtonStyle}
+            type="button"
+            className={cn(
+              'h-[30px] shrink-0 cursor-pointer rounded-md border border-transparent px-3 font-product text-glyph-12 text-white/50 transition-colors',
+              'bg-white/5 hover:bg-white/10',
+              filterState.evolvableOnly && 'border-brand-sky bg-brand-sky/25 text-white/90',
+            )}
             data-active={filterState.evolvableOnly || undefined}
             onClick={() => onFilterChange({ evolvableOnly: !filterState.evolvableOnly })}
           >
@@ -142,27 +144,30 @@ export function PersonaListToolbar({
           </button>
         )}
 
-        {/* 정렬 */}
-        <CombineChip value={filterState.sortBy} onValueChange={(v: string) => onFilterChange({ sortBy: v as SortBy })}>
-          <CombineChip.Trigger size="small">
-            <CombineChip.Value placeholder={t('sort')} />
-          </CombineChip.Trigger>
-          <CombineChip.Content>
+        <Select value={filterState.sortBy} onValueChange={(v) => onFilterChange({ sortBy: v as SortBy })}>
+          <Select.Trigger size="sm" className={filterTriggerClassName}>
+            <Select.Value placeholder={t('sort')} />
+          </Select.Trigger>
+          <Select.Content>
             {SORT_OPTIONS.map((opt) => (
-              <CombineChip.Item key={opt.value} value={opt.value}>
+              <Select.Item key={opt.value} value={opt.value}>
                 {t(opt.labelKey)}
-              </CombineChip.Item>
+              </Select.Item>
             ))}
-          </CombineChip.Content>
-        </CombineChip>
+          </Select.Content>
+        </Select>
 
-        {/* 결과 수 + 초기화 */}
-        <div className={countSectionStyle}>
-          <span className={countTextStyle}>
+        <div className="ml-auto flex items-center gap-1">
+          <span className="font-product text-glyph-12 text-white/50">
             {counts.filtered}/{counts.total}
           </span>
           {isFiltering && (
-            <button className={resetButtonStyle} onClick={onReset} aria-label={t('reset')}>
+            <button
+              type="button"
+              className="flex size-6 cursor-pointer items-center justify-center rounded text-white/50 hover:bg-white/10 hover:text-white/75"
+              onClick={onReset}
+              aria-label={t('reset')}
+            >
               <RotateCcwIcon size={14} />
             </button>
           )}
@@ -171,62 +176,3 @@ export function PersonaListToolbar({
     </div>
   );
 }
-
-const toolbarContainerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '8px',
-  marginBottom: '8px',
-});
-
-const filterRowStyle = flex({
-  gap: '6px',
-  alignItems: 'center',
-  flexWrap: 'wrap',
-});
-
-const toggleButtonStyle = css({
-  height: '30px',
-  padding: '6px 12px',
-  borderRadius: '6px',
-  textStyle: 'glyph12.regular',
-  color: 'white.white_50',
-  backgroundColor: 'white.white_5',
-  border: '1px solid transparent',
-  cursor: 'pointer',
-  transition: 'all 0.15s ease',
-  _hover: {
-    backgroundColor: 'white.white_10',
-  },
-  '&[data-active]': {
-    color: 'white.white_90',
-    backgroundColor: 'brand.sky_25',
-    borderColor: 'brand.sky',
-  },
-});
-
-const countSectionStyle = flex({
-  alignItems: 'center',
-  gap: '4px',
-  marginLeft: 'auto',
-});
-
-const countTextStyle = css({
-  textStyle: 'glyph12.regular',
-  color: 'white.white_50',
-});
-
-const resetButtonStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '24px',
-  height: '24px',
-  borderRadius: '4px',
-  color: 'white.white_50',
-  cursor: 'pointer',
-  _hover: {
-    backgroundColor: 'white.white_10',
-    color: 'white.white_75',
-  },
-});
