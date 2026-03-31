@@ -6,7 +6,7 @@
 import createNextIntlPlugin from 'next-intl/plugin';
 import NextPWA from 'next-pwa';
 
-const withNextIntl = createNextIntlPlugin();
+const withNextIntl = createNextIntlPlugin('./src/shared/i18n/request.ts');
 
 const withPWA = NextPWA({
   dest: 'public',
@@ -16,7 +16,6 @@ const withPWA = NextPWA({
 });
 
 const nextConfig = withNextIntl({
-  transpilePackages: ['@gitanimals/ui-panda'],
   reactStrictMode: true,
   compiler: {
     styledComponents: true,
