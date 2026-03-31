@@ -14,11 +14,12 @@ import PointAdjustmentPage from "@/pages/PointAdjustmentPage";
 import PointsPage from "@/pages/PointsPage";
 import QuizManagementPage from "@/pages/QuizManagementPage";
 
-import { Sidebar } from "./components/Sidebar";
+import { MobileHeader, Sidebar, useIsMobile } from "./components/Sidebar";
 
 function ProtectedLayout() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -65,13 +66,23 @@ function ProtectedLayout() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex">
-      <Sidebar />
-
-      <main className="flex-1 ml-64">
-        <div className="max-w-[1600px] mx-auto px-3 py-3 relative">
-          <Outlet />
-        </div>
-      </main>
+      {isMobile ? (
+        <main className="flex-1 flex flex-col">
+          <MobileHeader />
+          <div className="flex-1 px-3 py-3 relative">
+            <Outlet />
+          </div>
+        </main>
+      ) : (
+        <>
+          <Sidebar />
+          <main className="flex-1 ml-64">
+            <div className="max-w-[1600px] mx-auto px-3 py-3 relative">
+              <Outlet />
+            </div>
+          </main>
+        </>
+      )}
     </div>
   );
 }
