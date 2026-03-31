@@ -1,7 +1,7 @@
 'use client';
 
+import type { CSSProperties } from 'react';
 import { useCallback, useState } from 'react';
-import { css } from '_panda/css';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { BlossomSVG } from './CherryBlossom';
@@ -39,8 +39,8 @@ export function MotionPetSection() {
 
   return (
     <>
-      <div className={desktopWrapperStyle}>
-        <div className={petPositionStyle}>
+      <div style={desktopWrapperStyle}>
+        <div style={petPositionStyle}>
           <MotionPet onClick={handleClick} />
         </div>
       </div>
@@ -49,7 +49,7 @@ export function MotionPetSection() {
         {petals.map((petal) => (
           <motion.div
             key={petal.id}
-            className={petalStyle}
+            style={petalStyle}
             initial={{ opacity: 1, y: 0, x: petal.x * 0.3, scale: 0 }}
             animate={{
               opacity: [1, 1, 0],
@@ -77,14 +77,12 @@ function MotionPet({ onClick }: { onClick: () => void }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className={containerStyle}>
+    <div style={containerStyle}>
       <motion.img
-        src="/main/snowman.svg"
-        alt="snowman"
-        width={100}
-        height={100}
+        src="/assets/spring-maltese.svg"
+        alt="maltese"
         draggable={false}
-        className={petStyle}
+        style={petStyle}
         animate={{
           y: [0, -8, 0],
         }}
@@ -111,45 +109,42 @@ function MotionPet({ onClick }: { onClick: () => void }) {
   );
 }
 
-const desktopWrapperStyle = css({
+const desktopWrapperStyle: CSSProperties = {
   position: 'relative',
   width: '100%',
   height: '100%',
   maxHeight: 'calc(100vh - 60px)',
-  _mobile: {
-    display: 'none',
-  },
-});
+  overflow: 'visible',
+};
 
-const petPositionStyle = css({
+const petPositionStyle: CSSProperties = {
   position: 'absolute',
-  bottom: '0',
-  right: '0',
-  objectFit: 'contain',
-  height: '100%',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
   userSelect: 'none',
   cursor: 'pointer',
-});
+};
 
-const containerStyle = css({
+const containerStyle: CSSProperties = {
   position: 'relative',
-  width: 'auto',
-  height: '100%',
-});
+  width: 'min(500px, 34vw)',
+};
 
-const petStyle = css({
-  width: 'auto',
-  height: '100%',
+const petStyle: CSSProperties = {
+  width: 'min(500px, 34vw)',
+  height: 'auto',
   objectFit: 'contain',
   userSelect: 'none',
   pointerEvents: 'auto',
   cursor: 'pointer',
-});
+  imageRendering: 'pixelated',
+};
 
-const petalStyle = css({
+const petalStyle: CSSProperties = {
   position: 'absolute',
   bottom: '10%',
   right: '15%',
   pointerEvents: 'none',
   zIndex: 1,
-});
+};

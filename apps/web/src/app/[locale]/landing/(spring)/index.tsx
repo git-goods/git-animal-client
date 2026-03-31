@@ -38,7 +38,7 @@ export async function SpringContent() {
 
         <MotionPetSection />
         <div className={containerStyle}>
-          <h1 className={springLogoStyle}>GITANIMALS</h1>
+          <img src="/assets/spring-logo.svg" alt="GITANIMALS" className={springLogoStyle} />
           <p className={descriptionStyle}>
             Spring is blooming in Gitanimals!
             <br />
@@ -66,17 +66,12 @@ export async function SpringContent() {
 }
 
 const springLogoStyle = css({
-  fontSize: '72px',
-  fontWeight: 900,
-  lineHeight: 1,
-  background: 'linear-gradient(135deg, #FF94A8 0%, #FFB7C5 40%, #FFD700 100%)',
-  backgroundClip: 'text',
-  color: 'transparent',
-  letterSpacing: '0.05em',
+  width: 'min(600px, 45vw)',
+  height: 'auto',
   userSelect: 'none',
+  filter: 'drop-shadow(0 4px 12px rgba(255, 150, 170, 0.3))',
   _mobile: {
-    fontSize: '36px',
-    textAlign: 'center',
+    width: 'min(280px, 80vw)',
   },
 });
 
@@ -85,12 +80,14 @@ const descriptionStyle = css({
   textStyle: 'glyph32.bold',
   fontWeight: 400,
   whiteSpace: 'pre-line',
-  marginTop: '40px',
-  marginBottom: '40px',
+  marginTop: '16px',
+  marginBottom: '28px',
+  lineHeight: 1.5,
   _mobile: {
     textStyle: 'glyph16.regular',
     fontSize: '16px',
-    marginTop: '20px',
+    marginTop: '12px',
+    marginBottom: '20px',
     textAlign: 'center',
   },
 });
@@ -104,12 +101,13 @@ const containerStyle = flex({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  paddingBottom: '160px',
+  paddingBottom: '0',
+  gap: '0',
   _mobile: {
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: '100px',
+    paddingBottom: '0',
     pl: 0,
   },
 });
@@ -119,8 +117,9 @@ const bgContainerStyle = css({
   width: '100%',
   height: 'calc(100vh - 60px)',
   display: 'grid',
-  gridTemplateColumns: '3fr 4fr',
-  paddingTop: '10%',
+  gridTemplateColumns: '2fr 3fr',
+  gap: '0',
+  alignItems: 'center',
   overflow: 'hidden',
   background: 'linear-gradient(180deg, #E8F4FD 0%, #FFF0F5 40%, #FFE4EE 70%, #FFDBEE 100%)',
   _mobile: {
