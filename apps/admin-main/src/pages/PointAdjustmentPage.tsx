@@ -4,9 +4,7 @@ import { Coins, Minus, Plus } from "lucide-react";
 import { toast } from "sonner";
 
 import ComingSoon from "@/components/ComingSoon";
-import { Alert, Button, Card, StatCard, Textarea } from "@/components/ds";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Alert, Button, Card, Input, StatCard, Textarea } from "@/components/ds";
 import {
   decreaseUserPoint,
   increaseUserPointAdmin,
@@ -22,23 +20,11 @@ export default function PointAdjustmentPage() {
   const increasePointMutation = useMutation({
     mutationFn: ({ username, data }: { username: string; data: PointChangeRequest }) =>
       increaseUserPointAdmin(username, data),
-    onError: (error) => {
-      console.error("포인트 증가 실패:", error);
-    },
-    onSuccess: () => {
-      toast.success("포인트 증가 요청이 성공적으로 전송되었습니다.");
-    },
   });
 
   const decreasePointMutation = useMutation({
     mutationFn: ({ username, data }: { username: string; data: PointChangeRequest }) =>
       decreaseUserPoint(username, data),
-    onError: (error) => {
-      console.error("포인트 감소 실패:", error);
-    },
-    onSuccess: () => {
-      toast.success("포인트 감소 요청이 성공적으로 전송되었습니다.");
-    },
   });
 
   const isLoading = increasePointMutation.isPending || decreasePointMutation.isPending;
@@ -62,6 +48,7 @@ export default function PointAdjustmentPage() {
       return;
     }
 
+    const actionText = operationType === "increase" ? "증가" : "감소";
     const mutationPayload = {
       username: username.trim(),
       data: {
@@ -70,10 +57,22 @@ export default function PointAdjustmentPage() {
       },
     };
 
+    const callbacks = {
+      onSuccess: () => {
+        toast.success(`포인트 ${actionText} 요청이 성공적으로 전송되었습니다.`);
+        setUsername("");
+        setPoint("");
+        setReason("");
+      },
+      onError: (error: Error) => {
+        toast.error(`포인트 ${actionText} 실패: ${error.message || "알 수 없는 오류"}`);
+      },
+    };
+
     if (operationType === "increase") {
-      increasePointMutation.mutate(mutationPayload);
+      increasePointMutation.mutate(mutationPayload, callbacks);
     } else {
-      decreasePointMutation.mutate(mutationPayload);
+      decreasePointMutation.mutate(mutationPayload, callbacks);
     }
   };
 
@@ -137,28 +136,30 @@ export default function PointAdjustmentPage() {
           </div>
 
           {/* 사용자명 */}
-          <Label>사용자명 (username)</Label>
           <Input
+            label="사용자명 (username)"
             placeholder="예: sumi-0011"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            helperText="GitHub 사용자명을 입력하세요."
             required
+            fullWidth
             disabled={isLoading}
           />
-          <p className="text-xs text-slate-500">GitHub 사용자명을 입력하세요.</p>
 
           {/* 포인트 */}
-          <Label>포인트</Label>
           <Input
+            label="포인트"
             type="number"
             placeholder="예: 1000"
             value={point}
             onChange={(e) => setPoint(e.target.value)}
+            helperText={`${operationType === "increase" ? "증가" : "감소"}시킬 포인트를 입력하세요. (양수)`}
             required
+            fullWidth
             disabled={isLoading}
             min="1"
           />
-          <p className="text-xs text-slate-500">{`${operationType === "increase" ? "증가" : "감소"}시킬 포인트를 입력하세요. (양수)`}</p>
 
           {/* 사유 */}
           <Textarea

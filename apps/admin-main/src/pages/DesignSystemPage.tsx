@@ -1,6 +1,22 @@
 import { CheckCircle, Mail, Plus, Save, Search, User } from "lucide-react";
 
-import { Alert, Button, Card, Input, StatCard, Textarea } from "@/components/ds";
+import {
+  Alert,
+  Avatar,
+  Badge,
+  Button,
+  Card,
+  Input,
+  ProgressBar,
+  StatCard,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Textarea,
+} from "@/components/ds";
 
 export default function DesignSystemPage() {
   return (
@@ -115,6 +131,147 @@ export default function DesignSystemPage() {
           />
           <StatCard title="이메일" value="1,234" icon={Mail} color="cyan" trend="+24" />
           <StatCard title="신규 가입" value="89" icon={Plus} color="indigo" trend="+15.3%" />
+        </div>
+      </Card>
+
+      {/* Badges */}
+      <Card title="Badges" subtitle="상태 및 분류 표시 배지">
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-sm text-slate-700 mb-2">Colors</h3>
+            <div className="flex flex-wrap gap-2">
+              <Badge color="blue">진행 중</Badge>
+              <Badge color="cyan">완료</Badge>
+              <Badge color="yellow">검토</Badge>
+              <Badge color="red">긴급</Badge>
+              <Badge color="orange">높음</Badge>
+              <Badge color="slate">계획</Badge>
+              <Badge color="green">승인</Badge>
+              <Badge color="indigo">신규</Badge>
+              <Badge color="sky">정보</Badge>
+              <Badge color="amber">경고</Badge>
+              <Badge color="purple">백엔드</Badge>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-sm text-slate-700 mb-2">Sizes</h3>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge size="sm" color="blue">
+                Small
+              </Badge>
+              <Badge size="md" color="blue">
+                Medium
+              </Badge>
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      {/* Progress Bar */}
+      <Card title="Progress Bar" subtitle="진행률 표시 바">
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-sm text-slate-700 mb-2">Colors</h3>
+            <div className="space-y-3 max-w-md">
+              <ProgressBar value={75} />
+              <ProgressBar value={45} color="cyan" />
+              <ProgressBar value={90} color="green" />
+              <ProgressBar value={30} color="red" />
+              <ProgressBar value={60} color="amber" />
+              <ProgressBar value={55} color="indigo" />
+            </div>
+          </div>
+          <div>
+            <h3 className="text-sm text-slate-700 mb-2">Sizes</h3>
+            <div className="space-y-3 max-w-md">
+              <ProgressBar value={60} size="sm" />
+              <ProgressBar value={60} size="md" />
+              <ProgressBar value={60} size="lg" />
+            </div>
+          </div>
+          <div>
+            <h3 className="text-sm text-slate-700 mb-2">Without Label</h3>
+            <div className="space-y-3 max-w-md">
+              <ProgressBar value={70} showLabel={false} />
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      {/* Avatar */}
+      <Card title="Avatar" subtitle="사용자 아바타 컴포넌트">
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-sm text-slate-700 mb-2">Sizes</h3>
+            <div className="flex items-center gap-3">
+              <Avatar name="김철수" size="sm" />
+              <Avatar name="이영희" size="md" />
+              <Avatar name="박민수" size="lg" />
+            </div>
+          </div>
+          <div>
+            <h3 className="text-sm text-slate-700 mb-2">Colors</h3>
+            <div className="flex items-center gap-3">
+              <Avatar name="김철수" color="blue" />
+              <Avatar name="이영희" color="cyan" />
+              <Avatar name="박민수" color="green" />
+              <Avatar name="정수현" color="red" />
+              <Avatar name="최지은" color="indigo" />
+              <Avatar name="강동훈" color="sky" />
+              <Avatar name="윤서연" color="amber" />
+              <Avatar name="한지우" color="slate" />
+            </div>
+          </div>
+          <div>
+            <h3 className="text-sm text-slate-700 mb-2">With Name</h3>
+            <div className="flex items-center gap-4">
+              <Avatar name="김철수" showName />
+              <Avatar name="이영희" showName color="cyan" />
+              <Avatar name="박민수" showName color="green" />
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      {/* Table */}
+      <Card title="Table" subtitle="데이터 테이블 컴포넌트">
+        <div className="rounded-lg border border-slate-200">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>이름</TableHead>
+                <TableHead>상태</TableHead>
+                <TableHead>역할</TableHead>
+                <TableHead className="text-right">포인트</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="text-sm font-medium text-slate-900">김철수</TableCell>
+                <TableCell>
+                  <Badge color="green">활성</Badge>
+                </TableCell>
+                <TableCell className="text-sm text-slate-600">관리자</TableCell>
+                <TableCell className="text-sm text-right text-slate-600">1,200P</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="text-sm font-medium text-slate-900">이영희</TableCell>
+                <TableCell>
+                  <Badge color="blue">진행 중</Badge>
+                </TableCell>
+                <TableCell className="text-sm text-slate-600">편집자</TableCell>
+                <TableCell className="text-sm text-right text-slate-600">850P</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="text-sm font-medium text-slate-900">박민수</TableCell>
+                <TableCell>
+                  <Badge color="slate">비활성</Badge>
+                </TableCell>
+                <TableCell className="text-sm text-slate-600">뷰어</TableCell>
+                <TableCell className="text-sm text-right text-slate-600">320P</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </div>
       </Card>
 
