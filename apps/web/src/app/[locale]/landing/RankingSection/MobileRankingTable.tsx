@@ -1,143 +1,189 @@
-import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation';
+'use client';
+
+import { useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { css, cx } from '_panda/css';
-import Flicking from '@egjs/react-flicking';
 import type { RankType } from '@gitanimals/api';
-import { getNewUrl } from '@gitanimals/util-common';
+import { rankQueries } from '@gitanimals/react-query';
+import { Skeleton } from '@gitanimals/ui-panda';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { RankingLink } from './RankingLink';
 
-import '@egjs/react-flicking/dist/flicking.css';
-import '@egjs/flicking-plugins/dist/pagination.css';
+const RANKS_PER_PAGE = 5;
+const SWIPE_THRESHOLD = 50;
 
-export function MobileRankingTable({ ranks, page, totalPage }: { page: number; ranks: RankType[]; totalPage: number }) {
-  const router = useRouter();
+interface MobileRankingTableProps {
+  initialRanks: RankType[];
+  initialPage: number;
+  totalPage: number;
+  type: 'WEEKLY_USER_CONTRIBUTIONS' | 'WEEKLY_GUILD_CONTRIBUTIONS';
+}
+
+export function MobileRankingTable({ initialRanks, initialPage, totalPage, type }: MobileRankingTableProps) {
   const { data: session } = useSession();
-  const searchParams = useSearchParams();
   const currentUsername = session?.user?.name;
+  const [page, setPage] = useState(initialPage);
+  const touchStartX = useRef(0);
 
-  const getRankingPageUrl = (params: Record<string, unknown>) => {
-    const oldParams = Object.fromEntries(searchParams.entries());
-    return getNewUrl({ baseUrl: '/', newParams: params, oldParams });
+  const goToPage = (next: number) => {
+    setPage(next);
   };
 
-  const handleMoveEnd = (e: any) => {
-    const direction = e.direction;
-    const newPage = direction === 'NEXT' ? page - 1 : page + 1;
+  const rankStart = page * RANKS_PER_PAGE + 4;
 
-    if (newPage < 0) return;
-    if (newPage > totalPage) return;
+  const { data: ranks, isPlaceholderData } = useQuery({
+    ...rankQueries.getRanksOptions({ rank: rankStart, size: RANKS_PER_PAGE, type }),
+    initialData: page === initialPage ? initialRanks : undefined,
+    placeholderData: keepPreviousData,
+  });
 
-    const newUrl = getRankingPageUrl({ page: newPage });
-    router.push(newUrl);
+  // Prefetch adjacent pages
+  useQuery({
+    ...rankQueries.getRanksOptions({ rank: (page - 1) * RANKS_PER_PAGE + 4, size: RANKS_PER_PAGE, type }),
+    enabled: page > 0,
+  });
+  useQuery({
+    ...rankQueries.getRanksOptions({ rank: (page + 1) * RANKS_PER_PAGE + 4, size: RANKS_PER_PAGE, type }),
+    enabled: page < totalPage,
+  });
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
   };
 
-  // 페이지 데이터를 10개씩 그룹화
-  const groupedRanks = ranks.reduce((acc: RankType[][], rank, index) => {
-    const groupIndex = Math.floor(index / 10);
-    if (!acc[groupIndex]) {
-      acc[groupIndex] = [];
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) < SWIPE_THRESHOLD) return;
+
+    if (diff > 0 && page < totalPage) {
+      goToPage(page + 1);
+    } else if (diff < 0 && page > 0) {
+      goToPage(page - 1);
     }
-    acc[groupIndex].push(rank);
-    return acc;
-  }, []);
+  };
 
   return (
-    <div className={rankingListStyle}>
-      <Flicking
-        className={flickingStyle}
-        defaultIndex={page - 1}
-        circular={false}
-        moveType="strict"
-        bound={true}
-        renderOnlyVisible={true}
-        onMoveEnd={handleMoveEnd}
-      >
-        {groupedRanks.map((group, index) => (
-          <div key={index} className={slideStyle}>
-            <table className={tableStyle}>
-              <thead>
-                <tr className={theadTrStyle}>
-                  <th>Rank</th>
-                  <th>Pet</th>
-                  <th>Name</th>
-                  <th>Contribution</th>
-                </tr>
-              </thead>
-              <tbody>
-                {group.map((item) => (
-                  <tr key={item.rank} className={cx(trStyle, item.name === currentUsername && currentUserTrStyle)}>
-                    <td>{item.rank}</td>
-                    <td>
-                      <RankingLink id={item.name}>
-                        <img src={item.image} alt={item.name} width={60} height={60} />
-                      </RankingLink>
-                    </td>
-                    <td>
-                      <RankingLink id={item.name}>{item.name}</RankingLink>
-                    </td>
-                    <td>{item.contributions}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ))}
-      </Flicking>
+    <div className={containerStyle} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+      <div className={cx(tableWrapperStyle, isPlaceholderData && fetchingStyle)}>
+        <RankingTableView ranks={ranks} currentUsername={currentUsername} />
+      </div>
       <div className={paginationStyle}>
-        {[0, 1, 2].map((group, index) => {
-          const isActive =
-            (page === 0 && index === 0) ||
-            (page !== 0 && page !== totalPage && index === 1) ||
-            (page === totalPage && index === 2);
-          return <div key={index} className={cx(paginationBulletStyle, isActive && 'active')}></div>;
-        })}
+        <button
+          className={arrowButtonStyle}
+          onClick={() => goToPage(page - 1)}
+          disabled={page <= 0}
+          aria-label="이전 페이지"
+        >
+          ‹
+        </button>
+        <span className={paginationTextStyle}>
+          {page + 1} / {totalPage + 1}
+        </span>
+        <button
+          className={arrowButtonStyle}
+          onClick={() => goToPage(page + 1)}
+          disabled={page >= totalPage}
+          aria-label="다음 페이지"
+        >
+          ›
+        </button>
       </div>
     </div>
   );
 }
 
-const flickingStyle = css({
-  width: '100%',
-  height: 'auto',
-  margin: '0 auto',
-  position: 'relative',
-  overflow: 'hidden',
+function RankingTableView({
+  ranks,
+  currentUsername,
+}: {
+  ranks: RankType[] | undefined;
+  currentUsername: string | null | undefined;
+}) {
+  return (
+    <table className={tableStyle}>
+      <thead>
+        <tr className={theadTrStyle}>
+          <th>Rank</th>
+          <th>Pet</th>
+          <th>Name</th>
+          <th>Contribution</th>
+        </tr>
+      </thead>
+      <tbody>
+        {ranks
+          ? ranks.map((item) => (
+              <tr key={item.rank} className={cx(trStyle, item.name === currentUsername && currentUserTrStyle)}>
+                <td>{item.rank}</td>
+                <td>
+                  <RankingLink id={item.name}>
+                    <img src={item.image} alt={item.name} width={60} height={60} />
+                  </RankingLink>
+                </td>
+                <td>
+                  <RankingLink id={item.name}>{item.name}</RankingLink>
+                </td>
+                <td>{item.contributions}</td>
+              </tr>
+            ))
+          : Array.from({ length: RANKS_PER_PAGE }).map((_, i) => (
+              <tr key={i} className={trStyle}>
+                <td>
+                  <Skeleton style={{ width: 20, height: 20, borderRadius: 4 }} />
+                </td>
+                <td>
+                  <Skeleton style={{ width: 40, height: 40, borderRadius: '50%' }} />
+                </td>
+                <td>
+                  <Skeleton style={{ width: 80, height: 16, borderRadius: 4 }} />
+                </td>
+                <td>
+                  <Skeleton style={{ width: 40, height: 16, borderRadius: 4 }} />
+                </td>
+              </tr>
+            ))}
+      </tbody>
+    </table>
+  );
+}
+
+const containerStyle = css({ width: '100%', overflow: 'hidden' });
+
+const tableWrapperStyle = css({
+  transition: 'opacity 0.15s ease',
 });
 
-const slideStyle = css({
-  width: '100%',
-  height: 'auto',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+const fetchingStyle = css({
+  opacity: 0.5,
 });
 
 const paginationStyle = css({
-  marginTop: '20px',
-  position: 'relative',
-  height: '30px',
+  marginTop: '16px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: 2,
 });
 
-const paginationBulletStyle = css({
-  width: '8px',
-  height: '8px',
-  borderRadius: '50%',
-  backgroundColor: 'white.white_50',
+const paginationTextStyle = css({
+  textStyle: 'glyph14.regular',
+  color: 'white.white_50',
+});
+
+const arrowButtonStyle = css({
+  width: '32px',
+  height: '32px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  border: 'none',
+  background: 'none',
+  color: 'white.white_75',
+  fontSize: '20px',
   cursor: 'pointer',
-
-  '&.active': {
-    backgroundColor: 'white.white_100',
+  _disabled: {
+    opacity: 0.25,
+    cursor: 'default',
   },
-});
-
-const rankingListStyle = css({
-  width: '100%',
 });
 
 const tableStyle = css({
@@ -148,7 +194,7 @@ const tableStyle = css({
 });
 
 const trBaseStyle = css({
-  borderRadius: '8px',
+  borderRadius: '6px',
 
   '& img': {
     borderRadius: '50%',
@@ -157,43 +203,23 @@ const trBaseStyle = css({
 
   '& td, & th': {
     border: 'none',
-    padding: '0 16px',
+    padding: '0 8px',
   },
 
   '& td:first-child, & th:first-child': {
-    paddingLeft: '40px',
-    borderRadius: '8px 0 0 8px',
-    width: '120px',
+    paddingLeft: '16px',
+    borderRadius: '6px 0 0 6px',
+    width: '54px',
   },
   '& td:last-child, & th:last-child': {
-    paddingRight: '40px',
-    borderRadius: '0 8px 8px 0',
+    paddingRight: '16px',
+    borderRadius: '0 6px 6px 0',
     textAlign: 'right',
   },
   '& td:nth-child(2), & th:nth-child(2)': {
     textAlign: 'center',
-    width: '72px',
-    padding: '0 8px',
-  },
-
-  _mobile: {
-    borderRadius: '6px',
-    '& td, & th': {
-      border: 'none',
-      padding: '0 8px',
-    },
-
-    '& td:first-child, & th:first-child': {
-      paddingLeft: '16px',
-      width: '54px',
-    },
-    '& td:last-child, & th:last-child': {
-      paddingRight: '16px',
-    },
-    '& td:nth-child(2), & th:nth-child(2)': {
-      width: '28px',
-      paddingLeft: '0px',
-    },
+    width: '28px',
+    paddingLeft: '0px',
   },
 });
 
@@ -213,21 +239,14 @@ const trStyle = cx(
     textStyle: 'glyph18.regular',
     color: 'white.white_100',
     backgroundColor: 'white.white_10',
-    height: '60px',
+    height: '48px',
+    fontSize: 'glyph15.regular',
 
     '& td:first-child': {
-      fontSize: '20px',
+      fontSize: '16px',
       lineHeight: '28px',
       fontFamily: 'token(fonts.dnf)',
       color: 'white.white_50',
-    },
-    _mobile: {
-      height: '48px',
-      fontSize: 'glyph15.regular',
-
-      '& td:first-child': {
-        fontSize: '16px',
-      },
     },
   }),
 );

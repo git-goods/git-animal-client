@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Button } from "@/components/ds";
-import { Input } from "@/components/ui/input";
+import { Button, Input } from "@/components/ds";
 import { authUtils } from "@/lib/auth";
 
 export default function LoginPage() {
@@ -62,7 +61,7 @@ export default function LoginPage() {
                   placeholder="어드민 비밀번호 입력"
                   value={token}
                   onChange={(e) => setToken(e.target.value)}
-                  className="flex-1"
+                  fullWidth
                 />
               </div>
               <Button onClick={onClickAdminPasswordInput}>완료</Button>

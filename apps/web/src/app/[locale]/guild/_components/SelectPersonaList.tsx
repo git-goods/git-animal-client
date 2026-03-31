@@ -1,17 +1,18 @@
 'use client';
 
-import { memo } from 'react';
+import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { LevelBanner } from '@gitanimals/ui-panda';
 import { BannerSkeletonList } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { MemoizedLevelPersonaItem } from '@/components/PersonaItem';
+import { PersonaListToolbar } from '@/components/PersonaListToolbar';
+import { usePersonaListFilter } from '@/hooks/persona/usePersonaListFilter';
 import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
-import { getPersonaImage } from '@/utils/image';
 
 const flexOverflowStyle = cx(
   css({
@@ -47,20 +48,37 @@ export const SelectPersonaList = wrap
   .on(function SelectPersonaList({ selectPersona, onSelectPersona }: SelectPersonaListProps) {
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
+    const t = useTranslations('Mypage.Filter');
 
-    // TODO: 정렬
+    const { filteredList, filterState, updateFilter, resetFilter, isFiltering, counts } = usePersonaListFilter(
+      data.personas,
+    );
+
     return (
       <section className={sectionStyle}>
-        <div className={flexOverflowStyle}>
-          {data.personas.map((persona) => (
-            <MemoizedPersonaItem
-              key={persona.id}
-              persona={persona}
-              isSelected={selectPersona.includes(persona.id)}
-              onClick={() => onSelectPersona(persona)}
-            />
-          ))}
-        </div>
+        <PersonaListToolbar
+          filterState={filterState}
+          onFilterChange={updateFilter}
+          onReset={resetFilter}
+          counts={counts}
+          isFiltering={isFiltering}
+          showSearch
+        />
+        {filteredList.length === 0 ? (
+          <p className={emptyStyle}>{t('no-results')}</p>
+        ) : (
+          <div className={flexOverflowStyle}>
+            {filteredList.map((persona) => (
+              <MemoizedLevelPersonaItem
+                key={persona.id}
+                persona={persona}
+                isSelected={selectPersona.includes(persona.id)}
+                onClick={() => onSelectPersona(persona)}
+                size="small"
+              />
+            ))}
+          </div>
+        )}
       </section>
     );
   });
@@ -74,25 +92,9 @@ const sectionStyle = css({
   gap: '16px',
 });
 
-interface PersonaItemProps {
-  persona: Persona;
-  isSelected: boolean;
-  onClick: () => void;
-}
-
-function PersonaItem({ persona, isSelected, onClick }: PersonaItemProps) {
-  return (
-    <button onClick={onClick} className={css({ outline: 'none', bg: 'transparent' })}>
-      <LevelBanner
-        image={getPersonaImage(persona.type)}
-        status={isSelected ? 'selected' : 'default'}
-        level={Number(persona.level)}
-        size="small"
-      />
-    </button>
-  );
-}
-
-const MemoizedPersonaItem = memo(PersonaItem, (prev, next) => {
-  return prev.isSelected === next.isSelected && prev.persona.level === next.persona.level;
+const emptyStyle = css({
+  textStyle: 'glyph14.regular',
+  color: 'white.white_50',
+  textAlign: 'center',
+  padding: '24px 0',
 });

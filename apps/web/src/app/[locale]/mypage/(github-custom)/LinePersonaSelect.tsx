@@ -2,12 +2,9 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
-import { flex } from '_panda/patterns';
+import { css } from '_panda/css';
 import { Dialog, ScrollArea } from '@gitanimals/ui-panda';
 import { ExpandIcon } from 'lucide-react';
-
-import { customScrollStyle } from '@/styles/scrollStyle';
 
 import { SelectPersonaList } from '../PersonaList';
 
@@ -36,52 +33,24 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
         />
       </ScrollArea>
       <Dialog open={isExtend} onOpenChange={() => setIsExtend(false)}>
-        <Dialog.Content size="large">
+        <Dialog.Content size="large" scrollable>
           <Dialog.Title>{t('line-type-select-pet')}</Dialog.Title>
-          <div className={flexOverflowStyle}>
-            <SelectPersonaList
-              selectPersona={selectPersona ? [selectPersona] : []}
-              onSelectPersona={(persona) => onChangePersona(persona.id)}
-            />
-          </div>
+          <SelectPersonaList
+            selectPersona={selectPersona ? [selectPersona] : []}
+            onSelectPersona={(persona) => onChangePersona(persona.id)}
+          >
+            <Dialog.TopSlot>
+              <SelectPersonaList.Toolbar showSearch />
+            </Dialog.TopSlot>
+            <Dialog.Body>
+              <SelectPersonaList.Grid />
+            </Dialog.Body>
+          </SelectPersonaList>
         </Dialog.Content>
       </Dialog>
     </div>
   );
 };
-
-const flexOverflowStyle = cx(
-  css({
-    display: 'flex',
-    overflowY: 'auto',
-    overflowX: 'hidden',
-    width: '100%',
-    gap: '4px',
-    height: '100%',
-    minHeight: '0',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    maxHeight: 'calc(100%)',
-    marginTop: '24px',
-  }),
-  customScrollStyle,
-);
-
-const listStyle = cx(
-  flex({
-    gap: '4px',
-    w: '100%',
-    h: '100%',
-    minH: '0',
-    overflowX: 'auto',
-    overflowY: 'hidden',
-    display: 'grid',
-    gridTemplateRows: 'repeat(2, 1fr)',
-    gridAutoColumns: 'max-content',
-    gridAutoFlow: 'column',
-  }),
-  customScrollStyle,
-);
 
 const selectPetContainerStyle = css({
   position: 'relative',

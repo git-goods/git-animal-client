@@ -4,6 +4,7 @@ import React, { Suspense } from 'react';
 import Image from 'next/image';
 import { AnchorButton } from '@gitanimals/ui-panda';
 
+import { Responsive } from '@/components/Responsive';
 import { useGetTotalProductCount } from '@/hooks/query/auction/useGetTotalProductCount';
 import { useGetTotalIdentityUserCount } from '@/hooks/query/identity/useGetTotalIdentityUserCount';
 import { useGetTotalPersonaCount } from '@/hooks/query/render/useGetTotalPersonaCount';
@@ -54,12 +55,15 @@ function AvailablePetSection() {
         </div>
 
         <div className={styles.buttonWrapper}>
-          <AnchorButton size="m" className="mobile" target="_blank" href={MORE_PET_GITHUB_URL}>
+          <Responsive
+            component={AnchorButton}
+            desktop={{ size: 'l' }}
+            mobile={{ size: 'm' }}
+            target="_blank"
+            href={MORE_PET_GITHUB_URL}
+          >
             Show More Pets
-          </AnchorButton>
-          <AnchorButton size="l" className="desktop" target="_blank" href={MORE_PET_GITHUB_URL}>
-            Show More Pets
-          </AnchorButton>
+          </Responsive>
         </div>
       </div>
     </section>

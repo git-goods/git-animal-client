@@ -7,7 +7,14 @@ import { createStyleContext } from '@shadow-panda/style-context';
 import { styled } from '_panda/jsx';
 import { css, cx } from '_panda/css';
 import { dialog } from '_panda/recipes';
-import { dialogContentCva, DialogContentVariants, dialogTitleStyle } from './Dialog.styles';
+import {
+  dialogContentCva,
+  DialogContentVariants,
+  dialogTitleStyle,
+  dialogScrollableStyle,
+  dialogTopSlotStyle,
+  dialogBodyStyle,
+} from './Dialog.styles';
 
 const { withProvider, withContext } = createStyleContext(dialog);
 
@@ -17,17 +24,22 @@ const DialogClose = withContext(styled(DialogPrimitive.Close), 'close');
 
 type DialogContentProps = {
   isShowClose?: boolean;
+  scrollable?: boolean;
 } & DialogContentVariants &
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
 
 const Content = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
-  ({ children, isShowClose = true, ...props }, ref) => (
+  ({ children, isShowClose = true, scrollable, ...props }, ref) => (
     <DialogPortal>
       <DialogOverlay className={overlayStyle} />
       <DialogPrimitive.Content
         ref={ref}
         {...props}
-        className={cx(dialogContentCva({ size: props.size ?? 'default' }), props.className)}
+        className={cx(
+          dialogContentCva({ size: props.size ?? 'default' }),
+          scrollable && dialogScrollableStyle,
+          props.className,
+        )}
       >
         {children}
         {isShowClose && (
@@ -60,6 +72,16 @@ const Title = React.forwardRef<
 
 Title.displayName = DialogPrimitive.Title.displayName;
 
+const TopSlot = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<'div'>>(
+  ({ className, ...props }, ref) => <div ref={ref} className={cx(dialogTopSlotStyle, className)} {...props} />,
+);
+TopSlot.displayName = 'DialogTopSlot';
+
+const Body = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<'div'>>(
+  ({ className, ...props }, ref) => <div ref={ref} className={cx(dialogBodyStyle, className)} {...props} />,
+);
+Body.displayName = 'DialogBody';
+
 export const DialogRoot = withProvider(styled(DialogPrimitive.Root), 'root');
 export const DialogTrigger = withContext(styled(DialogPrimitive.Trigger), 'trigger');
 export const DialogContent = withContext(styled(Content), 'content');
@@ -67,6 +89,8 @@ export const DialogHeader = withContext(styled('div'), 'header');
 export const DialogFooter = withContext(styled('div'), 'footer');
 export const DialogTitle = withContext(styled(Title), 'title');
 export const DialogDescription = withContext(styled(DialogPrimitive.Description), 'description');
+export const DialogTopSlot = TopSlot;
+export const DialogBody = Body;
 
 const Dialog = Object.assign(DialogRoot, {
   Root: DialogRoot,
@@ -76,6 +100,8 @@ const Dialog = Object.assign(DialogRoot, {
   Footer: DialogFooter,
   Title: DialogTitle,
   Description: DialogDescription,
+  TopSlot: DialogTopSlot,
+  Body: DialogBody,
 });
 
 export { Dialog };

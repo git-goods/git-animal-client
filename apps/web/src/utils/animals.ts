@@ -1,6 +1,18 @@
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
 import { ANIMAL_TIER_INFO, AnimalTier } from '@/components/AnimalCard/AnimalCard.constant';
 
+/**
+ * 페르소나 등급 정렬 우선순위 (낮을수록 우선)
+ * COLLABORATOR > DEFAULT > EVOLUTION
+ */
+const PERSONA_GRADE_PRIORITY: Record<string, number> = {
+  COLLABORATOR: 0,
+  DEFAULT: 1,
+  EVOLUTION: 2,
+};
+
+export const getPersonaGradePriority = (grade: string): number => PERSONA_GRADE_PRIORITY[grade] ?? 1;
+
 export const getAnimalTierInfo = (dropRateNumber: number): AnimalTierType => {
   if (dropRateNumber <= ANIMAL_TIER_INFO.EX.max) {
     return AnimalTier.EX;

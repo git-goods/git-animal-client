@@ -52,6 +52,8 @@ const chipContentStyle = css({
   border: '1px solid',
   borderColor: 'black.black_50',
   color: 'white',
+  zIndex: 9999,
+  pointerEvents: 'auto',
 });
 
 const chipItemStyle = css({
