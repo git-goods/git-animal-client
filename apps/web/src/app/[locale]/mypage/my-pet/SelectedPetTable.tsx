@@ -176,14 +176,14 @@ function SellConfirmDialog({
         <Dialog.Description className="text-left text-white/75 w-full">
           <p>{t('Shop.sell-confirm-description')}</p>
         </Dialog.Description>
-        <div className="flex items-center justify-between w-full">
-          <div className="flex items-center gap-2">
+        <div className="flex w-full min-w-0 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex min-w-0 items-center gap-2">
             <Checkbox id="do-not-show-again" onClick={() => setIsDoNotShowAgain(!isDoNotShowAgain)} />
             <Label htmlFor="do-not-show-again" className="whitespace-nowrap">
               {t('Shop.sell-confirm-checkbox')}
             </Label>
           </div>
-          <div className="flex gap-2 justify-end w-full">
+          <div className="flex shrink-0 flex-row gap-2 sm:justify-end">
             <Button onClick={onClose} variant="secondary" size="m">
               {t('Common.close')}
             </Button>
