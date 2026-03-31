@@ -1,12 +1,11 @@
 import type { ComponentProps } from 'react';
 import { memo } from 'react';
-import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
-import { Banner, LevelBanner } from '@gitanimals/ui-panda';
+import { Banner, cn, LevelBanner } from '@gitanimals/ui-tailwind';
 
 import { getPersonaImage } from '@/utils/image';
 
-// --- LevelPersonaItem (LevelBanner 기반) ---
+// --- LevelPersonaItem (LevelBanner — ui-tailwind) ---
 
 interface LevelPersonaItemProps {
   persona: Persona;
@@ -19,8 +18,9 @@ interface LevelPersonaItemProps {
 function LevelPersonaItem({ persona, isSelected, onClick, size = 'full', className }: LevelPersonaItemProps) {
   return (
     <button
+      type="button"
       onClick={onClick}
-      className={css({ outline: 'none', bg: 'transparent', width: '100%', height: '100%' })}
+      className={cn('h-full w-full bg-transparent outline-none')}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -33,7 +33,7 @@ function LevelPersonaItem({ persona, isSelected, onClick, size = 'full', classNa
         image={getPersonaImage(persona.type)}
         status={isSelected ? 'selected' : 'default'}
         level={Number(persona.level)}
-        className={cx(css({ width: '100%', height: '100%' }), className)}
+        className={cn('h-full w-full', className)}
         size={size}
       />
     </button>
@@ -48,7 +48,7 @@ export const MemoizedLevelPersonaItem = memo(LevelPersonaItem, (prev, next) => {
   );
 });
 
-// --- BannerPersonaItem (Banner 기반) ---
+// --- BannerPersonaItem (Banner — ui-tailwind) ---
 
 interface BannerPersonaItemProps {
   persona: Persona;
@@ -72,10 +72,11 @@ function BannerPersonaItem({
 }: BannerPersonaItemProps) {
   return (
     <button
+      type="button"
       onClick={onClick}
       disabled={loading}
-      className={cx(
-        css({ outline: 'none', bg: 'transparent', borderRadius: '12px' }),
+      className={cn(
+        'rounded-xl bg-transparent outline-none',
         isSpecialEffect && persona.isEvolutionable && 'gradient-move',
       )}
       onKeyDown={(e) => {
@@ -90,7 +91,7 @@ function BannerPersonaItem({
         loading={loading}
         image={getPersonaImage(persona.type)}
         status={isSelected ? 'selected' : 'default'}
-        className={cx(css({ width: '100%', height: '100%' }), className)}
+        className={cn('h-full w-full', className)}
         size={size}
       />
     </button>
