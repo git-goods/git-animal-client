@@ -39,7 +39,7 @@ export function MotionPetSection() {
 
   return (
     <>
-      <div style={desktopWrapperStyle}>
+      <div className="desktop" style={desktopWrapperStyle}>
         <div style={petPositionStyle}>
           <MotionPet onClick={handleClick} />
         </div>
