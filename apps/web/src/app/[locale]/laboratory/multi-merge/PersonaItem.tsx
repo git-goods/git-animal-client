@@ -1,4 +1,4 @@
 export {
   MemoizedBannerPersonaItem as MemoizedPersonaBannerItem,
   MemoizedLevelPersonaItem as MemoizedPersonaItem,
-} from '@/components/PersonaItem';
+} from '@/entities/persona/ui/PersonaItem';

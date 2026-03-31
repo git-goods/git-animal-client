@@ -12,8 +12,8 @@ import { toast } from 'sonner';
 
 import { MediaQuery } from '@/components/MediaQuery';
 import Pagination from '@/components/Pagination/Pagination';
-import { useLoading } from '@/store/loading';
-import { useClientUser } from '@/utils/clientAuth';
+import { useLoading } from '@/shared/store/loading';
+import { useClientUser } from '@/shared/utils/clientAuth';
 
 import { ShopTableDesktopRow, ShopTableMobileRow, ShopTableRowViewSkeleton } from '../_common/ShopTableMobileRow';
 import { useSearchOptions } from '../useSearchOptions';

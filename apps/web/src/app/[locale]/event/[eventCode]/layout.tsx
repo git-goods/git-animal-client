@@ -1,6 +1,6 @@
 import React from 'react';
 
-import GNB from '@/components/GNB/GNB';
+import GNB from '@/widgets/gnb/GNB';
 
 export async function generateMetadata({ params }: { params: { eventCode: string } }) {
   return {

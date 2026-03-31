@@ -4,9 +4,9 @@ import { getMessages } from 'next-intl/server';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 import { ClientProvider, GlobalComponent, Monitoring } from '@/components/Global';
-import { config } from '@/constants/config';
-import type { Locale } from '@/i18n/routing';
-import { LOCALE_LIST } from '@/i18n/routing';
+import { config } from '@/shared/config/config';
+import type { Locale } from '@/shared/i18n/routing';
+import { LOCALE_LIST } from '@/shared/i18n/routing';
 
 import '@egjs/react-flicking/dist/flicking.css';
 import '@egjs/react-flicking/dist/flicking-inline.css';

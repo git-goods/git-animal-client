@@ -7,7 +7,7 @@ import { cn } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { addNumberComma } from '@/utils/number';
+import { addNumberComma } from '@/shared/utils/number';
 
 export const FloatingPointSection = memo(
   wrap

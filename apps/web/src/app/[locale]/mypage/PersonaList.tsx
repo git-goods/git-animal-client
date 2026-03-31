@@ -8,11 +8,11 @@ import { cn, Skeleton } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { MemoizedBannerPersonaItem } from '@/components/PersonaItem';
-import { PersonaListToolbar } from '@/components/PersonaListToolbar';
-import type { PersonaFilterState } from '@/hooks/persona/usePersonaListFilter';
-import { usePersonaListFilter } from '@/hooks/persona/usePersonaListFilter';
-import { useClientUser } from '@/utils/clientAuth';
+import { MemoizedBannerPersonaItem } from '@/entities/persona/ui/PersonaItem';
+import { PersonaListToolbar } from '@/entities/persona/ui/PersonaListToolbar';
+import type { PersonaFilterState } from '@/entities/persona/model/usePersonaListFilter';
+import { usePersonaListFilter } from '@/entities/persona/model/usePersonaListFilter';
+import { useClientUser } from '@/shared/utils/clientAuth';
 
 // ─── Context ────────────────────────────────────────────────────────
 

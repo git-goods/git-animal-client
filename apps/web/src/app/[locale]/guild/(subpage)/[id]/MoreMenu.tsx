@@ -17,10 +17,10 @@ import { CatIcon, EllipsisVerticalIcon, LinkIcon, LogOutIcon, SettingsIcon, User
 import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
-import { ORIGIN_URL, ROUTE } from '@/constants/route';
-import { Link, useRouter } from '@/i18n/routing';
-import { useClientUser } from '@/utils/clientAuth';
-import { copyClipBoard } from '@/utils/copy';
+import { ORIGIN_URL, ROUTE } from '@/shared/config/route';
+import { Link, useRouter } from '@/shared/i18n/routing';
+import { useClientUser } from '@/shared/utils/clientAuth';
+import { copyClipBoard } from '@/shared/utils/copy';
 
 interface MenuType {
   title: string;

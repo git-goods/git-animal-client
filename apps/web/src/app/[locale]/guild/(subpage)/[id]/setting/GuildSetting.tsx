@@ -5,7 +5,7 @@ import { type Guild, updateGuild } from '@gitanimals/api';
 import { cn } from '@gitanimals/ui-tailwind';
 import { Button } from '@gitanimals/ui-tailwind';
 
-import { useRouter } from '@/i18n/routing';
+import { useRouter } from '@/shared/i18n/routing';
 
 import { GuildInfoFormClient } from './GuidlInfoFormClient';
 

@@ -6,7 +6,7 @@ import { cn } from '@gitanimals/ui-tailwind';
 import { TextArea, TextField, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@gitanimals/ui-tailwind';
 import { InfoIcon } from 'lucide-react';
 
-import { getBackgroundImage } from '@/utils/image';
+import { getBackgroundImage } from '@/shared/utils/image';
 
 export interface FormState {
   message: string;

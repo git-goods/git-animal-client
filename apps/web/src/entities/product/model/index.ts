@@ -1,0 +1,1 @@
+export { useGetTotalProductCount } from './useGetTotalProductCount';

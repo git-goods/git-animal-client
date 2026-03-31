@@ -9,8 +9,8 @@ import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { LoaderIcon, SearchIcon, XIcon } from 'lucide-react';
 
-import { customScrollStyle } from '@/styles/scrollStyle';
-import { getPersonaImage } from '@/utils/image';
+import { customScrollStyle } from '@/shared/styles/scrollStyle';
+import { getPersonaImage } from '@/shared/utils/image';
 
 const EVENT = {
   CHRISTMAS: {

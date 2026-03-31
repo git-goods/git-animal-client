@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import type { OrderType, SortDirection } from '@gitanimals/api';
 
-import { usePathname, useRouter } from '@/i18n/routing';
+import { usePathname, useRouter } from '@/shared/i18n/routing';
 
 interface SearchOptions {
   personaType: string;

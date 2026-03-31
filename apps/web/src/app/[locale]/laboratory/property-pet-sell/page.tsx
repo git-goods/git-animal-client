@@ -9,10 +9,10 @@ import { wrap } from '@suspensive/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 
 import { useDialog } from '@/components/Global/useDialog';
-import { trackEvent } from '@/lib/analytics';
-import { customScrollStyle } from '@/styles/scrollStyle';
-import { useClientUser } from '@/utils/clientAuth';
-import { getPersonaImage } from '@/utils/image';
+import { trackEvent } from '@/shared/lib/analytics';
+import { customScrollStyle } from '@/shared/styles/scrollStyle';
+import { useClientUser } from '@/shared/utils/clientAuth';
+import { getPersonaImage } from '@/shared/utils/image';
 
 import { LaboratoryLayout } from '../_component/LaboratoryLayout';
 

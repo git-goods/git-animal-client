@@ -7,9 +7,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, Heart } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { createOrUpdateUpvote } from '@/apis/laboratory/feedback';
-import { LABORATORY_FEEDBACK_QUERY_KEYS, upvoteQueryOptions } from '@/apis/laboratory/useLaboratoryFeedback';
-import { useClientUser } from '@/utils/clientAuth';
+import { createOrUpdateUpvote } from '@/features/laboratory-feedback/api/feedback';
+import { LABORATORY_FEEDBACK_QUERY_KEYS, upvoteQueryOptions } from '@/features/laboratory-feedback/model/useLaboratoryFeedback';
+import { useClientUser } from '@/shared/utils/clientAuth';
 
 interface LaboratoryLayoutProps {
   children: ReactNode;

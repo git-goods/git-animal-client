@@ -5,7 +5,7 @@ import { Button } from '@gitanimals/ui-tailwind';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
-import { useRouter } from '@/i18n/routing';
+import { useRouter } from '@/shared/i18n/routing';
 
 import { SelectPersonaList } from '../../_components/SelectPersonaList';
 

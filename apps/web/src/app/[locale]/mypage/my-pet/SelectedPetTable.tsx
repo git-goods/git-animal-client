@@ -11,9 +11,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
-import { LOCAL_STORAGE_KEY } from '@/constants/storage';
-import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
-import { getPersonaImage } from '@/utils/image';
+import { LOCAL_STORAGE_KEY } from '@/shared/config/storage';
+import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/shared/utils/animals';
+import { getPersonaImage } from '@/shared/utils/image';
 
 import { EvolutionPersona } from './(evolution)';
 import { MergePersona } from './(merge)';

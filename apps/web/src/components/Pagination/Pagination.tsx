@@ -1,7 +1,7 @@
 import { cn } from '@gitanimals/ui-tailwind/utils';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import type { PaginationSchema } from '@/schema/pagination';
+import type { PaginationSchema } from '@/shared/schema/pagination';
 
 function Pagination(props: { currentPage: number; onSetPage: (page: number) => void } & PaginationSchema) {
   const getPaginationGroup = () => {

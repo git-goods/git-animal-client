@@ -4,8 +4,8 @@ import { type PropsWithChildren, useEffect, useState } from 'react';
 import { cn } from '@gitanimals/ui-tailwind';
 import { Dialog } from '@gitanimals/ui-tailwind';
 
-import { usePathname, useRouter } from '@/i18n/routing';
-import { customScrollHorizontalStyle } from '@/styles/scrollStyle';
+import { usePathname, useRouter } from '@/shared/i18n/routing';
+import { customScrollHorizontalStyle } from '@/shared/styles/scrollStyle';
 
 export function InterceptingDialog({ children }: PropsWithChildren) {
   const router = useRouter();

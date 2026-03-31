@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 
-import { Link } from '@/i18n/routing';
+import { Link } from '@/shared/i18n/routing';
 
 import { FarmType } from './(github-custom)/FarmType';
 import { LineType } from './(github-custom)/LineType';

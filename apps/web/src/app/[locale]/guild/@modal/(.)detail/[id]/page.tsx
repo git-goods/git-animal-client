@@ -3,7 +3,7 @@ import { Button } from '@gitanimals/ui-tailwind';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import RouteModal from '@/components/RouteModal';
-import { Link } from '@/i18n/routing';
+import { Link } from '@/shared/i18n/routing';
 
 import { GuildDetail } from '../../../(subpage)/detail/GuildDetail';
 

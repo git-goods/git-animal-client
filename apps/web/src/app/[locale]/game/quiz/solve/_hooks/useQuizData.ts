@@ -2,7 +2,7 @@ import { useLocale } from 'next-intl';
 import { quizQueries } from '@gitanimals/react-query';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import type { Locale } from '@/i18n/routing';
+import type { Locale } from '@/shared/i18n/routing';
 
 interface Props {
   contextId: string;

@@ -11,8 +11,8 @@ import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { ChevronRight, FlaskConical } from 'lucide-react';
 
-import { Link, usePathname } from '@/i18n/routing';
-import { addNumberComma } from '@/utils/number';
+import { Link, usePathname } from '@/shared/i18n/routing';
+import { addNumberComma } from '@/shared/utils/number';
 
 export const ProfileSection = memo(
   wrap

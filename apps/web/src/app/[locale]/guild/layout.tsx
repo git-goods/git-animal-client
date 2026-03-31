@@ -1,4 +1,4 @@
-import GNB from '@/components/GNB/GNB';
+import GNB from '@/widgets/gnb/GNB';
 
 export default function GuildLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
   return (

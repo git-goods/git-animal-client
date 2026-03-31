@@ -6,9 +6,9 @@ import { cn } from '@gitanimals/ui-tailwind';
 import { ClipboardIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals';
-import { useClientUser } from '@/utils/clientAuth';
-import { copyClipBoard } from '@/utils/copy';
+import { getGitanimalsFarmString, GitanimalsFarm } from '@/shared/ui/Gitanimals';
+import { useClientUser } from '@/shared/utils/clientAuth';
+import { copyClipBoard } from '@/shared/utils/copy';
 
 import { FarmBackgroundSelect } from './FarmBackgroundSelect';
 import { FarmPersonaSelect } from './FarmPersonaSelect';

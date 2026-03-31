@@ -6,7 +6,7 @@ import {
   interceptorRequestFulfilled,
   interceptorResponseFulfilled,
   interceptorResponseRejected,
-} from '@/apis/interceptor';
+} from '@/shared/api/interceptor';
 
 import './globals.css';
 import '@gitanimals/asset-font/product-sans/index.css';

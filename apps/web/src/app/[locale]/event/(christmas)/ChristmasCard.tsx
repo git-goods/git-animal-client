@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-import { getPersonaImage } from '@/utils/image';
+import { getPersonaImage } from '@/shared/utils/image';
 
 interface ChristmasCardProps {
   type: string;

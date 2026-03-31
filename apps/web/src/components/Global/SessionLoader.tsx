@@ -8,7 +8,7 @@ import {
   interceptorRequestFulfilled,
   interceptorResponseFulfilled,
   interceptorResponseRejected,
-} from '@/apis/interceptor';
+} from '@/shared/api/interceptor';
 
 const SessionLoader = ({ children }: { children: React.ReactNode }) => {
   const session = useSession();

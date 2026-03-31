@@ -5,8 +5,8 @@ import { type Guild } from '@gitanimals/api';
 import { cn } from '@gitanimals/ui-tailwind';
 import { UsersRoundIcon } from 'lucide-react';
 
-import { ROUTE } from '@/constants/route';
-import { Link } from '@/i18n/routing';
+import { ROUTE } from '@/shared/config/route';
+import { Link } from '@/shared/i18n/routing';
 
 interface GuildCardProps {
   guild: Guild;

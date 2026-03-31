@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 
-import { DEV_MODE_KEY, parseDevModeFromSearchParams } from '@/lib/devtools/constants';
+import { DEV_MODE_KEY, parseDevModeFromSearchParams } from '@/shared/lib/devtools/constants';
 
 const DevModePage = ({ children }: { children: React.ReactNode }) => {
   const searchParams = useSearchParams();

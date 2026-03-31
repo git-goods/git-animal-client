@@ -5,11 +5,11 @@ import { cn, Skeleton } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { MemoizedLevelPersonaItem } from '@/components/PersonaItem';
-import { PersonaListToolbar } from '@/components/PersonaListToolbar';
-import { usePersonaListFilter } from '@/hooks/persona/usePersonaListFilter';
-import { customScrollStyle } from '@/styles/scrollStyle';
-import { useClientUser } from '@/utils/clientAuth';
+import { MemoizedLevelPersonaItem } from '@/entities/persona/ui/PersonaItem';
+import { PersonaListToolbar } from '@/entities/persona/ui/PersonaListToolbar';
+import { usePersonaListFilter } from '@/entities/persona/model/usePersonaListFilter';
+import { customScrollStyle } from '@/shared/styles/scrollStyle';
+import { useClientUser } from '@/shared/utils/clientAuth';
 
 function BannerSkeletonList({ length }: { length: number }) {
   return (

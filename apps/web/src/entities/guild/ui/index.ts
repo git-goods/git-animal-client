@@ -1,0 +1,1 @@
+export { GuildMemeberSlider } from './GuildMemberSlider';

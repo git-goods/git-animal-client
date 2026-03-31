@@ -5,7 +5,7 @@ import { SessionProvider } from 'next-auth/react';
 import { domMax, LazyMotion } from 'framer-motion';
 import { OverlayProvider } from 'overlay-kit';
 
-import QueryClientProvider from '@/apis/QueryClientProvider';
+import QueryClientProvider from '@/shared/api/QueryClientProvider';
 import Monitoring from '@/components/Global/Monitoring';
 
 import SessionLoader from './SessionLoader';

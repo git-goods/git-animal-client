@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 
-import { Link } from '@/i18n/routing';
+import { Link } from '@/shared/i18n/routing';
 
 import type { TabType } from '../type';
 

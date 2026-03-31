@@ -5,8 +5,8 @@ import { kickMemberFromGuild } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-tailwind';
 import { toast } from 'sonner';
 
-import { useRouter } from '@/i18n/routing';
-import { getPersonaImage } from '@/utils/image';
+import { useRouter } from '@/shared/i18n/routing';
+import { getPersonaImage } from '@/shared/utils/image';
 
 import { BannerGuildMember } from './BannerGuildMember';
 

@@ -12,7 +12,7 @@ import FailAlertDialog from '@/app/[locale]/game/quiz/solve/_components/fail/Fai
 import QuizProgressBar from '@/app/[locale]/game/quiz/solve/_components/solving/QuizProgressBar';
 import CorrectConfirmDialog from '@/app/[locale]/game/quiz/solve/_components/success/CorrectConfirmDialog';
 import { QUIZ_ANSWER } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
-import { customScrollStyle } from '@/styles/scrollStyle';
+import { customScrollStyle } from '@/shared/styles/scrollStyle';
 
 import useQuizAction from '../../_hooks/useQuizAction';
 import useQuizData from '../../_hooks/useQuizData';

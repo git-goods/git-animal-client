@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 
-import { USER_GITHUB_URL } from '@/constants/route';
+import { USER_GITHUB_URL } from '@/shared/config/route';
 
 export function RankingLink({
   children,

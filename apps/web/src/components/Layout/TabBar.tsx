@@ -2,7 +2,7 @@ import { cn } from '@gitanimals/ui-tailwind/utils';
 import { wrap } from '@suspensive/react';
 import { GamepadIcon, HouseIcon, StoreIcon, UserRoundIcon } from 'lucide-react';
 
-import { Link, usePathname } from '@/i18n/routing';
+import { Link, usePathname } from '@/shared/i18n/routing';
 
 const TAB_LIST = [
   {

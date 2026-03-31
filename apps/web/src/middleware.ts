@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import withAuth from 'next-auth/middleware';
 import createMiddleware from 'next-intl/middleware';
 
-import { routing } from './i18n/routing';
+import { routing } from './shared/i18n/routing';
 
 const publicPages = ['/', '/auth', '/event/HALLOWEEN_2024', '/event/CHRISTMAS_2024', '/test/ranking'];
 

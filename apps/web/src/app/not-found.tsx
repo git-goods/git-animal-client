@@ -3,10 +3,10 @@
 import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
-import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
+import { sendMessageToErrorChannel } from '@/shared/api/slack';
 import { ErrorPage } from '@/components/Error/ErrorPage';
-import { isDev } from '@/constants/env';
-import { GITHUB_ISSUE_URL } from '@/constants/outlink';
+import { isDev } from '@/shared/config/env';
+import { GITHUB_ISSUE_URL } from '@/shared/config/outlink';
 
 export default function NotFound() {
   const pathname = usePathname();

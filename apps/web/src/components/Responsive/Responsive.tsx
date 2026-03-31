@@ -1,8 +1,8 @@
 import type { ComponentProps, ElementType } from 'react';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
-const desktopClass = css({ display: 'block', _mobile: { display: 'none' } });
-const mobileClass = css({ display: 'none', _mobile: { display: 'block' } });
+const desktopClass = 'block max-mobile:hidden';
+const mobileClass = 'hidden max-mobile:block';
 
 type ResponsiveProps<C extends ElementType> = {
   component: C;
@@ -22,10 +22,10 @@ export function Responsive<C extends ElementType>({
 
   return (
     <>
-      <Comp {...shared} {...desktop} className={cx(desktopClass, shared.className as string, desktop?.className)}>
+      <Comp {...shared} {...desktop} className={cn(desktopClass, shared.className as string, desktop?.className)}>
         {children}
       </Comp>
-      <Comp {...shared} {...mobile} className={cx(mobileClass, shared.className as string, mobile?.className)}>
+      <Comp {...shared} {...mobile} className={cn(mobileClass, shared.className as string, mobile?.className)}>
         {children}
       </Comp>
     </>

@@ -1,8 +1,8 @@
 import { cn } from '@gitanimals/ui-tailwind/utils';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import { Link } from '@/i18n/routing';
-import type { PaginationSchema } from '@/schema/pagination';
+import { Link } from '@/shared/i18n/routing';
+import type { PaginationSchema } from '@/shared/schema/pagination';
 
 export function PaginationServer(props: { generateMoveLink: (props: { page: number }) => string } & PaginationSchema) {
   const getPaginationGroup = () => {

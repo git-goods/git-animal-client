@@ -4,7 +4,7 @@
 import type { Guild } from '@gitanimals/api';
 import { cn } from '@gitanimals/ui-tailwind';
 
-import { GitanimalsGuild } from '@/components/Gitanimals';
+import { GitanimalsGuild } from '@/shared/ui/Gitanimals';
 
 import { GuildPeopleList } from '../../_components/GuildPeopleList';
 

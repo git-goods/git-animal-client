@@ -5,7 +5,7 @@ import { cn } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { GuildJoinPetSelectDialog } from '@/app/[locale]/guild/_components/GuildPetSelectDialog';
-import { useRouter } from '@/i18n/routing';
+import { useRouter } from '@/shared/i18n/routing';
 import { joinGuildAction } from '@/serverActions/guild';
 
 const dialogTitleStyle = cn(

@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { ErrorBoundary } from '@suspensive/react';
 
 import { ErrorSection } from '@/components/Error/ErrorSection';
-import GNB from '@/components/GNB/GNB';
+import GNB from '@/widgets/gnb/GNB';
 
 import {
   AvailablePetSection,

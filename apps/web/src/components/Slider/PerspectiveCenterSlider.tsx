@@ -7,7 +7,7 @@ import type { FlickingOptions, FlickingProps } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
 import { cn } from '@gitanimals/ui-tailwind';
 
-import { useIsMounted } from '@/hooks/useIsMounted';
+import { useIsMounted } from '@/shared/hooks/useIsMounted';
 
 /**
  * 중앙에 있는 카드를 3D 효과로 보여주는 슬라이더

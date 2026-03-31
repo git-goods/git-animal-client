@@ -9,7 +9,7 @@ import {
   interceptorRequestFulfilled,
   interceptorResponseFulfilled,
   interceptorResponseRejected,
-} from '@/apis/interceptor';
+} from '@/shared/api/interceptor';
 
 import LoginButton from './LoginButton';
 

@@ -2,7 +2,7 @@
 
 import type { ComponentProps } from 'react';
 
-import { useRouter } from '@/i18n/routing';
+import { useRouter } from '@/shared/i18n/routing';
 
 /**
  * 이전 페이지로 이동하는 버튼 컴포넌트

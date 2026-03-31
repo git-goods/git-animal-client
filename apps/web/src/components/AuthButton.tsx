@@ -5,8 +5,8 @@ import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@gitanimals/ui-tailwind';
 
-import { getGithubOauthUrl } from '@/apis/auth/getGithubOauth';
-import { COOKIE_KEY, LOCAL_STORAGE_KEY } from '@/constants/storage';
+import { getGithubOauthUrl } from '@/features/auth/api/getGithubOauth';
+import { COOKIE_KEY, LOCAL_STORAGE_KEY } from '@/shared/config/storage';
 
 /**
  * client용 로그인 함수

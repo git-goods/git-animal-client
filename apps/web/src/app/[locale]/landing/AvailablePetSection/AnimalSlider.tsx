@@ -3,10 +3,10 @@
 import type { PersonaInfo } from '@gitanimals/api';
 import { cn } from '@gitanimals/ui-tailwind';
 
-import { AnimalCard } from '@/components/AnimalCard';
+import { AnimalCard } from '@/entities/persona';
 import { MediaQuery } from '@/components/MediaQuery';
 import { PerspectiveCenterSlider } from '@/components/Slider';
-import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
+import { useGetAllPersona } from '@/entities/persona/model/useGetAllPersona';
 
 import * as styles from './AnimalSlider.style';
 import AnimalSliderContainerMobile from './AnimalSliderContainerMobile';

@@ -1,7 +1,7 @@
 'use client';
 
-import { ROUTE } from '@/constants/route';
-import { redirect } from '@/i18n/routing';
+import { ROUTE } from '@/shared/config/route';
+import { redirect } from '@/shared/i18n/routing';
 
 function GamePage() {
   redirect(ROUTE.GAME.QUIZ.MAIN());

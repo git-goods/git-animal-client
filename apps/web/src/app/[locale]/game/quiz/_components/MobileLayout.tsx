@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 
-import GNB from '@/components/GNB/GNB';
+import GNB from '@/widgets/gnb/GNB';
 
 interface MobileLayoutProps {
   background?: {

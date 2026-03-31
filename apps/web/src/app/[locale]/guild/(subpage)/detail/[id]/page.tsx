@@ -1,7 +1,7 @@
 import { checkIsMyGuild, getGuildById } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-tailwind';
 
-import { Link } from '@/i18n/routing';
+import { Link } from '@/shared/i18n/routing';
 
 import { GuildDetail } from '../GuildDetail';
 
