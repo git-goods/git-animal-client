@@ -1,8 +1,8 @@
 'use client';
 
 import { type PropsWithChildren, useEffect, useState } from 'react';
-import { css, cx } from '_panda/css';
-import { Dialog } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind';
+import { Dialog } from '@gitanimals/ui-tailwind';
 
 import { usePathname, useRouter } from '@/i18n/routing';
 import { customScrollHorizontalStyle } from '@/styles/scrollStyle';
@@ -28,18 +28,9 @@ export function InterceptingDialog({ children }: PropsWithChildren) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content size="large" className={dialogContentStyle}>
+      <Dialog.Content size="large" className={cn('h-fit gap-8 overflow-y-auto', customScrollHorizontalStyle)}>
         {children}
       </Dialog.Content>
     </Dialog>
   );
 }
-
-const dialogContentStyle = cx(
-  css({
-    height: 'fit-content',
-    gap: 8,
-    overflowY: 'auto',
-  }),
-  customScrollHorizontalStyle,
-);

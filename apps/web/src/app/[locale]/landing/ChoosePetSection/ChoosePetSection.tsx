@@ -1,8 +1,7 @@
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 
 import { getServerAuth } from '@/auth';
 import { LoginButton } from '@/components/AuthButton';
-import { Responsive } from '@/components/Responsive';
 import { Link } from '@/i18n/routing';
 
 import * as styles from './ChoosePetSection.style';
@@ -23,9 +22,12 @@ async function ChoosePetSection() {
         <LoginButton label="Get a Pet" />
       ) : (
         <Link href="/mypage">
-          <Responsive component={Button} desktop={{ size: 'l' }} mobile={{ size: 'm' }}>
+          <Button className="max-mobile:hidden" size="l">
             Go To Mypage
-          </Responsive>
+          </Button>
+          <Button className="hidden max-mobile:block" size="m">
+            Go To Mypage
+          </Button>
         </Link>
       )}
     </section>

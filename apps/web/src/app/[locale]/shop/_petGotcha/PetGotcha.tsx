@@ -4,10 +4,10 @@ import type { ComponentPropsWithoutRef } from 'react';
 import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { userQueries } from '@gitanimals/react-query';
-import { Button } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind';
+import { Button } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -99,72 +99,31 @@ const ButtonWrapper = wrap
     );
   });
 
-const containerStyle = css({
-  position: 'relative',
-  padding: '120px 0',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
+const containerStyle = cn(
+  'relative py-[120px] flex flex-col items-center justify-center',
+  'max-mobile:py-[100px]'
+);
 
-  _mobile: {
-    padding: '100px 0',
-  },
-});
+const bgStyle = cn(
+  'absolute top-0 left-0 w-full h-full z-hide object-cover'
+);
 
-const bgStyle = css({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  zIndex: 'hide',
-  objectFit: 'cover',
-});
+const headingStyle = cn(
+  'font-product text-glyph-82 font-bold text-white',
+  'max-mobile:text-glyph-40'
+);
 
-const headingStyle = css({
-  textStyle: 'glyph82.bold',
-  color: 'white',
+const descStyle = cn(
+  'font-product text-glyph-24 text-white mt-4',
+  'max-mobile:mt-2 max-mobile:text-glyph-16'
+);
 
-  _mobile: {
-    textStyle: 'glyph40.bold',
-  },
-});
+const buttonContainerStyle = cn(
+  'flex gap-4 mt-20',
+  'max-mobile:gap-2 max-mobile:px-4 max-mobile:mt-5'
+);
 
-const descStyle = css({
-  textStyle: 'glyph24.regular',
-  color: 'white',
-  marginTop: '16px',
-
-  _mobile: {
-    marginTop: '8px',
-    textStyle: 'glyph16.regular',
-  },
-});
-
-const buttonContainerStyle = css({
-  display: 'flex',
-  gap: '16px',
-  marginTop: '80px',
-
-  _mobile: {
-    gap: '8px',
-    paddingInline: '16px',
-    marginTop: '20px',
-  },
-});
-
-const petContainerStyle = css({
-  marginTop: '150px',
-  width: '60%',
-  '& img': {
-    objectFit: 'contain',
-    margin: '0 auto',
-  },
-
-  _mobile: {
-    width: '100%',
-    paddingInline: '16px',
-    marginTop: '80px',
-  },
-});
+const petContainerStyle = cn(
+  'mt-[150px] w-[60%] [&_img]:object-contain [&_img]:mx-auto',
+  'max-mobile:w-full max-mobile:px-4 max-mobile:mt-20'
+);

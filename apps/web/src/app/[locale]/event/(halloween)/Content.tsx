@@ -1,8 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
-import { css, cx } from '_panda/css';
-import { flex } from '_panda/patterns';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import { MediaQuery } from '@/components/MediaQuery';
 
@@ -12,13 +11,13 @@ import { KingGhost } from './KingGhost';
 export async function HalloweenContent() {
   const t = await getTranslations('Event.Halloween');
   return (
-    <div className={bgContainerStyle}>
+    <div className="relative w-full min-h-[calc(100vh-60px)] font-product">
       <Image
         src="/event/halloween/halloween-bg.webp"
         alt="halloween bg"
         layout="fill"
         objectFit="cover"
-        className={bgImageStyle}
+        className="pointer-events-none"
       />
       <Image
         src="/event/halloween/halloween-right.webp"
@@ -26,7 +25,10 @@ export async function HalloweenContent() {
         width={544}
         height={1470}
         objectFit="contain"
-        className={cx(imageStyle, rightImageStyle)}
+        className={cn(
+          'w-auto h-full absolute object-contain z-base min-h-[calc(100vh-60px)] pointer-events-none top-[-60px] max-mobile:hidden',
+          'right-0',
+        )}
       />
       <Image
         src="/event/halloween/halloween-left.webp"
@@ -34,97 +36,30 @@ export async function HalloweenContent() {
         width={561}
         height={1470}
         objectFit="contain"
-        className={cx(imageStyle, leftImageStyle)}
+        className={cn(
+          'w-auto h-full absolute object-contain z-base min-h-[calc(100vh-60px)] pointer-events-none top-[-60px] max-mobile:hidden',
+          'absolute left-0',
+        )}
       />
 
       <MediaQuery mobile={<KingGhost />} />
 
-      <div className={containerStyle}>
+      <div className="relative w-full h-full pt-[211px] z-floating flex flex-col max-mobile:pt-[180px] max-mobile:pb-[200px]">
         <Image
           src="/event/halloween/halloween-title.svg"
           alt="gitanimals halloween event"
           width={1357}
           height={199}
           objectFit="contain"
-          className={logoImageStyle}
+          className="object-contain mx-auto max-w-[80vw] h-auto max-mobile:max-w-[90vw]"
           draggable={false}
         />
-        <h2 className={descriptionStyle}>{t('description')}</h2>
+        <h2 className="mt-6 text-[28px] leading-[1.5] text-center text-white mb-10 whitespace-pre-line font-semibold max-mobile:text-2xl">
+          {t('description')}
+        </h2>
 
         <HalloweenCardList />
       </div>
     </div>
   );
 }
-
-const containerStyle = flex({
-  position: 'relative',
-  width: '100%',
-  height: '100%',
-  paddingTop: 211,
-  zIndex: 'floating',
-  flexDirection: 'column',
-  _mobile: {
-    paddingTop: 180,
-    paddingBottom: 200,
-  },
-});
-
-const logoImageStyle = css({
-  objectFit: 'contain',
-  margin: '0 auto',
-  maxWidth: '80vw',
-  height: 'auto',
-  _mobile: {
-    maxWidth: '90vw',
-  },
-});
-
-const descriptionStyle = css({
-  marginTop: '24px',
-  fontSize: '28px',
-  lineHeight: '1.5',
-  textAlign: 'center',
-  color: '#fff',
-  mb: '40px',
-  whiteSpace: 'pre-line',
-  fontWeight: 600,
-
-  _mobile: {
-    fontSize: '24px',
-  },
-});
-
-const bgImageStyle = css({
-  pointerEvents: 'none',
-});
-
-const bgContainerStyle = css({
-  position: 'relative',
-  width: '100%',
-  minHeight: 'calc(100vh - 60px)',
-  fontFamily: 'Product Sans',
-});
-
-const imageStyle = css({
-  width: 'auto',
-  height: '100%',
-  position: 'absolute',
-  objectFit: 'contain',
-  zIndex: 'base',
-  minHeight: 'calc(100vh - 60px)',
-  pointerEvents: 'none',
-  top: '-60px',
-  _mobile: {
-    display: 'none',
-  },
-});
-
-const rightImageStyle = css({
-  right: 0,
-});
-
-const leftImageStyle = css({
-  position: 'absolute',
-  left: 0,
-});

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 export function ArrowButton({
   onClick,
@@ -13,18 +13,13 @@ export function ArrowButton({
   return (
     <button
       onClick={onClick}
-      className={cx(
-        direction === 'prev' ? prevArrowStyle : nextArrowStyle,
-        css({
-          rotate: direction === 'prev' ? '180deg' : '0deg',
-          cursor: disabled ? 'not-allowed' : 'pointer',
-          width: disabled ? '36px' : '40px',
-          height: disabled ? '36px' : '40px',
-          _mobile: {
-            width: disabled ? '24px' : '26px',
-            height: disabled ? '24px' : '26px',
-          },
-        }),
+      className={cn(
+        'absolute top-0 bottom-[64px] m-auto z-floating',
+        '[&_img]:w-full [&_img]:h-auto',
+        'max-mobile:bottom-[72px]',
+        direction === 'prev' ? 'left-[-62px] max-mobile:left-[-26px]' : 'right-[-62px] max-mobile:right-[-26px]',
+        direction === 'prev' ? 'rotate-180' : 'rotate-0',
+        disabled ? 'cursor-not-allowed w-9 h-9 max-mobile:w-6 max-mobile:h-6' : 'cursor-pointer w-10 h-10 max-mobile:w-[26px] max-mobile:h-[26px]'
       )}
     >
       {disabled ? (
@@ -35,40 +30,3 @@ export function ArrowButton({
     </button>
   );
 }
-
-const arrowStyle = css({
-  position: 'absolute',
-  top: '0',
-  bottom: '64px',
-  margin: 'auto',
-  zIndex: 'floating',
-
-  '& img': {
-    width: '100%',
-    height: '100%',
-  },
-
-  _mobile: {
-    bottom: '72px',
-  },
-});
-
-const prevArrowStyle = cx(
-  arrowStyle,
-  css({
-    left: '-62px',
-    _mobile: {
-      left: '-26px',
-    },
-  }),
-);
-
-const nextArrowStyle = cx(
-  arrowStyle,
-  css({
-    right: '-62px',
-    _mobile: {
-      right: '-26px',
-    },
-  }),
-);

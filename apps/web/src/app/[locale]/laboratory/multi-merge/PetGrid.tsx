@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { css } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import { DragSelectContainer } from '../../../../components/DragSelect';
 
@@ -24,29 +24,15 @@ interface PetGridProps {
   materialPets: Persona[];
 }
 
-const gridStyle = css({
-  display: 'grid',
-  gap: '8px',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(80px, auto))',
-});
+const gridStyle = 'grid gap-2 grid-cols-[repeat(auto-fill,minmax(80px,auto))]';
 
-const petCardStyle = css({
-  position: 'relative',
-  aspectRatio: '1',
-  borderRadius: '12px',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  cursor: 'pointer',
-  transition: 'all',
-  background: 'gray.gray_200',
-  border: '2px solid',
-  borderColor: 'transparent',
-  _hover: {
-    borderColor: 'gray.gray_400',
-  },
-});
+const petCardStyle = cn(
+  'relative aspect-square rounded-xl',
+  'flex flex-col items-center justify-center',
+  'cursor-pointer transition-all',
+  'bg-gray-200 border-2 border-transparent',
+  'hover:border-gray-400'
+);
 
 export function PetGrid({ pets, onPetClick, onMultiplePetSelect, targetPet, materialPets }: PetGridProps) {
   const handleSelectionEnd = useCallback(
@@ -90,7 +76,7 @@ export function PetGrid({ pets, onPetClick, onMultiplePetSelect, targetPet, mate
       onSelectionEnd={handleSelectionEnd}
       isEnabled={!!targetPet}
       className={gridStyle}
-      itemClassName={`${petCardStyle}`}
+      itemClassName={petCardStyle}
       renderItem={(pet) => {
         const selected = pet.id === targetPet?.id || materialPets.some((material) => material.id === pet.id);
         return <MemoizedPersonaItem persona={pet} isSelected={selected} onClick={() => onPetClick(pet)} />;

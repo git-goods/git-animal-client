@@ -1,12 +1,12 @@
 import React from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
 import type { GotchaResult } from '@gitanimals/api';
 import { postGotcha } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { userQueries } from '@gitanimals/react-query';
-import { Dialog } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind/utils';
+import { Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
@@ -88,7 +88,7 @@ function OnePet({ onClose }: Props) {
 Error Message: ${JSON.stringify(error)}
 \`\`\`
 User: ${data?.user.name}
-Token: ${data?.user.accessToken} 
+Token: ${data?.user.accessToken}
       `);
     }
   };
@@ -129,49 +129,22 @@ Token: ${data?.user.accessToken}
 
 export default OnePet;
 
-const dialogContentStyle = css({
-  height: 'fit-content',
+const dialogContentStyle = cn(
+  'h-fit',
+  'max-mobile:flex max-mobile:flex-col max-mobile:items-center max-mobile:justify-center'
+);
 
-  _mobile: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const headingStyle = cn(
+  'font-product text-glyph-48 font-bold text-white text-center',
+  'max-mobile:text-glyph-28'
+);
 
-const headingStyle = css({
-  textStyle: 'glyph48.bold',
-  color: 'white',
-  textAlign: 'center',
+const overlayStyle = cn(
+  'fixed top-0 left-0 w-full h-full bg-black-50 flex items-center justify-center',
+  'backdrop-blur-[10px] flex-col gap-[100px] z-[9001] cursor-pointer',
+);
 
-  _mobile: {
-    textStyle: 'glyph28.bold',
-  },
-});
-
-const overlayStyle = css({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  bg: 'black.black_50',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  backdropFilter: 'blur(10px)',
-  flexDirection: 'column',
-  gap: '100px',
-  zIndex: 9001,
-  cursor: 'pointer',
-});
-
-const noticeMessageStyle = css({
-  textStyle: 'glyph22.regular',
-  color: 'white',
-  textAlign: 'center',
-  _mobile: {
-    textStyle: 'glyph16.regular',
-  },
-});
+const noticeMessageStyle = cn(
+  'font-product text-glyph-22 text-white text-center',
+  'max-mobile:text-glyph-16',
+);

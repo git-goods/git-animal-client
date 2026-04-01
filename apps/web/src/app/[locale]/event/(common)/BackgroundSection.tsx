@@ -2,10 +2,10 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import type { Background } from '@gitanimals/api';
 import { renderUserQueries, shopQueries, useBuyBackground } from '@gitanimals/react-query';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
@@ -76,8 +76,10 @@ export const BackgroundSection = wrap
     };
 
     return (
-      <div className={sectionCss}>
-        <h2 className={h2Css}>Background</h2>
+      <div className="relative flex flex-col items-center py-[120px] px-5 w-full bg-gradient-to-b from-white to-[#A7DEF6]">
+        <h2 className="font-product text-glyph-82 font-bold text-black mb-20 max-mobile:text-glyph-40 max-mobile:mb-[30px]">
+          Background
+        </h2>
         <EmblaCarousel>
           {backgroundList?.map((item) => (
             <BackgroundItem
@@ -107,72 +109,26 @@ function BackgroundItem({
   const t = useTranslations('Shop.Background');
 
   return (
-    <div className={cardCss} key={item.type}>
-      <div className={cx(cardImageCss, isPurchased && purchasedCardImageCss)}>
+    <div className="w-full flex flex-col items-center justify-center relative" key={item.type}>
+      <div
+        className={cn(
+          'w-full aspect-[2/1] bg-white relative',
+          isPurchased && 'brightness-50 cursor-not-allowed',
+        )}
+      >
         <img src={getBackgroundImage(item.type)} alt={item.type} width={550} height={275} />
       </div>
-      <div className={cardPointStyle}>{addNumberComma(item.price)} P</div>
+      <div className="font-product text-glyph-18 font-bold text-black-75 border border-[#99C7DB] bg-[#DDF2FB] mt-1 mb-6 py-1 px-[25px] w-full">
+        {addNumberComma(item.price)} P
+      </div>
       <Button
         variant="secondary"
         onClick={() => onBuy(item.type)}
         disabled={isPurchased}
-        className={css({ minWidth: '120px' })}
+        className="min-w-[120px]"
       >
         {!isLoggedIn ? t('buy-possible-user') : isPurchased ? t('purchased') : t('buy')}
       </Button>
     </div>
   );
 }
-
-const sectionCss = css({
-  position: 'relative',
-  display: 'flex',
-  flexDir: 'column',
-  alignItems: 'center',
-  padding: '120px 20px',
-  width: '100%',
-  background: 'linear-gradient(180deg, #FFF 0%, #A7DEF6 100%)',
-});
-
-const h2Css = css({
-  textStyle: 'glyph82.bold',
-  color: 'black',
-  marginBottom: '80px',
-
-  _mobile: {
-    textStyle: 'glyph40.bold',
-    marginBottom: '30px',
-  },
-});
-
-const cardCss = css({
-  width: '100%',
-  display: 'flex',
-  flexDir: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  position: 'relative',
-});
-
-const cardImageCss = css({
-  width: '100%',
-  aspectRatio: '2 / 1',
-  bg: 'white',
-  position: 'relative',
-});
-
-const purchasedCardImageCss = css({
-  filter: 'brightness(0.5)',
-  cursor: 'not-allowed',
-});
-
-const cardPointStyle = css({
-  textStyle: 'glyph18.bold',
-  color: 'black.black_75',
-  border: '1px solid #99C7DB',
-  background: '#DDF2FB',
-  mt: '4px',
-  mb: '24px',
-  p: '4px 25px',
-  w: '100%',
-});

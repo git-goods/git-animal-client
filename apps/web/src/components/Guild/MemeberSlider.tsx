@@ -1,8 +1,7 @@
 'use client';
 
-import { css } from '_panda/css';
 import type { GuildMember } from '@gitanimals/api';
-import { BannerPetSelectMedium } from '@gitanimals/ui-panda';
+import { BannerPetSelectMedium } from '@gitanimals/ui-tailwind';
 import useEmblaCarousel from 'embla-carousel-react';
 
 import { getPersonaImage } from '@/utils/image';
@@ -15,10 +14,10 @@ export function GuildMemeberSlider({ members }: { members: GuildMember[] }) {
   });
 
   return (
-    <div ref={emblaRef} className={emblaViewportStyle}>
-      <div className={emblaContainerStyle}>
+    <div ref={emblaRef} className="overflow-hidden">
+      <div className="flex">
         {members.map((member) => (
-          <div className={emblaSlideStyle} key={member.id}>
+          <div className="flex-[0_0_auto] h-fit first:ml-0 ml-1" key={member.id}>
             <BannerPetSelectMedium
               key={member.id}
               name={member.name}
@@ -31,18 +30,3 @@ export function GuildMemeberSlider({ members }: { members: GuildMember[] }) {
     </div>
   );
 }
-
-const emblaViewportStyle = css({
-  overflow: 'hidden',
-});
-
-const emblaContainerStyle = css({
-  display: 'flex',
-});
-
-const emblaSlideStyle = css({
-  flex: '0 0 auto',
-  height: 'fit-content',
-  _first: { ml: 0 },
-  marginLeft: 1,
-});

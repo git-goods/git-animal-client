@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import { css } from '_panda/css';
-import { center, flex } from '_panda/patterns';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { getGuildById } from '@gitanimals/api';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { SearchIcon } from 'lucide-react';
 
 import { GitanimalsGuild } from '@/components/Gitanimals';
@@ -25,7 +24,7 @@ export default async function GuildPage({ params }: { params: { id: string } }) 
         </Link>
 
         <Link href="/guild/create">
-          <Button minWidth="126px" size="m" px="20px">
+          <Button className="min-w-[126px] px-5" size="m">
             Create Guild
           </Button>
         </Link>
@@ -53,77 +52,33 @@ export default async function GuildPage({ params }: { params: { id: string } }) 
   );
 }
 
-const guildPreviewStyle = css({
-  aspectRatio: '1/0.5',
-  width: '100%',
-  borderRadius: '8px',
-  overflow: 'hidden',
-  '& img': {
-    width: '100%',
-    height: '100%',
-  },
-});
+const guildPreviewStyle = cn(
+  'aspect-[1/0.5] w-full rounded-lg overflow-hidden',
+  '[&_img]:w-full [&_img]:h-full'
+);
 
-const topStyle = flex({
-  gap: 2,
-  alignItems: 'center',
-  justifyContent: 'flex-end',
+const topStyle = cn(
+  'flex gap-2 items-center justify-end',
+  '[&>*]:h-10 w-full mb-4'
+);
 
-  '& > *': {
-    height: '40px',
-  },
-  width: '100%',
-  mb: 4,
-});
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 8,
-  padding: 10,
-  borderRadius: '16px',
-  background: 'white.white_10',
-  backdropFilter: 'blur(7px)',
-});
+const containerStyle = cn(
+  'flex flex-col gap-8 p-10 rounded-2xl',
+  'bg-white/10 backdrop-blur-[7px]'
+);
 
-const listStyle = flex({
-  gap: 4,
-  overflowX: 'hidden',
-  minH: '180px',
-  color: 'white.white_100',
-});
+const titleStyle = cn(
+  'flex items-center gap-4',
+  'font-product text-glyph-36 font-bold text-white',
+  '[&_img]:rounded-lg',
+  '[&_h2]:flex-1'
+);
 
-const leaderStyle = css({
-  '& > p': {
-    mb: 1,
-  },
-});
+const bodyStyle = cn(
+  'font-product text-glyph-16 text-white/75 mt-3'
+);
 
-const membersStyle = css({
-  overflow: 'hidden',
-  flex: 1,
-});
-
-const titleStyle = flex({
-  alignItems: 'center',
-  gap: 4,
-  textStyle: 'glyph36.bold',
-  color: 'white.white_100',
-  '& img': {
-    borderRadius: '8px',
-  },
-  '& h2': {
-    flex: 1,
-  },
-});
-
-const bodyStyle = css({
-  textStyle: 'glyph16.regular',
-  color: 'white.white_75',
-  mt: 3,
-});
-const buttonWrapperStyle = center({
-  w: '40px',
-  h: '40px',
-  backgroundColor: 'white.white_25',
-  borderRadius: '10px',
-});
+const buttonWrapperStyle = cn(
+  'flex items-center justify-center',
+  'w-10 h-10 bg-white/25 rounded-[10px]'
+);

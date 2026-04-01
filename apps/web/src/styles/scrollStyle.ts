@@ -1,31 +1,11 @@
-import { css } from '_panda/css';
+export const customScrollStyle = [
+  '[&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar]:h-1',
+  '[&::-webkit-scrollbar-track]:bg-white/10 [&::-webkit-scrollbar-track]:rounded-sm',
+  '[&::-webkit-scrollbar-thumb]:bg-white/25 [&::-webkit-scrollbar-thumb]:rounded-sm',
+].join(' ');
 
-export const customScrollStyle = css({
-  '&::-webkit-scrollbar': {
-    height: '4px',
-    width: '4px',
-  },
-  '&::-webkit-scrollbar-track': {
-    backgroundColor: 'white.white_10',
-    borderRadius: '2px',
-  },
-  '&::-webkit-scrollbar-thumb': {
-    backgroundColor: 'white.white_25',
-    borderRadius: '2px',
-  },
-});
-
-export const customScrollHorizontalStyle = css({
-  '&::-webkit-scrollbar': {
-    height: '10px',
-    width: '4px',
-  },
-  '&::-webkit-scrollbar-track': {
-    backgroundColor: 'white.white_10',
-    borderRadius: '2px',
-  },
-  '&::-webkit-scrollbar-thumb': {
-    backgroundColor: 'white.white_25',
-    borderRadius: '2px',
-  },
-});
+export const customScrollHorizontalStyle = [
+  '[&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar]:h-2.5',
+  '[&::-webkit-scrollbar-track]:bg-white/10 [&::-webkit-scrollbar-track]:rounded-sm',
+  '[&::-webkit-scrollbar-thumb]:bg-white/25 [&::-webkit-scrollbar-thumb]:rounded-sm',
+].join(' ');

@@ -1,4 +1,4 @@
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 
 import { getServerAuth } from '@/auth';
 import { LoginButton } from '@/components/AuthButton';

@@ -2,8 +2,8 @@
 
 import { memo } from 'react';
 import Image from 'next/image';
-import { css } from '_panda/css';
 import { userQueries } from '@gitanimals/react-query';
+import { cn } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -17,9 +17,23 @@ export const FloatingPointSection = memo(
       const { data } = useSuspenseQuery(userQueries.userOptions());
 
       return (
-        <div className={divCss}>
-          <span className={titleCss}>My Points</span>
-          <span className={pointCss}>
+        <div className={cn(
+          'fixed top-[88px] left-5 w-fit',
+          'px-4 py-3 rounded-xl bg-black/25 z-sticky',
+          'flex flex-col gap-1 text-white backdrop-blur-[7px]',
+          'max-mobile:px-2.5 max-mobile:py-1.5'
+        )}>
+          <span className={cn(
+            'font-product text-glyph-16 font-bold',
+            'max-mobile:hidden'
+          )}>
+            My Points
+          </span>
+          <span className={cn(
+            'flex items-center gap-1.5',
+            'font-product text-glyph-32 font-bold',
+            'max-mobile:text-glyph-15'
+          )}>
             <Image width={28} height={28} src="/shop/coin.webp" alt="coin" />
             {addNumberComma(data.points)}P
           </span>
@@ -27,43 +41,3 @@ export const FloatingPointSection = memo(
       );
     }),
 );
-
-const divCss = css({
-  position: 'fixed',
-  top: '88px',
-  left: '20px',
-  w: 'fit-content',
-  padding: '12px 16px',
-  borderRadius: '12px',
-  backgroundColor: 'black.black_25',
-  zIndex: 'sticky',
-
-  display: 'flex',
-  flexDir: 'column',
-  gap: '4px',
-  color: 'white_100',
-  backdropFilter: 'blur(7px)',
-
-  _mobile: {
-    padding: '6px 10px 6px 8px',
-  },
-});
-
-const titleCss = css({
-  textStyle: 'glyph16.bold',
-
-  _mobile: {
-    display: 'none',
-  },
-});
-
-const pointCss = css({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '6px',
-  textStyle: 'glyph32.bold',
-
-  _mobile: {
-    textStyle: 'glyph15.bold',
-  },
-});

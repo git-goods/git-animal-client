@@ -1,9 +1,8 @@
 import Image from 'next/image';
-import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { userQueries } from '@gitanimals/react-query';
-import { Banner } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { useQuery } from '@tanstack/react-query';
 
 import { customScrollStyle } from '@/styles/scrollStyle';
@@ -24,22 +23,27 @@ function PetList(props: Props) {
   const personas = data?.personas || [];
 
   return (
-    <div className={cx(listContainerStyle, customScrollStyle)}>
+    <div className={cn(
+      'flex flex-wrap max-h-[582px] overflow-y-scroll gap-1',
+      'max-mobile:max-h-[347px]',
+      customScrollStyle
+    )}>
       {personas.map((persona) => {
+        const isSelected = props.selectedPersona?.id === persona.id;
         return (
           <button key={persona.id} onClick={() => props.onProductClick(persona)}>
-            <Banner
-              size="small"
-              status={props.selectedPersona?.id === persona.id ? 'selected' : 'default'}
-              image={
-                <Image
-                  src={getPersonaImage(persona.type)}
-                  width={isMobile ? 52 : 82}
-                  height={isMobile ? 52 : 82}
-                  alt={persona.type}
-                />
-              }
-            />
+            <div className={cn(
+              'flex items-center justify-center rounded-lg border-2 border-transparent bg-white/10',
+              isMobile ? 'w-[60px] h-[72px]' : 'w-[80px] h-[100px]',
+              isSelected && 'border-brand-canary bg-white/20'
+            )}>
+              <Image
+                src={getPersonaImage(persona.type)}
+                width={isMobile ? 52 : 82}
+                height={isMobile ? 52 : 82}
+                alt={persona.type}
+              />
+            </div>
           </button>
         );
       })}
@@ -48,15 +52,3 @@ function PetList(props: Props) {
 }
 
 export default PetList;
-
-const listContainerStyle = css({
-  display: 'flex',
-  flexWrap: 'wrap',
-  maxHeight: '582px',
-  overflowY: 'scroll',
-  gap: '4px',
-
-  _mobile: {
-    maxHeight: '347px',
-  },
-});

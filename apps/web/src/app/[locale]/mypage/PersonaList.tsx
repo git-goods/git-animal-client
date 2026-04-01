@@ -2,10 +2,9 @@
 
 import { createContext, useContext, useEffect, useMemo, useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { BannerSkeleton } from '@gitanimals/ui-panda';
+import { cn, Skeleton } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -40,21 +39,14 @@ function useSelectPersonaListContext() {
 
 // ─── Styles ─────────────────────────────────────────────────────────
 
-const listStyle = css({
-  gap: '4px',
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(64px, auto))',
-  _mobile: {
-    gridTemplateColumns: 'repeat(auto-fill, minmax(52px, auto))',
-  },
-});
+const listStyle = cn(
+  'gap-1 grid grid-cols-[repeat(auto-fill,minmax(64px,auto))]',
+  'max-mobile:grid-cols-[repeat(auto-fill,minmax(52px,auto))]',
+);
 
-const emptyStyle = css({
-  textStyle: 'glyph14.regular',
-  color: 'white.white_50',
-  textAlign: 'center',
-  padding: '24px 0',
-});
+const emptyStyle = cn(
+  'font-product text-glyph-14 text-white-50 text-center py-6',
+);
 
 // ─── Sub-components ─────────────────────────────────────────────────
 
@@ -122,9 +114,9 @@ const Root = wrap
   })
   .Suspense({
     fallback: (
-      <div className={cx(listStyle, css({ minH: '64px' }))}>
+      <div className={cn(listStyle, 'min-h-16')}>
         {Array.from({ length: 6 }).map((_, index) => (
-          <BannerSkeleton key={index} size="full" />
+          <Skeleton key={index} className="w-16 h-16 rounded-lg" />
         ))}
       </div>
     ),

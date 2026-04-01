@@ -1,7 +1,7 @@
 'use client';
 
 import { Children } from 'react';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import useEmblaCarousel from 'embla-carousel-react';
 
@@ -29,32 +29,35 @@ function EmblaCarousel({ children }: EmblaCarouselProps) {
   const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi);
 
   return (
-    <div className={containerStyle}>
-      <div className={css({ display: 'flex', mb: '8px', justifyContent: 'space-between', alignItems: 'center' })}>
-        <div className={arrowContainerStyle}>
+    <div className={cn('w-full max-w-[1200px] mx-auto px-[60px] relative', 'max-mobile:px-[35px]')}>
+      <div className="flex mb-2 justify-between items-center">
+        <div className="flex gap-[10px]">
           <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
         </div>
-        <div
-          className={css({
-            display: 'flex',
-            gap: 1,
-          })}
-        >
+        <div className="flex gap-1">
           {scrollSnaps.map((_, index) => (
             <DotButton
               key={index}
               onClick={() => onDotButtonClick(index)}
-              className={cx(index === selectedIndex && 'selected')}
+              className={cn(index === selectedIndex && 'selected')}
             />
           ))}
         </div>
       </div>
-      <div className={sliderContainerStyle}>
-        <div className={emblaViewportStyle} ref={emblaRef}>
-          <div className={emblaContainerStyle}>
+      <div className={cn('relative w-full', 'max-mobile:mt-0')}>
+        <div className="overflow-hidden w-full" ref={emblaRef}>
+          <div className="flex gap-5">
             {childrenArray.map((child, idx) => (
-              <div className={emblaSlideStyle(slidesPerView)} key={idx}>
+              <div
+                className={cn(
+                  slidesPerView === 1 ? 'flex-[0_0_100%]' : 'flex-[0_0_calc(50%-10px)]',
+                  'min-w-0 p-[10px] text-center',
+                  '[&_img]:w-full [&_img]:h-auto [&_img]:rounded-lg',
+                  '[&_p]:mt-[10px] [&_p]:text-[16px]'
+                )}
+                key={idx}
+              >
                 {child}
               </div>
             ))}
@@ -64,59 +67,5 @@ function EmblaCarousel({ children }: EmblaCarouselProps) {
     </div>
   );
 }
-const arrowContainerStyle = css({
-  display: 'flex',
-  gap: '10px',
-});
-
-const containerStyle = css({
-  width: '100%',
-  maxWidth: '1200px',
-  margin: '0 auto',
-  padding: '0 60px',
-  position: 'relative',
-
-  _mobile: {
-    padding: '0 35px',
-  },
-});
-
-const sliderContainerStyle = css({
-  position: 'relative',
-  width: '100%',
-
-  _mobile: {
-    marginTop: '0px',
-  },
-});
-
-const emblaViewportStyle = css({
-  overflow: 'hidden',
-  width: '100%',
-});
-
-const emblaContainerStyle = css({
-  display: 'flex',
-  gap: '20px',
-});
-
-const emblaSlideStyle = (slidesPerView: number) =>
-  css({
-    flex: slidesPerView === 1 ? '0 0 100%' : '0 0 calc(50% - 10px)',
-    minWidth: 0,
-    padding: '10px',
-    textAlign: 'center',
-
-    '& img': {
-      width: '100%',
-      height: 'auto',
-      borderRadius: '8px',
-    },
-
-    '& p': {
-      marginTop: '10px',
-      fontSize: '16px',
-    },
-  });
 
 export default EmblaCarousel;

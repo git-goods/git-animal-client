@@ -1,5 +1,5 @@
-import { css } from '_panda/css';
-import { ScrollArea } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind/utils';
+import { ScrollArea } from '@gitanimals/ui-tailwind';
 
 import { MemoizedPersonaBannerItem } from './PersonaItem';
 
@@ -20,50 +20,25 @@ interface SelectionSummaryProps {
 }
 
 // SelectionSummary 스타일
-const selectionSummaryStyle = css({
-  background: 'gray.gray_250',
-  borderRadius: '12px',
-  padding: '16px',
-  marginBottom: '16px',
-});
+const selectionSummaryStyle = cn(
+  'bg-gray-250 rounded-xl p-4 mb-4'
+);
 
-const summaryHeaderStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  marginBottom: '4px',
-});
+const summaryHeaderStyle = cn(
+  'flex items-center justify-between mb-1'
+);
 
-const summaryTextStyle = css({
-  color: 'white.white_100',
-  textStyle: 'glyph14.regular',
-});
+const summaryTextStyle = 'text-white font-product text-glyph-14';
 
-const selectedPetsContainerStyle = css({
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: '8px',
-  py: '6px',
-});
+const selectedPetsContainerStyle = 'flex flex-wrap gap-2 py-1.5';
 
-const selectedPetItemStyle = css({
-  position: 'relative',
-  width: '40px',
-  height: '40px',
-  background: 'gray.gray_200',
-  borderRadius: '8px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  border: '1px solid',
-  borderColor: 'brand.sky',
-  cursor: 'pointer',
-  transition: 'colors',
-  color: 'gray.gray_400',
-  _hover: {
-    borderColor: 'brand.sky_light',
-  },
-});
+const selectedPetItemStyle = cn(
+  'relative w-10 h-10 bg-gray-200 rounded-lg',
+  'flex items-center justify-center',
+  'border border-brand-sky cursor-pointer',
+  'transition-colors text-gray-400',
+  'hover:border-brand-sky-light'
+);
 
 export function SelectionSummary({ targetPet, materialPets, onPetClick }: SelectionSummaryProps) {
   return (
@@ -71,10 +46,10 @@ export function SelectionSummary({ targetPet, materialPets, onPetClick }: Select
       <div className={summaryHeaderStyle}>
         <span className={summaryTextStyle}>
           {targetPet ? 'Target' : 'No Target'} • Materials:{' '}
-          <span className={css({ color: 'brand.sky', fontWeight: 'bold' })}>{materialPets.length}</span>
+          <span className="text-brand-sky font-bold">{materialPets.length}</span>
         </span>
       </div>
-      <ScrollArea h="60px">
+      <ScrollArea className="h-[60px]">
         <div className={selectedPetsContainerStyle}>
           {materialPets.map((pet) => (
             <div key={pet.id} className={selectedPetItemStyle}>
@@ -82,7 +57,7 @@ export function SelectionSummary({ targetPet, materialPets, onPetClick }: Select
                 persona={pet}
                 isSelected={false}
                 onClick={() => onPetClick(pet)}
-                className={css({ borderRadius: '2px' })}
+                className="rounded-sm"
               />
             </div>
           ))}

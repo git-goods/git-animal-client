@@ -2,9 +2,7 @@
 
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { css } from '_panda/css';
-import { Box } from '_panda/jsx';
-import { SearchBar } from '@gitanimals/ui-panda';
+import { cn, SearchBar } from '@gitanimals/ui-tailwind';
 import { ChevronLeftIcon } from 'lucide-react';
 
 import { useGetNextUrl } from '@/hooks/useGetNewUrl';
@@ -37,19 +35,15 @@ export function GuildSearch() {
         </button>
       )}
 
-      <Box flex="1">
+      <div className="flex-1">
         <SearchBar
           placeholder="Search for a guild"
           defaultValue={text}
           onChange={(e) => setInput(e.target.value)}
           onSubmit={onSubmit}
-          className={css({
-            _mobile: {
-              width: 'calc(100vw - 72px)',
-            },
-          })}
+          className={cn('max-mobile:w-[calc(100vw-72px)]')}
         />
-      </Box>
+      </div>
     </>
   );
 }

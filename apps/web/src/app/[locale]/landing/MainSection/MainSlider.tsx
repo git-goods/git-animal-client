@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import useEmblaCarousel from 'embla-carousel-react';
 
 import * as styles from './MainSlider.style';
@@ -52,7 +52,7 @@ function MainSlider() {
         {MODE_ITEM_LIST.map((item, index) => (
           <button
             key={item.title}
-            className={cx(currentPanelIndex === index ? 'active' : '')}
+            className={cn(currentPanelIndex === index ? 'active' : '')}
             onClick={() => onPanelIndexChange(index)}
           >
             {item.title}
@@ -63,10 +63,10 @@ function MainSlider() {
       <div className={styles.sliderContainer}>
         <ArrowButton onClick={moveToPrevPanel} direction="prev" disabled={isFirstPanel} />
         <ArrowButton onClick={moveToNextPanel} direction="next" disabled={isLastPanel} />
-        <div className={emblaViewportStyle} ref={emblaRef}>
-          <div className={emblaContainerStyle}>
+        <div className="overflow-hidden w-full" ref={emblaRef}>
+          <div className="flex">
             {MODE_ITEM_LIST.map((item) => (
-              <div key={item.title} className={cx(styles.sliderItem, emblaSlideStyle)}>
+              <div key={item.title} className={cn(styles.sliderItem, 'flex-[0_0_100%] min-w-0')}>
                 <SliderItem item={item} />
               </div>
             ))}
@@ -91,18 +91,10 @@ function ArrowButton({
   return (
     <button
       onClick={onClick}
-      className={cx(
+      className={cn(
         direction === 'prev' ? prevArrowStyle : nextArrowStyle,
-        css({
-          rotate: direction === 'prev' ? '180deg' : '0deg',
-          cursor: disabled ? 'not-allowed' : 'pointer',
-          width: disabled ? '36px' : '40px',
-          height: disabled ? '36px' : '40px',
-          _mobile: {
-            width: disabled ? '24px' : '26px',
-            height: disabled ? '24px' : '26px',
-          },
-        }),
+        direction === 'prev' ? 'rotate-180' : 'rotate-0',
+        disabled ? 'cursor-not-allowed w-9 h-9 max-mobile:w-6 max-mobile:h-6' : 'cursor-pointer w-10 h-10 max-mobile:w-[26px] max-mobile:h-[26px]'
       )}
     >
       {disabled ? (
@@ -114,43 +106,18 @@ function ArrowButton({
   );
 }
 
-const arrowStyle = css({
-  position: 'absolute',
-  top: '0',
-  bottom: '0',
-  margin: 'auto',
-  zIndex: 'floating',
-
-  '& img': {
-    width: '100%',
-    height: '100%',
-  },
-
-  _mobile: {
-    bottom: '191px',
-  },
-});
-
-const prevArrowStyle = cx(
-  arrowStyle,
-  css({
-    left: '-62px',
-    _mobile: {
-      left: '8px',
-    },
-  }),
+const arrowStyle = cn(
+  'absolute top-0 bottom-0 my-auto z-floating',
+  '[&_img]:w-full [&_img]:h-full',
+  'max-mobile:bottom-[191px]'
 );
 
-const nextArrowStyle = cx(
+const prevArrowStyle = cn(
   arrowStyle,
-  css({
-    right: '-62px',
-    _mobile: {
-      right: '8px',
-    },
-  }),
+  'left-[-62px] max-mobile:left-2'
 );
 
-const emblaViewportStyle = css({ overflow: 'hidden', width: '100%' });
-const emblaContainerStyle = css({ display: 'flex' });
-const emblaSlideStyle = css({ flex: '0 0 100%', minWidth: 0 });
+const nextArrowStyle = cn(
+  arrowStyle,
+  'right-[-62px] max-mobile:right-2'
+);

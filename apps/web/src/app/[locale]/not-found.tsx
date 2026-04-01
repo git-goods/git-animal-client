@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { ErrorPage } from '@/components/Error/ErrorPage';
@@ -33,11 +32,11 @@ Path: ${pathname}
     <ErrorPage
       heading={t('title')}
       paragraph={
-        <div className={css({ textAlign: 'center' })}>
+        <div className="text-center">
           {t('main-description')}
           <br />
           <br />
-          <div className={css({ color: 'gray.500' })}>
+          <div className="text-gray-500">
             {t('description-line-1')} [<a href={GITHUB_ISSUE_URL}>GitHub</a>]
             <br />
             {t('description-line-2')}

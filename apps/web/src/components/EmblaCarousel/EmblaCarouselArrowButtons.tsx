@@ -1,6 +1,6 @@
 import type { ComponentPropsWithRef } from 'react';
 import React, { useCallback, useEffect, useState } from 'react';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import type { EmblaCarouselType } from 'embla-carousel';
 
 type UsePrevNextButtonsType = {
@@ -46,42 +46,20 @@ export const usePrevNextButtons = (emblaApi: EmblaCarouselType | undefined): Use
 
 type PropType = ComponentPropsWithRef<'button'>;
 
-const arrowButtonStyle = css({
-  appearance: 'none',
-  touchAction: 'manipulation',
-  display: 'inline-flex',
-  textDecoration: 'none',
-  cursor: 'pointer',
-  padding: '0',
-  margin: '0',
-  borderColor: '#EAEAEA',
-  borderWidth: '1px',
-  borderStyle: 'solid',
-  width: '36px',
-  height: '36px',
-  zIndex: 1,
-  borderRadius: '50%',
-  color: 'black.black_75',
-  alignItems: 'center',
-  justifyContent: 'center',
-  bg: 'white.white_75',
+const arrowButtonStyle = cn(
+  'appearance-none touch-manipulation inline-flex no-underline cursor-pointer',
+  'p-0 m-0 border border-[#EAEAEA] w-9 h-9 z-[1] rounded-full',
+  'text-black/75 items-center justify-center bg-white/75',
+  '[&.disabled]:opacity-50 [&.disabled]:cursor-not-allowed'
+);
 
-  '&.disabled': {
-    opacity: 0.5,
-    cursor: 'not-allowed',
-  },
-});
-
-const arrowIconStyle = css({
-  width: '35%',
-  height: '35%',
-});
+const arrowIconStyle = 'w-[35%] h-[35%]';
 
 export const PrevButton: React.FC<PropType> = (props) => {
   const { children, disabled, className, ...restProps } = props;
 
   return (
-    <button className={cx(arrowButtonStyle, className, disabled && 'disabled')} type="button" {...restProps}>
+    <button className={cn(arrowButtonStyle, className, disabled && 'disabled')} type="button" {...restProps}>
       <svg className={arrowIconStyle} viewBox="0 0 532 532">
         <path
           fill="currentColor"
@@ -97,7 +75,7 @@ export const NextButton: React.FC<PropType> = (props) => {
   const { children, className, disabled, ...restProps } = props;
 
   return (
-    <button className={cx(arrowButtonStyle, className, disabled && 'disabled')} type="button" {...restProps}>
+    <button className={cn(arrowButtonStyle, className, disabled && 'disabled')} type="button" {...restProps}>
       <svg className={arrowIconStyle} viewBox="0 0 532 532">
         <path
           fill="currentColor"

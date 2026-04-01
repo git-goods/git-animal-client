@@ -1,5 +1,4 @@
-import { css, cx } from '_panda/css';
-import { flex } from '_panda/patterns';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { wrap } from '@suspensive/react';
 import { GamepadIcon, HouseIcon, StoreIcon, UserRoundIcon } from 'lucide-react';
 
@@ -39,12 +38,23 @@ export const TabBar = wrap.Suspense().on(() => {
   const pathname = usePathname();
 
   return (
-    <div className={tabBarStyle}>
+    <div
+      className={cn(
+        'grid grid-cols-4 gap-[18px] pt-3 pb-1 px-10',
+        'fixed bottom-0 left-0 right-0 z-[100]',
+        'bg-[#212429] rounded-t-2xl',
+        'w-full max-w-[var(--container-max-width)] mx-auto'
+      )}
+    >
       {TAB_LIST.map((tab) => (
         <Link
           key={tab.label}
           href={tab.href}
-          className={cx(tabBarLinkStyle, isActiveTab(pathname, tab.href) ? css({ color: 'white' }) : css({}))}
+          className={cn(
+            'flex flex-col items-center justify-center gap-0.5',
+            'text-white/25 font-product text-glyph-12',
+            isActiveTab(pathname, tab.href) && 'text-white'
+          )}
         >
           <tab.Icon />
           <span>{tab.label}</span>
@@ -52,32 +62,4 @@ export const TabBar = wrap.Suspense().on(() => {
       ))}
     </div>
   );
-});
-
-const tabBarStyle = css({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(4, 1fr)',
-  gap: '18px',
-  pt: 3,
-  pb: 1,
-  px: 10,
-  position: 'fixed',
-  bottom: 0,
-  left: 0,
-  right: 0,
-  zIndex: 100,
-  backgroundColor: '#212429',
-  borderRadius: '16px 16px 0px 0px',
-  w: '100%',
-  maxW: 'var(--container-max-width)',
-  mx: 'auto',
-});
-
-const tabBarLinkStyle = flex({
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '2px',
-  color: 'white.white_25',
-  textStyle: 'glyph12.regular',
 });

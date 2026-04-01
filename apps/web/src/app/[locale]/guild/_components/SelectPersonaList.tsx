@@ -1,10 +1,9 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
+import { cn, Skeleton } from '@gitanimals/ui-tailwind';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { BannerSkeletonList } from '@gitanimals/ui-panda/src/components/Banner/Banner';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -14,20 +13,20 @@ import { usePersonaListFilter } from '@/hooks/persona/usePersonaListFilter';
 import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
 
-const flexOverflowStyle = cx(
-  css({
-    display: 'flex',
-    overflowY: 'auto',
-    overflowX: 'hidden',
-    width: '100%',
-    gap: '4px',
-    height: '100%',
-    minHeight: '0',
-    flexWrap: 'wrap',
-    maxHeight: '100%',
-  }),
+const flexOverflowStyle = cn(
+  'flex overflow-y-auto overflow-x-hidden w-full gap-1 h-full min-h-0 flex-wrap max-h-full',
   customScrollStyle,
 );
+
+function BannerSkeletonList({ length }: { length: number }) {
+  return (
+    <>
+      {Array.from({ length }).map((_, index) => (
+        <Skeleton key={index} className="w-[80px] h-[100px] rounded-lg" />
+      ))}
+    </>
+  );
+}
 
 interface SelectPersonaListProps {
   selectPersona: string[];
@@ -41,7 +40,7 @@ export const SelectPersonaList = wrap
   .Suspense({
     fallback: (
       <div className={flexOverflowStyle}>
-        <BannerSkeletonList length={6} size="small" />
+        <BannerSkeletonList length={6} />
       </div>
     ),
   })
@@ -83,18 +82,6 @@ export const SelectPersonaList = wrap
     );
   });
 
-const sectionStyle = css({
-  height: '100%',
-  maxHeight: '50vh',
-  minHeight: '164px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '16px',
-});
+const sectionStyle = cn('h-full max-h-[50vh] min-h-[164px] flex flex-col gap-4');
 
-const emptyStyle = css({
-  textStyle: 'glyph14.regular',
-  color: 'white.white_50',
-  textAlign: 'center',
-  padding: '24px 0',
-});
+const emptyStyle = cn('text-glyph-14 text-white-50 text-center py-6');

@@ -1,119 +1,37 @@
-import { getTranslations } from 'next-intl/server';
-import { css } from '_panda/css';
-import { grid } from '_panda/patterns';
-import { FlaskConical } from 'lucide-react';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import GNB from '@/components/GNB/GNB';
-import { Link } from '@/i18n/routing';
 
 import { ProfileSection } from './ProfileSection';
 
 async function MypageLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className={containerStyle}>
+    <div className="min-h-screen h-fit bg-[#019C5A]">
       <GNB />
-      <div className={mainStyle}>
+      <div
+        className={cn(
+          'grid gap-20 grid-cols-[222px_1fr] relative z-aboveDefault',
+          'py-[120px] px-[200px] min-h-[var(--main-min-height)]',
+          'max-pc:py-8 max-pc:px-10',
+          'max-mobile:grid-cols-1 max-mobile:px-4 max-mobile:py-0 max-mobile:gap-0'
+        )}
+      >
         <ProfileSection />
-        <div className={rightSectionStyle}>{children}</div>
+        <div
+          className={cn(
+            'overflow-x-hidden w-full rounded-2xl',
+            'bg-white/10 backdrop-blur-[7px] max-h-[1400px]',
+            'p-10 flex flex-col relative gap-10',
+            'max-pc:gap-6 max-pc:p-6',
+            'max-mobile:gap-3 max-mobile:bg-transparent max-mobile:p-0',
+            'max-mobile:max-h-none max-mobile:h-auto max-mobile:overflow-y-auto max-mobile:rounded-none'
+          )}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );
 }
 
 export default MypageLayout;
-
-async function LaboButton() {
-  const t = await getTranslations('Mypage');
-  return (
-    <Link href="/laboratory" className={laboButtonStyle}>
-      <FlaskConical />
-      {t('laboratory')}
-    </Link>
-  );
-}
-
-const laboButtonStyle = css({
-  position: 'absolute',
-
-  background: 'white.white_10',
-  backdropFilter: 'blur(7px)',
-  borderRadius: '8px',
-  p: '10px 20px',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '10px',
-  textStyle: 'glyph16.regular',
-  color: 'white.white_100',
-
-  top: '64px',
-  right: '200px',
-
-  _pc: {
-    top: '12px',
-    right: '40px',
-    p: '8px 12px',
-    '& > svg': {
-      width: '18px',
-      height: '18px',
-    },
-  },
-  _mobile: {
-    display: 'none',
-  },
-});
-
-const mainStyle = grid({
-  gap: '80px',
-  gridTemplateColumns: '222px 1fr',
-  position: 'relative',
-  zIndex: 'aboveDefault',
-  padding: '120px 200px',
-  minHeight: 'var(--main-min-height)',
-
-  _pc: {
-    padding: '32px 40px',
-  },
-
-  // TODO : 중간 태블릿 정도도 대응하면 좋을 듯
-  _mobile: {
-    gridTemplateColumns: '1fr',
-    padding: '0 16px 0',
-    gap: 0,
-  },
-});
-
-const rightSectionStyle = css({
-  overflowX: 'hidden',
-  width: '100%',
-  borderRadius: '16px',
-  background: 'white.white_10',
-  backdropFilter: 'blur(7px)',
-  maxHeight: '1400px',
-  p: '40px',
-  display: 'flex',
-  flexDirection: 'column',
-  position: 'relative',
-
-  gap: '40px',
-
-  _pc: {
-    gap: '24px',
-    padding: '24px',
-  },
-
-  _mobile: {
-    gap: '12px',
-    background: 'none',
-    p: 0,
-    maxHeight: 'auto',
-    height: 'auto',
-    overflowY: 'auto',
-    borderRadius: 0,
-  },
-});
-
-const containerStyle = css({
-  minHeight: '100vh',
-  height: 'fit-content',
-  backgroundColor: '#019C5A',
-});

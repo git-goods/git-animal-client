@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
 import type { GotchaResult } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { usePostGotcha, userQueries } from '@gitanimals/react-query';
-import { Dialog } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind/utils';
+import { Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -80,7 +80,7 @@ export function TenPet({ onClose }: Props) {
 Error Message: ${JSON.stringify(error)}
 \`\`\`
 User: ${data?.user.name}
-Token: ${data?.user.accessToken} 
+Token: ${data?.user.accessToken}
       `);
     },
   });
@@ -118,7 +118,7 @@ Token: ${data?.user.accessToken}
         {isRunning && (
           <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
         )}
-        <div className={cx(gameContainerStyle, isPending && css({ pointerEvents: 'none' }))}>
+        <div className={cn(gameContainerStyle, isPending && 'pointer-events-none')}>
           <TenCardFlipGame onGetPersona={onAction} getPersona={getPersona} />
         </div>
       </Dialog.Content>
@@ -126,29 +126,14 @@ Token: ${data?.user.accessToken}
   );
 }
 
-const dialogContentStyle = css({
-  _mobile: {
-    gap: '12px',
-  },
-});
+const dialogContentStyle = cn('max-mobile:gap-3');
 
-const noticeMessageStyle = css({
-  textStyle: 'glyph28.bold',
-  color: 'white',
-  textAlign: 'center',
-  mt: '12px',
+const noticeMessageStyle = cn(
+  'font-product text-glyph-28 font-bold text-white text-center mt-3',
+  'max-mobile:text-xs max-mobile:mt-0'
+);
 
-  _mobile: {
-    fontSize: '12px',
-    mt: '0px',
-  },
-});
-
-const gameContainerStyle = css({
-  width: '100%',
-  mt: '60px',
-
-  _mobile: {
-    mt: '28px',
-  },
-});
+const gameContainerStyle = cn(
+  'w-full mt-[60px]',
+  'max-mobile:mt-7'
+);

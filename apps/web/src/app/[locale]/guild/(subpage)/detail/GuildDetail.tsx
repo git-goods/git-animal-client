@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
+import { cn } from '@gitanimals/ui-tailwind';
 import type { Guild } from '@gitanimals/api';
 
 import { GitanimalsGuild } from '@/components/Gitanimals';
@@ -26,29 +25,18 @@ export const GuildDetail = ({ details }: { guildId: string; details: Guild }) =>
     </>
   );
 };
-const guildPreviewStyle = css({
-  aspectRatio: '1/0.5',
-  width: '100%',
-  borderRadius: '8px',
-  overflow: 'hidden',
-  '& img': {
-    width: '100%',
-    height: '100%',
-  },
-});
 
-const titleStyle = flex({
-  alignItems: 'center',
-  gap: 4,
-  textStyle: 'glyph36.bold',
-  color: 'white.white_100',
-  '& img': {
-    borderRadius: '8px',
-  },
-});
+const guildPreviewStyle = cn(
+  'aspect-[1/0.5] w-full rounded-lg overflow-hidden',
+  '[&_img]:w-full [&_img]:h-full'
+);
 
-const bodyStyle = css({
-  textStyle: 'glyph16.regular',
-  color: 'white.white_75',
-  mt: 3,
-});
+const titleStyle = cn(
+  'flex items-center gap-1',
+  'font-product text-glyph-36 font-bold text-white',
+  '[&_img]:rounded-lg'
+);
+
+const bodyStyle = cn(
+  'font-product text-glyph-16 text-white/75 mt-3'
+);

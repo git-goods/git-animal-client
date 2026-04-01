@@ -1,4 +1,4 @@
-import { css } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import type { PaginationSchema } from '@/schema/pagination';
@@ -13,7 +13,13 @@ function Pagination(props: { currentPage: number; onSetPage: (page: number) => v
   };
 
   return (
-    <div className={paginationContainerStyle}>
+    <div
+      className={cn(
+        'flex items-center justify-center gap-1.5',
+        '[&_button]:min-w-[15px] [&_button]:h-[26px] [&_button]:rounded',
+        '[&_button]:inline-flex [&_button]:items-center [&_button]:justify-center'
+      )}
+    >
       <button disabled={props.prevPage === null} onClick={() => props.onSetPage(props.prevPage || 0)}>
         <ChevronLeft color="#B5B8C0" />
       </button>
@@ -22,7 +28,10 @@ function Pagination(props: { currentPage: number; onSetPage: (page: number) => v
         <button
           key={i}
           onClick={() => props.onSetPage(i)}
-          className={props.currentPage === i ? selectedCss : nonSelectedCss}
+          className={cn(
+            'font-product text-glyph-16',
+            props.currentPage === i ? 'font-bold text-white' : 'text-white/50'
+          )}
         >
           {i + 1}
         </button>
@@ -36,29 +45,3 @@ function Pagination(props: { currentPage: number; onSetPage: (page: number) => v
 }
 
 export default Pagination;
-
-const paginationContainerStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '6px',
-
-  '& button': {
-    minWidth: '15px',
-    height: '26px',
-    borderRadius: '4px',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-const nonSelectedCss = css({
-  textStyle: 'glyph16.regular',
-  color: 'white.white_50',
-});
-
-const selectedCss = css({
-  textStyle: 'glyph16.bold',
-  color: 'white.white_100',
-});

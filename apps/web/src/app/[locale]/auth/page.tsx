@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { center } from '_panda/patterns';
+import { cn } from '@gitanimals/ui-tailwind';
 import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
 import { setRenderRequestInterceptor, setRenderResponseInterceptor } from '@gitanimals/api/src/_instance';
 
@@ -42,16 +42,7 @@ function JWTPage({
 
 export default JWTPage;
 
-const loadingContainerStyle = center({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor: 'rgba(255, 255, 255, 0.8)',
-  zIndex: 'loading',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  fontSize: '36px',
-});
+const loadingContainerStyle = cn(
+  'fixed inset-0 bg-white/80 z-loading',
+  'flex items-center justify-center text-[36px]'
+);

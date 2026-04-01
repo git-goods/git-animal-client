@@ -3,7 +3,7 @@
 import React, { Children, useState } from 'react';
 import { useRef } from 'react';
 import Image from 'next/image';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import { Fade, Perspective } from '@egjs/flicking-plugins';
 import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
@@ -51,7 +51,7 @@ function AnimalSliderContainerMobile({ children }: { children: React.ReactNode }
 
   return (
     <div>
-      <div className={cx(sliderContainer, 'slider-container')}>
+      <div className={cn(sliderContainer, 'slider-container')}>
         <ArrowButton onClick={moveToPrevPanel} direction="prev" disabled={isFirstPanel} />
         <ArrowButton onClick={moveToNextPanel} direction="next" disabled={isLastPanel} />
         <Flicking ref={flicking} {...sliderOptions}>
@@ -76,18 +76,11 @@ function ArrowButton({
   return (
     <button
       onClick={onClick}
-      className={cx(
+      className={cn(
         direction === 'prev' ? prevArrowStyle : nextArrowStyle,
-        css({
-          rotate: direction === 'prev' ? '180deg' : '0deg',
-          cursor: disabled ? 'not-allowed' : 'pointer',
-          width: disabled ? '36px' : '40px',
-          height: disabled ? '36px' : '40px',
-          _mobile: {
-            width: disabled ? '24px' : '26px',
-            height: disabled ? '24px' : '26px',
-          },
-        }),
+        direction === 'prev' ? 'rotate-180' : 'rotate-0',
+        disabled ? 'cursor-not-allowed w-9 h-9' : 'cursor-pointer w-10 h-10',
+        disabled ? 'max-mobile:w-6 max-mobile:h-6' : 'max-mobile:w-[26px] max-mobile:h-[26px]'
       )}
     >
       {disabled ? (
@@ -99,39 +92,20 @@ function ArrowButton({
   );
 }
 
-const arrowStyle = css({
-  position: 'absolute',
-  top: '0',
-  bottom: '0',
-  margin: 'auto',
-  zIndex: 'floating',
-
-  '& img': {
-    width: '100%',
-    height: '100%',
-  },
-
-  _mobile: {
-    bottom: '0',
-  },
-});
-
-const prevArrowStyle = cx(
-  arrowStyle,
-  css({
-    left: '-62px',
-    _mobile: {
-      left: '8px',
-    },
-  }),
+const arrowStyle = cn(
+  'absolute top-0 bottom-0 my-auto z-floating',
+  '[&_img]:w-full [&_img]:h-full',
+  'max-mobile:bottom-0'
 );
 
-const nextArrowStyle = cx(
+const prevArrowStyle = cn(
   arrowStyle,
-  css({
-    right: '-62px',
-    _mobile: {
-      right: '8px',
-    },
-  }),
+  '-left-[62px]',
+  'max-mobile:left-2'
+);
+
+const nextArrowStyle = cn(
+  arrowStyle,
+  '-right-[62px]',
+  'max-mobile:right-2'
 );

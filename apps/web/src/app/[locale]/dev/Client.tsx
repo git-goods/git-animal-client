@@ -1,8 +1,6 @@
 'use client';
 
-import { Box } from '_panda/jsx';
-import { flex } from '_panda/patterns';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 
 import { Link } from '@/i18n/routing';
 import { useDevMode } from '@/lib/devtools/devtools';
@@ -14,9 +12,9 @@ function DevClient() {
   const { data: session, status } = useClientSession();
 
   return (
-    <Box>
+    <div>
       <li>devMode: {isDevMode}</li>
-      <ul className={listStyle}>
+      <ul className="mt-6 flex flex-col gap-6 bg-white w-[90%] font-sans">
         <li>client session status : {status}</li>
         <li>
           client session user : <br /> {session?.user && JSON.stringify(session.user)}
@@ -38,20 +36,11 @@ function DevClient() {
           </Link>
         </li>
       </ul>
-    </Box>
+    </div>
   );
 }
 
 export default DevClient;
-
-const listStyle = flex({
-  marginTop: '24px',
-  gap: '24px',
-  flexDir: 'column',
-  bg: 'white',
-  w: '90%',
-  fontFamily: 'sans-serif',
-});
 
 function GoogleSheet() {
   const handleSubmit = async () => {

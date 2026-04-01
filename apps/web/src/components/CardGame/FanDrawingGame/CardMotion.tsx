@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { motion } from 'framer-motion';
 
 interface CardMotionProps {
@@ -31,7 +31,7 @@ export function NonSelectedCardMotion({ children, x, y, rotate }: PropsWithChild
           duration: 0.5,
         },
       }}
-      className={cardStyle}
+      className="absolute cursor-pointer"
       style={{
         transformStyle: 'preserve-3d',
         transformOrigin: 'center center',
@@ -66,7 +66,7 @@ export function SelectedCardMotion({ children, x, y, rotate }: PropsWithChildren
           stiffness: 70,
         },
       }}
-      className={cx('selected-card', selectedCardStyle)}
+      className={cn('selected-card', 'w-[40vw] max-w-[400px]')}
       style={{
         transformStyle: 'preserve-3d',
         transformOrigin: 'center center',
@@ -77,11 +77,6 @@ export function SelectedCardMotion({ children, x, y, rotate }: PropsWithChildren
     </motion.div>
   );
 }
-
-const selectedCardStyle = css({
-  width: '40vw',
-  maxWidth: '400px',
-});
 
 export function DrawingCardMotion({
   children,
@@ -115,7 +110,7 @@ export function DrawingCardMotion({
           delay: index * 0.1,
         },
       }}
-      className={cardStyle}
+      className="absolute cursor-pointer"
       onClick={onClick}
       style={{
         transformStyle: 'preserve-3d',
@@ -131,8 +126,3 @@ export function DrawingCardMotion({
     </motion.div>
   );
 }
-
-const cardStyle = css({
-  position: 'absolute',
-  cursor: 'pointer',
-});

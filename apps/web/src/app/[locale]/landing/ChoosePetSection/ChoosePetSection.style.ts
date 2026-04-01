@@ -1,40 +1,16 @@
-import { css } from '_panda/css';
-import { center } from '_panda/patterns';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
-export const section = center({
-  position: 'relative',
-  p: '120px 0',
-  overflow: 'hidden',
-  flexDirection: 'column',
-  gap: '60px',
+export const section = cn(
+  'relative flex flex-col items-center justify-center py-[120px] px-0 overflow-hidden gap-[60px]',
+  'max-mobile:py-[80px] max-mobile:px-4 max-mobile:gap-5',
+);
 
-  _mobile: {
-    p: '80px 16px',
-    gap: '20px',
-  },
-});
+export const bg = cn(
+  'absolute inset-0 z-hide',
+  '[&_img]:w-full [&_img]:h-full [&_img]:object-cover',
+);
 
-export const bg = css({
-  position: 'absolute',
-  top: 0,
-  bottom: 0,
-  right: 0,
-  left: 0,
-  zIndex: 'hide',
-  '& img': {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-  },
-});
-
-export const heading = css({
-  textStyle: 'glyph82.bold',
-  color: 'white',
-  textAlign: 'center',
-  maxWidth: '840px',
-
-  _mobile: {
-    textStyle: 'glyph40.bold',
-  },
-});
+export const heading = cn(
+  'font-product text-glyph-82 font-bold text-white text-center max-w-[840px]',
+  'max-mobile:text-glyph-40 max-mobile:font-bold',
+);

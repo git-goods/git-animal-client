@@ -27,7 +27,9 @@ const SolveQuizConfirmDialog = ({ onConfirm, onClose, isOpen }: SolveQuizConfirm
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content isShowClose={false}>
-        <Dialog.Title>{t('solve-todays-quiz')}</Dialog.Title>
+        <Dialog.Title className="font-product font-medium text-glyph-20 text-left">
+          {t('solve-todays-quiz')}
+        </Dialog.Title>
         <Flex alignItems="center" gap="8px" width="100%">
           <Button className={buttonStyle} onClick={onClose} variant="secondary" size="m">
             {t('cancel')}

@@ -3,13 +3,20 @@
 import { useParams } from 'next/navigation';
 import { leaveGuild } from '@gitanimals/api';
 import { guildQueries } from '@gitanimals/react-query';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@gitanimals/ui-panda';
+import {
+  Button,
+  Dialog,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { CatIcon, EllipsisVerticalIcon, LinkIcon, LogOutIcon, SettingsIcon, UsersRoundIcon } from 'lucide-react';
+import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
-import { useDialog } from '@/components/Global/useDialog';
 import { ORIGIN_URL, ROUTE } from '@/constants/route';
 import { Link, useRouter } from '@/i18n/routing';
 import { useClientUser } from '@/utils/clientAuth';
@@ -111,15 +118,24 @@ const useLeaveGuild = () => {
   const { id: guildId } = useParams();
   const router = useRouter();
 
-  const { showDialog } = useDialog();
-
   const action = () => {
-    showDialog({
-      title: 'Are you sure you want to leave the guild?',
-      onConfirm: submitLeaveGuild,
-      confirmText: 'Leave',
-      cancelText: 'Cancel',
-    });
+    overlay.open(({ isOpen, close }) => (
+      <Dialog open={isOpen} onOpenChange={close}>
+        <Dialog.Content className="max-w-fit">
+          <Dialog.Title className="font-product font-medium text-glyph-20 text-left">
+            Are you sure you want to leave the guild?
+          </Dialog.Title>
+          <div className="flex gap-2 justify-end w-full">
+            <Button onClick={submitLeaveGuild} variant="secondary" size="m">
+              Ok
+            </Button>
+            <Button onClick={() => close()} variant="primary" size="m">
+              Close
+            </Button>
+          </div>
+        </Dialog.Content>
+      </Dialog>
+    ));
   };
 
   const submitLeaveGuild = async () => {

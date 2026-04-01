@@ -1,7 +1,7 @@
 'use client';
 
-import { css } from '_panda/css';
-import { Button } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind';
+import { Button } from '@gitanimals/ui-tailwind';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowUp } from 'lucide-react';
 import { toast } from 'sonner';
@@ -79,14 +79,26 @@ export function FeedbackUpvote() {
   }
 
   return (
-    <footer className={footerStyle}>
-      <div className={contentStyle}>
-        <p className={messageStyle}>
+    <footer className="fixed bottom-0 left-0 right-0 border-t border-white/10 py-4 px-6 z-10 bg-gray-150">
+      <div
+        className={cn(
+          'mx-auto flex flex-col gap-3 items-center',
+          'md:flex-row md:justify-start'
+        )}
+      >
+        <p className="text-white text-sm leading-relaxed flex-1 text-center md:text-left">
           실험실 기능이 마음에 드셨나요? 정식 출시를 원하시면 업보트를 눌러주세요!
-          {typeof upvoteCount === 'number' && <span className={countStyle}> ({upvoteCount}명이 업보트했어요)</span>}
+          {typeof upvoteCount === 'number' && (
+            <span className="text-brand-sky font-bold ml-2"> ({upvoteCount}명이 업보트했어요)</span>
+          )}
         </p>
 
-        <Button className={buttonStyle} onClick={handleUpvote} disabled={isUpvoting || hasUpvoted} size="s">
+        <Button
+          className="min-w-[120px] font-bold flex items-center justify-center gap-1"
+          onClick={handleUpvote}
+          disabled={isUpvoting || hasUpvoted}
+          size="s"
+        >
           <ArrowUp width={20} height={20} />
           {hasUpvoted ? '업보트 완료' : '업보트'}
         </Button>
@@ -94,53 +106,3 @@ export function FeedbackUpvote() {
     </footer>
   );
 }
-
-const footerStyle = css({
-  position: 'fixed',
-  bottom: 0,
-  left: 0,
-  right: 0,
-  borderTop: '1px solid',
-  borderColor: 'white.white_10',
-  padding: '16px 24px',
-  zIndex: 10,
-  background: 'gray.gray_150',
-});
-
-const contentStyle = css({
-  margin: '0 auto',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '12px',
-  alignItems: 'center',
-  '@media (min-width: 768px)': {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
-});
-
-const messageStyle = css({
-  color: 'white.white_100',
-  fontSize: '14px',
-  lineHeight: '1.5',
-  flex: 1,
-  textAlign: 'center',
-  '@media (min-width: 768px)': {
-    textAlign: 'left',
-  },
-});
-
-const countStyle = css({
-  color: 'brand.sky',
-  fontWeight: 'bold',
-  marginLeft: '8px',
-});
-
-const buttonStyle = css({
-  minWidth: '120px',
-  fontWeight: 'bold',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '4px',
-});

@@ -1,4 +1,4 @@
-import { css } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import { MemoizedPersonaItem } from './PersonaItem';
 
@@ -20,42 +20,19 @@ interface MergeSlotsProps {
 }
 
 // MergeSlots 스타일
-const mergeSlotsContainerStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '16px',
-});
+const mergeSlotsContainerStyle = 'flex items-center justify-center gap-4';
 
-const slotContainerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-});
+const slotContainerStyle = 'flex flex-col items-center';
 
-const slotStyle = css({
-  width: '96px',
-  height: '96px',
-  background: 'gray.gray_200',
-  borderRadius: '16px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  border: '2px solid',
-  borderColor: 'gray.gray_300',
-});
+const slotStyle = cn(
+  'w-24 h-24 bg-gray-200 rounded-2xl',
+  'flex items-center justify-center',
+  'border-2 border-gray-300'
+);
 
-const slotLabelStyle = css({
-  color: 'gray.gray_400',
-  fontSize: '14px',
-  marginTop: '8px',
-});
+const slotLabelStyle = 'text-gray-400 text-sm mt-2';
 
-const operatorStyle = css({
-  fontSize: '24px',
-  color: 'gray.gray_500',
-  marginBottom: '24px',
-});
+const operatorStyle = 'text-2xl text-gray-500 mb-6';
 
 export function MergeSlots({ targetPet, materialPets, totalLevel, resultLevel }: MergeSlotsProps) {
   return (
@@ -79,20 +56,15 @@ export function MergeSlots({ targetPet, materialPets, totalLevel, resultLevel }:
         <div className={slotStyle}>
           {materialPets.length > 0 ? (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-              <span className={css({ color: 'brand.sky' })} style={{ fontSize: '24px', fontWeight: 'bold' }}>
+              <span className="text-brand-sky text-2xl font-bold">
                 {materialPets.length}
               </span>
-              <span
-                className={css({
-                  color: 'gray.gray_500',
-                })}
-                style={{ fontSize: '12px', marginTop: '4px' }}
-              >
+              <span className="text-gray-500 text-xs mt-1">
                 materials
               </span>
             </div>
           ) : (
-            <span className={css({ fontSize: '60px', color: 'gray.gray_500' })}>?</span>
+            <span className="text-[60px] text-gray-500">?</span>
           )}
         </div>
         <span className={slotLabelStyle}>Materials</span>

@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { css, cx } from '_panda/css';
-import { GameCard } from '@gitanimals/ui-panda';
+import { cn } from '@gitanimals/ui-tailwind';
+import { GameCard } from '@gitanimals/ui-tailwind';
 
 import { AnimalCardBack } from '@/components/AnimalCard/AnimalCard';
 import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
@@ -53,18 +53,16 @@ const CardFlipGame = ({ onGetPersona, getPersona }: CardFlipGameProps) => {
         {cards.map((isCardFlipped, index) => (
           <button key={index} className={cardStyle} onClick={() => handleCardClick(index)}>
             <div
-              className={cx(
+              className={cn(
                 cardInnerStyle,
-                css({
-                  transform: isCardFlipped ? 'rotateY(180deg)' : 'none',
-                  animation: selectedCard === index && isShaking ? 'move 0.5s' : 'none',
-                }),
+                isCardFlipped ? '[transform:rotateY(180deg)]' : '',
+                selectedCard === index && isShaking ? 'animate-move' : ''
               )}
             >
-              <div className={cx(cardFaceStyle, selectedCard !== null && cardScaleStyle)}>
+              <div className={cn(cardFaceStyle, selectedCard !== null && cardScaleStyle)}>
                 <AnimalCardBack tier="S_PLUS" />
               </div>
-              <div className={cx(cardFaceStyle, cardBackStyle)}>
+              <div className={cn(cardFaceStyle, cardBackStyle)}>
                 {getPersona && (
                   <GameCard
                     title={getPersona.type}
@@ -85,64 +83,38 @@ const CardFlipGame = ({ onGetPersona, getPersona }: CardFlipGameProps) => {
 
 export default CardFlipGame;
 
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '1rem',
-  width: '100%',
-});
+const containerStyle = cn(
+  'flex flex-col items-center gap-4 w-full'
+);
 
-const cardContainerStyle = css({
-  display: 'flex',
-  gap: '1rem',
-  width: '100%',
+const cardContainerStyle = cn(
+  'flex gap-4 w-full',
+  'max-mobile:flex-wrap max-mobile:justify-center max-mobile:gap-2'
+);
 
-  _mobile: {
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: '8px',
-  },
-});
+const cardStyle = cn(
+  'w-[20%] cursor-pointer h-auto aspect-[109/135]',
+  '[perspective:1000px]',
+  'max-mobile:w-[30%]'
+);
 
-const cardStyle = css({
-  width: '20%',
-  perspective: '1000px',
-  cursor: 'pointer',
-  height: 'auto',
-  aspectRatio: '109/135',
+const cardInnerStyle = cn(
+  'relative w-full h-full text-center',
+  'transition-transform duration-[600ms]',
+  '[transform-style:preserve-3d]'
+);
 
-  _mobile: {
-    width: '30%',
-  },
-});
+const cardFaceStyle = cn(
+  'absolute w-full h-full',
+  '[backface-visibility:hidden]',
+  'flex items-center justify-center'
+);
 
-const cardInnerStyle = css({
-  position: 'relative',
-  width: '100%',
-  height: '100%',
-  textAlign: 'center',
-  transition: 'transform 0.6s',
-  transformStyle: 'preserve-3d',
-});
+const cardScaleStyle = cn(
+  'transition-transform duration-300',
+  'hover:scale-105'
+);
 
-const cardFaceStyle = css({
-  position: 'absolute',
-  width: '100%',
-  height: '100%',
-  backfaceVisibility: 'hidden',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
-
-const cardScaleStyle = css({
-  transition: 'transform 0.3s',
-  _hover: {
-    transform: 'scale(1.05)',
-  },
-});
-
-const cardBackStyle = css({
-  transform: 'rotateY(180deg)',
-});
+const cardBackStyle = cn(
+  '[transform:rotateY(180deg)]'
+);

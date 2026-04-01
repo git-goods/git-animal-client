@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { toast } from 'sonner';
 
 import { getGuildString } from '@/components/Gitanimals';
@@ -24,7 +24,7 @@ export function CopyGuildImgButton({ guildId }: { guildId: string }) {
   };
 
   return (
-    <Button onClick={onLinkCopy} size="m" variant="secondary" mx="auto">
+    <Button onClick={onLinkCopy} size="m" variant="secondary" className="mx-auto">
       {t('copy-link-title')}
     </Button>
   );

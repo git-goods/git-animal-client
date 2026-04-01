@@ -2,7 +2,7 @@
 
 import type { PropsWithChildren } from 'react';
 import { createContext, useContext, useState } from 'react';
-import { cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 
 const SelectableFormItemContext = createContext<{
   selected: string | null;
@@ -64,7 +64,7 @@ export function SelectableFormItemOption(props: SelectableFormItemOptionProps) {
   return (
     <button
       type="button"
-      className={cx('selectable-form-item-option group', props.className)}
+      className={cn('selectable-form-item-option group', props.className)}
       onClick={() => onChange(props.value)}
       data-active={selected === props.value}
     >

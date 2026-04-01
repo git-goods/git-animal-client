@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { createGuild } from '@gitanimals/api';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
@@ -56,7 +56,7 @@ export default function GuildCreate() {
       {step === 'guild-info' && (
         <>
           <GuildCreateForm formData={formData} onDataChange={onChange} error={error} setError={setError} />
-          <Button mx="auto" disabled={isFirstStepValid} onClick={() => setStep('guild-persona')}>
+          <Button className="mx-auto" disabled={isFirstStepValid} onClick={() => setStep('guild-persona')}>
             Create / 3,000P
             <span style={{ textDecoration: 'line-through', fontSize: '12px', color: '#9295A1', marginLeft: '4px' }}>
               30,000P
@@ -70,7 +70,7 @@ export default function GuildCreate() {
             selectPersona={selectPersona ? [selectPersona] : []}
             onSelectPersona={(persona) => setSelectPersona(persona.id)}
           />
-          <Button mx="auto" disabled={!selectPersona} onClick={onSubmit}>
+          <Button className="mx-auto" disabled={!selectPersona} onClick={onSubmit}>
             Done
           </Button>
         </>

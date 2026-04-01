@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries } from '@gitanimals/react-query';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { useQuery } from '@tanstack/react-query';
 
 import { MediaQuery } from '@/components/MediaQuery';

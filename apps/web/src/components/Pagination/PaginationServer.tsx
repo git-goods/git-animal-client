@@ -1,4 +1,4 @@
-import { css } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Link } from '@/i18n/routing';
@@ -62,30 +62,11 @@ export function PaginationServer(props: { generateMoveLink: (props: { page: numb
   );
 }
 
-const paginationContainerStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '6px',
+const paginationContainerStyle = cn(
+  'flex items-center justify-center gap-1.5',
+  '[&_button]:min-w-[15px] [&_button]:h-[26px] [&_button]:rounded [&_button]:inline-flex [&_button]:items-center [&_button]:justify-center',
+);
 
-  '& button': {
-    minWidth: '15px',
-    height: '26px',
-    borderRadius: '4px',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const nonSelectedCss = cn('font-product text-glyph-16 leading-[10px] text-white/50');
 
-const nonSelectedCss = css({
-  textStyle: 'glyph16.regular',
-  lineHeight: '10px',
-  color: 'white.white_50',
-});
-
-const selectedCss = css({
-  textStyle: 'glyph16.bold',
-  lineHeight: '10px',
-  color: 'white.white_100',
-});
+const selectedCss = cn('font-product text-glyph-16 font-bold leading-[10px] text-white');

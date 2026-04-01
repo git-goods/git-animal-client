@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { Flex } from '_panda/jsx';
 import { createQuizContext } from '@gitanimals/api';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { toast } from 'sonner';
 
@@ -71,10 +69,10 @@ const SelectCategorySection = wrap
     }, [isSolved, router]);
 
     return (
-      <div className={containerStyle}>
-        <div className={contentContainerStyle}>
-          <h1 className={titleStyle}>{t('category')}</h1>
-          <h2 className={descriptionStyle}>{t('category-description')}</h2>
+      <div className="flex flex-col justify-center items-center flex-1 w-full h-full px-4 bg-gray-050">
+        <div className="flex flex-col justify-center items-center w-full">
+          <h1 className="font-product text-glyph-40 font-bold text-white">{t('category')}</h1>
+          <h2 className="mb-[60px] font-product text-body-18 font-normal text-white-90">{t('category-description')}</h2>
           <Tabs value={category} onValueChange={(value) => handleChangeCategory(value as QuizCategory)}>
             <TabsList>
               {categoryRadioProps.map((tabsTriggerItem) => {
@@ -84,19 +82,19 @@ const SelectCategorySection = wrap
                   ? `/assets/game/quiz/cursor-choiced.webp`
                   : `/assets/game/quiz/cursor-unchoiced.webp`;
                 return (
-                  <TabsTrigger key={value} value={value} className={tabsTriggerStyle}>
-                    <Flex direction="column" align="center" gap="12px">
+                  <TabsTrigger key={value} value={value} className="w-full h-[214px]">
+                    <div className="flex flex-col items-center gap-3">
                       <Image src={imageSrc} alt={label} width={60} height={60} />
-                      <span className={tabsTriggerLabelStyle}>{label}</span>
-                    </Flex>
+                      <span className="font-product text-body-18 font-bold text-white">{label}</span>
+                    </div>
                   </TabsTrigger>
                 );
               })}
             </TabsList>
           </Tabs>
         </div>
-        <div className={buttonContainerStyle}>
-          <Button className={buttonStyle} onClick={handleStart}>
+        <div className="w-full py-2">
+          <Button className="w-full" onClick={handleStart}>
             {t('start')}
           </Button>
         </div>
@@ -105,59 +103,3 @@ const SelectCategorySection = wrap
   });
 
 export default SelectCategorySection;
-
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flex: 1,
-  width: '100%',
-  height: '100%',
-  paddingInline: '16px',
-  backgroundColor: 'gray.gray_050',
-});
-
-const titleStyle = css({
-  textStyle: 'glyph40.bold',
-  fontFamily: 'Product Sans',
-  fontWeight: 700,
-  color: 'white',
-});
-
-const descriptionStyle = css({
-  marginBottom: '60px',
-  textStyle: 'body18.regular',
-  fontFamily: 'Product Sans',
-  fontWeight: 400,
-  color: 'white.white_90',
-});
-
-const tabsTriggerStyle = css({
-  width: '100%',
-  height: '214px',
-});
-
-const tabsTriggerLabelStyle = css({
-  textStyle: 'body18.bold',
-  fontFamily: 'Product Sans',
-  fontWeight: 700,
-  color: 'white',
-});
-
-const contentContainerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
-});
-
-const buttonContainerStyle = css({
-  width: '100%',
-  paddingBlock: '8px',
-});
-
-const buttonStyle = css({
-  width: '100%',
-});

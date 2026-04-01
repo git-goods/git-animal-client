@@ -1,7 +1,5 @@
 import React from 'react';
-import { css } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { Button, Dialog } from '@gitanimals/ui-panda';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
 
 export function AlertDialog(props: {
   isOpen: boolean;
@@ -12,25 +10,16 @@ export function AlertDialog(props: {
   return (
     <Dialog open={props.isOpen} onOpenChange={props.onClose}>
       <Dialog.Content>
-        <Dialog.Title className={titleStyle}>{props.title}</Dialog.Title>
-        <Dialog.Description className={descriptionStyle}>{props.description}</Dialog.Description>
-        <Flex gap="8px" justifyContent="flex-end" width="100%">
+        <Dialog.Title className="font-product text-glyph-20 text-left">{props.title}</Dialog.Title>
+        <Dialog.Description className="font-product text-glyph-16 text-left text-white/75 w-full">
+          {props.description}
+        </Dialog.Description>
+        <div className="flex gap-2 justify-end w-full">
           <Button onClick={props.onClose} variant="primary" size="m">
             Close
           </Button>
-        </Flex>
+        </div>
       </Dialog.Content>
     </Dialog>
   );
 }
-const titleStyle = css({
-  textStyle: 'glyph20.regular',
-  textAlign: 'left',
-});
-
-const descriptionStyle = css({
-  textStyle: 'glyph16.regular',
-  textAlign: 'left',
-  color: 'white.white_75',
-  width: '100%',
-});

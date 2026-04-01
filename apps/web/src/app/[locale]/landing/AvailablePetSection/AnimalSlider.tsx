@@ -1,6 +1,6 @@
 'use client';
 
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import type { PersonaInfo } from '@gitanimals/api';
 
 import { AnimalCard } from '@/components/AnimalCard';
@@ -31,7 +31,7 @@ function AnimalSlider() {
 
   // TODO: 화면 크기가 바뀌면 (breakpoint에 도달하면 slider 다시 렌더링)
   return (
-    <div className={cx(containerStyle)}>
+    <div className={cn(containerStyle)}>
       <MediaQuery
         desktop={
           <PerspectiveCenterSlider>
@@ -66,20 +66,9 @@ function AnimalSlider() {
 
 export default AnimalSlider;
 
-const containerStyle = css({
-  width: '1120px',
-  height: '1024px',
-
-  '@media (max-width: 1200px)': {
-    width: '835px',
-  },
-
-  '@media (max-width: 900px)': {
-    width: '530px',
-  },
-  '@media (max-width: 600px)': {
-    width: 'calc(100vw - 40px)',
-    height: '325px',
-    position: 'relative',
-  },
-});
+const containerStyle = cn(
+  'w-[1120px] h-[1024px]',
+  'max-[1200px]:w-[835px]',
+  'max-[900px]:w-[530px]',
+  'max-[600px]:w-[calc(100vw-40px)] max-[600px]:h-[325px] max-[600px]:relative'
+);
