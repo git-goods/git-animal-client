@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { wrap } from '@suspensive/react';
 import { overlay } from 'overlay-kit';
 
-import { ConfirmDialog } from '@/app/[locale]/laboratory/_component/ConfirmDialog';
+import { ConfirmDialog } from '@gitanimals/ui-tailwind';
 import { ROUTE } from '@/shared/config/route';
 import { useRouter } from '@/shared/i18n/routing';
 

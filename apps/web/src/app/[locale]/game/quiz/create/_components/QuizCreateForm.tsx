@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 
 import QuizField from '@/app/[locale]/game/quiz/create/_components/QuizField';
 import QuizTextArea from '@/app/[locale]/game/quiz/create/_components/QuizTextArea';
-import { ConfirmDialog } from '@/app/[locale]/laboratory/_component/ConfirmDialog';
+import { ConfirmDialog } from '@gitanimals/ui-tailwind';
 import Tabs from '@/components/Tabs/Tabs';
 import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';

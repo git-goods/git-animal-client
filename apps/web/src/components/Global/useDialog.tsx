@@ -1,8 +1,8 @@
 'use client';
 
-import { type ReactNode, useState } from 'react';
+import type { ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
-import { Button, cn, Dialog } from '@gitanimals/ui-tailwind';
+import { AlertDialog, ConfirmDialog } from '@gitanimals/ui-tailwind';
 import { atom, useAtom } from 'jotai';
 
 interface DialogState {
@@ -51,8 +51,8 @@ export function useDialog() {
  */
 export function DialogComponent() {
   const [dialog, setDialog] = useAtom(dialogAtom);
-  const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations('Common');
+
   const closeDialog = () => {
     setDialog((prev) => ({
       ...prev,
@@ -60,39 +60,27 @@ export function DialogComponent() {
     }));
   };
 
-  const confirmDialog = async () => {
-    if (isLoading) return;
-
-    if (dialog.onConfirm) {
-      setIsLoading(true);
-      await dialog.onConfirm();
-      setIsLoading(false);
-    }
-    closeDialog();
-  };
+  if (dialog.onConfirm) {
+    return (
+      <ConfirmDialog
+        isOpen={dialog.isOpen}
+        onClose={closeDialog}
+        onConfirm={dialog.onConfirm}
+        title={String(dialog.title)}
+        description={dialog.description}
+        cancelText={dialog.cancelText ? t(dialog.cancelText) : t('close')}
+        confirmText={dialog.confirmText ? t(dialog.confirmText) : t('confirm')}
+      />
+    );
+  }
 
   return (
-    <Dialog open={dialog.isOpen} onOpenChange={closeDialog}>
-      <Dialog.Content>
-        <Dialog.Title className={titleStyle}>{dialog.title}</Dialog.Title>
-        {dialog.description && (
-          <Dialog.Description className={descriptionStyle}>{dialog.description}</Dialog.Description>
-        )}
-        <div className="flex gap-2 justify-end w-full">
-          <Button onClick={closeDialog} variant="secondary" size="m">
-            {dialog.cancelText ? t(dialog.cancelText) : t('close')}
-          </Button>
-          {dialog.onConfirm && (
-            <Button onClick={confirmDialog} variant="primary" size="m" disabled={isLoading}>
-              {isLoading ? t('processing') : dialog.confirmText ? t(dialog.confirmText) : t('confirm')}
-            </Button>
-          )}
-        </div>
-      </Dialog.Content>
-    </Dialog>
+    <AlertDialog
+      isOpen={dialog.isOpen}
+      onClose={closeDialog}
+      title={String(dialog.title)}
+      description={dialog.description}
+      closeText={dialog.cancelText ? t(dialog.cancelText) : t('close')}
+    />
   );
 }
-
-const titleStyle = cn('font-product text-glyph-20 text-left');
-
-const descriptionStyle = cn('font-product text-glyph-16 text-left text-white/75 w-full');
