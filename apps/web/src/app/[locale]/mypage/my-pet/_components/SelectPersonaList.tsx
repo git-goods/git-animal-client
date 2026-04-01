@@ -21,16 +21,6 @@ function BannerSkeletonList({ length }: { length: number }) {
   );
 }
 
-function BannerSkeletonList({ length }: { length: number }) {
-  return (
-    <>
-      {Array.from({ length }).map((_, index) => (
-        <Skeleton key={index} className="w-[80px] h-[100px] rounded-lg" />
-      ))}
-    </>
-  );
-}
-
 interface SelectPersonaListProps {
   selectPersona: string[];
   onSelectPersona: (persona: Persona) => void;
