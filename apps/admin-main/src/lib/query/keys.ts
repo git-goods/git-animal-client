@@ -48,4 +48,16 @@ export const queryKeys = {
     all: ["analytics"] as const,
     reports: (type?: string) => [...queryKeys.analytics.all, "reports", type] as const,
   },
+
+  // 퀴즈 관련 쿼리
+  quizs: {
+    all: ["quizs"] as const,
+    approved: () => [...queryKeys.quizs.all, "approved"] as const,
+    approvedList: (filters?: Record<string, unknown>) =>
+      [...queryKeys.quizs.approved(), filters] as const,
+    notApproved: () => [...queryKeys.quizs.all, "not-approved"] as const,
+    notApprovedList: (filters?: Record<string, unknown>) =>
+      [...queryKeys.quizs.notApproved(), filters] as const,
+    solveContexts: (userId: string) => [...queryKeys.quizs.all, "solve-contexts", userId] as const,
+  },
 } as const;
