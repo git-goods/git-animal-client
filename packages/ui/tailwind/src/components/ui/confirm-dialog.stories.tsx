@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import React from 'react';
 import { ConfirmDialog } from './confirm-dialog';
-import { Button } from './button';
 
 const meta: Meta<typeof ConfirmDialog> = {
   title: 'UI/ConfirmDialog',
@@ -10,6 +9,11 @@ const meta: Meta<typeof ConfirmDialog> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  args: {
+    isOpen: true,
+    onClose: () => {},
+    onConfirm: () => {},
+  },
   argTypes: {
     title: { control: 'text' },
     description: { control: 'text' },
@@ -23,22 +27,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  render: (args) => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <>
-        <Button variant="primary" size="m" onClick={() => setIsOpen(true)}>
-          Open ConfirmDialog
-        </Button>
-        <ConfirmDialog
-          {...args}
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          onConfirm={() => setIsOpen(false)}
-        />
-      </>
-    );
-  },
   args: {
     title: 'Delete Item?',
     description: 'Are you sure you want to delete this item? This action cannot be undone.',
@@ -48,22 +36,6 @@ export const Default: Story = {
 };
 
 export const CustomButtonText: Story = {
-  render: (args) => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <>
-        <Button variant="secondary" size="m" onClick={() => setIsOpen(true)}>
-          Open ConfirmDialog
-        </Button>
-        <ConfirmDialog
-          {...args}
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          onConfirm={() => setIsOpen(false)}
-        />
-      </>
-    );
-  },
   args: {
     title: 'Merge Pet?',
     description: 'This will merge two pets into one. The original pets will be lost.',
@@ -72,59 +44,22 @@ export const CustomButtonText: Story = {
   },
 };
 
-export const AsyncConfirm: Story = {
-  render: (args) => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <>
-        <Button variant="primary" size="m" onClick={() => setIsOpen(true)}>
-          Async Confirm
-        </Button>
-        <ConfirmDialog
-          {...args}
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          onConfirm={async () => {
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-            setIsOpen(false);
-          }}
-        />
-      </>
-    );
-  },
+export const Loading: Story = {
   args: {
     title: 'Save Changes?',
-    description: 'Click confirm to simulate a 2-second async operation.',
+    description: 'Click confirm to simulate a loading state.',
     confirmText: 'Save',
     cancelText: 'Discard',
+    isLoading: true,
   },
 };
 
 export const WithChildren: Story = {
-  render: (args) => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <>
-        <Button variant="primary" size="m" onClick={() => setIsOpen(true)}>
-          With Custom Content
-        </Button>
-        <ConfirmDialog
-          {...args}
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          onConfirm={() => setIsOpen(false)}
-        >
-          <div className="rounded-md bg-white/10 p-3 text-sm text-white/70">
-            Pet: Golden Retriever (Lv.5)
-          </div>
-        </ConfirmDialog>
-      </>
-    );
-  },
   args: {
     title: 'Sell this pet?',
     description: 'The following pet will be sold:',
     confirmText: 'Sell',
     cancelText: 'Cancel',
+    children: <div className="rounded-md bg-white/10 p-3 text-sm text-white/70">Pet: Golden Retriever (Lv.5)</div>,
   },
 };
