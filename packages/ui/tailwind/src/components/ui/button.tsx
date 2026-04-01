@@ -9,6 +9,7 @@ const buttonVariants = cva(
     'font-product text-glyph-16 font-normal',
     'transition-all duration-200',
     'disabled:cursor-not-allowed',
+    'py-[2px] h-fit',
   ].join(' '),
   {
     variants: {
@@ -31,9 +32,9 @@ const buttonVariants = cva(
         ].join(' '),
       },
       size: {
-        s: 'px-6 h-8 min-h-[32px] text-glyph-14',
-        m: 'px-[30px] h-10 min-h-[40px] text-glyph-16',
-        l: 'px-[76px] py-[25px] min-h-[76px] text-glyph-20',
+        s: 'px-2 min-w-[64px] min-h-[32px] text-glyph-14',
+        m: 'px-3 min-w-[120px] min-h-[40px] text-glyph-16',
+        l: 'px-4 min-w-[176px] py-[25px] min-h-[76px] text-glyph-20',
       },
       floating: {
         true: 'w-full max-w-[calc(100%-32px)] fixed bottom-4 left-1/2 -translate-x-1/2',
@@ -45,7 +46,7 @@ const buttonVariants = cva(
       size: 'm',
       floating: false,
     },
-  }
+  },
 );
 
 export interface ButtonProps
@@ -56,14 +57,8 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, floating, ...props }, ref) => {
-    return (
-      <button
-        className={cn(buttonVariants({ variant, size, floating }), className)}
-        ref={ref}
-        {...props}
-      />
-    );
-  }
+    return <button className={cn(buttonVariants({ variant, size, floating }), className)} ref={ref} {...props} />;
+  },
 );
 Button.displayName = 'Button';
 
@@ -73,14 +68,8 @@ export interface AnchorButtonProps
 
 const AnchorButton = React.forwardRef<HTMLAnchorElement, AnchorButtonProps>(
   ({ className, variant, size, floating, ...props }, ref) => {
-    return (
-      <a
-        className={cn(buttonVariants({ variant, size, floating }), className)}
-        ref={ref}
-        {...props}
-      />
-    );
-  }
+    return <a className={cn(buttonVariants({ variant, size, floating }), className)} ref={ref} {...props} />;
+  },
 );
 AnchorButton.displayName = 'AnchorButton';
 
