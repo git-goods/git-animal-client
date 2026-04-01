@@ -78,3 +78,4 @@ apps/admin-main/.env.local
 apps/admin-main/docs/superpowers
 .omc
 
+docs/superpowers
