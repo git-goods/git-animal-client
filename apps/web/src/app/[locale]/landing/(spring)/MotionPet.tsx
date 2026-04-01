@@ -39,7 +39,7 @@ export function MotionPetSection() {
 
   return (
     <>
-      <div className="desktop" style={desktopWrapperStyle}>
+      <div className="max-mobile:hidden" style={desktopWrapperStyle}>
         <div style={petPositionStyle}>
           <MotionPet onClick={handleClick} />
         </div>

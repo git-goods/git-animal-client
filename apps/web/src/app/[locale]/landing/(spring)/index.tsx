@@ -1,10 +1,9 @@
-import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
-import { getServerAuth } from '@/auth';
 import { LoginButton } from '@/components/AuthButton';
-import { Link } from '@/i18n/routing';
+import { getServerAuth } from '@/shared/api/auth';
+import { Link } from '@/shared/i18n/routing';
 
 import { CherryBlossom } from './CherryBlossom';
 import { MotionPetSection } from './MotionPet';
@@ -23,7 +22,7 @@ export async function SpringContent() {
   const session = await getServerAuth();
   return (
     <div>
-      <div className={bgContainerStyle}>
+      <div className={bgContainerClass}>
         {[...Array(BLOSSOM_COUNT)].map((_, i) => (
           <CherryBlossom
             key={i}
@@ -37,22 +36,22 @@ export async function SpringContent() {
         ))}
 
         <MotionPetSection />
-        <div className={containerStyle}>
-          <img src="/assets/spring-logo.svg" alt="GITANIMALS" className={springLogoStyle} />
-          <p className={descriptionStyle}>
+        <div className={containerClass}>
+          <img src="/assets/spring-logo.svg" alt="GITANIMALS" className={springLogoClass} />
+          <p className={descriptionClass}>
             Spring is blooming in Gitanimals!
             <br />
             Collect a spring pet now!
           </p>
-          <div className={css({ display: 'flex', gap: '10px' })}>
+          <div className="flex gap-2.5">
             {!session ? (
               <LoginButton label="Get a spring pet now" />
             ) : (
               <Link href="/mypage">
-                <Button className="desktop" size="l">
+                <Button className="max-mobile:hidden" size="l">
                   Go To Mypage
                 </Button>
-                <Button className="mobile" size="m">
+                <Button className="hidden max-mobile:block" size="m">
                   Go To Mypage
                 </Button>
               </Link>
@@ -65,64 +64,24 @@ export async function SpringContent() {
   );
 }
 
-const springLogoStyle = css({
-  width: 'min(600px, 45vw)',
-  height: 'auto',
-  userSelect: 'none',
-  filter: 'drop-shadow(0 4px 12px rgba(255, 150, 170, 0.3))',
-  _mobile: {
-    width: 'min(280px, 80vw)',
-  },
-});
+const springLogoClass = cn(
+  'w-[min(600px,45vw)] h-auto select-none drop-shadow-[0_4px_12px_rgba(255,150,170,0.3)]',
+  'max-mobile:w-[min(280px,80vw)]',
+);
 
-const descriptionStyle = css({
-  color: 'black.black_75',
-  textStyle: 'glyph32.bold',
-  fontWeight: 400,
-  whiteSpace: 'pre-line',
-  marginTop: '16px',
-  marginBottom: '28px',
-  lineHeight: 1.5,
-  _mobile: {
-    textStyle: 'glyph16.regular',
-    fontSize: '16px',
-    marginTop: '12px',
-    marginBottom: '20px',
-    textAlign: 'center',
-  },
-});
+const descriptionClass = cn(
+  'text-black/75 whitespace-pre-line mt-4 mb-7 leading-[1.5]',
+  'font-product text-glyph-32 font-normal',
+  'max-mobile:text-glyph-16 max-mobile:text-[16px] max-mobile:mt-3 max-mobile:mb-5 max-mobile:text-center',
+);
 
-const containerStyle = flex({
-  position: 'relative',
-  width: '80%',
-  height: '100%',
-  paddingLeft: '40px',
-  zIndex: 2,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  paddingBottom: '0',
-  gap: '0',
-  _mobile: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: '0',
-    pl: 0,
-  },
-});
+const containerClass = cn(
+  'relative w-[80%] h-full pl-10 z-[2] flex flex-col justify-center',
+  'max-mobile:w-full max-mobile:items-center max-mobile:justify-center max-mobile:pl-0',
+);
 
-const bgContainerStyle = css({
-  position: 'relative',
-  width: '100%',
-  height: 'calc(100vh - 60px)',
-  display: 'grid',
-  gridTemplateColumns: '2fr 3fr',
-  gap: '0',
-  alignItems: 'center',
-  overflow: 'hidden',
-  background: 'linear-gradient(180deg, #E8F4FD 0%, #FFF0F5 40%, #FFE4EE 70%, #FFDBEE 100%)',
-  _mobile: {
-    gridTemplateColumns: '1fr',
-  },
-});
+const bgContainerClass = cn(
+  'relative w-full h-[calc(100vh-60px)] grid grid-cols-[2fr_3fr] items-center overflow-hidden',
+  'bg-gradient-to-b from-[#E8F4FD] via-[#FFF0F5] via-[70%] to-[#FFDBEE]',
+  'max-mobile:grid-cols-1',
+);
