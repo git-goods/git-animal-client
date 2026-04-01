@@ -7,21 +7,7 @@ import { SummaryCards } from "@/components/SummaryCards";
 import { identityQueryOptions } from "@/lib/api/identity";
 
 export default function DashboardPage() {
-  const {
-    data: userData,
-    isLoading,
-    error,
-    isFetching,
-    status,
-  } = useQuery(identityQueryOptions.user);
-
-  console.log("🔍 Dashboard Query Status:", {
-    userData,
-    isLoading,
-    isFetching,
-    error,
-    status,
-  });
+  useQuery(identityQueryOptions.user);
 
   return (
     <>
