@@ -350,7 +350,7 @@ DialogV2Footer.displayName = 'DialogV2Footer';
 
 function DialogV2Body({ className, children }: { className?: string; children?: React.ReactNode }) {
   return (
-    <ScrollArea className={cn('flex-1', className)}>
+    <ScrollArea className={cn('flex-1 min-h-0', className)}>
       {children}
     </ScrollArea>
   );
