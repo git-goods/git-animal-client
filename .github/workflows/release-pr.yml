@@ -1,0 +1,129 @@
+name: Release PR
+
+on:
+  push:
+    branches: [dev]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  release-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for changes
+        id: check
+        run: |
+          COMMIT_COUNT=$(git rev-list --count origin/main..origin/dev 2>/dev/null || echo "0")
+          echo "commit_count=$COMMIT_COUNT" >> "$GITHUB_OUTPUT"
+          if [ "$COMMIT_COUNT" -eq 0 ]; then
+            echo "No commits between main and dev. Skipping."
+          fi
+
+      - name: Parse commits and generate body
+        if: steps.check.outputs.commit_count != '0'
+        id: generate
+        run: |
+          COMMITS=$(git log origin/main..origin/dev --no-merges --format="%s")
+
+          FEAT=""
+          FIX=""
+          REFACTOR=""
+          STYLE=""
+          DOCS=""
+          CHORE=""
+
+          while IFS= read -r line; do
+            [ -z "$line" ] && continue
+
+            # prefix 제거하여 메시지 추출
+            msg=$(echo "$line" | sed 's/^[a-z]*\(([^)]*)\)\?[!]\?: *//')
+
+            case "$line" in
+              feat:*|feat\(*)       FEAT="${FEAT}- ${msg}"$'\n' ;;
+              fix:*|fix\(*)         FIX="${FIX}- ${msg}"$'\n' ;;
+              refactor:*|refactor\(*) REFACTOR="${REFACTOR}- ${msg}"$'\n' ;;
+              style:*|style\(*)     STYLE="${STYLE}- ${msg}"$'\n' ;;
+              docs:*|docs\(*)       DOCS="${DOCS}- ${msg}"$'\n' ;;
+              chore:*|chore\(*)     CHORE="${CHORE}- ${msg}"$'\n' ;;
+              *)                    CHORE="${CHORE}- ${line}"$'\n' ;;
+            esac
+          done <<< "$COMMITS"
+
+          # 버전 계산: 최근 RELEASE 커밋에서 현재 버전 추출
+          CURRENT_VERSION=$(git log --all --oneline --grep="\[RELEASE\]" --format="%s" | head -1 | sed 's/.*v\([0-9]*\.[0-9]*\.[0-9]*\).*/\1/')
+          if [ -z "$CURRENT_VERSION" ]; then
+            CURRENT_VERSION="0.0.0"
+          fi
+
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+
+          if [ -n "$FEAT" ]; then
+            MINOR=$((MINOR + 1))
+            PATCH=0
+          else
+            PATCH=$((PATCH + 1))
+          fi
+
+          NEXT_VERSION="v${MAJOR}.${MINOR}.${PATCH}"
+          echo "next_version=$NEXT_VERSION" >> "$GITHUB_OUTPUT"
+
+          # PR 본문 생성
+          BODY="## [RELEASE] $NEXT_VERSION"
+          NEWLINE=$'\n'
+
+          if [ -n "$FEAT" ]; then
+            BODY="${BODY}${NEWLINE}${NEWLINE}### 기능${NEWLINE}${FEAT}"
+          fi
+
+          if [ -n "$FIX" ]; then
+            BODY="${BODY}${NEWLINE}${NEWLINE}### 버그 수정${NEWLINE}${FIX}"
+          fi
+
+          if [ -n "$REFACTOR" ]; then
+            BODY="${BODY}${NEWLINE}${NEWLINE}### 리팩토링${NEWLINE}${REFACTOR}"
+          fi
+
+          if [ -n "$STYLE" ]; then
+            BODY="${BODY}${NEWLINE}${NEWLINE}### 스타일${NEWLINE}${STYLE}"
+          fi
+
+          if [ -n "$DOCS" ]; then
+            BODY="${BODY}${NEWLINE}${NEWLINE}### 문서${NEWLINE}${DOCS}"
+          fi
+
+          if [ -n "$CHORE" ]; then
+            BODY="${BODY}${NEWLINE}${NEWLINE}### 기타${NEWLINE}${CHORE}"
+          fi
+
+          # multiline output
+          {
+            echo "body<<BODY_EOF"
+            echo "$BODY"
+            echo "BODY_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create or update PR
+        if: steps.check.outputs.commit_count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          NEXT_VERSION="${{ steps.generate.outputs.next_version }}"
+          TITLE="[RELEASE] $NEXT_VERSION"
+
+          # 기존 열린 PR 확인
+          EXISTING_PR=$(gh pr list --base main --head dev --state open --json number --jq '.[0].number // empty')
+
+          if [ -n "$EXISTING_PR" ]; then
+            echo "Updating existing PR #$EXISTING_PR"
+            gh pr edit "$EXISTING_PR" --title "$TITLE" --body "${{ steps.generate.outputs.body }}"
+          else
+            echo "Creating new PR"
+            gh pr create --base main --head dev --title "$TITLE" --body "${{ steps.generate.outputs.body }}"
+          fi
