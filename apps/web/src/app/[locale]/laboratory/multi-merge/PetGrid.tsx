@@ -31,7 +31,7 @@ const petCardStyle = cn(
   'flex flex-col items-center justify-center',
   'cursor-pointer transition-all',
   'bg-gray-200 border-2 border-transparent',
-  'hover:border-gray-400'
+  'hover:border-gray-400',
 );
 
 export function PetGrid({ pets, onPetClick, onMultiplePetSelect, targetPet, materialPets }: PetGridProps) {

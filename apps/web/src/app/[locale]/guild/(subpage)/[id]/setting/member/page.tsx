@@ -1,5 +1,5 @@
-import { cn } from '@gitanimals/ui-tailwind/utils';
 import { getGuildById } from '@gitanimals/api';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import { GuildModalPageTitle } from '@/app/[locale]/guild/_components/GuildModalPageLayout';
 
@@ -40,6 +40,4 @@ export default async function GuildMemberSetting({ params }: { params: { id: str
   );
 }
 
-const subHeadingStyle = cn(
-  'font-product text-glyph-14 text-white mb-2'
-);
+const subHeadingStyle = cn('font-product text-glyph-14 text-white mb-2');

@@ -44,7 +44,7 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
             'w-full bg-white h-full transition-all duration-300',
             'max-w-[1000px] rounded-xl relative',
             '[&_img]:max-w-full',
-            'max-mobile:max-w-full'
+            'max-mobile:max-w-full',
           )}
           style={{ width: sizes.width, height: sizes.height }}
         >
@@ -54,7 +54,7 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
             className={cn(
               'w-7 h-7 flex items-center justify-center',
               'bg-black/25 rounded-md',
-              'absolute top-3 right-3 text-white'
+              'absolute top-3 right-3 text-white',
             )}
             onClick={onLinkCopy}
           >
@@ -78,7 +78,7 @@ function SizeInputList({ onApply }: { onApply: (width: number, height: number) =
         'relative',
         '[&_.heading]:font-product [&_.heading]:text-glyph-18 [&_.heading]:font-bold',
         '[&_.heading]:text-white [&_.heading]:mb-4',
-        'max-mobile:hidden'
+        'max-mobile:hidden',
       )}
     >
       <h2 className="heading">{t('customize-size')}</h2>

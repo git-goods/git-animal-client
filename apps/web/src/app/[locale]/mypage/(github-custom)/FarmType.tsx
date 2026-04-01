@@ -45,7 +45,7 @@ export function FarmType() {
             className={cn(
               'w-7 h-7 flex items-center justify-center',
               'bg-white/25 rounded-md',
-              'absolute top-3 right-3 text-white'
+              'absolute top-3 right-3 text-white',
             )}
             onClick={onLinkCopy}
           >

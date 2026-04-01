@@ -27,7 +27,7 @@ const slotContainerStyle = 'flex flex-col items-center';
 const slotStyle = cn(
   'w-24 h-24 bg-gray-200 rounded-2xl',
   'flex items-center justify-center',
-  'border-2 border-gray-300'
+  'border-2 border-gray-300',
 );
 
 const slotLabelStyle = 'text-gray-400 text-sm mt-2';
@@ -56,12 +56,8 @@ export function MergeSlots({ targetPet, materialPets, totalLevel, resultLevel }:
         <div className={slotStyle}>
           {materialPets.length > 0 ? (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-              <span className="text-brand-sky text-2xl font-bold">
-                {materialPets.length}
-              </span>
-              <span className="text-gray-500 text-xs mt-1">
-                materials
-              </span>
+              <span className="text-brand-sky text-2xl font-bold">{materialPets.length}</span>
+              <span className="text-gray-500 text-xs mt-1">materials</span>
             </div>
           ) : (
             <span className="text-[60px] text-gray-500">?</span>

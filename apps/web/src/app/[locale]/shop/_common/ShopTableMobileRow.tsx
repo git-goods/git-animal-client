@@ -40,7 +40,7 @@ export function ShopTableRowViewSkeleton() {
 const skeletonStyle = cn(
   'bg-gradient-to-r from-gray-800 via-gray-600 via-gray-200 to-gray-800',
   'bg-[length:200%_100%]',
-  'animate-skeleton-loading'
+  'animate-skeleton-loading',
 );
 
 export const rowStyle = cn(
@@ -49,19 +49,21 @@ export const rowStyle = cn(
   'items-center px-8 gap-4',
   'font-product text-glyph-20 text-white',
   '[&_button]:text-black [&_button]:w-full [&_button]:px-1.5',
-  '[&_*]:overflow-hidden [&_*]:text-ellipsis'
+  '[&_*]:overflow-hidden [&_*]:text-ellipsis',
 );
 
 export function ShopTableMobileRow({ personaType, personaLevel, price, rightElement }: Props) {
   const tier = useGetPersonaTier(personaType);
 
   return (
-    <div className={cn(
-      'flex gap-1 items-center',
-      'text-white/50 font-product text-glyph-14',
-      'bg-white/10 rounded-md',
-      'py-1 pl-2 pr-4'
-    )}>
+    <div
+      className={cn(
+        'flex gap-1 items-center',
+        'text-white/50 font-product text-glyph-14',
+        'bg-white/10 rounded-md',
+        'py-1 pl-2 pr-4',
+      )}
+    >
       <div>
         <img src={getPersonaImage(personaType)} width={60} height={67} alt="animal1" />
       </div>

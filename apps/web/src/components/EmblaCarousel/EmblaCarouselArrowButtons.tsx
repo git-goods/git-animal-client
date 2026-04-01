@@ -50,7 +50,7 @@ const arrowButtonStyle = cn(
   'appearance-none touch-manipulation inline-flex no-underline cursor-pointer',
   'p-0 m-0 border border-[#EAEAEA] w-9 h-9 z-[1] rounded-full',
   'text-black/75 items-center justify-center bg-white/75',
-  '[&.disabled]:opacity-50 [&.disabled]:cursor-not-allowed'
+  '[&.disabled]:opacity-50 [&.disabled]:cursor-not-allowed',
 );
 
 const arrowIconStyle = 'w-[35%] h-[35%]';

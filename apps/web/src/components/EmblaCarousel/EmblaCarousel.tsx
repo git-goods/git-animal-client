@@ -1,8 +1,8 @@
 'use client';
 
 import { Children } from 'react';
-import { cn } from '@gitanimals/ui-tailwind';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
+import { cn } from '@gitanimals/ui-tailwind';
 import useEmblaCarousel from 'embla-carousel-react';
 
 import { NextButton, PrevButton, usePrevNextButtons } from './EmblaCarouselArrowButtons';
@@ -54,7 +54,7 @@ function EmblaCarousel({ children }: EmblaCarouselProps) {
                   slidesPerView === 1 ? 'flex-[0_0_100%]' : 'flex-[0_0_calc(50%-10px)]',
                   'min-w-0 p-[10px] text-center',
                   '[&_img]:w-full [&_img]:h-auto [&_img]:rounded-lg',
-                  '[&_p]:mt-[10px] [&_p]:text-[16px]'
+                  '[&_p]:mt-[10px] [&_p]:text-[16px]',
                 )}
                 key={idx}
               >

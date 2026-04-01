@@ -97,7 +97,7 @@ export function LaboratoryLayout({
                   'bg-white/5 border border-white/10',
                   'text-white font-product text-glyph-12 cursor-pointer',
                   'transition-all duration-300',
-                  'hover:bg-white/10 hover:-translate-x-1'
+                  'hover:bg-white/10 hover:-translate-x-1',
                 )}
               >
                 <ArrowLeft className="w-[18px] h-[18px]" />
@@ -115,12 +115,14 @@ export function LaboratoryLayout({
                   'font-product text-glyph-12 font-bold px-2 py-1 rounded-lg',
                   'bg-gradient-to-r from-[#667eea] to-[#764ba2]',
                   'text-white whitespace-nowrap animate-pulse',
-                  'shadow-[0_0_20px_rgba(102,126,234,0.5)]'
+                  'shadow-[0_0_20px_rgba(102,126,234,0.5)]',
                 )}
               >
                 🧪 실험실
               </span>
-              <h1 className="font-product text-glyph-22 font-bold text-white leading-tight md:text-glyph-24">{title}</h1>
+              <h1 className="font-product text-glyph-22 font-bold text-white leading-tight md:text-glyph-24">
+                {title}
+              </h1>
             </div>
             {laboratoryId && (
               <button
@@ -137,7 +139,7 @@ export function LaboratoryLayout({
                   'data-[upvoted=true]:bg-gradient-to-r data-[upvoted=true]:from-[#f093fb] data-[upvoted=true]:to-[#f5576c]',
                   'data-[upvoted=true]:border-transparent data-[upvoted=true]:cursor-default',
                   'data-[upvoted=true]:shadow-[0_4px_12px_rgba(240,147,251,0.3)]',
-                  'disabled:opacity-70 disabled:cursor-not-allowed'
+                  'disabled:opacity-70 disabled:cursor-not-allowed',
                 )}
                 onClick={handleUpvote}
                 disabled={isUpvoting || hasUpvoted}
@@ -146,7 +148,7 @@ export function LaboratoryLayout({
                 <Heart
                   className={cn(
                     'w-[18px] h-[18px] stroke-2 transition-all duration-300',
-                    hasUpvoted && 'fill-current animate-[heartbeat_1s_ease-in-out]'
+                    hasUpvoted && 'fill-current animate-[heartbeat_1s_ease-in-out]',
                   )}
                 />
                 <span className="font-semibold whitespace-nowrap">{hasUpvoted ? '업보트 완료' : '업보트'}</span>

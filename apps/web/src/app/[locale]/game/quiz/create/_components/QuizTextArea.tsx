@@ -36,7 +36,12 @@ function QuizTextArea({ maxLength = 1000, ...props }: QuizTextAreaProps) {
         maxLength={maxLength}
       />
       <div className="flex justify-end items-center">
-        <div className={cn('relative text-white-50 font-product text-glyph-12 font-normal p-[0px_12px_8px_0px]', props.error && 'text-[#FF6B56]')}>
+        <div
+          className={cn(
+            'relative text-white-50 font-product text-glyph-12 font-normal p-[0px_12px_8px_0px]',
+            props.error && 'text-[#FF6B56]',
+          )}
+        >
           <strong className="font-normal text-white-50">{inputLen}</strong>
           <span>/{maxLength}</span>
         </div>

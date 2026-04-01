@@ -23,7 +23,7 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
       <section
         className={cn(
           'relative flex items-center justify-between mb-4',
-          '[&_.heading]:font-product [&_.heading]:text-glyph-18 [&_.heading]:font-bold [&_.heading]:text-white'
+          '[&_.heading]:font-product [&_.heading]:text-glyph-18 [&_.heading]:font-bold [&_.heading]:text-white',
         )}
       >
         <h2 className="heading">{t('change-pet')}</h2>

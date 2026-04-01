@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react';
-import { cn } from '@gitanimals/ui-tailwind/utils';
 import { LinkMonoIcon } from '@gitanimals/ui-icon';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import * as styles from './Footer.style';
 import { TeammateProfile } from './TeammateProfile';

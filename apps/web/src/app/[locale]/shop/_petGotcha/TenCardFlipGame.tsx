@@ -37,17 +37,14 @@ const Card = ({
 const cardStyle = cn(
   'relative cursor-pointer w-[20%] aspect-[109/135] h-auto',
   '[perspective:1000px]',
-  'max-mobile:w-[30%]'
+  'max-mobile:w-[30%]',
 );
 
-const cardInnerStyle = cn(
-  'w-full h-full relative',
-  '[transform-style:preserve-3d]'
-);
+const cardInnerStyle = cn('w-full h-full relative', '[transform-style:preserve-3d]');
 
 const cardFaceStyle = cn(
   'absolute w-full h-full rounded-xl',
-  'shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)]'
+  'shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)]',
 );
 
 const cardFrontFaceStyle = cn('[backface-visibility:hidden]');
@@ -132,10 +129,10 @@ const cardGridStyle = cn('flex flex-col gap-6');
 
 const rowStyle = cn(
   'grid grid-rows-2 gap-3',
-  'max-mobile:w-full max-mobile:gap-2 max-mobile:flex max-mobile:flex-wrap max-mobile:justify-center max-mobile:items-center'
+  'max-mobile:w-full max-mobile:gap-2 max-mobile:flex max-mobile:flex-wrap max-mobile:justify-center max-mobile:items-center',
 );
 
 const cardRowStyle = cn(
   'flex gap-3 justify-center',
-  'max-mobile:w-full max-mobile:flex max-mobile:flex-wrap max-mobile:justify-center max-mobile:items-center'
+  'max-mobile:w-full max-mobile:flex max-mobile:flex-wrap max-mobile:justify-center max-mobile:items-center',
 );

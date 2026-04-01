@@ -14,7 +14,7 @@ function Input(props: InputProps) {
         'rounded-lg outline-none w-full',
         'focus:border-[#00894d]',
         'placeholder:text-black/50 placeholder:font-product placeholder:text-glyph-16',
-        props.className
+        props.className,
       )}
     />
   );

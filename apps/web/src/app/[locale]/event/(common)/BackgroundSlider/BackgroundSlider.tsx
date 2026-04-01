@@ -49,7 +49,10 @@ function BackgroundSlider({ children }: { children: React.ReactNode }) {
         <ArrowButton onClick={moveToNextPanel} direction="next" disabled={isLastPanel} />
         <Flicking ref={flicking} {...sliderOptions}>
           {Children.map(children, (child, idx) => (
-            <div className="w-[calc(50%-10px)] p-[10px] text-center [&_img]:w-full [&_img]:h-auto [&_img]:rounded-lg [&_p]:mt-[10px] [&_p]:text-base" key={idx}>
+            <div
+              className="w-[calc(50%-10px)] p-[10px] text-center [&_img]:w-full [&_img]:h-auto [&_img]:rounded-lg [&_p]:mt-[10px] [&_p]:text-base"
+              key={idx}
+            >
               {child}
             </div>
           ))}

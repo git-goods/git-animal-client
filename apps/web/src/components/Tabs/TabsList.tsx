@@ -6,13 +6,16 @@ interface TabsListProps extends ComponentProps<'div'> {
   width?: string;
 }
 
-const TabsList = ({ children, gap = '6px', width = '100%', className, style, ...props }: PropsWithChildren<TabsListProps>) => {
+const TabsList = ({
+  children,
+  gap = '6px',
+  width = '100%',
+  className,
+  style,
+  ...props
+}: PropsWithChildren<TabsListProps>) => {
   return (
-    <div
-      className={cn('flex', className)}
-      style={{ gap, width, ...style }}
-      {...props}
-    >
+    <div className={cn('flex', className)} style={{ gap, width, ...style }} {...props}>
       {children}
     </div>
   );

@@ -17,7 +17,7 @@ function Pagination(props: { currentPage: number; onSetPage: (page: number) => v
       className={cn(
         'flex items-center justify-center gap-1.5',
         '[&_button]:min-w-[15px] [&_button]:h-[26px] [&_button]:rounded',
-        '[&_button]:inline-flex [&_button]:items-center [&_button]:justify-center'
+        '[&_button]:inline-flex [&_button]:items-center [&_button]:justify-center',
       )}
     >
       <button disabled={props.prevPage === null} onClick={() => props.onSetPage(props.prevPage || 0)}>
@@ -30,7 +30,7 @@ function Pagination(props: { currentPage: number; onSetPage: (page: number) => v
           onClick={() => props.onSetPage(i)}
           className={cn(
             'font-product text-glyph-16',
-            props.currentPage === i ? 'font-bold text-white' : 'text-white/50'
+            props.currentPage === i ? 'font-bold text-white' : 'text-white/50',
           )}
         >
           {i + 1}

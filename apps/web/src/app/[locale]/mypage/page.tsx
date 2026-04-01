@@ -46,7 +46,7 @@ async function Mypage({
           '[&_.tab-item:hover]:text-white/75 [&_.tab-item:hover]:bg-white/25 [&_.tab-item:hover]:border-white/50',
           'max-mobile:[&_.tab-item]:w-full max-mobile:[&_.tab-item]:rounded-md max-mobile:[&_.tab-item]:border',
           'max-mobile:[&_.tab-item]:text-glyph-16 max-mobile:[&_.tab-item]:font-bold',
-          'max-mobile:[&_.tab-item]:h-10 max-mobile:[&_.tab-item]:px-4 max-mobile:[&_.tab-item]:py-2'
+          'max-mobile:[&_.tab-item]:h-10 max-mobile:[&_.tab-item]:px-4 max-mobile:[&_.tab-item]:py-2',
         )}
       >
         <Link href="/mypage?type=farm-type">

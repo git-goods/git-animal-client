@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { cn } from '@gitanimals/ui-tailwind';
 import { type Guild } from '@gitanimals/api';
+import { cn } from '@gitanimals/ui-tailwind';
 import { UsersRoundIcon } from 'lucide-react';
 
 import { ROUTE } from '@/constants/route';

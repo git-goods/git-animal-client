@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { cn, SplitText } from '@gitanimals/ui-tailwind';
 import { rankQueries } from '@gitanimals/react-query';
+import { cn, SplitText } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
@@ -86,25 +86,18 @@ export const TopBanner = wrap
     );
   });
 
-const blankStyle = cn(
-  'w-full h-[78px]',
-  'max-mobile:h-[52px]'
-);
+const blankStyle = cn('w-full h-[78px]', 'max-mobile:h-[52px]');
 
-const coinContainerStyle = cn(
-  'flex items-center justify-center'
-);
+const coinContainerStyle = cn('flex items-center justify-center');
 
-const containerStyle = cn(
-  'bg-white/25 text-white py-2.5 absolute top-0 left-0 right-0 w-full'
-);
+const containerStyle = cn('bg-white/25 text-white py-2.5 absolute top-0 left-0 right-0 w-full');
 
 const textContainerStyle = cn(
   'border-t border-b border-white',
   'flex h-[58px] items-center justify-center',
   'text-center font-dos text-[32px] font-medium leading-[120%] tracking-[-0.3px]',
   '[font-feature-settings:"liga"_off,"clig"_off]',
-  'max-mobile:h-[35px] max-mobile:text-[16px]'
+  'max-mobile:h-[35px] max-mobile:text-[16px]',
 );
 
 const textStyle = {
@@ -116,5 +109,5 @@ const textStyle = {
 
 const coinStyle = cn(
   'w-8 h-8 ml-2.5 mr-2',
-  'max-mobile:w-[18px] max-mobile:h-[18px] max-mobile:ml-0 max-mobile:mr-[1.5px]'
+  'max-mobile:w-[18px] max-mobile:h-[18px] max-mobile:ml-0 max-mobile:mr-[1.5px]',
 );

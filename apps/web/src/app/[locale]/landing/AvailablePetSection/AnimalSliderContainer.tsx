@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { useRef } from 'react';
 import Image from 'next/image';
-import { cn } from '@gitanimals/ui-tailwind';
 import { Arrow } from '@egjs/flicking-plugins';
 import type { FlickingOptions, FlickingProps } from '@egjs/react-flicking';
 import Flicking from '@egjs/react-flicking';
+import { cn } from '@gitanimals/ui-tailwind';
 
 // TODO: 후에 공통으로 사용할 수 있을 것 같다.
 function AnimalSliderContainer({ children }: { children: React.ReactNode }) {
@@ -47,14 +47,11 @@ const sliderArrowStyle = cn(
   'translate-x-10 w-10 h-10',
   'absolute block top-0 bottom-0 my-auto z-floating',
   '[&.flicking-arrow-disabled]:translate-x-9 [&.flicking-arrow-disabled]:w-9 [&.flicking-arrow-disabled]:h-9',
-  '[&.flicking-arrow-disabled]:cursor-not-allowed [&.flicking-arrow-disabled]:brightness-50'
+  '[&.flicking-arrow-disabled]:cursor-not-allowed [&.flicking-arrow-disabled]:brightness-50',
 );
 
 const prevArrowStyle = cn('rotate-180 -left-6');
 
 const nextArrowStyle = cn('-right-6');
 
-const sliderContainer = cn(
-  'relative w-full h-full',
-  'max-mobile:w-full max-mobile:h-auto'
-);
+const sliderContainer = cn('relative w-full h-full', 'max-mobile:w-full max-mobile:h-auto');

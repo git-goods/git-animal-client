@@ -28,10 +28,7 @@ export const infoItem = cn(
   'max-mobile:[&_p:last-child]:text-glyph-14',
 );
 
-export const buttonWrapper = cn(
-  'pt-5',
-  'max-mobile:pt-0',
-);
+export const buttonWrapper = cn('pt-5', 'max-mobile:pt-0');
 
 const bgPicture = 'absolute left-0 right-0 z-0';
 

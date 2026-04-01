@@ -2,9 +2,9 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { cn } from '@gitanimals/ui-tailwind';
 import type { Background } from '@gitanimals/api';
 import { renderUserQueries, shopQueries, useBuyBackground } from '@gitanimals/react-query';
+import { cn } from '@gitanimals/ui-tailwind';
 import { Button } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -110,23 +110,13 @@ function BackgroundItem({
 
   return (
     <div className="w-full flex flex-col items-center justify-center relative" key={item.type}>
-      <div
-        className={cn(
-          'w-full aspect-[2/1] bg-white relative',
-          isPurchased && 'brightness-50 cursor-not-allowed',
-        )}
-      >
+      <div className={cn('w-full aspect-[2/1] bg-white relative', isPurchased && 'brightness-50 cursor-not-allowed')}>
         <img src={getBackgroundImage(item.type)} alt={item.type} width={550} height={275} />
       </div>
       <div className="font-product text-glyph-18 font-bold text-black-75 border border-[#99C7DB] bg-[#DDF2FB] mt-1 mb-6 py-1 px-[25px] w-full">
         {addNumberComma(item.price)} P
       </div>
-      <Button
-        variant="secondary"
-        onClick={() => onBuy(item.type)}
-        disabled={isPurchased}
-        className="min-w-[120px]"
-      >
+      <Button variant="secondary" onClick={() => onBuy(item.type)} disabled={isPurchased} className="min-w-[120px]">
         {!isLoggedIn ? t('buy-possible-user') : isPurchased ? t('purchased') : t('buy')}
       </Button>
     </div>

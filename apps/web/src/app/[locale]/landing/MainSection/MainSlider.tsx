@@ -94,7 +94,9 @@ function ArrowButton({
       className={cn(
         direction === 'prev' ? prevArrowStyle : nextArrowStyle,
         direction === 'prev' ? 'rotate-180' : 'rotate-0',
-        disabled ? 'cursor-not-allowed w-9 h-9 max-mobile:w-6 max-mobile:h-6' : 'cursor-pointer w-10 h-10 max-mobile:w-[26px] max-mobile:h-[26px]'
+        disabled
+          ? 'cursor-not-allowed w-9 h-9 max-mobile:w-6 max-mobile:h-6'
+          : 'cursor-pointer w-10 h-10 max-mobile:w-[26px] max-mobile:h-[26px]',
       )}
     >
       {disabled ? (
@@ -109,15 +111,9 @@ function ArrowButton({
 const arrowStyle = cn(
   'absolute top-0 bottom-0 my-auto z-floating',
   '[&_img]:w-full [&_img]:h-full',
-  'max-mobile:bottom-[191px]'
+  'max-mobile:bottom-[191px]',
 );
 
-const prevArrowStyle = cn(
-  arrowStyle,
-  'left-[-62px] max-mobile:left-2'
-);
+const prevArrowStyle = cn(arrowStyle, 'left-[-62px] max-mobile:left-2');
 
-const nextArrowStyle = cn(
-  arrowStyle,
-  'right-[-62px] max-mobile:right-2'
-);
+const nextArrowStyle = cn(arrowStyle, 'right-[-62px] max-mobile:right-2');

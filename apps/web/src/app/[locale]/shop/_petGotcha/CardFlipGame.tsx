@@ -56,7 +56,7 @@ const CardFlipGame = ({ onGetPersona, getPersona }: CardFlipGameProps) => {
               className={cn(
                 cardInnerStyle,
                 isCardFlipped ? '[transform:rotateY(180deg)]' : '',
-                selectedCard === index && isShaking ? 'animate-move' : ''
+                selectedCard === index && isShaking ? 'animate-move' : '',
               )}
             >
               <div className={cn(cardFaceStyle, selectedCard !== null && cardScaleStyle)}>
@@ -83,38 +83,20 @@ const CardFlipGame = ({ onGetPersona, getPersona }: CardFlipGameProps) => {
 
 export default CardFlipGame;
 
-const containerStyle = cn(
-  'flex flex-col items-center gap-4 w-full'
-);
+const containerStyle = cn('flex flex-col items-center gap-4 w-full');
 
-const cardContainerStyle = cn(
-  'flex gap-4 w-full',
-  'max-mobile:flex-wrap max-mobile:justify-center max-mobile:gap-2'
-);
+const cardContainerStyle = cn('flex gap-4 w-full', 'max-mobile:flex-wrap max-mobile:justify-center max-mobile:gap-2');
 
-const cardStyle = cn(
-  'w-[20%] cursor-pointer h-auto aspect-[109/135]',
-  '[perspective:1000px]',
-  'max-mobile:w-[30%]'
-);
+const cardStyle = cn('w-[20%] cursor-pointer h-auto aspect-[109/135]', '[perspective:1000px]', 'max-mobile:w-[30%]');
 
 const cardInnerStyle = cn(
   'relative w-full h-full text-center',
   'transition-transform duration-[600ms]',
-  '[transform-style:preserve-3d]'
+  '[transform-style:preserve-3d]',
 );
 
-const cardFaceStyle = cn(
-  'absolute w-full h-full',
-  '[backface-visibility:hidden]',
-  'flex items-center justify-center'
-);
+const cardFaceStyle = cn('absolute w-full h-full', '[backface-visibility:hidden]', 'flex items-center justify-center');
 
-const cardScaleStyle = cn(
-  'transition-transform duration-300',
-  'hover:scale-105'
-);
+const cardScaleStyle = cn('transition-transform duration-300', 'hover:scale-105');
 
-const cardBackStyle = cn(
-  '[transform:rotateY(180deg)]'
-);
+const cardBackStyle = cn('[transform:rotateY(180deg)]');

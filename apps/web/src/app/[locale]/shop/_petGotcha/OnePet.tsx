@@ -5,8 +5,8 @@ import type { GotchaResult } from '@gitanimals/api';
 import { postGotcha } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { userQueries } from '@gitanimals/react-query';
-import { cn } from '@gitanimals/ui-tailwind/utils';
 import { Dialog } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { useQueryClient } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
@@ -131,7 +131,7 @@ export default OnePet;
 
 const dialogContentStyle = cn(
   'h-fit',
-  'max-mobile:flex max-mobile:flex-col max-mobile:items-center max-mobile:justify-center'
+  'max-mobile:flex max-mobile:flex-col max-mobile:items-center max-mobile:justify-center',
 );
 
 const headingStyle = cn(

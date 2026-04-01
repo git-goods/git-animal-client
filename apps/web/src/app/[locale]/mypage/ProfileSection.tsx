@@ -4,9 +4,9 @@
 import { memo } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { userQueries } from '@gitanimals/react-query';
 import { cn } from '@gitanimals/ui-tailwind';
 import { Skeleton } from '@gitanimals/ui-tailwind';
-import { userQueries } from '@gitanimals/react-query';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { ChevronRight, FlaskConical } from 'lucide-react';
@@ -39,7 +39,7 @@ export const ProfileSection = memo(
             className={cn(
               'w-40 h-40 rounded-full bg-white overflow-hidden',
               '[&_img]:w-full [&_img]:h-full',
-              'max-mobile:w-12 max-mobile:h-12'
+              'max-mobile:w-12 max-mobile:h-12',
             )}
           >
             <img src={data.profileImage ?? ''} alt="profile" width={160} height={160} />
@@ -48,7 +48,7 @@ export const ProfileSection = memo(
             <p
               className={cn(
                 'text-white font-product text-glyph-48 font-bold mt-2 mb-1',
-                'max-mobile:text-glyph-24 max-mobile:m-0 max-mobile:mb-0.5'
+                'max-mobile:text-glyph-24 max-mobile:m-0 max-mobile:mb-0.5',
               )}
             >
               {data?.username}
@@ -56,7 +56,7 @@ export const ProfileSection = memo(
             <div
               className={cn(
                 'flex text-white font-product text-glyph-24 gap-1.5 items-center',
-                'max-mobile:text-glyph-14 max-mobile:[&_img]:w-4 max-mobile:[&_img]:h-4'
+                'max-mobile:text-glyph-14 max-mobile:[&_img]:w-4 max-mobile:[&_img]:h-4',
               )}
             >
               <Image src="/mypage/coin.svg" alt="coin" width={24} height={24} /> {addNumberComma(data.points ?? 0)}
@@ -70,7 +70,7 @@ export const ProfileSection = memo(
                 'p-1 flex items-center gap-1 font-product text-glyph-18 text-white/50',
                 '[&.selected]:text-brand-canary',
                 'max-mobile:gap-0 max-mobile:text-glyph-15 max-mobile:p-0',
-                isMypagePath && 'selected'
+                isMypagePath && 'selected',
               )}
             >
               <ChevronRight size={20} color={isMypagePath ? '#FCFD9C' : '#FFFFFF80'} />
@@ -82,7 +82,7 @@ export const ProfileSection = memo(
                 'p-1 flex items-center gap-1 font-product text-glyph-18 text-white/50',
                 '[&.selected]:text-brand-canary',
                 'max-mobile:gap-0 max-mobile:text-glyph-15 max-mobile:p-0',
-                isMyPetPath && 'selected'
+                isMyPetPath && 'selected',
               )}
             >
               <ChevronRight size={20} color={isMyPetPath ? '#FCFD9C' : '#FFFFFF80'} />
@@ -97,7 +97,7 @@ export const ProfileSection = memo(
               'mt-6 animate-pulse transition-[background] duration-300',
               'hover:bg-gradient-to-br hover:from-[#016EDB] hover:via-[#16B7CD] hover:to-[#5CCA69]',
               'max-pc:px-3 max-pc:py-2 max-pc:[&>svg]:w-[18px] max-pc:[&>svg]:h-[18px]',
-              'max-mobile:hidden'
+              'max-mobile:hidden',
             )}
           >
             <FlaskConical />

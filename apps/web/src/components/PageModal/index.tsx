@@ -4,7 +4,8 @@ import { XIcon } from 'lucide-react';
 
 import { BackTrigger } from '@/components/Trigger';
 
-const dialogTitleStyle = 'font-product text-glyph-48 font-bold text-white text-center max-[1200px]:text-glyph-32 max-mobile:text-glyph-24';
+const dialogTitleStyle =
+  'font-product text-glyph-48 font-bold text-white text-center max-[1200px]:text-glyph-32 max-mobile:text-glyph-24';
 
 export function PageModalLayout({ children }: PropsWithChildren) {
   return (

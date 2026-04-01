@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl';
 import type { GotchaResult } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { usePostGotcha, userQueries } from '@gitanimals/react-query';
-import { cn } from '@gitanimals/ui-tailwind/utils';
 import { Dialog } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -130,10 +130,7 @@ const dialogContentStyle = cn('max-mobile:gap-3');
 
 const noticeMessageStyle = cn(
   'font-product text-glyph-28 font-bold text-white text-center mt-3',
-  'max-mobile:text-xs max-mobile:mt-0'
+  'max-mobile:text-xs max-mobile:mt-0',
 );
 
-const gameContainerStyle = cn(
-  'w-full mt-[60px]',
-  'max-mobile:mt-7'
-);
+const gameContainerStyle = cn('w-full mt-[60px]', 'max-mobile:mt-7');

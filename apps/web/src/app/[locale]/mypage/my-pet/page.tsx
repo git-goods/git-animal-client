@@ -2,8 +2,8 @@
 
 import { useCallback, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { cn } from '@gitanimals/ui-tailwind';
 import { type Persona } from '@gitanimals/api';
+import { cn } from '@gitanimals/ui-tailwind';
 import { ScrollArea } from '@gitanimals/ui-tailwind';
 
 import { SelectPersonaList } from '../PersonaList';
@@ -25,7 +25,7 @@ function MypageMyPets() {
         className={cn(
           'relative',
           '[&_.heading]:font-product [&_.heading]:text-glyph-18 [&_.heading]:font-bold',
-          '[&_.heading]:text-white [&_.heading]:mb-4'
+          '[&_.heading]:text-white [&_.heading]:mb-4',
         )}
       >
         <h2 className="heading">{t('pet-list')}</h2>
@@ -46,7 +46,7 @@ function MypageMyPets() {
       <p
         className={cn(
           'font-product text-glyph-18 text-white/75 mt-4',
-          'opacity-0 animate-[fadeIn_0.5s_ease-in-out_5s_forwards]'
+          'opacity-0 animate-[fadeIn_0.5s_ease-in-out_5s_forwards]',
         )}
       >
         {t('sell-to-other')}

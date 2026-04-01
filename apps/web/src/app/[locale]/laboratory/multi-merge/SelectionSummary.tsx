@@ -1,5 +1,5 @@
-import { cn } from '@gitanimals/ui-tailwind/utils';
 import { ScrollArea } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import { MemoizedPersonaBannerItem } from './PersonaItem';
 
@@ -20,13 +20,9 @@ interface SelectionSummaryProps {
 }
 
 // SelectionSummary 스타일
-const selectionSummaryStyle = cn(
-  'bg-gray-250 rounded-xl p-4 mb-4'
-);
+const selectionSummaryStyle = cn('bg-gray-250 rounded-xl p-4 mb-4');
 
-const summaryHeaderStyle = cn(
-  'flex items-center justify-between mb-1'
-);
+const summaryHeaderStyle = cn('flex items-center justify-between mb-1');
 
 const summaryTextStyle = 'text-white font-product text-glyph-14';
 
@@ -37,7 +33,7 @@ const selectedPetItemStyle = cn(
   'flex items-center justify-center',
   'border border-brand-sky cursor-pointer',
   'transition-colors text-gray-400',
-  'hover:border-brand-sky-light'
+  'hover:border-brand-sky-light',
 );
 
 export function SelectionSummary({ targetPet, materialPets, onPetClick }: SelectionSummaryProps) {

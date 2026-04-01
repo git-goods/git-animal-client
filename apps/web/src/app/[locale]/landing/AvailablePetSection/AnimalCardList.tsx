@@ -66,6 +66,4 @@ function AnimalCardContainer() {
 
 export default AnimalCardContainer;
 
-const container = cn(
-  'grid gap-5 justify-center grid-cols-[repeat(4,1fr)] w-[1120px] h-[1024px]'
-);
+const container = cn('grid gap-5 justify-center grid-cols-[repeat(4,1fr)] w-[1120px] h-[1024px]');

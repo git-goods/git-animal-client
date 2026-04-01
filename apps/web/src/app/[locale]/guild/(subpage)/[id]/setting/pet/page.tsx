@@ -1,8 +1,8 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { cn } from '@gitanimals/ui-tailwind';
 import { changeMainPet } from '@gitanimals/api';
+import { cn } from '@gitanimals/ui-tailwind';
 
 import { GuildModalPageTitle } from '@/app/[locale]/guild/_components/GuildModalPageLayout';
 import { GuildJoinPetSelectDialog } from '@/app/[locale]/guild/_components/GuildPetSelectDialog';
@@ -31,6 +31,4 @@ export default function GuildSettingPetPage() {
   );
 }
 
-const containerStyle = cn(
-  'flex flex-col items-center gap-[60px]'
-);
+const containerStyle = cn('flex flex-col items-center gap-[60px]');

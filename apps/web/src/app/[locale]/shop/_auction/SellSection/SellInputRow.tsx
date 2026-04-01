@@ -5,8 +5,8 @@ import { useTranslations } from 'next-intl';
 import type { Persona } from '@gitanimals/api';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries, userQueries } from '@gitanimals/react-query';
-import { cn } from '@gitanimals/ui-tailwind/utils';
 import { Button, Dialog } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -118,7 +118,7 @@ function SellInputRow({ item, initPersona }: Props) {
                   'w-full h-full min-h-16 text-xl font-bold',
                   'border-none outline-none',
                   'placeholder:text-glyph-20 placeholder:text-white/25',
-                  '[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0'
+                  '[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0',
                 )}
                 inputMode="numeric"
                 placeholder={t('price-you-want')}
@@ -161,7 +161,7 @@ function SellPriceModal({
             'rounded-lg border border-white/25',
             'font-product text-glyph-16 text-white',
             'placeholder:text-glyph-16 placeholder:text-white/75',
-            '[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0'
+            '[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0',
           )}
           placeholder="Type price..."
           type="number"
