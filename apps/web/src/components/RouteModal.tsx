@@ -18,7 +18,12 @@ import { customScrollHorizontalStyle } from '@/shared/styles/scrollStyle';
  * @param title - 모달 제목 (선택사항)
  */
 
-export default function RouteModal({ children, title }: PropsWithChildren<{ title?: string }>) {
+interface RouteModalProps {
+  title?: string;
+  gap?: 'sm' | 'lg';
+}
+
+export default function RouteModal({ children, title, gap = 'sm' }: PropsWithChildren<RouteModalProps>) {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -41,7 +46,11 @@ export default function RouteModal({ children, title }: PropsWithChildren<{ titl
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content
         size="large"
-        className={cn('h-fit gap-2 overflow-y-auto max-mobile:h-screen', customScrollHorizontalStyle)}
+        className={cn(
+          'h-fit overflow-y-auto max-mobile:h-screen',
+          gap === 'sm' ? 'gap-2' : 'gap-8',
+          customScrollHorizontalStyle,
+        )}
       >
         {title && <Dialog.Title>{title}</Dialog.Title>}
         {children}
