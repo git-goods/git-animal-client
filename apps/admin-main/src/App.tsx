@@ -12,12 +12,14 @@ import DashboardPage from "@/pages/DashboardPage";
 import DesignSystemPage from "@/pages/DesignSystemPage";
 import PointAdjustmentPage from "@/pages/PointAdjustmentPage";
 import PointsPage from "@/pages/PointsPage";
+import QuizManagementPage from "@/pages/QuizManagementPage";
 
-import { Sidebar } from "./components/Sidebar";
+import { MobileHeader, Sidebar, useIsMobile } from "./components/Sidebar";
 
 function ProtectedLayout() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -64,13 +66,23 @@ function ProtectedLayout() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex">
-      <Sidebar />
-
-      <main className="flex-1 ml-64">
-        <div className="max-w-[1600px] mx-auto px-3 py-3 relative">
-          <Outlet />
-        </div>
-      </main>
+      {isMobile ? (
+        <main className="flex-1 flex flex-col">
+          <MobileHeader />
+          <div className="flex-1 px-3 py-3 relative">
+            <Outlet />
+          </div>
+        </main>
+      ) : (
+        <>
+          <Sidebar />
+          <main className="flex-1 ml-64">
+            <div className="max-w-[1600px] mx-auto px-3 py-3 relative">
+              <Outlet />
+            </div>
+          </main>
+        </>
+      )}
     </div>
   );
 }
@@ -86,6 +98,7 @@ export default function App() {
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/points" element={<PointsPage />} />
             <Route path="/point-adjustment" element={<PointAdjustmentPage />} />
+            <Route path="/quiz" element={<QuizManagementPage />} />
             <Route path="/users" element={<ComingSoonPage pageName="사용자" />} />
             <Route path="/analytics" element={<ComingSoonPage pageName="분석" />} />
             <Route path="/reports" element={<ComingSoonPage pageName="리포트" />} />

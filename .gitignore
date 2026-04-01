@@ -74,4 +74,7 @@ apps/web/public/sw.js
 # Local Claude Code instructions
 apps/*/CLAUDE.local.md
 CLAUDE.local.md
+apps/admin-main/.env.local
+apps/admin-main/docs/superpowers
 .omc
+
