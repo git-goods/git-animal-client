@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 
 import QuizField from '@/app/[locale]/game/quiz/create/_components/QuizField';
 import QuizTextArea from '@/app/[locale]/game/quiz/create/_components/QuizTextArea';
-import { ConfirmDialog } from '@gitanimals/ui-tailwind';
+import { ConfirmDialogV2 } from '@gitanimals/ui-tailwind';
 import Tabs from '@/components/Tabs/Tabs';
 import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';
@@ -42,7 +42,7 @@ const QuizCreateForm = () => {
 
   const handleCheckToggleLanguage = () => {
     overlay.open(({ isOpen, close }) => (
-      <ConfirmDialog
+      <ConfirmDialogV2
         title={t('toggle-language-title')}
         description={t('toggle-language-description')}
         isOpen={isOpen}

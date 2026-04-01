@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
-import { AlertDialog, ConfirmDialog } from '@gitanimals/ui-tailwind';
+import { AlertDialogV2, ConfirmDialogV2 } from '@gitanimals/ui-tailwind';
 import { atom, useAtom } from 'jotai';
 
 interface DialogState {
@@ -62,7 +62,7 @@ export function DialogComponent() {
 
   if (dialog.onConfirm) {
     return (
-      <ConfirmDialog
+      <ConfirmDialogV2
         isOpen={dialog.isOpen}
         onClose={closeDialog}
         onConfirm={dialog.onConfirm}
@@ -75,7 +75,7 @@ export function DialogComponent() {
   }
 
   return (
-    <AlertDialog
+    <AlertDialogV2
       isOpen={dialog.isOpen}
       onClose={closeDialog}
       title={String(dialog.title)}
