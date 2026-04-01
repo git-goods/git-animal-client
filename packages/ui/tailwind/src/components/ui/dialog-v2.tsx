@@ -5,6 +5,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { X, ArrowLeft } from 'lucide-react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
+import { ScrollArea } from './scroll-area';
 
 // ---------------------------------------------------------------------------
 // Size Context
@@ -347,11 +348,13 @@ DialogV2Footer.displayName = 'DialogV2Footer';
 // DialogV2Body — scrollable content area
 // ---------------------------------------------------------------------------
 
-const DialogV2Body = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('flex-1 overflow-y-auto', className)} {...props} />
-  ),
-);
+function DialogV2Body({ className, children }: { className?: string; children?: React.ReactNode }) {
+  return (
+    <ScrollArea className={cn('flex-1', className)}>
+      {children}
+    </ScrollArea>
+  );
+}
 DialogV2Body.displayName = 'DialogV2Body';
 
 // ---------------------------------------------------------------------------
