@@ -105,49 +105,48 @@ function Grid() {
 const NAV_HEIGHT = 44; // arrows + dots bar height
 
 function useInventoryGrid(totalItems: number, minItemSize: number, gap: number, minRows: number, maxRows: number) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const prevSizeRef = useRef({ width: 0, height: 0 });
+  const sensorRef = useRef<HTMLDivElement>(null);
   const [cols, setCols] = useState(6);
   const [rows, setRows] = useState(minRows);
 
   useEffect(() => {
-    const el = containerRef.current;
+    const el = sensorRef.current;
     if (!el) return;
 
+    let rafId: number;
     const measure = () => {
-      const width = el.offsetWidth;
-      const height = el.offsetHeight;
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const parent = el.parentElement;
+        if (!parent) return;
 
-      // 컨테이너 크기가 실제로 변경된 경우에만 재계산
-      if (width === prevSizeRef.current.width && height === prevSizeRef.current.height) return;
-      prevSizeRef.current = { width, height };
+        const width = parent.offsetWidth;
+        const height = parent.offsetHeight;
 
-      const calcCols = Math.floor((width + gap) / (minItemSize + gap));
-      setCols((prev) => {
-        const next = Math.max(calcCols, 1);
-        return prev === next ? prev : next;
+        const nextCols = Math.max(Math.floor((width + gap) / (minItemSize + gap)), 1);
+        const availableHeight = height - NAV_HEIGHT;
+        const nextRows =
+          availableHeight > 0
+            ? Math.min(Math.max(Math.floor((availableHeight + gap) / (minItemSize + gap)), minRows), maxRows)
+            : minRows;
+
+        setCols((prev) => (prev === nextCols ? prev : nextCols));
+        setRows((prev) => (prev === nextRows ? prev : nextRows));
       });
-
-      const availableHeight = height - NAV_HEIGHT;
-      if (availableHeight > 0) {
-        const calcRows = Math.floor((availableHeight + gap) / (minItemSize + gap));
-        setRows((prev) => {
-          const next = Math.min(Math.max(calcRows, minRows), maxRows);
-          return prev === next ? prev : next;
-        });
-      }
     };
 
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => {
+      cancelAnimationFrame(rafId);
+      observer.disconnect();
+    };
   }, [gap, minItemSize, minRows, maxRows]);
 
   const itemsPerPage = cols * rows;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  return { containerRef, cols, rows, itemsPerPage, totalPages };
+  return { sensorRef, cols, rows, itemsPerPage };
 }
 
 interface InventoryGridProps {
@@ -161,7 +160,7 @@ function InventoryGrid({ minRows = 2, maxRows = 5, minItemSize = 64, gap = 4 }: 
   const t = useTranslations('Mypage.Filter');
   const { filteredList, selectedIds, onSelectPersona, loadingPersona, isSpecialEffect } = useSelectPersonaListContext();
 
-  const { containerRef, cols, rows, itemsPerPage } = useInventoryGrid(filteredList.length, minItemSize, gap, minRows, maxRows);
+  const { sensorRef, cols, rows, itemsPerPage } = useInventoryGrid(filteredList.length, minItemSize, gap, minRows, maxRows);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -192,7 +191,9 @@ function InventoryGrid({ minRows = 2, maxRows = 5, minItemSize = 64, gap = 4 }: 
   }
 
   return (
-    <div ref={containerRef} className="h-full">
+    <div className="relative h-full">
+      {/* 크기 측정용 센서 - 콘텐츠와 분리하여 리사이즈 루프 방지 */}
+      <div ref={sensorRef} className="absolute inset-0 pointer-events-none invisible" />
       {/* Navigation: arrows left, dots right */}
       <div className="flex mb-2 justify-between items-center">
         <div className="flex gap-[10px]">
