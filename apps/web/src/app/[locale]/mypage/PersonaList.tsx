@@ -102,10 +102,10 @@ function Grid() {
 
 // ─── InventoryGrid (Embla carousel + dynamic grid) ─────────────────
 
-/** 뷰포트 높이에서 UI 크롬(헤더, 여백 등)을 뺀 가용 높이 비율 */
-const VIEWPORT_RATIO_INLINE = 0.2;
-const VIEWPORT_RATIO_DIALOG = 0.75;
-const NAV_HEIGHT = 44;
+const NAV_HEIGHT = 44; // arrows + dots bar
+/** 다이얼로그 크롬: 제목(50) + 검색(40) + 필터(40) + 패딩/갭(30) + nav(44) */
+const DIALOG_CHROME_HEIGHT = 204;
+const INLINE_CHROME_HEIGHT = NAV_HEIGHT;
 
 function useInventoryGrid(
   totalItems: number,
@@ -132,10 +132,11 @@ function useInventoryGrid(
         const width = el.offsetWidth;
         const nextCols = Math.max(Math.floor((width + gap) / (minItemSize + gap)), 1);
 
-        // rows: 뷰포트 높이 기반
+        // rows: 뷰포트 높이에서 크롬 높이를 뺀 가용 영역 기반
         const vh = window.innerHeight;
-        const ratio = mode === 'dialog' ? VIEWPORT_RATIO_DIALOG : VIEWPORT_RATIO_INLINE;
-        const availableHeight = vh * ratio - NAV_HEIGHT;
+        const chrome = mode === 'dialog' ? DIALOG_CHROME_HEIGHT : INLINE_CHROME_HEIGHT;
+        const dialogHeight = mode === 'dialog' ? vh * 0.9 : vh;
+        const availableHeight = dialogHeight - chrome;
         const nextRows =
           availableHeight > 0
             ? Math.min(Math.max(Math.floor((availableHeight + gap) / (minItemSize + gap)), minRows), maxRows)
