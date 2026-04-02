@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { cn } from '@gitanimals/ui-tailwind';
-import { Dialog, ScrollArea } from '@gitanimals/ui-tailwind';
+import { DialogV2, ScrollArea } from '@gitanimals/ui-tailwind';
 import { ExpandIcon } from 'lucide-react';
 
 import { SelectPersonaList } from '../PersonaList';
@@ -37,22 +37,23 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
           onSelectPersona={(persona) => onChangePersona(persona.id)}
         />
       </ScrollArea>
-      <Dialog open={isExtend} onOpenChange={() => setIsExtend(false)}>
-        <Dialog.Content size="large" scrollable>
-          <Dialog.Title>{t('line-type-select-pet')}</Dialog.Title>
+      <DialogV2 open={isExtend} onOpenChange={() => setIsExtend(false)}>
+        <DialogV2.Content size="lg">
+          <DialogV2.CloseButton />
+          <DialogV2.Header>
+            <DialogV2.Title>{t('line-type-select-pet')}</DialogV2.Title>
+          </DialogV2.Header>
           <SelectPersonaList
             selectPersona={selectPersona ? [selectPersona] : []}
             onSelectPersona={(persona) => onChangePersona(persona.id)}
           >
-            <Dialog.TopSlot>
-              <SelectPersonaList.Toolbar showSearch />
-            </Dialog.TopSlot>
-            <Dialog.Body>
+            <SelectPersonaList.Toolbar showSearch />
+            <DialogV2.Body>
               <SelectPersonaList.Grid />
-            </Dialog.Body>
+            </DialogV2.Body>
           </SelectPersonaList>
-        </Dialog.Content>
-      </Dialog>
+        </DialogV2.Content>
+      </DialogV2>
     </div>
   );
 };
