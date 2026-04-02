@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import type { Persona } from '@gitanimals/api';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries, userQueries } from '@gitanimals/react-query';
-import { Button, DialogV2 } from '@gitanimals/ui-tailwind';
+import { Button, DialogV2, TextField } from '@gitanimals/ui-tailwind';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useQueryClient } from '@tanstack/react-query';
@@ -112,11 +112,10 @@ function SellInputRow({ item, initPersona }: Props) {
             <div>{ANIMAL_TIER_TEXT_MAP[personaTier]}</div>
             <div>{item.level}</div>
             <div>
-              <input
+              <TextField
                 className={cn(
-                  'font-product text-glyph-20',
-                  'w-full h-full min-h-16 text-xl font-bold',
-                  'border-none outline-none',
+                  'text-glyph-20 text-xl font-bold',
+                  'h-full min-h-16 border-none',
                   'placeholder:text-glyph-20 placeholder:text-white/25',
                   '[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0',
                 )}
@@ -156,19 +155,12 @@ function SellPriceModal({
         <DialogV2.Header>
           <DialogV2.Title>{t('sell-price-modal-title')}</DialogV2.Title>
         </DialogV2.Header>
-        <input
-          className={cn(
-            'flex h-[55px] py-3.5 pl-5 pr-3.5',
-            'items-start gap-2 w-full outline-none',
-            'rounded-lg border border-white/25',
-            'font-product text-glyph-16 text-white',
-            'placeholder:text-glyph-16 placeholder:text-white/75',
-            '[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0',
-          )}
+        <TextField
           placeholder="Type price..."
           type="number"
           value={Boolean(sellPrice) ? sellPrice : ''}
           onChange={(e) => setSellPrice(Number(e.target.value))}
+          className="[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0"
         />
         <DialogV2.Footer>
           <Button onClick={onClose} variant="secondary" size="m">
