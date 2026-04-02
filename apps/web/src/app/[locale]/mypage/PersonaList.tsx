@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
@@ -11,10 +11,10 @@ import useEmblaCarousel from 'embla-carousel-react';
 
 import { NextButton, PrevButton, usePrevNextButtons } from '@/components/EmblaCarousel/EmblaCarouselArrowButtons';
 import { DotButton, useDotButton } from '@/components/EmblaCarousel/EmblaCarouselDotButton';
-import { MemoizedBannerPersonaItem } from '@/entities/persona/ui/PersonaItem';
-import { PersonaListToolbar } from '@/entities/persona/ui/PersonaListToolbar';
 import type { PersonaFilterState } from '@/entities/persona/model/usePersonaListFilter';
 import { usePersonaListFilter } from '@/entities/persona/model/usePersonaListFilter';
+import { MemoizedBannerPersonaItem } from '@/entities/persona/ui/PersonaItem';
+import { PersonaListToolbar } from '@/entities/persona/ui/PersonaListToolbar';
 import { useClientUser } from '@/shared/utils/clientAuth';
 
 // ─── Context ────────────────────────────────────────────────────────
@@ -47,9 +47,7 @@ const listStyle = cn(
   'max-mobile:grid-cols-[repeat(auto-fill,minmax(52px,auto))]',
 );
 
-const emptyStyle = cn(
-  'font-product text-glyph-14 text-white-50 text-center py-6',
-);
+const emptyStyle = cn('font-product text-glyph-14 text-white-50 text-center py-6');
 
 // ─── Sub-components ─────────────────────────────────────────────────
 
@@ -102,6 +100,7 @@ function Grid() {
 
 // ─── InventoryGrid (Embla carousel + dynamic grid) ─────────────────
 
+const MAX_DOTS = 5;
 const NAV_HEIGHT = 44; // arrows + dots bar
 /** 다이얼로그 크롬: 제목(50) + 검색(40) + 필터(40) + 패딩/갭(30) + nav(44) */
 const DIALOG_CHROME_HEIGHT = 204;
@@ -144,9 +143,7 @@ function useInventoryGrid(
         const dialogHeight = mode === 'dialog' ? vh * 0.9 : vh;
         const availableHeight = dialogHeight - chrome;
         const nextRows =
-          availableHeight > 0
-            ? Math.min(Math.max(Math.floor(availableHeight / rowHeight), minRows), maxRows)
-            : minRows;
+          availableHeight > 0 ? Math.min(Math.max(Math.floor(availableHeight / rowHeight), minRows), maxRows) : minRows;
 
         // 그리드 명시적 높이 = 행 수 × 행 높이 - 마지막 gap
         const nextGridHeight = nextRows * rowHeight - gap;
@@ -183,7 +180,14 @@ function InventoryGrid({ minRows = 2, maxRows = 10, minItemSize = 64, gap = 4, m
   const t = useTranslations('Mypage.Filter');
   const { filteredList, selectedIds, onSelectPersona, loadingPersona, isSpecialEffect } = useSelectPersonaListContext();
 
-  const { containerRef, cols, rows, itemsPerPage, gridHeight, ready } = useInventoryGrid(filteredList.length, minItemSize, gap, minRows, maxRows, mode);
+  const { containerRef, cols, rows, itemsPerPage, gridHeight, ready } = useInventoryGrid(
+    filteredList.length,
+    minItemSize,
+    gap,
+    minRows,
+    maxRows,
+    mode,
+  );
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -216,54 +220,64 @@ function InventoryGrid({ minRows = 2, maxRows = 10, minItemSize = 64, gap = 4, m
 
   return (
     <div ref={containerRef} className="overflow-hidden">
-      {!ready ? null : <>
-      {/* Navigation: arrows left, dots right */}
-      <div className="flex mb-2 justify-between items-center">
-        <div className="flex gap-[10px]">
-          <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-          <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
-        </div>
-        <div className="flex gap-1">
-          {scrollSnaps.map((_, index) => (
-            <DotButton
-              key={index}
-              onClick={() => onDotButtonClick(index)}
-              className={cn(index === selectedIndex && 'selected')}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Embla carousel - each slide is a grid page */}
-      <div className="overflow-hidden w-full [&>div]:!min-w-0" ref={emblaRef}>
-        <div className="flex">
-          {pages.map((page, pageIdx) => (
-            <div key={pageIdx} className="flex-[0_0_100%] min-w-0 overflow-hidden">
-              <div
-                className="grid overflow-hidden"
-                style={{
-                  gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-                  gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
-                  gap: `${gap}px`,
-                  height: `${gridHeight}px`,
-                }}
-              >
-                {page.map((persona) => (
-                  <MemoizedBannerPersonaItem
-                    key={persona.id}
-                    persona={persona}
-                    isSelected={selectedIds.has(persona.id)}
-                    onClick={() => onSelectPersona(persona)}
-                    loading={loadingPersona?.includes(persona.id) ?? false}
-                    isSpecialEffect={isSpecialEffect}
-                  />
-                ))}
-              </div>
+      {!ready ? null : (
+        <>
+          {/* Navigation: arrows left, dots right */}
+          <div className="flex mb-2 justify-between items-center">
+            <div className="flex gap-[10px]">
+              <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
+              <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
             </div>
-          ))}
-        </div>
-      </div>
-      </>}
+            <div className="flex gap-1">
+              {(() => {
+                const total = scrollSnaps.length;
+                const start = total <= MAX_DOTS ? 0 : Math.min(Math.max(selectedIndex - 2, 0), total - MAX_DOTS);
+                const end = start + Math.min(total, MAX_DOTS);
+                return scrollSnaps.slice(start, end).map((_, i) => {
+                  const index = start + i;
+                  return (
+                    <DotButton
+                      key={index}
+                      onClick={() => onDotButtonClick(index)}
+                      className={cn(index === selectedIndex && 'selected')}
+                    />
+                  );
+                });
+              })()}
+            </div>
+          </div>
+
+          {/* Embla carousel - each slide is a grid page */}
+          <div className="overflow-hidden w-full [&>div]:!min-w-0" ref={emblaRef}>
+            <div className="flex">
+              {pages.map((page, pageIdx) => (
+                <div key={pageIdx} className="flex-[0_0_100%] min-w-0 overflow-hidden">
+                  <div
+                    className="grid overflow-hidden"
+                    style={{
+                      gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+                      gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
+                      gap: `${gap}px`,
+                      height: `${gridHeight}px`,
+                    }}
+                  >
+                    {page.map((persona) => (
+                      <MemoizedBannerPersonaItem
+                        key={persona.id}
+                        persona={persona}
+                        isSelected={selectedIds.has(persona.id)}
+                        onClick={() => onSelectPersona(persona)}
+                        loading={loadingPersona?.includes(persona.id) ?? false}
+                        isSpecialEffect={isSpecialEffect}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
