@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { cn } from '@gitanimals/ui-tailwind';
-import { DialogV2, ScrollArea } from '@gitanimals/ui-tailwind';
+import { DialogV2 } from '@gitanimals/ui-tailwind';
 import { ExpandIcon } from 'lucide-react';
 
 import { SelectPersonaList } from '../PersonaList';
@@ -31,25 +31,25 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
           <ExpandIcon color="white" size={20} />
         </button>
       </section>
-      <ScrollArea className="h-40">
-        <SelectPersonaList
-          selectPersona={selectPersona ? [selectPersona] : []}
-          onSelectPersona={(persona) => onChangePersona(persona.id)}
-        />
-      </ScrollArea>
+      <SelectPersonaList
+        selectPersona={selectPersona ? [selectPersona] : []}
+        onSelectPersona={(persona) => onChangePersona(persona.id)}
+      >
+        <SelectPersonaList.InventoryGrid minRows={2} maxRows={3} />
+      </SelectPersonaList>
       <DialogV2 open={isExtend} onOpenChange={() => setIsExtend(false)}>
-        <DialogV2.Content size="lg">
+        <DialogV2.Content size="lg" className="h-full">
           <DialogV2.CloseButton />
-          <DialogV2.Header>
-            <DialogV2.Title>{t('line-type-select-pet')}</DialogV2.Title>
-          </DialogV2.Header>
           <SelectPersonaList
             selectPersona={selectPersona ? [selectPersona] : []}
             onSelectPersona={(persona) => onChangePersona(persona.id)}
           >
-            <SelectPersonaList.Toolbar showSearch />
-            <DialogV2.Body>
-              <SelectPersonaList.Grid />
+            <DialogV2.Header>
+              <DialogV2.Title>{t('line-type-select-pet')}</DialogV2.Title>
+              <SelectPersonaList.Toolbar showSearch />
+            </DialogV2.Header>
+            <DialogV2.Body scroll={false} className="h-full flex-1">
+              <SelectPersonaList.InventoryGrid minRows={2} mode="dialog" />
             </DialogV2.Body>
           </SelectPersonaList>
         </DialogV2.Content>
