@@ -72,8 +72,8 @@ export function FarmPersonaSelect({ onImageRefresh }: { onImageRefresh: () => vo
               <SelectPersonaList.Toolbar showSearch showVisibilityFilter />
             </DialogV2.Header>
 
-            <DialogV2.Body className="h-full flex-1 overflow-x-hidden [&_[data-radix-scroll-area-viewport]>div]:!block [&_[data-radix-scroll-area-viewport]>div]:!min-w-0">
-              <SelectPersonaList.InventoryGrid minRows={2} maxRows={5} mode="dialog" />
+            <DialogV2.Body scroll={false} className="h-full flex-1">
+              <SelectPersonaList.InventoryGrid minRows={2} mode="dialog" />
             </DialogV2.Body>
           </SelectPersonaList>
         </DialogV2.Content>

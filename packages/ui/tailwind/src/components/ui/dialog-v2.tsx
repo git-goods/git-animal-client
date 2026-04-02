@@ -54,7 +54,7 @@ DialogV2Overlay.displayName = 'DialogV2Overlay';
 
 export const dialogV2ContentVariants = cva(
   [
-    'fixed bg-gray-150 border border-gray-150 z-[3001] text-white flex flex-col',
+    'fixed bg-gray-150 border border-gray-150 z-[3001] text-white flex flex-col w-full overflow-hidden',
     'data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
   ].join(' '),
   {
@@ -88,7 +88,7 @@ export const dialogV2ContentVariants = cva(
         lg: [
           // base: center float
           'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
-          'max-w-[640px] max-h-[calc(100vh-120px)] p-8 gap-5 rounded-2xl',
+          'max-w-[clamp(640px,calc(100vw-400px),100%)] max-h-[calc(100vh-120px)] p-8 gap-5 rounded-2xl',
           // tablet: fullscreen
           'max-tablet:inset-0 max-tablet:translate-x-0 max-tablet:translate-y-0',
           'max-tablet:max-w-full max-tablet:h-full max-tablet:rounded-none',
@@ -101,7 +101,7 @@ export const dialogV2ContentVariants = cva(
         full: [
           // base: center float with margins
           'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
-          'max-w-[calc(100vw-400px)] max-h-[calc(100vh-120px)] h-full p-10 gap-6 rounded-2xl',
+          'max-w-[calc(100vw-200px)] max-h-[calc(100vh-120px)] h-full p-10 gap-6 rounded-2xl',
           // tablet
           'max-tablet:max-w-[calc(100vw-80px)] max-tablet:max-h-[calc(100vh-60px)]',
           'max-tablet:p-6 max-tablet:gap-5',
@@ -128,23 +128,18 @@ export interface DialogV2ContentProps
   size?: DialogV2Size;
 }
 
-const DialogV2Content = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Content>,
-  DialogV2ContentProps
->(({ className, children, size = 'md', ...props }, ref) => (
-  <DialogV2SizeContext.Provider value={size}>
-    <DialogV2Portal>
-      <DialogV2Overlay />
-      <DialogPrimitive.Content
-        ref={ref}
-        className={cn(dialogV2ContentVariants({ size }), className)}
-        {...props}
-      >
-        {children}
-      </DialogPrimitive.Content>
-    </DialogV2Portal>
-  </DialogV2SizeContext.Provider>
-));
+const DialogV2Content = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Content>, DialogV2ContentProps>(
+  ({ className, children, size = 'md', ...props }, ref) => (
+    <DialogV2SizeContext.Provider value={size}>
+      <DialogV2Portal>
+        <DialogV2Overlay />
+        <DialogPrimitive.Content ref={ref} className={cn(dialogV2ContentVariants({ size }), className)} {...props}>
+          {children}
+        </DialogPrimitive.Content>
+      </DialogV2Portal>
+    </DialogV2SizeContext.Provider>
+  ),
+);
 DialogV2Content.displayName = 'DialogV2Content';
 
 // ---------------------------------------------------------------------------
@@ -167,23 +162,14 @@ const DialogV2CloseButton = React.forwardRef<
         {/* X button — desktop/tablet */}
         <DialogPrimitive.Close
           ref={ref}
-          className={cn(
-            'absolute right-4 top-4 bg-transparent p-0 outline-none',
-            'max-mobile:hidden',
-            className,
-          )}
+          className={cn('absolute right-4 top-4 bg-transparent p-0 outline-none', 'max-mobile:hidden', className)}
           {...props}
         >
           <X className="h-6 w-6 text-white" />
           <span className="sr-only">Close</span>
         </DialogPrimitive.Close>
         {/* Drag handle bar — mobile only */}
-        <div
-          className={cn(
-            'hidden max-mobile:flex justify-center w-full pb-1 flex-shrink-0',
-          )}
-          aria-hidden="true"
-        >
+        <div className={cn('hidden max-mobile:flex justify-center w-full pb-1 flex-shrink-0')} aria-hidden="true">
           <div className="w-10 h-1 rounded-full bg-white/30" />
         </div>
       </>
@@ -196,11 +182,7 @@ const DialogV2CloseButton = React.forwardRef<
       {/* X button — desktop only */}
       <DialogPrimitive.Close
         ref={ref}
-        className={cn(
-          'absolute right-4 top-4 bg-transparent p-0 outline-none',
-          'max-tablet:hidden',
-          className,
-        )}
+        className={cn('absolute right-4 top-4 bg-transparent p-0 outline-none', 'max-tablet:hidden', className)}
         {...props}
       >
         <X className="h-6 w-6 text-white" />
@@ -235,11 +217,7 @@ const DialogV2Header = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTM
     return (
       <div
         ref={ref}
-        className={cn(
-          'flex flex-col gap-1 flex-shrink-0',
-          needsBackButtonPadding && 'max-tablet:pl-10',
-          className,
-        )}
+        className={cn('flex flex-col gap-1 flex-shrink-0', needsBackButtonPadding && 'max-tablet:pl-10', className)}
         {...props}
       />
     );
@@ -276,13 +254,7 @@ const DialogV2Title = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ className, ...props }, ref) => {
   const size = useDialogV2Size();
-  return (
-    <DialogPrimitive.Title
-      ref={ref}
-      className={cn(dialogV2TitleVariants({ size }), className)}
-      {...props}
-    />
-  );
+  return <DialogPrimitive.Title ref={ref} className={cn(dialogV2TitleVariants({ size }), className)} {...props} />;
 });
 DialogV2Title.displayName = 'DialogV2Title';
 
@@ -333,13 +305,7 @@ const DialogV2Footer = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTM
           ? 'max-tablet:flex-col-reverse max-tablet:[&>*]:w-full'
           : '';
 
-    return (
-      <div
-        ref={ref}
-        className={cn('flex flex-row gap-2 flex-shrink-0', mobileFullWidth, className)}
-        {...props}
-      />
-    );
+    return <div ref={ref} className={cn('flex flex-row gap-2 flex-shrink-0', mobileFullWidth, className)} {...props} />;
   },
 );
 DialogV2Footer.displayName = 'DialogV2Footer';
@@ -348,12 +314,19 @@ DialogV2Footer.displayName = 'DialogV2Footer';
 // DialogV2Body — scrollable content area
 // ---------------------------------------------------------------------------
 
-function DialogV2Body({ className, children }: { className?: string; children?: React.ReactNode }) {
-  return (
-    <ScrollArea className={cn('flex-1 min-h-0', className)}>
-      {children}
-    </ScrollArea>
-  );
+function DialogV2Body({
+  className,
+  children,
+  scroll = true,
+}: {
+  className?: string;
+  children?: React.ReactNode;
+  scroll?: boolean;
+}) {
+  if (!scroll) {
+    return <div className={cn('flex-1 h-0 min-h-0 overflow-hidden', className)}>{children}</div>;
+  }
+  return <ScrollArea className={cn('flex-1 h-0 min-h-0', className)}>{children}</ScrollArea>;
 }
 DialogV2Body.displayName = 'DialogV2Body';
 
