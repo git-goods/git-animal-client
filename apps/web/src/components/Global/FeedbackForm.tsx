@@ -5,11 +5,11 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { XIcon } from '@gitanimals/ui-icon';
 import { Button } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { toast } from 'sonner';
 
 import { usePostFeedback } from '@/features/feedback/model/usePostFeedback';
 import type { PostIssueRequest } from '@/features/feedback/model/usePostIssue';
-import Input from '@/components/Input';
 import Select from '@/components/Select';
 import TextArea from '@/components/TextArea';
 import type { GithubIssueType } from '@/shared/config/github';
@@ -151,6 +151,23 @@ const useFeedbackContent = () => {
 
   return { content, onContentChange, isValid, initContent };
 };
+
+function Input(props: React.ComponentProps<'input'>) {
+  return (
+    <input
+      {...props}
+      className={cn(
+        'border border-black/10 bg-transparent text-black/75',
+        'py-[14px] pb-[13px] pl-5 pr-[14px]',
+        'font-product text-glyph-16',
+        'rounded-lg outline-none w-full',
+        'focus:border-[#00894d]',
+        'placeholder:text-black/50 placeholder:font-product placeholder:text-glyph-16',
+        props.className,
+      )}
+    />
+  );
+}
 
 function LabelSelect({ onChange }: { onChange: (value: string[]) => void }) {
   return (
