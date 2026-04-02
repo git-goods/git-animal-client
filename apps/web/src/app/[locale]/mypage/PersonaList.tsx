@@ -200,9 +200,12 @@ function InventoryGrid({ minRows = 2, maxRows = 10, minItemSize = 64, gap = 4, m
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
   const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi);
 
-  // Recompute embla when grid dimensions change
+  // Recompute embla when grid dimensions or content change
   useEffect(() => {
-    if (ready) emblaApi?.reInit();
+    if (ready && emblaApi) {
+      emblaApi.reInit();
+      emblaApi.scrollTo(0, true);
+    }
   }, [emblaApi, ready, cols, rows, itemsPerPage, filteredList.length]);
 
   const pages = useMemo(() => {
@@ -225,8 +228,8 @@ function InventoryGrid({ minRows = 2, maxRows = 10, minItemSize = 64, gap = 4, m
           {/* Navigation: arrows left, dots right */}
           <div className="flex mb-2 justify-between items-center">
             <div className="flex gap-[10px]">
-              <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-              <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+              <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} className="w-6 h-6" />
+              <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} className="w-6 h-6" />
             </div>
             <div className="flex gap-1">
               {(() => {
