@@ -135,7 +135,8 @@ function useInventoryGrid(
         // rows: 뷰포트 높이에서 크롬 높이를 뺀 가용 영역 기반
         // 실제 아이템 높이를 측정하여 정확한 행 수 계산
         const firstItem = el.querySelector('[class*="grid"] > button');
-        const itemHeight = firstItem ? firstItem.getBoundingClientRect().height : minItemSize;
+        const measuredHeight = firstItem ? firstItem.getBoundingClientRect().height : 0;
+        const itemHeight = measuredHeight > 0 ? measuredHeight : minItemSize;
         const rowHeight = itemHeight + gap;
 
         const vh = window.innerHeight;
