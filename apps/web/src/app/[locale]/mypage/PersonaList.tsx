@@ -106,6 +106,7 @@ const NAV_HEIGHT = 44; // arrows + dots bar height
 
 function useInventoryGrid(totalItems: number, minItemSize: number, gap: number, minRows: number, maxRows: number) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const prevSizeRef = useRef({ width: 0, height: 0 });
   const [cols, setCols] = useState(6);
   const [rows, setRows] = useState(minRows);
 
@@ -117,13 +118,23 @@ function useInventoryGrid(totalItems: number, minItemSize: number, gap: number, 
       const width = el.offsetWidth;
       const height = el.offsetHeight;
 
+      // 컨테이너 크기가 실제로 변경된 경우에만 재계산
+      if (width === prevSizeRef.current.width && height === prevSizeRef.current.height) return;
+      prevSizeRef.current = { width, height };
+
       const calcCols = Math.floor((width + gap) / (minItemSize + gap));
-      setCols(Math.max(calcCols, 1));
+      setCols((prev) => {
+        const next = Math.max(calcCols, 1);
+        return prev === next ? prev : next;
+      });
 
       const availableHeight = height - NAV_HEIGHT;
       if (availableHeight > 0) {
         const calcRows = Math.floor((availableHeight + gap) / (minItemSize + gap));
-        setRows(Math.min(Math.max(calcRows, minRows), maxRows));
+        setRows((prev) => {
+          const next = Math.min(Math.max(calcRows, minRows), maxRows);
+          return prev === next ? prev : next;
+        });
       }
     };
 
