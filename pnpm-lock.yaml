@@ -457,6 +457,9 @@ importers:
       google-spreadsheet:
         specifier: ^4.1.2
         version: 4.1.2(google-auth-library@9.11.0)
+      gsap:
+        specifier: ^3.14.2
+        version: 3.14.2
       jotai:
         specifier: ^2.8.0
         version: 2.8.3(@types/react@18.2.61)(react@18.2.0)
@@ -8854,6 +8857,9 @@ packages:
 
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
+
+  gsap@3.14.2:
+    resolution: {integrity: sha512-P8/mMxVLU7o4+55+1TCnQrPmgjPKnwkzkXOK1asnR9Jg2lna4tEY5qBJjMmAaOBDDZWtlRjBXjLa0w53G/uBLA==}
 
   gtoken@7.1.0:
     resolution: {integrity: sha512-pCcEwRi+TKpMlxAQObHDQ56KawURgyAf6jtIY046fJ5tIv3zDe/LEIubckAO8fj6JnAxLdmWkUfNyulQ2iKdEw==}
@@ -23823,6 +23829,8 @@ snapshots:
       tinygradient: 1.1.5
 
   graphemer@1.4.0: {}
+
+  gsap@3.14.2: {}
 
   gtoken@7.1.0:
     dependencies:
