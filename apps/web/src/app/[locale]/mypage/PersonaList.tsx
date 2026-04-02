@@ -101,7 +101,7 @@ function Grid() {
 // ─── InventoryGrid (Embla carousel + dynamic grid) ─────────────────
 
 const MAX_DOTS = 5;
-const NAV_HEIGHT = 44; // arrows + dots bar
+const NAV_HEIGHT = 32; // arrows(24px) + gap(8px)
 /** 다이얼로그 크롬: 제목(50) + 검색(40) + 필터(40) + 패딩/갭(30) + nav(44) */
 const DIALOG_CHROME_HEIGHT = 204;
 const INLINE_CHROME_HEIGHT = NAV_HEIGHT;
@@ -241,11 +241,11 @@ function InventoryGrid({ minRows = 2, maxRows = 10, minItemSize = 64, gap = 4, m
   }
 
   return (
-    <div ref={containerRef} className="overflow-hidden">
+    <div ref={containerRef} className="overflow-hidden flex flex-col gap-2">
       {!ready ? null : (
         <>
           {/* Navigation: arrows left, dots right */}
-          <div className="flex mb-2 justify-between items-center">
+          <div className="flex justify-between items-center">
             <div className="flex gap-[10px]">
               <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} className="w-6 h-6" />
               <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} className="w-6 h-6" />
