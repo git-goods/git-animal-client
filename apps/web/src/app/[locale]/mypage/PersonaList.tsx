@@ -102,9 +102,12 @@ function Grid() {
 
 // ─── InventoryGrid (Embla carousel + dynamic grid) ─────────────────
 
-function useInventoryGrid(totalItems: number, rows: number, minItemSize: number, gap: number) {
+const NAV_HEIGHT = 44; // arrows + dots bar height
+
+function useInventoryGrid(totalItems: number, minItemSize: number, gap: number, minRows: number, maxRows: number) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [cols, setCols] = useState(6);
+  const [rows, setRows] = useState(minRows);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -112,33 +115,42 @@ function useInventoryGrid(totalItems: number, rows: number, minItemSize: number,
 
     const measure = () => {
       const width = el.offsetWidth;
-      const calculated = Math.floor((width + gap) / (minItemSize + gap));
-      setCols(Math.max(calculated, 1));
+      const height = el.offsetHeight;
+
+      const calcCols = Math.floor((width + gap) / (minItemSize + gap));
+      setCols(Math.max(calcCols, 1));
+
+      const availableHeight = height - NAV_HEIGHT;
+      if (availableHeight > 0) {
+        const calcRows = Math.floor((availableHeight + gap) / (minItemSize + gap));
+        setRows(Math.min(Math.max(calcRows, minRows), maxRows));
+      }
     };
 
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(el);
     return () => observer.disconnect();
-  }, [gap, minItemSize]);
+  }, [gap, minItemSize, minRows, maxRows]);
 
   const itemsPerPage = cols * rows;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  return { containerRef, cols, itemsPerPage, totalPages };
+  return { containerRef, cols, rows, itemsPerPage, totalPages };
 }
 
 interface InventoryGridProps {
-  rows?: number;
+  minRows?: number;
+  maxRows?: number;
   minItemSize?: number;
   gap?: number;
 }
 
-function InventoryGrid({ rows = 2, minItemSize = 64, gap = 4 }: InventoryGridProps) {
+function InventoryGrid({ minRows = 2, maxRows = 5, minItemSize = 64, gap = 4 }: InventoryGridProps) {
   const t = useTranslations('Mypage.Filter');
   const { filteredList, selectedIds, onSelectPersona, loadingPersona, isSpecialEffect } = useSelectPersonaListContext();
 
-  const { containerRef, cols, itemsPerPage, totalPages } = useInventoryGrid(filteredList.length, rows, minItemSize, gap);
+  const { containerRef, cols, rows, itemsPerPage } = useInventoryGrid(filteredList.length, minItemSize, gap, minRows, maxRows);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -151,10 +163,10 @@ function InventoryGrid({ rows = 2, minItemSize = 64, gap = 4 }: InventoryGridPro
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
   const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi);
 
-  // Recompute embla when cols/rows change
+  // Recompute embla when grid dimensions change
   useEffect(() => {
     emblaApi?.reInit();
-  }, [emblaApi, cols, rows, filteredList.length]);
+  }, [emblaApi, cols, rows, itemsPerPage, filteredList.length]);
 
   const pages = useMemo(() => {
     const result: Persona[][] = [];
@@ -169,7 +181,7 @@ function InventoryGrid({ rows = 2, minItemSize = 64, gap = 4 }: InventoryGridPro
   }
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className="h-full">
       {/* Navigation: arrows left, dots right */}
       <div className="flex mb-2 justify-between items-center">
         <div className="flex gap-[10px]">
