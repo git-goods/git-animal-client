@@ -1,14 +1,12 @@
 'use client';
 
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import Image from 'next/image';
 import { cn } from '@gitanimals/ui-tailwind';
 import useEmblaCarousel from 'embla-carousel-react';
-import gsap from 'gsap';
 
 /**
- * 중앙에 있는 카드를 3D perspective + fade 효과로 보여주는 슬라이더
- * Embla Carousel + GSAP 기반
+ * 중앙 정렬 캐러셀 슬라이더 (Embla Carousel 기반)
  */
 export function PerspectiveCenterSlider({ children }: { children: React.ReactNode }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -17,56 +15,6 @@ export function PerspectiveCenterSlider({ children }: { children: React.ReactNod
     skipSnaps: false,
     containScroll: false,
   });
-
-  const applyEffects = useCallback(() => {
-    if (!emblaApi) return;
-
-    const scrollSnaps = emblaApi.scrollSnapList();
-    const scrollProgress = emblaApi.scrollProgress();
-    const slides = emblaApi.slideNodes();
-    const totalSnaps = scrollSnaps.length;
-
-    slides.forEach((slide, index) => {
-      // 각 슬라이드의 snap 위치와 현재 스크롤 진행도의 차이
-      let diff = scrollSnaps[index]! - scrollProgress;
-
-      // loop 모드에서 최단 거리 계산
-      if (totalSnaps > 1) {
-        if (diff > 0.5) diff -= 1;
-        if (diff < -0.5) diff += 1;
-      }
-
-      // -1 ~ 1 범위로 정규화
-      const distance = Math.min(Math.max(diff, -1), 1);
-      const absDistance = Math.abs(distance);
-
-      // Perspective 효과: rotate 0.5 → 최대 ±25deg, scale 0.2 → 최소 0.8
-      const rotateY = distance * -25;
-      const scale = 1 - absDistance * 0.2;
-      const opacity = 1 - absDistance * 0.6;
-
-      gsap.set(slide, {
-        rotateY,
-        scale,
-        opacity,
-        transformPerspective: 1000,
-        zIndex: Math.round((1 - absDistance) * 10),
-      });
-    });
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-
-    applyEffects();
-    emblaApi.on('scroll', applyEffects);
-    emblaApi.on('reInit', applyEffects);
-
-    return () => {
-      emblaApi.off('scroll', applyEffects);
-      emblaApi.off('reInit', applyEffects);
-    };
-  }, [emblaApi, applyEffects]);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
@@ -96,7 +44,7 @@ export function PerspectiveCenterSlider({ children }: { children: React.ReactNod
           <div className="flex">
             {Array.isArray(children)
               ? children.map((child, index) => (
-                  <div key={index} className="flex-[0_0_80%] min-w-0 px-2">
+                  <div key={index} className="flex-[0_0_100%] min-w-0">
                     {child}
                   </div>
                 ))
