@@ -5,7 +5,7 @@ import type { GotchaResult } from '@gitanimals/api';
 import { postGotcha } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { userQueries } from '@gitanimals/react-query';
-import { Dialog } from '@gitanimals/ui-tailwind';
+import { DialogV2 } from '@gitanimals/ui-tailwind';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 import { useQueryClient } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
@@ -113,17 +113,20 @@ Token: ${data?.user.accessToken}
   };
 
   return (
-    <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="large" className={dialogContentStyle}>
-        <Dialog.Title className={headingStyle}>{t('choose-one-card')}</Dialog.Title>
+    <DialogV2 open={true} onOpenChange={onClose}>
+      <DialogV2.Content size="lg" className={dialogContentStyle}>
+        <DialogV2.CloseButton />
+        <DialogV2.Header>
+          <DialogV2.Title className={headingStyle}>{t('choose-one-card')}</DialogV2.Title>
+        </DialogV2.Header>
 
         <CardDrawingGame
           characters={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }]}
           onSelectCard={onAction}
           onClose={onClose}
         />
-      </Dialog.Content>
-    </Dialog>
+      </DialogV2.Content>
+    </DialogV2>
   );
 }
 
