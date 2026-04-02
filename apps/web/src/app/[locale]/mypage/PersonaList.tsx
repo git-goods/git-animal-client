@@ -133,13 +133,18 @@ function useInventoryGrid(
         const nextCols = Math.max(Math.floor((width + gap) / (minItemSize + gap)), 1);
 
         // rows: 뷰포트 높이에서 크롬 높이를 뺀 가용 영역 기반
+        // 실제 아이템 높이를 측정하여 정확한 행 수 계산
+        const firstItem = el.querySelector('[class*="grid"] > button');
+        const itemHeight = firstItem ? firstItem.getBoundingClientRect().height : minItemSize;
+        const rowHeight = itemHeight + gap;
+
         const vh = window.innerHeight;
         const chrome = mode === 'dialog' ? DIALOG_CHROME_HEIGHT : INLINE_CHROME_HEIGHT;
         const dialogHeight = mode === 'dialog' ? vh * 0.9 : vh;
         const availableHeight = dialogHeight - chrome;
         const nextRows =
           availableHeight > 0
-            ? Math.min(Math.max(Math.floor((availableHeight + gap) / (minItemSize + gap)), minRows), maxRows)
+            ? Math.min(Math.max(Math.floor(availableHeight / rowHeight), minRows), maxRows)
             : minRows;
 
         setCols((prev) => (prev === nextCols ? prev : nextCols));
