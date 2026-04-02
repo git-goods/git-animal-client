@@ -102,30 +102,40 @@ function Grid() {
 
 // ─── InventoryGrid (Embla carousel + dynamic grid) ─────────────────
 
-const NAV_HEIGHT = 44; // arrows + dots bar height
+/** 뷰포트 높이에서 UI 크롬(헤더, 여백 등)을 뺀 가용 높이 비율 */
+const VIEWPORT_RATIO_INLINE = 0.2;
+const VIEWPORT_RATIO_DIALOG = 0.5;
+const NAV_HEIGHT = 44;
 
-function useInventoryGrid(totalItems: number, minItemSize: number, gap: number, minRows: number, maxRows: number) {
-  const sensorRef = useRef<HTMLDivElement>(null);
+function useInventoryGrid(
+  totalItems: number,
+  minItemSize: number,
+  gap: number,
+  minRows: number,
+  maxRows: number,
+  mode: 'inline' | 'dialog',
+) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [cols, setCols] = useState(0);
   const [rows, setRows] = useState(0);
   const ready = cols > 0 && rows > 0;
 
   useEffect(() => {
-    const el = sensorRef.current;
+    const el = containerRef.current;
     if (!el) return;
 
     let rafId: number;
     const measure = () => {
       cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
-        const parent = el.parentElement;
-        if (!parent) return;
-
-        const width = parent.offsetWidth;
-        const height = parent.offsetHeight;
-
+        // cols: 컨테이너 너비 기반
+        const width = el.offsetWidth;
         const nextCols = Math.max(Math.floor((width + gap) / (minItemSize + gap)), 1);
-        const availableHeight = height - NAV_HEIGHT;
+
+        // rows: 뷰포트 높이 기반
+        const vh = window.innerHeight;
+        const ratio = mode === 'dialog' ? VIEWPORT_RATIO_DIALOG : VIEWPORT_RATIO_INLINE;
+        const availableHeight = vh * ratio - NAV_HEIGHT;
         const nextRows =
           availableHeight > 0
             ? Math.min(Math.max(Math.floor((availableHeight + gap) / (minItemSize + gap)), minRows), maxRows)
@@ -143,11 +153,11 @@ function useInventoryGrid(totalItems: number, minItemSize: number, gap: number, 
       cancelAnimationFrame(rafId);
       observer.disconnect();
     };
-  }, [gap, minItemSize, minRows, maxRows]);
+  }, [gap, minItemSize, minRows, maxRows, mode]);
 
   const itemsPerPage = cols * rows;
 
-  return { sensorRef, cols, rows, itemsPerPage, ready };
+  return { containerRef, cols, rows, itemsPerPage, ready };
 }
 
 interface InventoryGridProps {
@@ -155,13 +165,14 @@ interface InventoryGridProps {
   maxRows?: number;
   minItemSize?: number;
   gap?: number;
+  mode?: 'inline' | 'dialog';
 }
 
-function InventoryGrid({ minRows = 2, maxRows = 5, minItemSize = 64, gap = 4 }: InventoryGridProps) {
+function InventoryGrid({ minRows = 2, maxRows = 5, minItemSize = 64, gap = 4, mode = 'inline' }: InventoryGridProps) {
   const t = useTranslations('Mypage.Filter');
   const { filteredList, selectedIds, onSelectPersona, loadingPersona, isSpecialEffect } = useSelectPersonaListContext();
 
-  const { sensorRef, cols, rows, itemsPerPage, ready } = useInventoryGrid(filteredList.length, minItemSize, gap, minRows, maxRows);
+  const { containerRef, cols, rows, itemsPerPage, ready } = useInventoryGrid(filteredList.length, minItemSize, gap, minRows, maxRows, mode);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -193,10 +204,7 @@ function InventoryGrid({ minRows = 2, maxRows = 5, minItemSize = 64, gap = 4 }: 
   }
 
   return (
-    <div className="relative h-full">
-      {/* 크기 측정용 센서 - 콘텐츠와 분리하여 리사이즈 루프 방지 */}
-      <div ref={sensorRef} className="absolute inset-0 pointer-events-none invisible" />
-
+    <div ref={containerRef} className="overflow-hidden">
       {!ready ? null : <>
       {/* Navigation: arrows left, dots right */}
       <div className="flex mb-2 justify-between items-center">
@@ -216,15 +224,15 @@ function InventoryGrid({ minRows = 2, maxRows = 5, minItemSize = 64, gap = 4 }: 
       </div>
 
       {/* Embla carousel - each slide is a grid page */}
-      <div className="overflow-hidden w-full" ref={emblaRef}>
+      <div className="overflow-hidden w-full [&>div]:!min-w-0" ref={emblaRef}>
         <div className="flex">
           {pages.map((page, pageIdx) => (
-            <div key={pageIdx} className="flex-[0_0_100%] min-w-0">
+            <div key={pageIdx} className="flex-[0_0_100%] min-w-0 overflow-hidden">
               <div
                 className="grid"
                 style={{
-                  gridTemplateColumns: `repeat(${cols}, 1fr)`,
-                  gridTemplateRows: `repeat(${rows}, 1fr)`,
+                  gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+                  gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
                   gap: `${gap}px`,
                 }}
               >
