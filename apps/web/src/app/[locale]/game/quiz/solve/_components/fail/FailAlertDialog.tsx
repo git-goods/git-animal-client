@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { Button, Dialog } from '@gitanimals/ui-tailwind';
+import { Button, DialogV2 } from '@gitanimals/ui-tailwind';
 
 interface FailAlertDialogProps {
   onClose: () => void;
@@ -21,21 +21,19 @@ const FailAlertDialog = ({ onClose, isOpen }: FailAlertDialogProps) => {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content
-        className="flex flex-col items-center gap-3 w-full"
-        isShowClose={false}
+    <DialogV2 open={isOpen} onOpenChange={onClose}>
+      <DialogV2.Content
+        size="sm"
+        className="items-center"
         onInteractOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
       >
-        <div className="flex flex-col items-center gap-3 w-full">
-          <Dialog.Title className="!font-product !text-glyph-24 !font-bold !text-center">
-            {t('fail-dialog.title')}
-          </Dialog.Title>
-          <Dialog.Description className="font-product text-glyph-16 font-normal text-center text-white-75 break-keep">
+        <DialogV2.Header className="items-center">
+          <DialogV2.Title>{t('fail-dialog.title')}</DialogV2.Title>
+          <DialogV2.Description className="text-center break-keep">
             {t('fail-dialog.description')}
-          </Dialog.Description>
-        </div>
+          </DialogV2.Description>
+        </DialogV2.Header>
         <div className="w-40 h-40 flex justify-center items-center my-1">
           <Image
             src="/assets/game/quiz/cursor-unchoiced.webp"
@@ -45,13 +43,13 @@ const FailAlertDialog = ({ onClose, isOpen }: FailAlertDialogProps) => {
             draggable={false}
           />
         </div>
-        <div className="w-full">
+        <DialogV2.Footer className="w-full">
           <Button className="w-full" onClick={handleClose} variant="secondary" size="m">
             {t('fail-dialog.close-button')}
           </Button>
-        </div>
-      </Dialog.Content>
-    </Dialog>
+        </DialogV2.Footer>
+      </DialogV2.Content>
+    </DialogV2>
   );
 };
 
