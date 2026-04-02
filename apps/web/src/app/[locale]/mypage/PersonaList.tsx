@@ -142,9 +142,14 @@ function useInventoryGrid(
         const rowHeight = itemHeight + gap;
 
         const vh = window.innerHeight;
-        const chrome = mode === 'dialog' ? DIALOG_CHROME_HEIGHT : INLINE_CHROME_HEIGHT;
-        const dialogHeight = mode === 'dialog' ? vh * 0.9 : vh;
-        const availableHeight = dialogHeight - chrome;
+        let availableHeight: number;
+        if (mode === 'dialog') {
+          availableHeight = vh * 0.9 - DIALOG_CHROME_HEIGHT;
+        } else {
+          // inline: 컨테이너 위치부터 뷰포트 하단까지 남은 공간 사용
+          const rect = el.getBoundingClientRect();
+          availableHeight = vh - rect.top - NAV_HEIGHT;
+        }
         const nextRows =
           availableHeight > 0 ? Math.min(Math.max(Math.floor(availableHeight / rowHeight), minRows), maxRows) : minRows;
 
