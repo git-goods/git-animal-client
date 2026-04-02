@@ -65,7 +65,7 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
 
   return (
     <DialogV2 open={isOpen} onOpenChange={onClose}>
-      <DialogV2.Content size="lg">
+      <DialogV2.Content size="full">
         <DialogV2.CloseButton />
         <DialogV2.Header>
           <DialogV2.Title>Merge to Level Up</DialogV2.Title>
