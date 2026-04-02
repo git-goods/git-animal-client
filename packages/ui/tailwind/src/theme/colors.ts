@@ -1,6 +1,9 @@
 import { COLORS } from '@gitanimals/ui-token';
 
 export const colors = {
+  transparent: 'transparent',
+  current: 'currentColor',
+
   // Black & White
   black: {
     DEFAULT: COLORS.black,
