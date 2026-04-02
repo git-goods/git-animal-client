@@ -76,7 +76,7 @@ function BannerPersonaItem({
       onClick={onClick}
       disabled={loading}
       className={cn(
-        'rounded-xl bg-transparent outline-none',
+        'rounded-xl bg-transparent outline-none h-full',
         isSpecialEffect && persona.isEvolutionable && 'gradient-move',
       )}
       onKeyDown={(e) => {
