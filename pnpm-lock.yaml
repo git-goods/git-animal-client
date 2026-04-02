@@ -370,12 +370,6 @@ importers:
       '@air/react-drag-to-select':
         specifier: ^5.0.11
         version: 5.0.11(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
-      '@egjs/flicking-plugins':
-        specifier: ^4.7.1
-        version: 4.7.1(@egjs/flicking@4.11.3)
-      '@egjs/react-flicking':
-        specifier: ^4.11.3
-        version: 4.11.3
       '@gitanimals/api':
         specifier: workspace:*
         version: link:../../packages/api
@@ -457,9 +451,6 @@ importers:
       google-spreadsheet:
         specifier: ^4.1.2
         version: 4.1.2(google-auth-library@9.11.0)
-      gsap:
-        specifier: ^3.14.2
-        version: 3.14.2
       jotai:
         specifier: ^2.8.0
         version: 2.8.3(@types/react@18.2.61)(react@18.2.0)
@@ -2045,12 +2036,6 @@ packages:
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  '@cfcs/core@0.0.24':
-    resolution: {integrity: sha512-feB38qu+eDk0Pggh/yR7gjaNmvUYA2uCxHP3Pz2MLE4LZ/9jPdtu8bzCSI47yTEhWyZCF5Pk698hdz8IN2mTjA==}
-
-  '@cfcs/core@0.1.0':
-    resolution: {integrity: sha512-kvYX0RpL45XTHJ5sW7teNbKeAa7pK3nNqaJPoFfZDPTIBJOkTtRD3QhkBG+O3Hu69a8xeMoPvF6y/RtJ6JUOdA==}
-
   '@chromatic-com/storybook@1.5.0':
     resolution: {integrity: sha512-LkLKv7SWu/6kGep1ft2HA1T/cm14wU0zoW71gE4cZRcgUoRQJtyhITFTLHrjqAxz6bVqNgqzQtd5oBZ2nK3L3g==}
     engines: {node: '>=16.0.0', yarn: '>=1.22.18'}
@@ -2090,32 +2075,6 @@ packages:
   '@discoveryjs/json-ext@0.5.7':
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
     engines: {node: '>=10.0.0'}
-
-  '@egjs/agent@2.4.3':
-    resolution: {integrity: sha512-XvksSENe8wPeFlEVouvrOhKdx8HMniJ3by7sro2uPF3M6QqWwjzVcmvwoPtdjiX8O1lfRoLhQMp1a7NGlVTdIA==}
-
-  '@egjs/axes@3.9.0':
-    resolution: {integrity: sha512-V+HxHxEGmlu/0yJ9kqlj2doiJt1yVeROTy/0Qf+IaJ9hMabjzUgfYffGR+3atcRpejjGbcpAIiBrGbAkDVaLjg==}
-
-  '@egjs/component@3.0.5':
-    resolution: {integrity: sha512-cLcGizTrrUNA2EYE3MBmEDt2tQv1joVP1Q3oDisZ5nw0MZDx2kcgEXM+/kZpfa/PAkFvYVhRUZwytIQWoN3V/w==}
-
-  '@egjs/flicking-plugins@4.7.1':
-    resolution: {integrity: sha512-J0k499sCs5IAMXAJuBcrY1OoiHRi4BPbS1/RCCkIzsYgdoHzcAUjKyhSsms3gLz4O/K5eTbBmWBUtFO86fETHg==}
-    peerDependencies:
-      '@egjs/flicking': ^4.1.0
-
-  '@egjs/flicking@4.11.3':
-    resolution: {integrity: sha512-90IbXMwdiNL4+Yrvfgi4zYk9XKLbjVaVLus5lIl28twQiT/KV3W9ypJOJEK7U5U9oS2q7dn8OJZolD8JNOsxag==}
-
-  '@egjs/imready@1.4.1':
-    resolution: {integrity: sha512-JIOBs4lB7FYdsKi5uvz2j3SObX8eShtZjtqlOH41tm185aJOQZwiKBK8+V4MxzG4X6DqVhpdN8UcuVwBbElfsg==}
-
-  '@egjs/list-differ@1.0.1':
-    resolution: {integrity: sha512-OTFTDQcWS+1ZREOdCWuk5hCBgYO4OsD30lXcOCyVOAjXMhgL5rBRDnt/otb6Nz8CzU0L/igdcaQBDLWc4t9gvg==}
-
-  '@egjs/react-flicking@4.11.3':
-    resolution: {integrity: sha512-OsRHUDlFR1z0FVRB+ljf7d+uAyRV0weVU4ckDshgKwHfb4htLJeGzc3zPUQyKIIEQNzYKIIGiKoCqsF5Hk2ahg==}
 
   '@emnapi/runtime@1.2.0':
     resolution: {integrity: sha512-bV21/9LQmcQeCPEg3BDFtvwL6cwiTMksYNWQQ4KOxCZikEGalWtenoZ0wCiukJINlGCIi2KXx01g4FoH/LxpzQ==}
@@ -8858,9 +8817,6 @@ packages:
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
 
-  gsap@3.14.2:
-    resolution: {integrity: sha512-P8/mMxVLU7o4+55+1TCnQrPmgjPKnwkzkXOK1asnR9Jg2lna4tEY5qBJjMmAaOBDDZWtlRjBXjLa0w53G/uBLA==}
-
   gtoken@7.1.0:
     resolution: {integrity: sha512-pCcEwRi+TKpMlxAQObHDQ56KawURgyAf6jtIY046fJ5tIv3zDe/LEIubckAO8fj6JnAxLdmWkUfNyulQ2iKdEw==}
     engines: {node: '>=14.0.0'}
@@ -15092,14 +15048,6 @@ snapshots:
   '@bcoe/v8-coverage@0.2.3':
     optional: true
 
-  '@cfcs/core@0.0.24':
-    dependencies:
-      '@egjs/component': 3.0.5
-
-  '@cfcs/core@0.1.0':
-    dependencies:
-      '@egjs/component': 3.0.5
-
   '@chromatic-com/storybook@1.5.0(react@18.2.0)':
     dependencies:
       chromatic: 11.5.4
@@ -15153,40 +15101,6 @@ snapshots:
       postcss-selector-parser: 6.1.2
 
   '@discoveryjs/json-ext@0.5.7': {}
-
-  '@egjs/agent@2.4.3': {}
-
-  '@egjs/axes@3.9.0':
-    dependencies:
-      '@cfcs/core': 0.1.0
-      '@egjs/agent': 2.4.3
-      '@egjs/component': 3.0.5
-
-  '@egjs/component@3.0.5': {}
-
-  '@egjs/flicking-plugins@4.7.1(@egjs/flicking@4.11.3)':
-    dependencies:
-      '@egjs/flicking': 4.11.3
-
-  '@egjs/flicking@4.11.3':
-    dependencies:
-      '@egjs/axes': 3.9.0
-      '@egjs/component': 3.0.5
-      '@egjs/imready': 1.4.1
-      '@egjs/list-differ': 1.0.1
-
-  '@egjs/imready@1.4.1':
-    dependencies:
-      '@cfcs/core': 0.0.24
-      '@egjs/component': 3.0.5
-
-  '@egjs/list-differ@1.0.1': {}
-
-  '@egjs/react-flicking@4.11.3':
-    dependencies:
-      '@egjs/component': 3.0.5
-      '@egjs/flicking': 4.11.3
-      '@egjs/list-differ': 1.0.1
 
   '@emnapi/runtime@1.2.0':
     dependencies:
@@ -23829,8 +23743,6 @@ snapshots:
       tinygradient: 1.1.5
 
   graphemer@1.4.0: {}
-
-  gsap@3.14.2: {}
 
   gtoken@7.1.0:
     dependencies:

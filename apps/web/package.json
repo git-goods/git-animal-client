@@ -14,8 +14,6 @@
   },
   "dependencies": {
     "@air/react-drag-to-select": "^5.0.11",
-    "@egjs/flicking-plugins": "^4.7.1",
-    "@egjs/react-flicking": "^4.11.3",
     "@gitanimals/api": "workspace:*",
     "@gitanimals/asset-font": "workspace:*",
     "@gitanimals/dayjs": "workspace:*",
@@ -43,7 +41,6 @@
     "framer-motion": "^11.1.7",
     "google-auth-library": "^9.11.0",
     "google-spreadsheet": "^4.1.2",
-    "gsap": "^3.14.2",
     "jotai": "^2.8.0",
     "lottie-react": "^2.4.0",
     "lucide-react": "^0.408.0",
