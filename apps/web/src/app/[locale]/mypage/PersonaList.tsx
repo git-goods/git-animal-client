@@ -133,11 +133,9 @@ function useInventoryGrid(
         if (width < minItemSize * 2) return;
         const nextCols = Math.max(Math.floor((width + gap) / (minItemSize + gap)), 1);
 
-        // rows: 뷰포트 높이에서 크롬 높이를 뺀 가용 영역 기반
-        // 실제 아이템 높이를 측정하여 정확한 행 수 계산
-        const firstItem = el.querySelector('[class*="grid"] > button');
-        const measuredHeight = firstItem ? firstItem.getBoundingClientRect().height : 0;
-        const itemHeight = measuredHeight > 0 ? measuredHeight : minItemSize;
+        // rows: 가용 높이 기반. 아이템이 aspect-square이므로 컬럼 너비 = 아이템 높이
+        const colWidth = (width - (nextCols - 1) * gap) / nextCols;
+        const itemHeight = colWidth;
         const rowHeight = itemHeight + gap;
 
         const vh = window.innerHeight;
