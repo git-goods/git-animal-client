@@ -4,12 +4,11 @@ import { useState } from 'react';
 import React from 'react';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries } from '@gitanimals/react-query';
-import { Banner, cn, Dialog } from '@gitanimals/ui-tailwind';
+import { Banner, cn, DialogV2 } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { LoaderIcon, SearchIcon, XIcon } from 'lucide-react';
 
-import { customScrollStyle } from '@/shared/styles/scrollStyle';
 import { getPersonaImage } from '@/shared/utils/image';
 
 const EVENT = {
@@ -67,10 +66,13 @@ export const PersonaSearch = wrap
           <SearchIcon color="rgba(255, 255, 255, 0.5)" width={20} height={20} />
         </button>
 
-        <Dialog open={isOpen} onOpenChange={() => setIsOpen(false)}>
-          <Dialog.Content size="large" className="flex flex-col items-center justify-center">
-            <Dialog.Title>Select Find Persona</Dialog.Title>
-            <div className={cn('flex justify-start w-full mb-4', 'max-mobile:mb-0 max-mobile:my-6')}>
+        <DialogV2 open={isOpen} onOpenChange={() => setIsOpen(false)}>
+          <DialogV2.Content size="lg">
+            <DialogV2.CloseButton />
+            <DialogV2.Header>
+              <DialogV2.Title>Select Find Persona</DialogV2.Title>
+            </DialogV2.Header>
+            <div className={cn('flex justify-start w-full', 'max-mobile:my-2')}>
               {selected && (
                 <div
                   className={cn(
@@ -89,7 +91,7 @@ export const PersonaSearch = wrap
                 </div>
               )}
             </div>
-            <div className={cn('flex-1 overflow-auto gap-1 justify-center', customScrollStyle)}>
+            <DialogV2.Body className={cn('gap-1 justify-center')}>
               {Object.values(EVENT).map((event) => (
                 <React.Fragment key={event.label}>
                   <h4
@@ -136,9 +138,9 @@ export const PersonaSearch = wrap
                   </div>
                 </>
               )}
-            </div>
-          </Dialog.Content>
-        </Dialog>
+            </DialogV2.Body>
+          </DialogV2.Content>
+        </DialogV2>
       </>
     );
   });
