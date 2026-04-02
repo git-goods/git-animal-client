@@ -153,7 +153,8 @@ function useInventoryGrid(
           while (parent) {
             const { overflow, overflowY } = getComputedStyle(parent);
             if (overflow === 'hidden' || overflowY === 'hidden') {
-              bottom = parent.getBoundingClientRect().bottom;
+              const parentPaddingBottom = parseFloat(getComputedStyle(parent).paddingBottom) || 0;
+              bottom = parent.getBoundingClientRect().bottom - parentPaddingBottom;
               break;
             }
             parent = parent.parentElement;
