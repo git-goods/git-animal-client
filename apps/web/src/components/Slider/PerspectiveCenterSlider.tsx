@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import { cn } from '@gitanimals/ui-tailwind';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -18,23 +18,23 @@ export function PerspectiveCenterSlider({ children }: { children: React.ReactNod
     containScroll: false,
   });
 
-  const slidesRef = useRef<HTMLElement[]>([]);
-
   const applyEffects = useCallback(() => {
     if (!emblaApi) return;
 
-    const engine = emblaApi.internalEngine();
+    const scrollSnaps = emblaApi.scrollSnapList();
     const scrollProgress = emblaApi.scrollProgress();
     const slides = emblaApi.slideNodes();
+    const totalSnaps = scrollSnaps.length;
 
     slides.forEach((slide, index) => {
-      // 각 슬라이드의 중앙으로부터의 거리 계산 (loop 고려)
-      let diff = engine.slideLooper.loopPoints.length
-        ? engine.slideRegistry[index]!.reduce((sum, i) => {
-            const location = engine.slideLocations[i]!;
-            return sum + (location.get() - scrollProgress);
-          }, 0) / engine.slideRegistry[index]!.length
-        : engine.scrollSnaps[index]! - scrollProgress;
+      // 각 슬라이드의 snap 위치와 현재 스크롤 진행도의 차이
+      let diff = scrollSnaps[index]! - scrollProgress;
+
+      // loop 모드에서 최단 거리 계산
+      if (totalSnaps > 1) {
+        if (diff > 0.5) diff -= 1;
+        if (diff < -0.5) diff += 1;
+      }
 
       // -1 ~ 1 범위로 정규화
       const distance = Math.min(Math.max(diff, -1), 1);
@@ -96,13 +96,7 @@ export function PerspectiveCenterSlider({ children }: { children: React.ReactNod
           <div className="flex">
             {Array.isArray(children)
               ? children.map((child, index) => (
-                  <div
-                    key={index}
-                    className="flex-[0_0_80%] min-w-0 px-2"
-                    ref={(el) => {
-                      if (el) slidesRef.current[index] = el;
-                    }}
-                  >
+                  <div key={index} className="flex-[0_0_80%] min-w-0 px-2">
                     {child}
                   </div>
                 ))
