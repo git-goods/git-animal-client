@@ -101,10 +101,9 @@ function Grid() {
 // ─── InventoryGrid (Embla carousel + dynamic grid) ─────────────────
 
 const MAX_DOTS = 5;
-const NAV_HEIGHT = 32; // arrows(24px) + gap(8px)
+const NAV_HEIGHT = 40; // arrows(24px) + gap(8px)
 /** 다이얼로그 크롬: 제목(50) + 검색(40) + 필터(40) + 패딩/갭(30) + nav(44) */
 const DIALOG_CHROME_HEIGHT = 204;
-const INLINE_CHROME_HEIGHT = NAV_HEIGHT;
 
 function useInventoryGrid(
   totalItems: number,
@@ -146,20 +145,16 @@ function useInventoryGrid(
         if (mode === 'dialog') {
           availableHeight = vh * 0.9 - DIALOG_CHROME_HEIGHT;
         } else {
-          // inline: 컨테이너 위치부터 overflow-hidden 부모 하단까지 남은 공간
-          const rect = el.getBoundingClientRect();
-          let bottom = vh;
-          let parent = el.parentElement;
-          while (parent) {
-            const { overflow, overflowY } = getComputedStyle(parent);
-            if (overflow === 'hidden' || overflowY === 'hidden') {
-              const parentPaddingBottom = parseFloat(getComputedStyle(parent).paddingBottom) || 0;
-              bottom = parent.getBoundingClientRect().bottom - parentPaddingBottom;
-              break;
-            }
-            parent = parent.parentElement;
+          // inline: 컨테이너에 flex-1 min-h-0이 설정되어 있으므로
+          // clientHeight가 부모 flex에 의해 제한된 실제 높이
+          const containerHeight = el.clientHeight;
+          if (containerHeight > 0) {
+            availableHeight = containerHeight - NAV_HEIGHT;
+          } else {
+            // 초기 렌더링 시 높이가 0일 수 있음 → fallback
+            const rect = el.getBoundingClientRect();
+            availableHeight = vh - rect.top - NAV_HEIGHT;
           }
-          availableHeight = bottom - rect.top - NAV_HEIGHT;
         }
         const nextRows =
           availableHeight > 0 ? Math.min(Math.max(Math.floor(availableHeight / rowHeight), minRows), maxRows) : minRows;
@@ -241,7 +236,7 @@ function InventoryGrid({ minRows = 2, maxRows = 10, minItemSize = 64, gap = 4, m
   }
 
   return (
-    <div ref={containerRef} className="overflow-hidden flex flex-col gap-2">
+    <div ref={containerRef} className="overflow-hidden flex flex-col gap-2 flex-1 min-h-0">
       {!ready ? null : (
         <>
           {/* Navigation: arrows left, dots right */}
