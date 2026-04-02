@@ -5,8 +5,8 @@ import type { GuildLeader, GuildMember } from '@gitanimals/api';
 import useEmblaCarousel from 'embla-carousel-react';
 import { UsersRoundIcon } from 'lucide-react';
 
-import { USER_GITHUB_URL } from '@/constants/route';
-import { getPersonaImage } from '@/utils/image';
+import { USER_GITHUB_URL } from '@/shared/config/route';
+import { getPersonaImage } from '@/shared/utils/image';
 
 export function GuildPeopleList({ members, leader }: { members: GuildMember[]; leader: GuildLeader }) {
   const [emblaRef] = useEmblaCarousel({

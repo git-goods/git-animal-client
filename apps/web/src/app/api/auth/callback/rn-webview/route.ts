@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server';
 import NextAuth from 'next-auth';
 
-import { authOptions } from '@/auth';
+import { authOptions } from '@/shared/api/auth';
 
 export async function POST(req: NextRequest) {
   try {

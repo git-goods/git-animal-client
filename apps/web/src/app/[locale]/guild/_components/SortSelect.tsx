@@ -4,8 +4,8 @@ import { useSearchParams } from 'next/navigation';
 import type { FilterType } from '@gitanimals/api';
 import { Select } from '@gitanimals/ui-tailwind';
 
-import { useGetNextUrl } from '@/hooks/useGetNewUrl';
-import { useRouter } from '@/i18n/routing';
+import { useGetNextUrl } from '@/shared/hooks/useGetNewUrl';
+import { useRouter } from '@/shared/i18n/routing';
 
 const options: { label: string; value: FilterType }[] = [
   { label: 'Random', value: 'RANDOM' },

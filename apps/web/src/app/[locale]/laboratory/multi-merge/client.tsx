@@ -9,8 +9,8 @@ import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-q
 import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
-import { Link } from '@/i18n/routing';
-import { useClientUser } from '@/utils/clientAuth';
+import { Link } from '@/shared/i18n/routing';
+import { useClientUser } from '@/shared/utils/clientAuth';
 
 import { MergeResultModal } from '../../mypage/my-pet/(merge)/MergeResult';
 

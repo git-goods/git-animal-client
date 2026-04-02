@@ -2,10 +2,10 @@
 
 import { Button } from '@gitanimals/ui-tailwind';
 
-import { Link } from '@/i18n/routing';
-import { useDevMode } from '@/lib/devtools/devtools';
-import { useClientSession } from '@/utils/clientAuth';
-import { getIsOnLoadSheet, sendLog } from '@/utils/log';
+import { Link } from '@/shared/i18n/routing';
+import { useDevMode } from '@/shared/lib/devtools/devtools';
+import { useClientSession } from '@/shared/utils/clientAuth';
+import { getIsOnLoadSheet, sendLog } from '@/shared/utils/log';
 
 function DevClient() {
   const { isDevMode } = useDevMode();

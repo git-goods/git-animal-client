@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { evolutionPersona, type MergePersonaLevelResponse, type Persona } from '@gitanimals/api';
+import { evolutionPersona, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
 import { Button, CommonDialog } from '@gitanimals/ui-tailwind';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -11,7 +10,6 @@ import { overlay } from 'overlay-kit';
 
 import { PersonaBanner, PersonaBannerUnknown, PersonaGradientBanner } from '../_components/PersonaBanner';
 import { SpinningLoader } from '../_components/SpinningLoader';
-import { MergeResultModal } from '../(merge)/MergeResult';
 
 import { EvolutionResult } from './EvolutionResult';
 
@@ -25,13 +23,9 @@ export function EvolutionPersona({ isOpen, onClose, targetPersona }: EvolutionPe
   const queryClient = useQueryClient();
   const t = useTranslations('Mypage');
 
-  const [resultData, setResultData] = useState<MergePersonaLevelResponse | null>(null);
-
   const { mutate, isPending: isEvolving } = useMutation({
     mutationFn: () => evolutionPersona(targetPersona.id),
     onSuccess: (data) => {
-      console.log('data', data);
-
       overlay.open(({ isOpen, close }) => (
         <EvolutionResult key={data.id} isOpen={isOpen} onClose={() => close()} result={data} />
       ));
@@ -52,12 +46,6 @@ export function EvolutionPersona({ isOpen, onClose, targetPersona }: EvolutionPe
       <div className="flex justify-center">
         <Button onClick={onMergeAction}>{t('evolution')}</Button>
       </div>
-      <MergeResultModal
-        key={resultData?.id}
-        isOpen={Boolean(resultData)}
-        onClose={() => setResultData(null)}
-        result={resultData as MergePersonaLevelResponse}
-      />
       {isEvolving && <SpinningLoader />}
     </CommonDialog>
   );

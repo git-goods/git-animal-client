@@ -9,10 +9,10 @@ import { cn } from '@gitanimals/ui-tailwind/utils';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
-import { GITHUB_ISSUE_URL } from '@/constants/outlink';
-import { useTimer } from '@/hooks/useTimer';
-import { trackEvent } from '@/lib/analytics';
+import { sendMessageToErrorChannel } from '@/shared/api/slack';
+import { GITHUB_ISSUE_URL } from '@/shared/config/outlink';
+import { useTimer } from '@/shared/hooks/useTimer';
+import { trackEvent } from '@/shared/lib/analytics';
 
 import { TenCardFlipGame } from './TenCardFlipGame';
 import { useCheckEnoughMoney } from './useCheckEnoughMoney';

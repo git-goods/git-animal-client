@@ -1,7 +1,5 @@
 'use client';
 
-import { css } from '_panda/css';
-
 import DevModePage from '@/components/DevMode/DevModePage';
 
 import { CherryBlossom } from '../../landing/(spring)/CherryBlossom';
@@ -13,19 +11,19 @@ const SIZES = [12, 20, 28, 36, 48];
 export default function CherryBlossomDemoPage() {
   return (
     <DevModePage>
-      <div className={pageStyle}>
-        <h1 className={titleStyle}>Cherry Blossom Particle Demo</h1>
+      <div className="p-10 bg-gradient-to-b from-[#E8F4FD] via-[#FFF0F5] via-[70%] to-[#FFDBEE] min-h-screen">
+        <h1 className="text-[32px] font-bold text-[#333] mb-8">Cherry Blossom Particle Demo</h1>
 
         {/* Static variants */}
-        <section className={sectionStyle}>
-          <h2 className={subtitleStyle}>Static Variants (sizes: {SIZES.join(', ')}px)</h2>
-          <div className={gridStyle}>
+        <section className="mb-12">
+          <h2 className="text-xl font-semibold text-[#555] mb-4">Static Variants (sizes: {SIZES.join(', ')}px)</h2>
+          <div className="flex flex-col gap-6">
             {[0, 1, 2, 3].map((variant) => (
-              <div key={variant} className={cardStyle}>
-                <p className={labelStyle}>{VARIANT_LABELS[variant]}</p>
-                <div className={rowStyle}>
+              <div key={variant} className="bg-white/70 rounded-xl p-5">
+                <p className="text-sm font-semibold text-[#666] mb-3">{VARIANT_LABELS[variant]}</p>
+                <div className="flex items-end gap-8">
                   {SIZES.map((size) => (
-                    <div key={size} className={itemStyle}>
+                    <div key={size} className="flex flex-col items-center gap-2 relative w-[60px] h-[60px]">
                       <CherryBlossom
                         delay={0}
                         left="50%"
@@ -34,7 +32,7 @@ export default function CherryBlossomDemoPage() {
                         variant={variant}
                         opacity={1}
                       />
-                      <span className={sizeLabelStyle}>{size}px</span>
+                      <span className="text-[11px] text-[#999] absolute -bottom-1">{size}px</span>
                     </div>
                   ))}
                 </div>
@@ -44,9 +42,9 @@ export default function CherryBlossomDemoPage() {
         </section>
 
         {/* Animated preview */}
-        <section className={sectionStyle}>
-          <h2 className={subtitleStyle}>Animated Preview</h2>
-          <div className={previewStyle}>
+        <section className="mb-12">
+          <h2 className="text-xl font-semibold text-[#555] mb-4">Animated Preview</h2>
+          <div className="relative w-full h-[400px] overflow-hidden rounded-xl bg-gradient-to-b from-[#E8F4FD] via-[#FFF0F5] via-[70%] to-[#FFDBEE]">
             {[...Array(16)].map((_, i) => {
               const variant = i % 4;
               return (
@@ -67,78 +65,3 @@ export default function CherryBlossomDemoPage() {
     </DevModePage>
   );
 }
-
-const pageStyle = css({
-  padding: '40px',
-  background: 'linear-gradient(180deg, #E8F4FD 0%, #FFF0F5 40%, #FFE4EE 70%, #FFDBEE 100%)',
-  minHeight: '100vh',
-});
-
-const titleStyle = css({
-  fontSize: '32px',
-  fontWeight: 700,
-  color: '#333',
-  marginBottom: '32px',
-});
-
-const subtitleStyle = css({
-  fontSize: '20px',
-  fontWeight: 600,
-  color: '#555',
-  marginBottom: '16px',
-});
-
-const sectionStyle = css({
-  marginBottom: '48px',
-});
-
-const gridStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '24px',
-});
-
-const cardStyle = css({
-  background: 'rgba(255,255,255,0.7)',
-  borderRadius: '12px',
-  padding: '20px',
-});
-
-const labelStyle = css({
-  fontSize: '14px',
-  fontWeight: 600,
-  color: '#666',
-  marginBottom: '12px',
-});
-
-const rowStyle = css({
-  display: 'flex',
-  alignItems: 'flex-end',
-  gap: '32px',
-});
-
-const itemStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '8px',
-  position: 'relative',
-  width: '60px',
-  height: '60px',
-});
-
-const sizeLabelStyle = css({
-  fontSize: '11px',
-  color: '#999',
-  position: 'absolute',
-  bottom: '-4px',
-});
-
-const previewStyle = css({
-  position: 'relative',
-  width: '100%',
-  height: '400px',
-  overflow: 'hidden',
-  borderRadius: '12px',
-  background: 'linear-gradient(180deg, #E8F4FD 0%, #FFF0F5 40%, #FFE4EE 70%, #FFDBEE 100%)',
-});

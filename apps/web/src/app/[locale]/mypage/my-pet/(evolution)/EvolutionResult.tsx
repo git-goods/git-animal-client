@@ -9,7 +9,7 @@ import { snakeToTitleCase } from '@gitanimals/util-common';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 
-import { getPersonaImage } from '@/utils/image';
+import { getPersonaImage } from '@/shared/utils/image';
 
 interface MergeResultModalProps {
   isOpen: boolean;

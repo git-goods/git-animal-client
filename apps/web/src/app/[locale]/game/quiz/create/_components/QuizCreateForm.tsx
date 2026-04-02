@@ -9,15 +9,15 @@ import { toast } from 'sonner';
 
 import QuizField from '@/app/[locale]/game/quiz/create/_components/QuizField';
 import QuizTextArea from '@/app/[locale]/game/quiz/create/_components/QuizTextArea';
-import { ConfirmDialog } from '@/app/[locale]/laboratory/_component/ConfirmDialog';
+import { ConfirmDialog } from '@gitanimals/ui-tailwind';
 import Tabs from '@/components/Tabs/Tabs';
 import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';
 import useTabs from '@/components/Tabs/useTabs';
-import { ROUTE } from '@/constants/route';
-import type { Locale } from '@/i18n/routing';
-import { LOCALE, useRouter } from '@/i18n/routing';
-import useToggleLocale from '@/i18n/useToggleLocale';
+import { ROUTE } from '@/shared/config/route';
+import type { Locale } from '@/shared/i18n/routing';
+import { LOCALE, useRouter } from '@/shared/i18n/routing';
+import useToggleLocale from '@/shared/i18n/useToggleLocale';
 
 import type { QuizCategory, QuizLevel } from '../../_constants/quiz.constants';
 import { QUIZ_ANSWER, QUIZ_CATEGORY, QUIZ_LEVEL, QUIZ_RESULT } from '../../_constants/quiz.constants';

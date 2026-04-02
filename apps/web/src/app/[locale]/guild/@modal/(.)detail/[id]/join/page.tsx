@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 
 import { GuildJoinPetSelectDialog } from '@/app/[locale]/guild/_components/GuildPetSelectDialog';
 import RouteModal, { RouteModalTitle } from '@/components/RouteModal';
-import { useRouter } from '@/i18n/routing';
+import { useRouter } from '@/shared/i18n/routing';
 import { joinGuildAction } from '@/serverActions/guild';
 
 export default function GuildJoinModal({ params }: { params: { id: string } }) {

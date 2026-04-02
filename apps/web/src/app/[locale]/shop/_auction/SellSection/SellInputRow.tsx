@@ -11,10 +11,10 @@ import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
-import { useGetPersonaTier } from '@/hooks/persona/useGetPersonaDropRate';
-import { ANIMAL_TIER_TEXT_MAP } from '@/utils/animals';
-import { getPersonaImage } from '@/utils/image';
+import { useRegisterProduct } from '@/features/auction/model/useRegisterProduct';
+import { useGetPersonaTier } from '@/entities/persona/model/useGetPersonaDropRate';
+import { ANIMAL_TIER_TEXT_MAP } from '@/shared/utils/animals';
+import { getPersonaImage } from '@/shared/utils/image';
 
 import { rowStyle, ShopTableMobileRow } from '../../_common/ShopTableMobileRow';
 import { tableCss, theadCss } from '../table.styles';

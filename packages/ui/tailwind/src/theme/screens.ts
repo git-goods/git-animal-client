@@ -34,10 +34,17 @@ export const screens = {
   xl: '1280px',
   '2xl': '1440px',
 
-  // Max-width breakpoints (matching PandaCSS conditions)
-  'max-mobile': { max: '768px' },
-  'max-tablet': { max: '1024px' },
+  // Max-width breakpoints — DESCENDING order so cascade works correctly
+  // (larger max-width first, smaller last → smaller breakpoints override larger ones)
   'max-pc': { max: '1440px' },
+  'max-1400': { max: '1400px' },
+  'max-1200': { max: '1200px' },
+  'max-tablet': { max: '1024px' },
+  'max-950': { max: '950px' },
+  'max-900': { max: '900px' },
+  'max-mobile': { max: '768px' },
+  'max-600': { max: '600px' },
+  'max-400': { max: '400px' },
 
   // Min-width named breakpoints
   desktop: { min: '769px' },

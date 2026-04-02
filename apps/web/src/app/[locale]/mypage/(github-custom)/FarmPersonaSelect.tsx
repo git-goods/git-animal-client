@@ -10,7 +10,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { ExpandIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { useChangePersonaVisible } from '@/apis/persona/useChangePersonaVisible';
+import { useChangePersonaVisible } from '@/features/change-persona-visible/model/useChangePersonaVisible';
 
 import { SelectPersonaList } from '../PersonaList';
 

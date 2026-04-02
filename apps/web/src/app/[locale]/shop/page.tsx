@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
-import GNB from '@/components/GNB/GNB';
+import GNB from '@/widgets/gnb/GNB';
 
 import { BackgroundSection } from './_background/BackgroundSection';
 import { FloatingPointSection } from './_common/FloatingPointSection';

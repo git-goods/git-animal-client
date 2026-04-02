@@ -9,8 +9,8 @@ import Image from 'next/image';
 
 import { PaginationServer } from '@/components/Pagination/PaginationServer';
 import { BackTrigger } from '@/components/Trigger';
-import { ROUTE } from '@/constants/route';
-import { Link, redirect } from '@/i18n/routing';
+import { ROUTE } from '@/shared/config/route';
+import { Link, redirect } from '@/shared/i18n/routing';
 
 import { GuildCard } from './_components/GuildCard';
 import { GuildSearch } from './_components/GuildSearch';

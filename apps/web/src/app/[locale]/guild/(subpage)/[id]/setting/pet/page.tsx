@@ -6,7 +6,7 @@ import { cn } from '@gitanimals/ui-tailwind';
 
 import { GuildModalPageTitle } from '@/app/[locale]/guild/_components/GuildModalPageLayout';
 import { GuildJoinPetSelectDialog } from '@/app/[locale]/guild/_components/GuildPetSelectDialog';
-import { useRouter } from '@/i18n/routing';
+import { useRouter } from '@/shared/i18n/routing';
 
 export default function GuildSettingPetPage() {
   const router = useRouter();

@@ -12,10 +12,10 @@ import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
 import EmblaCarousel from '@/components/EmblaCarousel';
-import { trackEvent } from '@/lib/analytics';
-import { useClientUser } from '@/utils/clientAuth';
-import { getBackgroundImage } from '@/utils/image';
-import { addNumberComma } from '@/utils/number';
+import { trackEvent } from '@/shared/lib/analytics';
+import { useClientUser } from '@/shared/utils/clientAuth';
+import { getBackgroundImage } from '@/shared/utils/image';
+import { addNumberComma } from '@/shared/utils/number';
 
 interface BackgroundSectionProps {
   possibleBgTypes: string[];

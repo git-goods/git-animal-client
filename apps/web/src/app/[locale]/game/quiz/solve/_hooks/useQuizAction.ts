@@ -5,8 +5,8 @@ import { answerQuiz, getRoundResult, stopQuizContext } from '@gitanimals/api';
 import { toast } from 'sonner';
 
 import type { QuizAnswer } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
-import { ROUTE } from '@/constants/route';
-import { type Locale, useRouter } from '@/i18n/routing';
+import { ROUTE } from '@/shared/config/route';
+import { type Locale, useRouter } from '@/shared/i18n/routing';
 
 import { QUIZ_RESULT } from '../../_constants/quiz.constants';
 import { customT } from '../../_utils/quiz.intl';

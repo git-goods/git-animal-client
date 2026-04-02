@@ -1,6 +1,6 @@
 import { cn } from '@gitanimals/ui-tailwind/utils';
 
-import { getPersonaImage } from '@/utils/image';
+import { getPersonaImage } from '@/shared/utils/image';
 
 export function PersonaBanner({ level, personaType }: { level: number | string; personaType: string }) {
   return (

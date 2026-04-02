@@ -1,8 +1,8 @@
 import { Button } from '@gitanimals/ui-tailwind';
 
-import { getServerAuth } from '@/auth';
+import { getServerAuth } from '@/shared/api/auth';
 import { LoginButton } from '@/components/AuthButton';
-import { Link } from '@/i18n/routing';
+import { Link } from '@/shared/i18n/routing';
 
 import * as styles from './ChoosePetSection.style';
 

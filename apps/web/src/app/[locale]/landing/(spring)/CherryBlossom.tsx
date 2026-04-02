@@ -1,6 +1,5 @@
 'use client';
 
-import { css } from '_panda/css';
 import { motion } from 'framer-motion';
 
 interface CherryBlossomProps {
@@ -129,7 +128,7 @@ export function BlossomSVG({ variant, size }: { variant: number; size: number })
 export function CherryBlossom({ delay, left, size, duration, variant, opacity }: CherryBlossomProps) {
   return (
     <motion.div
-      className={blossomStyle}
+      className="absolute pointer-events-none top-0 z-[1] max-mobile:scale-[0.8]"
       initial={{ y: -20 }}
       animate={{
         y: ['-5vh', '200vh'],
@@ -164,13 +163,3 @@ export function CherryBlossom({ delay, left, size, duration, variant, opacity }:
     </motion.div>
   );
 }
-
-const blossomStyle = css({
-  position: 'absolute',
-  pointerEvents: 'none',
-  top: 0,
-  zIndex: 1,
-  _mobile: {
-    scale: 0.8,
-  },
-});

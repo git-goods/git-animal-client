@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 
-import GNB from '@/components/GNB/GNB';
+import GNB from '@/widgets/gnb/GNB';
 
 interface MobileLayoutProps {
   background?: {
@@ -43,7 +43,7 @@ export const MobileLayout = async ({ children, background }: MobileLayoutProps) 
             opacity: background?.opacity ?? 0.3,
           }}
         />
-        <div className="sticky w-[min(100vw,475px)] h-[calc(100vh-var(--mobile-header-height))] flex flex-col justify-center items-center gap-4 text-white text-lg max-[950px]:hidden">
+        <div className="sticky w-[min(100vw,475px)] h-[calc(100vh-var(--mobile-header-height))] flex flex-col justify-center items-center gap-4 text-white text-lg max-950:hidden">
           <Image
             className="drop-shadow-[0_0_10px_rgba(0,0,0,0.5)]"
             src="/layout/gitanimals-string-logo-white.svg"

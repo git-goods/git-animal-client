@@ -5,8 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import { cn, SearchBar } from '@gitanimals/ui-tailwind';
 import { ChevronLeftIcon } from 'lucide-react';
 
-import { useGetNextUrl } from '@/hooks/useGetNewUrl';
-import { useRouter } from '@/i18n/routing';
+import { useGetNextUrl } from '@/shared/hooks/useGetNewUrl';
+import { useRouter } from '@/shared/i18n/routing';
 
 export function GuildSearch() {
   const router = useRouter();

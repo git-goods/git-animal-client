@@ -3,11 +3,11 @@
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 
-import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
+import { sendMessageToErrorChannel } from '@/shared/api/slack';
 import { ErrorPage } from '@/components/Error/ErrorPage';
-import { isDev } from '@/constants/env';
-import { GITHUB_ISSUE_URL } from '@/constants/outlink';
-import { usePathname, useRouter } from '@/i18n/routing';
+import { isDev } from '@/shared/config/env';
+import { GITHUB_ISSUE_URL } from '@/shared/config/outlink';
+import { usePathname, useRouter } from '@/shared/i18n/routing';
 
 export default function NotFound() {
   const pathname = usePathname();

@@ -11,8 +11,8 @@ import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { ChevronRight, FlaskConical } from 'lucide-react';
 
-import { Link, usePathname } from '@/i18n/routing';
-import { addNumberComma } from '@/utils/number';
+import { Link, usePathname } from '@/shared/i18n/routing';
+import { addNumberComma } from '@/shared/utils/number';
 
 export const ProfileSection = memo(
   wrap
@@ -47,7 +47,7 @@ export const ProfileSection = memo(
           <div className="max-mobile:flex-1">
             <p
               className={cn(
-                'text-white font-product text-glyph-48 font-bold mt-2 mb-1',
+                'text-white font-product text-glyph-48 font-bold mt-2 mb-1 whitespace-nowrap',
                 'max-mobile:text-glyph-24 max-mobile:m-0 max-mobile:mb-0.5',
               )}
             >

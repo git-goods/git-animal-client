@@ -14,11 +14,11 @@ import type { Variants } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
 import { toast } from 'sonner';
 
-import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
+import { sendMessageToErrorChannel } from '@/shared/api/slack';
 import { login } from '@/components/AuthButton';
-import { GIT_ANIMALS_MAIN_URL } from '@/constants/outlink';
-import { Link, useRouter } from '@/i18n/routing';
-import { trackEvent } from '@/lib/analytics';
+import { GIT_ANIMALS_MAIN_URL } from '@/shared/config/outlink';
+import { Link, useRouter } from '@/shared/i18n/routing';
+import { trackEvent } from '@/shared/lib/analytics';
 
 interface DrawProps {
   renderCard: (type: string) => React.ReactNode;

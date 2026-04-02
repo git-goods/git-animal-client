@@ -7,7 +7,7 @@ import { cn } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useQuery } from '@tanstack/react-query';
 
-import { Link } from '@/i18n/routing';
+import { Link } from '@/shared/i18n/routing';
 
 export const GuildSliderContainer = wrap.ErrorBoundary({ fallback: <>{}</> }).on(
   ({

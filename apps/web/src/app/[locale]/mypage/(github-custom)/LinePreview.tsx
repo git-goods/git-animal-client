@@ -7,10 +7,10 @@ import { Button, TextField } from '@gitanimals/ui-tailwind';
 import { ClipboardIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
-import { customScrollStyle } from '@/styles/scrollStyle';
-import { useClientUser } from '@/utils/clientAuth';
-import { copyClipBoard } from '@/utils/copy';
+import { getGitanimalsLineString, GitanimalsLine } from '@/shared/ui/Gitanimals';
+import { customScrollStyle } from '@/shared/styles/scrollStyle';
+import { useClientUser } from '@/shared/utils/clientAuth';
+import { copyClipBoard } from '@/shared/utils/copy';
 
 const DEFAULT_SIZE = { width: 600, height: 120 };
 

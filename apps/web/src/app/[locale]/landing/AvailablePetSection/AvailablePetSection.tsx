@@ -4,10 +4,10 @@ import React, { Suspense } from 'react';
 import Image from 'next/image';
 import { AnchorButton } from '@gitanimals/ui-tailwind';
 
-import { useGetTotalProductCount } from '@/hooks/query/auction/useGetTotalProductCount';
-import { useGetTotalIdentityUserCount } from '@/hooks/query/identity/useGetTotalIdentityUserCount';
-import { useGetTotalPersonaCount } from '@/hooks/query/render/useGetTotalPersonaCount';
-import { useGetTotalRenderUserCount } from '@/hooks/query/render/useGetTotalRenderUserCount';
+import { useGetTotalProductCount } from '@/entities/product/model/useGetTotalProductCount';
+import { useGetTotalIdentityUserCount } from '@/entities/user/model/useGetTotalIdentityUserCount';
+import { useGetTotalPersonaCount } from '@/entities/persona/model/useGetTotalPersonaCount';
+import { useGetTotalRenderUserCount } from '@/entities/user/model/useGetTotalRenderUserCount';
 
 import AnimalSlider from './AnimalSlider';
 import * as styles from './AvailablePetSection.style';

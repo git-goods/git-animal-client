@@ -1,6 +1,6 @@
 import { cn } from '@gitanimals/ui-tailwind/utils';
 
-import GNB from '@/components/GNB/GNB';
+import GNB from '@/widgets/gnb/GNB';
 
 import { ProfileSection } from './ProfileSection';
 

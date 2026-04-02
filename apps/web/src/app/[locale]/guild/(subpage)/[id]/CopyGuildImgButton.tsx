@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@gitanimals/ui-tailwind';
 import { toast } from 'sonner';
 
-import { getGuildString } from '@/components/Gitanimals';
-import { copyClipBoard } from '@/utils/copy';
+import { getGuildString } from '@/shared/ui/Gitanimals';
+import { copyClipBoard } from '@/shared/utils/copy';
 
 export function CopyGuildImgButton({ guildId }: { guildId: string }) {
   const t = useTranslations('Preview');

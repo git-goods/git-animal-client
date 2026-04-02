@@ -6,10 +6,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowUp } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { createOrUpdateUpvote } from '@/apis/laboratory/feedback';
-import { LABORATORY_FEEDBACK_QUERY_KEYS, upvoteQueryOptions } from '@/apis/laboratory/useLaboratoryFeedback';
-import { usePathname } from '@/i18n/routing';
-import { useClientUser } from '@/utils/clientAuth';
+import { createOrUpdateUpvote } from '@/features/laboratory-feedback/api/feedback';
+import { LABORATORY_FEEDBACK_QUERY_KEYS, upvoteQueryOptions } from '@/features/laboratory-feedback/model/useLaboratoryFeedback';
+import { usePathname } from '@/shared/i18n/routing';
+import { useClientUser } from '@/shared/utils/clientAuth';
 
 export function FeedbackUpvote() {
   const pathname = usePathname();

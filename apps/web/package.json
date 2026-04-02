@@ -3,9 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "scripts": {
-    "prepare": "panda codegen",
     "dev": "rm -rf .next && next dev --turbo",
-    "prebuild": "panda codegen",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

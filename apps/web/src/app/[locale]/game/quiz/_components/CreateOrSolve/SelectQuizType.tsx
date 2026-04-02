@@ -4,9 +4,9 @@ import { useTranslations } from 'next-intl';
 import { wrap } from '@suspensive/react';
 import { overlay } from 'overlay-kit';
 
-import { ConfirmDialog } from '@/app/[locale]/laboratory/_component/ConfirmDialog';
-import { ROUTE } from '@/constants/route';
-import { useRouter } from '@/i18n/routing';
+import { ConfirmDialog } from '@gitanimals/ui-tailwind';
+import { ROUTE } from '@/shared/config/route';
+import { useRouter } from '@/shared/i18n/routing';
 
 import useTodayQuizData from '../../_hooks/useTodayQuizData';
 import { customT } from '../../_utils/quiz.intl';

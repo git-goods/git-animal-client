@@ -8,7 +8,7 @@ import GuildCreate from './GuildCreate';
 
 const dialogTitleStyle = cn(
   'font-product text-glyph-48 font-bold text-white text-center',
-  'max-[1200px]:text-glyph-32',
+  'max-1200:text-glyph-32',
   'max-mobile:text-glyph-24',
 );
 

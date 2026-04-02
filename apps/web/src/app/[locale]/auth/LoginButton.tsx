@@ -3,7 +3,7 @@
 import React from 'react';
 import { signIn } from 'next-auth/react';
 
-import { LOCAL_STORAGE_KEY } from '@/constants/storage';
+import { LOCAL_STORAGE_KEY } from '@/shared/config/storage';
 
 function LoginButton({ token }: { token: string }) {
   const ref = React.useRef<HTMLButtonElement>(null);

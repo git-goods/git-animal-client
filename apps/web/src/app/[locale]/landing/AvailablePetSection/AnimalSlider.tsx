@@ -3,10 +3,10 @@
 import type { PersonaInfo } from '@gitanimals/api';
 import { cn } from '@gitanimals/ui-tailwind';
 
-import { AnimalCard } from '@/components/AnimalCard';
+import { AnimalCard } from '@/entities/persona';
 import { MediaQuery } from '@/components/MediaQuery';
 import { PerspectiveCenterSlider } from '@/components/Slider';
-import { useGetAllPersona } from '@/hooks/query/render/useGetAllPersona';
+import { useGetAllPersona } from '@/entities/persona/model/useGetAllPersona';
 
 import * as styles from './AnimalSlider.style';
 import AnimalSliderContainerMobile from './AnimalSliderContainerMobile';
@@ -68,7 +68,7 @@ export default AnimalSlider;
 
 const containerStyle = cn(
   'w-[1120px] h-[1024px]',
-  'max-[1200px]:w-[835px]',
-  'max-[900px]:w-[530px]',
-  'max-[600px]:w-[calc(100vw-40px)] max-[600px]:h-[325px] max-[600px]:relative',
+  'max-1200:w-[835px]',
+  'max-900:w-[530px]',
+  'max-600:w-[calc(100vw-40px)] max-600:h-[325px] max-600:relative',
 );

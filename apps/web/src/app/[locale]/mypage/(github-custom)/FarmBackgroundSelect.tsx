@@ -6,9 +6,9 @@ import { cn } from '@gitanimals/ui-tailwind/utils';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { customScrollStyle } from '@/styles/scrollStyle';
-import { useClientSession, useClientUser } from '@/utils/clientAuth';
-import { getBackgroundImage } from '@/utils/image';
+import { customScrollStyle } from '@/shared/styles/scrollStyle';
+import { useClientSession, useClientUser } from '@/shared/utils/clientAuth';
+import { getBackgroundImage } from '@/shared/utils/image';
 
 export const FarmBackgroundSelect = wrap
   .ErrorBoundary({ fallback: <></> })

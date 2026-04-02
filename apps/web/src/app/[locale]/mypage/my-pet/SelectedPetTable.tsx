@@ -5,15 +5,15 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { dropPet, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Button, Checkbox, Dialog, Label } from '@gitanimals/ui-tailwind';
+import { Button, Checkbox, ConfirmDialog, Label } from '@gitanimals/ui-tailwind';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
-import { LOCAL_STORAGE_KEY } from '@/constants/storage';
-import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
-import { getPersonaImage } from '@/utils/image';
+import { LOCAL_STORAGE_KEY } from '@/shared/config/storage';
+import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/shared/utils/animals';
+import { getPersonaImage } from '@/shared/utils/image';
 
 import { EvolutionPersona } from './(evolution)';
 import { MergePersona } from './(merge)';
@@ -157,42 +157,25 @@ function SellConfirmDialog({
   onClose: () => void;
   isOpen: boolean;
 }) {
-  const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations();
   const [isDoNotShowAgain, setIsDoNotShowAgain] = useState(false);
 
-  const confirmDialog = async () => {
-    if (isLoading) return;
-
-    setIsLoading(true);
-    await onConfirm(isDoNotShowAgain);
-    setIsLoading(false);
-  };
-
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content>
-        <Dialog.Title>{t('Shop.sell-confirm')}</Dialog.Title>
-        <Dialog.Description className="text-left text-white/75 w-full">
-          <p>{t('Shop.sell-confirm-description')}</p>
-        </Dialog.Description>
-        <div className="flex items-center justify-between w-full">
-          <div className="flex items-center gap-2">
-            <Checkbox id="do-not-show-again" onClick={() => setIsDoNotShowAgain(!isDoNotShowAgain)} />
-            <Label htmlFor="do-not-show-again" className="whitespace-nowrap">
-              {t('Shop.sell-confirm-checkbox')}
-            </Label>
-          </div>
-          <div className="flex gap-2 justify-end w-full">
-            <Button onClick={onClose} variant="secondary" size="m">
-              {t('Common.close')}
-            </Button>
-            <Button onClick={confirmDialog} variant="primary" size="m" disabled={isLoading}>
-              {isLoading ? t('Common.processing') : t('Common.confirm')}
-            </Button>
-          </div>
-        </div>
-      </Dialog.Content>
-    </Dialog>
+    <ConfirmDialog
+      isOpen={isOpen}
+      onClose={onClose}
+      onConfirm={() => onConfirm(isDoNotShowAgain)}
+      title={t('Shop.sell-confirm')}
+      description={t('Shop.sell-confirm-description')}
+      confirmText={t('Common.confirm')}
+      cancelText={t('Common.close')}
+    >
+      <div className="flex min-w-0 items-center gap-2 w-full">
+        <Checkbox id="do-not-show-again" onClick={() => setIsDoNotShowAgain(!isDoNotShowAgain)} />
+        <Label htmlFor="do-not-show-again" className="whitespace-nowrap">
+          {t('Shop.sell-confirm-checkbox')}
+        </Label>
+      </div>
+    </ConfirmDialog>
   );
 }

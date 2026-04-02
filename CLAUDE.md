@@ -21,12 +21,31 @@ GitAnimals is a monorepo that allows users to raise virtual pets through GitHub 
 - `packages/util/*` - Utility packages (common, typescript)
 
 **Key Technologies:**
-- **Styling:** PandaCSS with Shadow Panda preset for component styling
-- **State Management:** Tanstack Query v5 (server state), Jotai & Zustand (client state)  
+- **Styling:** Tailwind CSS (migrating from PandaCSS)
+- **State Management:** Tanstack Query v5 (server state), Jotai (client state)
 - **Authentication:** NextAuth.js (web), token-based auth (webview)
-- **UI Components:** Radix UI primitives + custom PandaCSS components
+- **UI Components:** Radix UI primitives + `@gitanimals/ui-tailwind`
 - **Package Manager:** pnpm v9.0+ with workspace configuration
 - **Build System:** Turborepo for orchestration
+
+**Web App Architecture (FSD-inspired Hybrid):**
+
+apps/web은 FSD(Feature-Sliced Design) 기반 하이브리드 아키텍처를 사용합니다.
+상세 가이드: [`apps/web/ARCHITECTURE.md`](apps/web/ARCHITECTURE.md)
+
+```
+src/
+├── app/          # Next.js App Router (라우팅 + 조합, FSD app+pages 역할)
+├── widgets/      # 독립적 대규모 UI 블록 (GNB 등)
+├── features/     # 사용자 액션 기능 (auction, auth, feedback 등)
+├── entities/     # 비즈니스 엔티티 (persona, guild, user, product)
+├── shared/       # 범용 기반 코드 (api, config, hooks, i18n, lib, store, utils)
+├── components/   # [레거시] 점진적으로 shared/ui/ 또는 entities/*/ui/로 이전
+└── middleware.ts
+```
+
+의존성 규칙: `app/ → widgets/ → features/ → entities/ → shared/`
+상위 레이어는 하위 레이어만 import 가능. 같은 레이어 슬라이스 간 import 금지.
 
 ## Development Commands
 
@@ -68,20 +87,23 @@ pnpm --filter @gitanimals/ui-panda storybook # Start Storybook
 
 ## Code Patterns & Conventions
 
-**Component Architecture:**
-- UI components in `packages/ui/panda/src/components/`
-- Each component has: `Component.tsx`, `Component.stories.tsx`, `index.ts`
-- PandaCSS styling with design tokens from `packages/ui/token`
+**Component Architecture (apps/web):**
+- FSD 레이어 구조: `shared/ → entities/ → features/ → widgets/ → app/`
+- 각 슬라이스는 `ui/`, `model/`, `api/` 세그먼트와 barrel `index.ts`로 구성
+- 라우트 전용 UI는 `app/[locale]/*/_components/`에 코로케이션
+- 도메인 무관 공유 UI는 `shared/ui/` 또는 `components/`(레거시)
 
 **Import Patterns:**
 - Workspace dependencies use `workspace:*` protocol
-- UI components imported from `@gitanimals/ui-panda`
+- UI components imported from `@gitanimals/ui-tailwind`
 - Shared utilities from `@gitanimals/util-common`
+- Web app 내부는 `@/` alias 사용 (→ `src/`)
+- FSD 의존성 규칙 준수: `@/shared/`, `@/entities/`, `@/features/`, `@/widgets/`
 
 **State Management:**
-- Server state: Tanstack Query v5 with `queryOptions` pattern in `src/apis/`
-- Client state: Jotai for atomic state, Zustand for stores
-- Auth state managed through NextAuth.js
+- Server state: Tanstack Query v5 in `entities/*/model/` 및 `features/*/model/`
+- Client state: Jotai atoms in `shared/store/`
+- Auth state managed through NextAuth.js (`shared/api/auth.ts`)
 
 **Tanstack Query v5 Best Practices:**
 - Always use `queryOptions` factory pattern for reusable query definitions
@@ -120,7 +142,7 @@ pnpm --filter @gitanimals/ui-panda storybook # Start Storybook
 
   // Usage in component
   import { useQuery } from '@tanstack/react-query';
-  import { userQueryOptions } from '@/apis/user/queries';
+  import { userQueryOptions } from '@/entities/user/model/queries';
 
   function UserProfile({ userId }: { userId: string }) {
     const { data: user } = useQuery(userQueryOptions.getUser(userId));
@@ -139,10 +161,10 @@ pnpm --filter @gitanimals/ui-panda storybook # Start Storybook
   - No need for custom hooks unless adding extra logic
 
 **Styling Approach:**
-- PandaCSS with `styled-system` generation
-- Shadow Panda preset for enhanced component styling
-- Responsive design using PandaCSS conditions (mobile/desktop)
-- Design tokens centralized in `packages/ui/token`
+- Tailwind CSS (migrating from PandaCSS)
+- `@gitanimals/ui-tailwind` 디자인 시스템 컴포넌트
+- Responsive design using Tailwind breakpoints
+- `cn()` utility for conditional class merging
 
 ## Testing & Quality
 
@@ -155,7 +177,7 @@ pnpm --filter @gitanimals/ui-panda storybook # Start Storybook
 
 - `turbo.json` - Build pipeline configuration
 - `pnpm-workspace.yaml` - Workspace definition
-- `apps/*/panda.config.ts` - PandaCSS configuration per app
+- `apps/web/ARCHITECTURE.md` - **FSD 아키텍처 상세 가이드 (필독)**
 - `packages/ui/panda/src/theme/` - Design system tokens and styles
 
 ## Build Pipeline Dependencies
@@ -167,7 +189,9 @@ The build system has specific dependency chains:
 
 ## Notes for Development
 
-- Always run `panda codegen` after theme changes
 - UI component changes require Storybook restart
 - Mobile app uses Expo SDK ~53.0.17 with React Native 0.79.5
 - Web app uses Next.js App Router with internationalization (next-intl)
+- **apps/web 작업 시 반드시 FSD 의존성 규칙을 따를 것** (상세: `apps/web/ARCHITECTURE.md`)
+- 새 코드는 반드시 `shared/`, `entities/`, `features/`, `widgets/` 중 적절한 레이어에 배치
+- `components/`(레거시)에 새 파일 추가 금지 — 적절한 FSD 레이어 사용

@@ -6,10 +6,10 @@ import Script from 'next/script';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/react';
 
-import { config, MONITORING_KEY } from '@/constants/config';
-import { isProd } from '@/constants/env';
-import { usePathname } from '@/i18n/routing';
-import { initAnalytics, trackPageView } from '@/lib/analytics';
+import { config, MONITORING_KEY } from '@/shared/config/config';
+import { isProd } from '@/shared/config/env';
+import { usePathname } from '@/shared/i18n/routing';
+import { initAnalytics, trackPageView } from '@/shared/lib/analytics';
 
 function Monitoring() {
   const pathname = usePathname();

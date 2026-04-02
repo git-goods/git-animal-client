@@ -1,8 +1,8 @@
 import { getTranslations } from 'next-intl/server';
 import { ChevronLeft } from 'lucide-react';
 
-import { ROUTE } from '@/constants/route';
-import { Link } from '@/i18n/routing';
+import { ROUTE } from '@/shared/config/route';
+import { Link } from '@/shared/i18n/routing';
 
 import QuizCreateForm from './_components/QuizCreateForm';
 

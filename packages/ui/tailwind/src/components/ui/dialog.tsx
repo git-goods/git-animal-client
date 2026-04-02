@@ -43,7 +43,7 @@ const dialogContentVariants = cva(
         large: [
           'p-[60px_40px] rounded-2xl bg-gray-150',
           'max-w-[calc(100%-400px)] max-h-[calc(100%-240px)] w-full h-full',
-          'max-[1200px]:p-[48px_24px] max-[1200px]:max-w-[calc(100vw-240px)] max-[1200px]:max-h-[calc(100vh-120px)]',
+          'max-1200:p-[48px_24px] max-1200:max-w-[calc(100vw-240px)] max-1200:max-h-[calc(100vh-120px)]',
           'max-mobile:h-full max-mobile:max-w-[100vw] max-mobile:max-h-[100vh] max-mobile:rounded-none',
         ].join(' '),
         screen: [
@@ -106,8 +106,8 @@ const DialogTitle = React.forwardRef<
   <DialogPrimitive.Title
     ref={ref}
     className={cn(
-      'font-product text-glyph-32 font-bold text-white text-center',
-      'max-[1200px]:text-glyph-32',
+      'text-glyph-32 font-bold text-white text-center',
+      'max-1200:text-glyph-32',
       'max-mobile:text-glyph-24',
       className,
     )}
@@ -122,7 +122,7 @@ const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn('font-product text-glyph-16 text-white/70', className)}
+    className={cn('text-glyph-16 text-white/70 whitespace-normal', className)}
     {...props}
   />
 ));

@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { CardBack as CardBackUi } from '@gitanimals/ui-tailwind';
 import { motion } from 'framer-motion';
 
-import { AnimalCard } from '@/components/AnimalCard';
+import { AnimalCard } from '@/entities/persona';
 
 import { DrawingCardMotion, NonSelectedCardMotion } from './CardMotion';
 

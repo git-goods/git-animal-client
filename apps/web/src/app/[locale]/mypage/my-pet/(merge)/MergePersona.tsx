@@ -7,7 +7,7 @@ import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-quer
 import { Button, CommonDialog, Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useClientSession } from '@/utils/clientAuth';
+import { useClientSession } from '@/shared/utils/clientAuth';
 
 import { SelectPersonaList } from '../_components/SelectPersonaList';
 import { SpinningLoader } from '../_components/SpinningLoader';

@@ -4,8 +4,8 @@ import { Button } from '@gitanimals/ui-tailwind';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 import { SearchIcon } from 'lucide-react';
 
-import { GitanimalsGuild } from '@/components/Gitanimals';
-import { Link } from '@/i18n/routing';
+import { GitanimalsGuild } from '@/shared/ui/Gitanimals';
+import { Link } from '@/shared/i18n/routing';
 
 import { GuildPeopleList } from '../../_components/GuildPeopleList';
 

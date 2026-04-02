@@ -11,11 +11,11 @@ import { useQueryClient } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
-import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
+import { sendMessageToErrorChannel } from '@/shared/api/slack';
 import { SelectedCardMotion } from '@/components/CardGame/FanDrawingGame/CardMotion';
 import { CardDrawingGame, DetailedCard } from '@/components/CardGame/FanDrawingGame/FanDrawingGame';
-import { GITHUB_ISSUE_URL } from '@/constants/outlink';
-import { trackEvent } from '@/lib/analytics';
+import { GITHUB_ISSUE_URL } from '@/shared/config/outlink';
+import { trackEvent } from '@/shared/lib/analytics';
 
 import { useCheckEnoughMoney } from './useCheckEnoughMoney';
 

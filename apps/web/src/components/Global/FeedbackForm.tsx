@@ -7,15 +7,15 @@ import { XIcon } from '@gitanimals/ui-icon';
 import { Button } from '@gitanimals/ui-tailwind';
 import { toast } from 'sonner';
 
-import { usePostFeedback } from '@/apis/github/usePostFeedback';
-import type { PostIssueRequest } from '@/apis/github/usePostIssue';
+import { usePostFeedback } from '@/features/feedback/model/usePostFeedback';
+import type { PostIssueRequest } from '@/features/feedback/model/usePostIssue';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
 import TextArea from '@/components/TextArea';
-import type { GithubIssueType } from '@/constants/github';
-import { GITHUB_ISSUE_TYPE, SERVICE_MAINTAINER } from '@/constants/github';
-import { useClientUser } from '@/utils/clientAuth';
-import { sendLog } from '@/utils/log';
+import type { GithubIssueType } from '@/shared/config/github';
+import { GITHUB_ISSUE_TYPE, SERVICE_MAINTAINER } from '@/shared/config/github';
+import { useClientUser } from '@/shared/utils/clientAuth';
+import { sendLog } from '@/shared/utils/log';
 
 const ISSUE_LABEL: Record<
   string,

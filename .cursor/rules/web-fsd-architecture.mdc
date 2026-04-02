@@ -1,0 +1,107 @@
+---
+description: apps/web 프로젝트 코드 작성 시 FSD-inspired 하이브리드 아키텍처 규칙을 적용합니다.
+globs:
+  - apps/web/src/**/*.ts
+  - apps/web/src/**/*.tsx
+alwaysApply: false
+---
+
+# apps/web FSD 아키텍처 규칙
+
+## 레이어 구조와 의존성
+
+apps/web은 FSD-inspired 하이브리드 아키텍처를 사용합니다.
+
+```
+src/
+├── app/          # 라우팅 + 조합 (Next.js App Router)
+├── widgets/      # 독립적 대규모 UI 블록
+├── features/     # 사용자 액션 기능
+├── entities/     # 비즈니스 엔티티
+├── shared/       # 범용 기반 코드
+├── components/   # [레거시] 새 파일 추가 금지
+└── middleware.ts
+```
+
+의존성 규칙: `app/ → widgets/ → features/ → entities/ → shared/`
+
+## 핵심 규칙
+
+1. **상위 레이어는 하위 레이어만 import 가능**
+   - features/는 entities/와 shared/만 import
+   - entities/는 shared/만 import
+   - shared/는 외부 패키지만 import
+
+2. **같은 레이어 슬라이스 간 import 금지**
+   - entities/persona/에서 entities/guild/ import 불가
+   - features/auction/에서 features/feedback/ import 불가
+
+3. **components/ 디렉토리에 새 파일 추가 금지**
+   - 새 코드는 반드시 적절한 FSD 레이어에 배치
+   - 도메인 무관 UI → shared/ui/
+   - 도메인 관련 UI → entities/*/ui/
+   - 기능 UI → features/*/ui/
+   - 대규모 조합 블록 → widgets/
+
+4. **각 슬라이스는 barrel index.ts 제공**
+   ```typescript
+   // entities/persona/index.ts
+   export * from './ui';
+   export * from './model';
+   ```
+
+## 새 코드 배치 기준
+
+| 코드 유형 | 배치 위치 | 예시 |
+|---|---|---|
+| 라우트 전용 UI | `app/[locale]/*/_components/` | 페이지별 폼, 섹션 |
+| 범용 UI (도메인 무관) | `shared/ui/` | Modal, Button |
+| 엔티티 UI | `entities/*/ui/` | PersonaItem, GuildCard |
+| 엔티티 쿼리/로직 | `entities/*/model/` | useGetAllPersona |
+| 사용자 액션 | `features/*/model/` | useRegisterProduct |
+| API 호출 함수 | `features/*/api/` 또는 `shared/api/` | github.ts |
+| 독립 대규모 블록 | `widgets/*/` | GNB |
+| 유틸리티 | `shared/utils/` | image.ts, string.ts |
+| 상수/설정 | `shared/config/` | env.ts, route.ts |
+| hooks (범용) | `shared/hooks/` | usePagination |
+
+## 슬라이스 내부 구조
+
+```
+features/auction/
+├── api/                    # API 호출 함수
+├── model/                  # hooks, 상태, 비즈니스 로직
+├── ui/                     # UI 컴포넌트
+└── index.ts                # public API (barrel export)
+```
+
+## import 스타일
+
+```typescript
+// 외부 패키지
+import { useQuery } from '@tanstack/react-query';
+import { getAllPersona } from '@gitanimals/api';
+
+// FSD 레이어 (절대경로 @/)
+import GNB from '@/widgets/gnb/GNB';
+import { AnimalCard } from '@/entities/persona';
+import { getPersonaImage } from '@/shared/utils/image';
+
+// 같은 슬라이스 내 (상대경로)
+import { useGetAllPersona } from './useGetAllPersona';
+```
+
+## `@gitanimals/*` 패키지
+
+모노레포 패키지는 외부 shared 계층으로 취급합니다.
+entities, features에서 직접 import 허용:
+
+```typescript
+import { getAllPersona } from '@gitanimals/api';        // OK
+import { cn } from '@gitanimals/ui-tailwind';           // OK
+import { userQueries } from '@gitanimals/react-query';  // OK
+```
+
+## 상세 가이드
+
+전체 아키텍처 가이드는 `apps/web/ARCHITECTURE.md`를 참조하세요.

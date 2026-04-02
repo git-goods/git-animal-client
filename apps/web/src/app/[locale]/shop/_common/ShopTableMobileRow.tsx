@@ -4,10 +4,10 @@ import type { Product } from '@gitanimals/api';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 
-import { useGetPersonaTier } from '@/hooks/persona/useGetPersonaDropRate';
-import { ANIMAL_TIER_TEXT_MAP } from '@/utils/animals';
-import { getPersonaImage } from '@/utils/image';
-import { addNumberComma } from '@/utils/number';
+import { useGetPersonaTier } from '@/entities/persona/model/useGetPersonaDropRate';
+import { ANIMAL_TIER_TEXT_MAP } from '@/shared/utils/animals';
+import { getPersonaImage } from '@/shared/utils/image';
+import { addNumberComma } from '@/shared/utils/number';
 
 interface Props {
   rightElement: ReactNode;

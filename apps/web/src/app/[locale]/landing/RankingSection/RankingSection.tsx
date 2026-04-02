@@ -6,7 +6,7 @@ import { cn } from '@gitanimals/ui-tailwind';
 import { useQueries } from '@tanstack/react-query';
 
 import { MediaQuery } from '@/components/MediaQuery';
-import { Link } from '@/i18n/routing';
+import { Link } from '@/shared/i18n/routing';
 
 import GameConsole from './GameConsole/GameConsole';
 import { MobileGameConsole } from './MobileGameConsole/MobileGameConsole';

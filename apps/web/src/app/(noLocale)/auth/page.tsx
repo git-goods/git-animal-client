@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import notFound from '@/app/[locale]/not-found';
-import { COOKIE_KEY } from '@/constants/storage';
+import { COOKIE_KEY } from '@/shared/config/storage';
 
 export default async function AuthPage({ searchParams }: { searchParams: Promise<{ jwt: string }> }) {
   const jwtToken = (await searchParams).jwt;

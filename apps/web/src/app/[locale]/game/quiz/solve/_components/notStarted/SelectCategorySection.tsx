@@ -12,8 +12,8 @@ import Tabs from '@/components/Tabs/Tabs';
 import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';
 import useTabs from '@/components/Tabs/useTabs';
-import { ROUTE } from '@/constants/route';
-import { type Locale, useRouter } from '@/i18n/routing';
+import { ROUTE } from '@/shared/config/route';
+import { type Locale, useRouter } from '@/shared/i18n/routing';
 
 import type { QuizCategory } from '../../../_constants/quiz.constants';
 import { QUIZ_CATEGORY } from '../../../_constants/quiz.constants';

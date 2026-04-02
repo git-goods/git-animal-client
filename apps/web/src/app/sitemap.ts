@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
-import { config } from '@/constants/config';
-import { LOCALE_LIST } from '@/i18n/routing';
+import { config } from '@/shared/config/config';
+import { LOCALE_LIST } from '@/shared/i18n/routing';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = config.url;

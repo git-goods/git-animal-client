@@ -4,11 +4,11 @@ import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@gitanimals/ui-tailwind';
 
-import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
+import { sendMessageToErrorChannel } from '@/shared/api/slack';
 import { ErrorPage } from '@/components/Error/ErrorPage';
-import { isDev } from '@/constants/env';
-import { usePathname, useRouter } from '@/i18n/routing';
-import { useClientUser } from '@/utils/clientAuth';
+import { isDev } from '@/shared/config/env';
+import { usePathname, useRouter } from '@/shared/i18n/routing';
+import { useClientUser } from '@/shared/utils/clientAuth';
 
 interface Props {
   error: Error;

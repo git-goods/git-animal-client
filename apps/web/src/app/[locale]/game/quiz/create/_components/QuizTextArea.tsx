@@ -2,7 +2,7 @@ import type { ChangeEvent, ComponentProps } from 'react';
 import { useState } from 'react';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 
-import { customScrollStyle } from '@/styles/scrollStyle';
+import { customScrollStyle } from '@/shared/styles/scrollStyle';
 
 interface QuizTextAreaProps extends ComponentProps<'textarea'> {
   error?: boolean;

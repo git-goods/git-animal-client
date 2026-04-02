@@ -3,8 +3,8 @@ import type { GotchaResult } from '@gitanimals/api';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 import { motion } from 'framer-motion';
 
-import { AnimalCard } from '@/components/AnimalCard';
-import { AnimalCardBack } from '@/components/AnimalCard/AnimalCard';
+import { AnimalCard } from '@/entities/persona';
+import { AnimalCardBack } from '@/entities/persona';
 
 const Card = ({
   onClick,
