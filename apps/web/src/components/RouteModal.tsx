@@ -2,10 +2,9 @@
 
 import { type PropsWithChildren, useEffect, useState } from 'react';
 import { cn } from '@gitanimals/ui-tailwind';
-import { Dialog } from '@gitanimals/ui-tailwind';
+import { DialogV2 } from '@gitanimals/ui-tailwind';
 
 import { usePathname, useRouter } from '@/shared/i18n/routing';
-import { customScrollHorizontalStyle } from '@/shared/styles/scrollStyle';
 
 /**
  * 라우트 모달 컴포넌트
@@ -43,22 +42,27 @@ export default function RouteModal({ children, title, gap = 'sm' }: PropsWithChi
   }, [pathname]);
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content
-        size="large"
+    <DialogV2 open={isOpen} onOpenChange={onClose}>
+      <DialogV2.Content
+        size="lg"
         className={cn(
-          'h-fit overflow-y-auto max-mobile:h-screen',
           gap === 'sm' ? 'gap-2' : 'gap-8',
-          customScrollHorizontalStyle,
         )}
       >
-        {title && <Dialog.Title>{title}</Dialog.Title>}
-        {children}
-      </Dialog.Content>
-    </Dialog>
+        <DialogV2.CloseButton />
+        {title && (
+          <DialogV2.Header>
+            <DialogV2.Title>{title}</DialogV2.Title>
+          </DialogV2.Header>
+        )}
+        <DialogV2.Body>
+          {children}
+        </DialogV2.Body>
+      </DialogV2.Content>
+    </DialogV2>
   );
 }
 
 export function RouteModalTitle({ children }: PropsWithChildren) {
-  return <Dialog.Title>{children}</Dialog.Title>;
+  return <DialogV2.Title>{children}</DialogV2.Title>;
 }
