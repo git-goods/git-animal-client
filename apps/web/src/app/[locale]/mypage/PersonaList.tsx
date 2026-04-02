@@ -130,6 +130,8 @@ function useInventoryGrid(
       rafId = requestAnimationFrame(() => {
         // cols: 컨테이너 너비 기반
         const width = el.offsetWidth;
+        // reInit 중 컨테이너가 일시적으로 축소될 수 있으므로 비정상 폭은 무시
+        if (width < minItemSize * 2) return;
         const nextCols = Math.max(Math.floor((width + gap) / (minItemSize + gap)), 1);
 
         // rows: 뷰포트 높이에서 크롬 높이를 뺀 가용 영역 기반
