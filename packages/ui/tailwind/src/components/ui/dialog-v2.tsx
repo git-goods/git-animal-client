@@ -91,7 +91,7 @@ export const dialogV2ContentVariants = cva(
           'max-w-[clamp(640px,calc(100vw-400px),100%)] max-h-[calc(100vh-120px)] p-8 gap-5 rounded-2xl',
           // tablet: fullscreen
           'max-tablet:inset-0 max-tablet:translate-x-0 max-tablet:translate-y-0',
-          'max-tablet:max-w-full max-tablet:h-full max-tablet:rounded-none',
+          'max-tablet:max-w-full max-tablet:h-full max-tablet:max-h-full max-tablet:rounded-none',
           'max-tablet:p-6 max-tablet:gap-4',
           // mobile: fullscreen
           'max-mobile:p-5 max-mobile:gap-3',
@@ -217,7 +217,7 @@ const DialogV2Header = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTM
     return (
       <div
         ref={ref}
-        className={cn('flex flex-col gap-1 flex-shrink-0', needsBackButtonPadding && 'max-tablet:pl-10', className)}
+        className={cn('flex flex-col gap-1 flex-shrink-0', needsBackButtonPadding && 'max-tablet:pt-10', className)}
         {...props}
       />
     );

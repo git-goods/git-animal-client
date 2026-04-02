@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
-import { Button, CommonDialog, Dialog } from '@gitanimals/ui-tailwind';
+import { Button, DialogV2 } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useClientSession } from '@/shared/utils/clientAuth';
@@ -64,26 +64,35 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
   };
 
   return (
-    <CommonDialog isOpen={isOpen} onClose={onClose} title="Merge to Level Up" size="large">
-      <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
+    <DialogV2 open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogV2.Content size="lg" className="h-full">
+        <DialogV2.CloseButton />
+        <DialogV2.Header>
+          <DialogV2.Title>Merge to Level Up</DialogV2.Title>
+        </DialogV2.Header>
 
-      <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
+        <DialogV2.Body>
+          <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
+          <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
+        </DialogV2.Body>
 
-      <Dialog.Footer className="flex justify-center gap-3">
-        <Button variant="secondary" onClick={onClose}>
-          {t('cancel')}
-        </Button>
-        <Button disabled={isMergeDisabled} onClick={onMergeAction}>
-          {t('merge')}
-        </Button>
-      </Dialog.Footer>
-      <MergeResultModal
-        key={resultData?.id}
-        isOpen={Boolean(resultData)}
-        onClose={() => setResultData(null)}
-        result={resultData as MergePersonaLevelResponse}
-      />
-      {isMerging && <SpinningLoader />}
-    </CommonDialog>
+        <DialogV2.Footer className="flex justify-center gap-3">
+          <Button variant="secondary" onClick={onClose}>
+            {t('cancel')}
+          </Button>
+          <Button disabled={isMergeDisabled} onClick={onMergeAction}>
+            {t('merge')}
+          </Button>
+        </DialogV2.Footer>
+
+        <MergeResultModal
+          key={resultData?.id}
+          isOpen={Boolean(resultData)}
+          onClose={() => setResultData(null)}
+          result={resultData as MergePersonaLevelResponse}
+        />
+        {isMerging && <SpinningLoader />}
+      </DialogV2.Content>
+    </DialogV2>
   );
 }
