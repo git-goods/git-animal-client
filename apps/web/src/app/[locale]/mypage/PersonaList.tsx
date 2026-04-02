@@ -146,9 +146,19 @@ function useInventoryGrid(
         if (mode === 'dialog') {
           availableHeight = vh * 0.9 - DIALOG_CHROME_HEIGHT;
         } else {
-          // inline: 컨테이너 위치부터 뷰포트 하단까지 남은 공간 사용
+          // inline: 컨테이너 위치부터 overflow-hidden 부모 하단까지 남은 공간
           const rect = el.getBoundingClientRect();
-          availableHeight = vh - rect.top - NAV_HEIGHT;
+          let bottom = vh;
+          let parent = el.parentElement;
+          while (parent) {
+            const { overflow, overflowY } = getComputedStyle(parent);
+            if (overflow === 'hidden' || overflowY === 'hidden') {
+              bottom = parent.getBoundingClientRect().bottom;
+              break;
+            }
+            parent = parent.parentElement;
+          }
+          availableHeight = bottom - rect.top - NAV_HEIGHT;
         }
         const nextRows =
           availableHeight > 0 ? Math.min(Math.max(Math.floor(availableHeight / rowHeight), minRows), maxRows) : minRows;
