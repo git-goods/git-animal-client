@@ -118,6 +118,7 @@ function useInventoryGrid(
   const containerRef = useRef<HTMLDivElement>(null);
   const [cols, setCols] = useState(0);
   const [rows, setRows] = useState(0);
+  const [gridHeight, setGridHeight] = useState(0);
   const ready = cols > 0 && rows > 0;
 
   useEffect(() => {
@@ -147,8 +148,12 @@ function useInventoryGrid(
             ? Math.min(Math.max(Math.floor(availableHeight / rowHeight), minRows), maxRows)
             : minRows;
 
+        // 그리드 명시적 높이 = 행 수 × 행 높이 - 마지막 gap
+        const nextGridHeight = nextRows * rowHeight - gap;
+
         setCols((prev) => (prev === nextCols ? prev : nextCols));
         setRows((prev) => (prev === nextRows ? prev : nextRows));
+        setGridHeight((prev) => (prev === nextGridHeight ? prev : nextGridHeight));
       });
     };
 
@@ -163,7 +168,7 @@ function useInventoryGrid(
 
   const itemsPerPage = cols * rows;
 
-  return { containerRef, cols, rows, itemsPerPage, ready };
+  return { containerRef, cols, rows, itemsPerPage, gridHeight, ready };
 }
 
 interface InventoryGridProps {
@@ -178,7 +183,7 @@ function InventoryGrid({ minRows = 2, maxRows = 10, minItemSize = 64, gap = 4, m
   const t = useTranslations('Mypage.Filter');
   const { filteredList, selectedIds, onSelectPersona, loadingPersona, isSpecialEffect } = useSelectPersonaListContext();
 
-  const { containerRef, cols, rows, itemsPerPage, ready } = useInventoryGrid(filteredList.length, minItemSize, gap, minRows, maxRows, mode);
+  const { containerRef, cols, rows, itemsPerPage, gridHeight, ready } = useInventoryGrid(filteredList.length, minItemSize, gap, minRows, maxRows, mode);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -235,11 +240,12 @@ function InventoryGrid({ minRows = 2, maxRows = 10, minItemSize = 64, gap = 4, m
           {pages.map((page, pageIdx) => (
             <div key={pageIdx} className="flex-[0_0_100%] min-w-0 overflow-hidden">
               <div
-                className="grid"
+                className="grid overflow-hidden"
                 style={{
                   gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
                   gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
                   gap: `${gap}px`,
+                  height: `${gridHeight}px`,
                 }}
               >
                 {page.map((persona) => (
