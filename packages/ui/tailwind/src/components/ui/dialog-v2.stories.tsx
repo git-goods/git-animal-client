@@ -13,9 +13,11 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
+const noop = () => {};
+
 export const SM: Story = {
   render: () => (
-    <DialogV2 open>
+    <DialogV2 key="sm" open onOpenChange={noop} modal={false}>
       <DialogV2.Content size="sm">
         <DialogV2.Title>Delete Item?</DialogV2.Title>
         <DialogV2.Description>
@@ -32,7 +34,7 @@ export const SM: Story = {
 
 export const MD: Story = {
   render: () => (
-    <DialogV2 open>
+    <DialogV2 key="md" open onOpenChange={noop} modal={false}>
       <DialogV2.Content size="md">
         <DialogV2.CloseButton />
         <DialogV2.Header>
@@ -68,7 +70,7 @@ export const MD: Story = {
 
 export const LG: Story = {
   render: () => (
-    <DialogV2 open>
+    <DialogV2 key="lg" open onOpenChange={noop} modal={false}>
       <DialogV2.Content size="lg">
         <DialogV2.CloseButton />
         <DialogV2.Header>
@@ -98,7 +100,7 @@ export const LG: Story = {
 
 export const Full: Story = {
   render: () => (
-    <DialogV2 open>
+    <DialogV2 key="full" open onOpenChange={noop} modal={false}>
       <DialogV2.Content size="full">
         <DialogV2.CloseButton />
         <DialogV2.Header>

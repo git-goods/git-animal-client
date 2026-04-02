@@ -23,6 +23,11 @@ const config: StorybookConfig = {
           '@': resolve(__dirname, '../src'),
         },
       },
+      server: {
+        watch: {
+          ignored: ['**/dist/**'],
+        },
+      },
     });
   },
 };
