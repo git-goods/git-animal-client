@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import type { GotchaResult } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { usePostGotcha, userQueries } from '@gitanimals/react-query';
-import { Dialog } from '@gitanimals/ui-tailwind';
+import { DialogV2 } from '@gitanimals/ui-tailwind';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -110,19 +110,22 @@ Token: ${data?.user.accessToken}
   }, [isFinished, onClose, resetTimer]);
 
   return (
-    <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="screen" className={dialogContentStyle}>
-        <Dialog.Title>
-          {isPending ? t('gotcha-in-progress') : isSuccess ? t('get-persona-success') : t('click-card-to-flip')}
-        </Dialog.Title>
+    <DialogV2 open={true} onOpenChange={onClose}>
+      <DialogV2.Content size="full" className={dialogContentStyle}>
+        <DialogV2.CloseButton />
+        <DialogV2.Header>
+          <DialogV2.Title>
+            {isPending ? t('gotcha-in-progress') : isSuccess ? t('get-persona-success') : t('click-card-to-flip')}
+          </DialogV2.Title>
+        </DialogV2.Header>
         {isRunning && (
           <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
         )}
         <div className={cn(gameContainerStyle, isPending && 'pointer-events-none')}>
           <TenCardFlipGame onGetPersona={onAction} getPersona={getPersona} />
         </div>
-      </Dialog.Content>
-    </Dialog>
+      </DialogV2.Content>
+    </DialogV2>
   );
 }
 
