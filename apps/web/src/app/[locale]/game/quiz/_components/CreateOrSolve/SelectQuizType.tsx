@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { wrap } from '@suspensive/react';
 import { overlay } from 'overlay-kit';
 
-import { ConfirmDialog } from '@gitanimals/ui-tailwind';
+import { ConfirmDialogV2 } from '@gitanimals/ui-tailwind';
 import { ROUTE } from '@/shared/config/route';
 import { useRouter } from '@/shared/i18n/routing';
 
@@ -27,7 +27,7 @@ const SelectQuizType = wrap
 
     const handleSolveQuiz = () => {
       overlay.open(({ isOpen, close }) => (
-        <ConfirmDialog
+        <ConfirmDialogV2
           isOpen={isOpen}
           onClose={close}
           onConfirm={() => {
@@ -42,7 +42,7 @@ const SelectQuizType = wrap
 
     const handleCheckLanguage = () => {
       overlay.open(({ isOpen, close }) => (
-        <ConfirmDialog
+        <ConfirmDialogV2
           isOpen={isOpen}
           onClose={close}
           onConfirm={() => {

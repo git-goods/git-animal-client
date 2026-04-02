@@ -7,6 +7,7 @@ export * from './confirm-dialog';
 export * from './confirm-dialog-v2';
 export * from './dialog';
 export * from './dialog-v2';
+export * from './flat-dialog';
 export * from './dropdown-menu';
 export * from './label';
 export * from './scroll-area';

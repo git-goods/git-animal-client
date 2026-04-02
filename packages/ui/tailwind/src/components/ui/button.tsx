@@ -34,7 +34,7 @@ const buttonVariants = cva(
       size: {
         s: 'px-2 min-w-[64px] min-h-[32px] text-glyph-14',
         m: 'px-3 min-w-[120px] min-h-[40px] text-glyph-16',
-        l: 'px-4 min-w-[176px] py-[25px] min-h-[76px] text-glyph-20',
+        l: 'px-4 min-w-[176px] py-5 min-h-[76px] text-glyph-20',
       },
       floating: {
         true: 'w-full max-w-[calc(100%-32px)] fixed bottom-4 left-1/2 -translate-x-1/2',

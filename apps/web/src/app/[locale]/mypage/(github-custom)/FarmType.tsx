@@ -34,12 +34,7 @@ export function FarmType() {
         <div className="rounded-xl relative overflow-hidden w-fit">
           <GitanimalsFarm
             imageKey={String(imageKey)}
-            className={cn(
-              'w-[600px] aspect-[2/1]',
-              'max-pc:w-[400px]',
-              'max-tablet:w-[300px]',
-              'max-mobile:w-full'
-            )}
+            className={cn('w-[600px] aspect-[2/1]', 'max-pc:w-[400px]', 'max-tablet:w-[300px]', 'max-mobile:w-full')}
           />
           <button
             className={cn(

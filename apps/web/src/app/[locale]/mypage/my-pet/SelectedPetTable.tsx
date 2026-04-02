@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { dropPet, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Button, Checkbox, ConfirmDialog, Label } from '@gitanimals/ui-tailwind';
+import { Button, Checkbox, ConfirmDialogV2, Label } from '@gitanimals/ui-tailwind';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
@@ -161,7 +161,7 @@ function SellConfirmDialog({
   const [isDoNotShowAgain, setIsDoNotShowAgain] = useState(false);
 
   return (
-    <ConfirmDialog
+    <ConfirmDialogV2
       isOpen={isOpen}
       onClose={onClose}
       onConfirm={() => onConfirm(isDoNotShowAgain)}
@@ -176,6 +176,6 @@ function SellConfirmDialog({
           {t('Shop.sell-confirm-checkbox')}
         </Label>
       </div>
-    </ConfirmDialog>
+    </ConfirmDialogV2>
   );
 }

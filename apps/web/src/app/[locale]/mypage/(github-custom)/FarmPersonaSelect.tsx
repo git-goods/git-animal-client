@@ -4,8 +4,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { cn } from '@gitanimals/ui-tailwind';
-import { Dialog, ScrollArea } from '@gitanimals/ui-tailwind';
+import { cn, DialogV2 } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { ExpandIcon } from 'lucide-react';
 import { toast } from 'sonner';
@@ -61,22 +60,24 @@ export function FarmPersonaSelect({ onImageRefresh }: { onImageRefresh: () => vo
           <ExpandIcon color="white" size={20} />
         </button>
       </section>
-      <ScrollArea className="h-40">
-        <SelectPersonaList {...personaListProps} />
-      </ScrollArea>
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <Dialog.Content size="large" className="overflow-hidden flex flex-col gap-4">
-          <Dialog.Title>{t('farm-type-select-pet')}</Dialog.Title>
+      <SelectPersonaList {...personaListProps}>
+        <SelectPersonaList.InventoryGrid minRows={2} maxRows={3} />
+      </SelectPersonaList>
+      <DialogV2 open={isOpen} onOpenChange={() => setIsOpen(false)}>
+        <DialogV2.Content size="lg" className="h-full">
+          <DialogV2.CloseButton />
           <SelectPersonaList {...personaListProps}>
-            <Dialog.TopSlot>
+            <DialogV2.Header>
+              <DialogV2.Title>{t('farm-type-select-pet')}</DialogV2.Title>
               <SelectPersonaList.Toolbar showSearch showVisibilityFilter />
-            </Dialog.TopSlot>
-            <Dialog.Body>
-              <SelectPersonaList.Grid />
-            </Dialog.Body>
+            </DialogV2.Header>
+
+            <DialogV2.Body scroll={false} className="h-full flex-1">
+              <SelectPersonaList.InventoryGrid minRows={2} mode="dialog" />
+            </DialogV2.Body>
           </SelectPersonaList>
-        </Dialog.Content>
-      </Dialog>
+        </DialogV2.Content>
+      </DialogV2>
     </div>
   );
 }
