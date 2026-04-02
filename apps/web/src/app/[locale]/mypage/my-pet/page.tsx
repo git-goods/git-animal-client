@@ -4,7 +4,6 @@ import { useCallback, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { type Persona } from '@gitanimals/api';
 import { cn } from '@gitanimals/ui-tailwind';
-import { ScrollArea } from '@gitanimals/ui-tailwind';
 
 import { SelectPersonaList } from '../PersonaList';
 
@@ -19,28 +18,26 @@ function MypageMyPets() {
   }, []);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full min-h-0">
       <SelectedPetTable currentPersona={selectPersona} reset={() => setSelectPersona(null)} />
       <section
         className={cn(
-          'relative',
+          'relative flex-1 min-h-0 flex flex-col',
           '[&_.heading]:font-product [&_.heading]:text-glyph-18 [&_.heading]:font-bold',
           '[&_.heading]:text-white [&_.heading]:mb-4',
         )}
       >
         <h2 className="heading">{t('pet-list')}</h2>
 
-        <ScrollArea className="h-[calc(100vh-424px)]">
-          <SelectPersonaList
-            selectPersona={selectPersona ? [selectPersona.id] : []}
-            onSelectPersona={(persona) => setSelectPersona(persona)}
-            initSelectPersonas={initSelectPersonas}
-            isSpecialEffect
-          >
-            <SelectPersonaList.Toolbar showSearch showEvolvableFilter />
-            <SelectPersonaList.Grid />
-          </SelectPersonaList>
-        </ScrollArea>
+        <SelectPersonaList
+          selectPersona={selectPersona ? [selectPersona.id] : []}
+          onSelectPersona={(persona) => setSelectPersona(persona)}
+          initSelectPersonas={initSelectPersonas}
+          isSpecialEffect
+        >
+          <SelectPersonaList.Toolbar showSearch showEvolvableFilter />
+          <SelectPersonaList.InventoryGrid minRows={2} mode="inline" />
+        </SelectPersonaList>
       </section>
 
       <p
