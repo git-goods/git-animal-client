@@ -104,7 +104,7 @@ function Grid() {
 
 /** 뷰포트 높이에서 UI 크롬(헤더, 여백 등)을 뺀 가용 높이 비율 */
 const VIEWPORT_RATIO_INLINE = 0.2;
-const VIEWPORT_RATIO_DIALOG = 0.5;
+const VIEWPORT_RATIO_DIALOG = 0.75;
 const NAV_HEIGHT = 44;
 
 function useInventoryGrid(
@@ -168,7 +168,7 @@ interface InventoryGridProps {
   mode?: 'inline' | 'dialog';
 }
 
-function InventoryGrid({ minRows = 2, maxRows = 5, minItemSize = 64, gap = 4, mode = 'inline' }: InventoryGridProps) {
+function InventoryGrid({ minRows = 2, maxRows = 10, minItemSize = 64, gap = 4, mode = 'inline' }: InventoryGridProps) {
   const t = useTranslations('Mypage.Filter');
   const { filteredList, selectedIds, onSelectPersona, loadingPersona, isSpecialEffect } = useSelectPersonaListContext();
 
