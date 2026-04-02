@@ -1,3 +1,5 @@
+'use client';
+
 import { ANIMAL_CARD_IMAGE_BASE_URL } from './constants';
 
 interface Props {

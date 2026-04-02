@@ -2,40 +2,13 @@
   "name": "@gitanimals/ui-tailwind",
   "version": "0.1.0",
   "private": true,
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    },
-    "./preset": {
-      "types": "./dist/preset.d.ts",
-      "import": "./dist/preset.mjs",
-      "require": "./dist/preset.js"
-    },
-    "./config": {
-      "types": "./dist/config.d.ts",
-      "import": "./dist/config.mjs",
-      "require": "./dist/config.js"
-    },
-    "./theme": {
-      "types": "./dist/theme/index.d.ts",
-      "import": "./dist/theme/index.mjs",
-      "require": "./dist/theme/index.js"
-    },
-    "./components": {
-      "types": "./dist/components/index.d.ts",
-      "import": "./dist/components/index.mjs",
-      "require": "./dist/components/index.js"
-    },
-    "./utils": {
-      "types": "./dist/utils/index.d.ts",
-      "import": "./dist/utils/index.mjs",
-      "require": "./dist/utils/index.js"
-    }
+    ".": "./src/index.ts",
+    "./preset": "./src/preset.ts",
+    "./config": "./src/config.ts",
+    "./theme": "./src/theme/index.ts",
+    "./components": "./src/components/index.ts",
+    "./utils": "./src/utils/index.ts"
   },
   "scripts": {
     "build": "tsup",
