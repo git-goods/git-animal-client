@@ -64,7 +64,7 @@ export function FarmPersonaSelect({ onImageRefresh }: { onImageRefresh: () => vo
         <SelectPersonaList.InventoryGrid minRows={2} maxRows={3} />
       </SelectPersonaList>
       <DialogV2 open={isOpen} onOpenChange={() => setIsOpen(false)}>
-        <DialogV2.Content size="lg">
+        <DialogV2.Content size="lg" className="h-full">
           <DialogV2.CloseButton />
           <SelectPersonaList {...personaListProps}>
             <DialogV2.Header>
@@ -72,7 +72,7 @@ export function FarmPersonaSelect({ onImageRefresh }: { onImageRefresh: () => vo
               <SelectPersonaList.Toolbar showSearch showVisibilityFilter />
             </DialogV2.Header>
 
-            <DialogV2.Body className="h-full">
+            <DialogV2.Body className="h-full flex-1 overflow-x-hidden">
               <SelectPersonaList.InventoryGrid minRows={2} maxRows={5} />
             </DialogV2.Body>
           </SelectPersonaList>

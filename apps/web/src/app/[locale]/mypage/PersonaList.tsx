@@ -106,8 +106,9 @@ const NAV_HEIGHT = 44; // arrows + dots bar height
 
 function useInventoryGrid(totalItems: number, minItemSize: number, gap: number, minRows: number, maxRows: number) {
   const sensorRef = useRef<HTMLDivElement>(null);
-  const [cols, setCols] = useState(6);
-  const [rows, setRows] = useState(minRows);
+  const [cols, setCols] = useState(0);
+  const [rows, setRows] = useState(0);
+  const ready = cols > 0 && rows > 0;
 
   useEffect(() => {
     const el = sensorRef.current;
@@ -146,7 +147,7 @@ function useInventoryGrid(totalItems: number, minItemSize: number, gap: number, 
 
   const itemsPerPage = cols * rows;
 
-  return { sensorRef, cols, rows, itemsPerPage };
+  return { sensorRef, cols, rows, itemsPerPage, ready };
 }
 
 interface InventoryGridProps {
@@ -160,7 +161,7 @@ function InventoryGrid({ minRows = 2, maxRows = 5, minItemSize = 64, gap = 4 }: 
   const t = useTranslations('Mypage.Filter');
   const { filteredList, selectedIds, onSelectPersona, loadingPersona, isSpecialEffect } = useSelectPersonaListContext();
 
-  const { sensorRef, cols, rows, itemsPerPage } = useInventoryGrid(filteredList.length, minItemSize, gap, minRows, maxRows);
+  const { sensorRef, cols, rows, itemsPerPage, ready } = useInventoryGrid(filteredList.length, minItemSize, gap, minRows, maxRows);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -175,16 +176,17 @@ function InventoryGrid({ minRows = 2, maxRows = 5, minItemSize = 64, gap = 4 }: 
 
   // Recompute embla when grid dimensions change
   useEffect(() => {
-    emblaApi?.reInit();
-  }, [emblaApi, cols, rows, itemsPerPage, filteredList.length]);
+    if (ready) emblaApi?.reInit();
+  }, [emblaApi, ready, cols, rows, itemsPerPage, filteredList.length]);
 
   const pages = useMemo(() => {
+    if (!ready) return [];
     const result: Persona[][] = [];
     for (let i = 0; i < filteredList.length; i += itemsPerPage) {
       result.push(filteredList.slice(i, i + itemsPerPage));
     }
     return result.length > 0 ? result : [[]];
-  }, [filteredList, itemsPerPage]);
+  }, [filteredList, itemsPerPage, ready]);
 
   if (filteredList.length === 0) {
     return <p className={emptyStyle}>{t('no-results')}</p>;
@@ -194,6 +196,8 @@ function InventoryGrid({ minRows = 2, maxRows = 5, minItemSize = 64, gap = 4 }: 
     <div className="relative h-full">
       {/* 크기 측정용 센서 - 콘텐츠와 분리하여 리사이즈 루프 방지 */}
       <div ref={sensorRef} className="absolute inset-0 pointer-events-none invisible" />
+
+      {!ready ? null : <>
       {/* Navigation: arrows left, dots right */}
       <div className="flex mb-2 justify-between items-center">
         <div className="flex gap-[10px]">
@@ -239,6 +243,7 @@ function InventoryGrid({ minRows = 2, maxRows = 5, minItemSize = 64, gap = 4 }: 
           ))}
         </div>
       </div>
+      </>}
     </div>
   );
 }
