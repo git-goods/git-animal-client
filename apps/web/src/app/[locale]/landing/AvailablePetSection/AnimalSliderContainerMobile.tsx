@@ -1,62 +1,37 @@
 'use client';
 
-import React, { Children, useState } from 'react';
-import { useRef } from 'react';
+import React, { Children, useCallback } from 'react';
 import Image from 'next/image';
-import { Fade, Perspective } from '@egjs/flicking-plugins';
-import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
-import Flicking from '@egjs/react-flicking';
+import useEmblaCarousel from 'embla-carousel-react';
 import { cn } from '@gitanimals/ui-tailwind';
+
+import { usePrevNextButtons } from '@/components/EmblaCarousel/EmblaCarouselArrowButtons';
 
 import { sliderContainer } from '../MainSection/MainSlider.style';
 
 function AnimalSliderContainerMobile({ children }: { children: React.ReactNode }) {
-  const flicking = useRef<Flicking | null>(null);
-
-  const [currentPanelIndex, setCurrentPanelIndex] = useState(0);
-
-  const isFirstPanel = currentPanelIndex === 0;
-  const isLastPanel = Children.count(children) - 1 === currentPanelIndex;
-
-  // TODO: arrow plugin을 사용
-  const moveToNextPanel = async () => {
-    if (!flicking.current) return;
-    if (isLastPanel) return;
-    if (flicking.current.animating) return;
-
-    try {
-      flicking.current.next();
-    } catch (error) {}
-  };
-
-  const moveToPrevPanel = async () => {
-    if (!flicking.current) return;
-    if (isFirstPanel) return;
-    if (flicking.current.animating) return;
-
-    try {
-      flicking.current.prev();
-    } catch (error) {}
-  };
-  const onPanelChanged = (e: ChangedEvent<Flicking>) => {
-    setCurrentPanelIndex(e.index);
-  };
-  const _plugins = [new Perspective({ rotate: 0.5, scale: 0.2 }), new Fade()];
-
-  const sliderOptions: Partial<FlickingProps & FlickingOptions> = {
-    onChanged: onPanelChanged,
+  const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'center',
-    plugins: _plugins,
-  };
+    loop: false,
+    skipSnaps: false,
+  });
+
+  const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi);
 
   return (
     <div>
       <div className={cn(sliderContainer, 'slider-container')}>
-        <ArrowButton onClick={moveToPrevPanel} direction="prev" disabled={isFirstPanel} />
-        <ArrowButton onClick={moveToNextPanel} direction="next" disabled={isLastPanel} />
-        <Flicking ref={flicking} {...sliderOptions}>
-          {children}
-        </Flicking>
+        <ArrowButton onClick={onPrevButtonClick} direction="prev" disabled={prevBtnDisabled} />
+        <ArrowButton onClick={onNextButtonClick} direction="next" disabled={nextBtnDisabled} />
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex">
+            {Children.map(children, (child, index) => (
+              <div key={index} className="flex-[0_0_100%] min-w-0">
+                {child}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

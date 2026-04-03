@@ -14,9 +14,6 @@ import {
   RankingServerSide,
 } from './landing';
 
-import '@egjs/react-flicking/dist/flicking.css';
-import '@egjs/react-flicking/dist/flicking-inline.css';
-
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('page');
 

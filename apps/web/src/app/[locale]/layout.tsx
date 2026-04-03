@@ -8,9 +8,6 @@ import { config } from '@/shared/config/config';
 import type { Locale } from '@/shared/i18n/routing';
 import { LOCALE_LIST } from '@/shared/i18n/routing';
 
-import '@egjs/react-flicking/dist/flicking.css';
-import '@egjs/react-flicking/dist/flicking-inline.css';
-
 export function generateMetadata({ params: { locale } }: { params: { locale: Locale } }): Metadata {
   const baseUrl = config.url;
 

@@ -80,7 +80,6 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
           </DialogV2.Body>
         </SelectPersonaList>
 
-
         <DialogV2.Footer className="justify-center">
           <Button variant="secondary" onClick={onClose}>
             {t('cancel')}

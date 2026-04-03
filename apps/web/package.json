@@ -14,9 +14,6 @@
   },
   "dependencies": {
     "@air/react-drag-to-select": "^5.0.11",
-    "@gitanimals/ui-tailwind": "workspace:*",
-    "@egjs/flicking-plugins": "^4.7.1",
-    "@egjs/react-flicking": "^4.11.3",
     "@gitanimals/api": "workspace:*",
     "@gitanimals/asset-font": "workspace:*",
     "@gitanimals/dayjs": "workspace:*",
@@ -25,6 +22,7 @@
     "@gitanimals/react-query": "workspace:*",
     "@gitanimals/ui-icon": "workspace:*",
     "@gitanimals/ui-panda": "workspace:*",
+    "@gitanimals/ui-tailwind": "workspace:*",
     "@gitanimals/util-common": "workspace:*",
     "@next/third-parties": "^14.2.5",
     "@octokit/core": "^6.1.2",
@@ -60,9 +58,6 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.3.3",
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.17",
     "@gitanimals/eslint-config": "workspace:*",
     "@gitanimals/typescript-config": "workspace:*",
     "@gitanimals/util-common": "workspace:*",
@@ -87,11 +82,14 @@
     "@types/react": "*",
     "@types/react-dom": "^18",
     "@typescript-eslint/parser": "^7.7.1",
+    "autoprefixer": "^10.4.21",
     "eslint": "^8",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
+    "postcss": "^8.5.6",
     "prettier": "*",
     "storybook": "^8.0.9",
+    "tailwindcss": "^3.4.17",
     "typescript": "*"
   }
 }

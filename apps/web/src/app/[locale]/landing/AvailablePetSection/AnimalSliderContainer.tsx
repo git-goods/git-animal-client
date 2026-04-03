@@ -1,39 +1,36 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useRef } from 'react';
+import React, { useCallback } from 'react';
 import Image from 'next/image';
-import { Arrow } from '@egjs/flicking-plugins';
-import type { FlickingOptions, FlickingProps } from '@egjs/react-flicking';
-import Flicking from '@egjs/react-flicking';
+import useEmblaCarousel from 'embla-carousel-react';
 import { cn } from '@gitanimals/ui-tailwind';
 
-// TODO: 후에 공통으로 사용할 수 있을 것 같다.
 function AnimalSliderContainer({ children }: { children: React.ReactNode }) {
-  const flicking = useRef<Flicking | null>(null);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    loop: false,
+    skipSnaps: false,
+  });
 
-  // TODO: useMounted hook으로 분리
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => setIsMounted(true), []);
-
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const plugins = [new Arrow({ parentEl: wrapperRef.current })];
-
-  const sliderOptions: Partial<FlickingProps & FlickingOptions> = {
-    panelsPerView: 1,
-    plugins: isMounted ? plugins : undefined,
-  };
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
   return (
     <div>
-      <div ref={wrapperRef} className={sliderContainer}>
-        <Flicking ref={flicking} {...sliderOptions}>
-          {children}
-        </Flicking>
-        <span className={cn('flicking-arrow-prev', 'is-outside', sliderArrowStyle, prevArrowStyle)}>
+      <div className={sliderContainer}>
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex">
+            {React.Children.map(children, (child, index) => (
+              <div key={index} className="flex-[0_0_100%] min-w-0">
+                {child}
+              </div>
+            ))}
+          </div>
+        </div>
+        <span className={cn(sliderArrowStyle, prevArrowStyle)} onClick={scrollPrev}>
           <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
         </span>
-        <span className={cn('flicking-arrow-next', 'is-outside', sliderArrowStyle, nextArrowStyle)}>
+        <span className={cn(sliderArrowStyle, nextArrowStyle)} onClick={scrollNext}>
           <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
         </span>
       </div>
@@ -44,10 +41,9 @@ function AnimalSliderContainer({ children }: { children: React.ReactNode }) {
 export default AnimalSliderContainer;
 
 const sliderArrowStyle = cn(
-  'translate-x-10 w-10 h-10',
+  'w-10 h-10 cursor-pointer',
   'absolute block top-0 bottom-0 my-auto z-floating',
-  '[&.flicking-arrow-disabled]:translate-x-9 [&.flicking-arrow-disabled]:w-9 [&.flicking-arrow-disabled]:h-9',
-  '[&.flicking-arrow-disabled]:cursor-not-allowed [&.flicking-arrow-disabled]:brightness-50',
+  '[&_img]:w-full [&_img]:h-full',
 );
 
 const prevArrowStyle = cn('rotate-180 -left-6');
