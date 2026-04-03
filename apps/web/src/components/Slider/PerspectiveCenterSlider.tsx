@@ -1,43 +1,33 @@
 'use client';
 
-import { useRef } from 'react';
+import { useCallback } from 'react';
 import Image from 'next/image';
-import { Arrow, Fade, Perspective } from '@egjs/flicking-plugins';
-import type { FlickingOptions, FlickingProps } from '@egjs/react-flicking';
-import Flicking from '@egjs/react-flicking';
 import { cn } from '@gitanimals/ui-tailwind';
-
-import { useIsMounted } from '@/shared/hooks/useIsMounted';
+import useEmblaCarousel from 'embla-carousel-react';
 
 /**
- * 중앙에 있는 카드를 3D 효과로 보여주는 슬라이더
+ * 중앙 정렬 캐러셀 슬라이더 (Embla Carousel 기반)
  */
 export function PerspectiveCenterSlider({ children }: { children: React.ReactNode }) {
-  const flicking = useRef<Flicking | null>(null);
-
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const isMounted = useIsMounted();
-
-  const _plugins = [
-    new Perspective({ rotate: 0.5, scale: 0.2 }),
-    new Fade(),
-    new Arrow({ parentEl: wrapperRef.current }),
-  ];
-
-  const sliderOptions: Partial<FlickingProps & FlickingOptions> = {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'center',
-    plugins: isMounted ? _plugins : undefined,
-  };
+    loop: true,
+    skipSnaps: false,
+    containScroll: false,
+  });
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
   return (
     <div>
-      <div className={cn('mt-20', 'slider-container')} ref={wrapperRef}>
+      <div className={cn('mt-20 relative slider-container')}>
         <span
           className={cn(
             'absolute top-0 bottom-0 m-auto z-floating cursor-pointer w-10 h-10 [&_img]:w-full [&_img]:h-full max-mobile:bottom-0 max-mobile:w-[26px] max-mobile:h-[26px]',
             'rotate-180 -left-[62px] max-mobile:left-2',
-            'flicking-arrow-prev is-outside',
           )}
+          onClick={scrollPrev}
         >
           <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
         </span>
@@ -45,14 +35,22 @@ export function PerspectiveCenterSlider({ children }: { children: React.ReactNod
           className={cn(
             'absolute top-0 bottom-0 m-auto z-floating cursor-pointer w-10 h-10 [&_img]:w-full [&_img]:h-full max-mobile:bottom-0 max-mobile:w-[26px] max-mobile:h-[26px]',
             '-right-[62px] max-mobile:right-2',
-            'flicking-arrow-next is-outside',
           )}
+          onClick={scrollNext}
         >
           <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
         </span>
-        <Flicking ref={flicking} {...sliderOptions}>
-          {children}
-        </Flicking>
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex">
+            {Array.isArray(children)
+              ? children.map((child, index) => (
+                  <div key={index} className="flex-[0_0_100%] min-w-0">
+                    {child}
+                  </div>
+                ))
+              : children}
+          </div>
+        </div>
       </div>
     </div>
   );
