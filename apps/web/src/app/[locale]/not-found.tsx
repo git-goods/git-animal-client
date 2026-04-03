@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { sendMessageToErrorChannel } from '@/shared/api/slack';
-import { ErrorPage } from '@/components/Error/ErrorPage';
+import { ErrorPage } from '@/shared/ui/Error';
 import { isDev } from '@/shared/config/env';
 import { GITHUB_ISSUE_URL } from '@/shared/config/outlink';
 import { usePathname, useRouter } from '@/shared/i18n/routing';
