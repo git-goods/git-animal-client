@@ -10,8 +10,8 @@ import { toast } from 'sonner';
 
 import { usePostFeedback } from '@/features/feedback/model/usePostFeedback';
 import type { PostIssueRequest } from '@/features/feedback/model/usePostIssue';
-import Select from '@/components/Select';
-import TextArea from '@/components/TextArea';
+import Select from './Select';
+import TextArea from './TextArea';
 import type { GithubIssueType } from '@/shared/config/github';
 import { GITHUB_ISSUE_TYPE, SERVICE_MAINTAINER } from '@/shared/config/github';
 import { useClientUser } from '@/shared/utils/clientAuth';

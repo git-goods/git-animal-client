@@ -6,7 +6,7 @@ import { domMax, LazyMotion } from 'framer-motion';
 import { OverlayProvider } from 'overlay-kit';
 
 import QueryClientProvider from '@/shared/api/QueryClientProvider';
-import Monitoring from '@/components/Global/Monitoring';
+import Monitoring from './Monitoring';
 
 import SessionLoader from './SessionLoader';
 
