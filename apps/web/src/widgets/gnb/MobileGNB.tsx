@@ -11,7 +11,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronRight, Globe, LogOutIcon, Menu } from 'lucide-react';
 
 import { AdaptiveLink } from '@/components/AdaptiveLink';
-import { RenderLoginButton, RenderLogoutButton } from '@/components/AuthButton';
+import { RenderLoginButton, RenderLogoutButton } from '@/features/auth';
 import { Link } from '@/shared/i18n/routing';
 import { useClientSession } from '@/shared/utils/clientAuth';
 

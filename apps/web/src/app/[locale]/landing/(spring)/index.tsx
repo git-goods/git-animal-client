@@ -1,7 +1,7 @@
 import { Button } from '@gitanimals/ui-tailwind';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 
-import { LoginButton } from '@/components/AuthButton';
+import { LoginButton } from '@/features/auth';
 import { getServerAuth } from '@/shared/api/auth';
 import { Link } from '@/shared/i18n/routing';
 

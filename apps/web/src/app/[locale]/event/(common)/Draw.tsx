@@ -15,7 +15,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { toast } from 'sonner';
 
 import { sendMessageToErrorChannel } from '@/shared/api/slack';
-import { login } from '@/components/AuthButton';
+import { login } from '@/features/auth';
 import { GIT_ANIMALS_MAIN_URL } from '@/shared/config/outlink';
 import { Link, useRouter } from '@/shared/i18n/routing';
 import { trackEvent } from '@/shared/lib/analytics';
