@@ -101,10 +101,9 @@ function Grid() {
 // ─── InventoryGrid (Embla carousel + dynamic grid) ─────────────────
 
 const MAX_DOTS = 5;
-const NAV_HEIGHT = 44; // arrows + dots bar
+const NAV_HEIGHT = 40; // arrows(24px) + gap(8px)
 /** 다이얼로그 크롬: 제목(50) + 검색(40) + 필터(40) + 패딩/갭(30) + nav(44) */
 const DIALOG_CHROME_HEIGHT = 204;
-const INLINE_CHROME_HEIGHT = NAV_HEIGHT;
 
 function useInventoryGrid(
   totalItems: number,
@@ -134,17 +133,27 @@ function useInventoryGrid(
         if (width < minItemSize * 2) return;
         const nextCols = Math.max(Math.floor((width + gap) / (minItemSize + gap)), 1);
 
-        // rows: 뷰포트 높이에서 크롬 높이를 뺀 가용 영역 기반
-        // 실제 아이템 높이를 측정하여 정확한 행 수 계산
-        const firstItem = el.querySelector('[class*="grid"] > button');
-        const measuredHeight = firstItem ? firstItem.getBoundingClientRect().height : 0;
-        const itemHeight = measuredHeight > 0 ? measuredHeight : minItemSize;
+        // rows: 가용 높이 기반. 아이템이 aspect-square이므로 컬럼 너비 = 아이템 높이
+        const colWidth = (width - (nextCols - 1) * gap) / nextCols;
+        const itemHeight = colWidth;
         const rowHeight = itemHeight + gap;
 
         const vh = window.innerHeight;
-        const chrome = mode === 'dialog' ? DIALOG_CHROME_HEIGHT : INLINE_CHROME_HEIGHT;
-        const dialogHeight = mode === 'dialog' ? vh * 0.9 : vh;
-        const availableHeight = dialogHeight - chrome;
+        let availableHeight: number;
+        if (mode === 'dialog') {
+          availableHeight = vh * 0.9 - DIALOG_CHROME_HEIGHT;
+        } else {
+          // inline: 컨테이너에 flex-1 min-h-0이 설정되어 있으므로
+          // clientHeight가 부모 flex에 의해 제한된 실제 높이
+          const containerHeight = el.clientHeight;
+          if (containerHeight > 0) {
+            availableHeight = containerHeight - NAV_HEIGHT;
+          } else {
+            // 초기 렌더링 시 높이가 0일 수 있음 → fallback
+            const rect = el.getBoundingClientRect();
+            availableHeight = vh - rect.top - NAV_HEIGHT;
+          }
+        }
         const nextRows =
           availableHeight > 0 ? Math.min(Math.max(Math.floor(availableHeight / rowHeight), minRows), maxRows) : minRows;
 
@@ -225,11 +234,11 @@ function InventoryGrid({ minRows = 2, maxRows = 10, minItemSize = 64, gap = 4, m
   }
 
   return (
-    <div ref={containerRef} className="overflow-hidden">
+    <div ref={containerRef} className="overflow-hidden flex flex-col gap-2 flex-1 min-h-0">
       {!ready ? null : (
         <>
           {/* Navigation: arrows left, dots right */}
-          <div className="flex mb-2 justify-between items-center">
+          <div className="flex justify-between items-center">
             <div className="flex gap-[10px]">
               <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} className="w-6 h-6" />
               <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} className="w-6 h-6" />

@@ -19,10 +19,10 @@ async function MypageLayout({ children }: { children: React.ReactNode }) {
         <ProfileSection />
         <div
           className={cn(
-            'overflow-x-hidden w-full rounded-2xl',
-            'bg-white/10 backdrop-blur-[7px] max-h-[1400px]',
+            'overflow-hidden w-full rounded-2xl',
+            'bg-white/10 backdrop-blur-[7px] max-h-[calc(100vh-300px)]',
             'p-10 flex flex-col relative gap-10',
-            'max-pc:gap-6 max-pc:p-6',
+            'max-pc:max-h-[calc(100vh-124px)] max-pc:gap-6 max-pc:p-6',
             'max-mobile:gap-3 max-mobile:bg-transparent max-mobile:p-0',
             'max-mobile:max-h-none max-mobile:h-auto max-mobile:overflow-y-auto max-mobile:rounded-none',
           )}

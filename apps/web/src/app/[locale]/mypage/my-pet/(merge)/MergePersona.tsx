@@ -9,7 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useClientSession } from '@/shared/utils/clientAuth';
 
-import { SelectPersonaList } from '../_components/SelectPersonaList';
+import { SelectPersonaList } from '../../PersonaList';
 import { SpinningLoader } from '../_components/SpinningLoader';
 
 import { MergePreview } from './MergePreview';
@@ -72,9 +72,14 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
         </DialogV2.Header>
         <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
 
-        <DialogV2.Body>
-          <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
-        </DialogV2.Body>
+        <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona}>
+          <SelectPersonaList.Toolbar showSearch />
+
+          <DialogV2.Body scroll={false} className="h-full flex-1">
+            <SelectPersonaList.InventoryGrid minRows={2} mode="dialog" />
+          </DialogV2.Body>
+        </SelectPersonaList>
+
 
         <DialogV2.Footer className="justify-center">
           <Button variant="secondary" onClick={onClose}>
