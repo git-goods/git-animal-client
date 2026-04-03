@@ -6,7 +6,7 @@ import { cn } from '@gitanimals/ui-tailwind/utils';
 import { ChevronRightIcon } from 'lucide-react';
 
 import { getServerAuth } from '@/shared/api/auth';
-import { AdaptiveLink } from '@/components/AdaptiveLink';
+import { AdaptiveLink } from '@/shared/ui/AdaptiveLink';
 import { GIT_ANIMALS_MAIN_URL } from '@/shared/config/outlink';
 import { Link } from '@/shared/i18n/routing';
 import { checkIdDevAccessPossible } from '@/shared/utils/dev';

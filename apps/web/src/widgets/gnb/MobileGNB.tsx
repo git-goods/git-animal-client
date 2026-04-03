@@ -10,7 +10,7 @@ import type { Transition, Variants } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronRight, Globe, LogOutIcon, Menu } from 'lucide-react';
 
-import { AdaptiveLink } from '@/components/AdaptiveLink';
+import { AdaptiveLink } from '@/shared/ui/AdaptiveLink';
 import { RenderLoginButton, RenderLogoutButton } from '@/features/auth';
 import { Link } from '@/shared/i18n/routing';
 import { useClientSession } from '@/shared/utils/clientAuth';
