@@ -20,6 +20,7 @@ src/
 │   │   ├── laboratory/         # 실험실
 │   │   ├── event/              # 이벤트 (halloween, christmas)
 │   │   └── landing/            # 랜딩 섹션 컴포넌트 (라우트 아님)
+│   │   ├── _components/        # 로케일 셸 (ClientProvider, Monitoring, GlobalOverlay 등)
 │   ├── api/                    # Route Handlers (auth, oauth)
 │   └── (noLocale)/             # locale 없는 라우트
 │
@@ -30,7 +31,9 @@ src/
 │   ├── auction/                # 경매 등록 (useRegisterProduct)
 │   ├── auth/                   # GitHub OAuth 인증
 │   ├── change-persona-visible/ # 펫 표시/숨김 전환
-│   ├── feedback/               # GitHub 이슈/피드백 보고
+│   ├── feedback/               # GitHub 이슈/피드백 (model/ui, 슬라이스 루트 barrel 없음)
+│   ├── guild/                  # 길드 가입 등 액션
+│   │   └── actions/            # Server Actions (`'use server'`)
 │   └── laboratory-feedback/    # 실험실 피드백 (Supabase 기반)
 │
 ├── entities/                   # 비즈니스 엔티티
@@ -58,12 +61,6 @@ src/
 │   ├── exceptions/             # 에러 타입
 │   └── schema/                 # 유효성 검증 스키마
 │
-├── components/                 # [레거시] 아직 분류되지 않은 공유 UI
-│                               # → 점진적으로 shared/ui/ 또는 entities/*/ui/로 이전
-│
-├── serverActions/              # Server Actions
-│                               # → 점진적으로 features/*/api/로 이전
-│
 └── middleware.ts               # next-intl + next-auth 미들웨어
 ```
 
@@ -79,8 +76,8 @@ app/ → widgets/ → features/ → entities/ → shared/
 
 | From (소스) | To (대상) | 허용 |
 |---|---|---|
-| `app/` | `widgets/`, `features/`, `entities/`, `shared/`, `components/` | O |
-| `widgets/` | `features/`, `entities/`, `shared/`, `components/` | O |
+| `app/` | `widgets/`, `features/`, `entities/`, `shared/` | O |
+| `widgets/` | `features/`, `entities/`, `shared/` | O |
 | `features/` | `entities/`, `shared/` | O |
 | `entities/` | `shared/` | O |
 | `shared/` | (없음, 외부 패키지만) | O |
@@ -247,6 +244,8 @@ import { AnimalCard, usePersonaListFilter } from '@/entities/persona';
 import { usePersonaListFilter } from '@/entities/persona/model/usePersonaListFilter';
 ```
 
+**public API(barrel) 원칙:** `index.ts`에는 **슬라이스 밖에서 실제로 쓰는 심볼만**보냅니다. 슬라이스 내부 전용 훅·헬퍼·서버 액션은 상대 경로 또는 세그먼트 경로로 직접 import합니다. Server Action은 `features/{slice}/actions/*.ts`에 두고, 루트 barrel에 올리지 않아도 됩니다.
+
 ## 새 코드 작성 가이드
 
 ### 새 페이지 추가
@@ -258,8 +257,8 @@ import { usePersonaListFilter } from '@/entities/persona/model/usePersonaListFil
 ### 새 feature 추가
 
 1. `features/{name}/` 디렉토리 생성
-2. `api/` (API 호출), `model/` (hooks, 로직), `ui/` (UI) 세그먼트 배치
-3. `index.ts` barrel export 작성
+2. 필요한 세그먼트만 배치: `api/`, `actions/` (Server Actions, `'use server'`), `model/`, `ui/` 등
+3. 외부에 노출할 심볼이 있을 때만 `index.ts` barrel 작성 (내부 전용만이면 생략 가능)
 4. 의존성 규칙 확인: entities와 shared만 import
 
 ### 새 entity 추가
@@ -268,18 +267,6 @@ import { usePersonaListFilter } from '@/entities/persona/model/usePersonaListFil
 2. `ui/` (표현 컴포넌트), `model/` (hooks, types) 세그먼트 배치
 3. `index.ts` barrel export 작성
 4. 의존성 규칙 확인: shared만 import, 다른 entity import 금지
-
-### `components/`에서의 점진적 이전
-
-`components/`에 남아있는 코드는 레거시입니다. 수정 시 적절한 레이어로 이전하세요:
-
-| 현재 위치 | 이전 대상 | 조건 |
-|---|---|---|
-| `components/Select/`, `Tabs/`, `Pagination/` | `shared/ui/` | 도메인 무관 범용 UI |
-| `components/Global/` | `shared/ui/` + `app/` providers | 전역 프로바이더/셸 |
-| `components/Error/` | `shared/ui/` | 에러 표시 UI |
-| `components/AuthButton.tsx` | `features/auth/ui/` | 인증 기능 UI |
-| `components/CardGame/` | `features/` 또는 `widgets/` | 게임 기능 |
 
 ## Tanstack Query 패턴
 
@@ -316,5 +303,4 @@ export const useRegisterProduct = (options?) =>
 
 1. **새 코드**는 반드시 FSD 레이어 구조를 따릅니다
 2. **기존 코드 수정 시** 해당 코드를 적절한 레이어로 이전합니다
-3. `components/`에 남아있는 코드는 터치할 때 이전합니다
-4. `serverActions/`의 코드도 관련 `features/*/api/`로 이전합니다
+3. Server Action은 `features/{slice}/actions/`에 두고 `'use server'`를 명시합니다
