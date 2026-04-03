@@ -2,7 +2,7 @@ import { checkIsMyGuild, getGuildById } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-tailwind';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 
-import RouteModal from '@/components/RouteModal';
+import RouteModal from '@/app/[locale]/guild/_components/RouteModal';
 import { Link } from '@/shared/i18n/routing';
 
 import { GuildDetail } from '../../../(subpage)/detail/GuildDetail';
