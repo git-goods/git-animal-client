@@ -1,6 +1,6 @@
 'use client';
 
-import { MediaQuery } from '@/components/MediaQuery';
+import { MediaQuery } from '@/shared/ui/MediaQuery';
 
 import { CardList, MobileCardList } from '../(common)/CardList';
 

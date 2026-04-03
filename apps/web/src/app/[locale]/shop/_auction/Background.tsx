@@ -6,7 +6,7 @@ import { cn } from '@gitanimals/ui-tailwind';
 import type { Variants } from 'framer-motion';
 import { motion } from 'framer-motion';
 
-import { MediaQuery } from '@/components/MediaQuery';
+import { MediaQuery } from '@/shared/ui/MediaQuery';
 
 export const Background = memo(function Background() {
   return (
