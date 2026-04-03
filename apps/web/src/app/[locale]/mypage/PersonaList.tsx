@@ -9,8 +9,8 @@ import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import useEmblaCarousel from 'embla-carousel-react';
 
-import { NextButton, PrevButton, usePrevNextButtons } from '@/components/EmblaCarousel/EmblaCarouselArrowButtons';
-import { DotButton, useDotButton } from '@/components/EmblaCarousel/EmblaCarouselDotButton';
+import { NextButton, PrevButton, usePrevNextButtons } from '@/shared/ui/EmblaCarousel/EmblaCarouselArrowButtons';
+import { DotButton, useDotButton } from '@/shared/ui/EmblaCarousel/EmblaCarouselDotButton';
 import type { PersonaFilterState } from '@/entities/persona/model/usePersonaListFilter';
 import { usePersonaListFilter } from '@/entities/persona/model/usePersonaListFilter';
 import { MemoizedBannerPersonaItem } from '@/entities/persona/ui/PersonaItem';

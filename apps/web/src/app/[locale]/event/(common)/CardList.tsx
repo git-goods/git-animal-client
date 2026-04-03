@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { PerspectiveCenterSlider } from '@/components/Slider';
+import { PerspectiveCenterSlider } from '@/shared/ui/Slider';
 
 interface CardListProps {
   renderCard: (type: string) => React.ReactNode;

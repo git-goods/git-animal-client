@@ -5,7 +5,7 @@ import Image from 'next/image';
 import useEmblaCarousel from 'embla-carousel-react';
 import { cn } from '@gitanimals/ui-tailwind';
 
-import { usePrevNextButtons } from '@/components/EmblaCarousel/EmblaCarouselArrowButtons';
+import { usePrevNextButtons } from '@/shared/ui/EmblaCarousel/EmblaCarouselArrowButtons';
 
 import { sliderContainer } from '../MainSection/MainSlider.style';
 

@@ -5,7 +5,7 @@ import { cn } from '@gitanimals/ui-tailwind';
 
 import { AnimalCard } from '@/entities/persona';
 import { MediaQuery } from '@/shared/ui/MediaQuery';
-import { PerspectiveCenterSlider } from '@/components/Slider';
+import { PerspectiveCenterSlider } from '@/shared/ui/Slider';
 import { useGetAllPersona } from '@/entities/persona/model/useGetAllPersona';
 
 import * as styles from './AnimalSlider.style';

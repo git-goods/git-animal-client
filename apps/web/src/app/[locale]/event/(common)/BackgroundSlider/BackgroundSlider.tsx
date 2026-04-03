@@ -4,7 +4,7 @@ import { Children, useCallback, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 
-import { usePrevNextButtons } from '@/components/EmblaCarousel/EmblaCarouselArrowButtons';
+import { usePrevNextButtons } from '@/shared/ui/EmblaCarousel/EmblaCarouselArrowButtons';
 
 import { ArrowButton } from './Arrow';
 

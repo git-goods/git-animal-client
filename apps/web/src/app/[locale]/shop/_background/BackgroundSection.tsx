@@ -12,7 +12,7 @@ import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
-import EmblaCarousel from '@/components/EmblaCarousel';
+import EmblaCarousel from '@/shared/ui/EmblaCarousel';
 import { trackEvent } from '@/shared/lib/analytics';
 import { getQueryClient } from '@/shared/lib/react-query/queryClient';
 import { useClientUser } from '@/shared/utils/clientAuth';
