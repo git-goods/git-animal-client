@@ -9,7 +9,7 @@ import { Button } from '@gitanimals/ui-tailwind';
 import { useQuery } from '@tanstack/react-query';
 
 import { MediaQuery } from '@/components/MediaQuery';
-import Pagination from '@/components/Pagination/Pagination';
+import { Pagination } from '@/shared/ui/Pagination';
 
 import { ShopTableDesktopRow, ShopTableMobileRow, ShopTableRowViewSkeleton } from '../_common/ShopTableMobileRow';
 

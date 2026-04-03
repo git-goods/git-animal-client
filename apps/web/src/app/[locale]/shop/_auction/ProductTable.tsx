@@ -11,7 +11,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { MediaQuery } from '@/components/MediaQuery';
-import Pagination from '@/components/Pagination/Pagination';
+import { Pagination } from '@/shared/ui/Pagination';
 import { useLoading } from '@/shared/store/loading';
 import { useClientUser } from '@/shared/utils/clientAuth';
 
