@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { evolutionPersona, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Button, CommonDialog } from '@gitanimals/ui-tailwind';
+import { Button, DialogV2 } from '@gitanimals/ui-tailwind';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { MoveRight } from 'lucide-react';
 import { overlay } from 'overlay-kit';
@@ -41,13 +41,19 @@ export function EvolutionPersona({ isOpen, onClose, targetPersona }: EvolutionPe
   };
 
   return (
-    <CommonDialog isOpen={isOpen} onClose={onClose} title="GitAnimals Evolution" size="large">
-      <EvolutionPreview targetPersona={targetPersona} />
-      <div className="flex justify-center">
-        <Button onClick={onMergeAction}>{t('evolution')}</Button>
-      </div>
-      {isEvolving && <SpinningLoader />}
-    </CommonDialog>
+    <DialogV2 open={isOpen} onOpenChange={onClose}>
+      <DialogV2.Content size="lg">
+        <DialogV2.CloseButton />
+        <DialogV2.Header>
+          <DialogV2.Title>GitAnimals Evolution</DialogV2.Title>
+        </DialogV2.Header>
+        <EvolutionPreview targetPersona={targetPersona} />
+        <DialogV2.Footer className="justify-center">
+          <Button onClick={onMergeAction}>{t('evolution')}</Button>
+        </DialogV2.Footer>
+        {isEvolving && <SpinningLoader />}
+      </DialogV2.Content>
+    </DialogV2>
   );
 }
 

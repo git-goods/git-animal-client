@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import type { Persona } from '@gitanimals/api';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries, userQueries } from '@gitanimals/react-query';
-import { Button, Dialog } from '@gitanimals/ui-tailwind';
+import { Button, DialogV2 } from '@gitanimals/ui-tailwind';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useQueryClient } from '@tanstack/react-query';
@@ -151,9 +151,11 @@ function SellPriceModal({
   const t = useTranslations('Shop');
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content>
-        <Dialog.Title>{t('sell-price-modal-title')}</Dialog.Title>
+    <DialogV2 open={isOpen} onOpenChange={onClose}>
+      <DialogV2.Content size="sm">
+        <DialogV2.Header>
+          <DialogV2.Title>{t('sell-price-modal-title')}</DialogV2.Title>
+        </DialogV2.Header>
         <input
           className={cn(
             'flex h-[55px] py-3.5 pl-5 pr-3.5',
@@ -168,16 +170,16 @@ function SellPriceModal({
           value={Boolean(sellPrice) ? sellPrice : ''}
           onChange={(e) => setSellPrice(Number(e.target.value))}
         />
-        <div className="flex justify-end gap-2 w-full">
+        <DialogV2.Footer>
           <Button onClick={onClose} variant="secondary" size="m">
             Cancle
           </Button>
           <Button onClick={() => sellPrice && onAction(sellPrice)} variant="primary" size="m" disabled={!sellPrice}>
             Sell
           </Button>
-        </div>
-      </Dialog.Content>
-    </Dialog>
+        </DialogV2.Footer>
+      </DialogV2.Content>
+    </DialogV2>
   );
 }
 

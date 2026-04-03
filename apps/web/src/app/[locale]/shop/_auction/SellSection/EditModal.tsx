@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { auctionQueries, useChangeProductPrice, useDeleteProduct, userQueries } from '@gitanimals/react-query';
 import { cn } from '@gitanimals/ui-tailwind';
-import { Button, Dialog } from '@gitanimals/ui-tailwind';
+import { Button, DialogV2 } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -58,9 +58,11 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content>
-        <Dialog.Title className={titleStyle}>{t('edit-product')}</Dialog.Title>
+    <DialogV2 open={isOpen} onOpenChange={onClose}>
+      <DialogV2.Content size="sm">
+        <DialogV2.Header>
+          <DialogV2.Title className={titleStyle}>{t('edit-product')}</DialogV2.Title>
+        </DialogV2.Header>
         <input
           className={inputStyle}
           placeholder="Type price..."
@@ -68,16 +70,16 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
           value={Boolean(price) ? price : ''}
           onChange={(e) => setPrice(Number(e.target.value))}
         />
-        <div className={buttonWrapperStyle}>
+        <DialogV2.Footer>
           <Button onClick={onSave} variant="secondary" size="m">
             Save
           </Button>
           <Button onClick={onDelete} variant="primary" size="m">
             Delete
           </Button>
-        </div>
-      </Dialog.Content>
-    </Dialog>
+        </DialogV2.Footer>
+      </DialogV2.Content>
+    </DialogV2>
   );
 }
 
