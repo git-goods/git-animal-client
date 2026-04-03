@@ -1,6 +1,6 @@
 'use client';
 
-import { OrderTypeSelect, SortDirectionSelect } from '@/components/SortSelect';
+import { OrderTypeSelect, SortDirectionSelect } from './_components/SortSelect';
 
 import { useSearchOptions } from '../useSearchOptions';
 
