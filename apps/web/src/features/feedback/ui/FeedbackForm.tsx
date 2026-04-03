@@ -8,8 +8,8 @@ import { Button } from '@gitanimals/ui-tailwind';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 import { toast } from 'sonner';
 
-import { usePostFeedback } from '@/features/feedback/model/usePostFeedback';
-import type { PostIssueRequest } from '@/features/feedback/model/usePostIssue';
+import type { PostIssueRequest } from '../model/usePostIssue';
+import { usePostFeedback } from '../model/usePostFeedback';
 import Select from './Select';
 import TextArea from './TextArea';
 import type { GithubIssueType } from '@/shared/config/github';

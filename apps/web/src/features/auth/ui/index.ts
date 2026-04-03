@@ -1,6 +1,5 @@
 export {
   login,
-  logout,
   LoginButton,
   LogoutButton,
   RenderLoginButton,

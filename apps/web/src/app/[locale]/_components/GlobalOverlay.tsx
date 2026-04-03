@@ -3,7 +3,7 @@
 import { createPortal } from 'react-dom';
 import { Toaster } from 'sonner';
 
-import { FeedbackForm } from '@/features/feedback';
+import FeedbackForm from '@/features/feedback/ui/FeedbackForm';
 import { DialogComponent } from '@/shared/hooks/useDialog';
 
 function GlobalOverlay() {

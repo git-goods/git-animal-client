@@ -1,2 +1,7 @@
-export { getGithubOauthUrl } from './api/getGithubOauth';
-export * from './ui';
+export {
+  login,
+  LoginButton,
+  LogoutButton,
+  RenderLoginButton,
+  RenderLogoutButton,
+} from './ui';
