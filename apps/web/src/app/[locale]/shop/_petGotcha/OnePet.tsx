@@ -12,8 +12,11 @@ import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import { sendMessageToErrorChannel } from '@/shared/api/slack';
-import { SelectedCardMotion } from '@/components/CardGame/FanDrawingGame/CardMotion';
-import { CardDrawingGame, DetailedCard } from '@/components/CardGame/FanDrawingGame/FanDrawingGame';
+import { SelectedCardMotion } from '@/app/[locale]/shop/_petGotcha/_components/FanDrawingGame/CardMotion';
+import {
+  CardDrawingGame,
+  DetailedCard,
+} from '@/app/[locale]/shop/_petGotcha/_components/FanDrawingGame/FanDrawingGame';
 import { GITHUB_ISSUE_URL } from '@/shared/config/outlink';
 import { trackEvent } from '@/shared/lib/analytics';
 
