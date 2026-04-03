@@ -11,7 +11,7 @@ import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-quer
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
-import EmblaCarousel from '@/components/EmblaCarousel';
+import EmblaCarousel from '@/shared/ui/EmblaCarousel';
 import { trackEvent } from '@/shared/lib/analytics';
 import { useClientUser } from '@/shared/utils/clientAuth';
 import { getBackgroundImage } from '@/shared/utils/image';

@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@gitanimals/ui-tailwind';
 
 import { sendMessageToErrorChannel } from '@/shared/api/slack';
-import { ErrorPage } from '@/components/Error/ErrorPage';
+import { ErrorPage } from '@/shared/ui/Error';
 import { isDev } from '@/shared/config/env';
 import { usePathname, useRouter } from '@/shared/i18n/routing';
 import { useClientUser } from '@/shared/utils/clientAuth';

@@ -1,8 +1,8 @@
 import { Button } from '@gitanimals/ui-tailwind';
 
 import { getServerAuth } from '@/shared/api/auth';
-import { LoginButton } from '@/components/AuthButton';
-import { Responsive } from '@/components/Responsive';
+import { LoginButton } from '@/features/auth';
+import { Responsive } from '@/shared/ui/Responsive';
 import { Link } from '@/shared/i18n/routing';
 
 import * as styles from './MainSection.style';

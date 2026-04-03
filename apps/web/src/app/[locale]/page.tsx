@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { ErrorBoundary } from '@suspensive/react';
 
-import { ErrorSection } from '@/components/Error/ErrorSection';
+import { ErrorSection } from '@/shared/ui/Error';
 import GNB from '@/widgets/gnb/GNB';
 
 import { SpringContent } from './landing/(spring)';

@@ -5,7 +5,7 @@ import { rankQueries } from '@gitanimals/react-query';
 import { cn } from '@gitanimals/ui-tailwind';
 import { useQueries } from '@tanstack/react-query';
 
-import { MediaQuery } from '@/components/MediaQuery';
+import { MediaQuery } from '@/shared/ui/MediaQuery';
 import { Link } from '@/shared/i18n/routing';
 
 import GameConsole from './GameConsole/GameConsole';

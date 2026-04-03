@@ -14,12 +14,11 @@ apps/web은 FSD-inspired 하이브리드 아키텍처를 사용합니다.
 
 ```
 src/
-├── app/          # 라우팅 + 조합 (Next.js App Router)
+├── app/          # 라우팅 + 조합 (Next.js App Router, [locale]/_components 셸)
 ├── widgets/      # 독립적 대규모 UI 블록
-├── features/     # 사용자 액션 기능
+├── features/     # 사용자 액션 기능 (필요 시 actions/에 Server Actions)
 ├── entities/     # 비즈니스 엔티티
 ├── shared/       # 범용 기반 코드
-├── components/   # [레거시] 새 파일 추가 금지
 └── middleware.ts
 ```
 
@@ -36,16 +35,16 @@ src/
    - entities/persona/에서 entities/guild/ import 불가
    - features/auction/에서 features/feedback/ import 불가
 
-3. **components/ 디렉토리에 새 파일 추가 금지**
-   - 새 코드는 반드시 적절한 FSD 레이어에 배치
-   - 도메인 무관 UI → shared/ui/
-   - 도메인 관련 UI → entities/*/ui/
-   - 기능 UI → features/*/ui/
-   - 대규모 조합 블록 → widgets/
+3. **`src/components/` 레거시 디렉터리는 제거됨** — 새 코드는 `shared/ui/`, `features/*/ui/`, `app/.../_components/` 등 적절한 위치에만 둡니다.
 
-4. **각 슬라이스는 barrel index.ts 제공**
+4. **슬라이스 public API(`index.ts`)는 최소로**
+   - 슬라이스 **밖**에서 쓰는 심볼만 barrel에서 export합니다.
+   - 내부 전용은 상대 경로 또는 `model/`, `actions/` 등 세그먼트 경로로 직접 import합니다.
+   - Server Action은 `features/{slice}/actions/*.ts`에 두고, 루트 barrel에 올리지 않아도 됩니다.
+
+5. **entities 등 슬라이스는 필요 시 barrel 제공** (위 원칙 준수)
    ```typescript
-   // entities/persona/index.ts
+   // entities/persona/index.ts — 외부에 노출할 것만
    export * from './ui';
    export * from './model';
    ```
@@ -59,6 +58,7 @@ src/
 | 엔티티 UI | `entities/*/ui/` | PersonaItem, GuildCard |
 | 엔티티 쿼리/로직 | `entities/*/model/` | useGetAllPersona |
 | 사용자 액션 | `features/*/model/` | useRegisterProduct |
+| Server Actions | `features/*/actions/` (`'use server'`) | joinGuildAction |
 | API 호출 함수 | `features/*/api/` 또는 `shared/api/` | github.ts |
 | 독립 대규모 블록 | `widgets/*/` | GNB |
 | 유틸리티 | `shared/utils/` | image.ts, string.ts |
@@ -68,11 +68,12 @@ src/
 ## 슬라이스 내부 구조
 
 ```
-features/auction/
+features/{name}/
+├── actions/                # (선택) Server Actions — `'use server'`
 ├── api/                    # API 호출 함수
 ├── model/                  # hooks, 상태, 비즈니스 로직
 ├── ui/                     # UI 컴포넌트
-└── index.ts                # public API (barrel export)
+└── index.ts                # (선택) 외부에 필요한 것만 barrel export
 ```
 
 ## import 스타일

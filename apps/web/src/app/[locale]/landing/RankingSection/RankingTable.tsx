@@ -4,7 +4,7 @@ import type { RankType } from '@gitanimals/api';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 import { getNewUrl } from '@gitanimals/util-common';
 
-import { PaginationServer } from '@/components/Pagination/PaginationServer';
+import { PaginationServer } from '@/shared/ui/Pagination';
 
 import { RankingLink } from './RankingLink';
 

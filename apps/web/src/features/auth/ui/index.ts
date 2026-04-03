@@ -4,4 +4,4 @@ export {
   LogoutButton,
   RenderLoginButton,
   RenderLogoutButton,
-} from './ui';
+} from './AuthButton';

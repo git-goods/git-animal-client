@@ -8,7 +8,7 @@ import { Button, cn, LevelBanner } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 
-import { useDialog } from '@/components/Global/useDialog';
+import { useDialog } from '@/shared/hooks/useDialog';
 import { trackEvent } from '@/shared/lib/analytics';
 import { customScrollStyle } from '@/shared/styles/scrollStyle';
 import { useClientUser } from '@/shared/utils/clientAuth';

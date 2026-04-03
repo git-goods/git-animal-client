@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { GuildJoinPetSelectDialog } from '@/app/[locale]/guild/_components/GuildPetSelectDialog';
 import { useRouter } from '@/shared/i18n/routing';
-import { joinGuildAction } from '@/serverActions/guild';
+import { joinGuildAction } from '@/features/guild/actions/joinGuild';
 
 const dialogTitleStyle = cn(
   'font-product text-glyph-48 font-bold text-white text-center',

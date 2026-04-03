@@ -1,6 +1,6 @@
 'use client';
 
-import DevModePage from '@/components/DevMode/DevModePage';
+import DevModePage from '@/app/[locale]/dev/_components/DevModePage';
 
 import { CherryBlossom } from '../../landing/(spring)/CherryBlossom';
 

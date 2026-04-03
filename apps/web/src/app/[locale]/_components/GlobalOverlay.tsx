@@ -3,13 +3,13 @@
 import { createPortal } from 'react-dom';
 import { Toaster } from 'sonner';
 
-import FeedBack from './FeedbackForm';
-import { DialogComponent } from './useDialog';
+import FeedbackForm from '@/features/feedback/ui/FeedbackForm';
+import { DialogComponent } from '@/shared/hooks/useDialog';
 
-function GlobalComponent() {
+function GlobalOverlay() {
   return createPortal(
     <>
-      <FeedBack />
+      <FeedbackForm />
       <DialogComponent />
       <Toaster
         position="top-center"
@@ -30,4 +30,4 @@ function GlobalComponent() {
   );
 }
 
-export default GlobalComponent;
+export default GlobalOverlay;

@@ -7,8 +7,8 @@ import { getNewUrl } from '@gitanimals/util-common';
 import { ChevronLeftIcon } from 'lucide-react';
 import Image from 'next/image';
 
-import { PaginationServer } from '@/components/Pagination/PaginationServer';
-import { BackTrigger } from '@/components/Trigger';
+import { PaginationServer } from '@/shared/ui/Pagination';
+import { BackTrigger } from '@/shared/ui/Trigger';
 import { ROUTE } from '@/shared/config/route';
 import { Link, redirect } from '@/shared/i18n/routing';
 

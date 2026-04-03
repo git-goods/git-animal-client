@@ -2,7 +2,7 @@ import type { PropsWithChildren } from 'react';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 import { XIcon } from 'lucide-react';
 
-import { BackTrigger } from '@/components/Trigger';
+import { BackTrigger } from '@/shared/ui/Trigger';
 
 const dialogTitleStyle =
   'font-product text-glyph-48 font-bold text-white text-center max-1200:text-glyph-32 max-mobile:text-glyph-24';

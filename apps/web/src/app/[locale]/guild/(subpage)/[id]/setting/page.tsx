@@ -1,6 +1,6 @@
 import { checkIsLeader, getGuildBackgrounds, getGuildById, getGuildIcons } from '@gitanimals/api';
 
-import { PageModalTitle } from '@/components/PageModal';
+import { PageModalTitle } from '@/app/[locale]/guild/_components/PageModal';
 import { redirect } from '@/shared/i18n/routing';
 
 import { GuildSetting } from './GuildSetting';

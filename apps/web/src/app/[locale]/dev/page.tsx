@@ -2,7 +2,7 @@
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@gitanimals/ui-tailwind';
 
-import DevModePage from '@/components/DevMode/DevModePage';
+import DevModePage from '@/app/[locale]/dev/_components/DevModePage';
 import GNB from '@/widgets/gnb/GNB';
 
 import DevClient from './Client';

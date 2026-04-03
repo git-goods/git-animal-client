@@ -8,7 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Link } from '@/shared/i18n/routing';
 import { customScrollStyle } from '@/shared/styles/scrollStyle';
 
-import { AnimatePortal } from '@/components/Portal';
+import { AnimatePortal } from '@/shared/ui/Portal';
 
 export const InboxList = ({ isOpen, list }: { isOpen: boolean; list: Inbox[] }) => {
   const t = useTranslations('Layout');

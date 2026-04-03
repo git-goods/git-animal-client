@@ -8,10 +8,10 @@ import { toast } from 'sonner';
 
 import type { QuizStatus } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
 import { QUIZ_STATUS } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
-import Tabs from '@/components/Tabs/Tabs';
-import TabsList from '@/components/Tabs/TabsList';
-import TabsTrigger from '@/components/Tabs/TabsTrigger';
-import useTabs from '@/components/Tabs/useTabs';
+import Tabs from '@/app/[locale]/game/quiz/_components/Tabs/Tabs';
+import TabsList from '@/app/[locale]/game/quiz/_components/Tabs/TabsList';
+import TabsTrigger from '@/app/[locale]/game/quiz/_components/Tabs/TabsTrigger';
+import useTabs from '@/app/[locale]/game/quiz/_components/Tabs/useTabs';
 import { ROUTE } from '@/shared/config/route';
 import { type Locale, useRouter } from '@/shared/i18n/routing';
 

@@ -3,7 +3,9 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
-import { ClientProvider, GlobalComponent, Monitoring } from '@/components/Global';
+import ClientProvider from '@/app/[locale]/_components/ClientProvider';
+import GlobalOverlay from '@/app/[locale]/_components/GlobalOverlay';
+import Monitoring from '@/app/[locale]/_components/Monitoring';
 import { config } from '@/shared/config/config';
 import type { Locale } from '@/shared/i18n/routing';
 import { LOCALE_LIST } from '@/shared/i18n/routing';
@@ -47,7 +49,7 @@ export default async function LocaleLayout({
             <ClientProvider>
               {children}
 
-              <GlobalComponent />
+              <GlobalOverlay />
             </ClientProvider>
           </NuqsAdapter>
         </NextIntlClientProvider>

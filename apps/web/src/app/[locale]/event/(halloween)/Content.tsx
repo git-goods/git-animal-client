@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 
-import { MediaQuery } from '@/components/MediaQuery';
+import { MediaQuery } from '@/shared/ui/MediaQuery';
 
 import { HalloweenCardList } from './CardList';
 import { KingGhost } from './KingGhost';
