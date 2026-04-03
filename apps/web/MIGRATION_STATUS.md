@@ -1,6 +1,8 @@
 # PandaCSS → Tailwind CSS 마이그레이션 진행 상황
 
-**마지막 업데이트**: 2026-01-14
+**마지막 업데이트**: 2026-04-03
+
+> 본 문서는 **PandaCSS → Tailwind** 전환 진행률과, 이후 **`src/components/` 제거·FSD 배치**로 바뀐 **현재 파일 경로**를 함께 기록합니다. 상세 아키텍처는 [`ARCHITECTURE.md`](./ARCHITECTURE.md)를 참고하세요.
 
 ## 진행률 요약
 
@@ -20,21 +22,22 @@
 | `src/app/[locale]/landing/ChoosePetSection/ChoosePetSection.tsx`       | ✅ 완료 |
 | `src/app/[locale]/landing/AvailablePetSection/AvailablePetSection.tsx` | ✅ 완료 |
 
-### ✅ Components 섹션 (4개 파일 완료)
+### ✅ 당시 `src/components/` 기준 Tailwind 마이그레이션 (이후 경로 이동됨)
 
-| 파일                                                | 상태    |
-| --------------------------------------------------- | ------- |
-| `src/components/AnimalCard/AnimalCard.tsx`          | ✅ 완료 |
-| `src/components/SortSelect/SortDirectionSelect.tsx` | ✅ 완료 |
-| `src/components/SortSelect/OrderTypeSelect.tsx`     | ✅ 완료 |
-| `src/components/MediaQuery/MediaQuery.tsx`          | ✅ 완료 |
+Panda 제거 작업 당시 경로 기준으로 완료 처리되었으며, 아래 **현재 경로**로 재배치되었습니다.
+
+| Tailwind 마이그레이션 시점 경로                         | 현재 경로 (FSD·앱 코로케이션) |
+| ------------------------------------------------------- | ----------------------------- |
+| `src/components/AnimalCard/AnimalCard.tsx`              | `src/entities/persona/ui/AnimalCard.tsx` |
+| `src/components/SortSelect/SortDirectionSelect.tsx` 등  | `src/app/[locale]/shop/_auction/_components/SortSelect/` |
+| `src/components/MediaQuery/MediaQuery.tsx`              | `src/shared/ui/MediaQuery/` |
 
 ### ✅ Guild 페이지 (7개 파일 완료)
 
 | 파일                                                                  | 상태    |
 | --------------------------------------------------------------------- | ------- |
 | `src/app/[locale]/guild/_components/SortSelect.tsx`                   | ✅ 완료 |
-| `src/app/[locale]/guild/_components/GuildPetSelectDialog.tsx`         | ✅ 완료 |
+| `src/app/[locale]/guild/_components/GuildPetSelectDialog.tsx`       | ✅ 완료 |
 | `src/app/[locale]/guild/(subpage)/detail/[id]/page.tsx`               | ✅ 완료 |
 | `src/app/[locale]/guild/(subpage)/create/GuildCreate.tsx`             | ✅ 완료 |
 | `src/app/[locale]/guild/(subpage)/[id]/setting/member/MemberCard.tsx` | ✅ 완료 |
@@ -54,6 +57,30 @@
 
 ---
 
+## `src/components/` 제거 및 FSD 배치 (2026-04)
+
+레거시 `apps/web/src/components/` 디렉터리는 제거되었습니다. 주요 이동 요약:
+
+| 역할 | 현재 경로 |
+| ---- | --------- |
+| 범용 UI (Error, Portal, Pagination, MediaQuery, Responsive, AdaptiveLink, EmblaCarousel, Slider, Trigger 등) | `src/shared/ui/` |
+| 인증 버튼 | `src/features/auth/ui/` |
+| 피드백 폼 + 폼용 Select/TextArea | `src/features/feedback/ui/` |
+| 길드 가입 Server Action | `src/features/guild/actions/joinGuild.ts` (`'use server'`) |
+| 길드 라우트/페이지 모달 | `src/app/[locale]/guild/_components/` (`RouteModal`, `PageModal` 등) |
+| 경매 정렬 UI | `src/app/[locale]/shop/_auction/_components/SortSelect/` |
+| 펫뽑기 카드 UI | `src/app/[locale]/shop/_petGotcha/_components/FanDrawingGame/` |
+| 퀴즈 탭 UI | `src/app/[locale]/game/quiz/_components/Tabs/` |
+| Dev 모드 래퍼 | `src/app/[locale]/dev/_components/DevModePage.tsx` |
+| 실험실 멀티머지 DragSelect | `src/app/[locale]/laboratory/multi-merge/_components/DragSelect/` |
+| 로케일 셸 (ClientProvider, Monitoring, SessionLoader, GlobalOverlay) | `src/app/[locale]/_components/` |
+| 전역 확인/알럿 다이얼로그 훅 | `src/shared/hooks/useDialog.tsx` |
+
+- **`src/serverActions/`** 제거: 길드 액션은 `features/guild/actions/`로 통합, 미사용 `gotcha` 액션 삭제.
+- **public API**: 슬라이스 `index.ts`에는 외부에서 실제로 import하는 심볼만 유지 ([`ARCHITECTURE.md`](./ARCHITECTURE.md) 참고).
+
+---
+
 ## 완료된 작업
 
 ### 백그라운드 에이전트 작업 결과
@@ -70,14 +97,14 @@
 | a8ee052 | Guild subpage files          | ⚠️ Rate limit 중단 |
 | a1f8080 | Component files              | ⚠️ Rate limit 중단 |
 
-### 수동 마이그레이션 완료 파일
+### 수동 마이그레이션 완료 파일 (경로 갱신)
 
 - `src/app/[locale]/error.tsx`
 - `src/app/[locale]/auth/page.tsx`
 - `src/app/[locale]/auth/signOut/page.tsx`
-- `src/components/Pagination/PaginationServer.tsx`
-- `src/components/Global/useDialog.tsx`
-- `src/components/Global/FeedbackForm.tsx` (읽기만 완료)
+- `src/shared/ui/Pagination/PaginationServer.tsx` (구 `src/components/Pagination/PaginationServer.tsx`)
+- `src/shared/hooks/useDialog.tsx` (구 `src/components/Global/useDialog.tsx`)
+- `src/features/feedback/ui/FeedbackForm.tsx` (구 `src/components/Global/FeedbackForm.tsx`)
 
 ---
 
@@ -172,6 +199,7 @@ const style = cn('flex items-center gap-2', 'font-product text-glyph-16 text-whi
 
 - [x] 모든 파일 마이그레이션 완료
 - [x] `pnpm build:web` 빌드 성공 확인 ✅
+- [x] 레거시 `src/components/` 제거 및 FSD·앱 코로케이션 배치 (2026-04)
 - [ ] 시각적 회귀 테스트
 - [ ] PandaCSS 의존성 제거
   - `panda.config.ts` 삭제
