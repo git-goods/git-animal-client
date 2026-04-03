@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { cn } from '@gitanimals/ui-tailwind/utils';
 
-import { DragSelectContainer } from '../../../../components/DragSelect';
+import { DragSelectContainer } from './_components/DragSelect';
 
 import { MemoizedPersonaItem } from './PersonaItem';
 
