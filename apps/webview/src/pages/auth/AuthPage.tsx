@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Navigate, useLocation } from 'react-router-dom';
-import { Button, Banner } from '@gitanimals/ui-panda';
-import { css } from '../../../styled-system/css';
+import { Navigate, useLocation } from 'react-router-dom';
+import { Button, Banner } from '@gitanimals/ui-tailwind';
 import { authUtils, setupWebViewMessageHandler } from '../../utils';
 import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
 import { setRenderRequestInterceptor, setRenderResponseInterceptor } from '@gitanimals/api/src/_instance';
@@ -93,51 +92,15 @@ function LoginPage() {
   }
 
   return (
-    <div
-      className={css({
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
-        gap: '2rem',
-        padding: '2rem',
-        backgroundColor: 'gray.50',
-      })}
-    >
-      <div
-        className={css({
-          maxWidth: '400px',
-          width: '100%',
-          padding: '2rem',
-          backgroundColor: 'white',
-          borderRadius: 'lg',
-          boxShadow: 'lg',
-          textAlign: 'center',
-        })}
-      >
-        <h1
-          className={css({
-            fontSize: '2xl',
-            fontWeight: 'bold',
-            marginBottom: '1rem',
-          })}
-        >
-          {t('auth.welcome_title')}
-        </h1>
+    <div className="flex min-h-screen flex-col items-center justify-center gap-8 bg-gray-50 p-8">
+      <div className="w-full max-w-[400px] rounded-lg bg-white p-8 text-center shadow-lg">
+        <h1 className="mb-4 text-2xl font-bold">{t('auth.welcome_title')}</h1>
 
-        <p
-          className={css({
-            color: 'gray.600',
-            marginBottom: '2rem',
-          })}
-        >
-          {t('auth.welcome_description')}
-        </p>
+        <p className="mb-8 text-gray-600">{t('auth.welcome_description')}</p>
 
-        <Banner image="🔐" label={t('auth.auth_required')} />
+        <Banner image={<span className="text-5xl leading-none">🔐</span>} label={t('auth.auth_required')} />
 
-        <div className={css({ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '2rem' })}>
+        <div className="mt-8 flex flex-col gap-4">
           <Button onClick={() => authUtils.requestAuthFromParent()}>{t('auth.authenticate_button')}</Button>
           <a href="https://api.gitanimals.org/logins/oauth/github/by-redirect-when-success/LOCAL">
             <Button variant="secondary">{t('auth.local_login')}</Button>
@@ -145,9 +108,7 @@ function LoginPage() {
         </div>
 
         {from !== '/' && (
-          <p className={css({ fontSize: 'sm', color: 'gray.500', marginTop: '1rem' })}>
-            {t('auth.redirecting_to', { path: from })}
-          </p>
+          <p className="mt-4 text-sm text-gray-500">{t('auth.redirecting_to', { path: from })}</p>
         )}
       </div>
 

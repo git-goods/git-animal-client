@@ -1,5 +1,4 @@
 import { type ReactNode } from 'react';
-import { css } from '_panda/css';
 
 import { TABS, type TabType } from './type';
 
@@ -11,6 +10,14 @@ import SellListSection from './MySellList';
 import ProductTable from './ProductTable';
 import Tab from './Tab';
 import { useQueryState, parseAsStringLiteral } from 'nuqs';
+
+const sectionCss =
+  'relative flex min-h-[552px] w-full flex-col items-center bg-[linear-gradient(180deg,#000_0%,#004875_38.51%,#005B93_52.46%,#006FB3_73.8%,#0187DB_100%)] px-4 pb-20 pt-10';
+
+const h2Css = 'mb-10 text-glyph-48 font-bold text-white';
+
+const divCss =
+  'z-floating h-auto min-h-[924px] w-full max-w-[1120px] rounded-2xl p-0 pb-3';
 
 export function AuctionSection() {
   const [selectedTab] = useQueryState(
@@ -45,34 +52,3 @@ export function AuctionSection() {
     </section>
   );
 }
-
-const sectionCss = css({
-  position: 'relative',
-  display: 'flex',
-  flexDir: 'column',
-  alignItems: 'center',
-  width: '100%',
-  bg: 'linear-gradient(180deg, #000 0%, #004875 38.51%, #005B93 52.46%, #006FB3 73.8%, #0187DB 100%)',
-
-  padding: '40px 16px 80px',
-  minH: '552px',
-});
-
-const h2Css = css({
-  color: 'white',
-
-  textStyle: 'glyph48.bold',
-  marginBottom: '40px',
-});
-
-const divCss = css({
-  borderRadius: '16px',
-  maxW: '1120px',
-  width: '100%',
-  zIndex: 'floating',
-  minH: '924px',
-
-  height: 'auto',
-  padding: '0',
-  paddingBottom: '12px',
-});

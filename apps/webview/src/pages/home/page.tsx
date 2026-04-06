@@ -1,60 +1,22 @@
 'use client';
 
-import { css } from '_panda/css';
-
 import CharacterView from './_components/CharacterView';
 import { ProfileBoard } from './_components/ProfileBoard';
 
 export default function WebviewPage() {
   return (
-    <div className={containerStyle}>
-      <div className={backgroundStyle}>
-        <img src="/assets/home/app-background-home.png" alt="background" />
+    <div className="relative mx-auto flex h-full w-full max-w-[var(--container-max-width)] flex-col justify-between">
+      <div className="absolute bottom-0 left-0 flex h-full w-full flex-col justify-end bg-[#098761]">
+        <img
+          src="/assets/home/app-background-home.png"
+          alt="background"
+          className="min-h-[90%] w-full object-cover object-bottom object-center"
+        />
       </div>
-      <div
-        className={css({
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          height: '100%',
-          paddingBottom: '25%',
-        })}
-      >
+      <div className="relative flex h-full flex-col justify-between pb-[25%]">
         <ProfileBoard />
         <CharacterView />
       </div>
     </div>
   );
 }
-
-const containerStyle = css({
-  w: '100%',
-  h: '100%',
-  maxW: 'var(--container-max-width)',
-  mx: 'auto',
-  position: 'relative',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-});
-
-const backgroundStyle = css({
-  w: '100%',
-  h: '100%',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  bg: '#098761',
-
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'flex-end',
-
-  '& img': {
-    w: '100%',
-    minH: '90%',
-    objectFit: 'cover',
-    objectPosition: 'bottom center',
-  },
-});

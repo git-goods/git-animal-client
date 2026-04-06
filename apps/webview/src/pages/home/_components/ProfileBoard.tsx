@@ -1,7 +1,6 @@
-import { css } from '_panda/css';
 import { userQueries } from '@gitanimals/react-query';
 import { wrap } from '@suspensive/react';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export const ProfileBoard = wrap
   .Suspense({ fallback: null })
@@ -14,14 +13,14 @@ export const ProfileBoard = wrap
     }
 
     return (
-      <div className={containerStyle}>
-        <div className={profileItemStyle}>
-          <div className={profileItemContentStyle}>
+      <div className="flex flex-col px-4 pt-2">
+        <div className="mb-1.5 flex items-end justify-between px-2 py-2">
+          <div className="flex items-center gap-2 text-glyph-24 font-bold text-white [&_img]:h-8 [&_img]:w-8 [&_img]:overflow-hidden [&_img]:rounded-full">
             <img src={data.profileImage} alt="profile" />
             <p>{data.username}</p>
           </div>
-          <div className={coinStyle}>
-            <img src="/assets/shop/coin.webp" className={coinIconStyle} alt="point" />
+          <div className="flex items-center gap-[3px] text-glyph-16 text-white/90">
+            <img src="/assets/shop/coin.webp" className="h-4 w-4" alt="point" />
             <p>{data.points} P</p>
           </div>
         </div>
@@ -30,92 +29,21 @@ export const ProfileBoard = wrap
     );
   });
 
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  px: 4,
-  pt: 2,
-});
-
-const profileItemStyle = css({
-  display: 'flex',
-  alignItems: 'flex-end',
-  justifyContent: 'space-between',
-  py: 2,
-  mb: '6px',
-  px: 2,
-});
-
-const profileItemContentStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-  textStyle: 'glyph24.bold',
-  color: 'white.white_100',
-
-  '& img': {
-    width: '32px',
-    height: '32px',
-    borderRadius: '50%',
-    overflow: 'hidden',
-  },
-});
-
-const coinStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '3px',
-  textStyle: 'glyph16.regular',
-  color: 'white.white_90',
-});
-
-const coinIconStyle = css({
-  width: '16px',
-  height: '16px',
-});
-
 export function ScoreBoard() {
   return (
-    <div className={scoreBoardStyle}>
-      <div className={scoreItemStyle}>
-        <div className="label">Farm Visitor</div>
-        <div className="value">100</div>
+    <div className="grid grid-cols-3 gap-2 rounded-[10px] bg-[linear-gradient(132.51deg,rgba(253,251,209,0.4)_2.19%,rgba(0,157,129,0.4)_49.24%,rgba(61,139,255,0.4)_98.21%)] p-3 px-4 backdrop-blur-[20px]">
+      <div className="flex flex-col items-center justify-center">
+        <div className="label text-glyph-14 text-white/50">Farm Visitor</div>
+        <div className="value text-glyph-18 text-white">100</div>
       </div>
-      <div className={scoreItemStyle}>
-        <div className="label">Contribution</div>
-        <div className="value">100</div>
+      <div className="flex flex-col items-center justify-center">
+        <div className="label text-glyph-14 text-white/50">Contribution</div>
+        <div className="value text-glyph-18 text-white">100</div>
       </div>
-      <div className={scoreItemStyle}>
-        <div className="label">Next pet</div>
-        <div className="value">100</div>
+      <div className="flex flex-col items-center justify-center">
+        <div className="label text-glyph-14 text-white/50">Next pet</div>
+        <div className="value text-glyph-18 text-white">100</div>
       </div>
     </div>
   );
 }
-
-const scoreBoardStyle = css({
-  background:
-    'linear-gradient(132.51deg, rgba(253, 251, 209, 0.4) 2.19%, rgba(0, 157, 129, 0.4) 49.24%, rgba(61, 139, 255, 0.4) 98.21%)',
-  backdropFilter: 'blur(20px)',
-  borderRadius: '10px',
-  padding: '12px 16px',
-  gap: '8px',
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr 1fr',
-});
-
-const scoreItemStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-
-  '& .label': {
-    textStyle: 'glyph13.regular',
-    color: 'white.white_50',
-  },
-  '& .value': {
-    textStyle: 'glyph18.regular',
-    color: 'white.white_100',
-  },
-});

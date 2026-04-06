@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
-import { css } from '_panda/css';
 
 import type { TabType } from './type';
 
 import { parseAsStringLiteral, useQueryState } from 'nuqs';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 interface TabItemType {
   label: string;
@@ -39,6 +39,9 @@ interface Props {
   rightElement?: ReactNode;
 }
 
+const tabLinkBase =
+  "inline-flex h-8 items-center rounded-full px-3 text-glyph-16 font-bold leading-8 transition-all duration-300 ease-in-out [font-feature-settings:'liga'_off,'clig'_off]";
+
 // TODO: tab 구조 변경 필요, rightElement 분리
 function Tab({ selectedTab, rightElement }: Props) {
   const [_, setTab] = useQueryState(
@@ -47,11 +50,15 @@ function Tab({ selectedTab, rightElement }: Props) {
   );
 
   return (
-    <div className={tabContainerStyle}>
-      <div className={tabItemContainerStyle}>
+    <div className="mb-3 flex flex-col items-start justify-between gap-8">
+      <div className="m-auto rounded-2xl bg-black/25 p-1">
         {TAB.map((item) => (
           <button
-            className={item.key === selectedTab ? selectedLinkCss : nonSelectedLinkCss}
+            key={item.key}
+            className={cn(
+              tabLinkBase,
+              item.key === selectedTab ? 'bg-white/10 text-white/75' : 'text-white/25',
+            )}
             onClick={() => setTab(item.key as TabType)}
           >
             {item.label}
@@ -65,40 +72,3 @@ function Tab({ selectedTab, rightElement }: Props) {
 }
 
 export default Tab;
-
-const tabContainerStyle = css({
-  display: 'flex',
-  justifyContent: 'space-between',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-  gap: '32px',
-  marginBottom: '12px',
-});
-
-const tabItemContainerStyle = css({
-  backgroundColor: 'black.black_25',
-  padding: '4px',
-  margin: 'auto',
-  borderRadius: '16px',
-});
-
-const defaultLinkCss = css.raw({
-  fontFeatureSettings: 'liga off, clig off',
-  transition: 'all 0.3s ease',
-
-  padding: '0 12px',
-  display: 'inline-flex',
-  textStyle: 'glyph16.bold',
-  height: '32px',
-  borderRadius: '32px',
-  lineHeight: '32px',
-});
-
-const selectedLinkCss = css(defaultLinkCss, {
-  color: 'white.white_75',
-  backgroundColor: 'white.white_10',
-});
-
-const nonSelectedLinkCss = css(defaultLinkCss, {
-  color: 'white.white_25',
-});

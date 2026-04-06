@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Banner } from '@gitanimals/ui-panda';
-import { css } from '../../styled-system/css';
+import { Button } from '@gitanimals/ui-tailwind';
 import { authUtils } from '@/utils';
 import { ROUTES } from '@/router/constants';
 import { useNavigate } from 'react-router-dom';
@@ -24,31 +22,16 @@ function MyPagePage() {
   };
 
   return (
-    <div
-      className={css({
-        padding: '2rem',
-        maxWidth: '800px',
-        margin: '0 auto',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '2rem',
-      })}
-    >
-      <h1
-        className={css({
-          fontSize: '2xl',
-          fontWeight: 'bold',
-          marginBottom: '2rem',
-        })}
-      >
-        {t('profile.title')}
-      </h1>
+    <div className="mx-auto flex max-w-[800px] flex-col gap-8 p-8">
+      <h1 className="mb-8 text-2xl font-bold">{t('profile.title')}</h1>
 
       <Button variant="secondary" size="s" onClick={handleLogout}>
         {t('settings.logout')}
       </Button>
 
-      <button onClick={() => navigate('/dev')}>dev</button>
+      <button type="button" onClick={() => navigate('/dev')}>
+        dev
+      </button>
     </div>
   );
 }

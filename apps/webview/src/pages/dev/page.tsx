@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Banner, Dialog } from '@gitanimals/ui-panda';
-import { css } from '_panda/css';
+import { Button, Banner, Dialog } from '@gitanimals/ui-tailwind';
 import { authUtils } from '@/utils';
 
 export default function DevPage() {
@@ -36,48 +35,15 @@ export default function DevPage() {
   };
 
   return (
-    <div
-      className={css({
-        padding: '2rem',
-        maxWidth: '800px',
-        margin: '0 auto',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '2rem',
-      })}
-    >
-      <div
-        className={css({
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '2rem',
-        })}
-      >
-        <h1
-          className={css({
-            fontSize: '2xl',
-            fontWeight: 'bold',
-          })}
-        >
-          {t('home.title')}
-        </h1>
+    <div className="mx-auto flex max-w-[800px] flex-col gap-8 p-8">
+      <div className="mb-8 flex items-center justify-between">
+        <h1 className="text-2xl font-bold">{t('home.title')}</h1>
       </div>
 
       {/* 인증 상태 정보 */}
-      <div
-        className={css({
-          padding: '1.5rem',
-          border: '1px solid',
-          borderColor: 'green.300',
-          borderRadius: 'md',
-          backgroundColor: 'green.50',
-        })}
-      >
-        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>
-          {t('auth.authentication_status')}
-        </h2>
-        <div className={css({ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: 'sm' })}>
+      <div className="rounded-md border border-green-300 bg-green-50 p-6">
+        <h2 className="mb-4 text-xl font-semibold">{t('auth.authentication_status')}</h2>
+        <div className="flex flex-col gap-2 text-sm">
           <div>
             {t('home.status')}: ✅ {t('auth.authenticated')}
           </div>
@@ -91,43 +57,23 @@ export default function DevPage() {
               : t('settings.unknown')}
           </div>
         </div>
-        <Button size="s" variant="secondary" onClick={handleRefreshToken} className={css({ marginTop: '1rem' })}>
+        <Button size="s" variant="secondary" onClick={handleRefreshToken} className="mt-4">
           {t('auth.refresh_token')}
         </Button>
       </div>
 
       {/* 사용자 프로필 정보 */}
       {userProfile && (
-        <div
-          className={css({
-            padding: '1.5rem',
-            border: '1px solid',
-            borderColor: 'blue.300',
-            borderRadius: 'md',
-            backgroundColor: 'blue.50',
-          })}
-        >
-          <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>
-            {t('home.user_profile')}
-          </h2>
-          <pre className={css({ fontSize: 'sm', whiteSpace: 'pre-wrap' })}>{JSON.stringify(userProfile, null, 2)}</pre>
+        <div className="rounded-md border border-blue-300 bg-blue-50 p-6">
+          <h2 className="mb-4 text-xl font-semibold">{t('home.user_profile')}</h2>
+          <pre className="whitespace-pre-wrap text-sm">{JSON.stringify(userProfile, null, 2)}</pre>
         </div>
       )}
 
       {/* API 테스트 섹션 */}
-      <div
-        className={css({
-          padding: '1.5rem',
-          border: '1px solid',
-          borderColor: 'gray.300',
-          borderRadius: 'md',
-          backgroundColor: 'white',
-        })}
-      >
-        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>
-          {t('home.api_testing')}
-        </h2>
-        <div className={css({ display: 'flex', gap: '1rem', flexWrap: 'wrap' })}>
+      <div className="rounded-md border border-gray-300 bg-white p-6">
+        <h2 className="mb-4 text-xl font-semibold">{t('home.api_testing')}</h2>
+        <div className="flex flex-wrap gap-4">
           <Button onClick={fetchUserProfile}>{t('home.fetch_profile')}</Button>
           <Button variant="secondary" onClick={() => setCount(count + 1)}>
             {t('home.counter')}: {count}
@@ -138,7 +84,10 @@ export default function DevPage() {
         </div>
       </div>
 
-      <Banner image="🎉" label={t('home.banner_message')} />
+      <Banner
+        image={<span className="text-5xl leading-none">🎉</span>}
+        label={t('home.banner_message')}
+      />
 
       <Dialog>
         <Dialog.Trigger asChild>
@@ -147,15 +96,15 @@ export default function DevPage() {
         <Dialog.Content>
           <Dialog.Title>{t('home.webview_info_title')}</Dialog.Title>
           <Dialog.Description>{t('home.webview_info_description')}</Dialog.Description>
-          <div className={css({ marginTop: '1rem' })}>
-            <h3 className={css({ fontWeight: 'semibold', marginBottom: '0.5rem' })}>{t('home.features')}:</h3>
-            <ul className={css({ listStyle: 'disc', paddingLeft: '1.5rem', fontSize: 'sm' })}>
+          <div className="mt-4">
+            <h3 className="mb-2 font-semibold">{t('home.features')}:</h3>
+            <ul className="list-disc pl-6 text-sm">
               {(t('home.features_list', { returnObjects: true }) as string[]).map((feature: string, index: number) => (
                 <li key={index}>{feature}</li>
               ))}
             </ul>
           </div>
-          <div className={css({ display: 'flex', gap: '1rem', justifyContent: 'flex-end', marginTop: '1rem' })}>
+          <div className="mt-4 flex justify-end gap-4">
             <Button variant="secondary">{t('common.close')}</Button>
           </div>
         </Dialog.Content>

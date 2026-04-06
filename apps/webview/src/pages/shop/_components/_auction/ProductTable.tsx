@@ -1,10 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { Suspense, useEffect, useState } from 'react';
 import type { Product } from '@gitanimals/api';
 import { auctionQueries, useBuyProduct, useDeleteProduct, userQueries } from '@gitanimals/react-query';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 

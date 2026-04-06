@@ -1,5 +1,4 @@
-import { Button } from '@gitanimals/ui-panda';
-import { css } from '../../styled-system/css';
+import { Button } from '@gitanimals/ui-tailwind';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -16,13 +15,13 @@ function NotFoundPage() {
   };
 
   return (
-    <main className={mainCss}>
-      <h1 className={h1Css}>404</h1>
-      <div className={pCss}>
+    <main className="flex min-h-[100dvh] flex-col items-center justify-center px-4 text-glyph-16 text-white">
+      <h1 className="mb-3 text-glyph-40 font-bold">404</h1>
+      <div className="mb-8 text-center [&_a]:text-blue-500 [&_a]:underline">
         <p>{t('notfound.title')}</p>
         <p>{t('notfound.description')}</p>
       </div>
-      <div className={buttonCss}>
+      <div className="flex w-full justify-center gap-4">
         <Button onClick={handleGoBack} variant="secondary">
           {t('common.back', { defaultValue: 'Back' })}
         </Button>
@@ -31,38 +30,5 @@ function NotFoundPage() {
     </main>
   );
 }
-
-const buttonCss = css({
-  display: 'flex',
-  justifyContent: 'center',
-  w: '100%',
-  gap: '16px',
-});
-
-const mainCss = css({
-  h: '100dvh',
-  textStyle: 'glyph16.regular',
-  padding: '0 16px',
-
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: 'white',
-});
-
-const h1Css = css({
-  textStyle: 'glyph40.bold',
-  marginBottom: '12px',
-});
-
-const pCss = css({
-  marginBottom: '32px',
-  textAlign: 'center',
-  '& a': {
-    textDecoration: 'underline',
-    color: 'blue',
-  },
-});
 
 export default NotFoundPage;

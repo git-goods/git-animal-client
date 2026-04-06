@@ -3,9 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "scripts": {
-    "prepare": "panda codegen",
     "dev": "vite --port 3000",
-    "prebuild": "panda codegen",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint 'src/**/*.{js,jsx,ts,tsx}' --fix",
@@ -17,8 +15,7 @@
     "@gitanimals/dayjs": "workspace:*",
     "@gitanimals/exception": "workspace:*",
     "@gitanimals/react-query": "workspace:*",
-    "@gitanimals/ui-panda": "workspace:*",
-    "@gitanimals/ui-token": "workspace:*",
+    "@gitanimals/ui-tailwind": "workspace:*",
     "@gitanimals/util-common": "workspace:*",
     "@suspensive/react": "^2.17.1",
     "@tanstack/react-query": "*",
@@ -38,13 +35,14 @@
   "devDependencies": {
     "@gitanimals/eslint-config": "workspace:*",
     "@gitanimals/typescript-config": "workspace:*",
-    "@pandacss/dev": "^0.41.0",
-    "@shadow-panda/preset": "^0.7.1",
     "@types/node": "*",
     "@types/react": "*",
     "@types/react-dom": "*",
     "@vitejs/plugin-react": "^4.3.0",
+    "autoprefixer": "^10.4.20",
     "eslint": "^8",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
     "typescript": "*",
     "vite": "^7.1.2"
   }

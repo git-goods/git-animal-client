@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { css } from '_panda/css';
 import { auctionQueries } from '@gitanimals/react-query';
 import { useQuery } from '@tanstack/react-query';
 
@@ -65,7 +64,7 @@ function HistoryTable() {
               personaLevel={product.persona.personaLevel}
               price={product.price}
               rightElement={
-                <span className={css({ textStyle: 'glyph15.regular', color: 'white.white' })}>
+                <span className="text-glyph-15 font-normal text-white">
                   {getHistoryActionLabel(product?.receipt.soldAt)}
                 </span>
               }

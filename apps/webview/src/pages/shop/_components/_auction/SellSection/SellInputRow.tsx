@@ -2,20 +2,15 @@
 import type { ChangeEventHandler } from 'react';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { auctionQueries, userQueries } from '@gitanimals/react-query';
-import { Button, Dialog } from '@gitanimals/ui-panda';
-import { snakeToTitleCase } from '@gitanimals/util-common';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
+
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { useGetPersonaTier } from '@/hooks/persona/useGetPersonaDropRate';
-import { ANIMAL_TIER_TEXT_MAP } from '@/utils/animals';
-import { getPersonaImage } from '@/utils/image';
+import { ShopTableMobileRow } from '../../_common/ShopTableMobileRow';
 
-import { rowStyle, ShopTableMobileRow } from '../../_common/ShopTableMobileRow';
-import { tableCss, theadCss } from '../table.styles';
 import { useRegisterProduct } from './useRegisterProduct';
 
 const MAX_PRICE = 100_000_000;
@@ -25,14 +20,19 @@ interface Props {
   initPersona: () => void;
 }
 
+const mobilePriceinputStyle =
+  'flex h-[55px] w-full items-start gap-2 rounded-lg border border-white/25 py-[14px] pl-5 pr-[14px] pb-[13px] pt-[14px] text-glyph-16 font-normal text-white-100 outline-none ' +
+  'placeholder:text-glyph-16 placeholder:font-normal placeholder:text-white/75 ' +
+  '[&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none';
+
+const buttonWrapperStyle = 'flex w-full justify-end gap-2';
+
 function SellInputRow({ item, initPersona }: Props) {
   const { t } = useTranslation('shop');
-  const { price, resetPrice } = usePrice();
+  const { resetPrice } = usePrice();
   const [isSellPriceModalOpen, setIsSellPriceModalOpen] = useState(false);
 
   const queryClient = useQueryClient();
-
-  const personaTier = useGetPersonaTier(item.type);
 
   const { mutate } = useRegisterProduct({
     onSuccess: () => {
@@ -45,19 +45,6 @@ function SellInputRow({ item, initPersona }: Props) {
       toast.success('판매 등록이 완료되었습니다.');
     },
   });
-
-  const onSellClick = async () => {
-    try {
-      if (!item) throw new Error('Item is not found');
-      if (!price) throw new Error('가격을 입력해주세요. ');
-
-      mutate({ personaId: item.id, price });
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      }
-    }
-  };
 
   return (
     <>
@@ -76,7 +63,6 @@ function SellInputRow({ item, initPersona }: Props) {
             variant="secondary"
             size="s"
             onClick={() => {
-              console.log('onClick: ');
               setIsSellPriceModalOpen(true);
             }}
           >
@@ -125,57 +111,6 @@ function SellPriceModal({
     </Dialog>
   );
 }
-
-const mobilePriceinputStyle = css({
-  display: 'flex',
-  height: '55px',
-  padding: '14px 14px 13px 20px',
-  alignItems: 'flex-start',
-  gap: '8px',
-  width: '100%',
-  outline: 'none',
-  borderRadius: '8px',
-  border: '1px solid rgba(255, 255, 255, 0.25)',
-  textStyle: 'glyph16.regular',
-  color: 'white.white_100',
-  '&::placeholder': {
-    textStyle: 'glyph16.regular',
-    color: 'white.white_75',
-  },
-  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-    WebkitAppearance: 'none',
-    margin: 0,
-  },
-});
-
-const buttonWrapperStyle = css({
-  display: 'flex',
-  justifyContent: 'flex-end',
-  gap: '8px',
-  width: '100%',
-});
-
-const inputStyle = css({
-  textStyle: 'glyph20.regular',
-
-  width: '100%',
-  height: '100%',
-  minHeight: '64px',
-  fontSize: '20px',
-  fontWeight: 700,
-  border: 'none',
-  outline: 'none',
-
-  '&::placeholder': {
-    textStyle: 'glyph20.regular',
-    color: 'white.white_25',
-  },
-
-  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-    WebkitAppearance: 'none',
-    margin: 0,
-  },
-});
 
 function usePrice() {
   const [price, setPrice] = useState<number | undefined>();

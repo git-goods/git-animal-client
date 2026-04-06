@@ -1,7 +1,7 @@
-import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Banner } from '@gitanimals/ui-panda';
+import { Banner } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { useQuery } from '@tanstack/react-query';
 
 import { customScrollStyle } from '@/styles/scrollStyle';
@@ -13,6 +13,9 @@ interface Props {
   onProductClick: (product: Persona) => void;
 }
 
+const listContainerStyle =
+  'flex max-h-[582px] flex-wrap gap-1 overflow-y-scroll max-mobile:max-h-[347px]';
+
 function PetList(props: Props) {
   const { username } = useUser();
 
@@ -21,10 +24,10 @@ function PetList(props: Props) {
   const personas = data?.personas || [];
 
   return (
-    <div className={cx(listContainerStyle, customScrollStyle)}>
+    <div className={cn(listContainerStyle, customScrollStyle)}>
       {personas.map((persona) => {
         return (
-          <button key={persona.id} onClick={() => props.onProductClick(persona)}>
+          <button key={persona.id} type="button" onClick={() => props.onProductClick(persona)}>
             <Banner
               size="small"
               status={props.selectedPersona?.id === persona.id ? 'selected' : 'default'}
@@ -38,15 +41,3 @@ function PetList(props: Props) {
 }
 
 export default PetList;
-
-const listContainerStyle = css({
-  display: 'flex',
-  flexWrap: 'wrap',
-  maxHeight: '582px',
-  overflowY: 'scroll',
-  gap: '4px',
-
-  _mobile: {
-    maxHeight: '347px',
-  },
-});
