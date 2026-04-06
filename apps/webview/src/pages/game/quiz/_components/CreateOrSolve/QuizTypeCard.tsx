@@ -1,5 +1,4 @@
-import { css, cx } from '_panda/css';
-import { Flex } from '_panda/jsx';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 interface QuizTypeCardProps {
   title: string;
@@ -13,13 +12,33 @@ interface QuizTypeCardProps {
 
 const QuizTypeCard = ({ title, description, image, point, onClick, isDisabled, disabledLabel }: QuizTypeCardProps) => {
   return (
-    <button className={cx(cardStyle, isDisabled && disabledStyle)} onClick={onClick} disabled={isDisabled}>
-      <img className={cx(imageStyle, isDisabled && disabledContentStyle)} src={image} alt={title} width={100} height={100} />
-      <Flex className={isDisabled ? disabledContentStyle : undefined} direction="column" gap="4px">
-        <h4 className={titleStyle}>{title}</h4>
-        <p className={descriptionStyle}>{description}</p>
-      </Flex>
-      <p className={isDisabled && disabledLabel ? disabledLabelStyle : pointStyle}>
+    <button
+      className={cn(
+        'relative flex w-full items-center gap-3 rounded-[10px] bg-white/25 px-6 py-10',
+        isDisabled && 'pointer-events-none',
+      )}
+      onClick={onClick}
+      disabled={isDisabled}
+    >
+      <img
+        className={cn('shrink-0', isDisabled && 'opacity-40 grayscale')}
+        src={image}
+        alt={title}
+        width={100}
+        height={100}
+      />
+      <div className={cn('flex flex-col gap-1', isDisabled && 'opacity-40 grayscale')}>
+        <h4 className="text-left font-product text-glyph-18 font-bold text-white">{title}</h4>
+        <p className="break-keep text-left font-product text-glyph-14 font-normal text-white/50">{description}</p>
+      </div>
+      <p
+        className={cn(
+          'absolute right-2 top-2 rounded-full px-3 py-0.5 font-product text-glyph-12',
+          isDisabled && disabledLabel
+            ? 'bg-white/50 font-bold text-white'
+            : 'bg-black/25 font-normal text-white/75',
+        )}
+      >
         {isDisabled && disabledLabel ? disabledLabel : point}
       </p>
     </button>
@@ -27,68 +46,3 @@ const QuizTypeCard = ({ title, description, image, point, onClick, isDisabled, d
 };
 
 export default QuizTypeCard;
-
-const cardStyle = css({
-  position: 'relative',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '12px',
-  width: '100%',
-  padding: '40px 24px',
-  backgroundColor: 'white.white_25',
-  borderRadius: '10px',
-});
-
-const disabledStyle = css({
-  pointerEvents: 'none',
-});
-
-const disabledContentStyle = css({
-  opacity: 0.4,
-  filter: 'grayscale(1)',
-});
-
-const imageStyle = css({
-  flexShrink: 0,
-});
-
-const titleStyle = css({
-  textStyle: 'glyph18.bold',
-  fontFamily: 'Product Sans',
-  fontWeight: 700,
-  color: 'white',
-  textAlign: 'left',
-});
-
-const descriptionStyle = css({
-  textStyle: 'glyph14.regular',
-  fontFamily: 'Product Sans',
-  fontWeight: 400,
-  color: 'white.white_50',
-  wordBreak: 'keep-all',
-  textAlign: 'left',
-});
-
-const disabledLabelStyle = css({
-  position: 'absolute',
-  top: '8px',
-  right: '8px',
-  padding: '2px 12px',
-  backgroundColor: 'white.white_50',
-  borderRadius: 'full',
-  textStyle: 'glyph12.regular',
-  fontWeight: 700,
-  color: 'white',
-});
-
-const pointStyle = css({
-  position: 'absolute',
-  top: '8px',
-  right: '8px',
-  padding: '2px 12px',
-  backgroundColor: 'black.black_25',
-  borderRadius: 'full',
-  textStyle: 'glyph12.regular',
-  fontWeight: 400,
-  color: 'white.white_75',
-});

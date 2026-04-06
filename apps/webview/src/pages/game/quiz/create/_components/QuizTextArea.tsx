@@ -1,7 +1,6 @@
 import type { ChangeEvent, ComponentProps } from 'react';
 import { useState } from 'react';
-import { css, cx } from '_panda/css';
-import { Flex } from '_panda/jsx';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import { customScrollStyle } from '@/styles/scrollStyle';
 
@@ -18,83 +17,33 @@ function QuizTextArea({ maxLength = 1000, ...props }: QuizTextAreaProps) {
   };
 
   return (
-    <div className={containerStyle}>
+    <div className="group relative overflow-hidden rounded-lg border border-white/25 transition-all duration-100 ease-in-out focus-within:border-white/50">
       <textarea
         {...props}
-        className={cx(props.className, textAreaStyle, customScrollStyle, props.error && 'error')}
+        className={cn(
+          props.className,
+          'h-40 w-full resize-none rounded-lg border-none bg-transparent py-4 pl-5 pr-3 pt-4 font-product text-glyph-14 font-normal text-white outline-none',
+          'placeholder:font-product placeholder:text-glyph-14 placeholder:font-normal placeholder:text-white/50',
+          customScrollStyle,
+          props.error && 'border border-[#FF6B56]',
+        )}
         onChange={onChange}
         maxLength={maxLength}
       />
-      <Flex justify="flex-end" align="center">
-        <div className={cx(textLenStyle, props.error && 'error')}>
-          <strong>{inputLen}</strong>
+      <div className="flex items-center justify-end">
+        <div
+          className={cn(
+            'relative pb-2 pr-3 pt-0 font-product text-glyph-12 font-normal text-white/50',
+            'group-focus-within:[&_strong]:text-[#00894d]',
+            props.error && 'text-[#FF6B56] [&_strong]:text-[#FF6B56]',
+          )}
+        >
+          <strong className="font-normal">{inputLen}</strong>
           <span>/{maxLength}</span>
         </div>
-      </Flex>
+      </div>
     </div>
   );
 }
 
 export default QuizTextArea;
-
-const textAreaStyle = css({
-  background: 'transparent',
-  border: 'none',
-  color: 'white',
-  padding: '16px 12px 2px 20px',
-  textStyle: 'glyph14.regular',
-  fontFamily: 'Product Sans',
-  fontWeight: 400,
-  borderRadius: '8px',
-  outline: 'none',
-  width: '100%',
-  height: '160px',
-  resize: 'none',
-
-  '&::placeholder': {
-    textStyle: 'glyph14.regular',
-    fontFamily: 'Product Sans',
-    fontWeight: 400,
-    color: 'white.white_50',
-  },
-
-  '&.error': {
-    border: '1px solid #FF6B56',
-  },
-});
-
-const textLenStyle = css({
-  position: 'relative',
-  color: 'white.white_50',
-  textStyle: 'glyph12.regular',
-  fontFamily: 'Product Sans',
-  fontWeight: 400,
-  padding: '0px 12px 8px 0px',
-
-  '& strong': {
-    fontWeight: 400,
-    color: 'white.white_50',
-  },
-
-  '&.error': {
-    color: '#FF6B56',
-  },
-});
-
-const containerStyle = css({
-  position: 'relative',
-  border: `1px solid white`,
-  borderColor: 'white.white_25',
-  borderRadius: '8px',
-  transition: 'all 0.1s ease-in-out',
-  overflow: 'hidden',
-
-  '&:focus-within': {
-    border: '1px solid white',
-    borderColor: 'white.white_50',
-
-    '& strong': {
-      color: '#00894d',
-    },
-  },
-});
