@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { css } from '_panda/css';
 import { createQuiz } from '@gitanimals/api';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { toast } from 'sonner';
 
 import QuizField from './QuizField';
@@ -91,7 +91,7 @@ const QuizCreateForm = () => {
   };
 
   return (
-    <form className={contentStyle}>
+    <form className="flex flex-col gap-6">
       <QuizField
         title={t('difficulty-level')}
         content={
@@ -146,7 +146,7 @@ const QuizCreateForm = () => {
           </Tabs>
         }
       />
-      <Button className={buttonStyle} disabled={!enabledToCreate || isCreating} onClick={handleCreateQuiz}>
+      <Button className={cn('mt-[70px] h-10 w-full')} disabled={!enabledToCreate || isCreating} onClick={handleCreateQuiz}>
         {t('create-quiz-button')}
       </Button>
     </form>
@@ -154,15 +154,3 @@ const QuizCreateForm = () => {
 };
 
 export default QuizCreateForm;
-
-const contentStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '24px',
-});
-
-const buttonStyle = css({
-  width: '100%',
-  height: '40px',
-  marginTop: '70px',
-});

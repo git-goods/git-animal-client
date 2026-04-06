@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { css } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { Button, Dialog } from '@gitanimals/ui-panda';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { useTranslation } from 'react-i18next';
 
 interface FailAlertDialogProps {
@@ -10,7 +9,7 @@ interface FailAlertDialogProps {
 }
 
 const FailAlertDialog = ({ onClose, isOpen }: FailAlertDialogProps) => {
-  const { t, i18n } = useTranslation('quiz');
+  const { t } = useTranslation('quiz');
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,12 +23,14 @@ const FailAlertDialog = ({ onClose, isOpen }: FailAlertDialogProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content className={contentStyle} isShowClose={false}>
-        <Flex flexDirection="column" alignItems="center" gap="12px" width="100%">
-          <Dialog.Title className={titleStyle}>{t('fail-dialog.title')}</Dialog.Title>
-          <Dialog.Description className={descriptionStyle}>{t('fail-dialog.description')}</Dialog.Description>
-        </Flex>
-        <div className={imageContainerStyle}>
+      <Dialog.Content className={cn('flex w-full flex-col items-center gap-3')} isShowClose={false}>
+        <div className="flex w-full flex-col items-center gap-3">
+          <Dialog.Title className={cn('!text-center font-product text-glyph-24 font-bold')}>{t('fail-dialog.title')}</Dialog.Title>
+          <Dialog.Description className={cn('break-keep text-center font-product text-glyph-16 font-normal text-white/75')}>
+            {t('fail-dialog.description')}
+          </Dialog.Description>
+        </div>
+        <div className="my-1 flex h-[160px] w-[160px] items-center justify-center">
           <img
             src="/assets/game/quiz/cursor-unchoiced.webp"
             alt="quiz-failed"
@@ -38,51 +39,14 @@ const FailAlertDialog = ({ onClose, isOpen }: FailAlertDialogProps) => {
             draggable={false}
           />
         </div>
-        <Flex width="100%">
-          <Button className={buttonStyle} onClick={handleClose} variant="secondary" size="m">
+        <div className="w-full">
+          <Button className={cn('w-full')} onClick={handleClose} variant="secondary" size="m">
             {t('fail-dialog.close-button')}
           </Button>
-        </Flex>
+        </div>
       </Dialog.Content>
     </Dialog>
   );
 };
 
 export default FailAlertDialog;
-
-const buttonStyle = css({
-  width: '100%',
-});
-
-const contentStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '12px',
-  width: '100%',
-});
-
-const titleStyle = css({
-  textStyle: 'glyph24.bold !important',
-  fontFamily: 'Product Sans',
-  fontWeight: 700,
-  textAlign: 'center !important',
-});
-
-const descriptionStyle = css({
-  textStyle: 'glyph16.regular',
-  fontFamily: 'Product Sans',
-  fontWeight: 400,
-  textAlign: 'center',
-  color: 'white.white_75',
-  wordBreak: 'keep-all',
-});
-
-const imageContainerStyle = css({
-  width: '160px',
-  height: '160px',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginBlock: '4px',
-});

@@ -1,4 +1,6 @@
-@layer reset, base, tokens, recipes, utilities;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @font-face {
   font-family: 'DNFBitBitv2';
@@ -14,7 +16,7 @@
   font-style: normal;
 }
 
-@layer reset {
+@layer base {
   *,
   *::before,
   *::after {

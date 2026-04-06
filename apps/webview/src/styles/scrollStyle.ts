@@ -1,31 +1,6 @@
-import { css } from '_panda/css';
+/** Scrollbar styling via Tailwind arbitrary variants */
+export const customScrollStyle =
+  '[&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:rounded [&::-webkit-scrollbar-track]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded [&::-webkit-scrollbar-thumb]:bg-white/25';
 
-export const customScrollStyle = css({
-  '&::-webkit-scrollbar': {
-    height: '4px',
-    width: '4px',
-  },
-  '&::-webkit-scrollbar-track': {
-    backgroundColor: 'white.white_10',
-    borderRadius: '2px',
-  },
-  '&::-webkit-scrollbar-thumb': {
-    backgroundColor: 'white.white_25',
-    borderRadius: '2px',
-  },
-});
-
-export const customScrollHorizontalStyle = css({
-  '&::-webkit-scrollbar': {
-    height: '10px',
-    width: '4px',
-  },
-  '&::-webkit-scrollbar-track': {
-    backgroundColor: 'white.white_10',
-    borderRadius: '2px',
-  },
-  '&::-webkit-scrollbar-thumb': {
-    backgroundColor: 'white.white_25',
-    borderRadius: '2px',
-  },
-});
+export const customScrollHorizontalStyle =
+  '[&::-webkit-scrollbar]:h-[10px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:rounded [&::-webkit-scrollbar-track]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded [&::-webkit-scrollbar-thumb]:bg-white/25';

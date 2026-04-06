@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { css } from '_panda/css';
 import { getOnlyPet } from '@gitanimals/api';
 
 import { Character } from './Character';
@@ -85,8 +84,8 @@ export default function CharacterView() {
   }, [snowmanSvg, foxSvg]);
 
   return (
-    <div className={containerStyle}>
-      <svg xmlns="http://www.w3.org/2000/svg" className={svgStyle} viewBox="0 0 375 199" fill="none">
+    <div className="h-[55%]">
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-full w-full" viewBox="0 0 375 199" fill="none">
         {snowmanSvg && (
           <g ref={snowmanElementRef} id="snowman-container" dangerouslySetInnerHTML={{ __html: snowmanSvg }}></g>
         )}
@@ -95,13 +94,3 @@ export default function CharacterView() {
     </div>
   );
 }
-
-const containerStyle = css({
-  h: '55%',
-  // border: '1px solid white',
-});
-
-const svgStyle = css({
-  w: '100%',
-  h: '100%',
-});

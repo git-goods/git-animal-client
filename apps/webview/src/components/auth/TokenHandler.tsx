@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { authUtils } from '../../utils';
 
 interface TokenHandlerProps {

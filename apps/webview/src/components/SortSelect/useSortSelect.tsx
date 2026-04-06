@@ -1,5 +1,3 @@
-import { Flex } from '_panda/jsx';
-
 import { OrderTypeSelect, useOrderTypeSelect } from './OrderTypeSelect';
 import { SortDirectionSelect, useSortDirectionSelect } from './SortDirectionSelect';
 
@@ -14,10 +12,10 @@ export function useSortSelect() {
 
   const SortElement = () => {
     return (
-      <Flex gap="4px" alignItems="center">
+      <div className="flex items-center gap-1">
         <OrderTypeSelect onSelect={(option) => setOrderType(option)} />
         <SortDirectionSelect onSelect={(option) => setSortDirection(option)} />
-      </Flex>
+      </div>
     );
   };
 

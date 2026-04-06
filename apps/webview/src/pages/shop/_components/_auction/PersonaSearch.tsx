@@ -2,10 +2,9 @@
 
 import { useState } from 'react';
 import React from 'react';
-import { css, cx } from '_panda/css';
-import { center } from '_panda/patterns';
 import { auctionQueries } from '@gitanimals/react-query';
-import { Banner, Dialog } from '@gitanimals/ui-panda';
+import { Banner, Dialog } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { LoaderIcon, SearchIcon, XIcon } from 'lucide-react';
@@ -36,18 +35,26 @@ interface PersonaSearchProps {
   selected?: string | null;
 }
 
-const buttonWrapperStyle = center({
-  w: '36px',
-  h: '36px',
-  backgroundColor: 'white.white_25',
-  borderRadius: '10px',
-});
+const buttonWrapperStyle =
+  'flex h-9 w-9 items-center justify-center rounded-[10px] bg-white/25';
+
+const containerStyle = 'flex flex-col items-center justify-center';
+
+const selectedPersonaWrapperStyle = 'mb-4 flex w-full justify-start max-mobile:my-6';
+
+const selectedPersonaTagStyle =
+  'flex h-9 items-center gap-0.5 rounded-lg bg-white/25 px-2 text-glyph-16 font-bold text-white/90 max-mobile:h-[30px] max-mobile:px-3 max-mobile:text-glyph-12 max-mobile:font-normal max-mobile:text-white/50';
+
+const personaListHeadingStyle =
+  'my-3 text-left text-glyph-18 font-bold text-white max-mobile:text-glyph-16';
+
+const personaListStyle = 'flex flex-wrap gap-1';
 
 export const PersonaSearch = wrap
   .ErrorBoundary({ fallback: <></> })
   .Suspense({
     fallback: (
-      <button className={buttonWrapperStyle}>
+      <button type="button" className={buttonWrapperStyle}>
         <LoaderIcon />
       </button>
     ),
@@ -68,7 +75,7 @@ export const PersonaSearch = wrap
 
     return (
       <>
-        <button className={buttonWrapperStyle} onClick={() => setIsOpen(true)}>
+        <button type="button" className={buttonWrapperStyle} onClick={() => setIsOpen(true)}>
           <SearchIcon color="rgba(255, 255, 255, 0.5)" width={20} height={20} />
         </button>
 
@@ -80,19 +87,24 @@ export const PersonaSearch = wrap
                 <div className={selectedPersonaTagStyle}>
                   <span>Selected Persona</span>
                   <span>{selected}</span>
-                  <button onClick={() => onSelect('')}>
+                  <button type="button" onClick={() => onSelect('')}>
                     <XIcon width={20} height={20} color="#ffffff5d" />
                   </button>
                 </div>
               )}
             </div>
-            <div className={contentStyle}>
+            <div
+              className={cn(
+                'flex flex-1 flex-col justify-center gap-1 overflow-auto',
+                customScrollStyle,
+              )}
+            >
               {Object.values(EVENT).map((event) => (
                 <React.Fragment key={event.label}>
                   <h4 className={personaListHeadingStyle}>{event.label}</h4>
                   <div className={personaListStyle}>
                     {event.personaTypeList.map((type) => (
-                      <button key={type} onClick={() => onClick(type)}>
+                      <button key={type} type="button" onClick={() => onClick(type)}>
                         <Banner
                           size="small"
                           image={getPersonaImage(type)}
@@ -108,7 +120,7 @@ export const PersonaSearch = wrap
                   <h4 className={personaListHeadingStyle}>Other</h4>
                   <div className={personaListStyle}>
                     {filteredPersonaTypeList.map((type) => (
-                      <button key={type.name} onClick={() => onClick(type.name)}>
+                      <button key={type.name} type="button" onClick={() => onClick(type.name)}>
                         <Banner
                           size="small"
                           image={getPersonaImage(type.name)}
@@ -125,68 +137,3 @@ export const PersonaSearch = wrap
       </>
     );
   });
-
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
-
-const selectedPersonaWrapperStyle = css({
-  display: 'flex',
-  justifyContent: 'flex-start',
-  width: '100%',
-  marginBottom: '16px',
-
-  _mobile: {
-    mb: 0,
-    margin: '24px 0',
-  },
-});
-
-const selectedPersonaTagStyle = css({
-  textStyle: 'glyph16.bold',
-  color: 'white.white_90',
-  borderRadius: '8px',
-  background: 'rgba(255, 255, 255, 0.25)',
-  h: '36px',
-  display: 'flex',
-  gap: '2px',
-  alignItems: 'center',
-  px: '8px',
-
-  _mobile: {
-    textStyle: 'glyph12.regular',
-    color: 'white.white_50',
-    h: '30px',
-    px: '12px',
-  },
-});
-
-const contentStyle = cx(
-  css({
-    flex: 1,
-    overflow: 'auto',
-    gap: '4px',
-    justifyContent: 'center',
-  }),
-  customScrollStyle,
-);
-
-const personaListHeadingStyle = css({
-  textStyle: 'glyph18.bold',
-  color: 'white',
-  textAlign: 'left',
-  my: '12px',
-
-  _mobile: {
-    textStyle: 'glyph16.bold',
-  },
-});
-
-const personaListStyle = css({
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: '4px',
-});

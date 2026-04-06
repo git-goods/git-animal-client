@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Button, Banner } from '@gitanimals/ui-panda';
-import { css } from '../../styled-system/css';
+import { Button, Banner } from '@gitanimals/ui-tailwind';
 import { authUtils } from '../utils';
 import { ROUTES } from '../router/constants';
 
@@ -10,83 +9,30 @@ function AboutPage() {
   const isAuthenticated = authUtils.isAuthenticated();
 
   return (
-    <div
-      className={css({
-        padding: '2rem',
-        maxWidth: '800px',
-        margin: '0 auto',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '2rem',
-      })}
-    >
-      <h1
-        className={css({
-          fontSize: '2xl',
-          fontWeight: 'bold',
-          marginBottom: '2rem',
-        })}
-      >
-        {t('about.title')}
-      </h1>
+    <div className="mx-auto flex max-w-[800px] flex-col gap-8 p-8">
+      <h1 className="mb-8 text-2xl font-bold">{t('about.title')}</h1>
 
-      <div
-        className={css({
-          padding: '2rem',
-          border: '1px solid',
-          borderColor: 'gray.300',
-          borderRadius: 'md',
-          backgroundColor: 'white',
-        })}
-      >
-        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>
-          {t('about.what_is_title')}
-        </h2>
-        <p className={css({ marginBottom: '1rem', lineHeight: '1.6' })}>
-          {t('about.description_1')}
-        </p>
-        <p className={css({ marginBottom: '1rem', lineHeight: '1.6' })}>
-          {t('about.description_2')}
-        </p>
+      <div className="rounded-md border border-gray-300 bg-white p-8">
+        <h2 className="mb-4 text-xl font-semibold">{t('about.what_is_title')}</h2>
+        <p className="mb-4 leading-relaxed">{t('about.description_1')}</p>
+        <p className="mb-4 leading-relaxed">{t('about.description_2')}</p>
       </div>
 
-      <div
-        className={css({
-          padding: '2rem',
-          border: '1px solid',
-          borderColor: 'blue.300',
-          borderRadius: 'md',
-          backgroundColor: 'blue.50',
-        })}
-      >
-        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>
-          {t('about.features_title')}
-        </h2>
-        <ul className={css({ listStyle: 'disc', paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' })}>
+      <div className="rounded-md border border-blue-300 bg-blue-50 p-8">
+        <h2 className="mb-4 text-xl font-semibold">{t('about.features_title')}</h2>
+        <ul className="flex list-disc flex-col gap-2 pl-6">
           {(t('about.features_list', { returnObjects: true }) as string[]).map((feature: string, index: number) => (
             <li key={index}>{feature}</li>
           ))}
         </ul>
       </div>
 
-      <div
-        className={css({
-          padding: '2rem',
-          border: '1px solid',
-          borderColor: 'green.300',
-          borderRadius: 'md',
-          backgroundColor: 'green.50',
-        })}
-      >
-        <h2 className={css({ fontSize: 'xl', fontWeight: 'semibold', marginBottom: '1rem' })}>
-          {t('about.get_started_title')}
-        </h2>
+      <div className="rounded-md border border-green-300 bg-green-50 p-8">
+        <h2 className="mb-4 text-xl font-semibold">{t('about.get_started_title')}</h2>
         {isAuthenticated ? (
           <div>
-            <p className={css({ marginBottom: '1rem' })}>
-              {t('about.authenticated_description')}
-            </p>
-            <div className={css({ display: 'flex', gap: '1rem', flexWrap: 'wrap' })}>
+            <p className="mb-4">{t('about.authenticated_description')}</p>
+            <div className="flex flex-wrap gap-4">
               <Link to={ROUTES.HOME}>
                 <Button>{t('about.go_to_dashboard')}</Button>
               </Link>
@@ -97,9 +43,7 @@ function AboutPage() {
           </div>
         ) : (
           <div>
-            <p className={css({ marginBottom: '1rem' })}>
-              {t('about.not_authenticated_description')}
-            </p>
+            <p className="mb-4">{t('about.not_authenticated_description')}</p>
             <Link to={ROUTES.AUTH}>
               <Button>{t('about.get_started_button')}</Button>
             </Link>
@@ -107,10 +51,7 @@ function AboutPage() {
         )}
       </div>
 
-      <Banner 
-        image="🐾" 
-        label={t('about.banner_message')} 
-      />
+      <Banner image={<span className="text-5xl leading-none">🐾</span>} label={t('about.banner_message')} />
     </div>
   );
 }

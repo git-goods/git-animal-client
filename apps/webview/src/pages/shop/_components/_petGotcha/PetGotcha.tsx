@@ -1,29 +1,34 @@
 'use client';
 
 import { useState } from 'react';
-import { css } from '_panda/css';
 import { userQueries } from '@gitanimals/react-query';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 
 import OnePet from './OnePet';
 import { TenPet } from './TenPet';
-import { useTranslation } from 'react-i18next';
 
 export function PetGotcha() {
   const { t } = useTranslation('gotcha');
   const [openModal, setOpenModal] = useState<'one-pet' | 'ten-pet' | 'ratio-chart' | 'one-pet-1' | null>(null);
 
   return (
-    <div className={containerStyle}>
-      <img src="/assets/shop/pet-gotcha-bg-m.webp" alt="pet-gotcha-bg" className={bgStyle} width={375} height={621} />
-      <h1 className={headingStyle}>Pet Gotcha</h1>
-      <p className={descStyle}>{t('pet-gotcha-desc')}</p>
+    <div className="relative flex flex-col items-center justify-center py-[100px]">
+      <img
+        src="/assets/shop/pet-gotcha-bg-m.webp"
+        alt="pet-gotcha-bg"
+        className="absolute left-0 top-0 z-0 h-full w-full object-cover"
+        width={375}
+        height={621}
+      />
+      <h1 className="font-product text-glyph-40 font-bold text-white">Pet Gotcha</h1>
+      <p className="mt-2 font-product text-glyph-16 text-white">{t('pet-gotcha-desc')}</p>
 
       <ButtonWrapper onClickOnePet={() => setOpenModal('one-pet')} onClickTenPet={() => setOpenModal('ten-pet')} />
 
-      <div className={petContainerStyle}>
+      <div className="mt-20 w-full px-4 [&_img]:mx-auto [&_img]:object-contain">
         <img src="/assets/shop/pet-gotcha-image-card.webp" alt="pet-gotcha-pet" width={1120} height={530} />
       </div>
       {openModal === 'one-pet' && <OnePet onClose={() => setOpenModal(null)} />}
@@ -55,7 +60,7 @@ const ButtonWrapper = wrap
     const points = Number(data.points);
 
     return (
-      <div className={buttonContainerStyle}>
+      <div className="mt-5 flex gap-2 px-4">
         <Button size="s" onClick={onClickOnePet} disabled={points < 1_000}>
           Get 1 Pet - 1,000pts
         </Button>
@@ -65,51 +70,3 @@ const ButtonWrapper = wrap
       </div>
     );
   });
-
-const containerStyle = css({
-  position: 'relative',
-  padding: '100px 0',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
-
-const bgStyle = css({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  zIndex: 'hide',
-  objectFit: 'cover',
-});
-
-const headingStyle = css({
-  textStyle: 'glyph40.bold',
-  color: 'white',
-});
-
-const descStyle = css({
-  textStyle: 'glyph16.regular',
-  color: 'white',
-  marginTop: '8px',
-});
-
-const buttonContainerStyle = css({
-  display: 'flex',
-
-  gap: '8px',
-  paddingInline: '16px',
-  marginTop: '20px',
-});
-
-const petContainerStyle = css({
-  '& img': {
-    objectFit: 'contain',
-    margin: '0 auto',
-  },
-  width: '100%',
-  paddingInline: '16px',
-  marginTop: '80px',
-});

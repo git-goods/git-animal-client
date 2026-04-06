@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { css, cx } from '_panda/css';
 import type { GotchaResult } from '@gitanimals/api';
 import { motion } from 'framer-motion';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import { AnimalCard } from '@/components/AnimalCard';
 import { AnimalCardBack } from '@/components/AnimalCard/AnimalCard';
@@ -16,54 +16,33 @@ const Card = ({
   isFlipped: boolean;
 }) => {
   return (
-    <button className={cardStyle} onClick={onClick}>
+    <button
+      type="button"
+      className="relative aspect-[109/135] h-auto w-1/5 cursor-pointer max-mobile:w-[30%] [perspective:1000px]"
+      onClick={onClick}
+    >
       <motion.div
-        className={cardInnerStyle}
+        className="relative h-full w-full [transform-style:preserve-3d]"
         initial={false}
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ duration: 0.6, ease: 'easeInOut' }}
       >
-        <div className={cx(cardFaceStyle, cardBackFaceStyle)}>
+        <div
+          className={cn(
+            'absolute h-full w-full rounded-xl shadow-md [backface-visibility:hidden] [transform:rotateY(180deg)]',
+          )}
+        >
           {persona && <AnimalCard type={persona.name} dropRate={persona.dropRate} />}
         </div>
-        <div className={cx(cardFaceStyle, cardFrontFaceStyle)}>
+        <div
+          className={cn('absolute h-full w-full rounded-xl shadow-md [backface-visibility:hidden]')}
+        >
           <AnimalCardBack tier="S_PLUS" />
         </div>
       </motion.div>
     </button>
   );
 };
-
-const cardStyle = css({
-  position: 'relative',
-  cursor: 'pointer',
-  width: '20%',
-  perspective: '1000px',
-  aspectRatio: '109/135',
-  height: 'auto',
-
-  _mobile: {
-    width: '30%',
-  },
-});
-
-const cardInnerStyle = css({
-  width: '100%',
-  height: '100%',
-  position: 'relative',
-  transformStyle: 'preserve-3d',
-});
-
-const cardFaceStyle = css({
-  position: 'absolute',
-  width: '100%',
-  height: '100%',
-  borderRadius: 'xl',
-  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-});
-
-const cardFrontFaceStyle = css({ backfaceVisibility: 'hidden' });
-const cardBackFaceStyle = css({ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' });
 
 export const TenCardFlipGame = ({
   onGetPersona,
@@ -107,10 +86,10 @@ export const TenCardFlipGame = ({
 
   return (
     <>
-      <div className={gameContainerStyle}>
-        <div className={cardGridStyle}>
-          <div className={rowStyle}>
-            <div className={cardRowStyle}>
+      <div className="w-full">
+        <div className="flex flex-col gap-6">
+          <div className="grid grid-rows-2 gap-3 max-mobile:flex max-mobile:w-full max-mobile:flex-wrap max-mobile:items-center max-mobile:justify-center max-mobile:gap-2">
+            <div className="flex justify-center gap-3 max-mobile:w-full max-mobile:flex-wrap max-mobile:items-center max-mobile:justify-center max-mobile:gap-2">
               {[0, 1, 2, 3, 4].map((index) => (
                 <Card
                   key={index}
@@ -121,7 +100,7 @@ export const TenCardFlipGame = ({
               ))}
             </div>
             {/* 하단 행 */}
-            <div className={cardRowStyle}>
+            <div className="flex justify-center gap-3 max-mobile:w-full max-mobile:flex-wrap max-mobile:items-center max-mobile:justify-center max-mobile:gap-2">
               {[5, 6, 7, 8, 9].map((index) => (
                 <Card
                   key={index}
@@ -137,42 +116,3 @@ export const TenCardFlipGame = ({
     </>
   );
 };
-
-const gameContainerStyle = css({
-  width: '100%',
-});
-
-const cardGridStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '6',
-});
-
-const rowStyle = css({
-  display: 'grid',
-  gridTemplateRows: '2',
-  gap: '12px',
-
-  _mobile: {
-    width: '100%',
-    gap: '8px',
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-const cardRowStyle = css({
-  display: 'flex',
-  gap: '12px',
-  justifyContent: 'center',
-
-  _mobile: {
-    width: '100%',
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

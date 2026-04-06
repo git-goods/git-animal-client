@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Product } from '@gitanimals/api';
 import { auctionQueries } from '@gitanimals/react-query';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { useQuery } from '@tanstack/react-query';
 
 import Pagination from '@/components/Pagination/Pagination';

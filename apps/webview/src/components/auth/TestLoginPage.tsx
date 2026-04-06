@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Button, Banner } from '@gitanimals/ui-panda';
-import { css } from '../../../styled-system/css';
+import { Button } from '@gitanimals/ui-tailwind';
 import { authUtils } from '../../utils';
 
 interface TestLoginPageProps {
@@ -25,40 +24,10 @@ export function TestLoginPage({ onClose }: TestLoginPageProps) {
   };
 
   return (
-    <div
-      className={css({
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 1000,
-      })}
-    >
-      <div
-        className={css({
-          backgroundColor: 'white',
-          padding: '2rem',
-          borderRadius: 'lg',
-          maxWidth: '400px',
-          width: '90%',
-          maxHeight: '80vh',
-          overflowY: 'auto',
-        })}
-      >
-        <div
-          className={css({
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '2rem',
-          })}
-        >
-          <h2 className={css({ fontSize: 'xl', fontWeight: 'bold' })}>Test Login</h2>
+    <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50">
+      <div className="max-h-[80vh] w-[90%] max-w-[400px] overflow-y-auto rounded-lg bg-white p-8">
+        <div className="mb-8 flex items-center justify-between">
+          <h2 className="text-xl font-bold">Test Login</h2>
           {onClose && (
             <Button variant="secondary" size="s" onClick={onClose}>
               ✕
@@ -66,65 +35,34 @@ export function TestLoginPage({ onClose }: TestLoginPageProps) {
           )}
         </div>
 
-        <div
-          className={css({
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1rem',
-          })}
-        >
+        <div className="flex flex-col gap-4">
           {/* GitHub OAuth 로그인 */}
-          <div
-            className={css({
-              padding: '1rem',
-              border: '1px solid',
-              borderColor: 'gray.200',
-              borderRadius: 'md',
-            })}
-          >
-            <h3 className={css({ fontWeight: 'semibold', marginBottom: '0.5rem' })}>GitHub OAuth Login</h3>
+          <div className="rounded-md border border-gray-200 p-4">
+            <h3 className="mb-2 font-semibold">GitHub OAuth Login</h3>
             <a href="https://api.gitanimals.org/logins/oauth/github/by-redirect-when-success/LOCAL">LOGIN</a>
-            <p className={css({ fontSize: 'sm', color: 'gray.600', marginBottom: '1rem' })}>
+            <p className="mb-4 text-sm text-gray-600">
               Login using GitHub OAuth (requires backend integration)
             </p>
           </div>
 
           {/* 수동 토큰 입력 */}
-          <div
-            className={css({
-              padding: '1rem',
-              border: '1px solid',
-              borderColor: 'gray.200',
-              borderRadius: 'md',
-            })}
-          >
-            <h3 className={css({ fontWeight: 'semibold', marginBottom: '0.5rem' })}>Manual Token Input</h3>
-            <p className={css({ fontSize: 'sm', color: 'gray.600', marginBottom: '1rem' })}>
-              Paste your JWT token manually
-            </p>
+          <div className="rounded-md border border-gray-200 p-4">
+            <h3 className="mb-2 font-semibold">Manual Token Input</h3>
+            <p className="mb-4 text-sm text-gray-600">Paste your JWT token manually</p>
 
             {!showManualInput ? (
               <Button variant="secondary" size="s" onClick={() => setShowManualInput(true)}>
                 Show Token Input
               </Button>
             ) : (
-              <div className={css({ display: 'flex', flexDirection: 'column', gap: '0.5rem' })}>
+              <div className="flex flex-col gap-2">
                 <textarea
                   value={manualToken}
                   onChange={(e) => setManualToken(e.target.value)}
                   placeholder="Paste JWT token here..."
-                  className={css({
-                    width: '100%',
-                    height: '80px',
-                    padding: '0.5rem',
-                    border: '1px solid',
-                    borderColor: 'gray.300',
-                    borderRadius: 'sm',
-                    fontSize: 'sm',
-                    resize: 'vertical',
-                  })}
+                  className="h-20 w-full resize-y rounded-sm border border-gray-300 p-2 text-sm"
                 />
-                <div className={css({ display: 'flex', gap: '0.5rem' })}>
+                <div className="flex gap-2">
                   <Button size="s" onClick={handleManualTokenSubmit} disabled={!manualToken.trim()}>
                     Submit Token
                   </Button>

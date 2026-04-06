@@ -1,7 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@gitanimals/ui-panda';
-import { css } from '../../../styled-system/css';
+import { Button } from '@gitanimals/ui-tailwind';
 import { authUtils } from '../../utils';
 import { ROUTES } from '../../router/constants';
 // import LanguageSwitcher from '../LanguageSwitcher';
@@ -32,51 +31,22 @@ function Navigation() {
   const navItems = isAuthenticated ? protectedNavItems : publicNavItems;
 
   return (
-    <nav
-      className={css({
-        padding: '1rem',
-        borderBottom: '1px solid',
-        borderColor: 'gray.200',
-        backgroundColor: 'white',
-        position: 'sticky',
-        top: 0,
-        zIndex: 10,
-      })}
-    >
-      <div
-        className={css({
-          maxWidth: '800px',
-          margin: '0 auto',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        })}
-      >
-        <div className={css({ display: 'flex', gap: '1rem', alignItems: 'center' })}>
+    <nav className="sticky top-0 z-10 border-b border-gray-200 bg-white p-4">
+      <div className="mx-auto flex max-w-[800px] items-center justify-between">
+        <div className="flex items-center gap-4">
           <Link to={isAuthenticated ? ROUTES.HOME : ROUTES.ABOUT}>
-            <h1 className={css({ fontSize: 'lg', fontWeight: 'bold', cursor: 'pointer' })}>GitAnimals</h1>
+            <h1 className="cursor-pointer text-lg font-bold">GitAnimals</h1>
           </Link>
-          <div className={css({ display: 'flex', gap: '0.5rem' })}>
+          <div className="flex gap-2">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={css({
-                  padding: '0.5rem 1rem',
-                  borderRadius: 'md',
-                  textDecoration: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  fontSize: 'sm',
-                  transition: 'all 0.2s',
-                  backgroundColor: location.pathname === item.path ? 'blue.100' : 'transparent',
-                  color: location.pathname === item.path ? 'blue.700' : 'gray.600',
-                  _hover: {
-                    backgroundColor: 'blue.50',
-                    color: 'blue.600',
-                  },
-                })}
+                className={
+                  location.pathname === item.path
+                    ? 'flex items-center gap-2 rounded-md bg-blue-100 px-4 py-2 text-sm text-blue-700 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600'
+                    : 'flex items-center gap-2 rounded-md bg-transparent px-4 py-2 text-sm text-gray-600 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600'
+                }
               >
                 <span>{item.icon}</span>
                 <span>{item.label}</span>
@@ -85,7 +55,7 @@ function Navigation() {
           </div>
         </div>
 
-        <div className={css({ display: 'flex', gap: '0.5rem', alignItems: 'center' })}>
+        <div className="flex items-center gap-2">
           {/* <LanguageSwitcher /> */}
           {!isAuthenticated && (
             <Link to={ROUTES.ABOUT}>

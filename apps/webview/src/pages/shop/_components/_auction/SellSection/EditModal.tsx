@@ -1,12 +1,20 @@
 'use client';
 
 import React, { useState } from 'react';
-import { css } from '_panda/css';
 import { auctionQueries, useChangeProductPrice, useDeleteProduct, userQueries } from '@gitanimals/react-query';
-import { Button, Dialog } from '@gitanimals/ui-panda';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
+
+const titleStyle = 'w-full text-left text-glyph-20 font-normal text-white-100';
+
+const inputStyle =
+  'flex h-[55px] w-full items-start gap-2 rounded-lg border border-white/25 py-[14px] pl-5 pr-[14px] pb-[13px] text-glyph-16 font-normal text-white-100 outline-none ' +
+  'placeholder:text-glyph-16 placeholder:font-normal placeholder:text-white/75 ' +
+  '[&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none';
+
+const buttonWrapperStyle = 'flex w-full justify-end gap-2';
 
 function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: () => void; productId?: string }) {
   const queryClient = useQueryClient();
@@ -82,39 +90,3 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
 }
 
 export default EditModal;
-
-const titleStyle = css({
-  textStyle: 'glyph20.regular',
-  textAlign: 'left',
-  color: 'white.white_100',
-  width: '100%',
-});
-
-const inputStyle = css({
-  display: 'flex',
-  height: '55px',
-  padding: '14px 14px 13px 20px',
-  alignItems: 'flex-start',
-  gap: '8px',
-  width: '100%',
-  outline: 'none',
-  borderRadius: '8px',
-  border: '1px solid rgba(255, 255, 255, 0.25)',
-  textStyle: 'glyph16.regular',
-  color: 'white.white_100',
-  '&::placeholder': {
-    textStyle: 'glyph16.regular',
-    color: 'white.white_75',
-  },
-  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-    WebkitAppearance: 'none',
-    margin: 0,
-  },
-});
-
-const buttonWrapperStyle = css({
-  display: 'flex',
-  justifyContent: 'flex-end',
-  gap: '8px',
-  width: '100%',
-});

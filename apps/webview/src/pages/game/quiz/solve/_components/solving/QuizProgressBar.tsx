@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { css, cx } from '_panda/css';
 import { dayjs } from '@gitanimals/dayjs';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 interface QuizProgressBarProps {
   onTimeout: () => void;
@@ -48,30 +48,16 @@ const QuizProgressBar = ({ onTimeout, timeoutAt, paused }: QuizProgressBarProps)
   }, [progress, onTimeout]);
 
   return (
-    <div className={progressBarStyle}>
-      <div className={cx(progressBarFillStyle, warning && warningStyle)} style={{ width: `${progress}%` }} />
+    <div className="h-1 w-full overflow-hidden rounded bg-white/25">
+      <div
+        className={cn(
+          'h-full rounded transition-[width,background-color] duration-100 ease-linear',
+          warning ? 'animate-pulse bg-red-500' : 'bg-white',
+        )}
+        style={{ width: `${progress}%` }}
+      />
     </div>
   );
 };
 
 export default QuizProgressBar;
-
-const progressBarStyle = css({
-  width: '100%',
-  height: '4px',
-  backgroundColor: 'white.white_25',
-  borderRadius: '4px',
-  overflow: 'hidden',
-});
-
-const progressBarFillStyle = css({
-  height: '100%',
-  backgroundColor: 'white',
-  borderRadius: '4px',
-  transition: 'width 0.1s linear, background-color 0.1s linear',
-});
-
-const warningStyle = css({
-  backgroundColor: 'red.500',
-  animation: 'pulse 1s infinite',
-});

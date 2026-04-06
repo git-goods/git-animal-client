@@ -1,19 +1,16 @@
 import { ROUTES } from '@/router/constants';
-import { css } from '_panda/css';
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { isWebView } from './appEnv';
 import { NATIVE_CUSTOM_EVENTS } from '../../constants/app';
 import { getCustomEventMessage } from '@/lib/message';
 import { authUtils } from '@/utils';
-import { Button } from '@gitanimals/ui-panda';
 import { setAllInterceptors } from '@/utils/interceptor';
 
 export default function LoginPage() {
   const navigate = useNavigate();
 
   const redirectUrl = ROUTES.HOME;
-  const isProduction = process.env.NODE_ENV === 'production';
 
   const [searchParams] = useSearchParams();
   const jwtToken = searchParams.get('jwt');
@@ -79,43 +76,31 @@ export default function LoginPage() {
 
   return (
     <>
-      <div className={MainWrapperCss}>
+      <div className="relative h-screen w-full overflow-hidden">
         <img
           src="/assets/auth/app-background-auth.png"
           alt="background"
-          className={css({ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 })}
+          className="absolute inset-0 h-full w-full object-cover"
         />
-        <div
-          className={css({
-            position: 'relative',
-            zIndex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            h: '100%',
-            pt: '94px',
-            pb: 5,
-          })}
-        >
-          <img src="/assets/auth/logo-login.png" alt="gitanimals" className={css({ width: '300px', ml: '44px' })} />
-          <div
-            className={css({
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px',
-              width: '100%',
-              alignItems: 'center',
-            })}
-          >
+        <div className="relative z-[1] flex h-full flex-col items-center justify-between pb-5 pt-[94px]">
+          <img src="/assets/auth/logo-login.png" alt="gitanimals" className="ml-11 w-[300px]" />
+          <div className="flex w-full flex-col items-center gap-2">
             {isWebView() && (
-              <button className={appleLoginButtonCss} onClick={onClickAppleLogin}>
+              <button
+                type="button"
+                className="flex h-11 w-full max-w-[343px] items-center justify-center gap-1.5 rounded-2xl bg-white px-6 text-[15px] font-semibold leading-[19px]"
+                onClick={onClickAppleLogin}
+              >
                 <AppleLoginIcon />
                 Apple로 계속하기
               </button>
             )}
 
-            <button className={loginButtonCss} onClick={onClickGithubLogin}>
+            <button
+              type="button"
+              className="flex h-11 w-full max-w-[343px] items-center justify-center gap-1.5 rounded-2xl bg-brand-canary px-6 text-[15px] font-semibold leading-[19px]"
+              onClick={onClickGithubLogin}
+            >
               <GithubLoginIcon />
               GitHub로 계속하기
             </button>
@@ -149,52 +134,3 @@ function GithubLoginIcon() {
     </svg>
   );
 }
-
-const MainWrapperCss = css({
-  position: 'relative',
-
-  width: '100%',
-  height: '100vh',
-  overflow: 'hidden',
-});
-
-const LoginButtonListWrapperCss = css({
-  maxWidth: '320px',
-  display: 'flex',
-  gap: '8px',
-  flexDirection: 'column',
-  width: '100%',
-  alignItems: 'center',
-});
-
-const appleLoginButtonCss = css({
-  width: '100%',
-  maxWidth: '343px',
-  height: '44px',
-  padding: '0 24px',
-  borderRadius: '16px',
-  fontWeight: '600',
-  fontSize: '15px',
-  lineHeight: '19px',
-  backgroundColor: 'white',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '6px',
-});
-
-const loginButtonCss = css({
-  width: '100%',
-  maxWidth: '343px',
-  height: '44px',
-  padding: '0 24px',
-  borderRadius: '16px',
-  fontWeight: '600',
-  fontSize: '15px',
-  lineHeight: '19px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '6px',
-  backgroundColor: 'brand.canary',
-});
