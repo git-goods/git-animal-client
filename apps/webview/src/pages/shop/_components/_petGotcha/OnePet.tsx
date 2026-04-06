@@ -1,18 +1,17 @@
 import React from 'react';
-import { css } from '_panda/css';
 import { postGotcha } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { userQueries } from '@gitanimals/react-query';
-import { Dialog } from '@gitanimals/ui-panda';
+import { Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 import { CardDrawingGame } from '@/components/CardGame/FanDrawingGame/FanDrawingGame';
 import { GITHUB_ISSUE_URL } from '@/constants/outlink';
+import { authUtils } from '@/utils';
 
 import { useCheckEnoughMoney } from './useCheckEnoughMoney';
-import { useTranslation } from 'react-i18next';
-import { authUtils } from '@/utils';
 
 const ONE_PET_POINT = 1000 as const;
 
@@ -77,8 +76,13 @@ function OnePet({ onClose }: Props) {
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="large" className={dialogContentStyle}>
-        <Dialog.Title className={headingStyle}>{t('choose-one-card')}</Dialog.Title>
+      <Dialog.Content
+        size="large"
+        className="h-fit max-mobile:flex max-mobile:flex-col max-mobile:items-center max-mobile:justify-center"
+      >
+        <Dialog.Title className="text-center font-product text-glyph-48 font-bold text-white max-mobile:text-glyph-28">
+          {t('choose-one-card')}
+        </Dialog.Title>
 
         <CardDrawingGame
           characters={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }]}
@@ -91,24 +95,3 @@ function OnePet({ onClose }: Props) {
 }
 
 export default OnePet;
-
-const dialogContentStyle = css({
-  height: 'fit-content',
-
-  _mobile: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-const headingStyle = css({
-  textStyle: 'glyph48.bold',
-  color: 'white',
-  textAlign: 'center',
-
-  _mobile: {
-    textStyle: 'glyph28.bold',
-  },
-});

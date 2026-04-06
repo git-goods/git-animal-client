@@ -4,7 +4,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { NuqsAdapter } from 'nuqs/adapters/react';
-import { css } from '_panda/css';
 import AuthWrapper from './components/auth/AuthWrapper';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';

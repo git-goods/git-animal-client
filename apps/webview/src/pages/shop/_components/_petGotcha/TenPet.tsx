@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { css, cx } from '_panda/css';
 import type { GotchaResult } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { usePostGotcha, userQueries } from '@gitanimals/react-query';
-import { Dialog } from '@gitanimals/ui-panda';
+import { Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 import { GITHUB_ISSUE_URL } from '@/constants/outlink';
 import { useTimer } from '@/hooks/useTimer';
+import { authUtils } from '@/utils';
 
 import { TenCardFlipGame } from './TenCardFlipGame';
 import { useCheckEnoughMoney } from './useCheckEnoughMoney';
-import { authUtils } from '@/utils';
 
 const TEN_PET_POINT = 10000 as const;
 
@@ -100,44 +100,19 @@ export function TenPet({ onClose }: Props) {
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="screen" className={dialogContentStyle}>
+      <Dialog.Content size="screen" className="max-mobile:gap-3">
         <Dialog.Title>
           {isPending ? t('gotcha-in-progress') : isSuccess ? t('get-persona-success') : t('click-card-to-flip')}
         </Dialog.Title>
         {isRunning && (
-          <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
+          <p className="mt-3 text-center font-product text-glyph-28 font-bold text-white max-mobile:mt-0 max-mobile:text-xs">
+            {t('close-notice-message').replace('[count]', count.toString())}
+          </p>
         )}
-        <div className={cx(gameContainerStyle, isPending && css({ pointerEvents: 'none' }))}>
+        <div className={cn('mt-[60px] w-full max-mobile:mt-7', isPending && 'pointer-events-none')}>
           <TenCardFlipGame onGetPersona={onAction} getPersona={getPersona} />
         </div>
       </Dialog.Content>
     </Dialog>
   );
 }
-
-const dialogContentStyle = css({
-  _mobile: {
-    gap: '12px',
-  },
-});
-
-const noticeMessageStyle = css({
-  textStyle: 'glyph28.bold',
-  color: 'white',
-  textAlign: 'center',
-  mt: '12px',
-
-  _mobile: {
-    fontSize: '12px',
-    mt: '0px',
-  },
-});
-
-const gameContainerStyle = css({
-  width: '100%',
-  mt: '60px',
-
-  _mobile: {
-    mt: '28px',
-  },
-});

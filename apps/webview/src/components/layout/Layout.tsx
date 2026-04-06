@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { TabBar } from './TabBar';
 import { authUtils } from '@/utils';
-import { css } from '_panda/css';
 import { useEffect, useState } from 'react';
 import {
   interceptorRequestFulfilled,
@@ -10,6 +9,7 @@ import {
 } from '@/utils/interceptor';
 import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
 import { setRenderRequestInterceptor, setRenderResponseInterceptor } from '@gitanimals/api/src/_instance';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 function Layout() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -41,25 +41,24 @@ function Layout() {
 
   if (isAuthenticated) {
     return (
-      <div className={css({ minHeight: '100vh', backgroundColor: 'black' })}>
+      <div className="min-h-screen bg-black">
         <main
-          className={css({
-            h: 'calc(100vh - var(--tab-bar-height))',
-            maxWidth: 'var(--container-max-width)',
-            mx: 'auto',
-          })}
+          className={cn(
+            'mx-auto max-w-[var(--container-max-width)]',
+            'h-[calc(100vh-var(--tab-bar-height))]',
+          )}
         >
           <Outlet />
         </main>
-        <div className={css({ h: 'var(--tab-bar-height)' })}></div>
+        <div className="h-[var(--tab-bar-height)]" />
         <TabBar />
       </div>
     );
   }
 
   return (
-    <div className={css({ minHeight: '100vh', backgroundColor: 'black' })}>
-      <main className={css({ h: 'full', maxWidth: 'var(--container-max-width)', mx: 'auto' })}>
+    <div className="min-h-screen bg-black">
+      <main className="mx-auto h-full max-w-[var(--container-max-width)]">
         <Outlet />
       </main>
     </div>

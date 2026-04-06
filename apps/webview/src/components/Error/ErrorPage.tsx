@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { css } from '_panda/css';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
+import { cn } from '@gitanimals/ui-tailwind/utils';
 
 interface Props {
   heading: string;
@@ -14,36 +14,16 @@ interface Props {
 
 export function ErrorPage({ heading, paragraph, onClickButton, buttonText = 'Retry' }: Props) {
   return (
-    <main className={mainCss}>
-      <h1 className={h1Css}>{heading}</h1>
-      {paragraph && <div className={pCss}>{paragraph}</div>}
+    <main
+      className={cn(
+        'flex h-[100dvh] w-[100dvw] flex-col items-center justify-center bg-white px-4 font-product text-glyph-16',
+      )}
+    >
+      <h1 className="mb-3 font-product text-glyph-40 font-bold">{heading}</h1>
+      {paragraph && (
+        <div className="mb-8 [&_a]:text-blue-600 [&_a]:underline">{paragraph}</div>
+      )}
       {onClickButton && <Button onClick={onClickButton}>{buttonText}</Button>}
     </main>
   );
 }
-
-const mainCss = css({
-  backgroundColor: 'white',
-  w: '100dvw',
-  h: '100dvh',
-  textStyle: 'glyph16.regular',
-  padding: '0 16px',
-
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
-
-const h1Css = css({
-  textStyle: 'glyph40.bold',
-  marginBottom: '12px',
-});
-
-const pCss = css({
-  marginBottom: '32px',
-  '& a': {
-    textDecoration: 'underline',
-    color: 'blue',
-  },
-});
