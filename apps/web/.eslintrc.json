@@ -13,7 +13,7 @@
         "paths": [
           {
             "name": "styled-jsx/css",
-            "message": "Please use panda/css instead."
+            "message": "Please use Tailwind / @gitanimals/ui-tailwind instead."
           }
         ]
       }
