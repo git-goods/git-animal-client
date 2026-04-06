@@ -10,10 +10,10 @@ GitAnimals is a monorepo that allows users to raise virtual pets through GitHub 
 
 **Monorepo Structure:**
 - `apps/web` - Next.js 14 web application (main frontend)  
-- `apps/admin` - Remix admin dashboard
+- `apps/admin-main` - Admin dashboard (Vite)
 - `apps/webview` - Vite + React Router webview for mobile integration
 - `apps/webview-history` - Legacy Next.js webview (being migrated)
-- `packages/ui/panda` - Component library using PandaCSS
+- `packages/ui/tailwind` - Component library (Tailwind + Radix)
 - `packages/ui/icon` - Icon components  
 - `packages/ui/token` - Design tokens
 - `packages/api` - Shared API client with interceptors
@@ -52,7 +52,7 @@ src/
 ```bash
 # Development servers
 pnpm dev:web          # Start web app dev server (Next.js)
-pnpm dev:admin        # Start admin app dev server (Remix)
+pnpm dev:admin        # Start admin app dev server (admin-main)
 pnpm dev:webview      # Start webview dev server (Vite)
 
 # Build commands
@@ -66,13 +66,12 @@ pnpm lint             # Lint all workspaces
 pnpm format           # Format code with Prettier
 
 # UI Development
-pnpm sb:panda         # Start Storybook for UI components
+pnpm sb:tailwind      # Start Storybook for @gitanimals/ui-tailwind
 ```
 
 **Workspace-specific commands:**
 ```bash
 # Web app (apps/web)
-pnpm --filter @gitanimals/web prepare      # PandaCSS codegen
 pnpm --filter @gitanimals/web type-check   # TypeScript validation
 pnpm --filter @gitanimals/web lint:fix     # Fix ESLint issues
 
@@ -80,8 +79,8 @@ pnpm --filter @gitanimals/web lint:fix     # Fix ESLint issues
 pnpm --filter @gitanimals/webview dev       # Vite dev server on port 3000
 pnpm --filter @gitanimals/webview type-check # TypeScript validation
 
-# UI components (packages/ui/panda)
-pnpm --filter @gitanimals/ui-panda storybook # Start Storybook
+# UI components (packages/ui/tailwind)
+pnpm --filter @gitanimals/ui-tailwind storybook # Start Storybook (port 6002)
 ```
 
 ## Code Patterns & Conventions
@@ -178,14 +177,14 @@ pnpm --filter @gitanimals/ui-panda storybook # Start Storybook
 - `turbo.json` - Build pipeline configuration
 - `pnpm-workspace.yaml` - Workspace definition
 - `apps/web/ARCHITECTURE.md` - **FSD 아키텍처 상세 가이드 (필독)**
-- `packages/ui/panda/src/theme/` - Design system tokens and styles
+- `packages/ui/tailwind/src/theme/` - Design system tokens (Tailwind preset)
 
 ## Build Pipeline Dependencies
 
 The build system has specific dependency chains:
-- Most builds depend on `^build` and `^prepare` 
-- `prepare` tasks generate PandaCSS styled-system
-- Admin uses different output patterns (dist/**) vs others (.next/**)
+- Most builds depend on `^build` and `^prepare` where applicable
+- Some packages use `prepare` for codegen (e.g. legacy styled-system); web/webview rely on Tailwind
+- Admin-main and webview use `dist/**`; web uses `.next/**`
 
 ## Notes for Development
 
