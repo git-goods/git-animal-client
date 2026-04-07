@@ -1,19 +1,29 @@
+'use client';
+
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { authUtils } from '@/utils';
-import { useUser } from '@/hooks/useUser';
-import { ROUTES } from '@/router/constants';
+import { signIn } from 'next-auth/react';
+import { useClientSession, useClientUser } from '@/shared/utils/clientAuth';
 
 export default function ClaudeCodePage() {
   const [copied, setCopied] = useState(false);
-  const isAuthenticated = authUtils.isAuthenticated();
-  const user = useUser();
+  const { status } = useClientSession();
+  const user = useClientUser();
 
-  if (!isAuthenticated) {
-    return <Navigate to={ROUTES.AUTH} replace state={{ from: { pathname: '/auth/claude-code' } }} />;
+  if (status === 'loading') {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <span className="text-gray-500">Loading...</span>
+      </div>
+    );
   }
 
-  const command = `/gitanimals-buddy:login ${user.username}`;
+  if (status === 'unauthenticated') {
+    signIn(undefined, { callbackUrl: '/auth/claude-code' });
+    return null;
+  }
+
+  const username = user.name ?? '';
+  const command = `/gitanimals-buddy:login ${username}`;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(command);
@@ -29,19 +39,17 @@ export default function ClaudeCodePage() {
           <h1 className="mt-4 text-2xl font-bold text-gray-900">Claude Code 연동</h1>
         </div>
 
-        <p className="mb-2 text-center text-gray-600">
-          당신의 username은
-        </p>
-        <p className="mb-6 text-center text-xl font-bold text-gray-900">{user.username}</p>
+        <p className="mb-2 text-center text-gray-600">당신의 username은</p>
+        <p className="mb-6 text-center text-xl font-bold text-gray-900">{username}</p>
 
         <p className="mb-3 text-sm text-gray-500">아래 명령어를 Claude Code 터미널에 입력하세요:</p>
 
         <div className="flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
-          <code className="flex-1 text-sm font-mono text-gray-800">{command}</code>
+          <code className="flex-1 font-mono text-sm text-gray-800">{command}</code>
           <button
             type="button"
             onClick={handleCopy}
-            className="shrink-0 rounded-md bg-brand-canary px-3 py-1.5 text-sm font-semibold transition-opacity hover:opacity-80 active:opacity-60"
+            className="shrink-0 rounded-md bg-yellow-300 px-3 py-1.5 text-sm font-semibold transition-opacity hover:opacity-80 active:opacity-60"
           >
             {copied ? '복사됨 ✓' : '복사'}
           </button>

@@ -12,7 +12,6 @@ import SolveQuizPage from '@/pages/game/quiz/solve/page';
 import CreateQuizPage from '@/pages/game/quiz/create/page';
 import ShopPage from '@/pages/shop/page';
 import LoginPage from '@/pages/auth/LoginPage';
-import ClaudeCodePage from '@/pages/auth/ClaudeCodePage';
 
 export const router = createBrowserRouter([
   {
@@ -87,10 +86,7 @@ export const router = createBrowserRouter([
             path: 'login',
             element: <LoginPage />,
           },
-          {
-            path: 'claude-code',
-            element: <ClaudeCodePage />,
-          },
+
         ],
       },
       {
