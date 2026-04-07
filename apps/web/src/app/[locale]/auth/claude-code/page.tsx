@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { Button, TextField } from '@gitanimals/ui-tailwind';
+import { TextField } from '@gitanimals/ui-tailwind';
+
 import { useClientSession, useClientUser } from '@/shared/utils/clientAuth';
 
 export default function ClaudeCodePage() {
@@ -34,29 +35,20 @@ export default function ClaudeCodePage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-8 bg-brand-primary px-6">
-      <div className="text-center">
-        <p className="text-5xl leading-none">🐾</p>
-        <h1 className="mt-6 text-4xl font-bold text-white">Claude Code 연동</h1>
-      </div>
+      <div className="w-fit h-fit bg-white-10 rounded-lg p-6 flex flex-col items-center justify-center gap-6 min-w-[520px] px-10">
+        <div className="text-center">
+          <p className="text-glyph-82 font-[64px] leading-none">🐾</p>
+          <h1 className="mt-6 text-glyph-28 font-bold text-white">Claude Code 연동</h1>
+        </div>
 
-      <div className="text-center">
-        <p className="text-lg text-white/80">당신의 username은</p>
-        <p className="mt-1 text-3xl font-bold text-white">{username}</p>
-      </div>
+        <div className="text-center">
+          <p className="text-glyph-20 text-white/80">당신의 username은</p>
+          <p className="mt-1 text-glyph-28 font-bold text-white">{username}</p>
+        </div>
 
-      <div className="w-full max-w-[520px]">
-        <p className="mb-3 font-product text-glyph-14 text-white/70">
-          아래 명령어를 Claude Code 터미널에 입력하세요:
-        </p>
-        <div className="flex items-center gap-3">
-          <TextField
-            readOnly
-            value={command}
-            className="font-mono text-glyph-14"
-          />
-          <Button variant="primary" size="m" onClick={handleCopy} className="shrink-0">
-            {copied ? '복사됨 ✓' : '복사'}
-          </Button>
+        <div className="w-full ">
+          <p className="mb-3 text-glyph-14 text-white/70">아래 명령어를 Claude Code 터미널에 입력하세요</p>
+          <TextField readOnly value={command} className="text-glyph-14 w-full" />
         </div>
       </div>
     </div>
