@@ -12,6 +12,7 @@ import SolveQuizPage from '@/pages/game/quiz/solve/page';
 import CreateQuizPage from '@/pages/game/quiz/create/page';
 import ShopPage from '@/pages/shop/page';
 import LoginPage from '@/pages/auth/LoginPage';
+import ClaudeCodePage from '@/pages/auth/ClaudeCodePage';
 
 export const router = createBrowserRouter([
   {
@@ -77,11 +78,18 @@ export const router = createBrowserRouter([
       // 공개 라우트들 (인증 불필요)
       {
         path: NESTED_PATHS.AUTH(),
-        element: <LoginPage />,
         children: [
+          {
+            index: true,
+            element: <LoginPage />,
+          },
           {
             path: 'login',
             element: <LoginPage />,
+          },
+          {
+            path: 'claude-code',
+            element: <ClaudeCodePage />,
           },
         ],
       },
