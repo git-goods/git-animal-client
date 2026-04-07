@@ -11,8 +11,8 @@ export default function ClaudeCodePage() {
 
   if (status === 'loading') {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <span className="text-gray-500">Loading...</span>
+      <div className="flex min-h-screen items-center justify-center bg-brand-primary">
+        <span className="text-white/70">Loading...</span>
       </div>
     );
   }
@@ -32,24 +32,25 @@ export default function ClaudeCodePage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-gray-50 p-8">
-      <div className="w-full max-w-[480px] rounded-2xl bg-white p-8 shadow-lg">
-        <div className="mb-6 text-center">
-          <span className="text-5xl leading-none">🐾</span>
-          <h1 className="mt-4 text-2xl font-bold text-gray-900">Claude Code 연동</h1>
-        </div>
+    <div className="flex min-h-screen flex-col items-center justify-center gap-8 bg-brand-primary px-6">
+      <div className="text-center">
+        <p className="text-5xl leading-none">🐾</p>
+        <h1 className="mt-6 text-4xl font-bold text-white">Claude Code 연동</h1>
+      </div>
 
-        <p className="mb-2 text-center text-gray-600">당신의 username은</p>
-        <p className="mb-6 text-center text-xl font-bold text-gray-900">{username}</p>
+      <div className="text-center">
+        <p className="text-lg text-white/80">당신의 username은</p>
+        <p className="mt-1 text-3xl font-bold text-white">{username}</p>
+      </div>
 
-        <p className="mb-3 text-sm text-gray-500">아래 명령어를 Claude Code 터미널에 입력하세요:</p>
-
-        <div className="flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
-          <code className="flex-1 font-mono text-sm text-gray-800">{command}</code>
+      <div className="w-full max-w-[520px]">
+        <p className="mb-3 text-sm text-white/70">아래 명령어를 Claude Code 터미널에 입력하세요:</p>
+        <div className="flex items-center gap-3 rounded-2xl border-2 border-white/20 bg-white/10 px-5 py-4 backdrop-blur-sm">
+          <code className="flex-1 font-mono text-sm text-white">{command}</code>
           <button
             type="button"
             onClick={handleCopy}
-            className="shrink-0 rounded-md bg-yellow-300 px-3 py-1.5 text-sm font-semibold transition-opacity hover:opacity-80 active:opacity-60"
+            className="shrink-0 rounded-xl border-2 border-brand-canary bg-brand-canary px-4 py-2 text-sm font-bold text-black transition-opacity hover:opacity-80 active:opacity-60"
           >
             {copied ? '복사됨 ✓' : '복사'}
           </button>
