@@ -3,11 +3,12 @@ import { ComponentProps } from 'react';
 
 interface TextFieldProps extends ComponentProps<'input'> {
   error?: string;
+  containerClassName?: string;
 }
 
-export const TextField = ({ error, ...props }: TextFieldProps) => {
+export const TextField = ({ error, containerClassName, ...props }: TextFieldProps) => {
   return (
-    <div>
+    <div className={cx(containerClassName)}>
       <input type="text" {...props} className={cx(textFieldStyle, props.className)} />
       {error && <p className={errorStyle}>{error}</p>}
     </div>

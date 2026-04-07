@@ -30,7 +30,25 @@ export default function ClaudeCodePage() {
     <div className={pageRootCss}>
       <div className={cardCss}>
         <div className={headerBlockCss}>
-          <p className={emojiCss}>🐾</p>
+          <p className={emojiCss}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="52"
+              height="52"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ffffff"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              className="lucide lucide-paw-print-icon lucide-paw-print"
+            >
+              <circle cx="11" cy="4" r="2" />
+              <circle cx="18" cy="8" r="2" />
+              <circle cx="20" cy="16" r="2" />
+              <path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z" />
+            </svg>
+          </p>
           <h1 className={titleCss}>Claude Code 연동</h1>
         </div>
 
@@ -57,7 +75,7 @@ const pageRootCss = css({
   minHeight: '100vh',
   padding: '24px',
   bg: 'linear-gradient(180deg, #000 0%, #004875 38.51%, #005B93 52.46%, #006FB3 73.8%, #0187DB 100%)',
-
+  color: 'white',
   _mobile: {
     padding: '16px',
   },
@@ -99,6 +117,7 @@ const headerBlockCss = css({
 const emojiCss = css({
   textStyle: 'glyph82.bold',
   lineHeight: '1',
+  color: 'white,',
 });
 
 const titleCss = css({
