@@ -77,12 +77,16 @@ export const router = createBrowserRouter([
       // 공개 라우트들 (인증 불필요)
       {
         path: NESTED_PATHS.AUTH(),
-        element: <LoginPage />,
         children: [
+          {
+            index: true,
+            element: <LoginPage />,
+          },
           {
             path: 'login',
             element: <LoginPage />,
           },
+
         ],
       },
       {
