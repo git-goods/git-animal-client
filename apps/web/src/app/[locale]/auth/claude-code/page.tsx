@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
+import { Button, TextField } from '@gitanimals/ui-tailwind';
 import { useClientSession, useClientUser } from '@/shared/utils/clientAuth';
 
 export default function ClaudeCodePage() {
@@ -44,16 +45,18 @@ export default function ClaudeCodePage() {
       </div>
 
       <div className="w-full max-w-[520px]">
-        <p className="mb-3 text-sm text-white/70">아래 명령어를 Claude Code 터미널에 입력하세요:</p>
-        <div className="flex items-center gap-3 rounded-2xl border-2 border-white/20 bg-white/10 px-5 py-4 backdrop-blur-sm">
-          <code className="flex-1 font-mono text-sm text-white">{command}</code>
-          <button
-            type="button"
-            onClick={handleCopy}
-            className="shrink-0 rounded-xl border-2 border-brand-canary bg-brand-canary px-4 py-2 text-sm font-bold text-black transition-opacity hover:opacity-80 active:opacity-60"
-          >
+        <p className="mb-3 font-product text-glyph-14 text-white/70">
+          아래 명령어를 Claude Code 터미널에 입력하세요:
+        </p>
+        <div className="flex items-center gap-3">
+          <TextField
+            readOnly
+            value={command}
+            className="font-mono text-glyph-14"
+          />
+          <Button variant="primary" size="m" onClick={handleCopy} className="shrink-0">
             {copied ? '복사됨 ✓' : '복사'}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
