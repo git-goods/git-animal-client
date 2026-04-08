@@ -11,7 +11,12 @@ import { COOKIE_KEY, LOCAL_STORAGE_KEY } from '@/shared/config/storage';
 /**
  * client용 로그인 함수
  */
-export const login = (callbackUrl: string = '/mypage') => {
+export const login = (callbackUrl?: string) => {
+  if (!callbackUrl) {
+    const urlParams = new URLSearchParams(window.location.search);
+    callbackUrl = urlParams.get('callbackUrl') || '/mypage';
+  }
+
   localStorage.setItem(LOCAL_STORAGE_KEY.callbackUrl, callbackUrl);
 
   // cookie set (client)
