@@ -23,7 +23,9 @@ export default async function middleware(req: NextRequest) {
     'i',
   );
 
-  const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname);
+  const authPrefixRegex = RegExp(`^(/(${routing.locales.join('|')}))?/auth(/|$)`, 'i');
+
+  const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname) || authPrefixRegex.test(req.nextUrl.pathname);
 
   // URL 정보를 헤더에 추가한 새로운 요청 생성
   const requestHeaders = new Headers(req.headers);
