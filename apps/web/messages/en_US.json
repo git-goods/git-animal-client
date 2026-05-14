@@ -279,5 +279,10 @@
     "report-error-button": "Report Error",
     "ranking-error-title": "Unable to load ranking information",
     "ranking-error-description": "Please try again later"
+  },
+  "Auth": {
+    "sessionExpiredTitle": "Your session has expired",
+    "sessionExpiredDescription": "Please sign in again for security.\nYou'll return to your previous page after signing in.",
+    "sessionExpiredAction": "Sign in again"
   }
 }

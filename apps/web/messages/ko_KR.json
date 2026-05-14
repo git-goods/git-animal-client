@@ -280,5 +280,10 @@
     "report-error-button": "오류 보고하기",
     "ranking-error-title": "랭킹 정보를 불러올 수 없습니다",
     "ranking-error-description": "잠시 후 다시 시도해주세요"
+  },
+  "Auth": {
+    "sessionExpiredTitle": "세션이 만료되었어요",
+    "sessionExpiredDescription": "보안을 위해 다시 로그인이 필요해요.\n로그인 후 이전 페이지로 자동 이동합니다.",
+    "sessionExpiredAction": "다시 로그인"
   }
 }
