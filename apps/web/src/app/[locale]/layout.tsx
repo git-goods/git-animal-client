@@ -3,7 +3,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
-import { ClientProvider, GlobalComponent, Monitoring } from '@/components/Global';
+import { ClientProvider, GlobalComponent } from '@/components/Global';
 import { config } from '@/constants/config';
 import type { Locale } from '@/i18n/routing';
 import { LOCALE_LIST } from '@/i18n/routing';
@@ -43,8 +43,6 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body>
-        <Monitoring />
-
         <NextIntlClientProvider messages={messages}>
           <NuqsAdapter>
             <ClientProvider>

@@ -12,6 +12,7 @@ import { toast } from 'sonner';
 
 import { MediaQuery } from '@/components/MediaQuery';
 import Pagination from '@/components/Pagination/Pagination';
+import { trackEvent } from '@/lib/analytics';
 import { useLoading } from '@/store/loading';
 import { useClientUser } from '@/utils/clientAuth';
 
@@ -80,7 +81,14 @@ function ProductTableRow({ product }: { product: Product }) {
       toast.success(t('buy-product-success'), {
         duration: 1000,
       });
+
+      trackEvent('click_auction_buy', {
+        productId: product.id,
+        price: product.price,
+      });
+
       queryClient.invalidateQueries({ queryKey: auctionQueries.productsKey() });
+      // 유저 쿼리 invalidate → useSyncAnalyticsUser가 갱신된 포인트를 사용자 속성으로 재동기화
       queryClient.invalidateQueries({ queryKey: userQueries.allKey() });
     },
     onSettled: () => {
