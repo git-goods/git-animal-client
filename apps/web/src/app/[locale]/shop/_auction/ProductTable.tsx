@@ -12,8 +12,10 @@ import { toast } from 'sonner';
 
 import { MediaQuery } from '@/components/MediaQuery';
 import Pagination from '@/components/Pagination/Pagination';
+import { useGetPersonaTier } from '@/hooks/persona/useGetPersonaDropRate';
 import { trackEvent } from '@/lib/analytics';
 import { useLoading } from '@/store/loading';
+import { ANIMAL_TIER_TEXT_MAP } from '@/utils/animals';
 import { useClientUser } from '@/utils/clientAuth';
 
 import { ShopTableDesktopRow, ShopTableMobileRow, ShopTableRowViewSkeleton } from '../_common/ShopTableMobileRow';
@@ -75,6 +77,7 @@ function ProductTableRow({ product }: { product: Product }) {
   const t = useTranslations('Shop');
 
   const productStatus = product.sellerId === myId ? 'MY_SELLING' : product.paymentState;
+  const petTier = useGetPersonaTier(product.persona.personaType);
 
   const { mutate: buyProduct, isPending: isBuying } = useBuyProduct({
     onSuccess: () => {
@@ -83,8 +86,11 @@ function ProductTableRow({ product }: { product: Product }) {
       });
 
       trackEvent('click_auction_buy', {
-        productId: product.id,
-        price: product.price,
+        pet_name: product.persona.personaType,
+        pet_price: product.price,
+        pet_level: product.persona.personaLevel,
+        pet_grade: ANIMAL_TIER_TEXT_MAP[petTier],
+        seller_id: product.sellerId,
       });
 
       queryClient.invalidateQueries({ queryKey: auctionQueries.productsKey() });

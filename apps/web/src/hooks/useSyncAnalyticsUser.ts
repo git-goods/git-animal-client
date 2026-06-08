@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 import { userQueries } from '@gitanimals/react-query';
 import { useQuery } from '@tanstack/react-query';
 
-import { identifyUser, resetAnalyticsUser, setUserProperties } from '@/lib/analytics';
+import { SESSION_STORAGE_KEY } from '@/constants/storage';
+import { identifyUser, resetAnalyticsUser, setUserProperties, trackEvent } from '@/lib/analytics';
 import { useClientSession } from '@/utils/clientAuth';
 
 /**
@@ -27,6 +28,12 @@ export function useSyncAnalyticsUser() {
 
     if (userId) {
       identifyUser(userId);
+
+      // LoginButton에서 set한 "방금 로그인함" 플래그가 있으면 로그인 직후 1회만 complete_login 발사
+      if (sessionStorage.getItem(SESSION_STORAGE_KEY.justLoggedIn)) {
+        trackEvent('complete_login');
+        sessionStorage.removeItem(SESSION_STORAGE_KEY.justLoggedIn);
+      }
     } else {
       resetAnalyticsUser();
     }

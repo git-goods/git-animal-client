@@ -15,7 +15,9 @@ import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import { LOCAL_STORAGE_KEY } from '@/constants/storage';
+import { trackEvent } from '@/lib/analytics';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
+import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 import { EvolutionPersona } from './(evolution)';
@@ -30,6 +32,7 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
   const queryClient = useQueryClient();
 
   const t = useTranslations('Shop');
+  const { id: myId } = useClientUser();
   const [sellPersonaId, setSellPersonaId] = useState<string | null>(null);
   const { setDoNotShowAgain, isChecked: isDoNotShowAgain } = useDoNotShowAgain();
 
@@ -38,6 +41,19 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
     onSuccess: (data) => {
       toast.success((t('pet-sold') as string).replace('[money]', data.givenPoint.toString()));
       queryClient.invalidateQueries({ queryKey: userQueries.allKey() });
+
+      if (currentPersona) {
+        trackEvent('click_pet_sell', {
+          pet_name: currentPersona.type,
+          pet_price: 100,
+          pet_grade: ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))],
+          pet_level: Number(currentPersona.level),
+          page_name: 'mypage',
+          location: 'my_pet',
+          seller_id: String(myId),
+        });
+      }
+
       setSellPersonaId(null);
       reset();
     },
