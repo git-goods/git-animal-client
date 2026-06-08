@@ -13,7 +13,9 @@ import { toast } from 'sonner';
 
 import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
 import { useGetPersonaTier } from '@/hooks/persona/useGetPersonaDropRate';
+import { trackEvent } from '@/lib/analytics';
 import { ANIMAL_TIER_TEXT_MAP } from '@/utils/animals';
+import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 import { rowStyle, ShopTableMobileRow } from '../../_common/ShopTableMobileRow';
@@ -33,13 +35,24 @@ function SellInputRow({ item, initPersona }: Props) {
   const [isSellPriceModalOpen, setIsSellPriceModalOpen] = useState(false);
 
   const queryClient = useQueryClient();
+  const { id: myId } = useClientUser();
 
   const personaTier = useGetPersonaTier(item.type);
 
   const { mutate } = useRegisterProduct({
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: userQueries.allPersonasKey() });
       queryClient.invalidateQueries({ queryKey: auctionQueries.myProductsKey() });
+
+      trackEvent('click_pet_sell', {
+        pet_name: item.type,
+        pet_price: variables.price,
+        pet_grade: ANIMAL_TIER_TEXT_MAP[personaTier],
+        pet_level: Number(item.level),
+        page_name: 'shop',
+        location: 'auction_my_pet',
+        seller_id: String(myId),
+      });
 
       initPersona();
       resetPrice();

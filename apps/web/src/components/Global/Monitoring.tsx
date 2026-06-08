@@ -8,12 +8,15 @@ import { Analytics } from '@vercel/analytics/react';
 
 import { config, MONITORING_KEY } from '@/constants/config';
 import { isProd } from '@/constants/env';
+import { useSyncAnalyticsUser } from '@/hooks/useSyncAnalyticsUser';
 import { usePathname } from '@/i18n/routing';
 import { initAnalytics, trackPageView } from '@/lib/analytics';
 
 function Monitoring() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  useSyncAnalyticsUser();
 
   useEffect(() => {
     initAnalytics();
