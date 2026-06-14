@@ -3,8 +3,9 @@
 import React, { useReducer } from 'react';
 import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
-import { ClipboardIcon } from 'lucide-react';
-import { toast } from 'sonner';
+import { Button } from '@gitanimals/ui-panda';
+import { Github } from 'lucide-react';
+import { overlay } from 'overlay-kit';
 
 import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals';
 import { useClientUser } from '@/utils/clientAuth';
@@ -12,6 +13,7 @@ import { copyClipBoard } from '@/utils/copy';
 
 import { FarmBackgroundSelect } from './FarmBackgroundSelect';
 import { FarmPersonaSelect } from './FarmPersonaSelect';
+import { GithubGuideModal } from './GithubGuideModal';
 
 export function FarmType() {
   const t = useTranslations('Mypage');
@@ -20,12 +22,14 @@ export function FarmType() {
 
   const [imageKey, refreshImage] = useReducer((x: number) => x + 1, 0);
 
-  const onLinkCopy = async () => {
+  const onPublish = async () => {
+    const code = getGitanimalsFarmString({ username: name });
     try {
-      await copyClipBoard(getGitanimalsFarmString({ username: name }));
-
-      toast.success(t('copy-link-success'), { duration: 2000 });
-    } catch (error) {}
+      await copyClipBoard(code);
+    } catch {}
+    overlay.open(({ isOpen, close }) => (
+      <GithubGuideModal isOpen={isOpen} onClose={close} username={name} code={code} />
+    ));
   };
 
   return (
@@ -42,27 +46,10 @@ export function FarmType() {
               _mobile: { width: '100%' },
             })}
           />
-          <button
-            className={css({
-              width: '28px',
-              height: '28px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: 'black.black_50',
-              borderRadius: '6px',
-              position: 'absolute',
-              top: '12px',
-              right: '12px',
-              color: 'white',
-              cursor: 'pointer',
-              transition: 'background 0.2s',
-              _hover: { background: 'black.black_75' },
-            })}
-            onClick={onLinkCopy}
-          >
-            <ClipboardIcon size={16} />
-          </button>
+          <Button size="s" className={publishButtonStyle} onClick={onPublish}>
+            <Github size={16} />
+            {t('GithubGuide.upload-button')}
+          </Button>
         </div>
       </div>
       <div>
@@ -74,3 +61,13 @@ export function FarmType() {
 }
 
 const farmStyle = css({ borderRadius: '12px', position: 'relative', overflow: 'hidden', width: 'fit-content' });
+
+const publishButtonStyle = css({
+  position: 'absolute',
+  top: '12px',
+  right: '12px',
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '6px',
+  whiteSpace: 'nowrap',
+});

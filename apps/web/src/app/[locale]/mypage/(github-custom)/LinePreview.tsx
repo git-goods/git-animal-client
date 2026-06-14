@@ -5,13 +5,16 @@ import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { Button, TextField } from '@gitanimals/ui-panda';
-import { ClipboardIcon } from 'lucide-react';
+import { Github } from 'lucide-react';
+import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
 import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
+
+import { GithubGuideModal } from './GithubGuideModal';
 
 const DEFAULT_SIZE = { width: 600, height: 120 };
 
@@ -21,18 +24,18 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
   const { name } = useClientUser();
   const [sizes, setSizes] = useState<{ width: number; height: number }>(DEFAULT_SIZE);
 
-  const onLinkCopy = async () => {
+  const onPublish = async () => {
+    const code = getGitanimalsLineString({
+      username: name,
+      petId: selectPersona ?? undefined,
+      sizes: [sizes.width, sizes.height],
+    });
     try {
-      await copyClipBoard(
-        getGitanimalsLineString({
-          username: name,
-          petId: selectPersona ?? undefined,
-          sizes: [sizes.width, sizes.height],
-        }),
-      );
-
-      toast.success(t('copy-link-success'), { duration: 2000 });
-    } catch (error) {}
+      await copyClipBoard(code);
+    } catch {}
+    overlay.open(({ isOpen, close }) => (
+      <GithubGuideModal isOpen={isOpen} onClose={close} username={name} code={code} />
+    ));
   };
 
   return (
@@ -43,29 +46,25 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
         <div className={lineContainerStyle} style={{ width: sizes.width, height: sizes.height }}>
           <GitanimalsLine sizes={[sizes.width, sizes.height]} petId={selectPersona} />
 
-          <button
-            className={css({
-              width: '28px',
-              height: '28px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: 'black.black_25',
-              borderRadius: '6px',
-              position: 'absolute',
-              top: '12px',
-              right: '12px',
-              color: 'white.white_100',
-            })}
-            onClick={onLinkCopy}
-          >
-            <ClipboardIcon size={16} />
-          </button>
+          <Button size="s" className={publishButtonStyle} onClick={onPublish}>
+            <Github size={16} />
+            {t('GithubGuide.upload-button')}
+          </Button>
         </div>
       </section>
     </div>
   );
 }
+
+const publishButtonStyle = css({
+  position: 'absolute',
+  top: '12px',
+  right: '12px',
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '6px',
+  whiteSpace: 'nowrap',
+});
 
 const sectionContainerStyle = css({
   display: 'flex',
