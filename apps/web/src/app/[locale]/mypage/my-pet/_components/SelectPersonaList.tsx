@@ -81,15 +81,21 @@ const listSectionTitleStyle = css({
 
 const flexOverflowStyle = cx(
   css({
-    display: 'flex',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, 80px)',
+    gridAutoRows: '80px',
+    justifyContent: 'flex-start',
     overflowY: 'auto',
     overflowX: 'hidden',
     width: '100%',
-    gap: '4px',
+    gap: '8px',
     height: '100%',
     minHeight: '0',
-    flexWrap: 'wrap',
     maxHeight: 'calc(100% - 24px)',
+    _mobile: {
+      gridTemplateColumns: 'repeat(auto-fill, 52px)',
+      gridAutoRows: '52px',
+    },
   }),
   customScrollStyle,
 );

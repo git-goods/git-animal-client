@@ -34,25 +34,25 @@ export const MergePreview = ({ materialPersona, targetPersona }: MergePersonaPro
     <div className={containerStyle}>
       <div className={itemContainerStyle}>
         {targetPersona ? (
-          <PersonaBanner level={targetPersona.level} personaType={targetPersona.type} />
+          <PersonaBanner level={targetPersona.level} personaType={targetPersona.type} size="small" />
         ) : (
-          <PersonaBannerUnknown />
+          <PersonaBannerUnknown size="small" />
         )}
         <PlusIcon width={24} height={24} className={iconStyle} color="#FFFFFFBF" />
 
         {materialPersona ? (
-          <PersonaBanner level={materialPersona.level} personaType={materialPersona.type} />
+          <PersonaBanner level={materialPersona.level} personaType={materialPersona.type} size="small" />
         ) : (
-          <PersonaBannerUnknown />
+          <PersonaBannerUnknown size="small" />
         )}
 
         <EqualIcon width={24} height={24} className={iconStyle} color="#FFFFFFBF" />
 
         <ResultItemAnimation isVisible={Boolean(resultPersona)} key={resultPersona?.id}>
           {resultPersona ? (
-            <PersonaBanner level={resultPersona.level} personaType={resultPersona.type} />
+            <PersonaBanner level={resultPersona.level} personaType={resultPersona.type} size="small" />
           ) : (
-            <PersonaBannerUnknown />
+            <PersonaBannerUnknown size="small" />
           )}
         </ResultItemAnimation>
       </div>
@@ -64,7 +64,7 @@ const containerStyle = css({
   position: 'relative',
   display: 'flex',
   justifyContent: 'center',
-  padding: '32px 32px 12px',
+  padding: '16px 0 8px',
   overflow: 'hidden',
   minHeight: 'fit-content',
 
@@ -81,7 +81,7 @@ const itemContainerStyle = flex({
 });
 
 const iconStyle = css({
-  marginBottom: '34px',
+  marginBottom: '24px',
 });
 
 const flashEffectStyle = css({
