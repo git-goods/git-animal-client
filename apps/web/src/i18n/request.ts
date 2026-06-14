@@ -3,6 +3,7 @@ import { getRequestConfig } from 'next-intl/server';
 
 import { sendLog } from '@/utils/log';
 
+import { toIntlLocale } from './locale';
 import { routing } from './routing';
 
 export default getRequestConfig(async ({ locale }) => {
@@ -12,7 +13,9 @@ export default getRequestConfig(async ({ locale }) => {
   try {
     // Attempt to dynamically import the locale messages
     const messages = (await import(`../../messages/${locale}.json`)).default;
-    return { messages };
+    // App locales are underscore segments (`ko_KR`); convert to a valid BCP-47
+    // tag (`ko-KR`) so ICU message formatting (args / rich text) works.
+    return { locale: toIntlLocale(locale), messages };
   } catch (error) {
     sendLog({ locale: locale, error: 'Error loading messages for locale' }, 'Error loading messages for locale');
     // Log the error for debugging purposes

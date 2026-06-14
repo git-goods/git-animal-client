@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { css, cx } from '_panda/css';
 import { RadioButtonOff, RadioButtonOn } from '@gitanimals/ui-icon';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, Globe } from 'lucide-react';
 
 import { Link, type Locale, usePathname } from '@/i18n/routing';
+import { useSegmentLocale } from '@/i18n/useSegmentLocale';
 
 const LOCALE_MAP: Record<Locale, string> = {
   en_US: 'English',
@@ -83,7 +84,7 @@ const dropdownStyles = css({
 
 export function MobileLanguageSelector({ onBack }: { onBack: () => void }) {
   const pathname = usePathname();
-  const locale = useLocale();
+  const locale = useSegmentLocale();
   const t = useTranslations('Layout');
 
   return (

@@ -1,15 +1,14 @@
-import { useLocale } from 'next-intl';
 import { quizQueries } from '@gitanimals/react-query';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import type { Locale } from '@/i18n/routing';
+import { useSegmentLocale } from '@/i18n/useSegmentLocale';
 
 interface Props {
   contextId: string;
 }
 
 const useQuizData = ({ contextId }: Props) => {
-  const locale = useLocale() as Locale;
+  const locale = useSegmentLocale();
   const { data, refetch: refetchQuiz } = useSuspenseQuery(
     quizQueries.getQuizOptions({
       contextId,

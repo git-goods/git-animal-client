@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Image from 'next/image';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { createQuizContext } from '@gitanimals/api';
@@ -15,7 +15,8 @@ import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';
 import useTabs from '@/components/Tabs/useTabs';
 import { ROUTE } from '@/constants/route';
-import { type Locale, useRouter } from '@/i18n/routing';
+import { useRouter } from '@/i18n/routing';
+import { useSegmentLocale } from '@/i18n/useSegmentLocale';
 
 import type { QuizCategory } from '../../../_constants/quiz.constants';
 import { QUIZ_CATEGORY } from '../../../_constants/quiz.constants';
@@ -47,7 +48,7 @@ const SelectCategorySection = wrap
       ],
     });
 
-    const locale = useLocale() as Locale;
+    const locale = useSegmentLocale();
     const handleStart = async () => {
       try {
         const { contextId } = await createQuizContext({
