@@ -49,12 +49,15 @@ export function FarmType() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              background: 'white.white_25',
+              background: 'black.black_50',
               borderRadius: '6px',
               position: 'absolute',
               top: '12px',
               right: '12px',
               color: 'white',
+              cursor: 'pointer',
+              transition: 'background 0.2s',
+              _hover: { background: 'black.black_75' },
             })}
             onClick={onLinkCopy}
           >

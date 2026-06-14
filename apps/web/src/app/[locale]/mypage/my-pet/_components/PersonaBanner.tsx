@@ -2,22 +2,38 @@ import { css, cx } from '_panda/css';
 
 import { getPersonaImage } from '@/utils/image';
 
-export function PersonaBanner({ level, personaType }: { level: number | string; personaType: string }) {
+type PersonaBannerSize = 'default' | 'small';
+
+export function PersonaBanner({
+  level,
+  personaType,
+  size = 'default',
+}: {
+  level: number | string;
+  personaType: string;
+  size?: PersonaBannerSize;
+}) {
+  const isSmall = size === 'small';
   return (
-    <div className={itemStyle}>
+    <div className={cx(itemStyle, isSmall && itemSmallStyle)}>
       <div className={mergeItemStyle}>
-        <img src={getPersonaImage(personaType)} alt={personaType} className={imageStyle} />
+        <img
+          src={getPersonaImage(personaType)}
+          alt={personaType}
+          className={cx(imageStyle, isSmall && imageSmallStyle)}
+        />
       </div>
-      <div className={levelTextStyle}>Level {level}</div>
+      <div className={cx(levelTextStyle, isSmall && levelTextSmallStyle)}>Level {level}</div>
     </div>
   );
 }
 
-export function PersonaBannerUnknown() {
+export function PersonaBannerUnknown({ size = 'default' }: { size?: PersonaBannerSize }) {
+  const isSmall = size === 'small';
   return (
-    <div className={itemStyle}>
-      <img src="/mypage/merge/merge-empty.svg" alt="empty" className={imageStyle} />
-      <div className={cx(levelTextStyle, levelEmptyTextStyle)}>Level ?</div>
+    <div className={cx(itemStyle, isSmall && itemSmallStyle)}>
+      <img src="/mypage/merge/merge-empty.svg" alt="empty" className={cx(imageStyle, isSmall && imageSmallStyle)} />
+      <div className={cx(levelTextStyle, levelEmptyTextStyle, isSmall && levelTextSmallStyle)}>Level ?</div>
     </div>
   );
 }
@@ -38,10 +54,19 @@ const itemStyle = css({
   padding: '8px',
 });
 
+const itemSmallStyle = css({
+  padding: '6px',
+});
+
 const imageStyle = css({
   objectFit: 'contain',
   width: '120px',
   height: '120px',
+});
+
+const imageSmallStyle = css({
+  width: '72px',
+  height: '72px',
 });
 
 const levelTextStyle = css({
@@ -49,6 +74,11 @@ const levelTextStyle = css({
   marginTop: '12px',
   textStyle: 'glyph18.bold',
   color: 'white.white_100',
+});
+
+const levelTextSmallStyle = css({
+  marginTop: '6px',
+  textStyle: 'glyph14.bold',
 });
 
 const levelEmptyTextStyle = css({
