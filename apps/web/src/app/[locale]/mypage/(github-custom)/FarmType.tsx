@@ -8,6 +8,7 @@ import { Github } from 'lucide-react';
 import { overlay } from 'overlay-kit';
 
 import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals';
+import { trackEvent } from '@/lib/analytics';
 import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
 
@@ -27,8 +28,9 @@ export function FarmType() {
     try {
       await copyClipBoard(code);
     } catch {}
+    trackEvent('github_guide_opened', { type: 'farm' });
     overlay.open(({ isOpen, close }) => (
-      <GithubGuideModal isOpen={isOpen} onClose={close} username={name} code={code} />
+      <GithubGuideModal isOpen={isOpen} onClose={close} username={name} code={code} type="farm" />
     ));
   };
 

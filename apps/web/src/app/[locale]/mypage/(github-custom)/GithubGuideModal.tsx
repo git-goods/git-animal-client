@@ -6,6 +6,7 @@ import { AnchorButton, Button, Dialog } from '@gitanimals/ui-panda';
 import { CheckCircle2, Copy } from 'lucide-react';
 import { toast } from 'sonner';
 
+import { trackEvent } from '@/lib/analytics';
 import { copyClipBoard } from '@/utils/copy';
 
 interface GithubGuideModalProps {
@@ -13,9 +14,10 @@ interface GithubGuideModalProps {
   onClose: () => void;
   username: string;
   code: string;
+  type: 'farm' | 'line';
 }
 
-export function GithubGuideModal({ isOpen, onClose, username, code }: GithubGuideModalProps) {
+export function GithubGuideModal({ isOpen, onClose, username, code, type }: GithubGuideModalProps) {
   const t = useTranslations('Mypage.GithubGuide');
   const tMypage = useTranslations('Mypage');
 
@@ -27,6 +29,11 @@ export function GithubGuideModal({ isOpen, onClose, username, code }: GithubGuid
       await copyClipBoard(code);
       toast.success(tMypage('copy-link-success'), { duration: 2000 });
     } catch {}
+  };
+
+  const onClickLater = () => {
+    trackEvent('click_guide_later', { type });
+    onClose();
   };
 
   return (
@@ -86,10 +93,11 @@ export function GithubGuideModal({ isOpen, onClose, username, code }: GithubGuid
             variant="primary"
             size="m"
             className={primaryButtonStyle}
+            onClick={() => trackEvent('click_create_repo', { type })}
           >
             {t('create-repo-button')}
           </AnchorButton>
-          <Button variant="secondary" size="m" onClick={onClose}>
+          <Button variant="secondary" size="m" onClick={onClickLater}>
             {t('later-button')}
           </Button>
         </Dialog.Footer>

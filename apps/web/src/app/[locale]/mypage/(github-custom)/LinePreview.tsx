@@ -10,6 +10,7 @@ import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
+import { trackEvent } from '@/lib/analytics';
 import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
@@ -33,8 +34,9 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
     try {
       await copyClipBoard(code);
     } catch {}
+    trackEvent('github_guide_opened', { type: 'line' });
     overlay.open(({ isOpen, close }) => (
-      <GithubGuideModal isOpen={isOpen} onClose={close} username={name} code={code} />
+      <GithubGuideModal isOpen={isOpen} onClose={close} username={name} code={code} type="line" />
     ));
   };
 
