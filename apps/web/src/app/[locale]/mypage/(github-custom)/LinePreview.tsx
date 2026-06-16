@@ -6,16 +6,13 @@ import { css, cx } from '_panda/css';
 import { Flex } from '_panda/jsx';
 import { Button, TextField } from '@gitanimals/ui-panda';
 import { Github } from 'lucide-react';
-import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
-import { trackEvent } from '@/lib/analytics';
 import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
-import { copyClipBoard } from '@/utils/copy';
 
-import { GithubGuideModal } from './GithubGuideModal';
+import { useGithubPublish } from './useGithubPublish';
 
 const DEFAULT_SIZE = { width: 600, height: 120 };
 
@@ -23,22 +20,19 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
   const t = useTranslations('Mypage');
 
   const { name } = useClientUser();
+  const publish = useGithubPublish();
   const [sizes, setSizes] = useState<{ width: number; height: number }>(DEFAULT_SIZE);
 
-  const onPublish = async () => {
-    const code = getGitanimalsLineString({
+  const onPublish = () =>
+    publish({
+      code: getGitanimalsLineString({
+        username: name,
+        petId: selectPersona ?? undefined,
+        sizes: [sizes.width, sizes.height],
+      }),
       username: name,
-      petId: selectPersona ?? undefined,
-      sizes: [sizes.width, sizes.height],
+      type: 'line',
     });
-    try {
-      await copyClipBoard(code);
-    } catch {}
-    trackEvent('github_guide_opened', { type: 'line' });
-    overlay.open(({ isOpen, close }) => (
-      <GithubGuideModal isOpen={isOpen} onClose={close} username={name} code={code} type="line" />
-    ));
-  };
 
   return (
     <div className={cx(customScrollStyle, sectionContainerStyle)}>
