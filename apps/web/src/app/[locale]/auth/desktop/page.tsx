@@ -2,7 +2,9 @@
 
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { css } from '_panda/css';
+import { Button } from '@gitanimals/ui-panda';
 
 import { login } from '@/components/AuthButton';
 import { buildDesktopCallbackUrl, isValidDesktopRedirect } from '@/constants/desktopAuth';
@@ -12,6 +14,8 @@ export default function DesktopAuthPage() {
   const params = useSearchParams();
   const redirectUri = params.get('redirect_uri');
   const state = params.get('state');
+  const errorCode = params.get('error');
+  const t = useTranslations('Auth');
 
   const { status, data } = useClientSession();
 
@@ -19,13 +23,8 @@ export default function DesktopAuthPage() {
 
   useEffect(() => {
     if (!isValid) return;
-
     if (status === 'authenticated' && data?.user?.accessToken) {
       window.location.replace(buildDesktopCallbackUrl(redirectUri!, data.user.accessToken, state!));
-    } else if (status === 'unauthenticated') {
-      login(
-        `/auth/desktop?redirect_uri=${encodeURIComponent(redirectUri!)}&state=${encodeURIComponent(state!)}`,
-      );
     }
   }, [status, isValid, redirectUri, state, data?.user?.accessToken]);
 
@@ -34,21 +33,35 @@ export default function DesktopAuthPage() {
       <div className={pageRootCss}>
         <div className={cardCss}>
           <h1 className={titleCss}>잘못된 요청</h1>
-          <p className={descCss}>
-            redirect_uri가 허용 범위를 벗어났거나 필수 파라미터가 누락되었습니다.
-          </p>
+          <p className={descCss}>redirect_uri가 허용 범위를 벗어났거나 필수 파라미터가 누락되었습니다.</p>
         </div>
       </div>
     );
   }
 
-  const message =
-    status === 'authenticated' ? '데스크톱 앱으로 이동합니다…' : '로그인으로 이동합니다…';
+  const handleLogin = () => {
+    login(`/auth/desktop?redirect_uri=${encodeURIComponent(redirectUri!)}&state=${encodeURIComponent(state!)}`);
+  };
 
   return (
     <div className={pageRootCss}>
       <div className={cardCss}>
-        <p className={loadingTextCss}>{message}</p>
+        <h1 className={titleCss}>{t('desktopTitle')}</h1>
+
+        {errorCode && <div className={errorBannerCss}>{t('desktopErrorBanner')}</div>}
+
+        {status === 'loading' && <p className={loadingTextCss}>{t('desktopLoadingMessage')}</p>}
+
+        {status === 'authenticated' && <p className={loadingTextCss}>{t('desktopAuthenticatedMessage')}</p>}
+
+        {status === 'unauthenticated' && (
+          <>
+            <p className={descCss}>{t('desktopDescription')}</p>
+            <Button variant="primary" size="m" onClick={handleLogin}>
+              {t('desktopContinueButton')}
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );
@@ -101,5 +114,16 @@ const loadingTextCss = css({
 const descCss = css({
   textStyle: 'glyph16.regular',
   color: 'white.white_80',
+  textAlign: 'center',
+  whiteSpace: 'pre-line',
+});
+
+const errorBannerCss = css({
+  width: '100%',
+  padding: '12px 16px',
+  borderRadius: '8px',
+  background: 'rgba(255, 75, 75, 0.15)',
+  color: 'white',
+  textStyle: 'glyph14.regular',
   textAlign: 'center',
 });

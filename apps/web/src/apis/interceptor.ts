@@ -1,9 +1,10 @@
-import { getSession, signOut } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 import { CustomException } from '@gitanimals/exception';
 import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import { getServerAuth } from '@/auth';
 import type { ApiErrorScheme } from '@/exceptions/type';
+import { triggerSessionExpired } from '@/utils/sessionExpired';
 
 interface CachedSession {
   accessToken: string;
@@ -13,6 +14,11 @@ interface CachedSession {
 let cachedSession: CachedSession | null = null;
 let sessionPromise: Promise<CachedSession | null> | null = null;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+export const clearSessionCache = () => {
+  cachedSession = null;
+  sessionPromise = null;
+};
 
 const getSessionWithCache = async (): Promise<CachedSession | null> => {
   if (cachedSession && Date.now() < cachedSession.expiresAt) {
@@ -69,9 +75,10 @@ export const interceptorResponseFulfilled = (res: AxiosResponse) => {
 export const interceptorResponseRejected = async (error: AxiosError<ApiErrorScheme>) => {
   if (error?.response?.status === 401) {
     if (typeof window !== 'undefined') {
-      signOut();
+      clearSessionCache();
+      triggerSessionExpired(window.location.pathname + window.location.search);
     }
-    throw new CustomException('TOKEN_EXPIRED', 'token expired and sign out success');
+    throw new CustomException('TOKEN_EXPIRED', 'token expired');
   }
 
   // TODO: 403 처리

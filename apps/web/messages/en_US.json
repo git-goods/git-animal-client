@@ -292,5 +292,23 @@
     "report-error-button": "Report Error",
     "ranking-error-title": "Unable to load ranking information",
     "ranking-error-description": "Please try again later"
+  },
+  "Auth": {
+    "sessionExpiredTitle": "Your session has expired",
+    "sessionExpiredDescription": "Please sign in again for security.\nYou'll return to your previous page after signing in.",
+    "sessionExpiredAction": "Sign in again",
+    "desktopTitle": "Connect desktop app",
+    "desktopDescription": "The GitAnimals desktop app is requesting GitHub authentication.\nYou'll return to the desktop app once you sign in.",
+    "desktopContinueButton": "Continue with GitHub",
+    "desktopAuthenticatedMessage": "Returning to the desktop app…",
+    "desktopLoadingMessage": "Please wait a moment…",
+    "desktopErrorBanner": "Something went wrong while signing in. Please try again.",
+    "errorTitle": "Sign in failed",
+    "errorDescriptionDefault": "You can try again or go back to the home page.",
+    "errorDescriptionAccessDenied": "Access was denied. Please try again.",
+    "errorDescriptionCredentials": "Account verification failed. Please try again in a moment.",
+    "errorRetryDesktop": "Retry desktop connection",
+    "errorRetryDefault": "Sign in again",
+    "errorGoHome": "Back to home"
   }
 }
