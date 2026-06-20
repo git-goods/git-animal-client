@@ -6,7 +6,7 @@ import { css, cx } from '_panda/css';
 
 import { useClientUser } from '@/utils/clientAuth';
 
-const GITANIMALS_URL = 'https://www.gitanimals.org/en_US';
+const GITANIMALS_URL = 'https://www.gitanimals.org/en-US';
 
 const getLink = (props: { username: string; type: 'farm' | 'line' }) => {
   return `${GITANIMALS_URL}?utm_medium=image&utm_source=${props.username}&utm_content=${props.type}`;

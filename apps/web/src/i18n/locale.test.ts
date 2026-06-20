@@ -1,28 +1,28 @@
-// Run: node --experimental-strip-types --test apps/web/src/i18n/locale.test.ts
-import test from 'node:test';
-import assert from 'node:assert/strict';
+import { describe, expect, test } from 'vitest';
 
-import { toIntlLocale, toSegmentLocale } from './locale.ts';
+import { toIntlLocale, toSegmentLocale } from './locale';
 
-test('toIntlLocale converts underscore segment locale to BCP-47', () => {
-  assert.equal(toIntlLocale('ko_KR'), 'ko-KR');
-  assert.equal(toIntlLocale('en_US'), 'en-US');
-});
+describe('locale boundary converters', () => {
+  test('toSegmentLocale converts BCP-47 -> underscore API wire form', () => {
+    expect(toSegmentLocale('ko-KR')).toBe('ko_KR');
+    expect(toSegmentLocale('en-US')).toBe('en_US');
+  });
 
-test('toIntlLocale output is a valid BCP-47 tag (the actual bug)', () => {
-  // The underscore form is what breaks intl-messageformat at runtime.
-  assert.throws(() => Intl.getCanonicalLocales('ko_KR'), RangeError);
-  // The converted form must be accepted by Intl.
-  assert.doesNotThrow(() => Intl.getCanonicalLocales(toIntlLocale('ko_KR')));
-  assert.doesNotThrow(() => Intl.getCanonicalLocales(toIntlLocale('en_US')));
-});
+  test('BCP-47 locales are accepted by Intl; underscore form is not (the original bug)', () => {
+    // The underscore wire form is invalid for intl-messageformat at runtime.
+    expect(() => Intl.getCanonicalLocales('ko_KR')).toThrow(RangeError);
+    // The hyphen form the app uses everywhere is accepted by Intl.
+    expect(() => Intl.getCanonicalLocales('ko-KR')).not.toThrow();
+    expect(() => Intl.getCanonicalLocales('en-US')).not.toThrow();
+  });
 
-test('toSegmentLocale converts BCP-47 back to underscore segment locale', () => {
-  assert.equal(toSegmentLocale('ko-KR'), 'ko_KR');
-  assert.equal(toSegmentLocale('en-US'), 'en_US');
-});
+  test('toIntlLocale converts underscore -> BCP-47 (inverse of toSegmentLocale)', () => {
+    expect(toIntlLocale('ko_KR')).toBe('ko-KR');
+    expect(toIntlLocale('en_US')).toBe('en-US');
+  });
 
-test('round-trips between segment and intl forms', () => {
-  assert.equal(toSegmentLocale(toIntlLocale('ko_KR')), 'ko_KR');
-  assert.equal(toSegmentLocale(toIntlLocale('en_US')), 'en_US');
+  test('round-trips between BCP-47 and API wire forms', () => {
+    expect(toIntlLocale(toSegmentLocale('ko-KR'))).toBe('ko-KR');
+    expect(toIntlLocale(toSegmentLocale('en-US'))).toBe('en-US');
+  });
 });

@@ -8,7 +8,7 @@ export const MONITORING_KEY = {
 };
 
 export const config = {
-  url: isProd ? 'https://gitanimals.com' : 'http://localhost:3000',
+  url: isProd ? 'https://www.gitanimals.org' : 'http://localhost:3000',
   monitoring: {
     ...MONITORING_KEY,
   },
