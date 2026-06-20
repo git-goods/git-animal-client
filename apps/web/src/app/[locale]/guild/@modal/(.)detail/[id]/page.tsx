@@ -1,6 +1,5 @@
-import { css } from '_panda/css';
 import { checkIsMyGuild, getGuildById } from '@gitanimals/api';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 
 import RouteModal from '@/components/RouteModal';
 import { Link } from '@/i18n/routing';
@@ -13,22 +12,14 @@ export default async function GuildDetailModal({ params }: { params: { id: strin
 
   return (
     <RouteModal>
-      <div className={containerStyle}>
+      <div className="flex flex-col justify-center gap-[32px] h-fit">
         <GuildDetail guildId={params.id} details={details} />
         {!isMyGuild && (
           <Link href={`/guild/detail/${params.id}/join`} style={{ margin: 'auto' }}>
-            <Button w="100px">Join</Button>
+            <Button className="w-[100px]">Join</Button>
           </Link>
         )}
       </div>
     </RouteModal>
   );
 }
-
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  gap: '32px',
-  height: 'fit-content',
-});

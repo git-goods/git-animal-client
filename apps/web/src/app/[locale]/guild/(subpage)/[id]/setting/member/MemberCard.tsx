@@ -2,7 +2,7 @@
 
 import type { GuildMember } from '@gitanimals/api';
 import { kickMemberFromGuild } from '@gitanimals/api';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { toast } from 'sonner';
 
 import { useRouter } from '@/i18n/routing';
@@ -26,7 +26,7 @@ export function MemberCard({ member, guildId }: { member: GuildMember; guildId: 
       name={member.name}
       count={member.contributions}
       bottomElement={
-        <Button variant="secondary" onClick={kickMember} width="90px">
+        <Button variant="secondary" onClick={kickMember} className="w-[90px]">
           Kick
         </Button>
       }

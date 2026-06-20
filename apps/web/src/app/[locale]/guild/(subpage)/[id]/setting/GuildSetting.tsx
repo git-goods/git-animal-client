@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { css } from '_panda/css';
 import { type Guild, updateGuild } from '@gitanimals/api';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 
 import { useRouter } from '@/i18n/routing';
 
@@ -64,7 +63,7 @@ export function GuildSetting({
       />
       {error && <p aria-live="polite">{error}</p>}
       <Button
-        className={css({ display: 'block', mt: 10, mx: 'auto' })}
+        className="block mt-10 mx-auto"
         onClick={onSubmit}
         disabled={Object.values(formError).filter(Boolean).length > 0}
       >

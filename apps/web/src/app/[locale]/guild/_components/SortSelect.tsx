@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import type { FilterType } from '@gitanimals/api';
-import { CombineChip } from '@gitanimals/ui-panda';
+import { CombineChip } from '@gitanimals/ui-tailwind';
 
 import { useGetNextUrl } from '@/hooks/useGetNewUrl';
 import { useRouter } from '@/i18n/routing';

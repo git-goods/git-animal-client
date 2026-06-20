@@ -1,8 +1,7 @@
 'use client';
 
-import { Flex } from '_panda/jsx';
 import { acceptJoinGuild, denyJoinGuild, type GuildMember } from '@gitanimals/api';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { toast } from 'sonner';
 
 import { useRouter } from '@/i18n/routing';
@@ -32,12 +31,12 @@ export function WaitMemberCard({ member, guildId }: { member: GuildMember; guild
       name={member.name}
       count={member.contributions}
       bottomElement={
-        <Flex gap="2">
+        <div className="flex gap-2">
           <Button variant="secondary" onClick={denyMember}>
             Deny
           </Button>
           <Button onClick={acceptMember}>Accept</Button>
-        </Flex>
+        </div>
       }
     />
   );

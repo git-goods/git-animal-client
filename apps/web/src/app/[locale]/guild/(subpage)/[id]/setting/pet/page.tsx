@@ -1,7 +1,6 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { css } from '_panda/css';
 import { changeMainPet } from '@gitanimals/api';
 
 import { GuildModalPageTitle } from '@/app/[locale]/guild/_components/GuildModalPageLayout';
@@ -24,16 +23,9 @@ export default function GuildSettingPetPage() {
   };
 
   return (
-    <div className={containerStyle}>
+    <div className="flex flex-col items-center gap-[60px]">
       <GuildModalPageTitle>Edit profile pet</GuildModalPageTitle>
       <GuildJoinPetSelectDialog onSubmit={onSubmit} />
     </div>
   );
 }
-
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '60px',
-});
