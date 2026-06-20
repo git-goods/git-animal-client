@@ -1,12 +1,47 @@
 import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { css, cx } from '_panda/css';
 import type { RankType } from '@gitanimals/api';
+import { cn } from '@gitanimals/ui-tailwind';
 import { getNewUrl } from '@gitanimals/util-common';
 
 import { PaginationServer } from '@/components/Pagination/PaginationServer';
 
 import { RankingLink } from './RankingLink';
+
+const slideStyle = 'w-full h-auto flex items-center justify-center';
+
+const paginationStyle = 'mt-[20px] relative h-[30px] flex items-center justify-center gap-2';
+
+const rankingListStyle = 'w-full';
+
+const tableStyle = 'w-full border-separate text-left [border-spacing:0_4px]';
+
+const trBaseStyle = cn(
+  'rounded-[8px]',
+  '[&_img]:rounded-full [&_img]:overflow-hidden',
+  '[&_td]:border-none [&_th]:border-none [&_td]:px-[16px] [&_th]:px-[16px]',
+  '[&_td:first-child]:pl-[40px] [&_th:first-child]:pl-[40px] [&_td:first-child]:rounded-[8px_0_0_8px] [&_th:first-child]:rounded-[8px_0_0_8px] [&_td:first-child]:w-[120px] [&_th:first-child]:w-[120px]',
+  '[&_td:last-child]:pr-[40px] [&_th:last-child]:pr-[40px] [&_td:last-child]:rounded-[0_8px_8px_0] [&_th:last-child]:rounded-[0_8px_8px_0] [&_td:last-child]:text-right [&_th:last-child]:text-right',
+  '[&_td:nth-child(2)]:text-center [&_th:nth-child(2)]:text-center [&_td:nth-child(2)]:w-[72px] [&_th:nth-child(2)]:w-[72px] [&_td:nth-child(2)]:px-[8px] [&_th:nth-child(2)]:px-[8px]',
+  'mobile:rounded-[6px]',
+  'mobile:[&_td]:border-none mobile:[&_th]:border-none mobile:[&_td]:px-[8px] mobile:[&_th]:px-[8px]',
+  'mobile:[&_td:first-child]:pl-[16px] mobile:[&_th:first-child]:pl-[16px] mobile:[&_td:first-child]:w-[54px] mobile:[&_th:first-child]:w-[54px]',
+  'mobile:[&_td:last-child]:pr-[16px] mobile:[&_th:last-child]:pr-[16px]',
+  'mobile:[&_td:nth-child(2)]:w-[28px] mobile:[&_th:nth-child(2)]:w-[28px] mobile:[&_td:nth-child(2)]:pl-0 mobile:[&_th:nth-child(2)]:pl-0',
+);
+
+const theadTrStyle = cn(trBaseStyle, 'glyph16-bold bg-white-50 text-white-100 h-[40px]');
+
+const trStyle = cn(
+  trBaseStyle,
+  'glyph18-regular text-white-100 bg-white-10 h-[60px]',
+  '[&_td:first-child]:text-[20px] [&_td:first-child]:leading-[28px] [&_td:first-child]:font-dnf [&_td:first-child]:text-white-50',
+  'mobile:h-[48px] mobile:glyph15-regular',
+  'mobile:[&_td:first-child]:text-[16px]',
+);
+
+const currentUserTrStyle =
+  'bg-[linear-gradient(133deg,rgba(255,253,201,0.30)_2.19%,rgba(150,230,216,0.30)_49.24%,rgba(125,171,241,0.30)_98.21%)]';
 
 export function RankingTable({ ranks, page, totalPage }: { page: number; ranks: RankType[]; totalPage: number }) {
   const { data: session } = useSession();
@@ -43,7 +78,7 @@ export function RankingTable({ ranks, page, totalPage }: { page: number; ranks: 
             </thead>
             <tbody>
               {group.map((item) => (
-                <tr key={item.rank} className={cx(trStyle, item.name === currentUsername && currentUserTrStyle)}>
+                <tr key={item.rank} className={cn(trStyle, item.name === currentUsername && currentUserTrStyle)}>
                   <td>{item.rank}</td>
                   <td>
                     <RankingLink id={item.name}>
@@ -73,122 +108,3 @@ export function RankingTable({ ranks, page, totalPage }: { page: number; ranks: 
     </div>
   );
 }
-
-const slideStyle = css({
-  width: '100%',
-  height: 'auto',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
-
-const paginationStyle = css({
-  marginTop: '20px',
-  position: 'relative',
-  height: '30px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: 2,
-});
-
-const rankingListStyle = css({
-  width: '100%',
-});
-
-const tableStyle = css({
-  width: '100%',
-  borderCollapse: 'separate',
-  textAlign: 'left',
-  borderSpacing: '0 4px',
-});
-
-const trBaseStyle = css({
-  borderRadius: '8px',
-
-  '& img': {
-    borderRadius: '50%',
-    overflow: 'hidden',
-  },
-
-  '& td, & th': {
-    border: 'none',
-    padding: '0 16px',
-  },
-
-  '& td:first-child, & th:first-child': {
-    paddingLeft: '40px',
-    borderRadius: '8px 0 0 8px',
-    width: '120px',
-  },
-  '& td:last-child, & th:last-child': {
-    paddingRight: '40px',
-    borderRadius: '0 8px 8px 0',
-    textAlign: 'right',
-  },
-  '& td:nth-child(2), & th:nth-child(2)': {
-    textAlign: 'center',
-    width: '72px',
-    padding: '0 8px',
-  },
-
-  _mobile: {
-    borderRadius: '6px',
-    '& td, & th': {
-      border: 'none',
-      padding: '0 8px',
-    },
-
-    '& td:first-child, & th:first-child': {
-      paddingLeft: '16px',
-      width: '54px',
-    },
-    '& td:last-child, & th:last-child': {
-      paddingRight: '16px',
-    },
-    '& td:nth-child(2), & th:nth-child(2)': {
-      width: '28px',
-      paddingLeft: '0px',
-    },
-  },
-});
-
-const theadTrStyle = cx(
-  trBaseStyle,
-  css({
-    textStyle: 'glyph16.bold',
-    backgroundColor: 'white.white_50',
-    color: 'white.white_100',
-    height: '40px',
-  }),
-);
-
-const trStyle = cx(
-  trBaseStyle,
-  css({
-    textStyle: 'glyph18.regular',
-    color: 'white.white_100',
-    backgroundColor: 'white.white_10',
-    height: '60px',
-
-    '& td:first-child': {
-      fontSize: '20px',
-      lineHeight: '28px',
-      fontFamily: 'token(fonts.dnf)',
-      color: 'white.white_50',
-    },
-    _mobile: {
-      height: '48px',
-      fontSize: 'glyph15.regular',
-
-      '& td:first-child': {
-        fontSize: '16px',
-      },
-    },
-  }),
-);
-
-const currentUserTrStyle = css({
-  background:
-    'linear-gradient(133deg, rgba(255, 253, 201, 0.30) 2.19%, rgba(150, 230, 216, 0.30) 49.24%, rgba(125, 171, 241, 0.30) 98.21%)',
-});

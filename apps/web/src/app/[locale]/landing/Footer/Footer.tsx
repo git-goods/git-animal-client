@@ -1,11 +1,21 @@
 import type { ComponentProps } from 'react';
-import { cx } from '_panda/css';
 import { LinkMonoIcon } from '@gitanimals/ui-icon';
+import { cn } from '@gitanimals/ui-tailwind';
 
-import * as styles from './Footer.style';
 import { TeammateProfile } from './TeammateProfile';
 
 type TeammateProfileProps = ComponentProps<typeof TeammateProfile>;
+
+const styles = {
+  footer: 'flex flex-col gap-[120px] bg-black w-full text-white py-[120px] px-0 mobile:py-[80px] mobile:px-[16px] mobile:gap-[60px]',
+  article: 'flex w-full max-w-[1120px] mx-auto mobile:flex-col mobile:gap-[24px]',
+  title: 'w-[348px] flex-shrink glyph28-bold text-white mobile:glyph18-bold',
+  teamContentWrapper: 'w-full flex gap-[24px] flex-wrap mobile:gap-[12px]',
+  repoContentWrapper: 'w-full flex flex-col gap-[16px]',
+  repoLi: 'flex gap-[8px] mobile:flex-col mobile:gap-[1px]',
+  repoLiTitle: 'flex items-center gap-[8px] w-[226px] glyph18-bold mobile:glyph15-bold mobile:gap-[17px]',
+  repoLiLink: 'glyph16-regular text-white-75 underline mobile:glyph12-regular mobile:ml-[37px]',
+};
 
 export function Footer() {
   const TEAMMATE_DATA: TeammateProfileProps[] = [
@@ -96,7 +106,7 @@ export function Footer() {
   ] as const;
 
   return (
-    <footer className={cx(styles.footer, 'footer')}>
+    <footer className={cn(styles.footer, 'footer')}>
       <article className={styles.article}>
         <h2 className={styles.title}>Teams</h2>
         <div className={styles.teamContentWrapper}>

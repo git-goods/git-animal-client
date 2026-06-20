@@ -2,16 +2,50 @@
 
 import { useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { css, cx } from '_panda/css';
 import type { RankType } from '@gitanimals/api';
 import { rankQueries } from '@gitanimals/react-query';
-import { Skeleton } from '@gitanimals/ui-panda';
+import { cn, Skeleton } from '@gitanimals/ui-tailwind';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { RankingLink } from './RankingLink';
 
 const RANKS_PER_PAGE = 5;
 const SWIPE_THRESHOLD = 50;
+
+const containerStyle = 'w-full overflow-hidden';
+
+const tableWrapperStyle = 'transition-opacity duration-150 ease-[ease]';
+
+const fetchingStyle = 'opacity-50';
+
+const paginationStyle = 'mt-[16px] flex items-center justify-center';
+
+const paginationTextStyle = 'glyph14-regular text-white-50';
+
+const arrowButtonStyle =
+  'w-[32px] h-[32px] flex items-center justify-center border-none bg-none text-white-75 text-[20px] cursor-pointer disabled:opacity-25 disabled:cursor-default';
+
+const tableStyle = 'w-full border-separate text-left [border-spacing:0_4px]';
+
+const trBaseStyle = cn(
+  'rounded-[6px]',
+  '[&_img]:rounded-full [&_img]:overflow-hidden',
+  '[&_td]:border-none [&_th]:border-none [&_td]:px-[8px] [&_th]:px-[8px]',
+  '[&_td:first-child]:pl-[16px] [&_th:first-child]:pl-[16px] [&_td:first-child]:rounded-[6px_0_0_6px] [&_th:first-child]:rounded-[6px_0_0_6px] [&_td:first-child]:w-[54px] [&_th:first-child]:w-[54px]',
+  '[&_td:last-child]:pr-[16px] [&_th:last-child]:pr-[16px] [&_td:last-child]:rounded-[0_6px_6px_0] [&_th:last-child]:rounded-[0_6px_6px_0] [&_td:last-child]:text-right [&_th:last-child]:text-right',
+  '[&_td:nth-child(2)]:text-center [&_th:nth-child(2)]:text-center [&_td:nth-child(2)]:w-[28px] [&_th:nth-child(2)]:w-[28px] [&_td:nth-child(2)]:pl-0 [&_th:nth-child(2)]:pl-0',
+);
+
+const theadTrStyle = cn(trBaseStyle, 'glyph16-bold bg-white-50 text-white-100 h-[40px]');
+
+const trStyle = cn(
+  trBaseStyle,
+  'glyph18-regular text-white-100 bg-white-10 h-[48px] glyph15-regular',
+  '[&_td:first-child]:text-[16px] [&_td:first-child]:leading-[28px] [&_td:first-child]:font-dnf [&_td:first-child]:text-white-50',
+);
+
+const currentUserTrStyle =
+  'bg-[linear-gradient(133deg,rgba(255,253,201,0.30)_2.19%,rgba(150,230,216,0.30)_49.24%,rgba(125,171,241,0.30)_98.21%)]';
 
 interface MobileRankingTableProps {
   initialRanks: RankType[];
@@ -65,7 +99,7 @@ export function MobileRankingTable({ initialRanks, initialPage, totalPage, type 
 
   return (
     <div className={containerStyle} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-      <div className={cx(tableWrapperStyle, isPlaceholderData && fetchingStyle)}>
+      <div className={cn(tableWrapperStyle, isPlaceholderData && fetchingStyle)}>
         <RankingTableView ranks={ranks} currentUsername={currentUsername} />
       </div>
       <div className={paginationStyle}>
@@ -113,7 +147,7 @@ function RankingTableView({
       <tbody>
         {ranks
           ? ranks.map((item) => (
-              <tr key={item.rank} className={cx(trStyle, item.name === currentUsername && currentUserTrStyle)}>
+              <tr key={item.rank} className={cn(trStyle, item.name === currentUsername && currentUserTrStyle)}>
                 <td>{item.rank}</td>
                 <td>
                   <RankingLink id={item.name}>
@@ -146,112 +180,3 @@ function RankingTableView({
     </table>
   );
 }
-
-const containerStyle = css({ width: '100%', overflow: 'hidden' });
-
-const tableWrapperStyle = css({
-  transition: 'opacity 0.15s ease',
-});
-
-const fetchingStyle = css({
-  opacity: 0.5,
-});
-
-const paginationStyle = css({
-  marginTop: '16px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
-
-const paginationTextStyle = css({
-  textStyle: 'glyph14.regular',
-  color: 'white.white_50',
-});
-
-const arrowButtonStyle = css({
-  width: '32px',
-  height: '32px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  border: 'none',
-  background: 'none',
-  color: 'white.white_75',
-  fontSize: '20px',
-  cursor: 'pointer',
-  _disabled: {
-    opacity: 0.25,
-    cursor: 'default',
-  },
-});
-
-const tableStyle = css({
-  width: '100%',
-  borderCollapse: 'separate',
-  textAlign: 'left',
-  borderSpacing: '0 4px',
-});
-
-const trBaseStyle = css({
-  borderRadius: '6px',
-
-  '& img': {
-    borderRadius: '50%',
-    overflow: 'hidden',
-  },
-
-  '& td, & th': {
-    border: 'none',
-    padding: '0 8px',
-  },
-
-  '& td:first-child, & th:first-child': {
-    paddingLeft: '16px',
-    borderRadius: '6px 0 0 6px',
-    width: '54px',
-  },
-  '& td:last-child, & th:last-child': {
-    paddingRight: '16px',
-    borderRadius: '0 6px 6px 0',
-    textAlign: 'right',
-  },
-  '& td:nth-child(2), & th:nth-child(2)': {
-    textAlign: 'center',
-    width: '28px',
-    paddingLeft: '0px',
-  },
-});
-
-const theadTrStyle = cx(
-  trBaseStyle,
-  css({
-    textStyle: 'glyph16.bold',
-    backgroundColor: 'white.white_50',
-    color: 'white.white_100',
-    height: '40px',
-  }),
-);
-
-const trStyle = cx(
-  trBaseStyle,
-  css({
-    textStyle: 'glyph18.regular',
-    color: 'white.white_100',
-    backgroundColor: 'white.white_10',
-    height: '48px',
-    fontSize: 'glyph15.regular',
-
-    '& td:first-child': {
-      fontSize: '16px',
-      lineHeight: '28px',
-      fontFamily: 'token(fonts.dnf)',
-      color: 'white.white_50',
-    },
-  }),
-);
-
-const currentUserTrStyle = css({
-  background:
-    'linear-gradient(133deg, rgba(255, 253, 201, 0.30) 2.19%, rgba(150, 230, 216, 0.30) 49.24%, rgba(125, 171, 241, 0.30) 98.21%)',
-});

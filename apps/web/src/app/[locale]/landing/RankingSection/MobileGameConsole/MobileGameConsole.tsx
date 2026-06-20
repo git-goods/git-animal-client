@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { css } from '_panda/css';
 import { motion } from 'framer-motion';
+
+const containerStyle = 'w-screen -translate-x-[16px] h-auto flex items-center justify-center';
 
 export function MobileGameConsole() {
   const [isPressed, setIsPressed] = useState({
@@ -104,12 +105,3 @@ export function MobileGameConsole() {
     </div>
   );
 }
-
-const containerStyle = css({
-  width: '100vw',
-  transform: 'translateX(-16px)',
-  height: 'auto',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-});

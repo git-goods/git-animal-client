@@ -2,7 +2,7 @@
 
 import { Children } from 'react';
 import Image from 'next/image';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import useEmblaCarousel from 'embla-carousel-react';
 
 import { usePerspectiveTween } from './usePerspectiveTween';
@@ -20,12 +20,12 @@ export function PerspectiveCenterSlider({ children }: { children: React.ReactNod
 
   return (
     <div>
-      <div className={cx(sliderContainer, 'slider-container')}>
+      <div className={cn(sliderContainer, 'slider-container')}>
         <button
           type="button"
           aria-label="previous"
           onClick={() => emblaApi?.scrollPrev()}
-          className={cx('is-outside', prevArrowStyle)}
+          className={cn('is-outside', prevArrowStyle)}
         >
           <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
         </button>
@@ -33,7 +33,7 @@ export function PerspectiveCenterSlider({ children }: { children: React.ReactNod
           type="button"
           aria-label="next"
           onClick={() => emblaApi?.scrollNext()}
-          className={cx('is-outside', nextArrowStyle)}
+          className={cn('is-outside', nextArrowStyle)}
         >
           <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
         </button>
@@ -51,49 +51,11 @@ export function PerspectiveCenterSlider({ children }: { children: React.ReactNod
   );
 }
 
-const sliderContainer = css({
-  marginTop: '80px',
-});
+const sliderContainer = 'mt-[80px]';
 
-const arrowStyle = css({
-  position: 'absolute',
-  top: '0',
-  bottom: '0',
-  margin: 'auto',
-  zIndex: 'floating',
-  cursor: 'pointer',
-  width: '40px',
-  height: '40px',
+const arrowStyle =
+  'absolute top-0 bottom-0 m-auto z-floating cursor-pointer w-[40px] h-[40px] [&_img]:w-full [&_img]:h-full mobile:bottom-0 mobile:w-[26px] mobile:h-[26px]';
 
-  '& img': {
-    width: '100%',
-    height: '100%',
-  },
+const prevArrowStyle = cn(arrowStyle, 'rotate-[180deg] left-[-62px] mobile:left-[8px]');
 
-  _mobile: {
-    bottom: '0',
-    width: '26px',
-    height: '26px',
-  },
-});
-
-const prevArrowStyle = cx(
-  arrowStyle,
-  css({
-    rotate: '180deg',
-    left: '-62px',
-    _mobile: {
-      left: '8px',
-    },
-  }),
-);
-
-const nextArrowStyle = cx(
-  arrowStyle,
-  css({
-    right: '-62px',
-    _mobile: {
-      right: '8px',
-    },
-  }),
-);
+const nextArrowStyle = cn(arrowStyle, 'right-[-62px] mobile:right-[8px]');
