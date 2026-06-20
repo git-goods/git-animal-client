@@ -20,6 +20,8 @@
   },
   "dependencies": {
     "@gitanimals/ui-token": "workspace:*",
+    "@radix-ui/react-checkbox": "^1.1.1",
+    "@radix-ui/react-scroll-area": "^1.2.10",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.408.0",
