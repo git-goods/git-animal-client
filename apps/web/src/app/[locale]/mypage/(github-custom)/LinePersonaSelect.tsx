@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { Dialog, ScrollArea } from '@gitanimals/ui-panda';
+import { Dialog } from '@gitanimals/ui-panda';
+import { ScrollArea } from '@gitanimals/ui-tailwind';
 import { ExpandIcon } from 'lucide-react';
 
 import { SelectPersonaList } from '../PersonaList';
@@ -21,7 +21,7 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
   return (
     <div>
       <section className={selectPetContainerStyle}>
-        <h2 className="heading">{t('change-pet')}</h2>
+        <h2 className="glyph18-bold text-white">{t('change-pet')}</h2>
         <button onClick={() => setIsExtend(true)}>
           <ExpandIcon color="white" size={20} />
         </button>
@@ -52,15 +52,4 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
   );
 };
 
-const selectPetContainerStyle = css({
-  position: 'relative',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  marginBottom: '16px',
-
-  '& .heading': {
-    textStyle: 'glyph18.bold',
-    color: 'white',
-  },
-});
+const selectPetContainerStyle = 'relative flex items-center justify-between mb-[16px]';

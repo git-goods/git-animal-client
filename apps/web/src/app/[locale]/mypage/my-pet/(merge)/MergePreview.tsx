@@ -1,7 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import type { PropsWithChildren } from 'react';
-import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
 import type { Persona } from '@gitanimals/api';
 import { motion } from 'framer-motion';
 import { EqualIcon, PlusIcon } from 'lucide-react';
@@ -60,41 +58,18 @@ export const MergePreview = ({ materialPersona, targetPersona }: MergePersonaPro
   );
 };
 
-const containerStyle = css({
-  position: 'relative',
-  display: 'flex',
-  justifyContent: 'center',
-  padding: '16px 0 8px',
-  overflow: 'hidden',
-  minHeight: 'fit-content',
+const containerStyle = 'relative flex justify-center pt-[16px] pb-[8px] px-0 overflow-hidden min-h-fit mobile:p-0';
 
-  _mobile: {
-    padding: 0,
-  },
-});
+const itemContainerStyle = 'flex items-center justify-between w-full max-w-[612px]';
 
-const itemContainerStyle = flex({
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  width: '100%',
-  maxWidth: '612px',
-});
+const iconStyle = 'mb-[24px]';
 
-const iconStyle = css({
-  marginBottom: '24px',
-});
-
-const flashEffectStyle = css({
-  position: 'absolute',
-  inset: 0,
-  backgroundColor: 'white',
-  borderRadius: '8px',
-});
+const flashEffectStyle = 'absolute inset-0 bg-white rounded-[8px]';
 
 function ResultItemAnimation({ isVisible, children }: PropsWithChildren<{ isVisible: boolean }>) {
   return (
     <motion.div
-      className={css({ position: 'relative' })}
+      className="relative"
       initial={{ scale: 1 }}
       animate={{
         scale: isVisible ? [1, 1.2, 1] : 1,

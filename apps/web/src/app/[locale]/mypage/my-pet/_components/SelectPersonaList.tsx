@@ -1,8 +1,7 @@
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { BannerSkeletonList } from '@gitanimals/ui-panda/src/components/Banner/Banner';
+import { BannerSkeletonList, cn } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -63,46 +62,13 @@ export const SelectPersonaList = wrap
     );
   });
 
-const sectionStyle = css({
-  height: '100%',
-  maxHeight: '100%',
-  minHeight: '0',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '16px',
-});
+const sectionStyle = 'h-full max-h-full min-h-0 flex flex-col gap-[16px]';
 
-const listSectionTitleStyle = css({
-  textStyle: 'glyph16.regular',
-  color: 'white.white_50',
-  display: 'flex',
-  justifyContent: 'space-between',
-});
+const listSectionTitleStyle = 'glyph16-regular text-white-50 flex justify-between';
 
-const flexOverflowStyle = cx(
-  css({
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, 80px)',
-    gridAutoRows: '80px',
-    justifyContent: 'flex-start',
-    overflowY: 'auto',
-    overflowX: 'hidden',
-    width: '100%',
-    gap: '8px',
-    height: '100%',
-    minHeight: '0',
-    maxHeight: 'calc(100% - 24px)',
-    _mobile: {
-      gridTemplateColumns: 'repeat(auto-fill, 52px)',
-      gridAutoRows: '52px',
-    },
-  }),
+const flexOverflowStyle = cn(
+  'grid grid-cols-[repeat(auto-fill,_80px)] auto-rows-[80px] justify-start overflow-y-auto overflow-x-hidden w-full gap-[8px] h-full min-h-0 max-h-[calc(100%_-_24px)] mobile:grid-cols-[repeat(auto-fill,_52px)] mobile:auto-rows-[52px]',
   customScrollStyle,
 );
 
-const emptyStyle = css({
-  textStyle: 'glyph14.regular',
-  color: 'white.white_50',
-  textAlign: 'center',
-  padding: '24px 0',
-});
+const emptyStyle = 'glyph14-regular text-white-50 text-center px-0 py-[24px]';

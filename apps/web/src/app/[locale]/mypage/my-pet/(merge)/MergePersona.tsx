@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
 import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
-import { Button, CommonDialog, Dialog } from '@gitanimals/ui-panda';
+import { CommonDialog, Dialog } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useClientSession } from '@/utils/clientAuth';
@@ -89,4 +89,4 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
   );
 }
 
-const footerStyle = css({ display: 'flex', justifyContent: 'center', gap: '12px' });
+const footerStyle = 'flex justify-center gap-[12px]';
