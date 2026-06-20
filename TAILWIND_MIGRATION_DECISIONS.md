@@ -62,7 +62,13 @@
 ### ADR-009 — flicking → embla 전환, Perspective/Fade 는 scroll-progress 커스텀으로 재현 (PR3c)
 - **배경:** landing 슬라이더가 `@egjs/react-flicking` 기반이었다(마이그레이션 동반 목표). `MainSlider` 는 이미 embla. 실제 flicking 사용은 공유 컴포넌트 `PerspectiveCenterSlider`(landing+**event** 사용, Perspective+Fade+Arrow)와 `AnimalSliderContainerMobile`(Perspective+Fade)뿐이고, `AnimalSliderContainer` 는 **dead code** 였다.
 - **결정:** 둘을 embla 로 전환하고 dead code 는 삭제. flicking `Perspective({rotate:0.5, scale:0.2})` + `Fade()` 를 `useEmblaCarousel` + `usePerspectiveTween` 훅으로 재현한다 — embla `scrollProgress`/`scrollSnapList` 의 diff 로 `rotateY`(=-diff·90·rotate)·`scale`(=1-|diff|·scale)·`opacity`(=1-|diff|·fade) 를 계산해 transform. `embla-carousel-fade` 는 쓰지 않는다(opacity 를 tween 에 포함). 화살표는 `scrollPrev/Next`, 컨테이너/화살표 시각 스타일(panda)은 PR3d 로 미룬다(embla 구조 클래스만 tailwind).
-- **⚠️ 검증 필요(미해결):** Perspective 공식이 flicking 내부와 미묘히 다를 수 있어 **브라우저 시각 검증**으로 rotate/scale 튜닝이 필요하다. `PerspectiveCenterSlider` 는 공유 컴포넌트라 **event 슬라이스도 함께 영향**받으므로 event 도 검증 대상.
+- **⚠️ 검증 필요(미해결):** Perspective 공식이 flicking 내부와 미묘히 다를 수 있어 **브라우저 시각 검증**으로 rotate/scale 튜닝이 필요하다. `PerspectiveCenterSlider` 는 공유 컴포넌트라 **event 슬라이스도 함께 영향**받으므로 event 도 검증 대상. → 2026-06-21 브라우저 검증 완료(OK).
+
+### ADR-010 — `.style.ts` 정책 명확화(§5 보완) + ui-panda SplitText 잔존 (PR3d)
+- **배경:** §5 는 별도 `*.style.ts` 지양(turbopack 함정)을 권했다. PR3d 에서 landing 9개 `.style.ts` 를 컴포넌트 `.tsx` 로 인라인/코로케이션했다. 단 `MainSection/MainSlider.style.ts` 의 `sliderContainer` 는 `AnimalSliderContainerMobile` 이 cross-import 하는 공유 상수다.
+- **결정/검증(§6-1 결론):** turbopack 함정은 panda `css()`(빌드타임 추출 매크로)에 국한이고, **plain 문자열 className 상수는 별도 `.ts` 에 있어도 Tailwind content 스캔 대상**(`content` glob 에 `.ts` 포함)이다. PR3d 프로덕션 빌드에서 `MainSlider.style.ts` 의 `w-[1120px]` 가 정상 생성됨을 확인 → §5 의 우려(별도 파일 클래스 누락)는 **css() 호출에만 해당**. 따라서 원칙은 코로케이션이되, cross-import 공유 상수는 `.ts` 문자열 상수로 유지 허용.
+- **SplitText(미해결 TODO):** `MainSection/TopBanner` 가 `@gitanimals/ui-panda/src/animation/SplitText` 를 deep-import 한다. ui-tailwind 에 대응이 없어 공존 유지. **PandaCSS 제거(PR final) 전 ui-tailwind 로 이식** 필요.
+- **불필요 spacer 제거:** `(spring)`/`(christmas)` 의 `<div className="h-[60px]" />` 는 panda 프로젝트에 tailwind 문법으로 잘못 있던 무효(height 0) 요소였는데 Tailwind 도입으로 60px 여백이 실렌더됨 → 제거. (GNB 의 h-[60px] 는 fixed 헤더 보정용이라 유지)
 
 ---
 
@@ -135,3 +141,4 @@ auth 의 claude-code/desktop 원본이 `color: 'white.white_70'` / `'white.white
 - 2026-06-20 (PR1): auth 슬라이스 전환. ADR-007(슬라이스 컴포넌트는 panda 원본 기준, TextField 추가) + §2.6(white_70/80 원본 버그 → text-white 재현) 기록.
 - 2026-06-20 (PR2): GNB 슬라이스 전환(5파일, 순수 스타일·컴포넌트 추가 없음). ADR-008(nested selector → 자식 직접 className/arbitrary variant, 공유 panda 스타일은 cn 으로 공존) 기록.
 - 2026-06-20 (PR3a~c): landing 설계 부분 분리 PR. ADR-007 적용으로 Button/AnchorButton(panda cva 1:1)·Skeleton(gray gradient 1:1, animation easing linear 교정) 추가. ADR-009(flicking→embla, Perspective/Fade 를 usePerspectiveTween 으로 재현, dead code AnimalSliderContainer 삭제, 브라우저 검증 필요) 기록.
+- 2026-06-21 (PR3d): landing 전 섹션 스타일 사용부 전환(36파일, 9개 .style.ts 인라인화). 병렬 서브에이전트 7개로 전환 후 빌드·grep 검수. ADR-010(.style.ts 정책 §6-1 결론·SplitText 잔존·spacer 제거) 기록. embla 브라우저 검증 완료.

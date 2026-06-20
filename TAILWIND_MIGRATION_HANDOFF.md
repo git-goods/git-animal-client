@@ -128,10 +128,12 @@ PR 분리 원칙: 설계·깊은 리뷰 필요분(컴포넌트 추가, 라이브
 - ✅ **PR3a** `feat/tailwind-pr3a-button`: ui-tailwind Button/AnchorButton (panda cva 1:1, dev 폐기)
 - ✅ **PR3b** `feat/tailwind-pr3b-skeleton`: ui-tailwind Skeleton (gray gradient 1:1, animation easing linear 교정)
 - ✅ **PR3c** `feat/tailwind-pr3c-embla`: 슬라이더 flicking→embla. 공유 `PerspectiveCenterSlider`+`AnimalSliderContainerMobile`, `usePerspectiveTween` 훅으로 Perspective/Fade 재현, dead code `AnimalSliderContainer` 삭제. ⚠️ **브라우저 시각 검증 필요**(Perspective rotate/scale 튜닝, 공유라 event 슬라이스도 영향)
-- ⬜ **PR3d** (예정): landing 전 섹션 panda→tailwind **스타일 사용부 전환**(한 PR). 9개 `.style.ts` 인라인/코로케이션화(§5 turbopack 함정). 위 컴포넌트/embla 사용.
+- ✅ **PR3d** `feat/tailwind-pr3d-landing-styles`: landing 전 섹션 **스타일 사용부 전환**(36파일). 9개 `.style.ts` 인라인/코로케이션화(`MainSlider.style.ts` 만 cross-import 공유 상수로 유지). 병렬 서브에이전트 7개 전환 후 빌드·grep 검수. `(spring)`/`(christmas)` 불필요 `h-[60px]` spacer 제거. embla **브라우저 시각 검증 완료**.
+
+### ✅ §6-1 결론 (turbopack `.style.ts` 함정)
+turbopack 함정은 panda `css()`(빌드타임 추출)에 **국한**. plain 문자열 className 상수는 별도 `.ts` 여도 Tailwind content 스캔 정상(PR3d 프로덕션 빌드에서 `MainSlider.style.ts` 의 `w-[1120px]` 생성 확인). → §6-1 해소(ADR-010).
 
 ### 다음 액션
-1. **PR3c embla 브라우저 시각 검증** — landing + event 슬라이더 3D 효과/동작 확인, 필요 시 `usePerspectiveTween` rotate/scale 튜닝.
-2. **PR3d**(landing 스타일 사용부) 진행.
-3. 이후 슬라이스 `shop → mypage → guild → quiz`(§7). Dialog→DialogV2 동반.
-4. **push 전략(미해결):** 전체 포팅 후 cherry-pick/rebase 로 반영해 PR merge(사용자 결정). 브랜치를 PR0→…→PR3x 로 쌓는다.
+1. **PR4 슬라이스 `shop`**(§7). 이어서 `mypage → guild → quiz`. Dialog→DialogV2 동반.
+2. **push 전략(미해결):** 전체 포팅 후 cherry-pick/rebase 로 반영해 PR merge(사용자 결정). 브랜치를 PR0→…→PR3d 로 쌓는다.
+3. **잔여 TODO:** ① `TopBanner` 의 ui-panda `SplitText` → ui-tailwind 이식(PR final 전, ADR-010). ② PR final: PandaCSS 완전 제거 + tailwind preflight 재활성화(ADR-002).
