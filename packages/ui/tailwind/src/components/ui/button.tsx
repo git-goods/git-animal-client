@@ -13,7 +13,10 @@ import { cn } from '../../utils/cn';
  * size 별 fontSize(14/16/20)는 모두 line-height 150% 라 glyphN-regular 완전체 유틸과 일치한다.
  */
 const buttonVariants = cva(
-  'rounded-[6px] border border-black text-black transition-[filter,box-shadow] duration-200 disabled:cursor-not-allowed',
+  // border-solid 필수: 앱 전역 `button{border:transparent}`(border-style:none, 특이도 0,0,1)가 저특이도
+  // reset `*{border-style:solid}`(0,0,0)을 이겨 Tailwind `border`(width만)로는 테두리가 사라진다.
+  // `border-solid`(0,1,0)로 border-style 을 명시해야 panda(`border:1px solid` shorthand)와 1:1.
+  'rounded-[6px] border border-solid border-black text-black transition-[filter,box-shadow] duration-200 disabled:cursor-not-allowed',
   {
     variants: {
       variant: {

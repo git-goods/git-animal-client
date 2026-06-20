@@ -24,7 +24,9 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
           ref={ref}
           className={cn(
             'h-[55px] w-full items-start gap-[8px] px-[20px] py-[14px]',
-            'rounded-[8px] border border-white-25',
+            // border-solid 필수: 앱 전역 `button{border:transparent}`는 input 엔 무관하나, Tailwind `border`(width만)는
+            // border-style 을 전역 reset 에 의존하므로 panda(`border:1px solid`)와 1:1 을 위해 명시한다.
+            'rounded-[8px] border border-solid border-white-25',
             'glyph16-regular text-white placeholder:text-white-50',
             className,
           )}
