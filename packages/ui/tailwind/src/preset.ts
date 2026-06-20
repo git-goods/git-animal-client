@@ -1,0 +1,35 @@
+import type { Config } from 'tailwindcss';
+import { colors } from './theme/colors';
+import { fontFamily } from './theme/typography';
+import { keyframes, animation } from './theme/keyframes';
+import { screens } from './theme/screens';
+import { zIndex } from './theme/zIndex';
+import { glyphFontPlugin } from './plugins/glyphFont';
+
+/**
+ * GitAnimals Tailwind Preset
+ * Use this preset in your tailwind.config.ts:
+ *
+ * @example
+ * import { gitAnimalsPreset } from '@gitanimals/ui-tailwind/preset';
+ *
+ * export default {
+ *   presets: [gitAnimalsPreset],
+ *   content: ['./src/**\/*.{js,ts,jsx,tsx}'],
+ * }
+ */
+export const gitAnimalsPreset: Partial<Config> = {
+  theme: {
+    colors,
+    fontFamily,
+    screens,
+    zIndex,
+    extend: {
+      keyframes,
+      animation,
+    },
+  },
+  plugins: [glyphFontPlugin],
+};
+
+export default gitAnimalsPreset;
