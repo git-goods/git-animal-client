@@ -5,8 +5,6 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
 import type { Transition, Variants } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronRight, Globe, LogOutIcon, Menu } from 'lucide-react';
@@ -18,6 +16,13 @@ import { useClientSession } from '@/utils/clientAuth';
 
 import { MobileLanguageSelector } from './LanguageSelector';
 import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
+
+const mobileHeaderClass =
+  'fixed top-0 z-header hidden h-[60px] w-screen items-center justify-between bg-white px-[20px] mobile:flex';
+const mobileMenuClass =
+  'fixed left-0 right-0 top-[60px] z-drawer max-h-[calc(100vh-60px)] overflow-y-auto bg-white shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] mobile:flex';
+const menuItemClass =
+  'glyph16-regular flex justify-between border-b border-gray-900 capitalize text-black-75 [&_div]:flex [&_div]:items-center [&_div]:gap-[10px]';
 
 export const MobileGNB = () => {
   const t = useTranslations('Layout');
@@ -36,20 +41,20 @@ export const MobileGNB = () => {
 
   return (
     <>
-      <div className={css({ h: '60px' })} />
-      <header className={mobileHeaderStyle}>
-        <div className={mobileHeaderContentStyle}>
+      <div className="h-[60px]" />
+      <header className={mobileHeaderClass}>
+        <div className="relative flex h-[44px] w-full items-center justify-between">
           <button onClick={toggleMenu}>
             <Menu size={24} color="black" />
           </button>
 
-          <Link href="/" className="center-title">
+          <Link href="/" className="absolute left-1/2 w-fit -translate-x-1/2">
             <Image src="/main/gnb_right_logo.svg" alt="gitanimals-logo" width={80} height={22} />
           </Link>
 
           {isAuth && (
             <Link href="/mypage">
-              <div className="profile-image">
+              <div className="h-[28px] w-[28px] overflow-hidden rounded-full">
                 <img src={data.user.image} alt="profile" width={28} height={28} />
               </div>
             </Link>
@@ -65,9 +70,9 @@ export const MobileGNB = () => {
             exit="exit"
             variants={menuVariant}
             transition={menuTransition}
-            className={mobileMenuStyle}
+            className={mobileMenuClass}
           >
-            <ul className="menu-list">
+            <ul className="w-full [&>*]:w-full">
               {menuList.map((menu) => (
                 <AdaptiveLink href={menu.href} key={menu.label}>
                   <MenuItem {...menu} label={t(menu.label)} />
@@ -104,7 +109,7 @@ export const MobileGNB = () => {
 
 function MenuItem({ icon, label, isArrow = true }: { icon: ReactNode; label: string; isArrow?: boolean }) {
   return (
-    <motion.li className={menuItemStyle}>
+    <motion.li className={`${menuItemClass} pb-[18px] pl-[20px] pr-[22px] pt-[18px]`}>
       <div>
         {icon}
         <p>{label}</p>
@@ -113,80 +118,6 @@ function MenuItem({ icon, label, isArrow = true }: { icon: ReactNode; label: str
     </motion.li>
   );
 }
-
-const mobileHeaderContentStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  position: 'relative',
-  width: '100%',
-  height: '44px',
-  '& .center-title': { width: 'fit-content', position: 'absolute', left: '50%', transform: 'translateX(-50%)' },
-  '& .profile-image': {
-    width: '28px',
-    height: '28px',
-    borderRadius: '50%',
-    overflow: 'hidden',
-  },
-});
-
-const mobileHeaderStyle = css({
-  // common
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  zIndex: 'header',
-  position: 'fixed',
-  padding: '0 20px',
-  top: 0,
-  height: '60px',
-  backgroundColor: 'white',
-
-  // mobile
-  width: '100vw',
-  display: 'none',
-  _mobile: {
-    display: 'flex',
-  },
-});
-
-const mobileMenuStyle = css({
-  position: 'fixed',
-  left: 0,
-  right: 0,
-  backgroundColor: '#fff',
-  top: '60px',
-  maxHeight: 'calc(100vh - 60px)',
-  overflowY: 'auto',
-  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-  zIndex: 'drawer',
-
-  _mobile: {
-    display: 'flex',
-  },
-
-  '& .menu-list': {
-    width: '100%',
-    '& >  *': {
-      width: '100%',
-    },
-  },
-});
-
-const menuItemStyle = flex({
-  justifyContent: 'space-between',
-  textStyle: 'glyph16.regular',
-  textTransform: 'capitalize',
-  color: 'black.black_75',
-  padding: '18px 22px 18px 20px',
-  borderBottom: '1px solid',
-  borderColor: 'gray.gray_900',
-
-  '& div': {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-  },
-});
 
 const menuVariant: Variants = {
   initial: { opacity: 1, y: '-100%' },
