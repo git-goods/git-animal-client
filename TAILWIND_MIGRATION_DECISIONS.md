@@ -70,6 +70,16 @@
 - **SplitText(미해결 TODO):** `MainSection/TopBanner` 가 `@gitanimals/ui-panda/src/animation/SplitText` 를 deep-import 한다. ui-tailwind 에 대응이 없어 공존 유지. **PandaCSS 제거(PR final) 전 ui-tailwind 로 이식** 필요.
 - **불필요 spacer 제거:** `(spring)`/`(christmas)` 의 `<div className="h-[60px]" />` 는 panda 프로젝트에 tailwind 문법으로 잘못 있던 무효(height 0) 요소였는데 Tailwind 도입으로 60px 여백이 실렌더됨 → 제거. (GNB 의 h-[60px] 는 fixed 헤더 보정용이라 유지)
 
+### ADR-011 — 사용부는 통합 PR, 설계는 분리 PR (2026-06-21, 사용자 방침 전환)
+- **배경:** PR1(auth)/PR2(GNB)/PR3(landing)을 도메인별 브랜치로 나눴으나, 사용처(사용부) 전환은 §4 매핑을 **기계적으로 적용**하는 작업이라 도메인마다 PR 을 쪼개면 리뷰어가 같은 종류의 diff 를 여러 PR 에서 반복해서 본다.
+- **결정:** 사용부(도메인 panda→tailwind 치환)는 **도메인 = 커밋**으로 단일 브랜치(`feat/tailwind-usage-migration`)에 누적 → **통합 사용부 PR 1개**. 설계(ui-tailwind 컴포넌트 추가, Dialog→DialogV2, flicking→embla, 토큰 교정)는 **별도 작은 PR**. 커밋 메시지로 `feat: ui-tailwind X 추가`(설계) vs `feat: X 도메인 전환`(사용부)를 구분해 cherry-pick 분류. 기존 auth/GNB/landing 사용부 커밋도 통합 PR 에 합류.
+- **근거:** 리뷰는 커밋 단위로 충분하고, PR 개수 폭발 방지·머지 관리 단순. 설계만 깊게 본다.
+
+### ADR-012 — Dialog 전역 공존, DialogV2 전환은 별도 전역 PR (PR4)
+- **배경:** shop 5곳이 panda `Dialog`(compound API: `Dialog.Content`/`Dialog.Title`)를 쓴다. Dialog 는 mypage/guild 등도 쓰는 전역 컴포넌트이고, dev 의 `dialog-v2` 는 shadcn(named export) API 라 사용처 마이그레이션이 필요하다.
+- **결정:** shop 사용부 전환 시 `Dialog` 는 **panda import 그대로 유지(공존)**, 주변 css() 스타일만 Tailwind 로. `Dialog→DialogV2` 는 **전역(shop/mypage/guild...) 일괄 별도 PR** 로 한 번에 마이그레이션한다.
+- **근거:** shop 에서만 V2 로 바꾸면 다른 슬라이스와 API 가 갈린다(공존 혼란). 사용부 흐름을 막지 않고 Dialog 결정을 분리.
+
 ---
 
 ## 2. 토큰 감사 (dev `ui-tailwind/theme/*` vs panda single source, 2026-06-20)
@@ -142,3 +152,4 @@ auth 의 claude-code/desktop 원본이 `color: 'white.white_70'` / `'white.white
 - 2026-06-20 (PR2): GNB 슬라이스 전환(5파일, 순수 스타일·컴포넌트 추가 없음). ADR-008(nested selector → 자식 직접 className/arbitrary variant, 공유 panda 스타일은 cn 으로 공존) 기록.
 - 2026-06-20 (PR3a~c): landing 설계 부분 분리 PR. ADR-007 적용으로 Button/AnchorButton(panda cva 1:1)·Skeleton(gray gradient 1:1, animation easing linear 교정) 추가. ADR-009(flicking→embla, Perspective/Fade 를 usePerspectiveTween 으로 재현, dead code AnimalSliderContainer 삭제, 브라우저 검증 필요) 기록.
 - 2026-06-21 (PR3d): landing 전 섹션 스타일 사용부 전환(36파일, 9개 .style.ts 인라인화). 병렬 서브에이전트 7개로 전환 후 빌드·grep 검수. ADR-010(.style.ts 정책 §6-1 결론·SplitText 잔존·spacer 제거) 기록. embla 브라우저 검증 완료.
+- 2026-06-21 (방침 전환 + PR4): ADR-011(사용부 통합 PR/설계 분리 PR — 통합 브랜치 feat/tailwind-usage-migration). shop 설계분 ui-tailwind Banner/GameCard 추가(panda 1:1, dev % 누락 버그 수정). shop 사용부 전환(21파일, 병렬 에이전트 3개+빌드/grep+브라우저 검수). ADR-012(Dialog 전역 공존, V2 별도 PR) 기록.

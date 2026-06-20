@@ -133,7 +133,16 @@ PR 분리 원칙: 설계·깊은 리뷰 필요분(컴포넌트 추가, 라이브
 ### ✅ §6-1 결론 (turbopack `.style.ts` 함정)
 turbopack 함정은 panda `css()`(빌드타임 추출)에 **국한**. plain 문자열 className 상수는 별도 `.ts` 여도 Tailwind content 스캔 정상(PR3d 프로덕션 빌드에서 `MainSlider.style.ts` 의 `w-[1120px]` 생성 확인). → §6-1 해소(ADR-010).
 
+### 🔄 방침 전환 (ADR-011) — 사용부 통합 / 설계 분리
+이제부터 **사용부**(도메인 panda→tailwind 치환)는 도메인=커밋으로 **단일 브랜치 `feat/tailwind-usage-migration`** 에 누적 → **통합 사용부 PR 1개**. **설계**(컴포넌트 추가·Dialog/embla 전환·토큰 교정)는 별도 작은 PR. 커밋 메시지로 구분(cherry-pick 분류). 기존 auth/GNB/landing 사용부 커밋도 통합 PR 합류.
+
+### ✅ PR 4 (shop)
+- **설계:** ui-tailwind `Banner`/`GameCard` 추가(panda cva 1:1, dev `%` 누락 버그 수정). `lucide-react` 의존성 추가.
+- **사용부:** shop 도메인 전환(21파일, _petGotcha/_auction/_common/_background). 병렬 에이전트 3개+빌드/grep+**브라우저 검증 완료**.
+- **Dialog 공존(ADR-012):** shop 5곳 panda `Dialog` import 유지, 주변 스타일만 전환.
+
 ### 다음 액션
-1. **PR4 슬라이스 `shop`**(§7). 이어서 `mypage → guild → quiz`. Dialog→DialogV2 동반.
-2. **push 전략(미해결):** 전체 포팅 후 cherry-pick/rebase 로 반영해 PR merge(사용자 결정). 브랜치를 PR0→…→PR3d 로 쌓는다.
-3. **잔여 TODO:** ① `TopBanner` 의 ui-panda `SplitText` → ui-tailwind 이식(PR final 전, ADR-010). ② PR final: PandaCSS 완전 제거 + tailwind preflight 재활성화(ADR-002).
+1. **사용부 계속**(통합 브랜치): `mypage → guild → quiz`(§7). 도메인=커밋.
+2. **Dialog→DialogV2 전역 별도 PR**(ADR-012): shop/mypage/guild 등 Dialog 사용처 일괄 마이그레이션.
+3. **push 전략(미해결):** 전체 포팅 후 cherry-pick/rebase 로 설계 PR들 + 사용부 PR 로 분리해 merge(사용자 결정).
+4. **잔여 TODO:** ① `TopBanner` 의 ui-panda `SplitText` → ui-tailwind 이식(ADR-010). ② PR final: PandaCSS 완전 제거 + tailwind preflight 재활성화(ADR-002).
