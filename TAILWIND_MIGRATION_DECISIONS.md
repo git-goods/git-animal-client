@@ -59,6 +59,11 @@
   3. 슬라이스 밖 **공유 panda 스타일**(예: `@/styles/scrollStyle` 의 `customScrollStyle`)은 그 스타일을 소유한 슬라이스가 전환되기 전까지 `cn()` 으로 tailwind 클래스와 합쳐 **panda 채로 유지**한다(공존).
 - **근거:** 시각 1:1 + 가독성. 공유 스타일은 중복 전환을 피하고 소유 슬라이스에서 한 번에 전환한다.
 
+### ADR-009 — flicking → embla 전환, Perspective/Fade 는 scroll-progress 커스텀으로 재현 (PR3c)
+- **배경:** landing 슬라이더가 `@egjs/react-flicking` 기반이었다(마이그레이션 동반 목표). `MainSlider` 는 이미 embla. 실제 flicking 사용은 공유 컴포넌트 `PerspectiveCenterSlider`(landing+**event** 사용, Perspective+Fade+Arrow)와 `AnimalSliderContainerMobile`(Perspective+Fade)뿐이고, `AnimalSliderContainer` 는 **dead code** 였다.
+- **결정:** 둘을 embla 로 전환하고 dead code 는 삭제. flicking `Perspective({rotate:0.5, scale:0.2})` + `Fade()` 를 `useEmblaCarousel` + `usePerspectiveTween` 훅으로 재현한다 — embla `scrollProgress`/`scrollSnapList` 의 diff 로 `rotateY`(=-diff·90·rotate)·`scale`(=1-|diff|·scale)·`opacity`(=1-|diff|·fade) 를 계산해 transform. `embla-carousel-fade` 는 쓰지 않는다(opacity 를 tween 에 포함). 화살표는 `scrollPrev/Next`, 컨테이너/화살표 시각 스타일(panda)은 PR3d 로 미룬다(embla 구조 클래스만 tailwind).
+- **⚠️ 검증 필요(미해결):** Perspective 공식이 flicking 내부와 미묘히 다를 수 있어 **브라우저 시각 검증**으로 rotate/scale 튜닝이 필요하다. `PerspectiveCenterSlider` 는 공유 컴포넌트라 **event 슬라이스도 함께 영향**받으므로 event 도 검증 대상.
+
 ---
 
 ## 2. 토큰 감사 (dev `ui-tailwind/theme/*` vs panda single source, 2026-06-20)
@@ -129,3 +134,4 @@ auth 의 claude-code/desktop 원본이 `color: 'white.white_70'` / `'white.white
 - 2026-06-20: 문서 신설. ADR-001~006 기록, dev theme 토큰 감사 결과 정리(typography/screens 오류, brand.DEFAULT 오류, keyframes drift 발견). dev의 pre-compiled 문서가 source-first 구현과 모순되어 제거(ADR-006).
 - 2026-06-20 (PR1): auth 슬라이스 전환. ADR-007(슬라이스 컴포넌트는 panda 원본 기준, TextField 추가) + §2.6(white_70/80 원본 버그 → text-white 재현) 기록.
 - 2026-06-20 (PR2): GNB 슬라이스 전환(5파일, 순수 스타일·컴포넌트 추가 없음). ADR-008(nested selector → 자식 직접 className/arbitrary variant, 공유 panda 스타일은 cn 으로 공존) 기록.
+- 2026-06-20 (PR3a~c): landing 설계 부분 분리 PR. ADR-007 적용으로 Button/AnchorButton(panda cva 1:1)·Skeleton(gray gradient 1:1, animation easing linear 교정) 추가. ADR-009(flicking→embla, Perspective/Fade 를 usePerspectiveTween 으로 재현, dead code AnimalSliderContainer 삭제, 브라우저 검증 필요) 기록.
