@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import tailwindcssAnimate from 'tailwindcss-animate';
 import { colors } from './theme/colors';
 import { fontFamily } from './theme/typography';
 import { keyframes, animation } from './theme/keyframes';
@@ -29,7 +30,7 @@ export const gitAnimalsPreset: Partial<Config> = {
       animation,
     },
   },
-  plugins: [glyphFontPlugin],
+  plugins: [glyphFontPlugin, tailwindcssAnimate],
 };
 
 export default gitAnimalsPreset;

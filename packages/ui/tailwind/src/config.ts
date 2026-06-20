@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import tailwindcssAnimate from 'tailwindcss-animate';
 import { colors } from './theme/colors';
 import { fontFamily } from './theme/typography';
 import { keyframes, animation } from './theme/keyframes';
@@ -22,7 +23,7 @@ export const gitAnimalsConfig = {
       animation,
     },
   },
-  plugins: [glyphFontPlugin],
+  plugins: [glyphFontPlugin, tailwindcssAnimate],
 } satisfies Config;
 
 export interface GitAnimalsConfigOptions {
@@ -61,6 +62,6 @@ export function createGitAnimalsConfig(contentPaths: string[] = [], options: Git
         ...options.theme?.extend,
       },
     },
-    plugins: [glyphFontPlugin, ...(options.plugins || [])],
+    plugins: [glyphFontPlugin, tailwindcssAnimate, ...(options.plugins || [])],
   };
 }
