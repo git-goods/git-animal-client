@@ -88,7 +88,7 @@ export const animation: Record<string, string> = {
   slide: 'slide 20s linear infinite',
   'slide-from-right': 'slideFromRight 0.3s ease-in-out',
   'slide-from-left': 'slideFromLeft 0.3s ease-in-out',
-  skeleton: 'skeletonLoading 1.5s ease-in-out infinite',
+  skeleton: 'skeletonLoading 1.5s linear infinite',
   spin: 'animateSpin 1s linear infinite',
   pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
   heartbeat: 'heartbeat 1.5s ease-in-out infinite',
