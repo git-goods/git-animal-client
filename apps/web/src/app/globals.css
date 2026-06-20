@@ -1,5 +1,11 @@
 @layer reset, base, tokens, recipes, utilities;
 
+/* Tailwind 공존 (PR0): preflight는 tailwind.config.ts에서 비활성화 →
+   @tailwind base는 거의 비어있어 panda의 @layer reset과 충돌하지 않는다. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: 'DNFBitBitv2';
   font-style: normal;
