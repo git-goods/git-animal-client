@@ -1,19 +1,20 @@
-import type { Locale } from './routing';
-
 /**
- * The app uses underscore locale identifiers (`ko_KR`, `en_US`) for URL segments
- * and routing, but `Intl` / `intl-messageformat` require valid BCP-47 tags
- * (`ko-KR`, `en-US`). Use these helpers at the next-intl boundary so that
- * messages with ICU arguments / rich text format correctly, while routing keeps
- * the segment identity.
+ * The app uses BCP-47 locale identifiers (`en-US`, `ko-KR`) everywhere — URL
+ * segments, routing, `useLocale()`, message filenames, SEO. The backend API
+ * wire contract instead requires the underscore form (`en_US`, `ko_KR`). These
+ * helpers convert between the two; conversion to `ApiLocale` must happen only at
+ * the backend API boundary.
  */
 
-/** `ko_KR` (URL segment) -> `ko-KR` (BCP-47, used by Intl formatting). */
+/** Underscore locale form required by the backend API wire contract. */
+export type ApiLocale = 'en_US' | 'ko_KR';
+
+/** `en_US` (legacy/underscore) -> `en-US` (BCP-47). */
 export function toIntlLocale(locale: string): string {
   return locale.replace('_', '-');
 }
 
-/** `ko-KR` (BCP-47) -> `ko_KR` (URL segment identity used for routing/API). */
-export function toSegmentLocale(locale: string): Locale {
-  return locale.replace('-', '_') as Locale;
+/** `en-US` (BCP-47) -> `en_US` (underscore API wire form). */
+export function toSegmentLocale(locale: string): ApiLocale {
+  return locale.replace('-', '_') as ApiLocale;
 }

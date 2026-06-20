@@ -3,7 +3,6 @@ import { getRequestConfig } from 'next-intl/server';
 
 import { sendLog } from '@/utils/log';
 
-import { toIntlLocale } from './locale';
 import { routing } from './routing';
 
 export default getRequestConfig(async ({ locale }) => {
@@ -11,11 +10,12 @@ export default getRequestConfig(async ({ locale }) => {
   if (!routing.locales.includes(locale as any)) notFound();
 
   try {
-    // Attempt to dynamically import the locale messages
+    // Locales are already valid BCP-47 tags (`en-US`/`ko-KR`) matching the
+    // message filenames, so the route segment is loaded directly. With i18n
+    // routing, next-intl derives the active locale from the route — do NOT
+    // return `locale` here (that triggers a "returned a locale" warning).
     const messages = (await import(`../../messages/${locale}.json`)).default;
-    // App locales are underscore segments (`ko_KR`); convert to a valid BCP-47
-    // tag (`ko-KR`) so ICU message formatting (args / rich text) works.
-    return { locale: toIntlLocale(locale), messages };
+    return { messages };
   } catch (error) {
     sendLog({ locale: locale, error: 'Error loading messages for locale' }, 'Error loading messages for locale');
     // Log the error for debugging purposes

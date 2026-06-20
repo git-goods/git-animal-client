@@ -1,9 +1,9 @@
 import { getToggledLocale, usePathname, useRouter } from './routing';
-import { useSegmentLocale } from './useSegmentLocale';
+import { useTypedLocale } from './useTypedLocale';
 
 const useToggleLocale = () => {
   const router = useRouter();
-  const locale = useSegmentLocale();
+  const locale = useTypedLocale();
   const pathname = usePathname();
 
   const toggleLocale = () => {

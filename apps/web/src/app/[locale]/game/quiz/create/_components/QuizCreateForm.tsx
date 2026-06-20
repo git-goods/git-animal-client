@@ -20,13 +20,15 @@ import type { Locale } from '@/i18n/routing';
 import { LOCALE, useRouter } from '@/i18n/routing';
 import { useSegmentLocale } from '@/i18n/useSegmentLocale';
 import useToggleLocale from '@/i18n/useToggleLocale';
+import { useTypedLocale } from '@/i18n/useTypedLocale';
 
 import type { QuizCategory, QuizLevel } from '../../_constants/quiz.constants';
 import { QUIZ_ANSWER, QUIZ_CATEGORY, QUIZ_LEVEL, QUIZ_RESULT } from '../../_constants/quiz.constants';
 import type { QuizAnswer } from '../../solve/_constants/solveQuiz.constants';
 
 const QuizCreateForm = () => {
-  const locale = useSegmentLocale();
+  const locale = useSegmentLocale(); // underscore — for the backend createQuiz call
+  const typedLocale = useTypedLocale(); // hyphen — matches the LOCALE.* tab values
   const { toggleLocale } = useToggleLocale();
   const [quizContents, setQuizContents] = useState<string>('');
   const handleChangeQuizContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -35,7 +37,7 @@ const QuizCreateForm = () => {
   const t = useTranslations('Quiz');
 
   const { tabsTriggerProps: languageRadioProps, selected: language } = useTabs<Locale>({
-    initialSelectedValue: locale,
+    initialSelectedValue: typedLocale,
     options: [
       { label: t('english'), value: LOCALE.EN_US },
       { label: t('korean'), value: LOCALE.KO_KR },

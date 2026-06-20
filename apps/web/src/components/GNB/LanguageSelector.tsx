@@ -8,11 +8,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, Globe } from 'lucide-react';
 
 import { Link, type Locale, usePathname } from '@/i18n/routing';
-import { useSegmentLocale } from '@/i18n/useSegmentLocale';
+import { useTypedLocale } from '@/i18n/useTypedLocale';
 
 const LOCALE_MAP: Record<Locale, string> = {
-  en_US: 'English',
-  ko_KR: '한국어',
+  'en-US': 'English',
+  'ko-KR': '한국어',
 };
 
 export const DesktopLanguageSelector = () => {
@@ -84,7 +84,7 @@ const dropdownStyles = css({
 
 export function MobileLanguageSelector({ onBack }: { onBack: () => void }) {
   const pathname = usePathname();
-  const locale = useSegmentLocale();
+  const locale = useTypedLocale();
   const t = useTranslations('Layout');
 
   return (

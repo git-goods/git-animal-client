@@ -5,7 +5,6 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 import { ClientProvider, GlobalComponent } from '@/components/Global';
 import { config } from '@/constants/config';
-import { toIntlLocale } from '@/i18n/locale';
 import type { Locale } from '@/i18n/routing';
 import { LOCALE_LIST } from '@/i18n/routing';
 
@@ -40,12 +39,12 @@ export default async function LocaleLayout({
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
-  const intlLocale = toIntlLocale(locale);
 
+  // `locale` is already a valid BCP-47 tag (`en-US`/`ko-KR`).
   return (
-    <html lang={intlLocale}>
+    <html lang={locale}>
       <body>
-        <NextIntlClientProvider locale={intlLocale} messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <NuqsAdapter>
             <ClientProvider>
               {children}
