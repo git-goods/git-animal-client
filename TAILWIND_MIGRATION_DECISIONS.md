@@ -87,6 +87,12 @@
   - 해석 결과(활성 :root): `radii.sm`=calc(0.5rem−4px)=**4px**, `border`=grayscale-200=**#e4e4e7**, `ring`=grayscale-400=**#a1a1aa**, `background`=grayscale-0=**white**, `primary`=grayscale-900(단 checkbox 는 checkboxLightStyle 로 #fafafa override).
 - **API 보존:** panda `ScrollArea` 는 `styled()` 라 `height="160px"` styled prop 을 받는다 → ui-tailwind ScrollArea 도 `height` prop 을 받아 root inline style 로 적용(사용처 변경 최소화, calc arbitrary 회피). panda `Skeleton` 의 styled prop(width/height/borderRadius)은 ui-tailwind 가 className API 라 사용처에서 className 으로 치환.
 
+### ADR-014 — `border` 유틸은 항상 `border-solid` 동반 (전역 `button{border:transparent}` 함정, PR5 mypage)
+- **배경:** mypage 판매 다이얼로그의 ui-tailwind `Checkbox` 테두리가 **프로덕션에서도** 안 보였다(`Button` 의 Sell/Merge 테두리도 사라짐). 원인 추적 결과 앱 전역 스타일에 `button { border: transparent }` 가 있는데, 이 `border` shorthand 가 **`border-style` 을 `none`** 으로 만든다(특이도 `button` = 0,0,1). Tailwind 의 `border` 유틸은 **border-width 만** 지정하고 border-style 은 저특이도 reset `*{border-style:solid}`(0,0,0)에 의존하는데, `button{border:transparent}`(0,0,1)가 이를 이겨 **border-style:none → 테두리 미렌더**. checkbox 는 그림자도 없어 완전 비표시, Button 은 inset box-shadow 덕에 테두리처럼 보였을 뿐 실제 border 는 사라진 상태였다.
+- **결정:** preflight OFF(ADR-002) 환경에서 ui-tailwind 컴포넌트는 `border` 를 쓸 때 **반드시 `border-solid` 를 동반**한다(`border border-solid border-<color>`). `border-solid`(특이도 0,1,0)가 `button{}`(0,0,1)을 이겨 border-style:solid 를 강제한다. panda 원본은 `border:1px solid` **shorthand**(style 포함)라 영향이 없었다 — 즉 Tailwind 의 width/color 분리 유틸 특유의 함정.
+- **적용:** `Checkbox`/`Button`/`TextField` 에 `border-solid` 추가(기존 Button/TextField 의 잠재 버그도 동시 해결). 이후 추가하는 모든 bordered 컴포넌트·사용부에도 동일 규칙 적용.
+- **교훈(검증 방식):** "빌드 CSS 에 클래스가 생성됐다"(`.border`/`.border-[#fafafa]` 존재)만으로는 부족하다. **cascade(특이도·layer) 까지** 따져야 실제 렌더를 보장한다. 전역 element 셀렉터(`button{}`)가 utility 의 일부 속성을 덮을 수 있다.
+
 ---
 
 ## 2. 토큰 감사 (dev `ui-tailwind/theme/*` vs panda single source, 2026-06-20)
@@ -160,4 +166,4 @@ auth 의 claude-code/desktop 원본이 `color: 'white.white_70'` / `'white.white
 - 2026-06-20 (PR3a~c): landing 설계 부분 분리 PR. ADR-007 적용으로 Button/AnchorButton(panda cva 1:1)·Skeleton(gray gradient 1:1, animation easing linear 교정) 추가. ADR-009(flicking→embla, Perspective/Fade 를 usePerspectiveTween 으로 재현, dead code AnimalSliderContainer 삭제, 브라우저 검증 필요) 기록.
 - 2026-06-21 (PR3d): landing 전 섹션 스타일 사용부 전환(36파일, 9개 .style.ts 인라인화). 병렬 서브에이전트 7개로 전환 후 빌드·grep 검수. ADR-010(.style.ts 정책 §6-1 결론·SplitText 잔존·spacer 제거) 기록. embla 브라우저 검증 완료.
 - 2026-06-21 (방침 전환 + PR4): ADR-011(사용부 통합 PR/설계 분리 PR — 통합 브랜치 feat/tailwind-usage-migration). shop 설계분 ui-tailwind Banner/GameCard 추가(panda 1:1, dev % 누락 버그 수정). shop 사용부 전환(21파일, 병렬 에이전트 3개+빌드/grep+브라우저 검수). ADR-012(Dialog 전역 공존, V2 별도 PR) 기록.
-- 2026-06-21 (PR5 mypage): 설계분 ui-tailwind Checkbox/Label/ScrollArea 추가(ADR-013 — 빌드 CSS 실측값으로 이식, shadow-panda semantic 토큰은 활성 :root 값. checkbox ring #d4d4d8→#a1a1aa 교정). mypage 사용부 20파일 전환(병렬 에이전트 3개 + SelectedPetTable 직접 + 빌드/grep 검수). Dialog/CommonDialog panda 유지(ADR-012). ⚠️ 브라우저 시각 검증 미완(auth-gated, 후속).
+- 2026-06-21 (PR5 mypage): 설계분 ui-tailwind Checkbox/Label/ScrollArea 추가(ADR-013 — 빌드 CSS 실측값으로 이식, shadow-panda semantic 토큰은 활성 :root 값. checkbox ring #d4d4d8→#a1a1aa 교정). mypage 사용부 20파일 전환(병렬 에이전트 3개 + SelectedPetTable 직접 + 빌드/grep 검수). Dialog/CommonDialog panda 유지(ADR-012). ADR-014(전역 `button{border:transparent}` 함정 → Checkbox/Button/TextField 에 `border-solid` 명시) 기록. **브라우저 시각 검증 완료**(프로덕션 `next start`, 체크박스·버튼 테두리 정상).
