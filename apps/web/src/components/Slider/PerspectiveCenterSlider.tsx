@@ -1,46 +1,51 @@
 'use client';
 
-import { useRef } from 'react';
+import { Children } from 'react';
 import Image from 'next/image';
 import { css, cx } from '_panda/css';
-import { Arrow, Fade, Perspective } from '@egjs/flicking-plugins';
-import type { FlickingOptions, FlickingProps } from '@egjs/react-flicking';
-import Flicking from '@egjs/react-flicking';
+import useEmblaCarousel from 'embla-carousel-react';
 
-import { useIsMounted } from '@/hooks/useIsMounted';
+import { usePerspectiveTween } from './usePerspectiveTween';
 
 /**
- * 중앙에 있는 카드를 3D 효과로 보여주는 슬라이더
+ * 중앙에 있는 카드를 3D 효과로 보여주는 슬라이더.
+ *
+ * flicking(Perspective+Fade+Arrow) → embla 로 전환(PR3c). Perspective/Fade 는
+ * usePerspectiveTween 으로 재현. embla 구조 클래스(viewport/container/slide)만 tailwind 이고,
+ * 화살표/컨테이너 시각 스타일(panda)은 landing 스타일 전환(PR3d) 때 함께 옮긴다.
  */
 export function PerspectiveCenterSlider({ children }: { children: React.ReactNode }) {
-  const flicking = useRef<Flicking | null>(null);
-
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const isMounted = useIsMounted();
-
-  const _plugins = [
-    new Perspective({ rotate: 0.5, scale: 0.2 }),
-    new Fade(),
-    new Arrow({ parentEl: wrapperRef.current }),
-  ];
-
-  const sliderOptions: Partial<FlickingProps & FlickingOptions> = {
-    align: 'center',
-    plugins: isMounted ? _plugins : undefined,
-  };
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'center', containScroll: false });
+  usePerspectiveTween(emblaApi, { rotate: 0.5, scale: 0.2 });
 
   return (
     <div>
-      <div className={cx(sliderContainer, 'slider-container')} ref={wrapperRef}>
-        <span className={cx('flicking-arrow-prev', 'is-outside', prevArrowStyle)}>
+      <div className={cx(sliderContainer, 'slider-container')}>
+        <button
+          type="button"
+          aria-label="previous"
+          onClick={() => emblaApi?.scrollPrev()}
+          className={cx('is-outside', prevArrowStyle)}
+        >
           <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
-        </span>
-        <span className={cx('flicking-arrow-next', 'is-outside', nextArrowStyle)}>
+        </button>
+        <button
+          type="button"
+          aria-label="next"
+          onClick={() => emblaApi?.scrollNext()}
+          className={cx('is-outside', nextArrowStyle)}
+        >
           <Image src="/icon/circle-arrow.svg" alt="arrow" width={40} height={40} />
-        </span>
-        <Flicking ref={flicking} {...sliderOptions}>
-          {children}
-        </Flicking>
+        </button>
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex">
+            {Children.map(children, (child, index) => (
+              <div key={index} className="min-w-0 flex-[0_0_auto]">
+                {child}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
