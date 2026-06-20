@@ -2,11 +2,10 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
 import type { Background } from '@gitanimals/api';
 import { useScrollHeading } from '@gitanimals/react';
 import { renderUserQueries, shopQueries, useBuyBackground } from '@gitanimals/react-query';
-import { Button } from '@gitanimals/ui-panda';
+import { Button, cn } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
@@ -66,8 +65,11 @@ export const BackgroundSection = wrap
     };
 
     return (
-      <div className={sectionCss}>
-        <h2 ref={backgroundRef} className={h2Css}>
+      <div className="relative flex flex-col items-center p-[120px_20px] w-full bg-[#6DE575] before:content-[''] before:absolute before:top-[-2px] before:left-0 before:right-0 before:h-[2px] before:bg-[#6DE575] mobile:p-[40px_16px]">
+        <h2
+          ref={backgroundRef}
+          className="glyph82-bold text-black mb-[80px] mobile:mb-[40px] mobile:glyph40-bold"
+        >
           Background
         </h2>
         <EmblaCarousel>
@@ -100,96 +102,26 @@ function BackgroundItem({
   const isEvent = item.type === EVENT_BACKGROUND;
 
   return (
-    <div className={cardCss} key={item.type}>
-      {isEvent && <div className={eventLabelCss}>{t('event-sale')}</div>}
-      <div className={cx(cardImageCss, isPurchased && purchasedCardImageCss)}>
+    <div className="w-full flex flex-col items-center justify-center relative" key={item.type}>
+      {isEvent && (
+        <div className="absolute top-[12px] left-[12px] z-floating inline-flex p-[6px_12px] items-center gap-[2px] rounded-[8px] bg-[#FF3030] glyph18-bold text-white">
+          {t('event-sale')}
+        </div>
+      )}
+      <div
+        className={cn(
+          'w-full aspect-[2/1] relative',
+          isPurchased && 'brightness-[0.5] cursor-not-allowed',
+        )}
+      >
         <img src={getBackgroundImage(item.type)} alt={item.type} width={550} height={275} />
       </div>
-      <div className={cardPointStyle}>{addNumberComma(item.price)} P</div>
+      <div className="glyph18-bold text-black-75 border border-[#3FB458] bg-[#56CA6F] mt-[4px] mb-[24px] p-[4px_25px] w-full">
+        {addNumberComma(item.price)} P
+      </div>
       <Button variant="secondary" onClick={() => onBuy(item.type)} disabled={isPurchased}>
         {isPurchased ? t('purchased') : t('buy')}
       </Button>
     </div>
   );
 }
-
-const eventLabelCss = css({
-  position: 'absolute',
-  top: '12px',
-  left: '12px',
-  zIndex: 'floating',
-  display: 'inline-flex',
-  padding: '6px 12px',
-  alignItems: 'center',
-  gap: '2px',
-  borderRadius: '8px',
-  background: '#FF3030',
-  textStyle: 'glyph18.bold',
-  color: 'white',
-});
-
-const sectionCss = css({
-  position: 'relative',
-  display: 'flex',
-  flexDir: 'column',
-  alignItems: 'center',
-  padding: '120px 20px',
-  width: '100%',
-  bg: '#6DE575',
-
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: '-2px',
-    left: '0',
-    right: '0',
-    height: '2px',
-    bg: '#6DE575',
-  },
-
-  _mobile: {
-    padding: '40px 16px',
-  },
-});
-
-const h2Css = css({
-  textStyle: 'glyph82.bold',
-  color: 'black',
-  marginBottom: '80px',
-
-  _mobile: {
-    marginBottom: '40px',
-    textStyle: 'glyph40.bold',
-  },
-});
-
-const cardCss = css({
-  width: '100%',
-  display: 'flex',
-  flexDir: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  position: 'relative',
-});
-
-const cardImageCss = css({
-  width: '100%',
-  aspectRatio: '2 / 1',
-  position: 'relative',
-});
-
-const purchasedCardImageCss = css({
-  filter: 'brightness(0.5)',
-  cursor: 'not-allowed',
-});
-
-const cardPointStyle = css({
-  textStyle: 'glyph18.bold',
-  color: 'black.black_75',
-  border: '1px solid #3FB458',
-  background: '#56CA6F',
-  mt: '4px',
-  mb: '24px',
-  p: '4px 25px',
-  w: '100%',
-});

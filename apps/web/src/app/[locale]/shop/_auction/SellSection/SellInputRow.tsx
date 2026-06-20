@@ -2,11 +2,11 @@
 import type { ChangeEventHandler } from 'react';
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
 import type { Persona } from '@gitanimals/api';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries, userQueries } from '@gitanimals/react-query';
-import { Button, Dialog } from '@gitanimals/ui-panda';
+import { Dialog } from '@gitanimals/ui-panda';
+import { Button, cn } from '@gitanimals/ui-tailwind';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -19,9 +19,12 @@ import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 import { rowStyle, ShopTableMobileRow } from '../../_common/ShopTableMobileRow';
-import { tableCss, theadCss } from '../table.styles';
 
 const MAX_PRICE = 100_000_000;
+
+const tableCss = 'w-full mb-[32px] mobile:mb-[12px]';
+const theadCss =
+  'grid grid-cols-[1fr_2.5fr_1fr_1fr_4.2fr_1.5fr] gap-[16px] px-[32px] py-[4px] rounded-[12px] bg-white-50 items-center h-[46px] glyph18-bold text-white-100 mb-[4px] [&>span:nth-child(1)]:text-center mobile:hidden';
 
 interface Props {
   item: Persona;
@@ -115,7 +118,7 @@ function SellInputRow({ item, initPersona }: Props) {
         <span></span>
       </div>
 
-      <div className={cx(rowStyle, 'row')}>
+      <div className={cn(rowStyle, 'row')}>
         {item && personaTier && (
           <>
             <div>
@@ -181,56 +184,13 @@ function SellPriceModal({
   );
 }
 
-const mobilePriceinputStyle = css({
-  display: 'flex',
-  height: '55px',
-  padding: '14px 14px 13px 20px',
-  alignItems: 'flex-start',
-  gap: '8px',
-  width: '100%',
-  outline: 'none',
-  borderRadius: '8px',
-  border: '1px solid rgba(255, 255, 255, 0.25)',
-  textStyle: 'glyph16.regular',
-  color: 'white.white_100',
-  '&::placeholder': {
-    textStyle: 'glyph16.regular',
-    color: 'white.white_75',
-  },
-  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-    WebkitAppearance: 'none',
-    margin: 0,
-  },
-});
+const mobilePriceinputStyle =
+  'flex h-[55px] pt-[14px] pr-[14px] pb-[13px] pl-[20px] items-start gap-[8px] w-full outline-none rounded-[8px] border border-[rgba(255,255,255,0.25)] glyph16-regular text-white-100 placeholder:glyph16-regular placeholder:text-white-75 [&::-webkit-outer-spin-button]:[-webkit-appearance:none] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:[-webkit-appearance:none] [&::-webkit-inner-spin-button]:m-0';
 
-const buttonWrapperStyle = css({
-  display: 'flex',
-  justifyContent: 'flex-end',
-  gap: '8px',
-  width: '100%',
-});
+const buttonWrapperStyle = 'flex justify-end gap-[8px] w-full';
 
-const inputStyle = css({
-  textStyle: 'glyph20.regular',
-
-  width: '100%',
-  height: '100%',
-  minHeight: '64px',
-  fontSize: '20px',
-  fontWeight: 700,
-  border: 'none',
-  outline: 'none',
-
-  '&::placeholder': {
-    textStyle: 'glyph20.regular',
-    color: 'white.white_25',
-  },
-
-  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-    WebkitAppearance: 'none',
-    margin: 0,
-  },
-});
+const inputStyle =
+  'glyph20-regular w-full h-full min-h-[64px] text-[20px] font-bold border-none outline-none placeholder:glyph20-regular placeholder:text-white-25 [&::-webkit-outer-spin-button]:[-webkit-appearance:none] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:[-webkit-appearance:none] [&::-webkit-inner-spin-button]:m-0';
 
 function usePrice() {
   const [price, setPrice] = useState<number | undefined>();
