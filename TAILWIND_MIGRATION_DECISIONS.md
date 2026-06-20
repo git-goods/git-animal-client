@@ -46,6 +46,11 @@
 - **결정:** `apps/web`에서는 **source-first**로 소비한다. `dist` 빌드 산출물에 의존하지 않는다. 모순된 dev 문서 2개는 제거한다(정확한 패키지 README는 컴포넌트 도입 시 작성).
 - **근거:** ① `@gitanimals/ui-panda`도 `"main": "src/index.ts"`로 source-first — **모노레포 표준**이다. ② Tailwind v3는 jiti로 TS config 및 그 import를 해석하므로 `tailwind.config.ts`가 `@gitanimals/ui-tailwind/config`(=src TS)를 import해도 동작한다(PR0 `build:web` 통과로 실증). ③ 별도 빌드 단계가 없어 DX가 단순하고, 잘못된 문서를 남기는 것은 협업자를 오도한다.
 
+### ADR-007 — 슬라이스 컴포넌트는 panda 원본 기준으로 작성, dev 변환본은 폐기 (PR1)
+- **배경:** PR1(auth)의 claude-code 페이지가 ui-panda `TextField` 를 쓴다. ADR-003 대로 ui-tailwind 에 컴포넌트를 추가해야 하는데, dev 의 `textfield.tsx` 가 있으나 ① 폐기한 `text-glyph-16` fontSize 방식, ② opacity 모디파이어(`white/25`) 사용, ③ panda 원본에 없는 `bg-transparent`/`focus` 임의 추가 등 lossy 했다.
+- **결정:** `@gitanimals/ui-panda` 원본 스펙을 기준으로 직접 작성한다. glyph 완전체 유틸(`glyph16-regular`), 색은 토큰 키(`white-25`/`white-50`/`brand-coral`). 배경/포커스는 panda 전역 reset 이 담당하므로 미지정. dev 변환본은 참고만 한다.
+- **근거:** dev 맹신 금지(작업 방침). 시각 1:1 의 기준은 panda 원본이다. 컴포넌트는 슬라이스에서 하나씩 이렇게 추가한다.
+
 ---
 
 ## 2. 토큰 감사 (dev `ui-tailwind/theme/*` vs panda single source, 2026-06-20)
@@ -107,5 +112,11 @@ dev(13): 위 중 `slideFromRight/slideFromLeft` **누락**, `move_5`→`move5`·
 
 ---
 
+### 2.6 white_70 / white_80 — 원본 코드의 미정의 토큰 참조 (PR1에서 발견)
+auth 의 claude-code/desktop 원본이 `color: 'white.white_70'` / `'white.white_80'` 을 참조한다. 그러나 ui-token `WHITE` 스케일에는 `100/90/75/50/25/10/5` 만 있고 **70/80 은 없다**(panda semanticTokens 도 동일).
+- panda 빌드 CSS 확인: panda 가 토큰을 못 찾아 `color:white.white_70` 을 **literal 로 출력** → 무효 CSS → color 미적용 → 부모 흰색 상속. 즉 원본 의도(흐린 흰색)와 무관하게 실제로는 **흰색**으로 렌더됐다.
+- **결정:** 전환 시 현재 동작(흰색)을 재현해 `text-white` 로 둔다. 디자이너 의도가 `white_75`/`white_90` 이었을 가능성은 있으나 추정하지 않는다(§4 원칙). 의도 복원은 디자인 확인 후 별도 작업.
+
 ## 3. 변경 이력
 - 2026-06-20: 문서 신설. ADR-001~006 기록, dev theme 토큰 감사 결과 정리(typography/screens 오류, brand.DEFAULT 오류, keyframes drift 발견). dev의 pre-compiled 문서가 source-first 구현과 모순되어 제거(ADR-006).
+- 2026-06-20 (PR1): auth 슬라이스 전환. ADR-007(슬라이스 컴포넌트는 panda 원본 기준, TextField 추가) + §2.6(white_70/80 원본 버그 → text-white 재현) 기록.
