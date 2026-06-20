@@ -51,6 +51,14 @@
 - **결정:** `@gitanimals/ui-panda` 원본 스펙을 기준으로 직접 작성한다. glyph 완전체 유틸(`glyph16-regular`), 색은 토큰 키(`white-25`/`white-50`/`brand-coral`). 배경/포커스는 panda 전역 reset 이 담당하므로 미지정. dev 변환본은 참고만 한다.
 - **근거:** dev 맹신 금지(작업 방침). 시각 1:1 의 기준은 panda 원본이다. 컴포넌트는 슬라이스에서 하나씩 이렇게 추가한다.
 
+### ADR-008 — panda nested selector / 공유 스타일 전환 규칙 (PR2)
+- **배경:** PR2(GNB)의 panda `css()` 에 `& .child`, `& > *`, `&:last-child`, `& div` 같은 nested selector 와, 슬라이스 밖 공유 스타일(`customScrollStyle`)이 섞여 있었다.
+- **결정:**
+  1. 자식이 같은 컴포넌트 JSX 안에 있으면 그 자식 요소에 **직접 className** 을 부여한다(가독성 우선). 예: `& .profile-image {…}` → 해당 `<div>` 에 직접.
+  2. 직접 부여가 어려운 구조적 selector 는 **arbitrary variant** 로 옮긴다: `& > * → [&>*]:`, `& li → [&_li]:`, `&:last-child → last:`.
+  3. 슬라이스 밖 **공유 panda 스타일**(예: `@/styles/scrollStyle` 의 `customScrollStyle`)은 그 스타일을 소유한 슬라이스가 전환되기 전까지 `cn()` 으로 tailwind 클래스와 합쳐 **panda 채로 유지**한다(공존).
+- **근거:** 시각 1:1 + 가독성. 공유 스타일은 중복 전환을 피하고 소유 슬라이스에서 한 번에 전환한다.
+
 ---
 
 ## 2. 토큰 감사 (dev `ui-tailwind/theme/*` vs panda single source, 2026-06-20)
@@ -120,3 +128,4 @@ auth 의 claude-code/desktop 원본이 `color: 'white.white_70'` / `'white.white
 ## 3. 변경 이력
 - 2026-06-20: 문서 신설. ADR-001~006 기록, dev theme 토큰 감사 결과 정리(typography/screens 오류, brand.DEFAULT 오류, keyframes drift 발견). dev의 pre-compiled 문서가 source-first 구현과 모순되어 제거(ADR-006).
 - 2026-06-20 (PR1): auth 슬라이스 전환. ADR-007(슬라이스 컴포넌트는 panda 원본 기준, TextField 추가) + §2.6(white_70/80 원본 버그 → text-white 재현) 기록.
+- 2026-06-20 (PR2): GNB 슬라이스 전환(5파일, 순수 스타일·컴포넌트 추가 없음). ADR-008(nested selector → 자식 직접 className/arbitrary variant, 공유 panda 스타일은 cn 으로 공존) 기록.
