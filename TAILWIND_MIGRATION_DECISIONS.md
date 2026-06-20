@@ -80,6 +80,13 @@
 - **결정:** shop 사용부 전환 시 `Dialog` 는 **panda import 그대로 유지(공존)**, 주변 css() 스타일만 Tailwind 로. `Dialog→DialogV2` 는 **전역(shop/mypage/guild...) 일괄 별도 PR** 로 한 번에 마이그레이션한다.
 - **근거:** shop 에서만 V2 로 바꾸면 다른 슬라이스와 API 가 갈린다(공존 혼란). 사용부 흐름을 막지 않고 Dialog 결정을 분리.
 
+### ADR-013 — recipe 기반 컴포넌트는 "빌드 CSS 실측값"으로 이식, shadow-panda semantic 토큰은 활성 :root 값으로 해석 (PR5 mypage)
+- **배경:** mypage 가 ui-panda `Checkbox`/`Label`/`ScrollArea` 를 쓴다. 이 셋은 shadow-panda preset 의 **slot recipe**(`checkbox`/`scrollArea`) 또는 recipe(`label`) 기반이고, base 스타일이 shadow-panda 자체 semantic 토큰(`primary`/`border`/`ring`/`background`/`radii.sm` 등)을 참조한다. 이 토큰들은 GitAnimals 디자인 토큰(ui-token)이 아니라 shadcn 계열 기본값이며, ui-tailwind theme(ADR-005: ui-token single source)에는 존재하지 않는다. dev 변환본(`checkbox.tsx`/`label.tsx`/`scroll-area.tsx`)은 lossy 했다(rounded-sm 오인, ring 색 임의 `white/25`, radix-label 불필요 추가).
+- **결정:** 추정·근사 금지. `pnpm build:web` 으로 **panda 가 실제로 출력한 CSS**(`.next/static/css`)에서 해당 recipe 클래스(`.checkbox__root`/`.scrollArea__*`/`.label`)와 그 토큰 변수(`--radii-sm`, `--borders-primary`, `--colors-ring` …)의 최종 해석값을 추출해 그대로 재현한다. ui-tailwind 에는 GitAnimals 토큰만 두는 원칙(ADR-005)을 지키되, recipe 가 끌어쓴 shadcn 토큰의 **결과값**은 리터럴(예 `#fafafa`, `#a1a1aa`, `#e4e4e7`, `rounded-[4px]`)로 박는다.
+- **light/dark 교훈(중요):** shadow-panda semantic 토큰은 `:root`(기본/라이트)와 `.dark` 두 값으로 정의된다. GitAnimals 앱은 html 에 `.dark` 를 **부여하지 않으므로 항상 `:root`(라이트) 값이 활성**이다. 토큰감사 초기에 light/dark 를 혼동해 checkbox focus ring 을 `grayscale-300`(zinc-300 #d4d4d8, `.dark` 값)으로 잡았다가, 빌드 CSS 의 활성 `:root` = `--colors-ring: grayscale-400`(zinc-400 #a1a1aa) 를 확인하고 교정했다. → recipe 토큰은 반드시 **활성 :root 블록**에서 값을 읽을 것.
+  - 해석 결과(활성 :root): `radii.sm`=calc(0.5rem−4px)=**4px**, `border`=grayscale-200=**#e4e4e7**, `ring`=grayscale-400=**#a1a1aa**, `background`=grayscale-0=**white**, `primary`=grayscale-900(단 checkbox 는 checkboxLightStyle 로 #fafafa override).
+- **API 보존:** panda `ScrollArea` 는 `styled()` 라 `height="160px"` styled prop 을 받는다 → ui-tailwind ScrollArea 도 `height` prop 을 받아 root inline style 로 적용(사용처 변경 최소화, calc arbitrary 회피). panda `Skeleton` 의 styled prop(width/height/borderRadius)은 ui-tailwind 가 className API 라 사용처에서 className 으로 치환.
+
 ---
 
 ## 2. 토큰 감사 (dev `ui-tailwind/theme/*` vs panda single source, 2026-06-20)
@@ -153,3 +160,4 @@ auth 의 claude-code/desktop 원본이 `color: 'white.white_70'` / `'white.white
 - 2026-06-20 (PR3a~c): landing 설계 부분 분리 PR. ADR-007 적용으로 Button/AnchorButton(panda cva 1:1)·Skeleton(gray gradient 1:1, animation easing linear 교정) 추가. ADR-009(flicking→embla, Perspective/Fade 를 usePerspectiveTween 으로 재현, dead code AnimalSliderContainer 삭제, 브라우저 검증 필요) 기록.
 - 2026-06-21 (PR3d): landing 전 섹션 스타일 사용부 전환(36파일, 9개 .style.ts 인라인화). 병렬 서브에이전트 7개로 전환 후 빌드·grep 검수. ADR-010(.style.ts 정책 §6-1 결론·SplitText 잔존·spacer 제거) 기록. embla 브라우저 검증 완료.
 - 2026-06-21 (방침 전환 + PR4): ADR-011(사용부 통합 PR/설계 분리 PR — 통합 브랜치 feat/tailwind-usage-migration). shop 설계분 ui-tailwind Banner/GameCard 추가(panda 1:1, dev % 누락 버그 수정). shop 사용부 전환(21파일, 병렬 에이전트 3개+빌드/grep+브라우저 검수). ADR-012(Dialog 전역 공존, V2 별도 PR) 기록.
+- 2026-06-21 (PR5 mypage): 설계분 ui-tailwind Checkbox/Label/ScrollArea 추가(ADR-013 — 빌드 CSS 실측값으로 이식, shadow-panda semantic 토큰은 활성 :root 값. checkbox ring #d4d4d8→#a1a1aa 교정). mypage 사용부 20파일 전환(병렬 에이전트 3개 + SelectedPetTable 직접 + 빌드/grep 검수). Dialog/CommonDialog panda 유지(ADR-012). ⚠️ 브라우저 시각 검증 미완(auth-gated, 후속).
