@@ -102,6 +102,13 @@
 
 ---
 
+### ADR-016 — PandaCSS 완전 제거 + tailwind preflight 재활성화 (PR final)
+- **배경:** auth/GNB/landing/shop/mypage/guild/quiz + event/laboratory/dev/공유컴포넌트까지 모든 사용처가 panda-free 가 되고, Dialog 계열까지 ui-tailwind 로 이식 완료되어 `_panda`/`styled-system`/`@gitanimals/ui-panda` 사용처가 0 이 됐다(전수 grep 확인).
+- **결정:** apps/web 에서 PandaCSS 인프라를 일괄 제거하고 ADR-002 대로 Tailwind preflight 를 재활성화(`corePlugins.preflight=false` 제거)해 Tailwind 가 전역 reset 을 단독 담당한다.
+- **제거 항목:** `panda.config.ts` + `styled-system/` 삭제, postcss 에서 `@pandacss/dev/postcss` 제거, `next.config` transpilePackages 에서 `@gitanimals/ui-panda` 제거, package.json 의 panda codegen 스크립트(prepare/prebuild)·`@gitanimals/ui-panda`·`@shadow-panda/style-context`·`@pandacss/dev`·`@shadow-panda/preset` 제거, tsconfig 의 `_panda` path·`styled-system` include·`@pandacss/dev` types 제거.
+- **globals.css:** panda `@layer reset,base,tokens,recipes,utilities;` 선언 제거. 커스텀 전역 reset(button border:transparent/body/.mobile/.desktop/:root 변수)은 `@layer base` 로 이동(preflight 뒤 적용). `box-sizing` 은 preflight 가 담당하므로 커스텀에서 제거. 죽은 `.dialog__content[data-state]` !important 규칙 제거(ui-tailwind Dialog 는 해당 클래스 미사용 — 중앙정렬을 자체 className 으로 처리). toast/evolution-gradient/keyframes 등 plain CSS 는 유지.
+- **검증:** type-check·`build:web` 통과(panda codegen 태스크 소멸 → 2 tasks). 빌드 CSS 에 panda 잔재(`dialog__content`/`checkbox__root`/`select__trigger`/`--colors-grayscale`/`--shadow-panda`/`@layer reset`/`--global-color-border`) **0**, tailwind preflight 시그니처(box-sizing/text-size-adjust/tab-size/button,select) 적용 확인, GitAnimals 유틸(glyph16-bold/gray-150=rgb(42 44 51)/brand) 정상. ⚠️ preflight 가 panda reset 을 대체하므로 **앱 전반 시각 검증** 필요(타이포/여백 미세 변화 점검).
+
 ## 2. 토큰 감사 (dev `ui-tailwind/theme/*` vs panda single source, 2026-06-20)
 
 검수 기준 원본: `packages/ui/token/src/{color,font/glyph}.ts`,
@@ -173,6 +180,7 @@ auth 의 claude-code/desktop 원본이 `color: 'white.white_70'` / `'white.white
 - 2026-06-20 (PR3a~c): landing 설계 부분 분리 PR. ADR-007 적용으로 Button/AnchorButton(panda cva 1:1)·Skeleton(gray gradient 1:1, animation easing linear 교정) 추가. ADR-009(flicking→embla, Perspective/Fade 를 usePerspectiveTween 으로 재현, dead code AnimalSliderContainer 삭제, 브라우저 검증 필요) 기록.
 - 2026-06-21 (PR3d): landing 전 섹션 스타일 사용부 전환(36파일, 9개 .style.ts 인라인화). 병렬 서브에이전트 7개로 전환 후 빌드·grep 검수. ADR-010(.style.ts 정책 §6-1 결론·SplitText 잔존·spacer 제거) 기록. embla 브라우저 검증 완료.
 - 2026-06-21 (방침 전환 + PR4): ADR-011(사용부 통합 PR/설계 분리 PR — 통합 브랜치 feat/tailwind-usage-migration). shop 설계분 ui-tailwind Banner/GameCard 추가(panda 1:1, dev % 누락 버그 수정). shop 사용부 전환(21파일, 병렬 에이전트 3개+빌드/grep+브라우저 검수). ADR-012(Dialog 전역 공존, V2 별도 PR) 기록.
+- 2026-06-21 (PR8~final, **🎉 PandaCSS 완전 제거**): event/laboratory/dev/공유컴포넌트 잔존 사용부 전환 + 컴포넌트 포팅(NoRatingCard/Tooltip/DropdownMenu/CombineChip/Select/Accordion/Dialog 계열/SplitText) + 공유 panda 스타일(scrollStyle/prevTextToken) 전환 + Dialog 전역 사용처 마이그레이션(DialogV2). 최종 ADR-016(panda 인프라 제거 + preflight 재활성화). apps/web 전체 `_panda`/`styled-system`/`@gitanimals/ui-panda` 잔존 0, build 통과. ⚠️ 앱 전반 브라우저 시각 검증 필요.
 - 2026-06-21 (PR7 quiz, **모든 도메인 사용부 완료**): quiz(game/quiz) 사용부 15파일 전환. 신규 컴포넌트 없음(Button=ui-tailwind, Dialog 3곳 panda 유지). 동적 ProgressBar width=inline style, pulse(1s)/dropShadow/word-break=arbitrary. `body18.*` 는 panda 미정의 토큰(no-op)이라 body18-* 로 두되 동일 no-op 보존. type-check·build 통과. → auth/GNB/landing/shop/mypage/guild/quiz 전 도메인 Tailwind 전환 완료. 남은 것: Dialog→DialogV2 PR, SplitText 이식, PR final(panda 제거).
 - 2026-06-21 (PR6 guild): 설계분 ui-tailwind 컴포넌트 5종 추가 — TextArea/SearchBar(리프) + Tooltip/DropdownMenu/CombineChip(radix compound). ADR-015(compound 는 visible 1:1 + 표준 shadcn 애니메이션 tailwindcss-animate, shadcn 토큰 미도입). guild 사용부 30파일 전환(병렬 에이전트 3개 + Button 스타일 prop→className 교정). Dialog/dialogTitleStyle panda 유지(ADR-012). 슬라이더는 이미 embla. type-check·build 통과, 브라우저 검증.
 - 2026-06-21 (PR5 mypage): 설계분 ui-tailwind Checkbox/Label/ScrollArea 추가(ADR-013 — 빌드 CSS 실측값으로 이식, shadow-panda semantic 토큰은 활성 :root 값. checkbox ring #d4d4d8→#a1a1aa 교정). mypage 사용부 20파일 전환(병렬 에이전트 3개 + SelectedPetTable 직접 + 빌드/grep 검수). Dialog/CommonDialog panda 유지(ADR-012). ADR-014(전역 `button{border:transparent}` 함정 → Checkbox/Button/TextField 에 `border-solid` 명시) 기록. **브라우저 시각 검증 완료**(프로덕션 `next start`, 체크박스·버튼 테두리 정상).
