@@ -1,6 +1,5 @@
-import { css } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { Button, Dialog } from '@gitanimals/ui-panda';
+import { Dialog } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 
 export function ConfirmDialog(props: {
   isOpen: boolean;
@@ -12,28 +11,19 @@ export function ConfirmDialog(props: {
   return (
     <Dialog open={props.isOpen} onOpenChange={props.onClose}>
       <Dialog.Content>
-        <Dialog.Title className={titleStyle}>{props.title}</Dialog.Title>
-        <Dialog.Description className={descriptionStyle}>{props.description}</Dialog.Description>
-        <Flex gap="8px" justifyContent="flex-end" width="100%">
+        <Dialog.Title className="glyph20-regular text-left">{props.title}</Dialog.Title>
+        <Dialog.Description className="glyph16-regular text-left text-white-75 w-full">
+          {props.description}
+        </Dialog.Description>
+        <div className="flex gap-[8px] justify-end w-full">
           <Button onClick={props.onClose} variant="secondary" size="m">
             Close
           </Button>
           <Button onClick={props.onConfirm} variant="primary" size="m">
             Ok
           </Button>
-        </Flex>
+        </div>
       </Dialog.Content>
     </Dialog>
   );
 }
-const titleStyle = css({
-  textStyle: 'glyph20.regular',
-  textAlign: 'left',
-});
-
-const descriptionStyle = css({
-  textStyle: 'glyph16.regular',
-  textAlign: 'left',
-  color: 'white.white_75',
-  width: '100%',
-});

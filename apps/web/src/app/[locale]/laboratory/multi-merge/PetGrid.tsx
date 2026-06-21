@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { css } from '_panda/css';
 
 import { DragSelectContainer } from '../../../../components/DragSelect';
 
@@ -24,29 +23,10 @@ interface PetGridProps {
   materialPets: Persona[];
 }
 
-const gridStyle = css({
-  display: 'grid',
-  gap: '8px',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(80px, auto))',
-});
+const gridStyle = 'grid gap-[8px] grid-cols-[repeat(auto-fill,minmax(80px,auto))]';
 
-const petCardStyle = css({
-  position: 'relative',
-  aspectRatio: '1',
-  borderRadius: '12px',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  cursor: 'pointer',
-  transition: 'all',
-  background: 'gray.gray_200',
-  border: '2px solid',
-  borderColor: 'transparent',
-  _hover: {
-    borderColor: 'gray.gray_400',
-  },
-});
+const petCardStyle =
+  'relative aspect-square rounded-[12px] flex flex-col items-center justify-center cursor-pointer transition-all bg-gray-200 border-2 border-solid border-transparent hover:border-gray-400';
 
 export function PetGrid({ pets, onPetClick, onMultiplePetSelect, targetPet, materialPets }: PetGridProps) {
   const handleSelectionEnd = useCallback(
