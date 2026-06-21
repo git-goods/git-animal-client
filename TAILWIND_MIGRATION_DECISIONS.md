@@ -93,6 +93,13 @@
 - **적용:** `Checkbox`/`Button`/`TextField` 에 `border-solid` 추가(기존 Button/TextField 의 잠재 버그도 동시 해결). 이후 추가하는 모든 bordered 컴포넌트·사용부에도 동일 규칙 적용.
 - **교훈(검증 방식):** "빌드 CSS 에 클래스가 생성됐다"(`.border`/`.border-[#fafafa]` 존재)만으로는 부족하다. **cascade(특이도·layer) 까지** 따져야 실제 렌더를 보장한다. 전역 element 셀렉터(`button{}`)가 utility 의 일부 속성을 덮을 수 있다.
 
+### ADR-015 — compound radix 컴포넌트는 visible 스타일만 1:1, 애니메이션은 표준 shadcn(tailwindcss-animate) (PR6 guild)
+- **배경:** guild 가 ui-panda `Tooltip`/`DropdownMenu`/`CombineChip`(=radix-select) 을 쓴다. 이들은 shadow-panda preset 의 **slot recipe** 기반이고, recipe base 가 shadow-panda 의 **enter/exit 애니메이션 시스템**(`--shadow-panda-enter-*` / `exit` 오케스트레이션)과 shadcn semantic 토큰(`popover`/`accent`/`shadows-md`/`durations-fast`)에 의존한다. 그러나 GitAnimals 는 각 컴포넌트의 **visible 스타일을 css() override 로 완전히 덮는다**(Tooltip=#404148/blur, DropdownMenu=rgba(0,0,0,.5)/blur, CombineChip=black-75/cva small·medium). 즉 shadcn 토큰은 실제 렌더에 거의 안 쓰이고, recipe 는 **구조(z-index/min-width/overflow/positioning) + 애니메이션**만 기여한다.
+- **결정(사용자 방침):** ① visible 스타일(색/패딩/radius/border)은 GitAnimals override 값으로 **1:1 이식**. ② shadow-panda 의 enter/exit 애니메이션 오케스트레이션을 그대로 재현하지 않고 **표준 shadcn 애니메이션 = `tailwindcss-animate` 플러그인**(`animate-in/out`, `fade-in-0`/`fade-out-0`, `zoom-in-95`/`zoom-out-95`, `slide-in-from-{side}-2`)으로 대체한다. zoom-95=scale 0.95, slide-from-2=8px 로 shadow-panda 값과 **시각적으로 동등**하다. ③ shadcn semantic 토큰(popover/accent 등)은 ui-tailwind 에 들이지 않고(ADR-005 유지), recipe 가 끌어쓰던 구조값(min-w 8rem, z-50, overflow-hidden, shadow-md)만 리터럴로 재현.
+- **인프라:** `tailwindcss-animate` 를 ui-tailwind preset/config 의 plugins 에 추가(`@radix-ui/react-select`·`react-tooltip`·`react-dropdown-menu` 의존성도). createGitAnimalsConfig 가 jiti 로 이 plugin(CJS)을 해석함을 `build:web` 으로 실증.
+- **범위:** DropdownMenu 는 guild 가 쓰는 Root/Trigger/Content/Item + 흔한 Group/Label/Separator/Portal 만 포팅(Sub/Checkbox/Radio 는 사용처 생길 때 추가). Dialog 는 여전히 panda 공존(ADR-012) — DropdownMenu/Tooltip/Select 는 애니메이션이 단순(fade/zoom)해 표준 대체가 안전했지만, Dialog(+오버레이/포커스 트랩)는 별도 DialogV2 PR 유지.
+- **검증:** 빌드 CSS 에서 override 값(#404148/rgba(0,0,0,.5)/black-75/rounded-10) + `tailwindcss-animate` 유틸 + `@keyframes enter/exit` 생성 확인. border 는 `border-solid` 동반(ADR-014).
+
 ---
 
 ## 2. 토큰 감사 (dev `ui-tailwind/theme/*` vs panda single source, 2026-06-20)
@@ -166,4 +173,5 @@ auth 의 claude-code/desktop 원본이 `color: 'white.white_70'` / `'white.white
 - 2026-06-20 (PR3a~c): landing 설계 부분 분리 PR. ADR-007 적용으로 Button/AnchorButton(panda cva 1:1)·Skeleton(gray gradient 1:1, animation easing linear 교정) 추가. ADR-009(flicking→embla, Perspective/Fade 를 usePerspectiveTween 으로 재현, dead code AnimalSliderContainer 삭제, 브라우저 검증 필요) 기록.
 - 2026-06-21 (PR3d): landing 전 섹션 스타일 사용부 전환(36파일, 9개 .style.ts 인라인화). 병렬 서브에이전트 7개로 전환 후 빌드·grep 검수. ADR-010(.style.ts 정책 §6-1 결론·SplitText 잔존·spacer 제거) 기록. embla 브라우저 검증 완료.
 - 2026-06-21 (방침 전환 + PR4): ADR-011(사용부 통합 PR/설계 분리 PR — 통합 브랜치 feat/tailwind-usage-migration). shop 설계분 ui-tailwind Banner/GameCard 추가(panda 1:1, dev % 누락 버그 수정). shop 사용부 전환(21파일, 병렬 에이전트 3개+빌드/grep+브라우저 검수). ADR-012(Dialog 전역 공존, V2 별도 PR) 기록.
+- 2026-06-21 (PR6 guild): 설계분 ui-tailwind 컴포넌트 5종 추가 — TextArea/SearchBar(리프) + Tooltip/DropdownMenu/CombineChip(radix compound). ADR-015(compound 는 visible 1:1 + 표준 shadcn 애니메이션 tailwindcss-animate, shadcn 토큰 미도입). guild 사용부 30파일 전환(병렬 에이전트 3개 + Button 스타일 prop→className 교정). Dialog/dialogTitleStyle panda 유지(ADR-012). 슬라이더는 이미 embla. type-check·build 통과, 브라우저 검증.
 - 2026-06-21 (PR5 mypage): 설계분 ui-tailwind Checkbox/Label/ScrollArea 추가(ADR-013 — 빌드 CSS 실측값으로 이식, shadow-panda semantic 토큰은 활성 :root 값. checkbox ring #d4d4d8→#a1a1aa 교정). mypage 사용부 20파일 전환(병렬 에이전트 3개 + SelectedPetTable 직접 + 빌드/grep 검수). Dialog/CommonDialog panda 유지(ADR-012). ADR-014(전역 `button{border:transparent}` 함정 → Checkbox/Button/TextField 에 `border-solid` 명시) 기록. **브라우저 시각 검증 완료**(프로덕션 `next start`, 체크박스·버튼 테두리 정상).
