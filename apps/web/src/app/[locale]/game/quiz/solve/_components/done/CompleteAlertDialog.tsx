@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { Dialog } from '@gitanimals/ui-panda';
-import { Button } from '@gitanimals/ui-tailwind';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
 
 import { customT } from '../../../_utils/quiz.intl';
 

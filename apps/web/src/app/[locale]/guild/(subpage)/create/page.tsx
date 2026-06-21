@@ -1,4 +1,4 @@
-import { dialogTitleStyle } from '@gitanimals/ui-panda';
+import { dialogTitleStyle } from '@gitanimals/ui-tailwind';
 
 import { GuildModalPageLayout } from '@/app/[locale]/guild/_components/GuildModalPageLayout';
 

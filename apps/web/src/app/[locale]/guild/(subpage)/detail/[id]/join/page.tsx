@@ -1,7 +1,7 @@
 'use client';
 
 import { inboxQueries } from '@gitanimals/react-query';
-import { dialogTitleStyle } from '@gitanimals/ui-panda';
+import { dialogTitleStyle } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { GuildJoinPetSelectDialog } from '@/app/[locale]/guild/_components/GuildPetSelectDialog';

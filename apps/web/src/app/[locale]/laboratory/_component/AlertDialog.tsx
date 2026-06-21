@@ -1,6 +1,5 @@
 import React from 'react';
-import { Dialog } from '@gitanimals/ui-panda';
-import { Button } from '@gitanimals/ui-tailwind';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
 
 export function AlertDialog(props: {
   isOpen: boolean;

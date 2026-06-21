@@ -3,8 +3,7 @@
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { auctionQueries, useChangeProductPrice, useDeleteProduct, userQueries } from '@gitanimals/react-query';
-import { Dialog } from '@gitanimals/ui-panda';
-import { Button } from '@gitanimals/ui-tailwind';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 

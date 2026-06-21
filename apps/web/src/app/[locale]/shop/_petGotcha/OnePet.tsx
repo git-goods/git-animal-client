@@ -5,7 +5,7 @@ import type { GotchaResult } from '@gitanimals/api';
 import { postGotcha } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { userQueries } from '@gitanimals/react-query';
-import { Dialog } from '@gitanimals/ui-panda';
+import { Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';

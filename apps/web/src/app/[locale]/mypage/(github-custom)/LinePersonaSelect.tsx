@@ -2,8 +2,7 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Dialog } from '@gitanimals/ui-panda';
-import { ScrollArea } from '@gitanimals/ui-tailwind';
+import { Dialog, ScrollArea } from '@gitanimals/ui-tailwind';
 import { ExpandIcon } from 'lucide-react';
 
 import { SelectPersonaList } from '../PersonaList';

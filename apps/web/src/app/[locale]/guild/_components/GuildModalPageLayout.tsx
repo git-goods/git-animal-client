@@ -1,6 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import { dialogTitleStyle } from '@gitanimals/ui-panda';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn, dialogTitleStyle } from '@gitanimals/ui-tailwind';
 import { XIcon } from 'lucide-react';
 
 import { BackTrigger } from '@/components/Trigger';

@@ -1,8 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { Dialog } from '@gitanimals/ui-panda';
-import { AnchorButton, Button } from '@gitanimals/ui-tailwind';
+import { AnchorButton, Button, Dialog } from '@gitanimals/ui-tailwind';
 import { CheckCircle2, Copy } from 'lucide-react';
 import { toast } from 'sonner';
 
