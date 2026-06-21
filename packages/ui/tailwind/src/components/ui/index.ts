@@ -1,3 +1,4 @@
+export * from './accordion';
 export * from './button';
 export * from './checkbox';
 export * from './combine-chip';
@@ -5,6 +6,7 @@ export * from './dropdown-menu';
 export * from './label';
 export * from './scroll-area';
 export * from './searchbar';
+export * from './select';
 export * from './skeleton';
 export * from './textarea';
 export * from './textfield';

@@ -990,6 +990,9 @@ importers:
       '@gitanimals/ui-token':
         specifier: workspace:*
         version: link:../token
+      '@radix-ui/react-accordion':
+        specifier: ^1.2.1
+        version: 1.2.12(@types/react-dom@18.3.7(@types/react@18.2.61))(@types/react@18.2.61)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       '@radix-ui/react-checkbox':
         specifier: ^1.1.1
         version: 1.3.3(@types/react-dom@18.3.7(@types/react@18.2.61))(@types/react@18.2.61)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
