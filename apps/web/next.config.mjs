@@ -16,7 +16,7 @@ const withPWA = NextPWA({
 });
 
 const nextConfig = withNextIntl({
-  transpilePackages: ['@gitanimals/ui-panda', '@gitanimals/ui-tailwind'],
+  transpilePackages: ['@gitanimals/ui-tailwind'],
   reactStrictMode: true,
   compiler: {
     styledComponents: true,

@@ -397,9 +397,6 @@ importers:
       '@gitanimals/ui-icon':
         specifier: workspace:*
         version: link:../../packages/ui/icon
-      '@gitanimals/ui-panda':
-        specifier: workspace:*
-        version: link:../../packages/ui/panda
       '@gitanimals/ui-tailwind':
         specifier: workspace:*
         version: link:../../packages/ui/tailwind
@@ -424,9 +421,6 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.1.6
         version: 1.1.6(@types/react-dom@18.2.19)(@types/react@18.2.61)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
-      '@shadow-panda/style-context':
-        specifier: ^0.7.1
-        version: 0.7.1(@types/react-dom@18.2.19)(@types/react@18.2.61)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       '@supabase/supabase-js':
         specifier: ^2.75.0
         version: 2.75.0
@@ -512,12 +506,6 @@ importers:
       '@next/bundle-analyzer':
         specifier: ^14.2.5
         version: 14.2.5
-      '@pandacss/dev':
-        specifier: ^0.41.0
-        version: 0.41.0(jsdom@20.0.3)(typescript@5.4.5)
-      '@shadow-panda/preset':
-        specifier: ^0.7.1
-        version: 0.7.1(@pandacss/dev@0.41.0(jsdom@20.0.3)(typescript@5.4.5))
       '@storybook/addon-essentials':
         specifier: ^8.0.9
         version: 8.1.9(@types/react-dom@18.2.19)(@types/react@18.2.61)(prettier@3.2.5)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
