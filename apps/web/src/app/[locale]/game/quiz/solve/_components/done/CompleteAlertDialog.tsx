@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { Button, Dialog } from '@gitanimals/ui-panda';
+import { Dialog } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 
 import { customT } from '../../../_utils/quiz.intl';
 
@@ -28,18 +27,20 @@ const CompleteAlertDialog = ({ completePoint, onClose, isOpen }: CompleteAlertDi
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content
-        className={contentStyle}
+        className="flex w-full flex-col items-center gap-[12px]"
         isShowClose={false}
         onInteractOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
       >
-        <Flex flexDirection="column" alignItems="center" gap="12px" width="100%">
-          <Dialog.Title className={titleStyle}>{t('complete-dialog.title')}</Dialog.Title>
-          <Dialog.Description className={descriptionStyle}>
+        <div className="flex w-full flex-col items-center gap-[12px]">
+          <Dialog.Title className="!glyph24-bold !text-center [font-family:'Product_Sans'] font-bold">
+            {t('complete-dialog.title')}
+          </Dialog.Title>
+          <Dialog.Description className="glyph16-regular text-center [font-family:'Product_Sans'] font-normal text-white-75 [word-break:keep-all]">
             {customT(t('complete-dialog.description'), { point: completePoint })}
           </Dialog.Description>
-        </Flex>
-        <div className={imageContainerStyle}>
+        </div>
+        <div className="my-[4px] flex h-[160px] w-[160px] items-center justify-center">
           <Image
             src="/assets/game/quiz/quiz-double-coin.webp"
             alt="quiz-complete"
@@ -48,51 +49,14 @@ const CompleteAlertDialog = ({ completePoint, onClose, isOpen }: CompleteAlertDi
             draggable={false}
           />
         </div>
-        <Flex width="100%">
-          <Button className={buttonStyle} onClick={handleClose} variant="secondary" size="m">
+        <div className="flex w-full">
+          <Button className="w-full" onClick={handleClose} variant="secondary" size="m">
             {t('complete-dialog.close-button')}
           </Button>
-        </Flex>
+        </div>
       </Dialog.Content>
     </Dialog>
   );
 };
 
 export default CompleteAlertDialog;
-
-const buttonStyle = css({
-  width: '100%',
-});
-
-const contentStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '12px',
-  width: '100%',
-});
-
-const titleStyle = css({
-  textStyle: 'glyph24.bold !important',
-  fontFamily: 'Product Sans',
-  fontWeight: 700,
-  textAlign: 'center !important',
-});
-
-const descriptionStyle = css({
-  textStyle: 'glyph16.regular',
-  fontFamily: 'Product Sans',
-  fontWeight: 400,
-  textAlign: 'center',
-  color: 'white.white_75',
-  wordBreak: 'keep-all',
-});
-
-const imageContainerStyle = css({
-  width: '160px',
-  height: '160px',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginBlock: '4px',
-});
