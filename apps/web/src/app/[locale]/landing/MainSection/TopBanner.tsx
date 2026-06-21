@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { rankQueries } from '@gitanimals/react-query';
-import SplitText from '@gitanimals/ui-panda/src/animation/SplitText/SplitText';
+import { SplitText } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { motion } from 'framer-motion';

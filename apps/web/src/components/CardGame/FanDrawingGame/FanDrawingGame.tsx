@@ -4,8 +4,7 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { CardBack as CardBackUi } from '@gitanimals/ui-panda';
+import { CardBack as CardBackUi } from '@gitanimals/ui-tailwind';
 import { motion } from 'framer-motion';
 
 import { AnimalCard } from '@/components/AnimalCard';
@@ -242,62 +241,17 @@ function RevealingCardMotion({
   );
 }
 
-const containerStyle = css({
-  width: '100%',
-  mx: 'auto',
-});
+const containerStyle = 'w-full mx-auto';
 
-const gameAreaStyle = css({
-  position: 'relative',
-  height: '360px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
+const gameAreaStyle = 'relative h-[360px] flex items-center justify-center';
 
-const cardContainerStyle = css({
-  position: 'relative',
-  zIndex: 0,
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
+const cardContainerStyle = 'relative z-0 w-full h-full flex items-center justify-center';
 
-const overlayStyle = css({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  bg: 'black.black_50',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  backdropFilter: 'blur(10px)',
-  flexDirection: 'column',
-  gap: '100px',
-  zIndex: 9001,
-});
+const overlayStyle =
+  'fixed top-0 left-0 w-full h-full bg-black-50 flex items-center justify-center backdrop-blur-[10px] flex-col gap-[100px] z-[9001]';
 
-const revealingCardMotionStyle = css({
-  position: 'absolute',
-  zIndex: 10,
-  transformStyle: 'preserve-3d',
-  cursor: 'pointer',
-});
+const revealingCardMotionStyle = 'absolute z-10 [transform-style:preserve-3d] cursor-pointer';
 
-const cardBackStyle = css({
-  width: '220px',
-  height: '272px',
-  overflow: 'hidden',
-});
+const cardBackStyle = 'w-[220px] h-[272px] overflow-hidden';
 
-const detailedCardStyle = css({
-  height: 'auto',
-  overflow: 'hidden',
-  position: 'relative',
-  transformStyle: 'preserve-3d',
-  aspectRatio: '220/272',
-});
+const detailedCardStyle = 'h-auto overflow-hidden relative [transform-style:preserve-3d] aspect-[220/272]';

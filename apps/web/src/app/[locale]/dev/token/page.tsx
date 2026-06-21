@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 
 import { useClientSession } from '@/utils/clientAuth';
 import { copyClipBoard } from '@/utils/copy';

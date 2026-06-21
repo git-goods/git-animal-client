@@ -1,9 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
-import { CombineChip, SearchBar } from '@gitanimals/ui-panda';
+import { CombineChip, SearchBar } from '@gitanimals/ui-tailwind';
 import { RotateCcwIcon } from 'lucide-react';
 
 import { ANIMAL_TIER_INFO } from '@/components/AnimalCard/AnimalCard.constant';
@@ -71,7 +69,7 @@ export function PersonaListToolbar({
   const t = useTranslations('Mypage.Filter');
 
   return (
-    <div className={toolbarContainerStyle}>
+    <div className="mb-[8px] flex flex-col gap-[8px]">
       {showSearch && (
         <SearchBar
           placeholder={t('search-placeholder')}
@@ -80,7 +78,7 @@ export function PersonaListToolbar({
         />
       )}
 
-      <div className={filterRowStyle}>
+      <div className="flex flex-wrap items-center gap-[6px]">
         {/* 등급 필터 */}
         <CombineChip
           value={filterState.grade}
@@ -134,7 +132,7 @@ export function PersonaListToolbar({
         {/* 진화 가능 필터 */}
         {showEvolvableFilter && (
           <button
-            className={toggleButtonStyle}
+            className="glyph12-regular h-[30px] cursor-pointer rounded-[6px] border border-solid border-transparent bg-white-5 px-[12px] py-[6px] text-white-50 transition-all duration-150 ease-[ease] hover:bg-white-10 data-[active]:border-brand-sky data-[active]:bg-brand-sky_25 data-[active]:text-white-90"
             data-active={filterState.evolvableOnly || undefined}
             onClick={() => onFilterChange({ evolvableOnly: !filterState.evolvableOnly })}
           >
@@ -157,12 +155,16 @@ export function PersonaListToolbar({
         </CombineChip>
 
         {/* 결과 수 + 초기화 */}
-        <div className={countSectionStyle}>
-          <span className={countTextStyle}>
+        <div className="ml-auto flex items-center gap-[4px]">
+          <span className="glyph12-regular text-white-50">
             {counts.filtered}/{counts.total}
           </span>
           {isFiltering && (
-            <button className={resetButtonStyle} onClick={onReset} aria-label={t('reset')}>
+            <button
+              className="flex h-[24px] w-[24px] cursor-pointer items-center justify-center rounded-[4px] text-white-50 hover:bg-white-10 hover:text-white-75"
+              onClick={onReset}
+              aria-label={t('reset')}
+            >
               <RotateCcwIcon size={14} />
             </button>
           )}
@@ -171,62 +173,3 @@ export function PersonaListToolbar({
     </div>
   );
 }
-
-const toolbarContainerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '8px',
-  marginBottom: '8px',
-});
-
-const filterRowStyle = flex({
-  gap: '6px',
-  alignItems: 'center',
-  flexWrap: 'wrap',
-});
-
-const toggleButtonStyle = css({
-  height: '30px',
-  padding: '6px 12px',
-  borderRadius: '6px',
-  textStyle: 'glyph12.regular',
-  color: 'white.white_50',
-  backgroundColor: 'white.white_5',
-  border: '1px solid transparent',
-  cursor: 'pointer',
-  transition: 'all 0.15s ease',
-  _hover: {
-    backgroundColor: 'white.white_10',
-  },
-  '&[data-active]': {
-    color: 'white.white_90',
-    backgroundColor: 'brand.sky_25',
-    borderColor: 'brand.sky',
-  },
-});
-
-const countSectionStyle = flex({
-  alignItems: 'center',
-  gap: '4px',
-  marginLeft: 'auto',
-});
-
-const countTextStyle = css({
-  textStyle: 'glyph12.regular',
-  color: 'white.white_50',
-});
-
-const resetButtonStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '24px',
-  height: '24px',
-  borderRadius: '4px',
-  color: 'white.white_50',
-  cursor: 'pointer',
-  _hover: {
-    backgroundColor: 'white.white_10',
-    color: 'white.white_75',
-  },
-});

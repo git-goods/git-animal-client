@@ -1,6 +1,5 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { css } from '_panda/css';
 
 import { getServerAuth } from '@/auth';
 import { buildDesktopCallbackUrl, isValidDesktopRedirect } from '@/constants/desktopAuth';
@@ -37,22 +36,8 @@ export default async function DesktopAuthEntryPage({
   redirect(`/${locale}/auth/desktop?${params}`);
 }
 
-const mainCss = css({
-  backgroundColor: 'white',
-  w: '100dvw',
-  h: '100dvh',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '0 16px',
-});
+const mainCss = 'bg-white w-[100dvw] h-[100dvh] flex flex-col items-center justify-center py-0 px-[16px]';
 
-const headingCss = css({
-  textStyle: 'glyph40.bold',
-  marginBottom: '12px',
-});
+const headingCss = 'glyph40-bold mb-[12px]';
 
-const descCss = css({
-  textStyle: 'glyph16.regular',
-});
+const descCss = 'glyph16-regular';

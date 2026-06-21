@@ -3,7 +3,7 @@
 import type { ComponentProps, JSX } from 'react';
 import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 
 import { getGithubOauthUrl } from '@/apis/auth/getGithubOauth';
 import { COOKIE_KEY, LOCAL_STORAGE_KEY } from '@/constants/storage';
