@@ -16,8 +16,6 @@
   },
   "dependencies": {
     "@air/react-drag-to-select": "^5.0.11",
-    "@egjs/flicking-plugins": "^4.7.1",
-    "@egjs/react-flicking": "^4.11.3",
     "@gitanimals/api": "workspace:*",
     "@gitanimals/asset-font": "workspace:*",
     "@gitanimals/dayjs": "workspace:*",

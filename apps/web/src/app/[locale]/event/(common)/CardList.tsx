@@ -5,9 +5,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import { PerspectiveCenterSlider } from '@/components/Slider';
 
-import '@egjs/react-flicking/dist/flicking.css';
-import '@egjs/react-flicking/dist/flicking-inline.css';
-
 interface CardListProps {
   renderCard: (type: string) => React.ReactNode;
   persona: string[];
