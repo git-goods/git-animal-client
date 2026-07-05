@@ -37,8 +37,8 @@ export function ShopTableRowViewSkeleton() {
   return <div className={cn(rowStyle, skeletonStyle)} />;
 }
 
-const skeletonStyle =
-  'animate-skeleton bg-[length:200%_100%] bg-[linear-gradient(90deg,#D8D9DD_25%,#9295A1_50%,#2F3238_75%,#D8D9DD_100%)]';
+// rowStyle 의 bg-white-10 위에 opacity blink 만 — sweep 없는 최소 로딩 신호.
+const skeletonStyle = 'animate-pulse';
 
 export const rowStyle =
   'w-full h-[80px] bg-white-10 rounded-[12px] grid grid-cols-[1fr_2.5fr_1fr_1fr_4.2fr_1.5fr] items-center px-[32px] gap-[16px] glyph20-regular text-white-100 [&_button]:text-black [&_button]:w-full [&_button]:px-[6px] [&_*]:overflow-hidden [&_*]:text-ellipsis';
