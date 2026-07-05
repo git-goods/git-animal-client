@@ -16,7 +16,7 @@ const TabsTrigger = ({ children, className, ...props }: PropsWithChildren<TabsTr
   return (
     <button
       type="button"
-      className={cn(className, buttonStyle, isSelected && 'selected')}
+      className={cn(buttonStyle, isSelected && 'selected', className)}
       onClick={() => handleChangeValue(props.value)}
       {...props}
     >
