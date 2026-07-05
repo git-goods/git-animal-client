@@ -14,11 +14,12 @@ import { cn } from '../../utils/cn';
  * - 애니메이션 표준 shadcn(ADR-015). icon md=16, dimmed=opacity-50.
  */
 const selectTriggerStyle = cva(
-  'flex w-fit items-center justify-center rounded-[10px] border-white-25 bg-white-25 px-[8px] py-[6px] h-[36px] glyph16-regular text-white-90',
+  'flex w-fit cursor-pointer items-center justify-center gap-[2px] rounded-[8px] border border-solid border-white-25 bg-white-25 px-[8px] py-[6px] h-[36px] glyph16-regular text-white-90',
   {
     variants: {
+      // panda CombineChip 의 trigger size 와 1:1 — small 은 얕은 white-5 배경의 subtle 칩.
       size: {
-        sm: 'h-[30px] bg-white-5',
+        small: 'h-[30px] gap-[1px] rounded-[6px] border-white-5 bg-white-5 glyph12-regular text-white-50',
       },
     },
   },

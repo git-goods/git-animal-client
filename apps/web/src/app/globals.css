@@ -19,6 +19,15 @@
 }
 
 @layer base {
+  /* PandaCSS 제거 후 Tailwind preflight 로 전환되며 전역 폰트 스무딩이 사라져
+     macOS 에서 텍스트가 prod 대비 더 굵게(subpixel) 렌더링되던 회귀를 복원.
+     prod 는 antialiased + optimizeLegibility 로 렌더링됨 (issue 4.3). */
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
   body {
     position: relative;
   }
@@ -29,6 +38,10 @@
     background-color: transparent;
     padding: 0;
     outline: none;
+  }
+
+  input {
+    background-color: transparent;
   }
 
   .mobile {

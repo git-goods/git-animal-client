@@ -14,7 +14,7 @@ import { cn } from '../../utils/cn';
  * - 애니메이션은 표준 shadcn(tailwindcss-animate). icon md=16px, dimmed=opacity-50.
  */
 const chipTriggerStyle = cva(
-  'flex w-fit cursor-pointer items-center justify-center py-[6px] pl-[8px] pr-[12px]',
+  'flex w-fit cursor-pointer items-center justify-center border border-solid py-[6px] pl-[8px] pr-[12px]',
   {
     variants: {
       size: {
