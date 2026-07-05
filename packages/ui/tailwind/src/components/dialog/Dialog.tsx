@@ -48,7 +48,7 @@ const dialogContentCva = cva(
         default:
           'flex flex-col items-center justify-center gap-[28px] text-white [&_.dialog-title]:w-full [&_.dialog-title]:glyph20-regular [&_.dialog-title]:text-left mobile:max-w-[calc(100vw-48px)]',
         large:
-          'h-full max-h-[calc(100%-240px)] max-w-[calc(100%-400px)] p-[60px_40px] [@media(max-width:1200px)]:max-h-[calc(100vh-120px)] [@media(max-width:1200px)]:max-w-[calc(100vw-240px)] [@media(max-width:1200px)]:p-[48px_24px] mobile:h-full mobile:max-h-[100vh] mobile:max-w-[100vw] mobile:rounded-none',
+          'h-full max-h-[calc(100%-240px)] max-w-[calc(100%-400px)] p-[60px_40px] [@media(min-width:769px)_and_(max-width:1200px)]:max-h-[calc(100vh-120px)] [@media(min-width:769px)_and_(max-width:1200px)]:max-w-[calc(100vw-240px)] [@media(min-width:769px)_and_(max-width:1200px)]:p-[48px_24px] mobile:h-full mobile:max-h-[100vh] mobile:max-w-[100vw] mobile:rounded-none',
         screen:
           'm-auto flex h-screen max-h-[100vh] w-screen max-w-[100vw] flex-col items-center justify-center rounded-none p-[24px] [@media(min-width:1920px)]:h-fit [@media(min-width:1920px)]:w-[1400px] [@media(min-width:1920px)]:rounded-[16px]',
       },
