@@ -88,4 +88,4 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
   );
 }
 
-const footerStyle = 'flex justify-center gap-[12px]';
+const footerStyle = 'flex justify-center sm:justify-center gap-[12px]';
