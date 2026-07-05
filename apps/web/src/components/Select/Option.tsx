@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 
 import { useSelectOpenContext, useSelectValueContext } from './Root';
 
@@ -23,56 +23,26 @@ function SelectOption({ children, value, onClick }: SelectOptionProps) {
 
   return (
     <button
-      className={optionStyle}
+      className="relative flex items-center gap-[8px] rounded-[6px] py-[6px] pl-[32px] pr-[14px] font-['Product_Sans'] text-[14px] font-normal leading-[150%] tracking-[-0.3px] text-[rgba(0,0,0,0.75)] transition-[background] duration-200"
       onClick={onOptionClick}
       style={{
         background: isSelected ? 'rgba(0, 0, 0, 0.05)' : undefined,
       }}
     >
       <div
-        className={cx('check-icon', checkIconStyle)}
+        className={cn('check-icon absolute left-[8px] top-[calc(50%_+_2px)] hidden -translate-y-1/2')}
         style={{
           display: isSelected ? 'block' : 'none',
         }}
       >
         <CheckIcon />
       </div>
-      <div className={valueWrapperStyle}>{children ?? value}</div>
+      <div className="flex items-center gap-[8px]">{children ?? value}</div>
     </button>
   );
 }
 
 export default SelectOption;
-
-const checkIconStyle = css({
-  position: 'absolute',
-  left: '8px',
-  top: 'calc(50% + 2px)',
-  transform: 'translateY(-50%)',
-  display: 'none',
-});
-
-const optionStyle = css({
-  position: 'relative',
-  display: 'flex',
-  padding: '6px 14px 6px 32px',
-  alignItems: 'center',
-  gap: '8px',
-  borderRadius: '6px',
-  color: 'rgba(0, 0, 0, 0.75)',
-  fontFamily: 'Product Sans',
-  fontSize: '14px',
-  fontWeight: 400,
-  lineHeight: '150%',
-  letterSpacing: '-0.3px',
-  transition: 'background 0.2s',
-});
-
-const valueWrapperStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-});
 
 function CheckIcon() {
   return (

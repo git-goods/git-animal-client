@@ -4,10 +4,8 @@
 import { memo } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
-import { flex } from '_panda/patterns';
 import { userQueries } from '@gitanimals/react-query';
-import { Skeleton } from '@gitanimals/ui-panda';
+import { cn, Skeleton } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { ChevronRight, FlaskConical } from 'lucide-react';
@@ -15,22 +13,14 @@ import { ChevronRight, FlaskConical } from 'lucide-react';
 import { Link, usePathname } from '@/i18n/routing';
 import { addNumberComma } from '@/utils/number';
 
-const profileSkeletonStyle = css({
-  '& > div': {
-    margin: '32px 20px',
-    _mobile: {
-      width: '48px',
-      height: '48px',
-    },
-  },
-});
+const profileSkeletonStyle = '[&>div]:m-[32px_20px] mobile:[&>div]:w-[48px] mobile:[&>div]:h-[48px]';
 
 export const ProfileSection = memo(
   wrap
     .Suspense({
       fallback: (
         <section className={profileSkeletonStyle}>
-          <Skeleton width={160} height={160} borderRadius="50%" />
+          <Skeleton className="h-[160px] w-[160px] rounded-full" />
         </section>
       ),
     })
@@ -47,7 +37,7 @@ export const ProfileSection = memo(
       return (
         <section className={profileSectionStyle}>
           <div className={profileImageStyle}>
-            <img src={data.profileImage ?? ''} alt="profile" width={160} height={160} />
+            <img src={data.profileImage ?? ''} alt="profile" width={160} height={160} className="w-full h-full" />
           </div>
           <div className={profileTextStyle}>
             <p className={profileNameStyle}>{data?.username}</p>
@@ -57,11 +47,11 @@ export const ProfileSection = memo(
           </div>
           <hr className={dividerStyle} />
           <div className={navStyle}>
-            <Link href="/mypage" className={cx(navItemStyle, isMypagePath && 'selected')}>
+            <Link href="/mypage" className={cn(navItemStyle, isMypagePath && navItemSelectedStyle)}>
               <ChevronRight size={20} color={isMypagePath ? '#FCFD9C' : '#FFFFFF80'} />
               <span>{t('github-custom')}</span>
             </Link>
-            <Link href="/mypage/my-pet" className={cx(navItemStyle, isMyPetPath && 'selected')}>
+            <Link href="/mypage/my-pet" className={cn(navItemStyle, isMyPetPath && navItemSelectedStyle)}>
               <ChevronRight size={20} color={isMyPetPath ? '#FCFD9C' : '#FFFFFF80'} />
               <span>{t('my-pet')}</span>
             </Link>
@@ -75,125 +65,41 @@ export const ProfileSection = memo(
     }),
 );
 
-const laboButtonStyle = css({
-  background: 'white.white_10',
-  backdropFilter: 'blur(7px)',
-  borderRadius: '8px',
-  p: '10px 20px',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '10px',
-  textStyle: 'glyph16.regular',
-  color: 'white.white_100',
+const laboButtonStyle = cn(
+  'bg-white-10 [backdrop-filter:blur(7px)] rounded-[8px] px-[20px] py-[10px]',
+  'flex items-center gap-[10px] glyph16-regular text-white-100',
+  'mt-[24px] [animation:pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite] [transition:background_0.3s_ease]',
+  'hover:[background:linear-gradient(150.51deg,#016EDB_11.25%,#16B7CD_61.95%,#5CCA69_94.01%)] hover:[animation:pulse_1.6s_cubic-bezier(0.4,0,0.6,1)_infinite]',
+  'pc:px-[12px] pc:py-[8px] pc:[&>svg]:w-[18px] pc:[&>svg]:h-[18px]',
+  'mobile:hidden',
+);
 
-  marginTop: '24px',
-  animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-  transition: 'background 0.3s ease',
+const profileSectionStyle = 'mobile:flex mobile:px-[20px] mobile:py-[32px] mobile:gap-[12px] mobile:items-center';
 
-  _hover: {
-    background: 'linear-gradient(150.51deg, #016EDB 11.25%, #16B7CD 61.95%, #5CCA69 94.01%)',
-    animation: 'pulse 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-  },
+const profileTextStyle = 'mobile:flex-1';
 
-  _pc: {
-    p: '8px 12px',
-    '& > svg': {
-      width: '18px',
-      height: '18px',
-    },
-  },
-  _mobile: {
-    display: 'none',
-  },
-});
+const navStyle = 'flex flex-col';
 
-const profileSectionStyle = css({
-  _mobile: {
-    display: 'flex',
-    padding: '32px 20px',
-    gap: '12px',
-    alignItems: 'center',
-  },
-});
+const navItemStyle = cn(
+  'p-[4px] flex items-center gap-[4px] glyph18-regular text-white-50',
+  'mobile:gap-0 mobile:glyph15-regular mobile:p-0',
+);
 
-const profileTextStyle = css({
-  _mobile: {
-    flex: 1,
-  },
-});
+const navItemSelectedStyle = 'text-brand-canary';
 
-const navStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-});
+const dividerStyle = 'bg-white-25 h-[1px] m-0 border-none mt-[48px] mb-[20px] mobile:hidden';
 
-const navItemStyle = css({
-  padding: '4px',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '4px',
-  textStyle: 'glyph18.regular',
-  color: 'white.white_50',
-  '&.selected': {
-    color: 'brand.canary',
-  },
-  _mobile: {
-    gap: 0,
-    textStyle: 'glyph15.regular',
-    p: 0,
-  },
-});
+const profileImageStyle = cn(
+  'w-[160px] h-[160px] rounded-[50%] bg-[#fff] overflow-hidden',
+  'mobile:w-[48px] mobile:h-[48px]',
+);
 
-const dividerStyle = css({
-  background: 'white.white_25',
-  height: '1px',
-  margin: 0,
-  border: 'none',
-  marginTop: '48px',
-  marginBottom: '20px',
-  _mobile: {
-    display: 'none',
-  },
-});
+const profileNameStyle = cn(
+  'text-white glyph48-bold mt-[8px] mb-[4px]',
+  'mobile:glyph24-bold mobile:m-0 mobile:mb-[2px]',
+);
 
-const profileImageStyle = css({
-  width: '160px',
-  height: '160px',
-  borderRadius: '50%',
-  backgroundColor: '#fff',
-  overflow: 'hidden',
-  '& img': {
-    width: '100%',
-    height: '100%',
-  },
-  _mobile: {
-    width: '48px',
-    height: '48px',
-  },
-});
-
-const profileNameStyle = css({
-  color: 'white.white',
-  textStyle: 'glyph48.bold',
-  marginTop: '8px',
-  marginBottom: '4px',
-  _mobile: {
-    textStyle: 'glyph24.bold',
-    margin: 0,
-    mb: '2px',
-  },
-});
-
-const pointStyle = flex({
-  color: 'white.white',
-  textStyle: 'glyph24.regular',
-  gap: '6px',
-  alignItems: 'center',
-  _mobile: {
-    textStyle: 'glyph14.regular',
-    '& img': {
-      width: '16px',
-      height: '16px',
-    },
-  },
-});
+const pointStyle = cn(
+  'flex text-white glyph24-regular gap-[6px] items-center',
+  'mobile:glyph14-regular mobile:[&_img]:w-[16px] mobile:[&_img]:h-[16px]',
+);

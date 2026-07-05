@@ -2,9 +2,15 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { TextArea, TextField, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@gitanimals/ui-panda';
+import {
+  cn,
+  TextArea,
+  TextField,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@gitanimals/ui-tailwind';
 import { InfoIcon } from 'lucide-react';
 
 import { getBackgroundImage } from '@/utils/image';
@@ -33,10 +39,10 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
 
   return (
     <>
-      <Flex flexDirection="column" gap="24px">
+      <div className="flex flex-col gap-[24px]">
         <div>
-          <p className={headingStyle}>Guild Information</p>
-          <div className={css({ position: 'relative' })}>
+          <p className="glyph14-bold mb-2">Guild Information</p>
+          <div className="relative">
             <TextField
               placeholder="Enter guild name"
               value={props.fields.title}
@@ -54,7 +60,7 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
               }}
               error={formError?.title}
             />
-            <div className={tooltipStyle}>
+            <div className="absolute top-[18px] right-[14px] h-fit">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -72,28 +78,32 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
             placeholder="Enter guild description"
             value={props.fields.body}
             onChange={(e) => props.onFieldChange('body', e.target.value)}
-            className={css({ mt: '6px' })}
+            className="mt-[6px]"
           />
         </div>
-        <div className={joinSettingStyle}>
+        <div className="flex gap-[10px] items-center justify-between">
           <div>
-            <p className={headingStyle}>Guild Join Settings</p>
+            <p className="glyph14-bold mb-2">Guild Join Settings</p>
             <p>Configure how users can join your guild.</p>
           </div>
           <div>
             <button
-              className={cx(
-                joinSettingButtonStyle,
-                !props.fields.autoJoin ? joinSettingButtonSelectedStyle : joinSettingButtonNotSelectedStyle,
+              className={cn(
+                'border border-solid rounded-[6px] py-[8px] px-[16px] glyph14-regular transition-all duration-100 ease-in-out last:ml-1',
+                !props.fields.autoJoin
+                  ? 'bg-white-25 border-white-50 text-white'
+                  : 'bg-white-10 border-white-10 text-white-25',
               )}
               onClick={() => props.onFieldChange('autoJoin', false)}
             >
               Approval Required
             </button>
             <button
-              className={cx(
-                joinSettingButtonStyle,
-                props.fields.autoJoin ? joinSettingButtonSelectedStyle : joinSettingButtonNotSelectedStyle,
+              className={cn(
+                'border border-solid rounded-[6px] py-[8px] px-[16px] glyph14-regular transition-all duration-100 ease-in-out last:ml-1',
+                props.fields.autoJoin
+                  ? 'bg-white-25 border-white-50 text-white'
+                  : 'bg-white-10 border-white-10 text-white-25',
               )}
               onClick={() => props.onFieldChange('autoJoin', true)}
             >
@@ -102,31 +112,46 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
           </div>
         </div>
         <div>
-          <p className={headingStyle}>Guild Icon</p>
-          <Flex gap="6px" className={css({ _mobile: { flexWrap: 'wrap' } })}>
+          <p className="glyph14-bold mb-2">Guild Icon</p>
+          <div className="flex gap-[6px] mobile:flex-wrap">
             {props.icons?.map((icon) => (
               <button
                 onClick={() => props.onFieldChange('guildIcon', icon)}
                 key={icon}
-                className={props.fields.guildIcon === icon ? selectedStyle : unselectedStyle}
+                className={
+                  props.fields.guildIcon === icon
+                    ? 'border-[1.5px] border-solid rounded-[8px] opacity-100'
+                    : 'border-none rounded-[8px] opacity-40 transition-opacity duration-100 ease-in-out'
+                }
               >
-                <img src={icon} className={itemStyle} width={70} height={70} key={icon} alt={icon} />
+                <img
+                  src={icon}
+                  className="border-white-90 rounded-[8px] border-none"
+                  width={70}
+                  height={70}
+                  key={icon}
+                  alt={icon}
+                />
               </button>
             ))}
-          </Flex>
+          </div>
         </div>
         <div>
-          <p className={headingStyle}>Guild background</p>
-          <Flex gap="6px" className={css({ _mobile: { flexWrap: 'wrap' } })}>
+          <p className="glyph14-bold mb-2">Guild background</p>
+          <div className="flex gap-[6px] mobile:flex-wrap">
             {props.backgrounds?.map((background) => (
               <button
                 onClick={() => props.onFieldChange('farmType', background)}
                 key={background}
-                className={props.fields.farmType === background ? selectedStyle : unselectedStyle}
+                className={
+                  props.fields.farmType === background
+                    ? 'border-[1.5px] border-solid rounded-[8px] opacity-100'
+                    : 'border-none rounded-[8px] opacity-40 transition-opacity duration-100 ease-in-out'
+                }
               >
                 <img
                   src={getBackgroundImage(background)}
-                  className={itemStyle}
+                  className="border-white-90 rounded-[8px] border-none"
                   width={284}
                   height={124}
                   key={background}
@@ -134,70 +159,9 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
                 />
               </button>
             ))}
-          </Flex>
+          </div>
         </div>
-      </Flex>
+      </div>
     </>
   );
 }
-
-const headingStyle = css({
-  textStyle: 'glyph14.bold',
-  mb: 2,
-});
-
-const itemStyle = css({
-  borderColor: 'white.white_90',
-  borderRadius: '8px',
-  border: 'none',
-});
-
-const tooltipStyle = css({
-  position: 'absolute',
-  top: '18px',
-  right: '14px  ',
-  height: 'fit-content',
-});
-
-const selectedStyle = css({
-  border: '1.5px solid',
-  borderRadius: '8px',
-  opacity: 1,
-});
-
-const unselectedStyle = css({
-  border: 'none',
-  borderRadius: '8px',
-  opacity: 0.4,
-  transition: 'opacity 0.1s ease-in-out',
-});
-
-const joinSettingStyle = css({
-  display: 'flex',
-  gap: '10px',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-});
-
-const joinSettingButtonStyle = css({
-  border: '1px solid',
-  borderRadius: '6px',
-  padding: '8px 16px',
-  textStyle: 'glyph14.regular',
-  transition: 'all 0.1s ease-in-out',
-  _last: {
-    ml: 1,
-  },
-});
-
-const joinSettingButtonNotSelectedStyle = css({
-  background: 'white.white_10',
-  borderColor: 'white.white_10',
-  color: 'white.white_25',
-});
-
-const joinSettingButtonSelectedStyle = css({
-  background: 'white.white_25',
-  borderColor: 'white.white_50',
-  color: 'white',
-});

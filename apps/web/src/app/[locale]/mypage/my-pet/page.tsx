@@ -2,10 +2,8 @@
 
 import { useCallback, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
 import { type Persona } from '@gitanimals/api';
-import { ScrollArea } from '@gitanimals/ui-panda';
+import { ScrollArea } from '@gitanimals/ui-tailwind';
 
 import { SelectPersonaList } from '../PersonaList';
 
@@ -20,7 +18,7 @@ function MypageMyPets() {
   }, []);
 
   return (
-    <div className={flex({ flexDir: 'column' })}>
+    <div className="flex flex-col">
       <SelectedPetTable currentPersona={selectPersona} reset={() => setSelectPersona(null)} />
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('pet-list')}</h2>
@@ -45,22 +43,8 @@ function MypageMyPets() {
 
 export default MypageMyPets;
 
-const captionMessageStyle = css({
-  textStyle: 'glyph18.regular',
-  color: 'white_75',
-  marginTop: '16px',
+// 안내 멘트 5초 뒤에 등장
+const captionMessageStyle = 'glyph18-regular text-white-75 mt-[16px] opacity-0 animate-[fadeIn_0.5s_ease-in-out_5s_forwards]';
 
-  // 안내 멘트 5초 뒤에 등장
-  opacity: 0,
-  animation: `fadeIn 0.5s ease-in-out 5s forwards`,
-});
-
-const selectPetContainerStyle = css({
-  position: 'relative',
-
-  '& .heading': {
-    textStyle: 'glyph18.bold',
-    color: 'white',
-    marginBottom: '16px',
-  },
-});
+const selectPetContainerStyle =
+  'relative [&_.heading]:glyph18-bold [&_.heading]:text-white [&_.heading]:mb-[16px]';

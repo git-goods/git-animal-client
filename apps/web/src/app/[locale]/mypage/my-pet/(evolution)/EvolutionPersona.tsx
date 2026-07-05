@@ -2,11 +2,9 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
 import { evolutionPersona, type MergePersonaLevelResponse, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Button, CommonDialog } from '@gitanimals/ui-panda';
+import { Button, CommonDialog } from '@gitanimals/ui-tailwind';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { MoveRight } from 'lucide-react';
 import { overlay } from 'overlay-kit';
@@ -51,7 +49,7 @@ export function EvolutionPersona({ isOpen, onClose, targetPersona }: EvolutionPe
   return (
     <CommonDialog isOpen={isOpen} onClose={onClose} title="GitAnimals Evolution" size="large">
       <EvolutionPreview targetPersona={targetPersona} />
-      <div className={css({ display: 'flex', justifyContent: 'center' })}>
+      <div className="flex justify-center">
         <Button onClick={onMergeAction}>{t('evolution')}</Button>
       </div>
       <MergeResultModal
@@ -81,24 +79,9 @@ const EvolutionPreview = ({ targetPersona }: { targetPersona: Persona }) => {
   );
 };
 
-const containerStyle = css({
-  position: 'relative',
-  display: 'flex',
-  justifyContent: 'center',
-  padding: '32px 32px 12px',
-  overflow: 'hidden',
-  minHeight: 'fit-content',
+const containerStyle =
+  'relative flex justify-center px-[32px] pt-[32px] pb-[12px] overflow-hidden min-h-fit mobile:p-0';
 
-  _mobile: {
-    padding: 0,
-  },
-});
+const itemContainerStyle = 'flex items-center justify-center w-full gap-[24px]';
 
-const itemContainerStyle = flex({
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '100%',
-  gap: '24px',
-});
-
-const iconStyle = css({ marginBottom: '34px' });
+const iconStyle = 'mb-[34px]';

@@ -1,5 +1,4 @@
 import { getTranslations } from 'next-intl/server';
-import { css } from '_panda/css';
 
 import { Background } from '@/app/[locale]/game/quiz/_components/BackGround';
 
@@ -11,9 +10,11 @@ async function QuizPage() {
   return (
     <>
       <Background widthBottom />
-      <div className={containerStyle}>
-        <h1 className={titleStyle}>Quiz</h1>
-        <p className={descriptionStyle}>{t('quiz-solve-description')}</p>
+      <div className="flex flex-col justify-center items-center w-full h-full p-[40px_16px]">
+        <h1 className="mb-[8px] glyph40-bold font-['Product_Sans'] font-bold text-white">Quiz</h1>
+        <p className="mb-[48px] glyph18-regular font-['Product_Sans'] font-normal text-white-90">
+          {t('quiz-solve-description')}
+        </p>
         <SelectQuizType />
       </div>
     </>
@@ -21,29 +22,3 @@ async function QuizPage() {
 }
 
 export default QuizPage;
-
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
-  height: '100%',
-  padding: '40px 16px',
-});
-
-const titleStyle = css({
-  marginBottom: '8px',
-  textStyle: 'glyph40.bold',
-  fontFamily: 'Product Sans',
-  fontWeight: 700,
-  color: 'white',
-});
-
-const descriptionStyle = css({
-  marginBottom: '48px',
-  textStyle: 'glyph18.regular',
-  fontFamily: 'Product Sans',
-  fontWeight: 400,
-  color: 'white.white_90',
-});

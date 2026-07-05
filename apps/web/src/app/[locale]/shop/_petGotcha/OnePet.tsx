@@ -1,12 +1,11 @@
 import React from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
 import type { GotchaResult } from '@gitanimals/api';
 import { postGotcha } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { userQueries } from '@gitanimals/react-query';
-import { Dialog } from '@gitanimals/ui-panda';
+import { Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
@@ -98,7 +97,7 @@ Token: ${data?.user.accessToken}
       ({ isOpen, close }) =>
         isOpen && (
           <div
-            className={overlayStyle}
+            className="fixed left-0 top-0 z-[9001] flex h-full w-full cursor-pointer flex-col items-center justify-center gap-[100px] bg-black-50 backdrop-blur-[10px]"
             onClick={() => {
               close();
             }}
@@ -106,7 +105,7 @@ Token: ${data?.user.accessToken}
             <SelectedCardMotion x={0} y={0} rotate={0} index={0}>
               <DetailedCard cardData={{ type: resultPersona.name, dropRate: resultPersona.dropRate }} />
             </SelectedCardMotion>
-            <p className={noticeMessageStyle}>{t('click-to-close')}</p>
+            <p className="glyph22-regular text-center text-white mobile:glyph16-regular">{t('click-to-close')}</p>
           </div>
         ),
     );
@@ -114,8 +113,10 @@ Token: ${data?.user.accessToken}
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="large" className={dialogContentStyle}>
-        <Dialog.Title className={headingStyle}>{t('choose-one-card')}</Dialog.Title>
+      <Dialog.Content size="large" className="h-fit mobile:flex mobile:flex-col mobile:items-center mobile:justify-center">
+        <Dialog.Title className="glyph48-bold text-center text-white mobile:glyph28-bold">
+          {t('choose-one-card')}
+        </Dialog.Title>
 
         <CardDrawingGame
           characters={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }]}
@@ -128,50 +129,3 @@ Token: ${data?.user.accessToken}
 }
 
 export default OnePet;
-
-const dialogContentStyle = css({
-  height: 'fit-content',
-
-  _mobile: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-const headingStyle = css({
-  textStyle: 'glyph48.bold',
-  color: 'white',
-  textAlign: 'center',
-
-  _mobile: {
-    textStyle: 'glyph28.bold',
-  },
-});
-
-const overlayStyle = css({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  bg: 'black.black_50',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  backdropFilter: 'blur(10px)',
-  flexDirection: 'column',
-  gap: '100px',
-  zIndex: 9001,
-  cursor: 'pointer',
-});
-
-const noticeMessageStyle = css({
-  textStyle: 'glyph22.regular',
-  color: 'white',
-  textAlign: 'center',
-  _mobile: {
-    textStyle: 'glyph16.regular',
-  },
-});

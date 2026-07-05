@@ -1,4 +1,3 @@
-import { css } from '_panda/css';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import type { PaginationSchema } from '@/schema/pagination';
@@ -37,28 +36,9 @@ function Pagination(props: { currentPage: number; onSetPage: (page: number) => v
 
 export default Pagination;
 
-const paginationContainerStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '6px',
+const paginationContainerStyle =
+  'flex items-center justify-center gap-[6px] [&_button]:min-w-[15px] [&_button]:h-[26px] [&_button]:rounded-[4px] [&_button]:inline-flex [&_button]:items-center [&_button]:justify-center';
 
-  '& button': {
-    minWidth: '15px',
-    height: '26px',
-    borderRadius: '4px',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const nonSelectedCss = 'glyph16-regular text-white-50';
 
-const nonSelectedCss = css({
-  textStyle: 'glyph16.regular',
-  color: 'white.white_50',
-});
-
-const selectedCss = css({
-  textStyle: 'glyph16.bold',
-  color: 'white.white_100',
-});
+const selectedCss = 'glyph16-bold text-white-100';

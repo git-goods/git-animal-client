@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries } from '@gitanimals/react-query';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { useQuery } from '@tanstack/react-query';
 
 import { MediaQuery } from '@/components/MediaQuery';
@@ -14,7 +14,11 @@ import Pagination from '@/components/Pagination/Pagination';
 import { ShopTableDesktopRow, ShopTableMobileRow, ShopTableRowViewSkeleton } from '../_common/ShopTableMobileRow';
 
 import EditModal from './SellSection/EditModal';
-import { tableCss, tbodyCss, theadCss } from './table.styles';
+
+const tableCss = 'w-full mb-[32px] mobile:mb-[12px]';
+const theadCss =
+  'grid grid-cols-[1fr_2.5fr_1fr_1fr_4.2fr_1.5fr] gap-[16px] px-[32px] py-[4px] rounded-[12px] bg-white-50 items-center h-[46px] glyph18-bold text-white-100 mb-[4px] [&>span:nth-child(1)]:text-center mobile:hidden';
+const tbodyCss = 'flex flex-col gap-[4px] mobile:min-h-[428px]';
 
 function SellListSection() {
   const t = useTranslations('Shop');

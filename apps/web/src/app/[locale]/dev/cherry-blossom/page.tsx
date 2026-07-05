@@ -1,7 +1,5 @@
 'use client';
 
-import { css } from '_panda/css';
-
 import DevModePage from '@/components/DevMode/DevModePage';
 
 import { CherryBlossom } from '../../landing/(spring)/CherryBlossom';
@@ -68,77 +66,26 @@ export default function CherryBlossomDemoPage() {
   );
 }
 
-const pageStyle = css({
-  padding: '40px',
-  background: 'linear-gradient(180deg, #E8F4FD 0%, #FFF0F5 40%, #FFE4EE 70%, #FFDBEE 100%)',
-  minHeight: '100vh',
-});
+const pageStyle =
+  'p-[40px] bg-[linear-gradient(180deg,#E8F4FD_0%,#FFF0F5_40%,#FFE4EE_70%,#FFDBEE_100%)] min-h-[100vh]';
 
-const titleStyle = css({
-  fontSize: '32px',
-  fontWeight: 700,
-  color: '#333',
-  marginBottom: '32px',
-});
+const titleStyle = 'text-[32px] font-[700] text-[#333] mb-[32px]';
 
-const subtitleStyle = css({
-  fontSize: '20px',
-  fontWeight: 600,
-  color: '#555',
-  marginBottom: '16px',
-});
+const subtitleStyle = 'text-[20px] font-[600] text-[#555] mb-[16px]';
 
-const sectionStyle = css({
-  marginBottom: '48px',
-});
+const sectionStyle = 'mb-[48px]';
 
-const gridStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '24px',
-});
+const gridStyle = 'flex flex-col gap-[24px]';
 
-const cardStyle = css({
-  background: 'rgba(255,255,255,0.7)',
-  borderRadius: '12px',
-  padding: '20px',
-});
+const cardStyle = 'bg-[rgba(255,255,255,0.7)] rounded-[12px] p-[20px]';
 
-const labelStyle = css({
-  fontSize: '14px',
-  fontWeight: 600,
-  color: '#666',
-  marginBottom: '12px',
-});
+const labelStyle = 'text-[14px] font-[600] text-[#666] mb-[12px]';
 
-const rowStyle = css({
-  display: 'flex',
-  alignItems: 'flex-end',
-  gap: '32px',
-});
+const rowStyle = 'flex items-end gap-[32px]';
 
-const itemStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '8px',
-  position: 'relative',
-  width: '60px',
-  height: '60px',
-});
+const itemStyle = 'flex flex-col items-center gap-[8px] relative w-[60px] h-[60px]';
 
-const sizeLabelStyle = css({
-  fontSize: '11px',
-  color: '#999',
-  position: 'absolute',
-  bottom: '-4px',
-});
+const sizeLabelStyle = 'text-[11px] text-[#999] absolute bottom-[-4px]';
 
-const previewStyle = css({
-  position: 'relative',
-  width: '100%',
-  height: '400px',
-  overflow: 'hidden',
-  borderRadius: '12px',
-  background: 'linear-gradient(180deg, #E8F4FD 0%, #FFF0F5 40%, #FFE4EE 70%, #FFDBEE 100%)',
-});
+const previewStyle =
+  'relative w-full h-[400px] overflow-hidden rounded-[12px] bg-[linear-gradient(180deg,#E8F4FD_0%,#FFF0F5_40%,#FFE4EE_70%,#FFDBEE_100%)]';

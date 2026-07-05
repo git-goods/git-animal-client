@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
 import type { GotchaResult } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { usePostGotcha, userQueries } from '@gitanimals/react-query';
-import { Dialog } from '@gitanimals/ui-panda';
+import { cn, Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -111,44 +110,19 @@ Token: ${data?.user.accessToken}
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="screen" className={dialogContentStyle}>
+      <Dialog.Content size="screen" className="mobile:gap-[12px]">
         <Dialog.Title>
           {isPending ? t('gotcha-in-progress') : isSuccess ? t('get-persona-success') : t('click-card-to-flip')}
         </Dialog.Title>
         {isRunning && (
-          <p className={noticeMessageStyle}>{t('close-notice-message').replace('[count]', count.toString())}</p>
+          <p className="glyph28-bold mt-[12px] text-center text-white mobile:mt-[0px] mobile:text-[12px]">
+            {t('close-notice-message').replace('[count]', count.toString())}
+          </p>
         )}
-        <div className={cx(gameContainerStyle, isPending && css({ pointerEvents: 'none' }))}>
+        <div className={cn('mt-[60px] w-full mobile:mt-[28px]', isPending && 'pointer-events-none')}>
           <TenCardFlipGame onGetPersona={onAction} getPersona={getPersona} />
         </div>
       </Dialog.Content>
     </Dialog>
   );
 }
-
-const dialogContentStyle = css({
-  _mobile: {
-    gap: '12px',
-  },
-});
-
-const noticeMessageStyle = css({
-  textStyle: 'glyph28.bold',
-  color: 'white',
-  textAlign: 'center',
-  mt: '12px',
-
-  _mobile: {
-    fontSize: '12px',
-    mt: '0px',
-  },
-});
-
-const gameContainerStyle = css({
-  width: '100%',
-  mt: '60px',
-
-  _mobile: {
-    mt: '28px',
-  },
-});

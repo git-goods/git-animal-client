@@ -2,11 +2,9 @@
 
 import { useState } from 'react';
 import React from 'react';
-import { css, cx } from '_panda/css';
-import { center } from '_panda/patterns';
 import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
 import { auctionQueries } from '@gitanimals/react-query';
-import { Banner, Dialog } from '@gitanimals/ui-panda';
+import { Banner, cn, Dialog } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { LoaderIcon, SearchIcon, XIcon } from 'lucide-react';
@@ -37,12 +35,7 @@ interface PersonaSearchProps {
   selected?: string;
 }
 
-const buttonWrapperStyle = center({
-  w: '36px',
-  h: '36px',
-  backgroundColor: 'white.white_25',
-  borderRadius: '10px',
-});
+const buttonWrapperStyle = 'flex items-center justify-center w-[36px] h-[36px] bg-white-25 rounded-[10px]';
 
 export const PersonaSearch = wrap
   .ErrorBoundary({ fallback: <></> })
@@ -128,67 +121,16 @@ export const PersonaSearch = wrap
     );
   });
 
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
+const containerStyle = 'flex flex-col items-center justify-center';
 
-const selectedPersonaWrapperStyle = css({
-  display: 'flex',
-  justifyContent: 'flex-start',
-  width: '100%',
-  marginBottom: '16px',
+const selectedPersonaWrapperStyle =
+  'flex justify-start w-full mb-[16px] mobile:mb-0 mobile:mx-0 mobile:my-[24px]';
 
-  _mobile: {
-    mb: 0,
-    margin: '24px 0',
-  },
-});
+const selectedPersonaTagStyle =
+  'glyph16-bold text-white-90 rounded-[8px] bg-[rgba(255,255,255,0.25)] h-[36px] flex gap-[2px] items-center px-[8px] mobile:glyph12-regular mobile:text-white-50 mobile:h-[30px] mobile:px-[12px]';
 
-const selectedPersonaTagStyle = css({
-  textStyle: 'glyph16.bold',
-  color: 'white.white_90',
-  borderRadius: '8px',
-  background: 'rgba(255, 255, 255, 0.25)',
-  h: '36px',
-  display: 'flex',
-  gap: '2px',
-  alignItems: 'center',
-  px: '8px',
+const contentStyle = cn('flex-1 overflow-auto gap-[4px] justify-center', customScrollStyle);
 
-  _mobile: {
-    textStyle: 'glyph12.regular',
-    color: 'white.white_50',
-    h: '30px',
-    px: '12px',
-  },
-});
+const personaListHeadingStyle = 'glyph18-bold text-white text-left my-[12px] mobile:glyph16-bold';
 
-const contentStyle = cx(
-  css({
-    flex: 1,
-    overflow: 'auto',
-    gap: '4px',
-    justifyContent: 'center',
-  }),
-  customScrollStyle,
-);
-
-const personaListHeadingStyle = css({
-  textStyle: 'glyph18.bold',
-  color: 'white',
-  textAlign: 'left',
-  my: '12px',
-
-  _mobile: {
-    textStyle: 'glyph16.bold',
-  },
-});
-
-const personaListStyle = css({
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: '4px',
-});
+const personaListStyle = 'flex flex-wrap gap-[4px]';

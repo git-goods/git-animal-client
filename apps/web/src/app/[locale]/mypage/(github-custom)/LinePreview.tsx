@@ -2,9 +2,7 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { Button, TextField } from '@gitanimals/ui-panda';
+import { Button, cn, TextField } from '@gitanimals/ui-tailwind';
 import { Github } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -35,7 +33,7 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
     });
 
   return (
-    <div className={cx(customScrollStyle, sectionContainerStyle)}>
+    <div className={cn(customScrollStyle, sectionContainerStyle)}>
       {/* TODO: 임시로 모바일에선 input 안보이게 처리 */}
       <SizeInputList onApply={(width, height) => setSizes({ width, height })} />
       <section>
@@ -52,42 +50,12 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
   );
 }
 
-const publishButtonStyle = css({
-  position: 'absolute',
-  top: '12px',
-  right: '12px',
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '6px',
-  whiteSpace: 'nowrap',
-});
+const publishButtonStyle = 'absolute top-[12px] right-[12px] inline-flex items-center gap-[6px] whitespace-nowrap';
 
-const sectionContainerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '24px',
-  overflowX: 'auto',
-  height: 'fit-content',
-  minHeight: 'fit-content',
-});
+const sectionContainerStyle = 'flex flex-col gap-[24px] overflow-x-auto h-fit min-h-fit';
 
-const lineContainerStyle = css({
-  width: '100%',
-  background: 'white',
-  height: '100%',
-  transition: 'all 0.3s',
-  maxWidth: '1000px',
-  borderRadius: '12px',
-  position: 'relative',
-
-  '& img': {
-    maxWidth: '100%',
-  },
-
-  _mobile: {
-    maxWidth: '100%',
-  },
-});
+const lineContainerStyle =
+  'w-full bg-white h-full transition-all duration-300 max-w-[1000px] rounded-[12px] relative [&_img]:max-w-full mobile:max-w-full';
 
 function SizeInputList({ onApply }: { onApply: (width: number, height: number) => void }) {
   const t = useTranslations('Mypage');
@@ -97,8 +65,8 @@ function SizeInputList({ onApply }: { onApply: (width: number, height: number) =
 
   return (
     <div className={sizeInputStyle}>
-      <h2 className="heading">{t('customize-size')}</h2>
-      <Flex gap="12px">
+      <h2 className="glyph18-bold text-white mb-[16px]">{t('customize-size')}</h2>
+      <div className="flex gap-[12px]">
         <SizeInput value={width} onChange={(e) => setWidth(parseInt(e.target.value))} name="width" />
         <SizeInput value={height} onChange={(e) => setHeight(parseInt(e.target.value))} name="height" />
         <Button
@@ -113,24 +81,12 @@ function SizeInputList({ onApply }: { onApply: (width: number, height: number) =
         >
           {t('apply-button')}
         </Button>
-      </Flex>
+      </div>
     </div>
   );
 }
 
-const sizeInputStyle = css({
-  position: 'relative',
-
-  '& .heading': {
-    textStyle: 'glyph18.bold',
-    color: 'white',
-    marginBottom: '16px',
-  },
-
-  _mobile: {
-    display: 'none',
-  },
-});
+const sizeInputStyle = 'relative mobile:hidden';
 
 function SizeInput(props: { value: number; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; name: string }) {
   const t = useTranslations('Mypage');

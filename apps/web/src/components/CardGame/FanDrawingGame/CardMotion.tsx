@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import { motion } from 'framer-motion';
 
 interface CardMotionProps {
@@ -66,7 +66,7 @@ export function SelectedCardMotion({ children, x, y, rotate }: PropsWithChildren
           stiffness: 70,
         },
       }}
-      className={cx('selected-card', selectedCardStyle)}
+      className={cn('selected-card', selectedCardStyle)}
       style={{
         transformStyle: 'preserve-3d',
         transformOrigin: 'center center',
@@ -78,10 +78,7 @@ export function SelectedCardMotion({ children, x, y, rotate }: PropsWithChildren
   );
 }
 
-const selectedCardStyle = css({
-  width: '40vw',
-  maxWidth: '400px',
-});
+const selectedCardStyle = 'w-[40vw] max-w-[400px]';
 
 export function DrawingCardMotion({
   children,
@@ -132,7 +129,4 @@ export function DrawingCardMotion({
   );
 }
 
-const cardStyle = css({
-  position: 'absolute',
-  cursor: 'pointer',
-});
+const cardStyle = 'absolute cursor-pointer';

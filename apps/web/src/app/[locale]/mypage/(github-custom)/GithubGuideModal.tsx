@@ -1,8 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { AnchorButton, Button, Dialog } from '@gitanimals/ui-panda';
+import { AnchorButton, Button, Dialog } from '@gitanimals/ui-tailwind';
 import { CheckCircle2, Copy } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -49,8 +48,8 @@ export function GithubGuideModal({ isOpen, onClose, username, code, type }: Gith
           <li className={stepItemStyle}>
             <span className={stepBadgeStyle}>1</span>
             <div className={stepBodyStyle}>
-              <strong>{t('step1-title')}</strong>
-              <p>
+              <strong className="glyph16-bold text-white-100">{t('step1-title')}</strong>
+              <p className="glyph14-regular text-gray-500">
                 {t.rich('step1-desc', {
                   repo: repoName,
                   code: (chunks) => <code className={codeChipStyle}>{chunks}</code>,
@@ -62,15 +61,15 @@ export function GithubGuideModal({ isOpen, onClose, username, code, type }: Gith
           <li className={stepItemStyle}>
             <span className={stepBadgeStyle}>2</span>
             <div className={stepBodyStyle}>
-              <strong>{t('step2-title')}</strong>
-              <p>{t('step2-desc')}</p>
+              <strong className="glyph16-bold text-white-100">{t('step2-title')}</strong>
+              <p className="glyph14-regular text-gray-500">{t('step2-desc')}</p>
               <button
                 type="button"
                 className={codeBlockStyle}
                 onClick={onRecopy}
                 aria-label={tMypage('copy-link-title')}
               >
-                <code>{code}</code>
+                <code className="font-mono text-[12px] text-white-100 whitespace-pre-wrap break-all">{code}</code>
                 <Copy size={16} className={codeCopyIconStyle} />
               </button>
             </div>
@@ -79,8 +78,8 @@ export function GithubGuideModal({ isOpen, onClose, username, code, type }: Gith
           <li className={stepItemStyle}>
             <span className={stepBadgeStyle}>3</span>
             <div className={stepBodyStyle}>
-              <strong>{t('step3-title')}</strong>
-              <p>{t('step3-desc')}</p>
+              <strong className="glyph16-bold text-white-100">{t('step3-title')}</strong>
+              <p className="glyph14-regular text-gray-500">{t('step3-desc')}</p>
             </div>
           </li>
         </ol>
@@ -106,79 +105,30 @@ export function GithubGuideModal({ isOpen, onClose, username, code, type }: Gith
   );
 }
 
-const contentStyle = css({ maxWidth: '460px', width: '100%', textAlign: 'left' });
+const contentStyle = 'max-w-[460px] w-full text-left';
 
-const headerStyle = css({ width: '100%', display: 'flex', flexDirection: 'column', gap: '8px' });
+const headerStyle = 'w-full flex flex-col gap-[8px]';
 
-const checkIconStyle = css({ color: 'brand.green' });
+const checkIconStyle = 'text-brand-green';
 
-const subtitleStyle = css({ textStyle: 'glyph14.regular', color: 'gray.gray_500' });
+const subtitleStyle = 'glyph14-regular text-gray-500';
 
-const stepListStyle = css({ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px' });
+const stepListStyle = 'w-full flex flex-col gap-[20px]';
 
-const stepItemStyle = css({ display: 'flex', gap: '12px', alignItems: 'flex-start' });
+const stepItemStyle = 'flex gap-[12px] items-start';
 
-const stepBadgeStyle = css({
-  flexShrink: 0,
-  width: '24px',
-  height: '24px',
-  borderRadius: '50%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  background: 'brand.green',
-  color: 'white.white_100',
-  textStyle: 'glyph14.bold',
-});
+const stepBadgeStyle =
+  'shrink-0 w-[24px] h-[24px] rounded-full flex items-center justify-center bg-brand-green text-white-100 glyph14-bold';
 
-const stepBodyStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '4px',
-  '& strong': { textStyle: 'glyph16.bold', color: 'white.white_100' },
-  '& p': { textStyle: 'glyph14.regular', color: 'gray.gray_500' },
-});
+const stepBodyStyle = 'flex flex-col gap-[4px]';
 
-const codeChipStyle = css({
-  padding: '1px 6px',
-  borderRadius: '4px',
-  background: 'gray.gray_400',
-  color: 'white.white_100',
-  fontFamily: 'monospace',
-});
+const codeChipStyle = 'px-[6px] py-[1px] rounded-[4px] bg-gray-400 text-white-100 font-mono';
 
-const codeBlockStyle = css({
-  marginTop: '8px',
-  width: '100%',
-  display: 'flex',
-  alignItems: 'flex-start',
-  justifyContent: 'space-between',
-  gap: '8px',
-  padding: '12px',
-  borderRadius: '8px',
-  background: 'gray.gray_400',
-  cursor: 'pointer',
-  textAlign: 'left',
-  maxHeight: '120px',
-  overflowY: 'auto',
-  '& code': {
-    fontFamily: 'monospace',
-    fontSize: '12px',
-    color: 'white.white_100',
-    whiteSpace: 'pre-wrap',
-    wordBreak: 'break-all',
-  },
-});
+const codeBlockStyle =
+  'mt-[8px] w-full flex items-start justify-between gap-[8px] p-[12px] rounded-[8px] bg-gray-400 cursor-pointer text-left max-h-[120px] overflow-y-auto';
 
-const codeCopyIconStyle = css({ flexShrink: 0, color: 'gray.gray_500' });
+const codeCopyIconStyle = 'shrink-0 text-gray-500';
 
-const footerStyle = css({ width: '100%', display: 'flex', gap: '8px' });
+const footerStyle = 'w-full flex gap-[8px]';
 
-const primaryButtonStyle = css({
-  flex: 1,
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  whiteSpace: 'nowrap',
-  textDecoration: 'none',
-});
+const primaryButtonStyle = 'flex-1 inline-flex items-center justify-center whitespace-nowrap no-underline';

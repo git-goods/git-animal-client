@@ -1,15 +1,2 @@
-import { css } from '_panda/css';
-
-export const container = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '100vh',
-  backgroundColor: '#fff',
-  gap: '24px',
-
-  '& h1': {
-    textStyle: 'glyph24.bold',
-  },
-});
+export const container =
+  'flex flex-col items-center justify-center h-[100vh] bg-[#fff] gap-[24px] [&_h1]:glyph24-bold';

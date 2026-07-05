@@ -3,12 +3,9 @@
 import { useCallback, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { flex } from '_panda/patterns';
 import { dropPet, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Button, Checkbox, Dialog, Label } from '@gitanimals/ui-panda';
+import { Button, Checkbox, cn, Dialog, Label } from '@gitanimals/ui-tailwind';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
@@ -112,7 +109,7 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
         <span></span>
       </div>
 
-      <div className={cx(rowStyle, 'row')}>
+      <div className={cn(rowStyle, 'row')}>
         {currentPersona && (
           <>
             <div>
@@ -121,7 +118,7 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
             <div>{snakeToTitleCase(currentPersona.type)}</div>
             <div>{ANIMAL_TIER_TEXT_MAP[getAnimalTierInfo(Number(currentPersona.dropRate.replace('%', '')))]}</div>
             <div>{currentPersona.level}</div>
-            <div className={flex({ gap: '8px' })}>
+            <div className="flex gap-[8px]">
               <Button variant="secondary" onClick={onSellClick}>
                 {t('sell')} (100P)
               </Button>
@@ -147,65 +144,20 @@ export function SelectedPetTable({ currentPersona, reset }: SelectedPetTableProp
   );
 }
 
-const tableCss = css({
-  width: '100%',
-  marginBottom: '32px',
-});
+const tableCss = 'w-full mb-[32px]';
 
-const theadCss = css({
-  display: 'grid',
-  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 5.7fr',
-  gap: '16px',
-  padding: '4px 32px',
-  borderRadius: '12px',
-  backgroundColor: 'white_50',
-  alignItems: 'center',
+const theadCss = cn(
+  'grid grid-cols-[1fr_2.5fr_1fr_1fr_5.7fr] items-center gap-[16px] px-[32px] py-[4px]',
+  'h-[46px] rounded-[12px] bg-white-50 glyph18-bold text-white-100',
+  '[&>span:nth-child(1)]:text-center mb-[4px] mobile:text-[16px]',
+);
 
-  height: '46px',
-  textStyle: 'glyph18.bold',
-  color: 'white_100',
-
-  '& > span:nth-child(1)': {
-    textAlign: 'center',
-  },
-
-  marginBottom: '4px',
-
-  _mobile: {
-    fontSize: '16px',
-  },
-});
-
-const rowStyle = css({
-  width: '100%',
-  height: '80px',
-  backgroundColor: 'white_10',
-  borderRadius: '12px',
-
-  display: 'grid',
-  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 5.7fr',
-  alignItems: 'center',
-  padding: '0 32px',
-  gap: '16px',
-
-  textStyle: 'glyph20.regular',
-  color: 'white.white_100',
-
-  '& button': {
-    color: 'black.black',
-    width: '100%',
-    paddingX: '6px',
-  },
-
-  '& *': {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-
-  _mobile: {
-    fontSize: '16px',
-  },
-});
+const rowStyle = cn(
+  'grid grid-cols-[1fr_2.5fr_1fr_1fr_5.7fr] items-center gap-[16px] px-[32px] py-0',
+  'h-[80px] w-full rounded-[12px] bg-white-10 glyph20-regular text-white-100',
+  '[&_button]:w-full [&_button]:px-[6px] [&_button]:text-black',
+  '[&_*]:overflow-hidden [&_*]:text-ellipsis mobile:text-[16px]',
+);
 
 const DO_NOT_SHOW_AGAIN_KEY = LOCAL_STORAGE_KEY.isDoNotShowAgain;
 
@@ -255,29 +207,25 @@ function SellConfirmDialog({
         <Dialog.Description className={descriptionStyle}>
           <p>{t('Shop.sell-confirm-description')}</p>
         </Dialog.Description>
-        <Flex alignItems="center" justifyContent="space-between" width="100%">
-          <Flex alignItems="center" gap="2">
+        <div className="flex w-full items-center justify-between">
+          <div className="flex items-center gap-2">
             <Checkbox id="do-not-show-again" onClick={() => setIsDoNotShowAgain(!isDoNotShowAgain)} />
-            <Label htmlFor="do-not-show-again" whiteSpace="nowrap">
+            <Label htmlFor="do-not-show-again" className="whitespace-nowrap">
               {t('Shop.sell-confirm-checkbox')}
             </Label>
-          </Flex>
-          <Flex gap="8px" justifyContent="flex-end" width="100%">
+          </div>
+          <div className="flex w-full justify-end gap-[8px]">
             <Button onClick={onClose} variant="secondary" size="m">
               {t('Common.close')}
             </Button>
             <Button onClick={confirmDialog} variant="primary" size="m" disabled={isLoading}>
               {isLoading ? t('Common.processing') : t('Common.confirm')}
             </Button>
-          </Flex>
-        </Flex>
+          </div>
+        </div>
       </Dialog.Content>
     </Dialog>
   );
 }
 
-const descriptionStyle = css({
-  textAlign: 'left',
-  color: 'white.white_75',
-  width: '100%',
-});
+const descriptionStyle = 'w-full text-left text-white-75';

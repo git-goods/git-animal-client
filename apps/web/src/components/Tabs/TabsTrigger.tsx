@@ -1,7 +1,7 @@
 'use client';
 
 import type { ComponentProps, PropsWithChildren } from 'react';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 
 import { useTabsContext } from './Tabs';
 
@@ -16,7 +16,7 @@ const TabsTrigger = ({ children, className, ...props }: PropsWithChildren<TabsTr
   return (
     <button
       type="button"
-      className={cx(className, buttonStyle, isSelected && 'selected')}
+      className={cn(buttonStyle, isSelected && 'selected', className)}
       onClick={() => handleChangeValue(props.value)}
       {...props}
     >
@@ -25,34 +25,10 @@ const TabsTrigger = ({ children, className, ...props }: PropsWithChildren<TabsTr
   );
 };
 
-const buttonStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '100%',
-  height: '40px',
-  color: 'white.white_25',
-  background: 'white.white_10',
-  border: '1px solid transparent',
-  borderRadius: '6px',
-  outline: 'none',
-  padding: '8px 16px',
-  textStyle: 'glyph16.bold',
-  transition: 'all 0.1s ease-in-out',
-
-  '&:focus': {
-    borderColor: 'white.white_50',
-  },
-
-  '&.selected': {
-    bg: 'white.white_50',
-    color: 'white',
-    borderColor: 'white.white_50',
-
-    '&:focus': {
-      borderColor: 'white',
-    },
-  },
-});
+const buttonStyle = cn(
+  'flex items-center justify-center w-full h-[40px] text-white-25 bg-white-10 border border-solid border-transparent rounded-[6px] outline-none py-[8px] px-[16px] glyph16-bold transition-all duration-100 ease-in-out',
+  'focus:border-white-50',
+  '[&.selected]:bg-white-50 [&.selected]:text-white [&.selected]:border-white-50 [&.selected]:focus:border-white',
+);
 
 export default TabsTrigger;

@@ -2,8 +2,7 @@
 
 import React, { useReducer } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { Github } from 'lucide-react';
 
 import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals';
@@ -29,13 +28,7 @@ export function FarmType() {
         <div className={farmStyle}>
           <GitanimalsFarm
             imageKey={String(imageKey)}
-            className={css({
-              width: '600px',
-              aspectRatio: '2/1',
-              _pc: { width: '400px' },
-              _tablet: { width: '300px' },
-              _mobile: { width: '100%' },
-            })}
+            className="w-[600px] aspect-[2/1] pc:w-[400px] tablet:w-[300px] mobile:w-full"
           />
           <Button size="s" className={publishButtonStyle} onClick={onPublish}>
             <Github size={16} />
@@ -51,14 +44,6 @@ export function FarmType() {
   );
 }
 
-const farmStyle = css({ borderRadius: '12px', position: 'relative', overflow: 'hidden', width: 'fit-content' });
+const farmStyle = 'rounded-[12px] relative overflow-hidden w-fit';
 
-const publishButtonStyle = css({
-  position: 'absolute',
-  top: '12px',
-  right: '12px',
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '6px',
-  whiteSpace: 'nowrap',
-});
+const publishButtonStyle = 'absolute top-[12px] right-[12px] inline-flex items-center gap-[6px] whitespace-nowrap';

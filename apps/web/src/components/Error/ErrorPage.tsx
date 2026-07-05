@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
-import { css } from '_panda/css';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 
 interface Props {
   heading: string;
@@ -27,35 +26,11 @@ export function ErrorPage({ heading, paragraph, onClickButton, buttonText = 'Ret
   );
 }
 
-const buttonCss = css({
-  display: 'flex',
-  justifyContent: 'center',
-  w: '100%',
-  gap: '16px',
-});
+const buttonCss = 'flex justify-center w-full gap-[16px]';
 
-const mainCss = css({
-  backgroundColor: 'white',
-  w: '100dvw',
-  h: '100dvh',
-  textStyle: 'glyph16.regular',
-  padding: '0 16px',
+const mainCss =
+  'bg-white w-[100dvw] h-[100dvh] glyph16-regular py-0 px-[16px] flex flex-col items-center justify-center';
 
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
+const h1Css = 'glyph40-bold mb-[12px]';
 
-const h1Css = css({
-  textStyle: 'glyph40.bold',
-  marginBottom: '12px',
-});
-
-const pCss = css({
-  marginBottom: '32px',
-  '& a': {
-    textDecoration: 'underline',
-    color: 'blue',
-  },
-});
+const pCss = 'mb-[32px] [&_a]:underline [&_a]:text-[blue]';

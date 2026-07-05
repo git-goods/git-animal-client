@@ -1,6 +1,5 @@
 import { getTranslations } from 'next-intl/server';
-import { css } from '_panda/css';
-import { grid } from '_panda/patterns';
+import { cn } from '@gitanimals/ui-tailwind';
 import { FlaskConical } from 'lucide-react';
 
 import GNB from '@/components/GNB/GNB';
@@ -32,88 +31,26 @@ async function LaboButton() {
   );
 }
 
-const laboButtonStyle = css({
-  position: 'absolute',
+const laboButtonStyle = cn(
+  'absolute bg-white-10 [backdrop-filter:blur(7px)] rounded-[8px] px-[20px] py-[10px]',
+  'flex items-center gap-[10px] glyph16-regular text-white-100',
+  'top-[64px] right-[200px]',
+  'pc:top-[12px] pc:right-[40px] pc:px-[12px] pc:py-[8px] pc:[&>svg]:w-[18px] pc:[&>svg]:h-[18px]',
+  'mobile:hidden',
+);
 
-  background: 'white.white_10',
-  backdropFilter: 'blur(7px)',
-  borderRadius: '8px',
-  p: '10px 20px',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '10px',
-  textStyle: 'glyph16.regular',
-  color: 'white.white_100',
-
-  top: '64px',
-  right: '200px',
-
-  _pc: {
-    top: '12px',
-    right: '40px',
-    p: '8px 12px',
-    '& > svg': {
-      width: '18px',
-      height: '18px',
-    },
-  },
-  _mobile: {
-    display: 'none',
-  },
-});
-
-const mainStyle = grid({
-  gap: '80px',
-  gridTemplateColumns: '222px 1fr',
-  position: 'relative',
-  zIndex: 'aboveDefault',
-  padding: '120px 200px',
-  minHeight: 'var(--main-min-height)',
-
-  _pc: {
-    padding: '32px 40px',
-  },
-
+const mainStyle = cn(
+  'grid gap-[80px] grid-cols-[222px_1fr] relative z-aboveDefault px-[200px] py-[120px] min-h-[var(--main-min-height)]',
+  'pc:px-[40px] pc:py-[32px]',
   // TODO : 중간 태블릿 정도도 대응하면 좋을 듯
-  _mobile: {
-    gridTemplateColumns: '1fr',
-    padding: '0 16px 0',
-    gap: 0,
-  },
-});
+  'mobile:grid-cols-[1fr] mobile:px-[16px] mobile:pt-0 mobile:pb-0 mobile:gap-0',
+);
 
-const rightSectionStyle = css({
-  overflowX: 'hidden',
-  width: '100%',
-  borderRadius: '16px',
-  background: 'white.white_10',
-  backdropFilter: 'blur(7px)',
-  maxHeight: '1400px',
-  p: '40px',
-  display: 'flex',
-  flexDirection: 'column',
-  position: 'relative',
+const rightSectionStyle = cn(
+  'overflow-x-hidden w-full rounded-[16px] bg-white-10 [backdrop-filter:blur(7px)] max-h-[1400px] p-[40px]',
+  'flex flex-col relative gap-[40px]',
+  'pc:gap-[24px] pc:p-[24px]',
+  'mobile:gap-[12px] mobile:bg-none mobile:p-0 mobile:max-h-[auto] mobile:h-auto mobile:overflow-y-auto mobile:rounded-none',
+);
 
-  gap: '40px',
-
-  _pc: {
-    gap: '24px',
-    padding: '24px',
-  },
-
-  _mobile: {
-    gap: '12px',
-    background: 'none',
-    p: 0,
-    maxHeight: 'auto',
-    height: 'auto',
-    overflowY: 'auto',
-    borderRadius: 0,
-  },
-});
-
-const containerStyle = css({
-  minHeight: '100vh',
-  height: 'fit-content',
-  backgroundColor: '#019C5A',
-});
+const containerStyle = 'min-h-screen h-fit bg-[#019C5A]';

@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
-import { css, cx } from '_panda/css';
 import type { RenderBackground } from '@gitanimals/api';
 import { renderUserQueries, useChangeMyBackgroundByToken } from '@gitanimals/react-query';
+import { cn } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -59,35 +59,16 @@ interface BackgroundItemProps extends RenderBackground {
 
 function BackgroundItem({ type, isSelected, onClick }: BackgroundItemProps) {
   return (
-    <button className={cx(backgroundItemStyle, isSelected && backgroundItemSelectedStyle)} onClick={onClick}>
+    <button className={cn(backgroundItemStyle, isSelected && backgroundItemSelectedStyle)} onClick={onClick}>
       <img src={getBackgroundImage(type)} alt={type} width={248} height={124} draggable={false} />
     </button>
   );
 }
 
-const backgroundListStyle = cx(
-  css({
-    width: 'fit-content',
-    display: 'flex',
-    flexWrap: 'nowrap',
-    gap: '4px',
-  }),
-);
+const backgroundListStyle = 'w-fit flex flex-nowrap gap-[4px]';
 
-const backgroundContainerStyle = cx(
-  css({
-    overflowX: 'auto',
-  }),
-  customScrollStyle,
-);
+const backgroundContainerStyle = cn('overflow-x-auto', customScrollStyle);
 
-const backgroundItemStyle = css({
-  border: '1px solid transparent',
-  width: '248px',
-  borderRadius: '8px',
-  overflow: 'hidden',
-});
+const backgroundItemStyle = 'border border-solid border-transparent w-[248px] rounded-[8px] overflow-hidden';
 
-const backgroundItemSelectedStyle = css({
-  borderColor: 'white.white_90',
-});
+const backgroundItemSelectedStyle = 'border-white-90';

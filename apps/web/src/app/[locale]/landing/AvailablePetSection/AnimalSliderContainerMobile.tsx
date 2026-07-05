@@ -1,62 +1,54 @@
 'use client';
 
-import React, { Children, useState } from 'react';
-import { useRef } from 'react';
+import React, { Children, useEffect, useState } from 'react';
 import Image from 'next/image';
-import { css, cx } from '_panda/css';
-import { Fade, Perspective } from '@egjs/flicking-plugins';
-import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
-import Flicking from '@egjs/react-flicking';
+import { cn } from '@gitanimals/ui-tailwind';
+import useEmblaCarousel from 'embla-carousel-react';
+
+import { usePerspectiveTween } from '@/components/Slider/usePerspectiveTween';
 
 import { sliderContainer } from '../MainSection/MainSlider.style';
 
+/**
+ * flicking(Perspective+Fade) → embla 전환(PR3c). 3D 효과는 usePerspectiveTween 으로 재현.
+ * 시각 스타일(panda)은 landing 스타일 전환(PR3d)에서 함께 옮긴다.
+ */
 function AnimalSliderContainerMobile({ children }: { children: React.ReactNode }) {
-  const flicking = useRef<Flicking | null>(null);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'center' });
+  usePerspectiveTween(emblaApi, { rotate: 0.5, scale: 0.2 });
 
   const [currentPanelIndex, setCurrentPanelIndex] = useState(0);
 
   const isFirstPanel = currentPanelIndex === 0;
   const isLastPanel = Children.count(children) - 1 === currentPanelIndex;
 
-  // TODO: arrow plugin을 사용
-  const moveToNextPanel = async () => {
-    if (!flicking.current) return;
-    if (isLastPanel) return;
-    if (flicking.current.animating) return;
+  useEffect(() => {
+    if (!emblaApi) return;
+    const onSelect = () => setCurrentPanelIndex(emblaApi.selectedScrollSnap());
+    onSelect();
+    emblaApi.on('select', onSelect).on('reInit', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect).off('reInit', onSelect);
+    };
+  }, [emblaApi]);
 
-    try {
-      flicking.current.next();
-    } catch (error) {}
-  };
-
-  const moveToPrevPanel = async () => {
-    if (!flicking.current) return;
-    if (isFirstPanel) return;
-    if (flicking.current.animating) return;
-
-    try {
-      flicking.current.prev();
-    } catch (error) {}
-  };
-  const onPanelChanged = (e: ChangedEvent<Flicking>) => {
-    setCurrentPanelIndex(e.index);
-  };
-  const _plugins = [new Perspective({ rotate: 0.5, scale: 0.2 }), new Fade()];
-
-  const sliderOptions: Partial<FlickingProps & FlickingOptions> = {
-    onChanged: onPanelChanged,
-    align: 'center',
-    plugins: _plugins,
-  };
+  const moveToNextPanel = () => emblaApi?.scrollNext();
+  const moveToPrevPanel = () => emblaApi?.scrollPrev();
 
   return (
     <div>
-      <div className={cx(sliderContainer, 'slider-container')}>
+      <div className={cn(sliderContainer, 'slider-container')}>
         <ArrowButton onClick={moveToPrevPanel} direction="prev" disabled={isFirstPanel} />
         <ArrowButton onClick={moveToNextPanel} direction="next" disabled={isLastPanel} />
-        <Flicking ref={flicking} {...sliderOptions}>
-          {children}
-        </Flicking>
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex">
+            {Children.map(children, (child, index) => (
+              <div key={index} className="min-w-0 flex-[0_0_auto]">
+                {child}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -76,18 +68,12 @@ function ArrowButton({
   return (
     <button
       onClick={onClick}
-      className={cx(
+      className={cn(
         direction === 'prev' ? prevArrowStyle : nextArrowStyle,
-        css({
-          rotate: direction === 'prev' ? '180deg' : '0deg',
-          cursor: disabled ? 'not-allowed' : 'pointer',
-          width: disabled ? '36px' : '40px',
-          height: disabled ? '36px' : '40px',
-          _mobile: {
-            width: disabled ? '24px' : '26px',
-            height: disabled ? '24px' : '26px',
-          },
-        }),
+        direction === 'prev' ? 'rotate-[180deg]' : 'rotate-[0deg]',
+        disabled
+          ? 'cursor-not-allowed w-[36px] h-[36px] mobile:w-[24px] mobile:h-[24px]'
+          : 'cursor-pointer w-[40px] h-[40px] mobile:w-[26px] mobile:h-[26px]',
       )}
     >
       {disabled ? (
@@ -99,39 +85,9 @@ function ArrowButton({
   );
 }
 
-const arrowStyle = css({
-  position: 'absolute',
-  top: '0',
-  bottom: '0',
-  margin: 'auto',
-  zIndex: 'floating',
+const arrowStyle =
+  'absolute top-0 bottom-0 m-auto z-floating [&_img]:w-full [&_img]:h-full mobile:bottom-0';
 
-  '& img': {
-    width: '100%',
-    height: '100%',
-  },
+const prevArrowStyle = cn(arrowStyle, 'left-[-62px] mobile:left-[8px]');
 
-  _mobile: {
-    bottom: '0',
-  },
-});
-
-const prevArrowStyle = cx(
-  arrowStyle,
-  css({
-    left: '-62px',
-    _mobile: {
-      left: '8px',
-    },
-  }),
-);
-
-const nextArrowStyle = cx(
-  arrowStyle,
-  css({
-    right: '-62px',
-    _mobile: {
-      right: '8px',
-    },
-  }),
-);
+const nextArrowStyle = cn(arrowStyle, 'right-[-62px] mobile:right-[8px]');

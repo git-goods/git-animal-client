@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 import useEmblaCarousel from 'embla-carousel-react';
 
-import * as styles from './MainSlider.style';
+import { sliderContainer } from './MainSlider.style';
 import SliderItem from './SliderItem';
 
 const MODE_ITEM_LIST = [
@@ -47,12 +47,17 @@ function MainSlider() {
   const moveToPrevPanel = () => emblaApi?.scrollPrev();
 
   return (
-    <div className={styles.container}>
-      <div className={styles.tab}>
+    <div className="m-auto h-fit w-fit rounded-[16px] bg-[rgba(255,255,255,0.10)]">
+      <div className="flex items-center justify-center gap-0 pt-[40px] mobile:pt-[26px]">
         {MODE_ITEM_LIST.map((item, index) => (
           <button
             key={item.title}
-            className={cx(currentPanelIndex === index ? 'active' : '')}
+            className={cn(
+              'px-[10px] py-[4px] text-white glyph18-regular mobile:px-[8px] mobile:py-[2px] mobile:glyph16-regular',
+              currentPanelIndex === index
+                ? 'opacity-100 glyph18-bold mobile:glyph16-bold'
+                : 'opacity-50',
+            )}
             onClick={() => onPanelIndexChange(index)}
           >
             {item.title}
@@ -60,13 +65,13 @@ function MainSlider() {
         ))}
       </div>
 
-      <div className={styles.sliderContainer}>
+      <div className={sliderContainer}>
         <ArrowButton onClick={moveToPrevPanel} direction="prev" disabled={isFirstPanel} />
         <ArrowButton onClick={moveToNextPanel} direction="next" disabled={isLastPanel} />
         <div className={emblaViewportStyle} ref={emblaRef}>
           <div className={emblaContainerStyle}>
             {MODE_ITEM_LIST.map((item) => (
-              <div key={item.title} className={cx(styles.sliderItem, emblaSlideStyle)}>
+              <div key={item.title} className={cn('h-fit w-fit', emblaSlideStyle)}>
                 <SliderItem item={item} />
               </div>
             ))}
@@ -91,18 +96,12 @@ function ArrowButton({
   return (
     <button
       onClick={onClick}
-      className={cx(
+      className={cn(
         direction === 'prev' ? prevArrowStyle : nextArrowStyle,
-        css({
-          rotate: direction === 'prev' ? '180deg' : '0deg',
-          cursor: disabled ? 'not-allowed' : 'pointer',
-          width: disabled ? '36px' : '40px',
-          height: disabled ? '36px' : '40px',
-          _mobile: {
-            width: disabled ? '24px' : '26px',
-            height: disabled ? '24px' : '26px',
-          },
-        }),
+        direction === 'prev' ? 'rotate-[180deg]' : 'rotate-[0deg]',
+        disabled
+          ? 'cursor-not-allowed w-[36px] h-[36px] mobile:w-[24px] mobile:h-[24px]'
+          : 'cursor-pointer w-[40px] h-[40px] mobile:w-[26px] mobile:h-[26px]',
       )}
     >
       {disabled ? (
@@ -114,43 +113,12 @@ function ArrowButton({
   );
 }
 
-const arrowStyle = css({
-  position: 'absolute',
-  top: '0',
-  bottom: '0',
-  margin: 'auto',
-  zIndex: 'floating',
+const arrowStyle = 'absolute top-0 bottom-0 m-auto z-floating [&_img]:w-full [&_img]:h-full mobile:bottom-[191px]';
 
-  '& img': {
-    width: '100%',
-    height: '100%',
-  },
+const prevArrowStyle = cn(arrowStyle, 'left-[-62px] mobile:left-[8px]');
 
-  _mobile: {
-    bottom: '191px',
-  },
-});
+const nextArrowStyle = cn(arrowStyle, 'right-[-62px] mobile:right-[8px]');
 
-const prevArrowStyle = cx(
-  arrowStyle,
-  css({
-    left: '-62px',
-    _mobile: {
-      left: '8px',
-    },
-  }),
-);
-
-const nextArrowStyle = cx(
-  arrowStyle,
-  css({
-    right: '-62px',
-    _mobile: {
-      right: '8px',
-    },
-  }),
-);
-
-const emblaViewportStyle = css({ overflow: 'hidden', width: '100%' });
-const emblaContainerStyle = css({ display: 'flex' });
-const emblaSlideStyle = css({ flex: '0 0 100%', minWidth: 0 });
+const emblaViewportStyle = 'overflow-hidden w-full';
+const emblaContainerStyle = 'flex';
+const emblaSlideStyle = 'flex-[0_0_100%] min-w-0';

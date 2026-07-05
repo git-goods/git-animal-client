@@ -1,6 +1,6 @@
 import type { ChangeEvent, ComponentProps } from 'react';
 import { useState } from 'react';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 
 interface TextAreaProps extends ComponentProps<'textarea'> {
   error?: boolean;
@@ -15,10 +15,13 @@ function TextArea({ maxLength = 300, ...props }: TextAreaProps) {
   };
 
   return (
-    <div className={containerStyle}>
+    <div className="relative rounded-[8px] border border-solid border-[rgba(0,0,0,0.1)] focus-within:border focus-within:border-solid focus-within:border-[#00894d] [&:focus-within_strong]:text-[#00894d]">
       <textarea
         {...props}
-        className={cx(props.className, textAreaStyle)}
+        className={cn(
+          props.className,
+          "w-full resize-none rounded-[8px] border-none bg-transparent p-[16px_20px] font-['Product_Sans'] text-[16px] font-normal leading-[150%] tracking-[-0.3px] text-[#000000bf] outline-none placeholder:font-['Product_Sans'] placeholder:text-[16px] placeholder:font-normal placeholder:leading-[150%] placeholder:tracking-[-0.3px] placeholder:text-[rgba(0,0,0,0.5)]",
+        )}
         onChange={onChange}
         maxLength={maxLength}
         style={{
@@ -26,7 +29,7 @@ function TextArea({ maxLength = 300, ...props }: TextAreaProps) {
         }}
       />
       <div
-        className={textLenStyle}
+        className="absolute bottom-[8px] right-[20px] w-fit font-['Product_Sans'] text-[12px] font-normal text-[rgba(0,0,0,0.5)] [&_strong]:font-normal [&_strong]:text-[rgba(0,0,0,0.75)]"
         style={{
           color: props.error ? '#FF6B56' : 'rgba(0, 0, 0, 0.5)',
         }}
@@ -39,54 +42,3 @@ function TextArea({ maxLength = 300, ...props }: TextAreaProps) {
 }
 
 export default TextArea;
-
-const textAreaStyle = css({
-  background: 'transparent',
-  border: 'none',
-  color: '#000000bf',
-  padding: '16px 20px',
-  fontFamily: 'Product Sans',
-  fontSize: '16px',
-  fontWeight: 400,
-  lineHeight: '150%',
-  letterSpacing: '-0.3px',
-  borderRadius: '8px',
-  outline: 'none',
-  width: '100%',
-  resize: 'none',
-  '&::placeholder': {
-    color: 'rgba(0, 0, 0, 0.5)',
-    fontFamily: 'Product Sans',
-    fontSize: '16px',
-    fontWeight: 400,
-    lineHeight: '150%',
-    letterSpacing: '-0.3px',
-  },
-});
-
-const textLenStyle = css({
-  position: 'absolute',
-  bottom: '8px',
-  color: 'rgba(0, 0, 0, 0.5)',
-  right: '20px',
-  fontFamily: 'Product Sans',
-  fontSize: '12px',
-  fontWeight: 400,
-  width: 'fit-content',
-  '& strong': {
-    fontWeight: 400,
-    color: 'rgba(0, 0, 0, 0.75)',
-  },
-});
-const containerStyle = css({
-  position: 'relative',
-  border: '1px solid rgba(0, 0, 0, 0.1)',
-  borderRadius: '8px',
-  // padding: '16px 20px 26px',
-  '&:focus-within': {
-    border: '1px solid #00894d',
-    '& strong': {
-      color: '#00894d',
-    },
-  },
-});

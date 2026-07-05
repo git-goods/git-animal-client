@@ -1,18 +1,27 @@
 import React from 'react';
 import Image from 'next/image';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 
-import * as styles from './HavePetWaySection.style';
+const styles = {
+  section: 'py-[120px] bg-brand-beige mobile:py-[80px] mobile:px-[16px]',
+  heading: 'text-black glyph48-bold text-center mb-[80px]',
+  wayContainer: 'grid grid-cols-2 max-w-[1120px] gap-[24px] m-auto mobile:grid-cols-1',
+  wayItem: 'relative flex flex-col gap-[12px] justify-between mobile:gap-[4px]',
+  wayItemHeading: 'glyph32-bold flex items-center gap-[12px] pt-[40px] px-[40px] mobile:glyph20-bold',
+  wayItemHeadingSpan: 'glyph22-regular block w-[32px] h-[32px] bg-black text-white text-center mobile:glyph16-regular mobile:w-[24px] mobile:h-[24px]',
+  wayItemDesc: 'glyph18-regular mt-[16px] px-[40px] text-black-90 mobile:glyph14-regular',
+  wayItemImage: 'w-full',
+};
 
 function HavePetWaySection() {
   return (
     <section className={styles.section}>
       <h2 className={styles.heading}>Two Ways to Have Pets</h2>
       <div className={styles.wayContainer}>
-        <div className={cx(styles.wayItem, css({ background: 'brand.coral' }))}>
+        <div className={cn(styles.wayItem, 'bg-brand-coral')}>
           <div>
             <h3 className={styles.wayItemHeading}>
-              <span>1</span>
+              <span className={styles.wayItemHeadingSpan}>1</span>
               Contributions 30 times
             </h3>
             <p className={styles.wayItemDesc}>
@@ -29,10 +38,10 @@ function HavePetWaySection() {
             height={360}
           />
         </div>
-        <div className={cx(styles.wayItem, css({ background: 'brand.turquoise' }))}>
+        <div className={cn(styles.wayItem, 'bg-brand-turquoise')}>
           <div>
             <h3 className={styles.wayItemHeading}>
-              <span>2</span>
+              <span className={styles.wayItemHeadingSpan}>2</span>
               Purchase Pets
             </h3>
             <p className={styles.wayItemDesc}>

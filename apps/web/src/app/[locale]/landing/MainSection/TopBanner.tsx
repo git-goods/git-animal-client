@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { css } from '_panda/css';
 import { rankQueries } from '@gitanimals/react-query';
-import SplitText from '@gitanimals/ui-panda/src/animation/SplitText/SplitText';
+import { SplitText } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
@@ -87,53 +86,14 @@ export const TopBanner = wrap
     );
   });
 
-const blankStyle = css({
-  width: '100%',
-  height: '78px',
-  _mobile: {
-    height: '52px',
-  },
-});
+const blankStyle = 'w-full h-[78px] mobile:h-[52px]';
 
-const coinContainerStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
+const coinContainerStyle = 'flex items-center justify-center';
 
-const containerStyle = css({
-  background: 'white.white_25',
-  color: 'white.white_100',
-  padding: '10px 0',
-  position: 'absolute',
-  top: '0',
-  left: '0',
-  right: '0',
-  width: '100%',
-});
+const containerStyle = 'bg-white-25 text-white-100 py-[10px] absolute top-0 left-0 right-0 w-full';
 
-const textContainerStyle = css({
-  borderTop: '1px solid white',
-  borderBottom: '1px solid white',
-  display: 'flex',
-  height: '58px',
-  alignItems: 'center',
-  justifyContent: 'center',
-
-  textAlign: 'center',
-  fontFeatureSettings: 'liga off, clig off',
-  fontFamily: 'token(fonts.dosgothic)',
-  fontSize: '32px',
-  fontStyle: 'normal',
-  fontWeight: '500',
-  lineHeight: '120%',
-  letterSpacing: '-0.3px',
-
-  _mobile: {
-    height: '35px',
-    fontSize: '16px',
-  },
-});
+const textContainerStyle =
+  "border-t border-b border-white flex h-[58px] items-center justify-center text-center not-italic font-medium font-dosgothic text-[32px] leading-[120%] tracking-[-0.3px] [font-feature-settings:'liga'_off,'clig'_off] mobile:h-[35px] mobile:text-[16px]";
 
 const textStyle = {
   background: 'linear-gradient(116deg, #FFFA8E 31.98%, #62FFE3 98.75%)',
@@ -142,16 +102,4 @@ const textStyle = {
   WebkitTextFillColor: 'transparent',
 };
 
-const coinStyle = css({
-  width: '32px',
-  height: '32px',
-  ml: '10px',
-  mr: '8px',
-
-  _mobile: {
-    width: '18px',
-    height: '18px',
-    ml: '0',
-    mr: '1.5px',
-  },
-});
+const coinStyle = 'w-[32px] h-[32px] ml-[10px] mr-[8px] mobile:w-[18px] mobile:h-[18px] mobile:ml-0 mobile:mr-[1.5px]';

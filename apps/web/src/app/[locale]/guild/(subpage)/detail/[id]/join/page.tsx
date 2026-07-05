@@ -1,8 +1,7 @@
 'use client';
 
-import { css } from '_panda/css';
 import { inboxQueries } from '@gitanimals/react-query';
-import { dialogTitleStyle } from '@gitanimals/ui-panda';
+import { dialogTitleStyle } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { GuildJoinPetSelectDialog } from '@/app/[locale]/guild/_components/GuildPetSelectDialog';
@@ -32,16 +31,11 @@ export default function GuildJoinPage({ params }: { params: { id: string } }) {
     <>
       <div>
         <h2 className={dialogTitleStyle}>Choose your pet</h2>
-        <p className={dialogDescriptionStyle}>If you choose a pet, it will be shown in the guild image.</p>
+        <p className="glyph20-regular text-white-50 mt-3 text-center">
+          If you choose a pet, it will be shown in the guild image.
+        </p>
       </div>
       <GuildJoinPetSelectDialog onSubmit={submitJoinGuild} />;
     </>
   );
 }
-
-const dialogDescriptionStyle = css({
-  textStyle: 'glyph20.regular',
-  color: 'white.white_50',
-  mt: 3,
-  textAlign: 'center',
-});

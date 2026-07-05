@@ -1,6 +1,4 @@
-import { css } from '_panda/css';
-import { flex } from '_panda/patterns';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 
 import { getServerAuth } from '@/auth';
 import { LoginButton } from '@/components/AuthButton';
@@ -23,7 +21,7 @@ export async function SpringContent() {
   const session = await getServerAuth();
   return (
     <div>
-      <div className={bgContainerStyle}>
+      <div className="relative w-full h-[calc(100vh-60px)] grid grid-cols-[2fr_3fr] gap-0 items-center overflow-hidden bg-[linear-gradient(180deg,#E8F4FD_0%,#FFF0F5_40%,#FFE4EE_70%,#FFDBEE_100%)] mobile:grid-cols-[1fr]">
         {[...Array(BLOSSOM_COUNT)].map((_, i) => (
           <CherryBlossom
             key={i}
@@ -37,14 +35,18 @@ export async function SpringContent() {
         ))}
 
         <MotionPetSection />
-        <div className={containerStyle}>
-          <img src="/assets/spring-logo.svg" alt="GITANIMALS" className={springLogoStyle} />
-          <p className={descriptionStyle}>
+        <div className="flex relative w-[80%] h-full pl-[40px] z-[2] flex-col justify-center pb-0 gap-0 mobile:w-full mobile:items-center mobile:justify-center mobile:pb-0 mobile:pl-0">
+          <img
+            src="/assets/spring-logo.svg"
+            alt="GITANIMALS"
+            className="w-[min(600px,45vw)] h-auto select-none [filter:drop-shadow(0_4px_12px_rgba(255,150,170,0.3))] mobile:w-[min(280px,80vw)]"
+          />
+          <p className="text-black-75 glyph32-bold font-normal whitespace-pre-line mt-[16px] mb-[28px] leading-[1.5] mobile:glyph16-regular mobile:text-[16px] mobile:mt-[12px] mobile:mb-[20px] mobile:text-center">
             Spring is blooming in Gitanimals!
             <br />
             Collect a spring pet now!
           </p>
-          <div className={css({ display: 'flex', gap: '10px' })}>
+          <div className="flex gap-[10px]">
             {!session ? (
               <LoginButton label="Get a spring pet now" />
             ) : (
@@ -60,69 +62,6 @@ export async function SpringContent() {
           </div>
         </div>
       </div>
-      <div className="h-[60px]" />
     </div>
   );
 }
-
-const springLogoStyle = css({
-  width: 'min(600px, 45vw)',
-  height: 'auto',
-  userSelect: 'none',
-  filter: 'drop-shadow(0 4px 12px rgba(255, 150, 170, 0.3))',
-  _mobile: {
-    width: 'min(280px, 80vw)',
-  },
-});
-
-const descriptionStyle = css({
-  color: 'black.black_75',
-  textStyle: 'glyph32.bold',
-  fontWeight: 400,
-  whiteSpace: 'pre-line',
-  marginTop: '16px',
-  marginBottom: '28px',
-  lineHeight: 1.5,
-  _mobile: {
-    textStyle: 'glyph16.regular',
-    fontSize: '16px',
-    marginTop: '12px',
-    marginBottom: '20px',
-    textAlign: 'center',
-  },
-});
-
-const containerStyle = flex({
-  position: 'relative',
-  width: '80%',
-  height: '100%',
-  paddingLeft: '40px',
-  zIndex: 2,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  paddingBottom: '0',
-  gap: '0',
-  _mobile: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: '0',
-    pl: 0,
-  },
-});
-
-const bgContainerStyle = css({
-  position: 'relative',
-  width: '100%',
-  height: 'calc(100vh - 60px)',
-  display: 'grid',
-  gridTemplateColumns: '2fr 3fr',
-  gap: '0',
-  alignItems: 'center',
-  overflow: 'hidden',
-  background: 'linear-gradient(180deg, #E8F4FD 0%, #FFF0F5 40%, #FFE4EE 70%, #FFDBEE 100%)',
-  _mobile: {
-    gridTemplateColumns: '1fr',
-  },
-});

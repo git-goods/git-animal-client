@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { css } from '_panda/css';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { ErrorPage } from '@/components/Error/ErrorPage';
@@ -31,11 +30,11 @@ Path: ${pathname}
     <ErrorPage
       heading="Not Found 🤔"
       paragraph={
-        <div className={css({ textAlign: 'center' })}>
+        <div className="text-center">
           The page you are looking for does not exist.
           <br />
           <br />
-          <div className={css({ color: 'gray.500' })}>
+          <div className="text-gray-500">
             If you have anything to report about the problem, please add it to the link here. [
             <a href={GITHUB_ISSUE_URL}>Github</a>]
             <br />

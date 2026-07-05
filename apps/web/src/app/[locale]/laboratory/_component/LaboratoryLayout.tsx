@@ -2,8 +2,6 @@
 
 import type { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-import { css } from '_panda/css';
-import { Flex } from '_panda/jsx';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, Heart } from 'lucide-react';
 import { toast } from 'sonner';
@@ -86,24 +84,26 @@ export function LaboratoryLayout({
   };
 
   return (
-    <div className={containerStyle}>
-      <header className={headerStyle}>
-        <div className={headerTopStyle}>
+    <div className="max-w-[1400px] mx-auto">
+      <header className="mb-[16px] animate-[fadeIn_0.6s_ease-out]">
+        <div className="flex justify-between items-start mb-[12px] gap-[16px]">
           <div>
             {showBackButton && (
               <button onClick={() => router.back()} className={backButtonStyle}>
-                <ArrowLeft className={arrowIconStyle} />
+                <ArrowLeft className="w-[18px] h-[18px]" />
                 <span>돌아가기</span>
               </button>
             )}
           </div>
         </div>
 
-        <div className={headerContentStyle}>
-          <Flex justify="space-between" align="center">
-            <div className={titleContainerStyle}>
+        <div className="flex flex-col gap-[12px]">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-[12px] flex-wrap">
               <span className={experimentBadgeStyle}>🧪 실험실</span>
-              <h1 className={titleStyle}>{title}</h1>
+              <h1 className="glyph22-bold text-white-100 leading-[1.2] [@media(min-width:768px)]:glyph24-bold">
+                {title}
+              </h1>
             </div>
             {laboratoryId && (
               <button
@@ -113,173 +113,38 @@ export function LaboratoryLayout({
                 data-upvoted={hasUpvoted}
               >
                 <Heart className={hasUpvoted ? heartFilledStyle : heartStyle} />
-                <span className={upvoteTextStyle}>{hasUpvoted ? '업보트 완료' : '업보트'}</span>
+                <span className="font-semibold whitespace-nowrap">{hasUpvoted ? '업보트 완료' : '업보트'}</span>
                 {typeof upvoteCount === 'number' && upvoteCount > 0 && (
-                  <span className={upvoteCountBadgeStyle}>{upvoteCount}</span>
+                  <span className="text-[12px] font-bold p-[2px_8px] rounded-[8px] bg-[rgba(255,255,255,0.2)] text-white min-w-[24px] text-center">
+                    {upvoteCount}
+                  </span>
                 )}
               </button>
             )}
-          </Flex>
-          {description && <p className={descriptionStyle}>{description}</p>}
+          </div>
+          {description && <p className="glyph14-regular text-white-75 max-w-[800px]">{description}</p>}
         </div>
       </header>
 
-      <main className={mainStyle}>{children}</main>
+      <main className="relative">{children}</main>
     </div>
   );
 }
 
-const containerStyle = css({
-  maxWidth: '1400px',
-  margin: '0 auto',
-});
+const backButtonStyle =
+  'inline-flex items-center gap-[8px] p-[4px_12px] rounded-[8px] bg-[rgba(255,255,255,0.05)] border border-solid border-[rgba(255,255,255,0.1)] text-white-100 glyph12-regular cursor-pointer transition-all duration-300 ease-[ease] ' +
+  'hover:bg-[rgba(255,255,255,0.1)] hover:[transform:translateX(-4px)]';
 
-const headerStyle = css({
-  marginBottom: '16px',
-  animation: 'fadeIn 0.6s ease-out',
-});
+const experimentBadgeStyle =
+  'glyph12-bold p-[4px_8px] rounded-[8px] bg-[linear-gradient(135deg,_#667eea_0%,_#764ba2_100%)] text-white-100 whitespace-nowrap animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite] shadow-[0_0_20px_rgba(102,126,234,0.5)]';
 
-const headerTopStyle = css({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'flex-start',
-  marginBottom: '12px',
-  gap: '16px',
-});
+const upvoteButtonStyle =
+  'flex items-center gap-[8px] p-[4px_12px] rounded-[8px] bg-[linear-gradient(145deg,_rgba(255,255,255,0.1),_rgba(255,255,255,0.05))] border border-solid border-[rgba(255,255,255,0.2)] text-white-100 glyph12-regular cursor-pointer transition-all duration-300 ease-[ease] shadow-[0_4px_12px_rgba(0,0,0,0.1)] ' +
+  'hover:not-disabled:bg-[linear-gradient(135deg,_#667eea_0%,_#764ba2_100%)] hover:not-disabled:border-transparent hover:not-disabled:[transform:translateY(-2px)] hover:not-disabled:shadow-[0_6px_20px_rgba(102,126,234,0.4)] ' +
+  'active:not-disabled:[transform:translateY(0)] ' +
+  'data-[upvoted=true]:bg-[linear-gradient(135deg,_#f093fb_0%,_#f5576c_100%)] data-[upvoted=true]:border-transparent data-[upvoted=true]:cursor-default data-[upvoted=true]:shadow-[0_4px_12px_rgba(240,147,251,0.3)] ' +
+  'disabled:opacity-70 disabled:cursor-not-allowed';
 
-const backButtonStyle = css({
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '8px',
-  padding: '4px 12px',
-  borderRadius: '8px',
-  background: 'rgba(255, 255, 255, 0.05)',
-  border: '1px solid rgba(255, 255, 255, 0.1)',
-  color: 'white.white_100',
-  textStyle: 'glyph12.regular',
-  cursor: 'pointer',
-  transition: 'all 0.3s ease',
+const heartStyle = 'w-[18px] h-[18px] [stroke-width:2] transition-all duration-300 ease-[ease]';
 
-  '&:hover': {
-    background: 'rgba(255, 255, 255, 0.1)',
-    transform: 'translateX(-4px)',
-  },
-});
-
-const arrowIconStyle = css({
-  width: '18px',
-  height: '18px',
-});
-
-const headerContentStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '12px',
-});
-
-const titleContainerStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '12px',
-  flexWrap: 'wrap',
-});
-
-const experimentBadgeStyle = css({
-  textStyle: 'glyph12.bold',
-  padding: '4px 8px',
-  borderRadius: '8px',
-  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  color: 'white.white_100',
-  whiteSpace: 'nowrap',
-  animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-  boxShadow: '0 0 20px rgba(102, 126, 234, 0.5)',
-});
-
-const titleStyle = css({
-  textStyle: 'glyph22.bold',
-  color: 'white.white_100',
-  lineHeight: '1.2',
-
-  '@media (min-width: 768px)': {
-    textStyle: 'glyph24.bold',
-  },
-});
-
-const descriptionStyle = css({
-  textStyle: 'glyph14.regular',
-  color: 'white.white_75',
-  maxWidth: '800px',
-});
-
-const mainStyle = css({
-  position: 'relative',
-});
-
-const upvoteButtonStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-  padding: '4px 12px',
-  borderRadius: '8px',
-  background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
-  border: '1px solid rgba(255, 255, 255, 0.2)',
-  color: 'white.white_100',
-  textStyle: 'glyph12.regular',
-  cursor: 'pointer',
-  transition: 'all 0.3s ease',
-  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-
-  '&:hover:not(:disabled)': {
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    borderColor: 'transparent',
-    transform: 'translateY(-2px)',
-    boxShadow: '0 6px 20px rgba(102, 126, 234, 0.4)',
-  },
-
-  '&:active:not(:disabled)': {
-    transform: 'translateY(0)',
-  },
-
-  '&[data-upvoted="true"]': {
-    background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-    borderColor: 'transparent',
-    cursor: 'default',
-    boxShadow: '0 4px 12px rgba(240, 147, 251, 0.3)',
-  },
-
-  '&:disabled': {
-    opacity: 0.7,
-    cursor: 'not-allowed',
-  },
-});
-
-const heartStyle = css({
-  width: '18px',
-  height: '18px',
-  strokeWidth: '2',
-  transition: 'all 0.3s ease',
-});
-
-const heartFilledStyle = css({
-  width: '18px',
-  height: '18px',
-  fill: 'currentColor',
-  strokeWidth: '2',
-  animation: 'heartbeat 1s ease-in-out',
-});
-
-const upvoteTextStyle = css({
-  fontWeight: '600',
-  whiteSpace: 'nowrap',
-});
-
-const upvoteCountBadgeStyle = css({
-  fontSize: '12px',
-  fontWeight: 'bold',
-  padding: '2px 8px',
-  borderRadius: '8px',
-  background: 'rgba(255, 255, 255, 0.2)',
-  color: 'white',
-  minWidth: '24px',
-  textAlign: 'center',
-});
+const heartFilledStyle = 'w-[18px] h-[18px] fill-current [stroke-width:2] animate-[heartbeat_1s_ease-in-out]';

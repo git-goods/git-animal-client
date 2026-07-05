@@ -1,13 +1,12 @@
 'use client';
 
-import { css } from '_panda/css';
-import { Select } from '@gitanimals/ui-panda';
+import { Select } from '@gitanimals/ui-tailwind';
 
 function DevComponentPage() {
   return (
     <div className={containerStyle}>
       <Select>
-        <Select.Trigger w="180px">
+        <Select.Trigger className="w-[180px]">
           <Select.Value placeholder="Theme" />
         </Select.Trigger>
         <Select.Content>
@@ -22,13 +21,4 @@ function DevComponentPage() {
 
 export default DevComponentPage;
 
-const containerStyle = css({
-  backgroundColor: '#2C2929',
-  padding: '24px',
-  height: '100vh',
-
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-  gap: '16px',
-});
+const containerStyle = 'bg-[#2C2929] p-[24px] h-[100vh] flex flex-col items-start gap-[16px]';

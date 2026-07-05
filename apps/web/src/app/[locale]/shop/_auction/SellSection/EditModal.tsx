@@ -2,9 +2,8 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
 import { auctionQueries, useChangeProductPrice, useDeleteProduct, userQueries } from '@gitanimals/react-query';
-import { Button, Dialog } from '@gitanimals/ui-panda';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -60,7 +59,7 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content>
-        <Dialog.Title className={titleStyle}>{t('edit-product')}</Dialog.Title>
+        <Dialog.Title className="glyph20-regular text-left text-white-100 w-full">{t('edit-product')}</Dialog.Title>
         <input
           className={inputStyle}
           placeholder="Type price..."
@@ -68,7 +67,7 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
           value={Boolean(price) ? price : ''}
           onChange={(e) => setPrice(Number(e.target.value))}
         />
-        <div className={buttonWrapperStyle}>
+        <div className="flex justify-end gap-[8px] w-full">
           <Button onClick={onSave} variant="secondary" size="m">
             Save
           </Button>
@@ -83,38 +82,5 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
 
 export default EditModal;
 
-const titleStyle = css({
-  textStyle: 'glyph20.regular',
-  textAlign: 'left',
-  color: 'white.white_100',
-  width: '100%',
-});
-
-const inputStyle = css({
-  display: 'flex',
-  height: '55px',
-  padding: '14px 14px 13px 20px',
-  alignItems: 'flex-start',
-  gap: '8px',
-  width: '100%',
-  outline: 'none',
-  borderRadius: '8px',
-  border: '1px solid rgba(255, 255, 255, 0.25)',
-  textStyle: 'glyph16.regular',
-  color: 'white.white_100',
-  '&::placeholder': {
-    textStyle: 'glyph16.regular',
-    color: 'white.white_75',
-  },
-  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-    WebkitAppearance: 'none',
-    margin: 0,
-  },
-});
-
-const buttonWrapperStyle = css({
-  display: 'flex',
-  justifyContent: 'flex-end',
-  gap: '8px',
-  width: '100%',
-});
+const inputStyle =
+  'flex h-[55px] pt-[14px] pr-[14px] pb-[13px] pl-[20px] items-start gap-[8px] w-full outline-none rounded-[8px] border border-[rgba(255,255,255,0.25)] glyph16-regular text-white-100 placeholder:glyph16-regular placeholder:text-white-75 [&::-webkit-outer-spin-button]:[-webkit-appearance:none] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:[-webkit-appearance:none] [&::-webkit-inner-spin-button]:m-0';

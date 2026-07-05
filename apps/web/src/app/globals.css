@@ -1,4 +1,8 @@
-@layer reset, base, tokens, recipes, utilities;
+/* PandaCSS 제거 완료(PR final): Tailwind preflight 가 base reset 을 담당하고,
+   GitAnimals 커스텀 전역 reset 은 아래 @layer base 에 둔다(preflight 뒤에 적용). */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @font-face {
   font-family: 'DNFBitBitv2';
@@ -14,11 +18,14 @@
   font-style: normal;
 }
 
-@layer reset {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
+@layer base {
+  /* PandaCSS 제거 후 Tailwind preflight 로 전환되며 전역 폰트 스무딩이 사라져
+     macOS 에서 텍스트가 prod 대비 더 굵게(subpixel) 렌더링되던 회귀를 복원.
+     prod 는 antialiased + optimizeLegibility 로 렌더링됨 (issue 4.3). */
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
@@ -31,6 +38,10 @@
     background-color: transparent;
     padding: 0;
     outline: none;
+  }
+
+  input {
+    background-color: transparent;
   }
 
   .mobile {
@@ -50,30 +61,13 @@
       display: none;
     }
   }
-}
 
-@layer base {
   :root {
     --mobile-header-height: 60px;
     --header-height: 60px;
 
     --main-min-height: calc(100vh - var(--header-height));
   }
-}
-
-.dialog__content[data-state='open'] {
-  animation: fadeIn !important;
-
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) !important;
-}
-.dialog__content[data-state='closed'] {
-  animation: fadeIn !important;
-
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) !important;
 }
 
 /* toast */

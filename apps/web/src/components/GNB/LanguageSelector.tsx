@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
 import { RadioButtonOff, RadioButtonOn } from '@gitanimals/ui-icon';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, Globe } from 'lucide-react';
@@ -15,13 +14,18 @@ const LOCALE_MAP: Record<Locale, string> = {
   'ko-KR': '한국어',
 };
 
+const dropdownClass =
+  'absolute right-[-40px] mt-[4px] w-full min-w-[100px] overflow-hidden rounded-[6px] bg-white py-[8px] shadow-[0px_3px_5px_2px_rgba(0,0,0,0.25)] z-dropdown';
+const optionClass =
+  'glyph16-regular w-full whitespace-nowrap px-[16px] py-[8px] text-center text-black transition-colors duration-200 hover:underline';
+
 export const DesktopLanguageSelector = () => {
   const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className={containerStyles}>
+    <div className="relative inline-block">
       <button onClick={() => setIsOpen(!isOpen)}>
         <Globe size={24} color="#000000BF" />
       </button>
@@ -33,11 +37,11 @@ export const DesktopLanguageSelector = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className={dropdownStyles}
+            className={dropdownClass}
           >
             {Object.keys(LOCALE_MAP).map((lang) => (
               <Link href={pathname} key={lang} locale={lang as Locale} passHref>
-                <motion.button key={lang} onClick={() => setIsOpen(false)} className="option">
+                <motion.button key={lang} onClick={() => setIsOpen(false)} className={optionClass}>
                   {LOCALE_MAP[lang as Locale]}
                 </motion.button>
               </Link>
@@ -49,54 +53,21 @@ export const DesktopLanguageSelector = () => {
   );
 };
 
-const containerStyles = css({
-  position: 'relative',
-  display: 'inline-block',
-});
-
-const dropdownStyles = css({
-  position: 'absolute',
-  right: '-40px',
-  mt: '4px',
-  bg: 'white',
-  borderRadius: '6px',
-  overflow: 'hidden',
-  minWidth: '100px',
-  width: '100%',
-  zIndex: 'dropdown',
-  boxShadow: '0px 3px 5px 2px rgba(0, 0, 0, 0.25)',
-  py: '8px',
-
-  '& .option': {
-    w: '100%',
-    textAlign: 'center',
-    px: '16px',
-    py: '8px',
-    transition: 'background-color 0.2s',
-    color: '#000',
-    whiteSpace: 'nowrap',
-    textStyle: 'glyph16.regular',
-    _hover: {
-      textDecoration: 'underline',
-    },
-  },
-});
-
 export function MobileLanguageSelector({ onBack }: { onBack: () => void }) {
   const pathname = usePathname();
   const locale = useTypedLocale();
   const t = useTranslations('Layout');
 
   return (
-    <article className={languageSelectorContainerStyle}>
-      <div className={cx(languageSelectorHeaderStyle)}>
+    <article className="fixed inset-0 z-drawer max-h-screen overflow-y-auto bg-white">
+      <div className="glyph18-regular relative flex h-[44px] w-full items-center justify-between px-[16px]">
         <button onClick={onBack}>
           <ChevronLeft size={24} color="#9295A1" />
         </button>
 
-        <div className="center-title">{t('language')}</div>
+        <div className="absolute left-1/2 w-fit -translate-x-1/2">{t('language')}</div>
       </div>
-      <ul className={languageSelectorListStyle}>
+      <ul className="glyph16-regular w-full [&_li]:flex [&_li]:items-center [&_li]:justify-between [&_li]:border-b [&_li]:border-gray-900 [&_li]:bg-white [&_li]:pb-[18px] [&_li]:pl-[20px] [&_li]:pr-[22px] [&_li]:pt-[18px]">
         {Object.keys(LOCALE_MAP).map((lang) => (
           <Link href={pathname} key={lang} locale={lang as Locale}>
             <li key={lang}>
@@ -109,49 +80,3 @@ export function MobileLanguageSelector({ onBack }: { onBack: () => void }) {
     </article>
   );
 }
-
-const languageSelectorContainerStyle = css({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor: '#fff',
-  maxHeight: '100vh',
-  overflowY: 'auto',
-  zIndex: 'drawer',
-});
-
-const languageSelectorHeaderStyle = css({
-  padding: '0 16px',
-  textStyle: 'glyph18.regular',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  position: 'relative',
-  width: '100%',
-  height: '44px',
-
-  '& .center-title': {
-    width: 'fit-content',
-    position: 'absolute',
-    left: '50%',
-    transform: 'translateX(-50%)',
-  },
-});
-
-const languageSelectorListStyle = css({
-  width: '100%',
-  textStyle: 'glyph16.regular',
-
-  '& li': {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '18px 22px 18px 20px',
-
-    borderBottom: '1px solid',
-    borderColor: 'gray.gray_900',
-    backgroundColor: 'white',
-  },
-});
