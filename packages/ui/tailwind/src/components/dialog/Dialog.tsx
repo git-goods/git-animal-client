@@ -41,6 +41,7 @@ const dialogContentCva = cva(
     'fixed left-1/2 top-1/2 z-[3001] grid w-full max-w-[32rem] -translate-x-1/2 -translate-y-1/2 gap-[16px]',
     'rounded-[16px] border border-solid border-gray-150 bg-gray-150 p-[24px] text-white-100 shadow-lg',
     'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+    'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]',
   ),
   {
     variants: {
