@@ -4,7 +4,7 @@ import { rankQueries } from '@gitanimals/react-query';
 
 import { getDehydratedQueries, Hydrate } from '@/lib/react-query/queryClient';
 
-import { RANKS_PER_PAGE, RANKS_TOP_3 } from '../../landing/RankingSection/constants';
+import { RANKS_PER_PAGE, RANKS_TOP_3 } from '../../landing/RankingSection/RankingSection.constants';
 import RankingSection from '../../landing/RankingSection/RankingSection';
 
 export default async function TestRankingPage({

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { cn } from '@gitanimals/ui-tailwind';
 import useEmblaCarousel from 'embla-carousel-react';
 
-import { sliderContainer } from './MainSlider.style';
+import { sliderContainer } from './MainSlider.styles';
 import SliderItem from './SliderItem';
 
 const MODE_ITEM_LIST = [

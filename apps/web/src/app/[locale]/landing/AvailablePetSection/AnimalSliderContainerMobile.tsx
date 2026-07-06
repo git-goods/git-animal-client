@@ -7,7 +7,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 
 import { usePerspectiveTween } from '@/components/Slider/usePerspectiveTween';
 
-import { sliderContainer } from '../MainSection/MainSlider.style';
+import { sliderContainer } from '../MainSection/MainSlider.styles';
 
 /**
  * flicking(Perspective+Fade) → embla 전환(PR3c). 3D 효과는 usePerspectiveTween 으로 재현.

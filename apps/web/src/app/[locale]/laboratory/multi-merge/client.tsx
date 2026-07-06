@@ -17,7 +17,7 @@ import { MergeResultModal } from '../../mypage/my-pet/(merge)/MergeResult';
 import { MergeSlots } from './MergeSlots';
 import { PetGrid } from './PetGrid';
 import { SelectionSummary } from './SelectionSummary';
-import { contentSectionStyle, instructionStyle, instructionTextStyle } from './styles';
+import { contentSectionStyle, instructionStyle, instructionTextStyle } from './multi-merge.styles';
 
 function PetMergeUI() {
   const queryClient = useQueryClient();

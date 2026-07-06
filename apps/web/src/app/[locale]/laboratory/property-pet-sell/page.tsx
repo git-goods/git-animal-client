@@ -14,7 +14,7 @@ import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/utils/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
-import { LaboratoryLayout } from '../_component/LaboratoryLayout';
+import { LaboratoryLayout } from '../_components/LaboratoryLayout';
 
 export default function PropertyPetSellPage() {
   return (

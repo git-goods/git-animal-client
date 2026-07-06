@@ -10,7 +10,7 @@ import { Link } from '@/i18n/routing';
 
 import GameConsole from './GameConsole/GameConsole';
 import { MobileGameConsole } from './MobileGameConsole/MobileGameConsole';
-import { calcTotalPage, RANKS_PER_PAGE, RANKS_TOP_3 } from './constants';
+import { calcTotalPage, RANKS_PER_PAGE, RANKS_TOP_3 } from './RankingSection.constants';
 import { MobileRankingTable } from './MobileRankingTable';
 import { RankingTable } from './RankingTable';
 import { TopPodium } from './TopPodium';
