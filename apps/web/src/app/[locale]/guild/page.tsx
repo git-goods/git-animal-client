@@ -16,8 +16,9 @@ import { GuildSearch } from './_components/GuildSearch';
 import { GuildSortSelect } from './_components/GuildSortSelect';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { getServerSession } from 'next-auth';
 import { CustomException } from '@gitanimals/exception';
+
+import { getServerAuth } from '@/auth';
 
 interface GuildPageProps {
   searchParams: {
@@ -40,7 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function GuildPage({ searchParams }: GuildPageProps) {
   let redirectUrl = null;
   try {
-    const session = await getServerSession();
+    const session = await getServerAuth();
 
     if (!session) {
       throw new Error('session not found');
