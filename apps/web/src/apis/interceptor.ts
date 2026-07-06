@@ -1,4 +1,6 @@
 import { getSession, signOut } from 'next-auth/react';
+import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
+import { setRenderRequestInterceptor, setRenderResponseInterceptor } from '@gitanimals/api/src/_instance';
 import { CustomException } from '@gitanimals/exception';
 import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
@@ -10,11 +12,27 @@ interface CachedSession {
   expiresAt: number;
 }
 
+// Client-only module-global cache. The browser global is per-user, so caching
+// here is safe. It MUST NOT be shared on the server, where a single module
+// instance is shared across concurrent requests from different users.
 let cachedSession: CachedSession | null = null;
 let sessionPromise: Promise<CachedSession | null> | null = null;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 const getSessionWithCache = async (): Promise<CachedSession | null> => {
+  // Server path: never touch module-global state. getServerAuth() reads
+  // request-scoped cookies, so resolve per request (a JWT decode per call).
+  if (typeof window === 'undefined') {
+    const session = await getServerAuth();
+    if (session?.user?.accessToken) {
+      return {
+        accessToken: session.user.accessToken,
+        expiresAt: Date.now() + CACHE_DURATION,
+      };
+    }
+    return null;
+  }
+
   if (cachedSession && Date.now() < cachedSession.expiresAt) {
     return cachedSession;
   }
@@ -25,12 +43,7 @@ const getSessionWithCache = async (): Promise<CachedSession | null> => {
 
   sessionPromise = (async () => {
     try {
-      let session;
-      if (typeof window !== 'undefined') {
-        session = await getSession();
-      } else {
-        session = await getServerAuth();
-      }
+      const session = await getSession();
 
       if (session?.user?.accessToken) {
         cachedSession = {
@@ -77,6 +90,23 @@ export const interceptorResponseRejected = async (error: AxiosError<ApiErrorSche
   // TODO: 403 처리
 
   return Promise.reject(error);
+};
+
+let registered = false;
+
+/**
+ * Attaches the request/response interceptors to the shared @gitanimals/api
+ * instances exactly once. Idempotent: safe to call from multiple module scopes
+ * (server root layout, client provider) without stacking handlers.
+ */
+export const registerInterceptors = () => {
+  if (registered) return;
+  registered = true;
+
+  setRequestInterceptor(interceptorRequestFulfilled);
+  setResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
+  setRenderRequestInterceptor(interceptorRequestFulfilled);
+  setRenderResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
 };
 
 export const setInterceptors = (instance: AxiosInstance) => {
