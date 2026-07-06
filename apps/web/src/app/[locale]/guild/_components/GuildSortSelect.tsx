@@ -15,7 +15,7 @@ const options: { label: string; value: FilterType }[] = [
   { label: 'Contribution (desc)', value: 'CONTRIBUTION_DESC' },
 ];
 
-export function SortSelect() {
+export function GuildSortSelect() {
   const router = useRouter();
   const getNextUrl = useGetNextUrl();
   const searchParams = useSearchParams();

@@ -18,12 +18,12 @@ import { useClientUser } from '@/utils/clientAuth';
 import { getBackgroundImage } from '@/utils/image';
 import { addNumberComma } from '@/utils/number';
 
-export const BackgroundSection = wrap
+export const ShopBackgroundSection = wrap
   .ErrorBoundary({
     fallback: () => <></>,
   })
   .Suspense({ fallback: <></> })
-  .on(function BackgroundSection() {
+  .on(function ShopBackgroundSection() {
     // url에 '#background'라는 해쉬값이 있으면 아래 h2 태그로 스크롤되는 이벤트 처리
     const backgroundRef = useScrollHeading('background');
 

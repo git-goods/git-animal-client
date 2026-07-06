@@ -13,7 +13,7 @@ import { Link, redirect } from '@/i18n/routing';
 
 import { GuildCard } from './_components/GuildCard';
 import { GuildSearch } from './_components/GuildSearch';
-import { SortSelect } from './_components/SortSelect';
+import { GuildSortSelect } from './_components/GuildSortSelect';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { getServerSession } from 'next-auth';
@@ -125,7 +125,7 @@ async function GuildMain({ searchParams, isSearchMode }: GuildMainProps) {
             <GuildSearch />
           </div>
 
-          <SortSelect />
+          <GuildSortSelect />
           <Link href="/guild/create">
             <Button size="m" className="min-w-[126px] px-[20px]">
               Create Guild

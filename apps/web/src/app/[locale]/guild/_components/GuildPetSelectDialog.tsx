@@ -5,7 +5,7 @@ import { useState } from 'react';
 import type { Persona } from '@gitanimals/api';
 import { Button } from '@gitanimals/ui-tailwind';
 
-import { SelectPersonaList } from './SelectPersonaList';
+import { GuildSelectPersonaList } from './GuildSelectPersonaList';
 
 export const GuildJoinPetSelectDialog = ({ onSubmit }: { onSubmit: (selectPersona: string) => void }) => {
   const [selectPersona, setSelectPersona] = useState<string>();
@@ -22,7 +22,7 @@ export const GuildJoinPetSelectDialog = ({ onSubmit }: { onSubmit: (selectPerson
 
   return (
     <>
-      <SelectPersonaList selectPersona={selectPersona ? [selectPersona] : []} onSelectPersona={onSelectPersona} />
+      <GuildSelectPersonaList selectPersona={selectPersona ? [selectPersona] : []} onSelectPersona={onSelectPersona} />
       <Button className="mx-auto w-[100px]" onClick={onDone} disabled={!selectPersona}>
         Done
       </Button>

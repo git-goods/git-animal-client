@@ -25,7 +25,7 @@ interface SelectPersonaListProps {
   loadingPersona?: string[];
 }
 
-export const SelectPersonaList = wrap
+export const GuildSelectPersonaList = wrap
   .ErrorBoundary({ fallback: <div>error</div> })
   .Suspense({
     fallback: (
@@ -34,7 +34,7 @@ export const SelectPersonaList = wrap
       </div>
     ),
   })
-  .on(function SelectPersonaList({ selectPersona, onSelectPersona }: SelectPersonaListProps) {
+  .on(function GuildSelectPersonaList({ selectPersona, onSelectPersona }: SelectPersonaListProps) {
     const { name } = useClientUser();
     const { data } = useSuspenseQuery(userQueries.allPersonasOptions(name));
     const t = useTranslations('Mypage.Filter');

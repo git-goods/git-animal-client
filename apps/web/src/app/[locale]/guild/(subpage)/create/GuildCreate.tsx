@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 
 import { useRouter } from '@/i18n/routing';
 
-import { SelectPersonaList } from '../../_components/SelectPersonaList';
+import { GuildSelectPersonaList } from '../../_components/GuildSelectPersonaList';
 
 import { GuildCreateForm } from './GuildCreateForm';
 
@@ -66,7 +66,7 @@ export default function GuildCreate() {
       )}
       {step === 'guild-persona' && (
         <>
-          <SelectPersonaList
+          <GuildSelectPersonaList
             selectPersona={selectPersona ? [selectPersona] : []}
             onSelectPersona={(persona) => setSelectPersona(persona.id)}
           />

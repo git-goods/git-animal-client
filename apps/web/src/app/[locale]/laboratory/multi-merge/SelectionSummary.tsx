@@ -1,6 +1,6 @@
 import { ScrollArea } from '@gitanimals/ui-tailwind';
 
-import { MemoizedPersonaBannerItem } from './PersonaItem';
+import { MemoizedPersonaBannerItem } from './MergePersonaItem';
 
 type Persona = {
   id: string;
