@@ -1,5 +1,5 @@
-import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constants';
-import { ANIMAL_TIER_INFO, AnimalTier } from '@/components/AnimalCard/AnimalCard.constants';
+import type { AnimalTierType } from '@/constants/animalTier';
+import { ANIMAL_TIER_INFO, AnimalTier } from '@/constants/animalTier';
 
 /**
  * 페르소나 등급 정렬 우선순위 (낮을수록 우선)

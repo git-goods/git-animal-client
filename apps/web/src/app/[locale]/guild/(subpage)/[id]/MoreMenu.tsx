@@ -12,7 +12,7 @@ import { toast } from 'sonner';
 import { useDialog } from '@/components/Global/useDialog';
 import { ORIGIN_URL, ROUTE } from '@/constants/route';
 import { Link, useRouter } from '@/i18n/routing';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
 
 interface MenuType {

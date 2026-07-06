@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
-import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
+import { useIsMobile } from '@gitanimals/react';
 import { auctionQueries, useBuyProduct, useDeleteProduct, userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-tailwind';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -16,7 +16,7 @@ import { useGetPersonaTier } from '@/hooks/persona/useGetPersonaDropRate';
 import { trackEvent } from '@/lib/analytics';
 import { useLoading } from '@/store/loading';
 import { ANIMAL_TIER_TEXT_MAP } from '@/utils/animals';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 
 import { ShopTableDesktopRow, ShopTableMobileRow, ShopTableRowViewSkeleton } from '../_common/ShopTableMobileRow';
 import { useSearchOptions } from '../useSearchOptions';

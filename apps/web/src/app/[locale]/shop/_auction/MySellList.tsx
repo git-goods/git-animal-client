@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
-import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
+import { useIsMobile } from '@gitanimals/react';
 import { auctionQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-tailwind';
 import { useQuery } from '@tanstack/react-query';

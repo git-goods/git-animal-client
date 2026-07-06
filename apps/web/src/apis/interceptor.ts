@@ -1,6 +1,10 @@
 import { getSession, signOut } from 'next-auth/react';
-import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
-import { setRenderRequestInterceptor, setRenderResponseInterceptor } from '@gitanimals/api/src/_instance';
+import {
+  setRenderRequestInterceptor,
+  setRenderResponseInterceptor,
+  setRequestInterceptor,
+  setResponseInterceptor,
+} from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 

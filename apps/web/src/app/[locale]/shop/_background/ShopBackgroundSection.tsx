@@ -14,7 +14,7 @@ import { toast } from 'sonner';
 import EmblaCarousel from '@/components/EmblaCarousel';
 import { trackEvent } from '@/lib/analytics';
 import { getQueryClient } from '@/lib/react-query/queryClient';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 import { getBackgroundImage } from '@/utils/image';
 import { addNumberComma } from '@/utils/number';
 

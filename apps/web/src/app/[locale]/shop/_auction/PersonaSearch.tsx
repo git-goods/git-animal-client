@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import React from 'react';
-import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
+import { useIsMobile } from '@gitanimals/react';
 import { auctionQueries } from '@gitanimals/react-query';
 import { Banner, cn, Dialog } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';

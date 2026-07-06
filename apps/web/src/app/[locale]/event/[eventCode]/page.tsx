@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 
-import { Footer } from '../../landing/_components/Footer';
+import { Footer } from '@/components/Footer';
 import { ChristmasContent } from '../(christmas)';
 import { EventEndOverlay } from '../(common)/EventEndOverlay';
 import { HalloweenContent } from '../(halloween)/Content';

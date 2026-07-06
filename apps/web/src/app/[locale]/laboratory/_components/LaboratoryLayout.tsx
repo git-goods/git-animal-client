@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 
 import { createOrUpdateUpvote } from '@/apis/laboratory/feedback';
 import { LABORATORY_FEEDBACK_QUERY_KEYS, upvoteQueryOptions } from '@/apis/laboratory/useLaboratoryFeedback';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 
 interface LaboratoryLayoutProps {
   children: ReactNode;

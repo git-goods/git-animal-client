@@ -6,7 +6,7 @@ import { cn } from '@gitanimals/ui-tailwind';
 
 import { RENDER_URL } from '@/constants/outlink';
 import { ORIGIN_URL } from '@/constants/route';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 
 const getLink = (props: { username: string; type: 'farm' | 'line' }) => {
   return `${ORIGIN_URL}?utm_medium=image&utm_source=${props.username}&utm_content=${props.type}`;

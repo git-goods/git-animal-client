@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import type { Persona } from '@gitanimals/api';
-import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
+import { useIsMobile } from '@gitanimals/react';
 import { userQueries } from '@gitanimals/react-query';
 import { Banner, cn } from '@gitanimals/ui-tailwind';
 import { useQuery } from '@tanstack/react-query';
 
 import { customScrollStyle } from '@/styles/scrollStyle';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 interface Props {

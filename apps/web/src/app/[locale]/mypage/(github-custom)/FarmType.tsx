@@ -6,7 +6,7 @@ import { Button } from '@gitanimals/ui-tailwind';
 import { Github } from 'lucide-react';
 
 import { getGitanimalsFarmString, GitanimalsFarm } from '@/components/Gitanimals';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 
 import { FarmBackgroundSelect } from './FarmBackgroundSelect';
 import { FarmPersonaSelect } from './FarmPersonaSelect';

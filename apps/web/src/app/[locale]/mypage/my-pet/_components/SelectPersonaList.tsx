@@ -9,7 +9,7 @@ import { MemoizedLevelPersonaItem } from '@/components/PersonaItem';
 import { PersonaListToolbar } from '@/components/PersonaListToolbar';
 import { usePersonaListFilter } from '@/hooks/persona/usePersonaListFilter';
 import { customScrollStyle } from '@/styles/scrollStyle';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 
 interface SelectPersonaListProps {
   selectPersona: string[];

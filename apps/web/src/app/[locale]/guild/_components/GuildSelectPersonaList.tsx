@@ -11,7 +11,7 @@ import { MemoizedLevelPersonaItem } from '@/components/PersonaItem';
 import { PersonaListToolbar } from '@/components/PersonaListToolbar';
 import { usePersonaListFilter } from '@/hooks/persona/usePersonaListFilter';
 import { customScrollStyle } from '@/styles/scrollStyle';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 
 const flexOverflowStyle = cn(
   'flex overflow-y-auto overflow-x-hidden w-full gap-[4px] h-full min-h-0 flex-wrap max-h-full',

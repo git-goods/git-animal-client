@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { CombineChip, SearchBar } from '@gitanimals/ui-tailwind';
 import { RotateCcwIcon } from 'lucide-react';
 
-import { ANIMAL_TIER_INFO } from '@/components/AnimalCard/AnimalCard.constants';
+import { ANIMAL_TIER_INFO } from '@/constants/animalTier';
 import type {
   GradeFilter,
   PersonaFilterState,

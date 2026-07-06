@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 
 import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
 import { customScrollStyle } from '@/styles/scrollStyle';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 
 import { useGithubPublish } from './useGithubPublish';
 

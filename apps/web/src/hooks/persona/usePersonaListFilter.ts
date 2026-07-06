@@ -1,7 +1,7 @@
 import { useDeferredValue, useMemo, useState } from 'react';
 import type { Persona } from '@gitanimals/api';
 
-import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constants';
+import type { AnimalTierType } from '@/constants/animalTier';
 import { getAnimalTierInfo, getPersonaGradePriority } from '@/utils/animals';
 
 export type SortBy = 'grade' | 'level-desc' | 'level-asc' | 'tier' | 'name';

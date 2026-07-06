@@ -2,8 +2,8 @@
 
 import { memo, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { dropPets } from '@gitanimals/api/src/shop/dropPet';
-import { userQueries } from '@gitanimals/react-query/src/user';
+import { dropPets } from '@gitanimals/api';
+import { userQueries } from '@gitanimals/react-query';
 import { Button, cn, LevelBanner } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
@@ -11,7 +11,7 @@ import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useDialog } from '@/components/Global/useDialog';
 import { trackEvent } from '@/lib/analytics';
 import { customScrollStyle } from '@/styles/scrollStyle';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 import { LaboratoryLayout } from '../_components/LaboratoryLayout';
