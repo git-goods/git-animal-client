@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Dialog, ScrollArea } from '@gitanimals/ui-tailwind';
+import { Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { ExpandIcon } from 'lucide-react';
 import { toast } from 'sonner';
@@ -53,9 +53,9 @@ export function FarmPersonaSelect({ onImageRefresh }: { onImageRefresh: () => vo
           <ExpandIcon color="white" size={20} />
         </button>
       </section>
-      <ScrollArea height="160px">
-        <SelectPersonaList {...personaListProps} />
-      </ScrollArea>
+      <SelectPersonaList {...personaListProps}>
+        <SelectPersonaList.InventoryGrid rows={2} />
+      </SelectPersonaList>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <Dialog.Content size="large" scrollable>
           <Dialog.Title>{t('farm-type-select-pet')}</Dialog.Title>
@@ -64,7 +64,7 @@ export function FarmPersonaSelect({ onImageRefresh }: { onImageRefresh: () => vo
               <SelectPersonaList.Toolbar showSearch showVisibilityFilter />
             </Dialog.TopSlot>
             <Dialog.Body>
-              <SelectPersonaList.Grid />
+              <SelectPersonaList.InventoryGrid rows="auto" minRows={2} />
             </Dialog.Body>
           </SelectPersonaList>
         </Dialog.Content>

@@ -3,7 +3,6 @@
 import { useCallback, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { type Persona } from '@gitanimals/api';
-import { ScrollArea } from '@gitanimals/ui-tailwind';
 
 import { SelectPersonaList } from '../PersonaList';
 
@@ -23,7 +22,7 @@ function MypageMyPets() {
       <section className={selectPetContainerStyle}>
         <h2 className="heading">{t('pet-list')}</h2>
 
-        <ScrollArea height="calc(100vh - 424px)">
+        <div className={petListBoxStyle}>
           <SelectPersonaList
             selectPersona={selectPersona ? [selectPersona.id] : []}
             onSelectPersona={(persona) => setSelectPersona(persona)}
@@ -31,9 +30,9 @@ function MypageMyPets() {
             isSpecialEffect
           >
             <SelectPersonaList.Toolbar showSearch showEvolvableFilter />
-            <SelectPersonaList.Grid />
+            <SelectPersonaList.InventoryGrid rows="auto" minRows={2} />
           </SelectPersonaList>
-        </ScrollArea>
+        </div>
       </section>
 
       <p className={captionMessageStyle}>{t('sell-to-other')}</p>
@@ -44,7 +43,9 @@ function MypageMyPets() {
 export default MypageMyPets;
 
 // 안내 멘트 5초 뒤에 등장
-const captionMessageStyle = 'glyph18-regular text-white-75 mt-[16px] opacity-0 animate-[fadeIn_0.5s_ease-in-out_5s_forwards]';
+const captionMessageStyle =
+  'glyph18-regular text-white-75 mt-[16px] opacity-0 animate-[fadeIn_0.5s_ease-in-out_5s_forwards]';
 
-const selectPetContainerStyle =
-  'relative [&_.heading]:glyph18-bold [&_.heading]:text-white [&_.heading]:mb-[16px]';
+const petListBoxStyle = 'h-[calc(100vh-424px)] min-h-0 flex flex-col';
+
+const selectPetContainerStyle = 'relative [&_.heading]:glyph18-bold [&_.heading]:text-white [&_.heading]:mb-[16px]';

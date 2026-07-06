@@ -1,13 +1,13 @@
 'use client';
 import { useState } from 'react';
 import { createGuild } from '@gitanimals/api';
-import { Button } from '@gitanimals/ui-tailwind';
+import { Button, ScrollArea } from '@gitanimals/ui-tailwind';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
 import { useRouter } from '@/i18n/routing';
 
-import { SelectPersonaList } from '../../_components/SelectPersonaList';
+import { SelectPersonaList } from '../../../mypage/PersonaList';
 
 import { GuildCreateForm } from './GuildCreateForm';
 
@@ -69,7 +69,12 @@ export default function GuildCreate() {
           <SelectPersonaList
             selectPersona={selectPersona ? [selectPersona] : []}
             onSelectPersona={(persona) => setSelectPersona(persona.id)}
-          />
+          >
+            <SelectPersonaList.Toolbar showSearch />
+            <ScrollArea height="50vh">
+              <SelectPersonaList.Grid />
+            </ScrollArea>
+          </SelectPersonaList>
           <Button className="mx-auto" disabled={!selectPersona} onClick={onSubmit}>
             Done
           </Button>
