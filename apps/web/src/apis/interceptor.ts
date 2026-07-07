@@ -83,12 +83,27 @@ export const interceptorResponseFulfilled = (res: AxiosResponse) => {
 };
 
 // Response interceptor
+// Latch so a burst of concurrent 401s triggers at most one signOut (which then
+// redirects/reloads and resets this module).
+let isSigningOut = false;
+
 export const interceptorResponseRejected = async (error: AxiosError<ApiErrorScheme>) => {
   if (error?.response?.status === 401) {
-    if (typeof window !== 'undefined') {
-      signOut();
+    if (typeof window === 'undefined') {
+      // Server: surface as a domain exception (unchanged).
+      throw new CustomException('TOKEN_EXPIRED', 'token expired and sign out success');
     }
-    throw new CustomException('TOKEN_EXPIRED', 'token expired and sign out success');
+
+    // Client: only sign out an actually-authenticated session whose backend
+    // token expired. A 401 while logged out (e.g. a background query to an
+    // authed endpoint like /inboxes) must NOT trigger signOut — that loops:
+    // signOut → session refetch → re-render → re-query → 401 → signOut → …
+    const session = await getSession();
+    if (session?.user?.accessToken && !isSigningOut) {
+      isSigningOut = true;
+      signOut();
+      throw new CustomException('TOKEN_EXPIRED', 'token expired and sign out success');
+    }
   }
 
   // TODO: 403 처리
