@@ -1,9 +1,9 @@
 'use client';
 
 import type { PersonaInfo } from '@gitanimals/api';
+import { renderStatsQueries } from '@gitanimals/react-query';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { renderQueryOptions } from '@/apis/render/queries';
 import { AnimalCard } from '@/components/AnimalCard';
 import { MediaQuery } from '@/components/MediaQuery';
 import { PerspectiveCenterSlider } from '@/components/Slider';
@@ -25,7 +25,7 @@ const cardContainerMobile =
 
 function AnimalSlider() {
   const { data } = useSuspenseQuery({
-    ...renderQueryOptions.getAllPersona(),
+    ...renderStatsQueries.allPersonaOptions(),
     staleTime: 1000 * 60 * 60 * 24,
   });
 

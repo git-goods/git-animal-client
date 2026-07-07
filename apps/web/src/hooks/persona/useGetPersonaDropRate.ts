@@ -1,6 +1,6 @@
+import { renderStatsQueries } from '@gitanimals/react-query';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { renderQueryOptions } from '@/apis/render/queries';
 import { getAnimalTierInfo } from '@/utils/animals';
 
 /**
@@ -12,7 +12,7 @@ import { getAnimalTierInfo } from '@/utils/animals';
 export const useGetPersonaDropRate = (personaType: string) => {
   const {
     data: { personas },
-  } = useSuspenseQuery(renderQueryOptions.getAllPersona());
+  } = useSuspenseQuery(renderStatsQueries.allPersonaOptions());
   const currentPersona = personas.find((persona) => persona.type === personaType);
   if (!currentPersona) throw new Error('unexpected persona');
 

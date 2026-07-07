@@ -2,12 +2,10 @@
 
 import React, { Suspense } from 'react';
 import Image from 'next/image';
+import { auctionQueries, identityQueries, renderStatsQueries } from '@gitanimals/react-query';
 import { AnchorButton } from '@gitanimals/ui-tailwind';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { auctionQueryOptions } from '@/apis/auctions/queries';
-import { identityQueryOptions } from '@/apis/identity/queries';
-import { renderQueryOptions } from '@/apis/render/queries';
 import { Responsive } from '@/components/Responsive';
 
 import AnimalSlider from './AnimalSlider';
@@ -87,18 +85,18 @@ function AvailablePetSection() {
 export default AvailablePetSection;
 
 function TotalUsers() {
-  const { data: identityData } = useSuspenseQuery(identityQueryOptions.getTotalIdentityUserCount());
-  const { data: renderData } = useSuspenseQuery(renderQueryOptions.getTotalRenderUserCount());
+  const { data: identityData } = useSuspenseQuery(identityQueries.totalUserCountOptions());
+  const { data: renderData } = useSuspenseQuery(renderStatsQueries.totalRenderUserCountOptions());
   return <p>{Number(identityData.userCount ?? 0) + Number(renderData.userCount ?? 0)}+</p>;
 }
 
 function TotalAdoptedPets() {
-  const { data } = useSuspenseQuery(renderQueryOptions.getTotalPersonaCount());
+  const { data } = useSuspenseQuery(renderStatsQueries.totalPersonaCountOptions());
   return <p>{data.personaCount}+</p>;
 }
 
 function RegisteredPets() {
-  const { data } = useSuspenseQuery(auctionQueryOptions.getTotalProductCount());
+  const { data } = useSuspenseQuery(auctionQueries.totalProductCountOptions());
 
   return <p>{data.count}+</p>;
 }
