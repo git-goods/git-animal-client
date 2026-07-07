@@ -20,6 +20,27 @@ test.describe('API interceptor auth header', () => {
     expect(authHeaders.every((h) => h === undefined)).toBe(true);
   });
 
+  test('logged out: no authed inbox call and no signOut loop', async ({ page }) => {
+    // Regression on two levels:
+    // 1) Root: Notification (authed /inboxes) must not render/fetch while logged
+    //    out — it's gated on isLogin in DesktopGNB.
+    // 2) Defense: even if an authed 401 slips through, the response interceptor
+    //    must not signOut a logged-out user (that looped: signOut → session
+    //    refetch → re-render → 401 → …, flooding /api/auth/session).
+    let inboxCount = 0;
+    let signoutCount = 0;
+    page.on('request', (req) => {
+      if (req.url().includes('/inboxes')) inboxCount += 1;
+      if (req.method() === 'POST' && req.url().includes('/api/auth/signout')) signoutCount += 1;
+    });
+
+    await page.goto('/');
+    await page.waitForTimeout(4000); // a loop would fire many requests in this window
+
+    expect(inboxCount).toBe(0);
+    expect(signoutCount).toBe(0);
+  });
+
   /**
    * Authenticated token-injection. Skipped by default: needs NEXTAUTH_SECRET and
    * a valid test accessToken in the E2E env. Enable once those exist — it proves
