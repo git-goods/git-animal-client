@@ -12,7 +12,9 @@
     "build-storybook": "storybook build",
     "type-check": "tsc --noEmit",
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@gitanimals/api": "workspace:*",
@@ -59,6 +61,7 @@
     "@gitanimals/typescript-config": "workspace:*",
     "@gitanimals/util-common": "workspace:*",
     "@next/bundle-analyzer": "^14.2.5",
+    "@playwright/test": "^1.48.0",
     "@storybook/addon-essentials": "^8.0.9",
     "@storybook/addon-interactions": "^8.0.9",
     "@storybook/addon-links": "^8.0.9",
@@ -68,7 +71,6 @@
     "@storybook/react": "^8.0.9",
     "@storybook/test": "^8.0.9",
     "@tanstack/eslint-plugin-query": "^5.28.11",
-    "autoprefixer": "^10.4.20",
     "@tanstack/react-query-devtools": "^5.32.0",
     "@types/google-spreadsheet": "^4.0.0",
     "@types/gtag.js": "^0.0.19",
@@ -78,6 +80,7 @@
     "@types/react": "*",
     "@types/react-dom": "^18",
     "@typescript-eslint/parser": "^7.7.1",
+    "autoprefixer": "^10.4.20",
     "eslint": "^8",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
