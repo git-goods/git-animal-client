@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { getSession, signOut } from 'next-auth/react';
 import {
   setRenderRequestInterceptor,
@@ -11,34 +12,33 @@ import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConf
 import { getServerAuth } from '@/auth';
 import type { ApiErrorScheme } from '@/exceptions/type';
 
+// Server path: request-scoped memoization via React cache(). Deduped within a
+// single render (one JWT decode instead of one per outbound request), and never
+// shared across concurrent requests from different users.
+const getServerAccessToken = cache(async (): Promise<string | null> => {
+  const session = await getServerAuth();
+  return session?.user?.accessToken ?? null;
+});
+
+// Client-only module-global cache. The browser global is per-user, so caching
+// here is safe. It MUST NOT be shared on the server, where a single module
+// instance is shared across concurrent requests from different users — the
+// server path above deliberately uses request-scoped cache() instead.
 interface CachedSession {
   accessToken: string;
   expiresAt: number;
 }
-
-// Client-only module-global cache. The browser global is per-user, so caching
-// here is safe. It MUST NOT be shared on the server, where a single module
-// instance is shared across concurrent requests from different users.
 let cachedSession: CachedSession | null = null;
-let sessionPromise: Promise<CachedSession | null> | null = null;
+let sessionPromise: Promise<string | null> | null = null;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
-const getSessionWithCache = async (): Promise<CachedSession | null> => {
-  // Server path: never touch module-global state. getServerAuth() reads
-  // request-scoped cookies, so resolve per request (a JWT decode per call).
+const getAccessToken = async (): Promise<string | null> => {
   if (typeof window === 'undefined') {
-    const session = await getServerAuth();
-    if (session?.user?.accessToken) {
-      return {
-        accessToken: session.user.accessToken,
-        expiresAt: Date.now() + CACHE_DURATION,
-      };
-    }
-    return null;
+    return getServerAccessToken();
   }
 
   if (cachedSession && Date.now() < cachedSession.expiresAt) {
-    return cachedSession;
+    return cachedSession.accessToken;
   }
 
   if (sessionPromise) {
@@ -54,7 +54,7 @@ const getSessionWithCache = async (): Promise<CachedSession | null> => {
           accessToken: session.user.accessToken,
           expiresAt: Date.now() + CACHE_DURATION,
         };
-        return cachedSession;
+        return cachedSession.accessToken;
       }
       return null;
     } finally {
@@ -66,12 +66,12 @@ const getSessionWithCache = async (): Promise<CachedSession | null> => {
 };
 
 export const interceptorRequestFulfilled = async (config: InternalAxiosRequestConfig) => {
-  const session = await getSessionWithCache();
+  const accessToken = await getAccessToken();
 
   if (!config.headers) return config;
 
-  if (session?.accessToken) {
-    config.headers.Authorization = `Bearer ${session.accessToken}`;
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
 
   return config;
