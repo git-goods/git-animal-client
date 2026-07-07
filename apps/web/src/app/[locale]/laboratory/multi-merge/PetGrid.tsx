@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { DragSelectContainer } from '../../../../components/DragSelect';
 
-import { MemoizedPersonaItem } from './PersonaItem';
+import { MemoizedPersonaItem } from './MergePersonaItem';
 
 type Persona = {
   id: string;

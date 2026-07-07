@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { createOrUpdateUpvote } from '@/apis/laboratory/feedback';
 import { LABORATORY_FEEDBACK_QUERY_KEYS, upvoteQueryOptions } from '@/apis/laboratory/useLaboratoryFeedback';
 import { Link } from '@/i18n/routing';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 
 // Note: This is now a client component, metadata should be handled at layout level if needed
 

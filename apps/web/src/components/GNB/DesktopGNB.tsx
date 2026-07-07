@@ -59,7 +59,7 @@ export async function DesktopGNB() {
             </Link>
           )}
           <div className="mx-[32px] flex items-center gap-[32px] [&>*]:h-[24px]">
-            <Notification />
+            {isLogin && <Notification />}
             <DesktopLanguageSelector />
             <a href={GIT_ANIMALS_MAIN_URL} target="_blank">
               <GithubIcon width={24} height={24} color="#000" fillOpacity={0.75} />

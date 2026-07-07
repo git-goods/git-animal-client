@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { wrap } from '@suspensive/react';
 import { overlay } from 'overlay-kit';
 
-import { ConfirmDialog } from '@/app/[locale]/laboratory/_component/ConfirmDialog';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { ROUTE } from '@/constants/route';
 import { useRouter } from '@/i18n/routing';
 

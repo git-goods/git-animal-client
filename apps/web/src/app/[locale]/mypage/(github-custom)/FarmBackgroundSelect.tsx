@@ -7,7 +7,7 @@ import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { customScrollStyle } from '@/styles/scrollStyle';
-import { useClientSession, useClientUser } from '@/utils/clientAuth';
+import { useClientSession, useClientUser } from '@/hooks/clientAuth';
 import { getBackgroundImage } from '@/utils/image';
 
 export const FarmBackgroundSelect = wrap

@@ -1,4 +1,5 @@
 export { setRequestInterceptor, setResponseInterceptor } from './_instance';
+export { setRenderRequestInterceptor, setRenderResponseInterceptor } from './_instance';
 export * from './type';
 export * from './schema';
 export * from './user';

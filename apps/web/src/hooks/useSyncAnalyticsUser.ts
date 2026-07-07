@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { SESSION_STORAGE_KEY } from '@/constants/storage';
 import { identifyUser, resetAnalyticsUser, setUserProperties, trackEvent } from '@/lib/analytics';
-import { useClientSession } from '@/utils/clientAuth';
+import { useClientSession } from '@/hooks/clientAuth';
 
 /**
  * 로그인한 사용자를 Mixpanel에 식별하고, 포인트를 사용자 속성으로 동기화한다.

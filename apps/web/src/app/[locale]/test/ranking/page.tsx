@@ -1,11 +1,11 @@
-import { getServerSession } from 'next-auth';
 import { getRankByUsername } from '@gitanimals/api';
 import { rankQueries } from '@gitanimals/react-query';
 
+import { getServerAuth } from '@/auth';
 import { getDehydratedQueries, Hydrate } from '@/lib/react-query/queryClient';
 
-import { RANKS_PER_PAGE, RANKS_TOP_3 } from '../../landing/RankingSection/constants';
-import RankingSection from '../../landing/RankingSection/RankingSection';
+import { RANKS_PER_PAGE, RANKS_TOP_3 } from '../../landing/_components/RankingSection/RankingSection.constants';
+import RankingSection from '../../landing/_components/RankingSection/RankingSection';
 
 export default async function TestRankingPage({
   searchParams,
@@ -15,7 +15,7 @@ export default async function TestRankingPage({
   try {
     const type = searchParams.ranking ?? 'people';
 
-    const session = await getServerSession();
+    const session = await getServerAuth();
 
     const getStartPageNumber = async () => {
       if (session && type === 'people') {

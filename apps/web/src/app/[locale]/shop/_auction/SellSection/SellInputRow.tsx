@@ -3,7 +3,7 @@ import type { ChangeEventHandler } from 'react';
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Persona } from '@gitanimals/api';
-import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
+import { useIsMobile } from '@gitanimals/react';
 import { auctionQueries, userQueries } from '@gitanimals/react-query';
 import { Button, cn, Dialog } from '@gitanimals/ui-tailwind';
 import { snakeToTitleCase } from '@gitanimals/util-common';
@@ -14,7 +14,7 @@ import { useRegisterProduct } from '@/apis/auctions/useRegisterProduct';
 import { useGetPersonaTier } from '@/hooks/persona/useGetPersonaDropRate';
 import { trackEvent } from '@/lib/analytics';
 import { ANIMAL_TIER_TEXT_MAP } from '@/utils/animals';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 import { rowStyle, ShopTableMobileRow } from '../../_common/ShopTableMobileRow';

@@ -1,12 +1,6 @@
 import type { Metadata, Viewport } from 'next';
-import { setRequestInterceptor, setResponseInterceptor } from '@gitanimals/api';
-import { setRenderRequestInterceptor, setRenderResponseInterceptor } from '@gitanimals/api/src/_instance';
 
-import {
-  interceptorRequestFulfilled,
-  interceptorResponseFulfilled,
-  interceptorResponseRejected,
-} from '@/apis/interceptor';
+import { registerInterceptors } from '@/apis/interceptor';
 
 import './globals.css';
 import '@gitanimals/asset-font/product-sans/index.css';
@@ -64,10 +58,7 @@ export const viewport: Viewport = {
   userScalable: false,
 };
 
-setRequestInterceptor(interceptorRequestFulfilled);
-setResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
-setRenderRequestInterceptor(interceptorRequestFulfilled);
-setRenderResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
+registerInterceptors();
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

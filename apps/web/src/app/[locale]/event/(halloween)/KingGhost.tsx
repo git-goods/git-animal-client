@@ -32,7 +32,6 @@ export function KingGhost() {
   };
 
   const handleClick = () => {
-    console.log('handleClick: ');
     setIsExpanded(!isExpanded);
   };
 

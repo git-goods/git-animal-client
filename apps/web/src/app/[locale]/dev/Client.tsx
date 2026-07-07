@@ -4,7 +4,7 @@ import { Button } from '@gitanimals/ui-tailwind';
 
 import { Link } from '@/i18n/routing';
 import { useDevMode } from '@/lib/devtools/devtools';
-import { useClientSession } from '@/utils/clientAuth';
+import { useClientSession } from '@/hooks/clientAuth';
 import { getIsOnLoadSheet, sendLog } from '@/utils/log';
 
 function DevClient() {
