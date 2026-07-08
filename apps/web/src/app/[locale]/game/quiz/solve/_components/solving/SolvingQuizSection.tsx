@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { cn, Dialog } from '@gitanimals/ui-tailwind';
+import { Button, cn, Dialog } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 
 import { Background } from '@/app/[locale]/game/quiz/_components/BackGround';
@@ -41,10 +41,6 @@ const SolvingQuizSection = wrap
 
     const { correctDialog, failDialog, completeDialog } = quizDialog;
     const { submit, terminateQuiz, moveToNextStage, moveToQuizMain, stopQuiz } = quizAction;
-
-    // correctDialog 의 onConfirm(다음 라운드 진행) 경로에서만 열리는 Dialog.Confirm 의 공용 onOpenChange 를 스킵하기 위한 플래그.
-    // (challenge-button 확인 후에도 Dialog.Confirm 내부에서 onOpenChange(false) 가 호출되어, stop 로직과 중복 실행되는 것을 방지)
-    const isMovingToNextStageRef = useRef(false);
 
     // round 바뀌면 타이머 정지 해제
     useEffect(() => {
@@ -92,41 +88,96 @@ const SolvingQuizSection = wrap
             </div>
           </div>
         </div>
-        <Dialog.Confirm
-          open={correctDialog.isOpen}
-          onOpenChange={(open) => {
-            if (open) return;
-
-            if (isMovingToNextStageRef.current) {
-              isMovingToNextStageRef.current = false;
-              return;
-            }
-
-            stopQuiz().then(() => terminateQuiz());
-          }}
-          onConfirm={() => {
-            isMovingToNextStageRef.current = true;
-            moveToNextStage();
-          }}
-          title={t('correct-dialog.title')}
-          description={t('correct-dialog.description')}
-          confirmText={t('correct-dialog.challenge-button')}
-          cancelText={customT(t('correct-dialog.stop-button'), { point: prize })}
-        />
-        <Dialog.Alert
-          open={failDialog.isOpen}
-          onOpenChange={(open) => !open && moveToQuizMain()}
-          title={t('fail-dialog.title')}
-          description={t('fail-dialog.description')}
-          confirmText={t('fail-dialog.close-button')}
-        />
-        <Dialog.Alert
-          open={completeDialog.isOpen}
-          onOpenChange={(open) => !open && terminateQuiz()}
-          title={t('complete-dialog.title')}
-          description={customT(t('complete-dialog.description'), { point: prize })}
-          confirmText={t('complete-dialog.close-button')}
-        />
+        <Dialog open={correctDialog.isOpen} onOpenChange={(open) => !open && stopQuiz().then(() => terminateQuiz())}>
+          <Dialog.Content
+            className="flex w-full flex-col items-center gap-[12px]"
+            isShowClose={false}
+            onEscapeKeyDown={(e) => e.preventDefault()}
+            onPointerDownOutside={(e) => e.preventDefault()}
+          >
+            <div className="flex w-full flex-col items-center gap-[12px]">
+              <Dialog.Title className="!glyph24-bold !text-center [font-family:'Product_Sans'] font-bold">
+                {t('correct-dialog.title')}
+              </Dialog.Title>
+              <Dialog.Description className="glyph16-regular text-center [font-family:'Product_Sans'] font-normal text-white-75 [word-break:keep-all]">
+                {t('correct-dialog.description')}
+              </Dialog.Description>
+            </div>
+            <Image
+              className="my-[4px]"
+              src="/assets/game/quiz/quiz-coin.svg"
+              alt="quiz-coin"
+              width={160}
+              height={160}
+              draggable={false}
+            />
+            <div className="flex w-full flex-col gap-[8px]">
+              <Button className="w-full" onClick={moveToNextStage} variant="primary" size="m">
+                {t('correct-dialog.challenge-button')}
+              </Button>
+              <Button
+                className="w-full"
+                onClick={() => stopQuiz().then(() => terminateQuiz())}
+                variant="secondary"
+                size="m"
+              >
+                {customT(t('correct-dialog.stop-button'), { point: prize })}
+              </Button>
+            </div>
+          </Dialog.Content>
+        </Dialog>
+        <Dialog open={failDialog.isOpen} onOpenChange={(open) => !open && moveToQuizMain()}>
+          <Dialog.Content className="flex w-full flex-col items-center gap-[12px]">
+            <div className="flex w-full flex-col items-center gap-[12px]">
+              <Dialog.Title className="!glyph24-bold !text-center [font-family:'Product_Sans'] font-bold">
+                {t('fail-dialog.title')}
+              </Dialog.Title>
+              <Dialog.Description className="glyph16-regular text-center [font-family:'Product_Sans'] font-normal text-white-75 [word-break:keep-all]">
+                {t('fail-dialog.description')}
+              </Dialog.Description>
+            </div>
+            <div className="my-[4px] flex h-[160px] w-[160px] items-center justify-center">
+              <Image
+                src="/assets/game/quiz/cursor-unchoiced.webp"
+                alt="quiz-failed"
+                width={100}
+                height={100}
+                draggable={false}
+              />
+            </div>
+            <div className="flex w-full">
+              <Button className="w-full" onClick={moveToQuizMain} variant="secondary" size="m">
+                {t('fail-dialog.close-button')}
+              </Button>
+            </div>
+          </Dialog.Content>
+        </Dialog>
+        <Dialog open={completeDialog.isOpen} onOpenChange={(open) => !open && terminateQuiz()}>
+          <Dialog.Content className="flex w-full flex-col items-center gap-[12px]">
+            <div className="flex w-full flex-col items-center gap-[12px]">
+              <Dialog.Title className="!glyph24-bold !text-center [font-family:'Product_Sans'] font-bold">
+                {t('complete-dialog.title')}
+              </Dialog.Title>
+              <Dialog.Description className="glyph16-regular text-center [font-family:'Product_Sans'] font-normal text-white-75 [word-break:keep-all]">
+                {customT(t('complete-dialog.description'), { point: prize })}
+              </Dialog.Description>
+            </div>
+            <div className="my-[4px] flex h-[160px] w-[160px] items-center justify-center">
+              <Image
+                src="/assets/game/quiz/quiz-double-coin.webp"
+                alt="quiz-complete"
+                width={204}
+                height={184}
+                draggable={false}
+              />
+            </div>
+            <div className="flex w-full">
+              <Button className="w-full" onClick={terminateQuiz} variant="secondary" size="m">
+                {t('complete-dialog.close-button')}
+              </Button>
+            </div>
+          </Dialog.Content>
+        </Dialog>
       </>
     );
   });
