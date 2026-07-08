@@ -1,21 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import type { GotchaResult } from '@gitanimals/api';
 import { postGotcha } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { userQueries } from '@gitanimals/react-query';
 import { Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
-import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
-import { SelectedCardMotion } from '@/components/CardGame/FanDrawingGame/CardMotion';
-import { CardDrawingGame, DetailedCard } from '@/components/CardGame/FanDrawingGame/FanDrawingGame';
 import { GITHUB_ISSUE_URL } from '@/constants/outlink';
 import { trackEvent } from '@/lib/analytics';
 
+import { GachaHatchGame } from './GachaHatchGame';
 import { useCheckEnoughMoney } from './useCheckEnoughMoney';
 
 const ONE_PET_POINT = 1000 as const;
@@ -31,7 +28,10 @@ function OnePet({ onClose }: Props) {
   const { data } = useSession();
   const { checkEnoughMoney } = useCheckEnoughMoney({ enoughPoint: ONE_PET_POINT });
 
-  const onAction = async () => {
+  // 뽑는 중(포인트 차감~결과 전)엔 닫기 차단 — 실수로 닫아 결과를 못 보는 것 방지
+  const [busy, setBusy] = useState(false);
+
+  const onDraw = async () => {
     try {
       if (!checkEnoughMoney()) {
         throw new Error(t('not-enough-points'));
@@ -41,17 +41,14 @@ function OnePet({ onClose }: Props) {
       const resultPersona = res.gotchaResults[0];
 
       queryClient.invalidateQueries({ queryKey: userQueries.userKey() });
-      toast.success(t('get-persona-success'));
-      onClose();
-
-      handleShowResult(resultPersona);
 
       trackEvent('gotcha', {
         type: '1-pet',
         status: 'success',
       });
 
-      return { type: resultPersona.name, dropRate: resultPersona.dropRate };
+      // 성공 토스트/결과 오버레이는 GachaHatchGame의 연출이 담당한다.
+      return { name: resultPersona.name, dropRate: resultPersona.dropRate };
     } catch (error) {
       trackEvent('gotcha', {
         type: '1-pet',
@@ -92,37 +89,20 @@ Token: ${data?.user.accessToken}
     }
   };
 
-  const handleShowResult = (resultPersona: GotchaResult) => {
-    overlay.open(
-      ({ isOpen, close }) =>
-        isOpen && (
-          <div
-            className="fixed left-0 top-0 z-[9001] flex h-full w-full cursor-pointer flex-col items-center justify-center gap-[100px] bg-black-50 backdrop-blur-[10px]"
-            onClick={() => {
-              close();
-            }}
-          >
-            <SelectedCardMotion x={0} y={0} rotate={0} index={0}>
-              <DetailedCard cardData={{ type: resultPersona.name, dropRate: resultPersona.dropRate }} />
-            </SelectedCardMotion>
-            <p className="glyph22-regular text-center text-white mobile:glyph16-regular">{t('click-to-close')}</p>
-          </div>
-        ),
-    );
-  };
-
   return (
-    <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="large" className="h-fit mobile:flex mobile:flex-col mobile:items-center mobile:justify-center">
-        <Dialog.Title className="glyph48-bold text-center text-white mobile:glyph28-bold">
-          {t('choose-one-card')}
-        </Dialog.Title>
+    <Dialog
+      open={true}
+      onOpenChange={(open) => {
+        // 뽑는 중엔 Esc/오버레이/X 로 닫히지 않도록 차단
+        if (!open && !busy) onClose();
+      }}
+    >
+      {/* 가챠 연출은 풀스크린 몰입형 — 박스 모달 대신 screen 변형 사용 */}
+      <Dialog.Content size="screen" isShowClose={!busy} className="border-none bg-black-90 p-0">
+        {/* 타이틀은 GOTCHA 워드마크가 대신 — a11y용으로만 유지 */}
+        <Dialog.Title className="sr-only">{t('pet-gotcha-title')}</Dialog.Title>
 
-        <CardDrawingGame
-          characters={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }]}
-          onSelectCard={onAction}
-          onClose={onClose}
-        />
+        <GachaHatchGame onDraw={onDraw} onClose={onClose} onBusyChange={setBusy} />
       </Dialog.Content>
     </Dialog>
   );
