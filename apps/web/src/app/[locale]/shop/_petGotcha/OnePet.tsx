@@ -113,7 +113,7 @@ Token: ${data?.user.accessToken}
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="hero">
+      <Dialog.Content size="hero" className="items-center justify-center">
         <Dialog.Title>{t('choose-one-card')}</Dialog.Title>
 
         <CardDrawingGame
