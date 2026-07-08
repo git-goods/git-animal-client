@@ -127,7 +127,12 @@ const SolvingQuizSection = wrap
           </Dialog.Content>
         </Dialog>
         <Dialog open={failDialog.isOpen} onOpenChange={(open) => !open && moveToQuizMain()}>
-          <Dialog.Content className="flex w-full flex-col items-center gap-[12px]">
+          <Dialog.Content
+            className="flex w-full flex-col items-center gap-[12px]"
+            isShowClose={false}
+            onEscapeKeyDown={(e) => e.preventDefault()}
+            onPointerDownOutside={(e) => e.preventDefault()}
+          >
             <div className="flex w-full flex-col items-center gap-[12px]">
               <Dialog.Title className="!glyph24-bold !text-center [font-family:'Product_Sans'] font-bold">
                 {t('fail-dialog.title')}
@@ -153,7 +158,12 @@ const SolvingQuizSection = wrap
           </Dialog.Content>
         </Dialog>
         <Dialog open={completeDialog.isOpen} onOpenChange={(open) => !open && terminateQuiz()}>
-          <Dialog.Content className="flex w-full flex-col items-center gap-[12px]">
+          <Dialog.Content
+            className="flex w-full flex-col items-center gap-[12px]"
+            isShowClose={false}
+            onEscapeKeyDown={(e) => e.preventDefault()}
+            onPointerDownOutside={(e) => e.preventDefault()}
+          >
             <div className="flex w-full flex-col items-center gap-[12px]">
               <Dialog.Title className="!glyph24-bold !text-center [font-family:'Product_Sans'] font-bold">
                 {t('complete-dialog.title')}

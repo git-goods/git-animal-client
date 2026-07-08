@@ -61,6 +61,7 @@ export function DialogComponent() {
         onConfirm={dialog.onConfirm}
         confirmText={confirmText}
         cancelText={cancelText}
+        size="md"
       />
     );
   }
@@ -72,6 +73,7 @@ export function DialogComponent() {
       title={dialog.title}
       description={dialog.description}
       confirmText={cancelText /* 기존 close 텍스트 유지 */}
+      size="md"
     />
   );
 }
