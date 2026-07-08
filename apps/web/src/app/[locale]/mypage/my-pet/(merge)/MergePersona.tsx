@@ -9,7 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useClientSession } from '@/hooks/clientAuth';
 
-import { SelectPersonaList } from '../_components/SelectPersonaList';
+import { SelectPersonaList } from '../../PersonaList';
 import { SpinningLoader } from '../_components/SpinningLoader';
 
 import { MergePreview } from './MergePreview';
@@ -67,7 +67,11 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
     <CommonDialog isOpen={isOpen} onClose={onClose} title="Merge to Level Up" size="large">
       <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
 
-      <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
+      <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona}>
+        <p className={listTitleStyle}>{t('please-choose-pet')}</p>
+        <SelectPersonaList.Toolbar showSearch />
+        <SelectPersonaList.InventoryGrid rows={3} />
+      </SelectPersonaList>
 
       <Dialog.Footer className={footerStyle}>
         <Button variant="secondary" onClick={onClose}>
@@ -89,3 +93,5 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
 }
 
 const footerStyle = 'flex justify-center sm:justify-center gap-[12px]';
+
+const listTitleStyle = 'glyph16-regular text-white-50 flex justify-between';
