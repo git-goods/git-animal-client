@@ -4,7 +4,7 @@ import { getTranslations } from 'next-intl/server';
 
 import GNB from '@/components/GNB/GNB';
 
-import { BackgroundSection } from './_background/BackgroundSection';
+import { ShopBackgroundSection } from './_background/ShopBackgroundSection';
 import { FloatingPointSection } from './_common/FloatingPointSection';
 import { AuctionSection } from './_auction';
 import { PetGotcha } from './_petGotcha';
@@ -40,7 +40,7 @@ async function ShopPage({
       <main>
         <PetGotcha />
         <AuctionSection selectedTab={searchParamsTab} />
-        <BackgroundSection />
+        <ShopBackgroundSection />
       </main>
     </div>
   );

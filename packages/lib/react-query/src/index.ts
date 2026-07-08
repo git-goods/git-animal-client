@@ -9,3 +9,4 @@ export * from './guild';
 export * from './quiz';
 export * from './rank';
 export * from './quiz';
+export * from './identity';

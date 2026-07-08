@@ -9,7 +9,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { BellIcon } from 'lucide-react';
 
 import { InboxList } from './InboxList';
-import { INBOX_NOTICE } from './notification.contants';
+import { INBOX_NOTICE } from './notification.constants';
 
 export const Notification = wrap
   .ErrorBoundary({ fallback: <></> })

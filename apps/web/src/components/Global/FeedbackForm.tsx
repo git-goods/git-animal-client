@@ -14,7 +14,7 @@ import Select from '@/components/Select';
 import TextArea from '@/components/TextArea';
 import type { GithubIssueType } from '@/constants/github';
 import { GITHUB_ISSUE_TYPE, SERVICE_MAINTAINER } from '@/constants/github';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 import { sendLog } from '@/utils/log';
 
 const ISSUE_LABEL: Record<

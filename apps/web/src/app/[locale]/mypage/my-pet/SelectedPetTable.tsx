@@ -14,7 +14,7 @@ import { toast } from 'sonner';
 import { LOCAL_STORAGE_KEY } from '@/constants/storage';
 import { trackEvent } from '@/lib/analytics';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 import { EvolutionPersona } from './(evolution)';

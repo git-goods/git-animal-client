@@ -3,7 +3,7 @@
 import { signIn } from 'next-auth/react';
 import { TextField } from '@gitanimals/ui-tailwind';
 
-import { useClientSession, useClientUser } from '@/utils/clientAuth';
+import { useClientSession, useClientUser } from '@/hooks/clientAuth';
 
 /** 상점 Auction 섹션과 동일 그라데이션 */
 const pageRootClass =

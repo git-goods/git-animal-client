@@ -15,7 +15,7 @@ import { MemoizedBannerPersonaItem } from '@/components/PersonaItem';
 import { PersonaListToolbar } from '@/components/PersonaListToolbar';
 import type { PersonaFilterState } from '@/hooks/persona/usePersonaListFilter';
 import { usePersonaListFilter } from '@/hooks/persona/usePersonaListFilter';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 
 // ─── Context ────────────────────────────────────────────────────────
 
