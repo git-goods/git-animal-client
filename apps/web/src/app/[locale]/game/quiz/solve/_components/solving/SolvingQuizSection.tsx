@@ -1,19 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { cn } from '@gitanimals/ui-tailwind';
+import { cn, Dialog } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 
 import { Background } from '@/app/[locale]/game/quiz/_components/BackGround';
-import CompleteAlertDialog from '@/app/[locale]/game/quiz/solve/_components/done/CompleteAlertDialog';
-import FailAlertDialog from '@/app/[locale]/game/quiz/solve/_components/fail/FailAlertDialog';
 import QuizProgressBar from '@/app/[locale]/game/quiz/solve/_components/solving/QuizProgressBar';
-import CorrectConfirmDialog from '@/app/[locale]/game/quiz/solve/_components/success/CorrectConfirmDialog';
 import { QUIZ_ANSWER } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
 import { customScrollStyle } from '@/styles/scrollStyle';
 
+import { customT } from '../../../_utils/quiz.intl';
 import useQuizAction from '../../_hooks/useQuizAction';
 import useQuizData from '../../_hooks/useQuizData';
 import useQuizDialogStatus from '../../_hooks/useQuizDialogStatus';
@@ -43,6 +41,10 @@ const SolvingQuizSection = wrap
 
     const { correctDialog, failDialog, completeDialog } = quizDialog;
     const { submit, terminateQuiz, moveToNextStage, moveToQuizMain, stopQuiz } = quizAction;
+
+    // correctDialog 의 onConfirm(다음 라운드 진행) 경로에서만 열리는 Dialog.Confirm 의 공용 onOpenChange 를 스킵하기 위한 플래그.
+    // (challenge-button 확인 후에도 Dialog.Confirm 내부에서 onOpenChange(false) 가 호출되어, stop 로직과 중복 실행되는 것을 방지)
+    const isMovingToNextStageRef = useRef(false);
 
     // round 바뀌면 타이머 정지 해제
     useEffect(() => {
@@ -90,18 +92,41 @@ const SolvingQuizSection = wrap
             </div>
           </div>
         </div>
-        <CorrectConfirmDialog
-          isOpen={correctDialog.isOpen}
-          onClose={correctDialog.close}
-          onStop={async () => {
-            await stopQuiz();
-            await terminateQuiz();
+        <Dialog.Confirm
+          open={correctDialog.isOpen}
+          onOpenChange={(open) => {
+            if (open) return;
+
+            if (isMovingToNextStageRef.current) {
+              isMovingToNextStageRef.current = false;
+              return;
+            }
+
+            stopQuiz().then(() => terminateQuiz());
           }}
-          onConfirm={moveToNextStage}
-          correctPoint={prize}
+          onConfirm={() => {
+            isMovingToNextStageRef.current = true;
+            moveToNextStage();
+          }}
+          title={t('correct-dialog.title')}
+          description={t('correct-dialog.description')}
+          confirmText={t('correct-dialog.challenge-button')}
+          cancelText={customT(t('correct-dialog.stop-button'), { point: prize })}
         />
-        <FailAlertDialog isOpen={failDialog.isOpen} onClose={moveToQuizMain} />
-        <CompleteAlertDialog isOpen={completeDialog.isOpen} onClose={terminateQuiz} completePoint={prize} />
+        <Dialog.Alert
+          open={failDialog.isOpen}
+          onOpenChange={(open) => !open && moveToQuizMain()}
+          title={t('fail-dialog.title')}
+          description={t('fail-dialog.description')}
+          confirmText={t('fail-dialog.close-button')}
+        />
+        <Dialog.Alert
+          open={completeDialog.isOpen}
+          onOpenChange={(open) => !open && terminateQuiz()}
+          title={t('complete-dialog.title')}
+          description={customT(t('complete-dialog.description'), { point: prize })}
+          confirmText={t('complete-dialog.close-button')}
+        />
       </>
     );
   });
