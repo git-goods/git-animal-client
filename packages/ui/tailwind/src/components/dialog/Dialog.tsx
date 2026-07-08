@@ -7,6 +7,9 @@ import { X } from 'lucide-react';
 
 import { cn } from '../../utils/cn';
 
+import { DialogAlert } from './Alert';
+import { DialogConfirm } from './Confirm';
+
 /**
  * ADR: docs/superpowers/specs/2026-07-08-dialog-core-redesign-design.md
  * size(Content) 하나가 recipe 전체(폭·패딩·타이포·정렬·버튼 크기 힌트)를 결정한다.
@@ -182,6 +185,8 @@ export const Dialog = Object.assign(DialogRoot, {
   Description,
   TopSlot,
   Body,
+  Alert: DialogAlert,
+  Confirm: DialogConfirm,
 });
 
 // 내부 노출: Alert/Confirm sugar가 size 에서 Button size 매핑 시 참조.
