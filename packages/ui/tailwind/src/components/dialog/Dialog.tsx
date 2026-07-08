@@ -8,13 +8,16 @@ import { X } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
 /**
- * PandaCSS `@gitanimals/ui-panda` 의 Dialog(compound) 와 1:1.
- * - visible 스타일은 GitAnimals override(dialogContentCva / Dialog.styles) 기준. recipe 구조(고정 중앙/슬롯)는 유지.
- * - 애니메이션은 표준 shadcn(tailwindcss-animate) fade(ADR-015). panda content 는 전역 `animation:fadeIn!important`
- *   로 사실상 fade 만 — zoom 없이 fade 로 재현.
- * - overlay: black-75 / z-3000(override), content: z-3001(cva). close: 우상단 transparent + X(24, white).
- * - border 는 border-solid 명시(ADR-014).
+ * ADR: docs/superpowers/specs/2026-07-08-dialog-core-redesign-design.md
+ * size(Content) 하나가 recipe 전체(폭·패딩·타이포·정렬·버튼 크기 힌트)를 결정한다.
+ * Title/Description/Footer 는 DialogSizeContext 로 size 를 consume 하여 자동 스타일링.
  */
+
+type DialogSize = 'sm' | 'md' | 'lg' | 'screen' | 'hero';
+
+const DialogSizeContext = React.createContext<DialogSize>('md');
+const useDialogSize = () => React.useContext(DialogSizeContext);
+
 const DialogRoot = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
 const DialogPortal = DialogPrimitive.Portal;
@@ -38,31 +41,28 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const dialogContentCva = cva(
   cn(
-    'fixed left-1/2 top-1/2 z-[3001] grid w-full max-w-[32rem] -translate-x-1/2 -translate-y-1/2 gap-[16px]',
-    'rounded-[16px] border border-solid border-gray-150 bg-gray-150 p-[24px] text-white-100 shadow-lg',
+    'fixed left-1/2 top-1/2 z-[3001] flex flex-col -translate-x-1/2 -translate-y-1/2',
+    'bg-gray-150 text-white-100 shadow-lg',
     'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
     'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]',
   ),
   {
     variants: {
       size: {
-        default:
-          'flex flex-col items-center justify-center gap-[28px] text-white [&_.dialog-title]:w-full [&_.dialog-title]:glyph20-regular [&_.dialog-title]:text-left mobile:max-w-[calc(100vw-48px)]',
-        large:
-          'h-full max-h-[calc(100%-240px)] max-w-[calc(100%-400px)] p-[60px_40px] [@media(min-width:769px)_and_(max-width:1200px)]:max-h-[calc(100vh-120px)] [@media(min-width:769px)_and_(max-width:1200px)]:max-w-[calc(100vw-240px)] [@media(min-width:769px)_and_(max-width:1200px)]:p-[48px_24px] mobile:h-full mobile:max-h-[100vh] mobile:max-w-[100vw] mobile:rounded-none',
-        screen:
-          'm-auto flex h-screen max-h-[100vh] w-screen max-w-[100vw] flex-col items-center justify-center rounded-none p-[24px] [@media(min-width:1920px)]:h-fit [@media(min-width:1920px)]:w-[1400px] [@media(min-width:1920px)]:rounded-[16px]',
+        sm: 'w-full max-w-[400px] p-5 gap-3 rounded-2xl border border-solid border-gray-150 mobile:max-w-[calc(100vw-48px)]',
+        md: 'w-full max-w-[560px] p-6 gap-4 rounded-2xl border border-solid border-gray-150 mobile:max-w-[calc(100vw-48px)]',
+        lg: 'w-full max-w-[960px] p-8 gap-6 rounded-2xl border border-solid border-gray-150 mobile:max-w-[100vw] mobile:max-h-[100vh] mobile:rounded-none mobile:p-5',
+        screen: 'w-screen h-screen max-w-[100vw] max-h-[100vh] p-6 gap-6 rounded-none mobile:p-5',
+        hero: 'w-screen h-screen max-w-[100vw] max-h-[100vh] p-8 gap-8 rounded-none mobile:p-6',
       },
     },
-    defaultVariants: {
-      size: 'default',
-    },
+    defaultVariants: { size: 'md' },
   },
 );
 
 export type DialogContentVariants = VariantProps<typeof dialogContentCva>;
 
-const dialogScrollableStyle = 'flex flex-col overflow-hidden [&_.dialog-title]:shrink-0';
+const dialogScrollableStyle = 'overflow-hidden [&_.dialog-title]:shrink-0';
 
 type DialogContentProps = {
   isShowClose?: boolean;
@@ -71,46 +71,74 @@ type DialogContentProps = {
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
 
 const Content = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
-  ({ children, isShowClose = true, scrollable, size, className, ...props }, ref) => (
-    <DialogPortal>
-      <DialogOverlay />
-      <DialogPrimitive.Content
-        ref={ref}
-        className={cn(dialogContentCva({ size: size ?? 'default' }), scrollable && dialogScrollableStyle, className)}
-        {...props}
-      >
-        {children}
-        {isShowClose && (
-          <DialogClose className="absolute right-[16px] top-[16px] cursor-pointer rounded-[4px] bg-transparent p-0 opacity-70 outline-none transition-opacity hover:opacity-100">
-            <X size={24} color="white" />
-            <span className="sr-only">Close</span>
-          </DialogClose>
-        )}
-      </DialogPrimitive.Content>
-    </DialogPortal>
-  ),
+  ({ children, isShowClose = true, scrollable, size, className, ...props }, ref) => {
+    const resolvedSize = size ?? 'md';
+    return (
+      <DialogSizeContext.Provider value={resolvedSize}>
+        <DialogPortal>
+          <DialogOverlay />
+          <DialogPrimitive.Content
+            ref={ref}
+            className={cn(dialogContentCva({ size: resolvedSize }), scrollable && dialogScrollableStyle, className)}
+            {...props}
+          >
+            {children}
+            {isShowClose && (
+              <DialogClose className="absolute right-[16px] top-[16px] cursor-pointer rounded-[4px] bg-transparent p-0 opacity-70 outline-none transition-opacity hover:opacity-100">
+                <X size={24} color="white" />
+                <span className="sr-only">Close</span>
+              </DialogClose>
+            )}
+          </DialogPrimitive.Content>
+        </DialogPortal>
+      </DialogSizeContext.Provider>
+    );
+  },
 );
 Content.displayName = DialogPrimitive.Content.displayName;
 
+/**
+ * hero size 의 히어로 타이포. dialogTitleStyle export 는 하위호환용으로 값 유지.
+ */
 export const dialogTitleStyle =
   'glyph48-bold text-white-100 text-center [@media(max-width:1200px)]:glyph32-bold mobile:glyph24-bold';
+
+const titleRecipe: Record<DialogSize, string> = {
+  sm: 'w-full glyph16-bold text-left text-white-100',
+  md: 'w-full glyph20-regular text-left text-white-100',
+  lg: 'w-full glyph24-bold text-left text-white-100',
+  screen: 'w-full glyph24-bold text-left text-white-100 mobile:glyph20-bold',
+  hero: `w-full ${dialogTitleStyle}`,
+};
 
 const Title = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
->(({ children, className, ...props }, ref) => (
-  <DialogPrimitive.Title ref={ref} className={cn('dialog-title', dialogTitleStyle, className)} {...props}>
-    {children}
-  </DialogPrimitive.Title>
-));
+>(({ children, className, ...props }, ref) => {
+  const size = useDialogSize();
+  return (
+    <DialogPrimitive.Title ref={ref} className={cn('dialog-title', titleRecipe[size], className)} {...props}>
+      {children}
+    </DialogPrimitive.Title>
+  );
+});
 Title.displayName = DialogPrimitive.Title.displayName;
+
+const descriptionRecipe: Record<DialogSize, string> = {
+  sm: 'w-full glyph14-regular text-left text-white-75',
+  md: 'w-full glyph16-regular text-left text-white-75',
+  lg: 'w-full glyph16-regular text-left text-white-75',
+  screen: 'w-full glyph16-regular text-left text-white-75',
+  hero: 'w-full glyph20-regular text-center text-white-75 mobile:glyph16-regular',
+};
 
 const Description = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
->(({ className, ...props }, ref) => (
-  <DialogPrimitive.Description ref={ref} className={className} {...props} />
-));
+>(({ className, ...props }, ref) => {
+  const size = useDialogSize();
+  return <DialogPrimitive.Description ref={ref} className={cn(descriptionRecipe[size], className)} {...props} />;
+});
 Description.displayName = DialogPrimitive.Description.displayName;
 
 const Header = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
@@ -118,9 +146,18 @@ const Header = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) =
 );
 Header.displayName = 'DialogHeader';
 
-const Footer = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-[8px]', className)} {...props} />
-);
+const footerRecipe: Record<DialogSize, string> = {
+  sm: 'flex justify-end gap-2 mt-2',
+  md: 'flex justify-end gap-2 mt-2',
+  lg: 'flex justify-end gap-3 mt-4',
+  screen: 'flex justify-end gap-3 mt-4',
+  hero: 'flex justify-center gap-4 mt-6',
+};
+
+const Footer = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
+  const size = useDialogSize();
+  return <div className={cn(footerRecipe[size], className)} {...props} />;
+};
 Footer.displayName = 'DialogFooter';
 
 const TopSlot = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<'div'>>(
@@ -146,3 +183,14 @@ export const Dialog = Object.assign(DialogRoot, {
   TopSlot,
   Body,
 });
+
+// 내부 노출: Alert/Confirm sugar가 size 에서 Button size 매핑 시 참조.
+export const buttonSizeForDialogSize: Record<DialogSize, 's' | 'm' | 'l'> = {
+  sm: 's',
+  md: 'm',
+  lg: 'm',
+  screen: 'm',
+  hero: 'l',
+};
+
+export type { DialogSize };
