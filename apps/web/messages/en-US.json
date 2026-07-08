@@ -63,7 +63,10 @@
     "gotcha-in-progress": "Drawing in progress. Please wait a moment.",
     "click-card-to-flip": "Click the card to flip!",
     "not-enough-points": "You don't have enough points to draw a pet.",
-    "click-to-close": "Touch the screen to close."
+    "click-to-close": "Touch the screen to close.",
+    "pet-gotcha-title": "Pet Gotcha",
+    "open-pack": "Tap the pack to open it!",
+    "tap-to-skip": "Tap the screen to skip"
   },
   "Shop": {
     "no-mobile-support": "Currently, mobile is not supported. Please connect to the desktop.",
