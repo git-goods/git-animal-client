@@ -68,7 +68,7 @@ export const PersonaSearch = wrap
         </button>
 
         <Dialog open={isOpen} onOpenChange={() => setIsOpen(false)}>
-          <Dialog.Content size="large" className={containerStyle}>
+          <Dialog.Content size="lg" className={containerStyle}>
             <Dialog.Title>Select Find Persona</Dialog.Title>
             <div className={selectedPersonaWrapperStyle}>
               {selected && (

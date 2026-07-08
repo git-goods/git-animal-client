@@ -110,7 +110,7 @@ Token: ${data?.user.accessToken}
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="screen" className="mobile:gap-[12px]">
+      <Dialog.Content size="hero">
         <Dialog.Title>
           {isPending ? t('gotcha-in-progress') : isSuccess ? t('get-persona-success') : t('click-card-to-flip')}
         </Dialog.Title>

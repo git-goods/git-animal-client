@@ -204,7 +204,7 @@ function SellConfirmDialog({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content>
         <Dialog.Title>{t('Shop.sell-confirm')}</Dialog.Title>
-        <Dialog.Description className={descriptionStyle}>
+        <Dialog.Description>
           <p>{t('Shop.sell-confirm-description')}</p>
         </Dialog.Description>
         <div className="flex w-full items-center justify-between">
@@ -227,5 +227,3 @@ function SellConfirmDialog({
     </Dialog>
   );
 }
-
-const descriptionStyle = 'w-full text-left text-white-75';
