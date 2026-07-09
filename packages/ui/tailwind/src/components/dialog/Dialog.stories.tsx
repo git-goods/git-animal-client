@@ -161,11 +161,8 @@ export const ConfirmSugar: Story = {
  * 콘텐츠 오버플로 처리 — `scrollable` prop + `Dialog.Body` 슬롯 조합.
  *
  * - `Dialog.Content scrollable` : 컨테이너 `overflow-hidden` + Title/Footer `shrink-0`
- * - `Dialog.Body` : `flex-1 overflow-y-auto` — 넘치는 콘텐츠만 이 슬롯 안에서 스크롤
- * - 결과: Title/Footer는 고정, Body만 스크롤
- *
- * ⚠ `md`/`lg` 는 데스크톱에서 max-height 를 자동으로 클램프하지 않음. 컨테이너가 뷰포트를
- * 넘길 만큼 길어질 여지가 있으면 `className="max-h-[80vh]"` 등을 함께 지정할 것.
+ * - `Dialog.Body` : Radix ScrollArea 기반 — Title/Footer는 고정, Body 안에서만 커스텀 스크롤바
+ * - `sm`/`md`/`lg` 는 recipe 자체에 `max-h: calc(100vh - 40px)` 가 걸려 있어 자동으로 뷰포트에 맞춤
  */
 export const OverflowScrollable: Story = {
   args: { size: 'lg' },
@@ -173,7 +170,7 @@ export const OverflowScrollable: Story = {
     <Preview>
       {(open, setOpen) => (
         <Dialog open={open} onOpenChange={setOpen}>
-          <Dialog.Content size={size} scrollable className="max-h-[80vh]">
+          <Dialog.Content size={size} scrollable>
             <Dialog.Title>긴 리스트</Dialog.Title>
             <Dialog.Description>Body 슬롯 안에서만 스크롤됩니다.</Dialog.Description>
             <Dialog.Body>
@@ -203,8 +200,8 @@ export const OverflowScrollable: Story = {
 /**
  * 오버플로 미처리 (안티패턴) — `scrollable` / `Dialog.Body` 없이 긴 콘텐츠를 그대로 넣는 경우.
  *
- * 컨테이너가 콘텐츠 높이만큼 커지면서 뷰포트를 넘겨 Footer 가 화면 밖으로 밀림.
- * 실제 화면에서 이 상태가 되면 위 `OverflowScrollable` 패턴으로 전환할 것.
+ * recipe 의 `max-h: calc(100vh - 40px)` 는 여전히 걸려 있어 컨테이너가 뷰포트를 뚫진 않지만,
+ * 자식 요소들이 컨테이너를 넘겨 잘리거나 Footer 가 아래로 밀린다. Body 슬롯으로 감쌀 것.
  */
 export const OverflowUnmanaged: Story = {
   args: { size: 'md' },

@@ -2,10 +2,12 @@
 
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
+import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { X } from 'lucide-react';
 
 import { cn } from '../../utils/cn';
+import { ScrollBar } from '../ui/scroll-area';
 
 import { DialogAlert } from './Alert';
 import { DialogConfirm } from './Confirm';
@@ -52,9 +54,11 @@ const dialogContentCva = cva(
   {
     variants: {
       size: {
-        sm: 'w-full max-w-[400px] p-5 gap-3 rounded-2xl border border-solid border-gray-150 mobile:max-w-[calc(100vw-48px)]',
-        md: 'w-full max-w-[560px] p-6 gap-4 rounded-2xl border border-solid border-gray-150 mobile:max-w-[calc(100vw-48px)]',
-        lg: 'w-full max-w-[960px] p-8 gap-6 rounded-2xl border border-solid border-gray-150 mobile:max-w-[100vw] mobile:max-h-[100vh] mobile:rounded-none mobile:p-5',
+        // sm/md/lg: 뷰포트 대비 최소 상하좌우 20px 여백 보장 (min()으로 max-w 이중 상한, max-h 균일)
+        sm: 'w-full max-w-[min(400px,calc(100vw-40px))] max-h-[calc(100vh-40px)] p-5 gap-3 rounded-2xl border border-solid border-gray-150',
+        md: 'w-full max-w-[min(560px,calc(100vw-40px))] max-h-[calc(100vh-40px)] p-6 gap-4 rounded-2xl border border-solid border-gray-150',
+        lg: 'w-full max-w-[min(960px,calc(100vw-40px))] max-h-[calc(100vh-40px)] p-8 gap-6 rounded-2xl border border-solid border-gray-150 mobile:p-5',
+        // screen/hero: 의도적 풀뷰포트 (여백 없음)
         screen: 'w-screen h-screen max-w-[100vw] max-h-[100vh] p-6 gap-6 rounded-none mobile:p-5',
         hero: 'w-screen h-screen max-w-[100vw] max-h-[100vh] p-8 gap-8 rounded-none mobile:p-6',
       },
@@ -168,11 +172,24 @@ const TopSlot = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<
 );
 TopSlot.displayName = 'DialogTopSlot';
 
-const Body = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<'div'>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('min-h-0 w-full flex-1 overflow-y-auto overflow-x-hidden', className)} {...props} />
-  ),
-);
+/**
+ * 오버플로 스크롤 슬롯. 네이티브 스크롤바 대신 Radix ScrollArea 로 감싼다.
+ * className 은 Root 에 적용 — 여전히 `flex-1 min-h-0` 를 유지해 컨테이너 안에서 남는 높이를 차지한다.
+ */
+const Body = React.forwardRef<
+  React.ElementRef<typeof ScrollAreaPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
+>(({ className, children, ...props }, ref) => (
+  <ScrollAreaPrimitive.Root
+    ref={ref}
+    className={cn('relative min-h-0 w-full flex-1 overflow-hidden', className)}
+    {...props}
+  >
+    <ScrollAreaPrimitive.Viewport className="h-full w-full">{children}</ScrollAreaPrimitive.Viewport>
+    <ScrollBar />
+    <ScrollAreaPrimitive.Corner />
+  </ScrollAreaPrimitive.Root>
+));
 Body.displayName = 'DialogBody';
 
 export const Dialog = Object.assign(DialogRoot, {
