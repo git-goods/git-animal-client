@@ -52,10 +52,12 @@ const dialogContentCva = cva(
   {
     variants: {
       size: {
-        // sm/md/lg: 뷰포트 대비 최소 상하좌우 20px 여백 보장 (min()으로 max-w 이중 상한, max-h 균일)
-        sm: 'w-full max-w-[min(400px,calc(100vw-40px))] max-h-[calc(100vh-40px)] p-5 gap-3 rounded-2xl border border-solid border-gray-150',
-        md: 'w-full max-w-[min(560px,calc(100vw-40px))] max-h-[calc(100vh-40px)] p-6 gap-4 rounded-2xl border border-solid border-gray-150',
-        lg: 'w-full max-w-[min(960px,calc(100vw-40px))] max-h-[calc(100vh-40px)] p-8 gap-6 rounded-2xl border border-solid border-gray-150 mobile:p-5',
+        // sm/md/lg: 뷰포트 대비 최소 상하좌우 20px 여백 보장
+        // - max-width 는 arbitrary property 문법으로 지정 (JIT extractor 가 nested min/calc 를 놓치지 않도록)
+        // - max-height 는 균일하게 100vh-40px
+        sm: 'w-full [max-width:min(400px,calc(100vw-40px))] max-h-[calc(100vh-40px)] p-5 gap-3 rounded-2xl border border-solid border-gray-150',
+        md: 'w-full [max-width:min(560px,calc(100vw-40px))] max-h-[calc(100vh-40px)] p-6 gap-4 rounded-2xl border border-solid border-gray-150',
+        lg: 'w-full [max-width:min(960px,calc(100vw-40px))] max-h-[calc(100vh-40px)] p-8 gap-6 rounded-2xl border border-solid border-gray-150 mobile:p-5',
         // screen/hero: 의도적 풀뷰포트 (여백 없음)
         screen: 'w-screen h-screen max-w-[100vw] max-h-[100vh] p-6 gap-6 rounded-none mobile:p-5',
         hero: 'w-screen h-screen max-w-[100vw] max-h-[100vh] p-8 gap-8 rounded-none mobile:p-6',
@@ -67,7 +69,12 @@ const dialogContentCva = cva(
 
 export type DialogContentVariants = VariantProps<typeof dialogContentCva>;
 
-const dialogScrollableStyle = 'overflow-hidden [&_.dialog-title]:shrink-0';
+/**
+ * scrollable 모드: Content 를 뷰포트 최대치까지 강제로 채워 `flex-1` Body 가 실제 높이를 가지도록 한다.
+ * (size 만으로는 max-h 만 걸려 있고 실제 h 는 콘텐츠 합에 따르므로, flex-1 자식이 0 이 되는 문제 방지)
+ * Title/Footer 는 shrink-0 로 고정, Body 만 남는 높이를 채운다.
+ */
+const dialogScrollableStyle = 'h-[calc(100vh-40px)] overflow-hidden [&_.dialog-title]:shrink-0';
 
 type DialogContentProps = {
   isShowClose?: boolean;
