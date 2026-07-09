@@ -2,12 +2,10 @@
 
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { X } from 'lucide-react';
 
 import { cn } from '../../utils/cn';
-import { ScrollBar } from '../ui/scroll-area';
 
 import { DialogAlert } from './Alert';
 import { DialogConfirm } from './Confirm';
@@ -173,23 +171,21 @@ const TopSlot = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<
 TopSlot.displayName = 'DialogTopSlot';
 
 /**
- * 오버플로 스크롤 슬롯. 네이티브 스크롤바 대신 Radix ScrollArea 로 감싼다.
- * className 은 Root 에 적용 — 여전히 `flex-1 min-h-0` 를 유지해 컨테이너 안에서 남는 높이를 차지한다.
+ * 오버플로 스크롤 슬롯. flex-1 로 남는 높이를 채우고 native overflow-y 로 스크롤.
+ * Radix ScrollArea 는 flex-1 안에서 percentage height cascade 가 불안정해 사용 안 함.
+ * 스크롤바는 커스텀 tailwind arbitrary 로 얇고 어둡게 스타일.
  */
-const Body = React.forwardRef<
-  React.ElementRef<typeof ScrollAreaPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
->(({ className, children, ...props }, ref) => (
-  <ScrollAreaPrimitive.Root
-    ref={ref}
-    className={cn('relative min-h-0 w-full flex-1 overflow-hidden', className)}
-    {...props}
-  >
-    <ScrollAreaPrimitive.Viewport className="h-full w-full">{children}</ScrollAreaPrimitive.Viewport>
-    <ScrollBar />
-    <ScrollAreaPrimitive.Corner />
-  </ScrollAreaPrimitive.Root>
-));
+const dialogBodyScrollStyle = cn(
+  'min-h-0 w-full flex-1 overflow-y-auto overflow-x-hidden',
+  '[scrollbar-width:thin] [scrollbar-color:#4b5563_transparent]',
+  '[&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent',
+  '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-600',
+  '[&::-webkit-scrollbar-thumb:hover]:bg-gray-500',
+);
+
+const Body = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<'div'>>(
+  ({ className, ...props }, ref) => <div ref={ref} className={cn(dialogBodyScrollStyle, className)} {...props} />,
+);
 Body.displayName = 'DialogBody';
 
 export const Dialog = Object.assign(DialogRoot, {
