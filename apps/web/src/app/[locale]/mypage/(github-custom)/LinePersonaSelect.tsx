@@ -32,7 +32,7 @@ export const LinePersonaSelect = ({ selectPersona, onChangePersona }: Props) => 
         <SelectPersonaList.InventoryGrid rows={2} />
       </SelectPersonaList>
       <Dialog open={isExtend} onOpenChange={() => setIsExtend(false)}>
-        <Dialog.Content size="large" scrollable>
+        <Dialog.Content size="lg" scrollable>
           <Dialog.Title>{t('line-type-select-pet')}</Dialog.Title>
           <SelectPersonaList
             selectPersona={selectPersona ? [selectPersona] : []}

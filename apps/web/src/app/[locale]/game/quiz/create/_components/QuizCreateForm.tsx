@@ -3,13 +3,12 @@
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { createQuiz } from '@gitanimals/api';
-import { Button } from '@gitanimals/ui-tailwind';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
 import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import QuizField from '@/app/[locale]/game/quiz/create/_components/QuizField';
 import QuizTextArea from '@/app/[locale]/game/quiz/create/_components/QuizTextArea';
-import { ConfirmDialog } from '@/components/ConfirmDialog';
 import Tabs from '@/components/Tabs/Tabs';
 import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';
@@ -34,6 +33,7 @@ const QuizCreateForm = () => {
     setQuizContents(e.target.value);
   };
   const t = useTranslations('Quiz');
+  const tCommon = useTranslations('Common');
 
   const { tabsTriggerProps: languageRadioProps, selected: language } = useTabs<Locale>({
     initialSelectedValue: typedLocale,
@@ -45,15 +45,17 @@ const QuizCreateForm = () => {
 
   const handleCheckToggleLanguage = () => {
     overlay.open(({ isOpen, close }) => (
-      <ConfirmDialog
+      <Dialog.Confirm
         title={t('toggle-language-title')}
         description={t('toggle-language-description')}
-        isOpen={isOpen}
-        onClose={close}
+        open={isOpen}
+        onOpenChange={(open) => !open && close()}
         onConfirm={() => {
           toggleLocale();
           close();
         }}
+        confirmText={tCommon('confirm')}
+        cancelText={tCommon('close')}
       />
     ));
   };

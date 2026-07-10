@@ -12,9 +12,9 @@ import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import { LOCAL_STORAGE_KEY } from '@/constants/storage';
+import { useClientUser } from '@/hooks/clientAuth';
 import { trackEvent } from '@/lib/analytics';
 import { ANIMAL_TIER_TEXT_MAP, getAnimalTierInfo } from '@/utils/animals';
-import { useClientUser } from '@/hooks/clientAuth';
 import { getPersonaImage } from '@/utils/image';
 
 import { EvolutionPersona } from './(evolution)';
@@ -202,9 +202,9 @@ function SellConfirmDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content>
+      <Dialog.Content size="screen">
         <Dialog.Title>{t('Shop.sell-confirm')}</Dialog.Title>
-        <Dialog.Description className={descriptionStyle}>
+        <Dialog.Description>
           <p>{t('Shop.sell-confirm-description')}</p>
         </Dialog.Description>
         <div className="flex w-full items-center justify-between">
@@ -227,5 +227,3 @@ function SellConfirmDialog({
     </Dialog>
   );
 }
-
-const descriptionStyle = 'w-full text-left text-white-75';

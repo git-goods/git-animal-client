@@ -113,10 +113,8 @@ Token: ${data?.user.accessToken}
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="large" className="h-fit mobile:flex mobile:flex-col mobile:items-center mobile:justify-center">
-        <Dialog.Title className="glyph48-bold text-center text-white mobile:glyph28-bold">
-          {t('choose-one-card')}
-        </Dialog.Title>
+      <Dialog.Content size="hero" className="items-center justify-center">
+        <Dialog.Title>{t('choose-one-card')}</Dialog.Title>
 
         <CardDrawingGame
           characters={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }]}

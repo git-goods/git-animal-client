@@ -59,7 +59,7 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content>
-        <Dialog.Title className="glyph20-regular text-left text-white-100 w-full">{t('edit-product')}</Dialog.Title>
+        <Dialog.Title>{t('edit-product')}</Dialog.Title>
         <input
           className={inputStyle}
           placeholder="Type price..."

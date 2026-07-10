@@ -57,7 +57,7 @@ export function FarmPersonaSelect({ onImageRefresh }: { onImageRefresh: () => vo
         <SelectPersonaList.InventoryGrid rows={2} />
       </SelectPersonaList>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <Dialog.Content size="large" scrollable>
+        <Dialog.Content size="lg" scrollable>
           <Dialog.Title>{t('farm-type-select-pet')}</Dialog.Title>
           <SelectPersonaList {...personaListProps}>
             <Dialog.TopSlot>

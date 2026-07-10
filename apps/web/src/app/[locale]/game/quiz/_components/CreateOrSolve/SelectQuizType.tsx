@@ -1,10 +1,10 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { Dialog } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { overlay } from 'overlay-kit';
 
-import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { ROUTE } from '@/constants/route';
 import { useRouter } from '@/i18n/routing';
 
@@ -24,33 +24,38 @@ const SelectQuizType = wrap
     const router = useRouter();
     const { isSolved, quizSolveCard } = useTodayQuizData();
     const t = useTranslations('Quiz');
+    const tCommon = useTranslations('Common');
 
     const handleSolveQuiz = () => {
       overlay.open(({ isOpen, close }) => (
-        <ConfirmDialog
-          isOpen={isOpen}
-          onClose={close}
+        <Dialog.Confirm
+          open={isOpen}
+          onOpenChange={(open) => !open && close()}
           onConfirm={() => {
             handleCheckLanguage();
             close();
           }}
           title={t('solve-todays-quiz')}
           description={t('solve-todays-quiz-description')}
+          confirmText={tCommon('confirm')}
+          cancelText={tCommon('close')}
         />
       ));
     };
 
     const handleCheckLanguage = () => {
       overlay.open(({ isOpen, close }) => (
-        <ConfirmDialog
-          isOpen={isOpen}
-          onClose={close}
+        <Dialog.Confirm
+          open={isOpen}
+          onOpenChange={(open) => !open && close()}
           onConfirm={() => {
             router.push(ROUTE.GAME.QUIZ.SOLVE());
             close();
           }}
           title={t('check-language-for-quiz-dialog-title')}
           description={t('check-language-for-quiz-dialog-description')}
+          confirmText={tCommon('confirm')}
+          cancelText={tCommon('close')}
         />
       ));
     };
