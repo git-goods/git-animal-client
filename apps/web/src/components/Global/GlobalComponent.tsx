@@ -4,8 +4,8 @@ import { createPortal } from 'react-dom';
 import { Toaster } from 'sonner';
 
 import FeedBack from './FeedbackForm';
+import { LoginCallbackWatcher } from './LoginCallbackWatcher';
 import { SessionExpiredDialog } from './SessionExpiredDialog';
-import { SessionExpiredQueryWatcher } from './SessionExpiredQueryWatcher';
 import { DialogComponent } from './useDialog';
 
 function GlobalComponent() {
@@ -14,7 +14,7 @@ function GlobalComponent() {
       <FeedBack />
       <DialogComponent />
       <SessionExpiredDialog />
-      <SessionExpiredQueryWatcher />
+      <LoginCallbackWatcher />
       <Toaster
         position="top-center"
         toastOptions={{

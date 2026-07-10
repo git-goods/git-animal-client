@@ -11,8 +11,10 @@ import { COOKIE_KEY, LOCAL_STORAGE_KEY } from '@/constants/storage';
 /**
  * client용 로그인 함수
  */
-export const login = (callbackUrl: string = '/mypage') => {
-  localStorage.setItem(LOCAL_STORAGE_KEY.callbackUrl, callbackUrl);
+export const login = (callbackUrl?: string) => {
+  // 인자가 없으면(예: 헤더 로그인 버튼) 미들웨어가 심어둔 딥링크 복귀 경로를 우선 사용한다.
+  const target = callbackUrl ?? localStorage.getItem(LOCAL_STORAGE_KEY.callbackUrl) ?? '/mypage';
+  localStorage.setItem(LOCAL_STORAGE_KEY.callbackUrl, target);
 
   // cookie set (client)
   const currentLocale = window.location.pathname.split('/')[1];
