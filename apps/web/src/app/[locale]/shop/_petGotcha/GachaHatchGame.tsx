@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl';
 import { AnimatePresence, motion, useAnimationControls, useReducedMotion } from 'framer-motion';
 
 import { AnimalCard } from '@/components/AnimalCard';
-import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
+import type { AnimalTierType } from '@/constants/animalTier';
 import { getAnimalTierInfo } from '@/utils/animals';
 
 // 알 부화 스프라이트 (12프레임, 32x384 세로 스트립) — VIERGACHT/iamcrog 픽셀 에셋.

@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { cn, GameCard } from '@gitanimals/ui-tailwind';
 
 import { AnimalCardBack } from '@/components/AnimalCard/AnimalCard';
-import type { AnimalTierType } from '@/components/AnimalCard/AnimalCard.constant';
+import type { AnimalTierType } from '@/constants/animalTier';
 import { getPersonaImage } from '@/utils/image';
 
 interface CardFlipGameProps {

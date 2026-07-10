@@ -2,7 +2,7 @@
 
 import { Children, useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
-import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
+import { useIsMobile } from '@gitanimals/react';
 
 import { ArrowButton } from './Arrow';
 

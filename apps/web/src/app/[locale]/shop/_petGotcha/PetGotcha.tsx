@@ -4,7 +4,7 @@ import type { ComponentPropsWithoutRef } from 'react';
 import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
+import { useIsMobile } from '@gitanimals/react';
 import { userQueries } from '@gitanimals/react-query';
 import { Button } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';

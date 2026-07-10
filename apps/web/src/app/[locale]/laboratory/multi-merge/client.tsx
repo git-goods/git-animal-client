@@ -10,14 +10,14 @@ import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import { Link } from '@/i18n/routing';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 
 import { MergeResultModal } from '../../mypage/my-pet/(merge)/MergeResult';
 
 import { MergeSlots } from './MergeSlots';
 import { PetGrid } from './PetGrid';
 import { SelectionSummary } from './SelectionSummary';
-import { contentSectionStyle, instructionStyle, instructionTextStyle } from './styles';
+import { contentSectionStyle, instructionStyle, instructionTextStyle } from './multi-merge.styles';
 
 function PetMergeUI() {
   const queryClient = useQueryClient();

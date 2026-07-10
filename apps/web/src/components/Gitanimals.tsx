@@ -4,12 +4,12 @@
 
 import { cn } from '@gitanimals/ui-tailwind';
 
-import { useClientUser } from '@/utils/clientAuth';
-
-const GITANIMALS_URL = 'https://www.gitanimals.org/en-US';
+import { RENDER_URL } from '@/constants/outlink';
+import { ORIGIN_URL } from '@/constants/route';
+import { useClientUser } from '@/hooks/clientAuth';
 
 const getLink = (props: { username: string; type: 'farm' | 'line' }) => {
-  return `${GITANIMALS_URL}?utm_medium=image&utm_source=${props.username}&utm_content=${props.type}`;
+  return `${ORIGIN_URL}?utm_medium=image&utm_source=${props.username}&utm_content=${props.type}`;
 };
 
 interface GitanimalsLineProps {
@@ -24,7 +24,7 @@ export function GitanimalsLine({ petId, sizes = [600, 120] }: GitanimalsLineProp
 
   return (
     <img
-      src={`https://render.gitanimals.org/lines/${username}${pet}`}
+      src={`${RENDER_URL}/lines/${username}${pet}`}
       width={sizes[0]}
       height={sizes[1]}
       alt="gitanimals"
@@ -43,7 +43,7 @@ export const getGitanimalsLineString = ({
   return `
 <a href="${getLink({ username, type: 'line' })}">
   <img
-    src="https://render.gitanimals.org/lines/${username}${pet}"
+    src="${RENDER_URL}/lines/${username}${pet}"
     width="${sizes[0]}"
     height="${sizes[1]}"
   />
@@ -67,7 +67,7 @@ export function GitanimalsFarm({ imageKey, className }: FarmImageProps) {
   const { name: username } = useClientUser();
   return (
     <img
-      src={`https://render.gitanimals.org/farms/${username}?${imageKey}`}
+      src={`${RENDER_URL}/farms/${username}?${imageKey}`}
       width={600}
       height={300}
       alt="preview farm"
@@ -84,7 +84,7 @@ interface FarmStringProps extends GitanimalsFarmProps {
 export const getGitanimalsFarmString = ({ username, sizes = [600, 300] }: FarmStringProps) => {
   return `<a href="${getLink({ username, type: 'farm' })}">
 <img
-  src="https://render.gitanimals.org/farms/${username}"
+  src="${RENDER_URL}/farms/${username}"
   width="${sizes[0]}"
   height="${sizes[1]}"
 />
@@ -92,13 +92,13 @@ export const getGitanimalsFarmString = ({ username, sizes = [600, 300] }: FarmSt
 };
 
 export function GitanimalsGuild({ guildId }: { guildId: string }) {
-  return <img src={`https://render.gitanimals.org/guilds/${guildId}/draw`} alt="gitanimals" draggable={false} />;
+  return <img src={`${RENDER_URL}/guilds/${guildId}/draw`} alt="gitanimals" draggable={false} />;
 }
 
 export const getGuildString = ({ guildId, sizes = [600, 300] }: { guildId: string } & GitanimalsFarmProps) => {
   return `<a href="https://www.gitanimals.org/">
       <img
-        src="https://render.gitanimals.org/guilds/${guildId}/draw"
+        src="${RENDER_URL}/guilds/${guildId}/draw"
         width="${sizes[0]}"
         height="${sizes[1]}"
         alt="gitanimals"

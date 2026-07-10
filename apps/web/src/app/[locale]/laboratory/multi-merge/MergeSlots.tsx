@@ -1,4 +1,4 @@
-import { MemoizedPersonaItem } from './PersonaItem';
+import { MemoizedPersonaItem } from './MergePersonaItem';
 
 type Persona = {
   id: string;

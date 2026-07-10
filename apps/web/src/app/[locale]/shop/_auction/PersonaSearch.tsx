@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import React from 'react';
-import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
+import { useIsMobile } from '@gitanimals/react';
 import { auctionQueries } from '@gitanimals/react-query';
 import { Banner, cn, Dialog } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
@@ -68,7 +68,7 @@ export const PersonaSearch = wrap
         </button>
 
         <Dialog open={isOpen} onOpenChange={() => setIsOpen(false)}>
-          <Dialog.Content size="large" className={containerStyle}>
+          <Dialog.Content size="lg" className={containerStyle}>
             <Dialog.Title>Select Find Persona</Dialog.Title>
             <div className={selectedPersonaWrapperStyle}>
               {selected && (

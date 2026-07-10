@@ -6,6 +6,8 @@ import {
   getProducts,
   GetProductsRequest,
   getProductsTypes,
+  getTotalProductCount,
+  GetTotalProductCountResponse,
 } from '@gitanimals/api/src/auction';
 import { queryOptions } from '@tanstack/react-query';
 
@@ -41,5 +43,14 @@ export const auctionQueries = {
     queryOptions({
       queryKey: [...auctionQueries.myProductsKey(), request],
       queryFn: () => getMyProducts(request),
+    }),
+
+  // statistics — intentionally NOT derived from allKey(): the total-count widget
+  // must stay decoupled from trade invalidations (buy/sell/delete).
+  totalProductCountKey: () => ['product', 'auction', 'statistics', 'total'],
+  totalProductCountOptions: () =>
+    queryOptions<GetTotalProductCountResponse>({
+      queryKey: auctionQueries.totalProductCountKey(),
+      queryFn: getTotalProductCount,
     }),
 };

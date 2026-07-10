@@ -2,10 +2,10 @@
 
 import { Button } from '@gitanimals/ui-tailwind';
 
-import { useClientSession } from '@/utils/clientAuth';
+import { useClientSession } from '@/hooks/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
 
-import * as styles from './token.style';
+import * as styles from './token.styles';
 
 function DevTokenPage() {
   const { data } = useClientSession();
