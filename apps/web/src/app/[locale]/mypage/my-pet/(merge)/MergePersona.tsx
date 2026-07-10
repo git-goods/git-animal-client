@@ -65,7 +65,7 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <Dialog.Content size="lg">
+      <Dialog.Content size="screen">
         <Dialog.Title>Merge to Level Up</Dialog.Title>
 
         <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />

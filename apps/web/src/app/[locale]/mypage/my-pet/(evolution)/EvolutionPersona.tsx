@@ -48,7 +48,7 @@ export function EvolutionPersona({ isOpen, onClose, targetPersona }: EvolutionPe
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <Dialog.Content size="hero">
+      <Dialog.Content size="screen">
         <Dialog.Title>GitAnimals Evolution</Dialog.Title>
         <EvolutionPreview targetPersona={targetPersona} />
         <Dialog.Footer>
