@@ -63,7 +63,10 @@
     "gotcha-in-progress": "뽑기를 진행중입니다. 잠시만 기다려주세요.",
     "click-card-to-flip": "카드를 클릭해서 뒤집어주세요!",
     "not-enough-points": "포인트가 부족합니다.",
-    "click-to-close": "결과를 확인하셨다면 화면을 터치해주세요"
+    "click-to-close": "결과를 확인하셨다면 화면을 터치해주세요",
+    "pet-gotcha-title": "펫 뽑기",
+    "open-pack": "카드팩을 눌러 개봉하세요!",
+    "tap-to-skip": "화면을 탭하면 건너뛰기"
   },
   "Shop": {
     "no-mobile-support": "현재 모바일은 지원하지 않습니다. 데스크탑으로 접속해주세요.",

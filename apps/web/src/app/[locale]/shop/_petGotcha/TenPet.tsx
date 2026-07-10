@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import type { GotchaResult } from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import { usePostGotcha, userQueries } from '@gitanimals/react-query';
-import { cn, Dialog } from '@gitanimals/ui-tailwind';
+import { Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { GITHUB_ISSUE_URL } from '@/constants/outlink';
-import { useTimer } from '@/hooks/useTimer';
 import { trackEvent } from '@/lib/analytics';
 
-import { TenCardFlipGame } from './TenCardFlipGame';
+import { CardPackGame } from './CardPackGame';
 import { useCheckEnoughMoney } from './useCheckEnoughMoney';
 
 const TEN_PET_POINT = 10000 as const;
@@ -27,34 +26,20 @@ export function TenPet({ onClose }: Props) {
   const t = useTranslations('Gotcha');
 
   const [getPersona, setGetPersona] = useState<GotchaResult[] | null>(null);
-
-  const { count, isRunning, isFinished, startTimer, resetTimer } = useTimer(3);
+  // 개봉~공개 완료 전엔 닫기 차단 (포인트 차감 후 결과 미확인 방지)
+  const [busy, setBusy] = useState(false);
 
   const { data } = useSession();
   const { checkEnoughMoney } = useCheckEnoughMoney({ enoughPoint: TEN_PET_POINT });
 
-  const {
-    mutate: postGotcha,
-    isPending,
-    isSuccess,
-  } = usePostGotcha({
-    onSuccess: async (res) => {
-      const resultPersona = res.gotchaResults;
-      setGetPersona(resultPersona);
-
+  const { mutate: postGotcha } = usePostGotcha({
+    onSuccess: (res) => {
+      setGetPersona(res.gotchaResults);
       queryClient.invalidateQueries({ queryKey: userQueries.allKey() });
-      startTimer();
-
-      trackEvent('gotcha', {
-        type: '10-pet',
-        status: 'success',
-      });
+      trackEvent('gotcha', { type: '10-pet', status: 'success' });
     },
     onError: (error) => {
-      trackEvent('gotcha', {
-        type: '10-pet',
-        status: 'error',
-      });
+      trackEvent('gotcha', { type: '10-pet', status: 'error' });
 
       toast.error(t('get-persona-fail'), {
         description:
@@ -79,49 +64,36 @@ export function TenPet({ onClose }: Props) {
 Error Message: ${JSON.stringify(error)}
 \`\`\`
 User: ${data?.user.name}
-Token: ${data?.user.accessToken} 
+Token: ${data?.user.accessToken}
       `);
     },
   });
 
-  const onAction = async () => {
-    if (isPending) return;
-
+  // 카드팩 개봉 = API 호출
+  const onOpen = () => {
     try {
       if (!checkEnoughMoney()) {
         throw new Error(t('not-enough-points'));
       }
-
       postGotcha({ count: 10 });
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
       }
+      onClose();
     }
   };
 
-  useEffect(() => {
-    // 3초 후에 닫기
-    if (isFinished) {
-      onClose();
-      resetTimer();
-    }
-  }, [isFinished, onClose, resetTimer]);
-
   return (
-    <Dialog open={true} onOpenChange={onClose}>
-      <Dialog.Content size="hero">
-        <Dialog.Title>
-          {isPending ? t('gotcha-in-progress') : isSuccess ? t('get-persona-success') : t('click-card-to-flip')}
-        </Dialog.Title>
-        {isRunning && (
-          <p className="glyph28-bold mt-[12px] text-center text-white mobile:mt-[0px] mobile:text-[12px]">
-            {t('close-notice-message').replace('[count]', count.toString())}
-          </p>
-        )}
-        <div className={cn('mt-[60px] w-full mobile:mt-[28px]', isPending && 'pointer-events-none')}>
-          <TenCardFlipGame onGetPersona={onAction} getPersona={getPersona} />
-        </div>
+    <Dialog
+      open={true}
+      onOpenChange={(open) => {
+        if (!open && !busy) onClose();
+      }}
+    >
+      <Dialog.Content size="screen" isShowClose={!busy} className="border-none bg-black-90 p-0">
+        <Dialog.Title className="sr-only">{t('pet-gotcha-title')}</Dialog.Title>
+        <CardPackGame onOpen={onOpen} results={getPersona} onClose={onClose} onBusyChange={setBusy} />
       </Dialog.Content>
     </Dialog>
   );
