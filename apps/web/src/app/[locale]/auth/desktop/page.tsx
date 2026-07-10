@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { Button } from '@gitanimals/ui-tailwind';
 
 import { login } from '@/components/AuthButton';
 import { buildDesktopCallbackUrl, isValidDesktopRedirect } from '@/constants/desktopAuth';
@@ -16,6 +18,8 @@ export default function DesktopAuthPage() {
   const params = useSearchParams();
   const redirectUri = params.get('redirect_uri');
   const state = params.get('state');
+  const errorCode = params.get('error');
+  const t = useTranslations('Auth');
 
   const { status, data } = useClientSession();
 
@@ -23,13 +27,8 @@ export default function DesktopAuthPage() {
 
   useEffect(() => {
     if (!isValid) return;
-
     if (status === 'authenticated' && data?.user?.accessToken) {
       window.location.replace(buildDesktopCallbackUrl(redirectUri!, data.user.accessToken, state!));
-    } else if (status === 'unauthenticated') {
-      login(
-        `/auth/desktop?redirect_uri=${encodeURIComponent(redirectUri!)}&state=${encodeURIComponent(state!)}`,
-      );
     }
   }, [status, isValid, redirectUri, state, data?.user?.accessToken]);
 
@@ -37,22 +36,42 @@ export default function DesktopAuthPage() {
     return (
       <div className={pageRootClass}>
         <div className={cardClass}>
-          <h1 className="glyph28-bold text-white mobile:glyph24-bold">잘못된 요청</h1>
-          <p className="glyph16-regular text-center text-white">
-            redirect_uri가 허용 범위를 벗어났거나 필수 파라미터가 누락되었습니다.
-          </p>
+          <h1 className="glyph28-bold text-white mobile:glyph24-bold">{t('desktopInvalidTitle')}</h1>
+          <p className="glyph16-regular text-center text-white-75">{t('desktopInvalidDescription')}</p>
         </div>
       </div>
     );
   }
 
-  const message =
-    status === 'authenticated' ? '데스크톱 앱으로 이동합니다…' : '로그인으로 이동합니다…';
+  const handleLogin = () => {
+    login(`/auth/desktop?redirect_uri=${encodeURIComponent(redirectUri!)}&state=${encodeURIComponent(state!)}`);
+  };
 
   return (
     <div className={pageRootClass}>
       <div className={cardClass}>
-        <p className="glyph20-regular text-white">{message}</p>
+        <h1 className="glyph28-bold text-white mobile:glyph24-bold">{t('desktopTitle')}</h1>
+
+        {errorCode && (
+          <div className="w-full rounded-[8px] bg-[rgba(255,75,75,0.15)] px-[16px] py-[12px] text-center glyph14-regular text-white">
+            {t('desktopErrorBanner')}
+          </div>
+        )}
+
+        {status === 'loading' && <p className="glyph20-regular text-white-75">{t('desktopLoadingMessage')}</p>}
+
+        {status === 'authenticated' && (
+          <p className="glyph20-regular text-white-75">{t('desktopAuthenticatedMessage')}</p>
+        )}
+
+        {status === 'unauthenticated' && (
+          <>
+            <p className="whitespace-pre-line text-center glyph16-regular text-white-75">{t('desktopDescription')}</p>
+            <Button variant="primary" size="m" onClick={handleLogin}>
+              {t('desktopContinueButton')}
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );

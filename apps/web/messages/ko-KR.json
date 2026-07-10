@@ -297,5 +297,25 @@
     "report-error-button": "오류 보고하기",
     "ranking-error-title": "랭킹 정보를 불러올 수 없습니다",
     "ranking-error-description": "잠시 후 다시 시도해주세요"
+  },
+  "Auth": {
+    "sessionExpiredTitle": "세션이 만료되었어요",
+    "sessionExpiredDescription": "보안을 위해 다시 로그인이 필요해요.\n로그인 후 이전 페이지로 자동 이동합니다.",
+    "sessionExpiredAction": "다시 로그인",
+    "desktopTitle": "데스크톱 앱 연결",
+    "desktopDescription": "GitAnimals 데스크톱 앱이 GitHub 계정 인증을 요청했어요.\n로그인하면 데스크톱 앱으로 자동 복귀해요.",
+    "desktopContinueButton": "GitHub으로 계속하기",
+    "desktopAuthenticatedMessage": "데스크톱 앱으로 이동하고 있어요…",
+    "desktopLoadingMessage": "잠시만 기다려주세요…",
+    "desktopErrorBanner": "로그인 중 문제가 발생했어요. 다시 시도해주세요.",
+    "desktopInvalidTitle": "잘못된 요청",
+    "desktopInvalidDescription": "redirect_uri가 허용 범위를 벗어났거나 필수 파라미터가 누락되었습니다.",
+    "errorTitle": "로그인에 실패했어요",
+    "errorDescriptionDefault": "다시 시도하거나 처음으로 돌아갈 수 있어요.",
+    "errorDescriptionAccessDenied": "접근이 거부되었어요. 다시 시도해주세요.",
+    "errorDescriptionCredentials": "계정 인증에 실패했어요. 잠시 후 다시 시도해주세요.",
+    "errorRetryDesktop": "데스크톱 연결 다시 시도",
+    "errorRetryDefault": "다시 로그인",
+    "errorGoHome": "처음으로"
   }
 }

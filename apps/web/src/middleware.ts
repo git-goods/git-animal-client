@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import withAuth from 'next-auth/middleware';
+import { getToken } from 'next-auth/jwt';
 import createMiddleware from 'next-intl/middleware';
 
 import { resolveLegacyLocalePath } from './i18n/legacyLocaleRedirect';
@@ -14,14 +14,22 @@ const intlMiddleware = createMiddleware({
   // cookie > accept-language > defaultLocale.
   localeDetection: true,
 });
-const authMiddleware = withAuth((req) => intlMiddleware(req), {
-  callbacks: {
-    authorized: ({ token }) => token != null,
-  },
-  pages: {
-    signIn: '/',
-  },
-});
+
+const extractLocale = (pathname: string): string | null => {
+  const segments = pathname.split('/').filter(Boolean);
+  if (segments.length === 0) return null;
+  return (routing.locales as readonly string[]).includes(segments[0]) ? segments[0] : null;
+};
+
+// With `localeDetection: true`, locale-detected entry routes vary by
+// `accept-language` and the `NEXT_LOCALE` cookie, but next-intl sets no `Vary`
+// header. Add one so a shared/CDN cache never serves a wrong-locale response.
+const withVary = (response: Response) => {
+  if (response instanceof NextResponse) {
+    response.headers.set('Vary', 'Accept-Language, Cookie');
+  }
+  return response;
+};
 
 export default async function middleware(req: NextRequest) {
   // 1) Backward-compat 308 redirect — MUST be the first statement, before the
@@ -51,16 +59,23 @@ export default async function middleware(req: NextRequest) {
     headers: requestHeaders,
   });
 
-  const response = isPublicPage ? intlMiddleware(modifiedRequest) : (authMiddleware as any)(modifiedRequest);
-
-  // With `localeDetection: true`, locale-detected entry routes vary by
-  // `accept-language` and the `NEXT_LOCALE` cookie, but next-intl sets no `Vary`
-  // header. Add one so a shared/CDN cache never serves a wrong-locale response.
-  if (response instanceof NextResponse) {
-    response.headers.set('Vary', 'Accept-Language, Cookie');
+  if (isPublicPage) {
+    return withVary(intlMiddleware(modifiedRequest));
   }
 
-  return response;
+  const token = await getToken({ req });
+  if (!token) {
+    // 보호 라우트 비인증 접근 → 홈으로. 원래 목적지는 callbackUrl 로 보존해 로그인 후 복귀시킨다.
+    // 만료/비로그인을 구분하지 않고 일반 로그인 진입으로 통일 — 익명 사용자에게 '세션 만료' 안내가
+    // 뜨는 오작동을 막는다. (실제 세션 만료 안내는 클라이언트 401 인터셉터가 담당)
+    const locale = extractLocale(req.nextUrl.pathname) ?? routing.defaultLocale;
+    const callbackUrl = req.nextUrl.pathname + req.nextUrl.search;
+    const redirectUrl = new URL(`/${locale}`, req.url);
+    redirectUrl.searchParams.set('callbackUrl', callbackUrl);
+    return withVary(NextResponse.redirect(redirectUrl));
+  }
+
+  return withVary(intlMiddleware(modifiedRequest));
 }
 
 export const config = {

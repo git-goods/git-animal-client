@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import { getSession, signOut } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 import {
   setRenderRequestInterceptor,
   setRenderResponseInterceptor,
@@ -11,6 +11,7 @@ import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConf
 
 import { getServerAuth } from '@/auth';
 import type { ApiErrorScheme } from '@/exceptions/type';
+import { triggerSessionExpired } from '@/utils/sessionExpired';
 
 // Server path: request-scoped memoization via React cache(). Deduped within a
 // single render (one JWT decode instead of one per outbound request), and never
@@ -31,6 +32,11 @@ interface CachedSession {
 let cachedSession: CachedSession | null = null;
 let sessionPromise: Promise<string | null> | null = null;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+export const clearSessionCache = () => {
+  cachedSession = null;
+  sessionPromise = null;
+};
 
 const getAccessToken = async (): Promise<string | null> => {
   if (typeof window === 'undefined') {
@@ -83,27 +89,15 @@ export const interceptorResponseFulfilled = (res: AxiosResponse) => {
 };
 
 // Response interceptor
-// Latch so a burst of concurrent 401s triggers at most one signOut (which then
-// redirects/reloads and resets this module).
-let isSigningOut = false;
-
 export const interceptorResponseRejected = async (error: AxiosError<ApiErrorScheme>) => {
   if (error?.response?.status === 401) {
-    if (typeof window === 'undefined') {
-      // Server: surface as a domain exception (unchanged).
-      throw new CustomException('TOKEN_EXPIRED', 'token expired and sign out success');
+    // 캐시 무효화는 환경과 무관하게 먼저 수행 — 만료된 토큰 재사용 방지.
+    clearSessionCache();
+    // 복구 UX(세션 만료 다이얼로그)는 클라이언트에서만 띄운다.
+    if (typeof window !== 'undefined') {
+      triggerSessionExpired(window.location.pathname + window.location.search);
     }
-
-    // Client: only sign out an actually-authenticated session whose backend
-    // token expired. A 401 while logged out (e.g. a background query to an
-    // authed endpoint like /inboxes) must NOT trigger signOut — that loops:
-    // signOut → session refetch → re-render → re-query → 401 → signOut → …
-    const session = await getSession();
-    if (session?.user?.accessToken && !isSigningOut) {
-      isSigningOut = true;
-      signOut();
-      throw new CustomException('TOKEN_EXPIRED', 'token expired and sign out success');
-    }
+    throw new CustomException('TOKEN_EXPIRED', 'token expired');
   }
 
   // TODO: 403 처리
