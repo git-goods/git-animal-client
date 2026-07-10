@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
+import { useIsMobile } from '@gitanimals/react';
 import { auctionQueries } from '@gitanimals/react-query';
 import { useQuery } from '@tanstack/react-query';
 
@@ -13,7 +12,10 @@ import Pagination from '@/components/Pagination/Pagination';
 import { ShopTableDesktopRow, ShopTableMobileRow, ShopTableRowViewSkeleton } from '../_common/ShopTableMobileRow';
 import { useSearchOptions } from '../useSearchOptions';
 
-import { tableCss, tbodyCss, theadCss } from './table.styles';
+const tableCss = 'w-full mb-[32px] mobile:mb-[12px]';
+const theadCss =
+  'grid grid-cols-[1fr_2.5fr_1fr_1fr_4.2fr_1.5fr] gap-[16px] px-[32px] py-[4px] rounded-[12px] bg-white-50 items-center h-[46px] glyph18-bold text-white-100 mb-[4px] [&>span:nth-child(1)]:text-center mobile:hidden';
+const tbodyCss = 'flex flex-col gap-[4px] mobile:min-h-[428px]';
 
 function HistoryTable() {
   const t = useTranslations('Shop');
@@ -63,7 +65,7 @@ function HistoryTable() {
                   personaLevel={product.persona.personaLevel}
                   price={product.price}
                   rightElement={
-                    <span className={css({ textStyle: 'glyph15.regular', color: 'white.white' })}>
+                    <span className="glyph15-regular text-white">
                       {getHistoryActionLabel(product?.receipt.soldAt)}
                     </span>
                   }

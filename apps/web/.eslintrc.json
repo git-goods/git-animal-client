@@ -19,5 +19,5 @@
       }
     ]
   },
-  "ignorePatterns": ["node_modules/", "next.config.mjs"]
+  "ignorePatterns": ["node_modules/", "next.config.mjs", "**/*.test.ts"]
 }

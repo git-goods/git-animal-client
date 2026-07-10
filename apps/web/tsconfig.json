@@ -4,9 +4,6 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ],
-      "_panda/*": [
-        "./styled-system/*"
       ]
     },
     "plugins": [
@@ -17,9 +14,6 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": false,
     "strictNullChecks": true,
-    "types": [
-      "@pandacss/dev"
-    ],
     "target": "ES2017"
   },
   "include": [
@@ -27,10 +21,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "styled-system",
     "types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.test.ts"
   ]
 }

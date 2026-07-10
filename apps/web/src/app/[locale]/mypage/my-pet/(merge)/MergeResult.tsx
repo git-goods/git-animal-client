@@ -3,13 +3,21 @@
 /* eslint-disable @next/next/no-img-element */
 import type { PropsWithChildren } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
 import type { MergePersonaLevelResponse } from '@gitanimals/api';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 
 import { getPersonaImage } from '@/utils/image';
+
+import {
+  closeButtonStyle,
+  containerInnerStyle,
+  containerInnerVariants,
+  containerStyle,
+  contentStaggerVariants,
+  contentStyle,
+} from '../_components/resultModal.shared';
 
 interface MergeResultModalProps {
   isOpen: boolean;
@@ -24,7 +32,7 @@ export const MergeResultModal = ({ isOpen, onClose, result }: MergeResultModalPr
 
   return (
     <MotionContainer onClose={onClose}>
-      <h3 className={css({ textStyle: 'glyph24.bold', color: 'white' })}>{t('merge-result')}</h3>
+      <h3 className="glyph24-bold text-white">{t('merge-result')}</h3>
       <div className={mergeItemStyle}>
         <img src={getPersonaImage(result.type)} alt={result.type} width={100} height={100} />
       </div>
@@ -36,20 +44,10 @@ export const MergeResultModal = ({ isOpen, onClose, result }: MergeResultModalPr
   );
 };
 
-const mergeItemStyle = css({
-  borderRadius: '16px',
-  border: '2px solid rgba(255, 255, 255, 0.25)',
-  background: 'rgba(255, 255, 255, 0.25)',
-  width: 'fit-content',
-});
+const mergeItemStyle =
+  'rounded-[16px] border-2 border-solid border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.25)] w-fit';
 
-const resultTextStyle = css({
-  textStyle: 'glyph18.bold',
-  color: 'white',
-  '& > span': {
-    marginTop: '4px',
-  },
-});
+const resultTextStyle = 'glyph18-bold text-white [&>span]:mt-[4px]';
 
 function MotionContainer({ children, onClose }: PropsWithChildren<{ onClose: () => void }>) {
   return (
@@ -75,61 +73,3 @@ function MotionContainer({ children, onClose }: PropsWithChildren<{ onClose: () 
     </AnimatePresence>
   );
 }
-
-const containerStyle = css({
-  position: 'absolute',
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  backgroundColor: 'black.black_50',
-  zIndex: 50,
-  cursor: 'pointer',
-});
-
-const containerInnerVariants = {
-  initial: { scale: 0, rotate: -180 },
-  animate: {
-    scale: 1,
-    rotate: 0,
-    transition: {
-      type: 'spring',
-      duration: 0.7,
-      bounce: 0.5,
-    },
-  },
-  exit: { scale: 0, rotate: 180, transition: { duration: 0.5 } },
-};
-
-const containerInnerStyle = css({
-  backgroundColor: 'gray.gray_150',
-  position: 'relative',
-  borderRadius: '16px',
-  padding: '36px 48px',
-});
-
-const closeButtonStyle = css({
-  position: 'absolute',
-  top: '8px',
-  right: '8px',
-  padding: '2px',
-  borderRadius: 'full',
-});
-
-const contentStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '12px',
-  textAlign: 'center',
-});
-
-const contentStaggerVariants = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0, transition: { delay: 0.3 } },
-};

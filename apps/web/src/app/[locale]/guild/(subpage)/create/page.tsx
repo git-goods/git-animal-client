@@ -1,5 +1,4 @@
-import { Flex } from '_panda/jsx';
-import { dialogTitleStyle } from '@gitanimals/ui-panda';
+import { dialogTitleStyle } from '@gitanimals/ui-tailwind';
 
 import { GuildModalPageLayout } from '@/app/[locale]/guild/_components/GuildModalPageLayout';
 
@@ -9,9 +8,9 @@ export default function GuildCreatePage() {
   return (
     <GuildModalPageLayout>
       <h2 className={dialogTitleStyle}>Create Guild</h2>
-      <Flex flexDirection="column" gap="24px">
+      <div className="flex flex-col gap-[24px]">
         <GuildCreate />
-      </Flex>
+      </div>
     </GuildModalPageLayout>
   );
 }

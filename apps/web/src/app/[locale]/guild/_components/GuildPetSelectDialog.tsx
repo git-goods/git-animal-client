@@ -3,9 +3,9 @@
 
 import { useState } from 'react';
 import type { Persona } from '@gitanimals/api';
-import { Button } from '@gitanimals/ui-panda';
+import { Button, ScrollArea } from '@gitanimals/ui-tailwind';
 
-import { SelectPersonaList } from './SelectPersonaList';
+import { SelectPersonaList } from '../../mypage/PersonaList';
 
 export const GuildJoinPetSelectDialog = ({ onSubmit }: { onSubmit: (selectPersona: string) => void }) => {
   const [selectPersona, setSelectPersona] = useState<string>();
@@ -22,8 +22,13 @@ export const GuildJoinPetSelectDialog = ({ onSubmit }: { onSubmit: (selectPerson
 
   return (
     <>
-      <SelectPersonaList selectPersona={selectPersona ? [selectPersona] : []} onSelectPersona={onSelectPersona} />
-      <Button mx="auto" w="100px" onClick={onDone} disabled={!selectPersona}>
+      <SelectPersonaList selectPersona={selectPersona ? [selectPersona] : []} onSelectPersona={onSelectPersona}>
+        <SelectPersonaList.Toolbar showSearch />
+        <ScrollArea height="50vh">
+          <SelectPersonaList.Grid />
+        </ScrollArea>
+      </SelectPersonaList>
+      <Button className="mx-auto w-[100px]" onClick={onDone} disabled={!selectPersona}>
         Done
       </Button>
     </>

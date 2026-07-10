@@ -1,102 +1,64 @@
 'use client';
 
-import { Children, useRef, useState } from 'react';
-import { css } from '_panda/css';
-import type { ChangedEvent, FlickingOptions, FlickingProps } from '@egjs/react-flicking';
-import Flicking from '@egjs/react-flicking';
-import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
+import { Children, useCallback, useEffect, useState } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import { useIsMobile } from '@gitanimals/react';
 
 import { ArrowButton } from './Arrow';
 
 function BackgroundSlider({ children }: { children: React.ReactNode }) {
   const isMobile = useIsMobile();
-  const flicking = useRef<Flicking | null>(null);
-  const [currentPanelIndex, setCurrentPanelIndex] = useState(0);
-
   const panelsPerView = isMobile ? 1 : 2;
 
-  const isFirstPanel = currentPanelIndex === 0;
-  const isLastPanel = currentPanelIndex === Math.ceil(Children.count(children) / panelsPerView) - 1;
+  // flicking(panelsPerView/align:'prev'/gap:20) → embla. 2-per-view 는 슬라이드 폭 50%(mobile 100%)로,
+  // slidesToScroll=panelsPerView 로 페이지 단위 이동. 화살표 disabled 는 embla canScrollPrev/Next 로 대체.
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    slidesToScroll: panelsPerView,
+    containScroll: 'trimSnaps',
+  });
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(false);
 
-  const moveToNextPanel = async () => {
-    if (!flicking.current || isLastPanel || flicking.current.animating) return;
-    try {
-      flicking.current.next();
-    } catch (error) {}
-  };
+  const onSelect = useCallback((api: NonNullable<typeof emblaApi>) => {
+    setCanPrev(api.canScrollPrev());
+    setCanNext(api.canScrollNext());
+  }, []);
 
-  const moveToPrevPanel = async () => {
-    if (!flicking.current || isFirstPanel || flicking.current.animating) return;
-    try {
-      flicking.current.prev();
-    } catch (error) {}
-  };
+  useEffect(() => {
+    if (!emblaApi) return;
+    emblaApi.reInit({ align: 'start', slidesToScroll: panelsPerView, containScroll: 'trimSnaps' });
+  }, [emblaApi, panelsPerView]);
 
-  const onPanelChanged = (e: ChangedEvent<Flicking>) => {
-    setCurrentPanelIndex(e.index);
-  };
-
-  const sliderOptions: Partial<FlickingProps & FlickingOptions> = {
-    panelsPerView,
-    align: 'prev',
-    gap: 20,
-    onChanged: onPanelChanged,
-  };
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect(emblaApi);
+    emblaApi.on('select', onSelect).on('reInit', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect).off('reInit', onSelect);
+    };
+  }, [emblaApi, onSelect]);
 
   return (
-    <div className={containerStyle}>
-      <div className={sliderContainerStyle}>
-        <ArrowButton onClick={moveToPrevPanel} direction="prev" disabled={isFirstPanel} />
-        <ArrowButton onClick={moveToNextPanel} direction="next" disabled={isLastPanel} />
-        <Flicking ref={flicking} {...sliderOptions}>
-          {Children.map(children, (child, idx) => (
-            <div className={sliderItemStyle} key={idx}>
-              {child}
-            </div>
-          ))}
-        </Flicking>
+    <div className="relative mx-auto w-full max-w-[1200px] px-[60px] mobile:px-[35px]">
+      <div className="relative mt-[20px] w-full mobile:mt-0">
+        <ArrowButton onClick={() => emblaApi?.scrollPrev()} direction="prev" disabled={!canPrev} />
+        <ArrowButton onClick={() => emblaApi?.scrollNext()} direction="next" disabled={!canNext} />
+        <div ref={emblaRef} className="overflow-hidden">
+          <div className="flex">
+            {Children.map(children, (child, idx) => (
+              <div
+                className="w-[calc(50%_-_10px)] shrink-0 p-[10px] text-center mobile:w-full [&_img]:h-auto [&_img]:w-full [&_img]:rounded-[8px] [&_p]:mt-[10px] [&_p]:text-[16px]"
+                key={idx}
+              >
+                {child}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
 }
-
-const containerStyle = css({
-  width: '100%',
-  maxWidth: '1200px',
-  margin: '0 auto',
-  padding: '0 60px',
-  position: 'relative',
-
-  _mobile: {
-    padding: '0 35px',
-  },
-});
-
-const sliderContainerStyle = css({
-  position: 'relative',
-  width: '100%',
-  marginTop: '20px',
-
-  _mobile: {
-    marginTop: '0px',
-  },
-});
-
-const sliderItemStyle = css({
-  width: 'calc(50% - 10px)', // gap을 고려한 너비
-  padding: '10px',
-  textAlign: 'center',
-
-  '& img': {
-    width: '100%',
-    height: 'auto',
-    borderRadius: '8px',
-  },
-
-  '& p': {
-    marginTop: '10px',
-    fontSize: '16px',
-  },
-});
 
 export default BackgroundSlider;

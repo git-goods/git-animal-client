@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { ReactNode } from 'react';
-import { css, cx } from '_panda/css';
-import { Box } from '_panda/jsx';
 import type { Product } from '@gitanimals/api';
+import { cn } from '@gitanimals/ui-tailwind';
 import { snakeToTitleCase } from '@gitanimals/util-common';
 
 import { useGetPersonaTier } from '@/hooks/persona/useGetPersonaDropRate';
@@ -35,42 +34,14 @@ export function ShopTableDesktopRow({ rightElement, ...item }: Props) {
 }
 
 export function ShopTableRowViewSkeleton() {
-  return <div className={cx(rowStyle, skeletonStyle)} />;
+  return <div className={cn(rowStyle, skeletonStyle)} />;
 }
 
-const skeletonStyle = css({
-  background:
-    'linear-gradient(90deg, token(colors.gray.800) 25%, token(colors.gray.600) 50%, token(colors.gray.200) 75%, token(colors.gray.800) 100%)',
-  backgroundSize: '200% 100%',
-  animation: `skeletonLoading 1.5s infinite linear`,
-});
+// rowStyle 의 bg-white-10 위에 opacity blink 만 — sweep 없는 최소 로딩 신호.
+const skeletonStyle = 'animate-pulse';
 
-export const rowStyle = css({
-  width: '100%',
-  height: '80px',
-  backgroundColor: 'white_10',
-  borderRadius: '12px',
-
-  display: 'grid',
-  gridTemplateColumns: '1fr 2.5fr 1fr 1fr 4.2fr 1.5fr',
-  alignItems: 'center',
-  padding: '0 32px',
-  gap: '16px',
-
-  textStyle: 'glyph20.regular',
-  color: 'white.white_100',
-
-  '& button': {
-    color: 'black.black',
-    width: '100%',
-    paddingX: '6px',
-  },
-
-  '& *': {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-});
+export const rowStyle =
+  'w-full h-[80px] bg-white-10 rounded-[12px] grid grid-cols-[1fr_2.5fr_1fr_1fr_4.2fr_1.5fr] items-center px-[32px] gap-[16px] glyph20-regular text-white-100 [&_button]:text-black [&_button]:w-full [&_button]:px-[6px] [&_*]:overflow-hidden [&_*]:text-ellipsis';
 
 export function ShopTableMobileRow({ personaType, personaLevel, price, rightElement }: Props) {
   const tier = useGetPersonaTier(personaType);
@@ -80,7 +51,7 @@ export function ShopTableMobileRow({ personaType, personaLevel, price, rightElem
       <div>
         <img src={getPersonaImage(personaType)} width={60} height={67} alt="animal1" />
       </div>
-      <Box flex="1">
+      <div className="flex-1">
         <span className={personaTypeStyle}>{snakeToTitleCase(personaType)}</span>
         <div className={personaContentStyle}>
           <span>{ANIMAL_TIER_TEXT_MAP[tier]}</span>
@@ -97,32 +68,14 @@ export function ShopTableMobileRow({ personaType, personaLevel, price, rightElem
             </>
           )}
         </div>
-      </Box>
+      </div>
       <div>{rightElement}</div>
     </div>
   );
 }
 
-const personaTypeStyle = css({
-  textStyle: 'glyph15.regular',
-  color: 'white.white',
-});
+const personaTypeStyle = 'glyph15-regular text-white';
 
-const personaContentStyle = css({
-  display: 'flex',
-  gap: '8px',
-  alignItems: 'center',
-  color: 'white.white_50',
-  textStyle: 'glyph14regular',
-});
+const personaContentStyle = 'flex gap-[8px] items-center text-white-50 glyph14-regular';
 
-const contentStyle = css({
-  display: 'flex',
-  gap: '4px',
-  alignItems: 'center',
-  color: 'white.white_50',
-  textStyle: 'glyph14regular',
-  bg: 'white.white_10',
-  borderRadius: '6px',
-  padding: '4px 16px 4px 8px',
-});
+const contentStyle = 'flex gap-[4px] items-center text-white-50 glyph14-regular bg-white-10 rounded-[6px] p-[4px_16px_4px_8px]';

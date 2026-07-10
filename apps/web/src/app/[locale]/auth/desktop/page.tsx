@@ -3,12 +3,16 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 
 import { login } from '@/components/AuthButton';
 import { buildDesktopCallbackUrl, isValidDesktopRedirect } from '@/constants/desktopAuth';
-import { useClientSession } from '@/utils/clientAuth';
+import { useClientSession } from '@/hooks/clientAuth';
+
+const pageRootClass =
+  'flex min-h-screen flex-col items-center justify-center p-[24px] text-white bg-[linear-gradient(180deg,#000_0%,#004875_38.51%,#005B93_52.46%,#006FB3_73.8%,#0187DB_100%)] mobile:p-[16px]';
+const cardClass =
+  'flex w-fit min-w-[520px] max-w-full flex-col items-center gap-[16px] rounded-[16px] bg-white-10 p-[40px] backdrop-blur-[7px] mobile:min-w-full mobile:bg-[rgba(255,255,255,0.08)] mobile:px-[16px] mobile:py-[24px]';
 
 export default function DesktopAuthPage() {
   const params = useSearchParams();
@@ -30,10 +34,10 @@ export default function DesktopAuthPage() {
 
   if (!isValid) {
     return (
-      <div className={pageRootCss}>
-        <div className={cardCss}>
-          <h1 className={titleCss}>잘못된 요청</h1>
-          <p className={descCss}>redirect_uri가 허용 범위를 벗어났거나 필수 파라미터가 누락되었습니다.</p>
+      <div className={pageRootClass}>
+        <div className={cardClass}>
+          <h1 className="glyph28-bold text-white mobile:glyph24-bold">{t('desktopInvalidTitle')}</h1>
+          <p className="glyph16-regular text-center text-white-75">{t('desktopInvalidDescription')}</p>
         </div>
       </div>
     );
@@ -44,19 +48,25 @@ export default function DesktopAuthPage() {
   };
 
   return (
-    <div className={pageRootCss}>
-      <div className={cardCss}>
-        <h1 className={titleCss}>{t('desktopTitle')}</h1>
+    <div className={pageRootClass}>
+      <div className={cardClass}>
+        <h1 className="glyph28-bold text-white mobile:glyph24-bold">{t('desktopTitle')}</h1>
 
-        {errorCode && <div className={errorBannerCss}>{t('desktopErrorBanner')}</div>}
+        {errorCode && (
+          <div className="w-full rounded-[8px] bg-[rgba(255,75,75,0.15)] px-[16px] py-[12px] text-center glyph14-regular text-white">
+            {t('desktopErrorBanner')}
+          </div>
+        )}
 
-        {status === 'loading' && <p className={loadingTextCss}>{t('desktopLoadingMessage')}</p>}
+        {status === 'loading' && <p className="glyph20-regular text-white-75">{t('desktopLoadingMessage')}</p>}
 
-        {status === 'authenticated' && <p className={loadingTextCss}>{t('desktopAuthenticatedMessage')}</p>}
+        {status === 'authenticated' && (
+          <p className="glyph20-regular text-white-75">{t('desktopAuthenticatedMessage')}</p>
+        )}
 
         {status === 'unauthenticated' && (
           <>
-            <p className={descCss}>{t('desktopDescription')}</p>
+            <p className="whitespace-pre-line text-center glyph16-regular text-white-75">{t('desktopDescription')}</p>
             <Button variant="primary" size="m" onClick={handleLogin}>
               {t('desktopContinueButton')}
             </Button>
@@ -66,64 +76,3 @@ export default function DesktopAuthPage() {
     </div>
   );
 }
-
-const pageRootCss = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  minHeight: '100vh',
-  padding: '24px',
-  bg: 'linear-gradient(180deg, #000 0%, #004875 38.51%, #005B93 52.46%, #006FB3 73.8%, #0187DB 100%)',
-  color: 'white',
-  _mobile: {
-    padding: '16px',
-  },
-});
-
-const cardCss = css({
-  borderRadius: '16px',
-  background: 'rgba(255, 255, 255, 0.1)',
-  backdropFilter: 'blur(7px)',
-  padding: '40px',
-  width: 'fit-content',
-  minWidth: '520px',
-  maxWidth: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '16px',
-  _mobile: {
-    minWidth: '100%',
-    padding: '24px 16px',
-    background: 'rgba(255, 255, 255, 0.08)',
-  },
-});
-
-const titleCss = css({
-  textStyle: 'glyph28.bold',
-  color: 'white',
-  _mobile: { textStyle: 'glyph24.bold' },
-});
-
-const loadingTextCss = css({
-  textStyle: 'glyph20.regular',
-  color: 'white.white_70',
-});
-
-const descCss = css({
-  textStyle: 'glyph16.regular',
-  color: 'white.white_80',
-  textAlign: 'center',
-  whiteSpace: 'pre-line',
-});
-
-const errorBannerCss = css({
-  width: '100%',
-  padding: '12px 16px',
-  borderRadius: '8px',
-  background: 'rgba(255, 75, 75, 0.15)',
-  color: 'white',
-  textStyle: 'glyph14.regular',
-  textAlign: 'center',
-});

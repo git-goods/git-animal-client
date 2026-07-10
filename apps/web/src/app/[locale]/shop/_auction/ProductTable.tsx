@@ -4,21 +4,27 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Product } from '@gitanimals/api';
-import useIsMobile from '@gitanimals/react/src/hooks/useIsMobile/useIsMobile';
+import { useIsMobile } from '@gitanimals/react';
 import { auctionQueries, useBuyProduct, useDeleteProduct, userQueries } from '@gitanimals/react-query';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { MediaQuery } from '@/components/MediaQuery';
 import Pagination from '@/components/Pagination/Pagination';
+import { useGetPersonaTier } from '@/hooks/persona/useGetPersonaDropRate';
+import { trackEvent } from '@/lib/analytics';
 import { useLoading } from '@/store/loading';
-import { useClientUser } from '@/utils/clientAuth';
+import { ANIMAL_TIER_TEXT_MAP } from '@/utils/animals';
+import { useClientUser } from '@/hooks/clientAuth';
 
 import { ShopTableDesktopRow, ShopTableMobileRow, ShopTableRowViewSkeleton } from '../_common/ShopTableMobileRow';
 import { useSearchOptions } from '../useSearchOptions';
 
-import { tableCss, tbodyCss, theadCss } from './table.styles';
+const tableCss = 'w-full mb-[32px] mobile:mb-[12px]';
+const theadCss =
+  'grid grid-cols-[1fr_2.5fr_1fr_1fr_4.2fr_1.5fr] gap-[16px] px-[32px] py-[4px] rounded-[12px] bg-white-50 items-center h-[46px] glyph18-bold text-white-100 mb-[4px] [&>span:nth-child(1)]:text-center mobile:hidden';
+const tbodyCss = 'flex flex-col gap-[4px] mobile:min-h-[428px]';
 
 function ProductTable() {
   const t = useTranslations('Shop');
@@ -74,13 +80,24 @@ function ProductTableRow({ product }: { product: Product }) {
   const t = useTranslations('Shop');
 
   const productStatus = product.sellerId === myId ? 'MY_SELLING' : product.paymentState;
+  const petTier = useGetPersonaTier(product.persona.personaType);
 
   const { mutate: buyProduct, isPending: isBuying } = useBuyProduct({
     onSuccess: () => {
       toast.success(t('buy-product-success'), {
         duration: 1000,
       });
+
+      trackEvent('click_auction_buy', {
+        pet_name: product.persona.personaType,
+        pet_price: product.price,
+        pet_level: product.persona.personaLevel,
+        pet_grade: ANIMAL_TIER_TEXT_MAP[petTier],
+        seller_id: product.sellerId,
+      });
+
       queryClient.invalidateQueries({ queryKey: auctionQueries.productsKey() });
+      // 유저 쿼리 invalidate → useSyncAnalyticsUser가 갱신된 포인트를 사용자 속성으로 재동기화
       queryClient.invalidateQueries({ queryKey: userQueries.allKey() });
     },
     onSettled: () => {

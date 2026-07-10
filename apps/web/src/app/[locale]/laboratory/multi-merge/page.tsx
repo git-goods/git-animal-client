@@ -1,4 +1,4 @@
-import { LaboratoryLayout } from '../_component/LaboratoryLayout';
+import { LaboratoryLayout } from '../_components/LaboratoryLayout';
 
 import PetMergeUI from './client';
 

@@ -3,15 +3,13 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { center } from '_panda/patterns';
 import { inboxQueries } from '@gitanimals/react-query';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { BellIcon } from 'lucide-react';
 
 import { InboxList } from './InboxList';
-import { INBOX_NOTICE } from './notification.contants';
+import { INBOX_NOTICE } from './notification.constants';
 
 export const Notification = wrap
   .ErrorBoundary({ fallback: <></> })
@@ -29,28 +27,16 @@ export const Notification = wrap
 
     return (
       <div>
-        <button className={notificationStyle} onClick={() => setIsOpen((prev) => !prev)}>
+        <button className="relative" onClick={() => setIsOpen((prev) => !prev)}>
           <BellIcon size={24} />
-          {inboxCount > 0 && <div className={countStyle}>{inboxCount}</div>}
+          {inboxCount > 0 && (
+            <div className="glyph12-regular absolute right-[-10px] top-[-10px] flex h-[18px] w-[18px] items-center justify-center rounded-[12px] bg-[#019C5A] text-white">
+              {inboxCount}
+            </div>
+          )}
         </button>
 
         <InboxList isOpen={isOpen} list={inboxList} />
       </div>
     );
   });
-
-const notificationStyle = css({
-  position: 'relative',
-});
-
-const countStyle = center({
-  borderRadius: '12px',
-  background: '#019C5A',
-  position: 'absolute',
-  top: '-10px',
-  right: '-10px',
-  textStyle: 'glyph12.regular',
-  width: '18px',
-  height: '18px',
-  color: 'white',
-});

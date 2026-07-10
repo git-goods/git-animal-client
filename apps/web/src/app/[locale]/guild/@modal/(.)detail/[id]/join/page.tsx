@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
 import { inboxQueries } from '@gitanimals/react-query';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -40,16 +39,11 @@ export default function GuildJoinModal({ params }: { params: { id: string } }) {
     <RouteModal>
       <div>
         <RouteModalTitle>Choose your pet</RouteModalTitle>
-        <p className={dialogDescriptionStyle}>If you choose a pet, it will be shown in the guild image.</p>
+        <p className="glyph20-regular text-white-50 mt-3 text-center">
+          If you choose a pet, it will be shown in the guild image.
+        </p>
       </div>
       <GuildJoinPetSelectDialog onSubmit={submitJoinGuild} />
     </RouteModal>
   );
 }
-
-const dialogDescriptionStyle = css({
-  textStyle: 'glyph20.regular',
-  color: 'white.white_50',
-  mt: 3,
-  textAlign: 'center',
-});

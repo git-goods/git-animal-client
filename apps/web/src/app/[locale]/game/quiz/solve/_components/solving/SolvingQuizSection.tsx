@@ -3,18 +3,15 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { css, cx } from '_panda/css';
-import { Flex } from '_panda/jsx';
+import { Button, cn, Dialog } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 
 import { Background } from '@/app/[locale]/game/quiz/_components/BackGround';
-import CompleteAlertDialog from '@/app/[locale]/game/quiz/solve/_components/done/CompleteAlertDialog';
-import FailAlertDialog from '@/app/[locale]/game/quiz/solve/_components/fail/FailAlertDialog';
 import QuizProgressBar from '@/app/[locale]/game/quiz/solve/_components/solving/QuizProgressBar';
-import CorrectConfirmDialog from '@/app/[locale]/game/quiz/solve/_components/success/CorrectConfirmDialog';
 import { QUIZ_ANSWER } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
 import { customScrollStyle } from '@/styles/scrollStyle';
 
+import { customT } from '../../../_utils/quiz.intl';
 import useQuizAction from '../../_hooks/useQuizAction';
 import useQuizData from '../../_hooks/useQuizData';
 import useQuizDialogStatus from '../../_hooks/useQuizDialogStatus';
@@ -53,111 +50,146 @@ const SolvingQuizSection = wrap
     return (
       <>
         <Background />
-        <div className={containerStyle}>
-          <p className={titleStyle}>
+        <div className="flex h-full w-full flex-1 flex-col overflow-hidden px-[16px] py-[40px]">
+          <p className="glyph40-bold mb-[24px] [font-family:'Product_Sans'] font-bold text-white">
             Quiz {round.current}/{round.total}
           </p>
-          <span className={difficultyStyle}>
+          <span className="glyph12-regular mb-[12px] w-fit rounded-[6px] bg-white-10 px-[12px] py-[6px] [font-family:'Product_Sans'] font-normal text-white-50">
             {t(level.toLowerCase())} {t('level')}
           </span>
-          <p className={cx(contentStyle, customScrollStyle)}>{problem}</p>
-          <div className={bottomContainerStyle}>
-            <p className={noticeStyle}>{t('timer-mention')}</p>
+          <p
+            className={cn(
+              'glyph16-regular h-full flex-1 shrink overflow-y-auto [font-family:\'Product_Sans\'] font-normal text-white-75',
+              customScrollStyle,
+            )}
+          >
+            {problem}
+          </p>
+          <div className="flex w-full shrink-0 flex-col">
+            <p className="glyph15-bold mb-[12px] text-center [font-family:'Product_Sans'] font-bold text-white">
+              {t('timer-mention')}
+            </p>
             <QuizProgressBar timeoutAt={round.timeoutAt} onTimeout={failDialog.open} paused={isRoundEnd} />
-            <Flex gap="8px" marginTop="24px">
-              <button className={oxButtonStyle} title="O" onClick={() => submit(QUIZ_ANSWER.YES)}>
+            <div className="mt-[24px] flex gap-[8px]">
+              <button
+                className="flex h-[76px] w-full items-center justify-center rounded-[10px] border-[3px] border-solid border-white-75 bg-[linear-gradient(132.51deg,rgba(255,253,201,0.8)_2.19%,rgba(150,230,216,0.8)_49.24%,rgba(125,171,241,0.8)_98.21%)]"
+                title="O"
+                onClick={() => submit(QUIZ_ANSWER.YES)}
+              >
                 <Image src="/assets/game/quiz/ox_o.webp" alt="O" width={60} height={60} />
               </button>
-              <button className={oxButtonStyle} title="X" onClick={() => submit(QUIZ_ANSWER.NO)}>
+              <button
+                className="flex h-[76px] w-full items-center justify-center rounded-[10px] border-[3px] border-solid border-white-75 bg-[linear-gradient(132.51deg,rgba(255,253,201,0.8)_2.19%,rgba(150,230,216,0.8)_49.24%,rgba(125,171,241,0.8)_98.21%)]"
+                title="X"
+                onClick={() => submit(QUIZ_ANSWER.NO)}
+              >
                 <Image src="/assets/game/quiz/ox_x.webp" alt="X" width={60} height={60} />
               </button>
-            </Flex>
+            </div>
           </div>
         </div>
-        <CorrectConfirmDialog
-          isOpen={correctDialog.isOpen}
-          onClose={correctDialog.close}
-          onStop={async () => {
-            await stopQuiz();
-            await terminateQuiz();
-          }}
-          onConfirm={moveToNextStage}
-          correctPoint={prize}
-        />
-        <FailAlertDialog isOpen={failDialog.isOpen} onClose={moveToQuizMain} />
-        <CompleteAlertDialog isOpen={completeDialog.isOpen} onClose={terminateQuiz} completePoint={prize} />
+        <Dialog open={correctDialog.isOpen} onOpenChange={(open) => !open && stopQuiz().then(() => terminateQuiz())}>
+          <Dialog.Content
+            className="flex w-full flex-col items-center gap-[12px]"
+            isShowClose={false}
+            onEscapeKeyDown={(e) => e.preventDefault()}
+            onPointerDownOutside={(e) => e.preventDefault()}
+          >
+            <div className="flex w-full flex-col items-center gap-[12px]">
+              <Dialog.Title className="!glyph24-bold !text-center [font-family:'Product_Sans'] font-bold">
+                {t('correct-dialog.title')}
+              </Dialog.Title>
+              <Dialog.Description className="glyph16-regular text-center [font-family:'Product_Sans'] font-normal text-white-75 [word-break:keep-all]">
+                {t('correct-dialog.description')}
+              </Dialog.Description>
+            </div>
+            <Image
+              className="my-[4px]"
+              src="/assets/game/quiz/quiz-coin.svg"
+              alt="quiz-coin"
+              width={160}
+              height={160}
+              draggable={false}
+            />
+            <div className="flex w-full flex-col gap-[8px]">
+              <Button className="w-full" onClick={moveToNextStage} variant="primary" size="m">
+                {t('correct-dialog.challenge-button')}
+              </Button>
+              <Button
+                className="w-full"
+                onClick={() => stopQuiz().then(() => terminateQuiz())}
+                variant="secondary"
+                size="m"
+              >
+                {customT(t('correct-dialog.stop-button'), { point: prize })}
+              </Button>
+            </div>
+          </Dialog.Content>
+        </Dialog>
+        <Dialog open={failDialog.isOpen} onOpenChange={(open) => !open && moveToQuizMain()}>
+          <Dialog.Content
+            className="flex w-full flex-col items-center gap-[12px]"
+            isShowClose={false}
+            onEscapeKeyDown={(e) => e.preventDefault()}
+            onPointerDownOutside={(e) => e.preventDefault()}
+          >
+            <div className="flex w-full flex-col items-center gap-[12px]">
+              <Dialog.Title className="!glyph24-bold !text-center [font-family:'Product_Sans'] font-bold">
+                {t('fail-dialog.title')}
+              </Dialog.Title>
+              <Dialog.Description className="glyph16-regular text-center [font-family:'Product_Sans'] font-normal text-white-75 [word-break:keep-all]">
+                {t('fail-dialog.description')}
+              </Dialog.Description>
+            </div>
+            <div className="my-[4px] flex h-[160px] w-[160px] items-center justify-center">
+              <Image
+                src="/assets/game/quiz/cursor-unchoiced.webp"
+                alt="quiz-failed"
+                width={100}
+                height={100}
+                draggable={false}
+              />
+            </div>
+            <div className="flex w-full">
+              <Button className="w-full" onClick={moveToQuizMain} variant="secondary" size="m">
+                {t('fail-dialog.close-button')}
+              </Button>
+            </div>
+          </Dialog.Content>
+        </Dialog>
+        <Dialog open={completeDialog.isOpen} onOpenChange={(open) => !open && terminateQuiz()}>
+          <Dialog.Content
+            className="flex w-full flex-col items-center gap-[12px]"
+            isShowClose={false}
+            onEscapeKeyDown={(e) => e.preventDefault()}
+            onPointerDownOutside={(e) => e.preventDefault()}
+          >
+            <div className="flex w-full flex-col items-center gap-[12px]">
+              <Dialog.Title className="!glyph24-bold !text-center [font-family:'Product_Sans'] font-bold">
+                {t('complete-dialog.title')}
+              </Dialog.Title>
+              <Dialog.Description className="glyph16-regular text-center [font-family:'Product_Sans'] font-normal text-white-75 [word-break:keep-all]">
+                {customT(t('complete-dialog.description'), { point: prize })}
+              </Dialog.Description>
+            </div>
+            <div className="my-[4px] flex h-[160px] w-[160px] items-center justify-center">
+              <Image
+                src="/assets/game/quiz/quiz-double-coin.webp"
+                alt="quiz-complete"
+                width={204}
+                height={184}
+                draggable={false}
+              />
+            </div>
+            <div className="flex w-full">
+              <Button className="w-full" onClick={terminateQuiz} variant="secondary" size="m">
+                {t('complete-dialog.close-button')}
+              </Button>
+            </div>
+          </Dialog.Content>
+        </Dialog>
       </>
     );
   });
 
 export default SolvingQuizSection;
-
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  flex: 1,
-  width: '100%',
-  height: '100%',
-  padding: '40px 16px',
-  overflow: 'hidden',
-});
-
-const titleStyle = css({
-  marginBottom: '24px',
-  textStyle: 'glyph40.bold',
-  fontFamily: 'Product Sans',
-  fontWeight: 700,
-  color: 'white',
-});
-
-const difficultyStyle = css({
-  width: 'fit-content',
-  marginBottom: '12px',
-  padding: '6px 12px',
-  backgroundColor: 'white.white_10',
-  borderRadius: '6px',
-  textStyle: 'glyph12.regular',
-  fontFamily: 'Product Sans',
-  fontWeight: 400,
-  color: 'white.white_50',
-});
-
-const contentStyle = css({
-  flex: 1,
-  flexShrink: 1,
-  height: '100%',
-  textStyle: 'glyph16.regular',
-  fontFamily: 'Product Sans',
-  fontWeight: 400,
-  color: 'white.white_75',
-  overflowY: 'auto',
-});
-
-const bottomContainerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  flexShrink: 0,
-  width: '100%',
-});
-
-const noticeStyle = css({
-  marginBottom: '12px',
-  textStyle: 'glyph15.bold',
-  textAlign: 'center',
-  fontFamily: 'Product Sans',
-  fontWeight: 700,
-  color: 'white',
-});
-
-const oxButtonStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '100%',
-  height: '76px',
-  background:
-    'linear-gradient(132.51deg, rgba(255, 253, 201, 0.8) 2.19%, rgba(150, 230, 216, 0.8) 49.24%, rgba(125, 171, 241, 0.8) 98.21%)',
-  borderRadius: '10px',
-  border: '3px solid',
-  borderColor: 'white.white_75',
-});

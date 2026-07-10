@@ -10,7 +10,8 @@ export const sessionExpiredAtom = atom<SessionExpiredState>({
   callbackUrl: null,
 });
 
-const isAuthPath = (pathname: string) => pathname.startsWith('/auth') || /^\/[^/]+\/auth(\/|$)/.test(pathname);
+// `/auth` 자체와 `/{locale}/auth` 만 인증 경로로 인정 — `/author` 등 오탐 방지 위해 세그먼트 경계(/|$) 기준.
+const isAuthPath = (pathname: string) => /^(\/[^/]+)?\/auth(\/|$)/.test(pathname);
 
 export const triggerSessionExpired = (callbackUrl?: string | null) => {
   if (typeof window === 'undefined') return;

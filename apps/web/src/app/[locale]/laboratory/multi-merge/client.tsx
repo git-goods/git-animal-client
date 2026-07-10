@@ -1,24 +1,23 @@
 'use client';
 
 import React, { Suspense, useState } from 'react';
-import { Flex } from '_panda/jsx';
 import type { MergePersonasResponse } from '@gitanimals/api';
 import { mergePersonas, type MergePersonasRequest, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Button, ScrollArea } from '@gitanimals/ui-panda';
+import { Button, ScrollArea } from '@gitanimals/ui-tailwind';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import { Link } from '@/i18n/routing';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 
 import { MergeResultModal } from '../../mypage/my-pet/(merge)/MergeResult';
 
 import { MergeSlots } from './MergeSlots';
 import { PetGrid } from './PetGrid';
 import { SelectionSummary } from './SelectionSummary';
-import { contentSectionStyle, instructionStyle, instructionTextStyle } from './styles';
+import { contentSectionStyle, instructionStyle, instructionTextStyle } from './multi-merge.styles';
 
 function PetMergeUI() {
   const queryClient = useQueryClient();
@@ -114,7 +113,7 @@ function PetMergeUI() {
 
         <SelectionSummary targetPet={targetPet} materialPets={materialPets} onPetClick={handlePetClick} />
 
-        <Flex gap="16px" justify="center">
+        <div className="flex gap-[16px] justify-center">
           {!targetPet && <Button disabled={!targetPet}>Select Target Pet</Button>}
           {targetPet && materialPets.length === 0 && (
             <Button disabled={targetPet && materialPets.length === 0}>Select Materials</Button>
@@ -132,7 +131,7 @@ function PetMergeUI() {
           <Button variant="secondary">
             <Link href="/laboratory">Exit</Link>
           </Button>
-        </Flex>
+        </div>
       </div>
 
       {/* Instruction Text */}
@@ -192,7 +191,7 @@ function PetList({
   };
 
   return (
-    <ScrollArea h="calc(100vh - 530px)">
+    <ScrollArea height="calc(100vh - 530px)">
       <PetGrid
         pets={availablePets}
         onPetClick={handlePetClick}

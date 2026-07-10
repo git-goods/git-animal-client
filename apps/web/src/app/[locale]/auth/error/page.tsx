@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 
 import { login } from '@/components/AuthButton';
 import { LOCAL_STORAGE_KEY } from '@/constants/storage';
@@ -15,6 +14,11 @@ const isDesktopCallback = (value: string | null): value is string => {
   if (!value) return false;
   return DESKTOP_CALLBACK_HINTS.some((hint) => value.includes(hint));
 };
+
+const pageRootClass =
+  'flex min-h-screen flex-col items-center justify-center p-[24px] text-white bg-[linear-gradient(180deg,#000_0%,#004875_38.51%,#005B93_52.46%,#006FB3_73.8%,#0187DB_100%)] mobile:p-[16px]';
+const cardClass =
+  'flex w-fit min-w-[520px] max-w-full flex-col items-center gap-[16px] rounded-[16px] bg-white-10 p-[40px] backdrop-blur-[7px] mobile:min-w-full mobile:bg-[rgba(255,255,255,0.08)] mobile:px-[16px] mobile:py-[24px]';
 
 export default function AuthErrorPage() {
   const params = useSearchParams();
@@ -54,12 +58,12 @@ export default function AuthErrorPage() {
   };
 
   return (
-    <main className={pageRootCss}>
-      <section className={cardCss}>
-        <h1 className={titleCss}>{t('errorTitle')}</h1>
-        <p className={descCss}>{description}</p>
-        {errorCode && <p className={errorCodeCss}>code: {errorCode}</p>}
-        <div className={buttonRowCss}>
+    <main className={pageRootClass}>
+      <section className={cardClass}>
+        <h1 className="glyph28-bold text-white mobile:glyph24-bold">{t('errorTitle')}</h1>
+        <p className="whitespace-pre-line text-center glyph16-regular text-white-75">{description}</p>
+        {errorCode && <p className="glyph14-regular text-white-50">code: {errorCode}</p>}
+        <div className="mt-[8px] flex flex-wrap justify-center gap-[12px]">
           <Button variant="primary" size="m" onClick={handleRetry}>
             {isDesktopFlow ? t('errorRetryDesktop') : t('errorRetryDefault')}
           </Button>
@@ -71,60 +75,3 @@ export default function AuthErrorPage() {
     </main>
   );
 }
-
-const pageRootCss = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  minHeight: '100vh',
-  padding: '24px',
-  bg: 'linear-gradient(180deg, #000 0%, #004875 38.51%, #005B93 52.46%, #006FB3 73.8%, #0187DB 100%)',
-  color: 'white',
-  _mobile: { padding: '16px' },
-});
-
-const cardCss = css({
-  borderRadius: '16px',
-  background: 'rgba(255, 255, 255, 0.1)',
-  backdropFilter: 'blur(7px)',
-  padding: '40px',
-  width: 'fit-content',
-  minWidth: '520px',
-  maxWidth: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '16px',
-  _mobile: {
-    minWidth: '100%',
-    padding: '24px 16px',
-    background: 'rgba(255, 255, 255, 0.08)',
-  },
-});
-
-const titleCss = css({
-  textStyle: 'glyph28.bold',
-  color: 'white',
-  _mobile: { textStyle: 'glyph24.bold' },
-});
-
-const descCss = css({
-  textStyle: 'glyph16.regular',
-  color: 'white.white_80',
-  textAlign: 'center',
-  whiteSpace: 'pre-line',
-});
-
-const errorCodeCss = css({
-  textStyle: 'glyph14.regular',
-  color: 'white.white_60',
-});
-
-const buttonRowCss = css({
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: '12px',
-  marginTop: '8px',
-  justifyContent: 'center',
-});

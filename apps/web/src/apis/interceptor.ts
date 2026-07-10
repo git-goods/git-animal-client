@@ -1,4 +1,11 @@
+import { cache } from 'react';
 import { getSession } from 'next-auth/react';
+import {
+  setRenderRequestInterceptor,
+  setRenderResponseInterceptor,
+  setRequestInterceptor,
+  setResponseInterceptor,
+} from '@gitanimals/api';
 import { CustomException } from '@gitanimals/exception';
 import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
@@ -6,13 +13,24 @@ import { getServerAuth } from '@/auth';
 import type { ApiErrorScheme } from '@/exceptions/type';
 import { triggerSessionExpired } from '@/utils/sessionExpired';
 
+// Server path: request-scoped memoization via React cache(). Deduped within a
+// single render (one JWT decode instead of one per outbound request), and never
+// shared across concurrent requests from different users.
+const getServerAccessToken = cache(async (): Promise<string | null> => {
+  const session = await getServerAuth();
+  return session?.user?.accessToken ?? null;
+});
+
+// Client-only module-global cache. The browser global is per-user, so caching
+// here is safe. It MUST NOT be shared on the server, where a single module
+// instance is shared across concurrent requests from different users — the
+// server path above deliberately uses request-scoped cache() instead.
 interface CachedSession {
   accessToken: string;
   expiresAt: number;
 }
-
 let cachedSession: CachedSession | null = null;
-let sessionPromise: Promise<CachedSession | null> | null = null;
+let sessionPromise: Promise<string | null> | null = null;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 export const clearSessionCache = () => {
@@ -20,9 +38,13 @@ export const clearSessionCache = () => {
   sessionPromise = null;
 };
 
-const getSessionWithCache = async (): Promise<CachedSession | null> => {
+const getAccessToken = async (): Promise<string | null> => {
+  if (typeof window === 'undefined') {
+    return getServerAccessToken();
+  }
+
   if (cachedSession && Date.now() < cachedSession.expiresAt) {
-    return cachedSession;
+    return cachedSession.accessToken;
   }
 
   if (sessionPromise) {
@@ -31,19 +53,14 @@ const getSessionWithCache = async (): Promise<CachedSession | null> => {
 
   sessionPromise = (async () => {
     try {
-      let session;
-      if (typeof window !== 'undefined') {
-        session = await getSession();
-      } else {
-        session = await getServerAuth();
-      }
+      const session = await getSession();
 
       if (session?.user?.accessToken) {
         cachedSession = {
           accessToken: session.user.accessToken,
           expiresAt: Date.now() + CACHE_DURATION,
         };
-        return cachedSession;
+        return cachedSession.accessToken;
       }
       return null;
     } finally {
@@ -55,12 +72,12 @@ const getSessionWithCache = async (): Promise<CachedSession | null> => {
 };
 
 export const interceptorRequestFulfilled = async (config: InternalAxiosRequestConfig) => {
-  const session = await getSessionWithCache();
+  const accessToken = await getAccessToken();
 
   if (!config.headers) return config;
 
-  if (session?.accessToken) {
-    config.headers.Authorization = `Bearer ${session.accessToken}`;
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
 
   return config;
@@ -74,8 +91,10 @@ export const interceptorResponseFulfilled = (res: AxiosResponse) => {
 // Response interceptor
 export const interceptorResponseRejected = async (error: AxiosError<ApiErrorScheme>) => {
   if (error?.response?.status === 401) {
+    // 캐시 무효화는 환경과 무관하게 먼저 수행 — 만료된 토큰 재사용 방지.
+    clearSessionCache();
+    // 복구 UX(세션 만료 다이얼로그)는 클라이언트에서만 띄운다.
     if (typeof window !== 'undefined') {
-      clearSessionCache();
       triggerSessionExpired(window.location.pathname + window.location.search);
     }
     throw new CustomException('TOKEN_EXPIRED', 'token expired');
@@ -84,6 +103,23 @@ export const interceptorResponseRejected = async (error: AxiosError<ApiErrorSche
   // TODO: 403 처리
 
   return Promise.reject(error);
+};
+
+let registered = false;
+
+/**
+ * Attaches the request/response interceptors to the shared @gitanimals/api
+ * instances exactly once. Idempotent: safe to call from multiple module scopes
+ * (server root layout, client provider) without stacking handlers.
+ */
+export const registerInterceptors = () => {
+  if (registered) return;
+  registered = true;
+
+  setRequestInterceptor(interceptorRequestFulfilled);
+  setResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
+  setRenderRequestInterceptor(interceptorRequestFulfilled);
+  setRenderResponseInterceptor(interceptorResponseFulfilled, interceptorResponseRejected);
 };
 
 export const setInterceptors = (instance: AxiosInstance) => {

@@ -1,11 +1,10 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
+import { Dialog } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { overlay } from 'overlay-kit';
 
-import { ConfirmDialog } from '@/app/[locale]/laboratory/_component/ConfirmDialog';
 import { ROUTE } from '@/constants/route';
 import { useRouter } from '@/i18n/routing';
 
@@ -25,39 +24,44 @@ const SelectQuizType = wrap
     const router = useRouter();
     const { isSolved, quizSolveCard } = useTodayQuizData();
     const t = useTranslations('Quiz');
+    const tCommon = useTranslations('Common');
 
     const handleSolveQuiz = () => {
       overlay.open(({ isOpen, close }) => (
-        <ConfirmDialog
-          isOpen={isOpen}
-          onClose={close}
+        <Dialog.Confirm
+          open={isOpen}
+          onOpenChange={(open) => !open && close()}
           onConfirm={() => {
             handleCheckLanguage();
             close();
           }}
           title={t('solve-todays-quiz')}
           description={t('solve-todays-quiz-description')}
+          confirmText={tCommon('confirm')}
+          cancelText={tCommon('close')}
         />
       ));
     };
 
     const handleCheckLanguage = () => {
       overlay.open(({ isOpen, close }) => (
-        <ConfirmDialog
-          isOpen={isOpen}
-          onClose={close}
+        <Dialog.Confirm
+          open={isOpen}
+          onOpenChange={(open) => !open && close()}
           onConfirm={() => {
             router.push(ROUTE.GAME.QUIZ.SOLVE());
             close();
           }}
           title={t('check-language-for-quiz-dialog-title')}
           description={t('check-language-for-quiz-dialog-description')}
+          confirmText={tCommon('confirm')}
+          cancelText={tCommon('close')}
         />
       ));
     };
 
     return (
-      <div className={containerStyle}>
+      <div className="flex flex-col gap-[8px] w-full">
         <QuizTypeCard
           title={t('create-quiz-card-title')}
           description={customT(t('create-quiz-card-description'), { point: QUIZ_REGISTER_POINT })}
@@ -80,10 +84,3 @@ const SelectQuizType = wrap
   });
 
 export default SelectQuizType;
-
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '8px',
-  width: '100%',
-});

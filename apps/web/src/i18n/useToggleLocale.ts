@@ -1,11 +1,9 @@
-import { useLocale } from 'next-intl';
-
-import type { Locale } from './routing';
 import { getToggledLocale, usePathname, useRouter } from './routing';
+import { useTypedLocale } from './useTypedLocale';
 
 const useToggleLocale = () => {
   const router = useRouter();
-  const locale = useLocale() as Locale;
+  const locale = useTypedLocale();
   const pathname = usePathname();
 
   const toggleLocale = () => {

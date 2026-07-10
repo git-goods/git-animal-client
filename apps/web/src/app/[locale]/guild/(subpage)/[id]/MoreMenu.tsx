@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation';
 import { leaveGuild } from '@gitanimals/api';
 import { guildQueries } from '@gitanimals/react-query';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@gitanimals/ui-panda';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@gitanimals/ui-tailwind';
 import { wrap } from '@suspensive/react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { CatIcon, EllipsisVerticalIcon, LinkIcon, LogOutIcon, SettingsIcon, UsersRoundIcon } from 'lucide-react';
@@ -12,7 +12,7 @@ import { toast } from 'sonner';
 import { useDialog } from '@/components/Global/useDialog';
 import { ORIGIN_URL, ROUTE } from '@/constants/route';
 import { Link, useRouter } from '@/i18n/routing';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 import { copyClipBoard } from '@/utils/copy';
 
 interface MenuType {

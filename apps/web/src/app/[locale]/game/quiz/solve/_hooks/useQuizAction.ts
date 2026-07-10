@@ -1,12 +1,13 @@
 'use client';
 
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { answerQuiz, getRoundResult, stopQuizContext } from '@gitanimals/api';
 import { toast } from 'sonner';
 
 import type { QuizAnswer } from '@/app/[locale]/game/quiz/solve/_constants/solveQuiz.constants';
 import { ROUTE } from '@/constants/route';
-import { type Locale, useRouter } from '@/i18n/routing';
+import { useRouter } from '@/i18n/routing';
+import { useSegmentLocale } from '@/i18n/useSegmentLocale';
 
 import { QUIZ_RESULT } from '../../_constants/quiz.constants';
 import { customT } from '../../_utils/quiz.intl';
@@ -22,7 +23,7 @@ interface UseQuizActionProps {
 
 const useQuizAction = ({ contextId, quizDialog, prize, refetchQuiz }: UseQuizActionProps) => {
   const t = useTranslations('Quiz');
-  const locale = useLocale() as Locale;
+  const locale = useSegmentLocale();
   const { correctDialog, failDialog, completeDialog } = quizDialog;
 
   const submit = async (answer: QuizAnswer) => {

@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { css } from '_panda/css';
 
 import { useSelectOpenContext, useSelectValueContext } from './Root';
 
@@ -14,11 +13,11 @@ function SelectLabel(props: SelectLabelProps) {
 
   return (
     <button
-      className={labelStyle}
+      className="flex w-full items-center gap-[8px] rounded-[8px] border border-solid border-[rgba(0,0,0,0.1)] bg-transparent py-[14px] pl-[20px] pr-[14px] font-['Product_Sans'] text-[16px] font-normal leading-[150%] tracking-[-0.3px] text-[rgba(0,0,0,0.75)] [&_.arrow-icon]:absolute [&_.arrow-icon]:bottom-0 [&_.arrow-icon]:right-[14px] [&_.arrow-icon]:top-0 [&_.arrow-icon]:m-auto [&_.arrow-icon]:rotate-0 [&_.arrow-icon]:transition-transform [&_.arrow-icon]:duration-200"
       style={isOpen ? { border: '1px solid #00894d' } : {}}
       onClick={() => setIsOpen((prev) => !prev)}
     >
-      {!selectedValue && <div className={placeholderStyle}>{props.placeholder}</div>}
+      {!selectedValue && <div className="text-[rgba(0,0,0,0.5)]">{props.placeholder}</div>}
       {selectedValue &&
         (typeof props.children === 'function' ? props.children({ value: selectedValue }) : props.children)}
       <ArrowIcon />
@@ -27,38 +26,6 @@ function SelectLabel(props: SelectLabelProps) {
 }
 
 export default SelectLabel;
-
-const labelStyle = css({
-  display: 'flex',
-  padding: '14px 14px 14px 20px',
-  alignItems: 'center',
-  gap: '8px',
-  borderRadius: '8px',
-  border: '1px solid rgba(0, 0, 0, 0.1)',
-  background: 'transparent',
-  width: '100%',
-
-  color: 'rgba(0, 0, 0, 0.75)',
-  fontFamily: 'Product Sans',
-  fontSize: '16px',
-  fontWeight: 400,
-  lineHeight: '150%',
-  letterSpacing: '-0.3px',
-
-  '& .arrow-icon': {
-    position: 'absolute',
-    right: '14px',
-    top: 0,
-    bottom: 0,
-    margin: 'auto',
-    transition: 'transform 0.2s',
-    transform: 'rotate(0deg)',
-  },
-});
-
-const placeholderStyle = css({
-  color: 'rgba(0, 0, 0, 0.5)',
-});
 
 function ArrowIcon() {
   return (

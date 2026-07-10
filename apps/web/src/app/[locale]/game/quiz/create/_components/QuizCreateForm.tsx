@@ -1,16 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useLocale, useTranslations } from 'next-intl';
-import { css } from '_panda/css';
+import { useTranslations } from 'next-intl';
 import { createQuiz } from '@gitanimals/api';
-import { Button } from '@gitanimals/ui-panda';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
 import { overlay } from 'overlay-kit';
 import { toast } from 'sonner';
 
 import QuizField from '@/app/[locale]/game/quiz/create/_components/QuizField';
 import QuizTextArea from '@/app/[locale]/game/quiz/create/_components/QuizTextArea';
-import { ConfirmDialog } from '@/app/[locale]/laboratory/_component/ConfirmDialog';
 import Tabs from '@/components/Tabs/Tabs';
 import TabsList from '@/components/Tabs/TabsList';
 import TabsTrigger from '@/components/Tabs/TabsTrigger';
@@ -18,23 +16,27 @@ import useTabs from '@/components/Tabs/useTabs';
 import { ROUTE } from '@/constants/route';
 import type { Locale } from '@/i18n/routing';
 import { LOCALE, useRouter } from '@/i18n/routing';
+import { useSegmentLocale } from '@/i18n/useSegmentLocale';
 import useToggleLocale from '@/i18n/useToggleLocale';
+import { useTypedLocale } from '@/i18n/useTypedLocale';
 
 import type { QuizCategory, QuizLevel } from '../../_constants/quiz.constants';
 import { QUIZ_ANSWER, QUIZ_CATEGORY, QUIZ_LEVEL, QUIZ_RESULT } from '../../_constants/quiz.constants';
 import type { QuizAnswer } from '../../solve/_constants/solveQuiz.constants';
 
 const QuizCreateForm = () => {
-  const locale = useLocale() as Locale;
+  const locale = useSegmentLocale(); // underscore — for the backend createQuiz call
+  const typedLocale = useTypedLocale(); // hyphen — matches the LOCALE.* tab values
   const { toggleLocale } = useToggleLocale();
   const [quizContents, setQuizContents] = useState<string>('');
   const handleChangeQuizContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuizContents(e.target.value);
   };
   const t = useTranslations('Quiz');
+  const tCommon = useTranslations('Common');
 
   const { tabsTriggerProps: languageRadioProps, selected: language } = useTabs<Locale>({
-    initialSelectedValue: locale,
+    initialSelectedValue: typedLocale,
     options: [
       { label: t('english'), value: LOCALE.EN_US },
       { label: t('korean'), value: LOCALE.KO_KR },
@@ -43,15 +45,17 @@ const QuizCreateForm = () => {
 
   const handleCheckToggleLanguage = () => {
     overlay.open(({ isOpen, close }) => (
-      <ConfirmDialog
+      <Dialog.Confirm
         title={t('toggle-language-title')}
         description={t('toggle-language-description')}
-        isOpen={isOpen}
-        onClose={close}
+        open={isOpen}
+        onOpenChange={(open) => !open && close()}
         onConfirm={() => {
           toggleLocale();
           close();
         }}
+        confirmText={tCommon('confirm')}
+        cancelText={tCommon('close')}
       />
     ));
   };
@@ -122,7 +126,7 @@ const QuizCreateForm = () => {
   };
 
   return (
-    <form className={contentStyle}>
+    <form className="flex flex-col gap-[24px]">
       <QuizField
         title={t('language')}
         content={
@@ -191,7 +195,7 @@ const QuizCreateForm = () => {
           </Tabs>
         }
       />
-      <Button className={buttonStyle} disabled={!enabledToCreate || isCreating} onClick={handleCreateQuiz}>
+      <Button className="w-full h-[40px] mt-[70px]" disabled={!enabledToCreate || isCreating} onClick={handleCreateQuiz}>
         {isCreating ? t('creating-quiz-button') : t('create-quiz-button')}
       </Button>
     </form>
@@ -199,15 +203,3 @@ const QuizCreateForm = () => {
 };
 
 export default QuizCreateForm;
-
-const contentStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '24px',
-});
-
-const buttonStyle = css({
-  width: '100%',
-  height: '40px',
-  marginTop: '70px',
-});

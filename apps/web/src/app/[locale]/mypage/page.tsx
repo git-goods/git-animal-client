@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { cx } from '_panda/css';
-import { flex } from '_panda/patterns';
+import { cn } from '@gitanimals/ui-tailwind';
 
 import { Link } from '@/i18n/routing';
 
@@ -37,10 +36,10 @@ async function Mypage({
     <>
       <div className={tabListStyle}>
         <Link href="/mypage?type=farm-type">
-          <button className={cx('tab-item', selectedType === 'farm-type' && 'selected')}>Farm Type</button>
+          <button className={cn(tabItemStyle, selectedType === 'farm-type' && tabItemSelectedStyle)}>Farm Type</button>
         </Link>
         <Link href="/mypage?type=line-type">
-          <button className={cx('tab-item', selectedType === 'line-type' && 'selected')}>1 Type</button>
+          <button className={cn(tabItemStyle, selectedType === 'line-type' && tabItemSelectedStyle)}>1 Type</button>
         </Link>
       </div>
       {MYPAGE_TAB_INNER_MAP[selectedType]}
@@ -49,40 +48,13 @@ async function Mypage({
 }
 export default Mypage;
 
-const tabListStyle = flex({
-  gap: '12px',
-  _mobile: {
-    '& a': {
-      flex: 1,
-    },
-  },
-  '& .tab-item': {
-    textStyle: 'glyph28.bold',
-    borderRadius: '12px',
-    padding: '12px',
-    textAlign: 'center',
-    border: '1.5px solid',
-    height: '58px',
-    color: 'white.white_25',
-    backgroundColor: 'white.white_10',
-    borderColor: 'white.white_10',
-    '&.selected': {
-      color: 'white.white_100',
-      backgroundColor: 'white.white_25',
-      borderColor: 'white.white_50',
-    },
-    _hover: {
-      color: 'white.white_75',
-      backgroundColor: 'white.white_25',
-      borderColor: 'white.white_50',
-    },
-    _mobile: {
-      width: '100%',
-      borderRadius: '6px',
-      border: '1px solid',
-      textStyle: 'glyph16.bold',
-      h: '40px',
-      p: '8px 16px',
-    },
-  },
-});
+const tabListStyle = 'flex gap-[12px] mobile:[&_a]:flex-1';
+
+const tabItemStyle = cn(
+  'glyph28-bold rounded-[12px] p-[12px] text-center border-[1.5px] border-solid h-[58px]',
+  'text-white-25 bg-white-10 border-white-10',
+  'hover:text-white-75 hover:bg-white-25 hover:border-white-50',
+  'mobile:w-full mobile:rounded-[6px] mobile:border mobile:border-solid mobile:glyph16-bold mobile:h-[40px] mobile:px-[16px] mobile:py-[8px]',
+);
+
+const tabItemSelectedStyle = 'text-white-100 bg-white-25 border-white-50';

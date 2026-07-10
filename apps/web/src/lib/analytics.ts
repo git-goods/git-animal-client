@@ -28,6 +28,24 @@ export const trackEvent = (eventName: string, properties?: Record<string, any>) 
   }
 };
 
+// 로그인한 사용자를 Mixpanel에 식별 (사용자 속성 설정의 전제 조건)
+export const identifyUser = (userId: string) => {
+  if (!isProd || !userId) return;
+  mixpanel.identify(userId);
+};
+
+// Mixpanel 사용자 속성(People) 설정
+export const setUserProperties = (properties: Record<string, any>) => {
+  if (!isProd) return;
+  mixpanel.people.set(properties);
+};
+
+// 로그아웃 시 사용자 식별 해제
+export const resetAnalyticsUser = () => {
+  if (!isProd) return;
+  mixpanel.reset();
+};
+
 // 페이지 뷰 추적을 위한 함수
 export const trackPageView = (url: string) => {
   if (!isProd) return;

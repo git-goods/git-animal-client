@@ -1,32 +1,21 @@
 import type { PropsWithChildren } from 'react';
-import { css, cx } from '_panda/css';
+import { cn } from '@gitanimals/ui-tailwind';
 
 import { useSelectOpenContext } from './Root';
 
 function SelectPanel({ children }: PropsWithChildren) {
   const { isOpen } = useSelectOpenContext();
 
-  return <div className={cx(panelStyle, isOpen && 'open')}>{children}</div>;
+  return (
+    <div
+      className={cn(
+        "invisible absolute left-0 right-0 top-full z-floating rounded-[8px] border border-solid border-[rgba(0,0,0,0.1)] bg-[var(--gray-color-gray-05,#fbfbfb)] px-[8px] py-[6px] opacity-0 shadow-[0px_2px_4px_0px_rgba(51,50,54,0.06)] transition-all duration-200 [&.open]:visible [&.open]:opacity-100",
+        isOpen && 'open',
+      )}
+    >
+      {children}
+    </div>
+  );
 }
 
 export default SelectPanel;
-
-const panelStyle = css({
-  borderRadius: '8px',
-  padding: '6px 8px',
-  border: '1px solid rgba(0, 0, 0, 0.1)',
-  background: 'var(--gray-color-gray-05, #fbfbfb)',
-  boxShadow: '0px 2px 4px 0px rgba(51, 50, 54, 0.06)',
-  zIndex: 'floating',
-  position: 'absolute',
-  top: '100%',
-  left: 0,
-  right: 0,
-  transition: 'all 0.2s',
-  visibility: 'hidden',
-  opacity: 0,
-  '&.open': {
-    visibility: 'visible',
-    opacity: 1,
-  },
-});

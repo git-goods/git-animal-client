@@ -1,6 +1,7 @@
-import { getAnimalTierInfo } from '@/utils/animals';
+import { renderStatsQueries } from '@gitanimals/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { useGetAllPersona } from '../query/render/useGetAllPersona';
+import { getAnimalTierInfo } from '@/utils/animals';
 
 /**
  * 페르소나의 드랍률을 가져오는 훅
@@ -11,7 +12,7 @@ import { useGetAllPersona } from '../query/render/useGetAllPersona';
 export const useGetPersonaDropRate = (personaType: string) => {
   const {
     data: { personas },
-  } = useGetAllPersona();
+  } = useSuspenseQuery(renderStatsQueries.allPersonaOptions());
   const currentPersona = personas.find((persona) => persona.type === personaType);
   if (!currentPersona) throw new Error('unexpected persona');
 

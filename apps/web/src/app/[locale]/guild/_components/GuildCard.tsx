@@ -1,8 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { Flex } from '_panda/jsx';
-import { flex } from '_panda/patterns';
 import { type Guild } from '@gitanimals/api';
 import { UsersRoundIcon } from 'lucide-react';
 
@@ -19,10 +17,10 @@ export function GuildCard({ guild }: GuildCardProps) {
       <Link href={ROUTE.GUILD.DETAIL(guild.id)} className={cardStyle}>
         <div className="card-top">
           <Image src={guild.guildIcon} alt={guild.title} width={40} height={40} className="card-guild-icon" />
-          <Flex gap="6px" alignItems="center">
+          <div className="flex gap-[6px] items-center">
             <UsersRoundIcon size={16} color="#FFFFFF80" />
             <span>{guild.members.length + 1}/ 15</span>
-          </Flex>
+          </div>
         </div>
         <h4 className="card-title">{guild.title}</h4>
         <p className="card-body">{guild.body}</p>
@@ -42,61 +40,13 @@ export function GuildCard({ guild }: GuildCardProps) {
   );
 }
 
-const cardStyle = flex({
-  width: '100%',
-  height: '100%',
-  padding: '24px',
-  flexDirection: 'column',
-  borderRadius: '12px',
-  backgroundColor: 'white_10',
-  backdropFilter: 'blur(7px)',
-  color: 'white',
-  _mobile: {
-    width: 'calc(100vw - 40px)',
-  },
-
-  '& .card-top': {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-between',
-    color: 'white.white_75',
-    textStyle: 'glyph16.regular',
-    alignItems: 'flex-start',
-  },
-  '& .card-guild-icon': {
-    width: '40px',
-    height: '40px',
-    borderRadius: '8px',
-  },
-  '& .card-title': {
-    textStyle: 'glyph24.bold',
-    mt: 3,
-    mb: 1,
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-  },
-  '& .card-body': {
-    textStyle: 'glyph12.regular',
-    color: 'white.white_75',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-  },
-  '& .card-sub-info': {
-    display: 'flex',
-    flexDirection: 'column',
-    mt: 4,
-    textStyle: 'glyph14.regular',
-    textAlign: 'left',
-    alignItems: 'flex-start',
-
-    '& span:first-child': {
-      color: 'white.white_50',
-      mr: 2,
-    },
-    '& span:last-child': {
-      color: 'white',
-    },
-  },
-});
+const cardStyle = [
+  'w-full h-full p-[24px] flex flex-col rounded-[12px] bg-white-10 [backdrop-filter:blur(7px)] text-white mobile:w-[calc(100vw_-_40px)]',
+  '[&_.card-top]:w-full [&_.card-top]:flex [&_.card-top]:justify-between [&_.card-top]:text-white-75 [&_.card-top]:glyph16-regular [&_.card-top]:items-start',
+  '[&_.card-guild-icon]:w-[40px] [&_.card-guild-icon]:h-[40px] [&_.card-guild-icon]:rounded-[8px]',
+  '[&_.card-title]:glyph24-bold [&_.card-title]:mt-3 [&_.card-title]:mb-1 [&_.card-title]:overflow-hidden [&_.card-title]:text-ellipsis [&_.card-title]:whitespace-nowrap',
+  '[&_.card-body]:glyph12-regular [&_.card-body]:text-white-75 [&_.card-body]:overflow-hidden [&_.card-body]:text-ellipsis [&_.card-body]:whitespace-nowrap',
+  '[&_.card-sub-info]:flex [&_.card-sub-info]:flex-col [&_.card-sub-info]:mt-4 [&_.card-sub-info]:glyph14-regular [&_.card-sub-info]:text-left [&_.card-sub-info]:items-start',
+  '[&_.card-sub-info_span:first-child]:text-white-50 [&_.card-sub-info_span:first-child]:mr-2',
+  '[&_.card-sub-info_span:last-child]:text-white',
+].join(' ');

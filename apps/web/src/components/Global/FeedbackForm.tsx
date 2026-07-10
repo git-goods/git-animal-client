@@ -3,9 +3,8 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { css } from '_panda/css';
 import { XIcon } from '@gitanimals/ui-icon';
-import { Button } from '@gitanimals/ui-panda';
+import { Button } from '@gitanimals/ui-tailwind';
 import { toast } from 'sonner';
 
 import { usePostFeedback } from '@/apis/github/usePostFeedback';
@@ -15,7 +14,7 @@ import Select from '@/components/Select';
 import TextArea from '@/components/TextArea';
 import type { GithubIssueType } from '@/constants/github';
 import { GITHUB_ISSUE_TYPE, SERVICE_MAINTAINER } from '@/constants/github';
-import { useClientUser } from '@/utils/clientAuth';
+import { useClientUser } from '@/hooks/clientAuth';
 import { sendLog } from '@/utils/log';
 
 const ISSUE_LABEL: Record<
@@ -175,86 +174,19 @@ function LabelSelect({ onChange }: { onChange: (value: string[]) => void }) {
   );
 }
 
-const buttonWrapperStyle = css({
-  textAlign: 'center',
-  margin: '24px auto',
-});
+const buttonWrapperStyle = 'text-center my-[24px] mx-auto';
 
-const openIconStyle = css({
-  position: 'fixed',
-  bottom: '0',
-  right: '4px',
-  height: '121px',
-  width: '110px',
-  zIndex: 'floating',
-  _mobile: {
-    scale: '0.7',
-    right: '-12px',
-    bottom: '-12px',
-  },
-});
+const openIconStyle =
+  'fixed bottom-0 right-[4px] h-[121px] w-[110px] z-[2] mobile:scale-[0.7] mobile:right-[-12px] mobile:bottom-[-12px]';
 
-const containerStyle = css({
-  position: 'fixed',
-  bottom: '120px',
-  right: '24px',
-  display: 'flex',
-  flexDirection: 'column',
-  width: '406px',
-  boxShadow: '0px 4px 24px 0px rgba(0, 0, 0, 0.25)',
-  backgroundColor: '#fff',
-  zIndex: 'drawer',
-  animation: 'fadeInUp 0.3s ease-in-out',
-  _mobile: {
-    width: '100%',
-    bottom: '0',
-    right: '0',
-    left: '0',
-    gap: 0,
-  },
-});
+const containerStyle =
+  'fixed bottom-[120px] right-[24px] flex flex-col w-[406px] shadow-[0px_4px_24px_0px_rgba(0,0,0,0.25)] bg-[#fff] z-[1400] animate-fade-in-up mobile:w-full mobile:bottom-0 mobile:right-0 mobile:left-0 mobile:gap-0';
 
-const issueOptionColorStyle = css({
-  width: '14px',
-  height: '14px',
-  borderRadius: '50%',
-});
+const issueOptionColorStyle = 'w-[14px] h-[14px] rounded-full';
 
-const closeIconWrapperStyle = css({
-  top: '16px',
-  right: '16px',
-  position: 'absolute',
-  cursor: 'pointer',
-});
+const closeIconWrapperStyle = 'top-[16px] right-[16px] absolute cursor-pointer';
 
-const headingStyle = css({
-  padding: '24px 32px',
-  position: 'relative',
-  background: 'brand.sky',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '24px',
-  alignItems: 'center',
-  '& h2': {
-    color: 'black.black_90',
-    textAlign: 'center',
-    textStyle: 'glyph18.bold',
-  },
-  '& p': {
-    color: 'black.black_75',
-    textStyle: 'glyph14.regular',
-  },
-  '@media screen and (max-width: 768px)': {
-    padding: '16px',
-  },
-});
+const headingStyle =
+  'py-[24px] px-[32px] relative bg-brand-sky flex flex-col gap-[24px] items-center [&_h2]:text-black-90 [&_h2]:text-center [&_h2]:glyph18-bold [&_p]:text-black-75 [&_p]:glyph14-regular [@media_screen_and_(max-width:768px)]:p-[16px]';
 
-const formStyle = css({
-  padding: '20px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '24px',
-  _mobile: {
-    gap: 3,
-  },
-});
+const formStyle = 'p-[20px] flex flex-col gap-[24px] mobile:gap-3';

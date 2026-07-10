@@ -1,8 +1,7 @@
 'use client';
 
 import { type PropsWithChildren, useEffect, useState } from 'react';
-import { css, cx } from '_panda/css';
-import { Dialog } from '@gitanimals/ui-panda';
+import { cn, Dialog } from '@gitanimals/ui-tailwind';
 
 import { usePathname, useRouter } from '@/i18n/routing';
 import { customScrollHorizontalStyle } from '@/styles/scrollStyle';
@@ -39,7 +38,7 @@ export default function RouteModal({ children, title }: PropsWithChildren<{ titl
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content size="large" className={dialogContentStyle}>
+      <Dialog.Content size="lg" className={dialogContentStyle}>
         {title && <Dialog.Title>{title}</Dialog.Title>}
         {children}
       </Dialog.Content>
@@ -47,17 +46,7 @@ export default function RouteModal({ children, title }: PropsWithChildren<{ titl
   );
 }
 
-const dialogContentStyle = cx(
-  css({
-    height: 'fit-content',
-    gap: 8,
-    overflowY: 'auto',
-    _mobile: {
-      height: '100vh',
-    },
-  }),
-  customScrollHorizontalStyle,
-);
+const dialogContentStyle = cn('h-fit gap-8 overflow-y-auto mobile:h-[100vh]', customScrollHorizontalStyle);
 
 export function RouteModalTitle({ children }: PropsWithChildren) {
   return <Dialog.Title>{children}</Dialog.Title>;

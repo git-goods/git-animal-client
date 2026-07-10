@@ -1,9 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
-import { Flex } from '_panda/jsx';
-import { Button, Dialog } from '@gitanimals/ui-panda';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
 import { useAtomValue } from 'jotai';
 
 import { login } from '@/components/AuthButton';
@@ -25,26 +23,16 @@ export function SessionExpiredDialog() {
         onPointerDownOutside={(e) => e.preventDefault()}
         onInteractOutside={(e) => e.preventDefault()}
       >
-        <Dialog.Title className={titleStyle}>{t('sessionExpiredTitle')}</Dialog.Title>
-        <Dialog.Description className={descriptionStyle}>{t('sessionExpiredDescription')}</Dialog.Description>
-        <Flex gap="8px" justifyContent="flex-end" width="100%">
+        <Dialog.Title className="text-left glyph20-regular">{t('sessionExpiredTitle')}</Dialog.Title>
+        <Dialog.Description className="w-full text-left glyph16-regular text-white-75">
+          {t('sessionExpiredDescription')}
+        </Dialog.Description>
+        <div className="flex w-full justify-end gap-[8px]">
           <Button onClick={handleLogin} variant="primary" size="m">
             {t('sessionExpiredAction')}
           </Button>
-        </Flex>
+        </div>
       </Dialog.Content>
     </Dialog>
   );
 }
-
-const titleStyle = css({
-  textStyle: 'glyph20.regular',
-  textAlign: 'left',
-});
-
-const descriptionStyle = css({
-  textStyle: 'glyph16.regular',
-  textAlign: 'left',
-  color: 'white.white_75',
-  width: '100%',
-});

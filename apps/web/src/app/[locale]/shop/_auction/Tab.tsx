@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { css } from '_panda/css';
 
 import { Link } from '@/i18n/routing';
 
@@ -42,8 +41,8 @@ interface Props {
 // TODO: tab 구조 변경 필요, rightElement 분리
 function Tab({ selectedTab, rightElement }: Props) {
   return (
-    <div className={tabContainerStyle}>
-      <div className={tabItemContainerStyle}>
+    <div className="flex items-center justify-between mb-[32px] mobile:flex-col mobile:items-start mobile:gap-[32px] mobile:mb-[12px]">
+      <div className="mobile:bg-black-25 mobile:p-[4px] mobile:m-auto mobile:rounded-[16px]">
         {TAB.map((item) => (
           <TabItem isSelected={item.key === selectedTab} {...item} key={item.key} />
         ))}
@@ -56,28 +55,12 @@ function Tab({ selectedTab, rightElement }: Props) {
 
 export default Tab;
 
-const tabContainerStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  marginBottom: '32px',
+const defaultLinkCss =
+  "py-[4px] px-[10px] glyph24-bold [font-feature-settings:liga_off,clig_off] transition-all duration-300 ease-[ease] mobile:py-0 mobile:px-[12px] mobile:inline-flex mobile:glyph16-bold mobile:h-[32px] mobile:rounded-[32px] mobile:leading-[32px]";
 
-  _mobile: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    gap: '32px',
-    marginBottom: '12px',
-  },
-});
+const selectedLinkCss = `${defaultLinkCss} text-white mobile:text-white-75 mobile:bg-white-10`;
 
-const tabItemContainerStyle = css({
-  _mobile: {
-    backgroundColor: 'black.black_25',
-    padding: '4px',
-    margin: 'auto',
-    borderRadius: '16px',
-  },
-});
+const nonSelectedLinkCss = `${defaultLinkCss} text-white-25 mobile:text-white-25`;
 
 export function TabItem({ isSelected, label, path }: { isSelected?: boolean } & TabItemType) {
   return (
@@ -86,31 +69,3 @@ export function TabItem({ isSelected, label, path }: { isSelected?: boolean } & 
     </Link>
   );
 }
-
-const defaultLinkCss = css.raw({
-  padding: '4px 10px',
-  textStyle: 'glyph24.bold',
-  fontFeatureSettings: 'liga off, clig off',
-  transition: 'all 0.3s ease',
-
-  _mobile: {
-    padding: '0 12px',
-    display: 'inline-flex',
-    textStyle: 'glyph16.bold',
-    height: '32px',
-    borderRadius: '32px',
-    lineHeight: '32px',
-  },
-});
-
-const selectedLinkCss = css(defaultLinkCss, {
-  color: 'white',
-
-  _mobile: { color: 'white.white_75', backgroundColor: 'white.white_10' },
-});
-
-const nonSelectedLinkCss = css(defaultLinkCss, {
-  color: 'white.white_25',
-
-  _mobile: { color: 'white.white_25' },
-});

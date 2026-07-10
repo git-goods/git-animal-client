@@ -59,7 +59,6 @@ const requestInterceptor = async (request: Request): Promise<Request> => {
   if (typeof window === "undefined") return request;
 
   const token = authUtils.getToken();
-  console.log("token", token);
   if (!token) return request;
 
   const headers = new Headers(request.headers);

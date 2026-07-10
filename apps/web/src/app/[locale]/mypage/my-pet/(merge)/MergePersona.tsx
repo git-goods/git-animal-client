@@ -2,15 +2,14 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { css } from '_panda/css';
 import type { MergePersonaLevelResponse, Persona } from '@gitanimals/api';
 import { useMergePersonaLevelByToken, userQueries } from '@gitanimals/react-query';
-import { Button, CommonDialog, Dialog } from '@gitanimals/ui-panda';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useClientSession } from '@/utils/clientAuth';
+import { useClientSession } from '@/hooks/clientAuth';
 
-import { SelectPersonaList } from '../_components/SelectPersonaList';
+import { SelectPersonaList } from '../../PersonaList';
 import { SpinningLoader } from '../_components/SpinningLoader';
 
 import { MergePreview } from './MergePreview';
@@ -65,28 +64,39 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
   };
 
   return (
-    <CommonDialog isOpen={isOpen} onClose={onClose} title="Merge to Level Up" size="large">
-      <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <Dialog.Content size="screen">
+        <Dialog.Title>Merge to Level Up</Dialog.Title>
 
-      <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona} />
+        <MergePreview targetPersona={targetPersona} materialPersona={materialPersona} />
 
-      <Dialog.Footer className={footerStyle}>
-        <Button variant="secondary" onClick={onClose}>
-          {t('cancel')}
-        </Button>
-        <Button disabled={isMergeDisabled} onClick={onMergeAction}>
-          {t('merge')}
-        </Button>
-      </Dialog.Footer>
-      <MergeResultModal
-        key={resultData?.id}
-        isOpen={Boolean(resultData)}
-        onClose={() => setResultData(null)}
-        result={resultData as MergePersonaLevelResponse}
-      />
-      {isMerging && <SpinningLoader />}
-    </CommonDialog>
+        <SelectPersonaList selectPersona={selectPersona} onSelectPersona={onSelectPersona}>
+          <p className={listTitleStyle}>{t('please-choose-pet')}</p>
+          <SelectPersonaList.Toolbar showSearch />
+          <SelectPersonaList.InventoryGrid rows={3} />
+        </SelectPersonaList>
+
+        <Dialog.Footer className={footerStyle}>
+          <Button variant="secondary" onClick={onClose}>
+            {t('cancel')}
+          </Button>
+          <Button disabled={isMergeDisabled} onClick={onMergeAction}>
+            {t('merge')}
+          </Button>
+        </Dialog.Footer>
+
+        <MergeResultModal
+          key={resultData?.id}
+          isOpen={Boolean(resultData)}
+          onClose={() => setResultData(null)}
+          result={resultData as MergePersonaLevelResponse}
+        />
+        {isMerging && <SpinningLoader />}
+      </Dialog.Content>
+    </Dialog>
   );
 }
 
-const footerStyle = css({ display: 'flex', justifyContent: 'center', gap: '12px' });
+const footerStyle = 'flex justify-center sm:justify-center gap-[12px]';
+
+const listTitleStyle = 'glyph16-regular text-white-50 flex justify-between';
