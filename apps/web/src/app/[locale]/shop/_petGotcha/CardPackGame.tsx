@@ -22,6 +22,9 @@ const TIER_RANK: Record<AnimalTierType, number> = { EX: 0, S_PLUS: 1, A_PLUS: 2,
 const tierOf = (p: GotchaResult) => getAnimalTierInfo(Number(p.dropRate.replace('%', '')));
 const isRare = (p: GotchaResult) => tierOf(p) === 'EX' || tierOf(p) === 'S_PLUS';
 
+// 회전(0.5s)이 끝나고 한 박자 뒤 — 이때 광채/컨페티로 레어를 강조한다
+const RARE_EMPHASIS_DELAY_MS = 500;
+
 type Phase = 'pack' | 'opening' | 'revealing' | 'finale' | 'done';
 
 interface Props {
@@ -82,17 +85,23 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
         return next;
       });
       const rare = isRare(res[i]);
-      if (rare) {
-        doShake();
-        fireConfetti({
-          particleCount: 50,
-          spread: 70,
-          startVelocity: 38,
-          origin: { y: 0.5 },
-          colors: [TIER_GLOW[tierOf(res[i])], '#ffffff'],
-        });
+      if (!rare) {
+        await wait(150);
+        if (skippedRef.current) return;
+        continue;
       }
-      await wait(rare ? 340 : 150);
+      // 앞면이 보인 뒤에 강조 — 뒷면 상태에서 글로우/컨페티가 터지면 등급이 미리 새어나간다
+      await wait(RARE_EMPHASIS_DELAY_MS);
+      if (skippedRef.current) return;
+      doShake();
+      fireConfetti({
+        particleCount: 50,
+        spread: 70,
+        startVelocity: 38,
+        origin: { y: 0.5 },
+        colors: [TIER_GLOW[tierOf(res[i])], '#ffffff'],
+      });
+      await wait(340);
       if (skippedRef.current) return;
     }
 
@@ -149,23 +158,35 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
       className="relative flex h-full min-h-[560px] w-full flex-col items-center justify-center overflow-hidden"
       onClick={handleStageClick}
     >
-      {/* 닫힌 덱(×10) */}
+      {/* 닫힌 덱(×10) — 응답 대기(opening) 동안에도 남겨 정적인 빈 화면을 만들지 않는다 */}
       <AnimatePresence>
-        {phase === 'pack' && (
+        {(phase === 'pack' || phase === 'opening') && (
           <motion.button
             type="button"
             key="deck"
             className="relative z-10"
+            disabled={phase === 'opening'}
             onClick={(e) => {
               e.stopPropagation();
               openPack();
             }}
             aria-label="open pack"
             initial={{ scale: 0.9, opacity: 0 }}
-            animate={reduce ? { scale: 1, opacity: 1 } : { scale: 1, opacity: 1, y: [0, -10, 0] }}
+            animate={
+              reduce
+                ? { scale: 1, opacity: 1 }
+                : phase === 'opening'
+                  ? { scale: [1, 1.06, 1], opacity: 1, rotate: [0, -2, 2, 0] }
+                  : { scale: 1, opacity: 1, y: [0, -10, 0] }
+            }
             exit={{ scale: 1.15, opacity: 0, transition: { duration: 0.2 } }}
-            transition={{ y: { duration: 1.8, repeat: Infinity, ease: 'easeInOut' }, default: { duration: 0.3 } }}
-            whileHover={{ scale: 1.05 }}
+            transition={{
+              y: { duration: 1.8, repeat: Infinity, ease: 'easeInOut' },
+              scale: phase === 'opening' ? { duration: 0.6, repeat: Infinity } : { duration: 0.3 },
+              rotate: { duration: 0.6, repeat: Infinity },
+              default: { duration: 0.3 },
+            }}
+            whileHover={phase === 'pack' ? { scale: 1.05 } : undefined}
           >
             <CardDeck />
           </motion.button>
@@ -173,7 +194,7 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
       </AnimatePresence>
 
       {/* 개봉 순간 — 중앙에서 부드럽게 퍼지는 빛 (전체 화이트 플래시 대신) */}
-      {phase === 'opening' && (
+      {phase === 'revealing' && (
         <motion.div
           className="pointer-events-none absolute left-1/2 top-1/2 z-20 h-[340px] w-[340px] -translate-x-1/2 -translate-y-1/2"
           initial={{ opacity: 0.6, scale: 0.2 }}
@@ -183,8 +204,8 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
         />
       )}
 
-      {/* 카드 그리드 */}
-      {phase !== 'pack' && (
+      {/* 카드 그리드 — 결과 도착 후에만 펼친다 */}
+      {phase !== 'pack' && phase !== 'opening' && (
         <motion.div className="z-10 grid grid-cols-5 gap-[14px] px-4 mobile:gap-[6px]" animate={shake}>
           {Array.from({ length: 10 }).map((_, i) => (
             <PackCard
@@ -209,8 +230,10 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
+            {/* 스크림 — 없으면 확대 카드가 그리드에 파묻혀 '잘못 놓인 카드'처럼 보인다 */}
+            <div className="absolute inset-0 bg-black/75" />
             <motion.div
-              className="relative w-[260px] max-w-[70vw]"
+              className="relative w-[320px] max-w-[75vw]"
               initial={{ scale: 0.3, y: 40, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
               transition={{ type: 'spring', stiffness: 140, damping: 13 }}
@@ -307,6 +330,8 @@ function PackCard({
           className="pointer-events-none absolute -inset-1.5 -z-10 rounded-2xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          // 뒤집힘이 끝나고 한 박자 뒤에 번지도록 — 뒷면에서 광채가 새면 등급이 미리 노출된다
+          transition={{ duration: 0.35, delay: isBest ? 0 : 0.45 }}
           style={{
             boxShadow: `0 0 ${isBest ? 28 : 18}px ${isBest ? 8 : 4}px ${TIER_GLOW[tier]}`,
             background: `${TIER_GLOW[tier]}22`,
