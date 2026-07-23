@@ -12,6 +12,7 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "sb:panda": "turbo run storybook --filter=@gitanimals/ui-panda",
+    "sb:tailwind": "turbo run storybook --filter=@gitanimals/ui-tailwind",
     "lint-staged": "lint-staged",
     "prepare": "husky"
   },

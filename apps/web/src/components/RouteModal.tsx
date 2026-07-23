@@ -38,7 +38,7 @@ export default function RouteModal({ children, title }: PropsWithChildren<{ titl
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content size="large" className={dialogContentStyle}>
+      <Dialog.Content size="lg" className={dialogContentStyle}>
         {title && <Dialog.Title>{title}</Dialog.Title>}
         {children}
       </Dialog.Content>

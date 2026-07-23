@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { evolutionPersona, type MergePersonaLevelResponse, type Persona } from '@gitanimals/api';
 import { userQueries } from '@gitanimals/react-query';
-import { Button, CommonDialog } from '@gitanimals/ui-tailwind';
+import { Button, Dialog } from '@gitanimals/ui-tailwind';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { MoveRight } from 'lucide-react';
 import { overlay } from 'overlay-kit';
@@ -47,19 +47,22 @@ export function EvolutionPersona({ isOpen, onClose, targetPersona }: EvolutionPe
   };
 
   return (
-    <CommonDialog isOpen={isOpen} onClose={onClose} title="GitAnimals Evolution" size="large">
-      <EvolutionPreview targetPersona={targetPersona} />
-      <div className="flex justify-center">
-        <Button onClick={onMergeAction}>{t('evolution')}</Button>
-      </div>
-      <MergeResultModal
-        key={resultData?.id}
-        isOpen={Boolean(resultData)}
-        onClose={() => setResultData(null)}
-        result={resultData as MergePersonaLevelResponse}
-      />
-      {isEvolving && <SpinningLoader />}
-    </CommonDialog>
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <Dialog.Content size="screen">
+        <Dialog.Title>GitAnimals Evolution</Dialog.Title>
+        <EvolutionPreview targetPersona={targetPersona} />
+        <Dialog.Footer>
+          <Button onClick={onMergeAction}>{t('evolution')}</Button>
+        </Dialog.Footer>
+        <MergeResultModal
+          key={resultData?.id}
+          isOpen={Boolean(resultData)}
+          onClose={() => setResultData(null)}
+          result={resultData as MergePersonaLevelResponse}
+        />
+        {isEvolving && <SpinningLoader />}
+      </Dialog.Content>
+    </Dialog>
   );
 }
 
