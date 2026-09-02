@@ -11,6 +11,9 @@ import { AnimalCard } from '@/components/AnimalCard';
 import type { AnimalTierType } from '@/constants/animalTier';
 import { getAnimalTierInfo } from '@/utils/animals';
 
+import type { GachaFailureKind } from './gachaError';
+import { GachaErrorPanel } from './GachaErrorPanel';
+
 // 알 부화 스프라이트 (12프레임, 32x384 세로 스트립) — VIERGACHT/iamcrog 픽셀 에셋.
 const EGG_SPRITE = '/shop/egg-hatch.png';
 const EGG_FRAMES = 12;
@@ -74,12 +77,13 @@ interface Persona {
 
 interface Props {
   onDraw: () => Promise<{ name: string; dropRate: string } | undefined>;
+  errorKind: GachaFailureKind | null;
   onClose: () => void;
   // 뽑는 중(포인트 차감~결과 전)엔 true → 부모가 닫기(X/Esc/오버레이)를 막음
   onBusyChange?: (busy: boolean) => void;
 }
 
-export function GachaHatchGame({ onDraw, onClose, onBusyChange }: Props) {
+export function GachaHatchGame({ onDraw, errorKind, onClose, onBusyChange }: Props) {
   const t = useTranslations('Gotcha');
   const reduce = useReducedMotion();
 
@@ -164,8 +168,9 @@ export function GachaHatchGame({ onDraw, onClose, onBusyChange }: Props) {
     setPhase('dropping');
     try {
       const res = await onDraw();
+      // 실패 안내는 부모가 올려준 errorKind 가 띄운다. idle 로 되돌려 재시도를 받는다.
       if (!res) {
-        onClose(); // onDraw가 에러 토스트/닫기를 처리함
+        setPhase('idle');
         return;
       }
       const tier = getAnimalTierInfo(Number(res.dropRate.replace('%', '')));
@@ -173,7 +178,7 @@ export function GachaHatchGame({ onDraw, onClose, onBusyChange }: Props) {
       setPersona(drawn);
       await runReveal(drawn);
     } catch {
-      onClose();
+      setPhase('idle');
     }
   };
 
@@ -193,7 +198,7 @@ export function GachaHatchGame({ onDraw, onClose, onBusyChange }: Props) {
   };
 
   const theme = persona ? TIER_THEME[persona.tier] : TIER_THEME.B_MINUS;
-  const showEgg = phase !== 'result';
+  const showEgg = phase !== 'result' && !errorKind;
 
   return (
     <div
@@ -241,6 +246,9 @@ export function GachaHatchGame({ onDraw, onClose, onBusyChange }: Props) {
       )}
 
       {phase === 'result' && persona && <Result persona={persona} theme={theme} tapLabel={t('click-to-close')} />}
+
+      {/* 실패해도 창을 닫지 않고 원인과 재시도를 남긴다 */}
+      {errorKind && <GachaErrorPanel kind={errorKind} onRetry={draw} onClose={onClose} />}
 
       {/* 하단 안내 문구 */}
       <div className="absolute bottom-4 left-0 w-full text-center">

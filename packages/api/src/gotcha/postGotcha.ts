@@ -30,7 +30,9 @@ export const postGotcha = async (request?: PostGotchaRequest): Promise<PostGotch
       headers: {
         'Api-Version': '3',
       },
-      timeout: 150000,
+      // 서버는 saga 결과 대기 기본값 10초에 걸리면 500 을 준다(git-goods/gitanimals#507).
+      // 150초는 게이트웨이가 커넥션을 물고 있을 때 화면이 2분 30초 잠기게 만들어 30초로 낮춘다.
+      timeout: 30000,
     },
   );
 };

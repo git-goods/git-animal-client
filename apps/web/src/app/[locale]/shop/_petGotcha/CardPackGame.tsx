@@ -11,6 +11,9 @@ import AnimalCard, { AnimalCardBack } from '@/components/AnimalCard/AnimalCard';
 import type { AnimalTierType } from '@/constants/animalTier';
 import { getAnimalTierInfo } from '@/utils/animals';
 
+import type { GachaFailureKind } from './gachaError';
+import { GachaErrorPanel } from './GachaErrorPanel';
+
 const TIER_GLOW: Record<AnimalTierType, string> = {
   EX: '#ffd54a',
   S_PLUS: '#b18cff',
@@ -27,11 +30,12 @@ type Phase = 'pack' | 'opening' | 'revealing' | 'finale' | 'done';
 interface Props {
   onOpen: () => void; // 덱 개봉 = API 호출 트리거
   results: GotchaResult[] | null;
+  errorKind: GachaFailureKind | null;
   onClose: () => void;
   onBusyChange?: (busy: boolean) => void;
 }
 
-export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) {
+export function CardPackGame({ onOpen, results, errorKind, onClose, onBusyChange }: Props) {
   const t = useTranslations('Gotcha');
   const reduce = useReducedMotion();
 
@@ -44,10 +48,13 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
 
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
+  // 개봉 실패는 phase 를 되돌리지 않는다 — 부모가 올려준 errorKind 로만 판단한다
+  const failure = phase === 'opening' ? errorKind : null;
+
   // 개봉~공개 완료 전엔 닫기 차단 (포인트 차감 후 결과 미확인 방지)
   useEffect(() => {
-    onBusyChange?.(phase === 'opening' || phase === 'revealing' || phase === 'finale');
-  }, [phase, onBusyChange]);
+    onBusyChange?.(!failure && (phase === 'opening' || phase === 'revealing' || phase === 'finale'));
+  }, [phase, failure, onBusyChange]);
 
   const wait = (ms: number) =>
     new Promise<void>((resolve) => {
@@ -74,8 +81,10 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
     await wait(650); // 카드 딜(펼침)이 끝난 뒤 플립 시작
     if (skippedRef.current) return;
 
-    // 순차 플립 — 레어는 팝/글로우/흔들림/컨페티로 강조하고 잠깐 머문다
-    for (let i = 0; i < 10; i++) {
+    // 순차 플립 — 레어는 팝/글로우/흔들림/컨페티로 강조하고 잠깐 머문다.
+    // 서버가 10개 미만을 주더라도 res 길이까지만 돈다 (초과 접근 시 연출이 중간에 멈춘다).
+    const revealCount = Math.min(res.length, 10);
+    for (let i = 0; i < revealCount; i++) {
       setFlipped((prev) => {
         const next = [...prev];
         next[i] = true;
@@ -184,7 +193,7 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
       )}
 
       {/* 카드 그리드 */}
-      {phase !== 'pack' && (
+      {phase !== 'pack' && !failure && (
         <motion.div className="z-10 grid grid-cols-5 gap-[14px] px-4 mobile:gap-[6px]" animate={shake}>
           {Array.from({ length: 10 }).map((_, i) => (
             <PackCard
@@ -232,6 +241,9 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* 실패해도 창을 닫지 않고 원인과 재시도를 남긴다 */}
+      {failure && <GachaErrorPanel kind={failure} onRetry={onOpen} onClose={onClose} />}
 
       {/* 안내 문구 */}
       <div className="absolute bottom-6 left-0 w-full text-center">
