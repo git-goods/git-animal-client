@@ -64,7 +64,6 @@ export function TenPet({ onClose }: Props) {
 Error Message: ${JSON.stringify(error)}
 \`\`\`
 User: ${data?.user.name}
-Token: ${data?.user.accessToken}
       `);
     },
   });
