@@ -11,7 +11,8 @@ const queryClientOption: QueryClientConfig = {
       throwOnError: true,
     },
     mutations: {
-      throwOnError: true,
+      // true 면 onError 가 처리한 에러가 렌더 중 다시 throw 되어 페이지가 에러 화면으로 바뀐다.
+      throwOnError: false,
       onError: (_error) => {
         toast.error('something went wrong 😭');
       },
