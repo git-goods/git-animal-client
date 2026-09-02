@@ -67,7 +67,12 @@
     "pet-gotcha-title": "펫 뽑기",
     "pull-lever": "알을 눌러 펫을 부화시켜보세요!",
     "open-pack": "카드팩을 눌러 개봉하세요!",
-    "tap-to-skip": "화면을 탭하면 건너뛰기"
+    "tap-to-skip": "화면을 탭하면 건너뛰기",
+    "error-server": "서버가 일시적으로 불안정합니다. 잠시 후 다시 시도해주세요.",
+    "error-timeout": "응답이 지연되고 있습니다. 잠시 후 다시 시도해주세요.",
+    "error-network": "네트워크 연결을 확인한 뒤 다시 시도해주세요.",
+    "points-not-charged": "포인트는 차감되지 않았습니다.",
+    "retry": "다시 시도"
   },
   "Shop": {
     "no-mobile-support": "현재 모바일은 지원하지 않습니다. 데스크탑으로 접속해주세요.",
