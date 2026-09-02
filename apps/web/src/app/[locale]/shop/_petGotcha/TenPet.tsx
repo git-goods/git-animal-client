@@ -58,8 +58,7 @@ export function TenPet({ onClose }: Props) {
         signOut();
         return;
       }
-      sendMessageToErrorChannel(`<!here>
-🔥 펫 뽑기 실패 🔥
+      sendMessageToErrorChannel(`🔥 펫 뽑기 실패 🔥
 \`\`\`
 Error Message: ${JSON.stringify(error)}
 \`\`\`
