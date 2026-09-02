@@ -21,6 +21,8 @@ export function useSyncAnalyticsUser() {
   const { data: user } = useQuery({
     ...userQueries.userOptions(),
     enabled: Boolean(userId),
+    // layout 에서 도는 훅이라, throw 하면 error.tsx 를 지나쳐 앱 전체가 크래시한다.
+    throwOnError: false,
   });
 
   useEffect(() => {

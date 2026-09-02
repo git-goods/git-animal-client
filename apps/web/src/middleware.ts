@@ -4,6 +4,7 @@ import createMiddleware from 'next-intl/middleware';
 
 import { resolveLegacyLocalePath } from './i18n/legacyLocaleRedirect';
 import { routing } from './i18n/routing';
+import { isBackendTokenExpired } from './utils/backendToken';
 
 const publicPages = ['/', '/auth', '/auth/desktop', '/event/HALLOWEEN_2024', '/event/CHRISTMAS_2024', '/test/ranking'];
 
@@ -63,8 +64,9 @@ export default async function middleware(req: NextRequest) {
     return withVary(intlMiddleware(modifiedRequest));
   }
 
+  // getToken 은 jwt 콜백을 태우지 않으므로 만료를 여기서 직접 본다.
   const token = await getToken({ req });
-  if (!token) {
+  if (!token || isBackendTokenExpired(token.accessToken)) {
     // 보호 라우트 비인증 접근 → 홈으로. 원래 목적지는 callbackUrl 로 보존해 로그인 후 복귀시킨다.
     // 만료/비로그인을 구분하지 않고 일반 로그인 진입으로 통일 — 익명 사용자에게 '세션 만료' 안내가
     // 뜨는 오작동을 막는다. (실제 세션 만료 안내는 클라이언트 401 인터셉터가 담당)
