@@ -40,7 +40,12 @@
     outline: none;
   }
 
-  input {
+  /* Tailwind preflight 는 button 과 input[type=button|reset|submit] 에만 배경을 지우므로,
+     panda reset 이 담당하던 form control 배경 초기화를 복원한다.
+     누락 시 UA 기본 흰 배경 + text-white 로 입력이 안 보인다 (issue #496). */
+  input,
+  textarea,
+  select {
     background-color: transparent;
   }
 

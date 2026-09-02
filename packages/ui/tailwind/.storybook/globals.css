@@ -20,6 +20,13 @@
     padding: 0;
     outline: none;
   }
+
+  /* 앱 globals.css 와 동일: form control 배경 초기화 (issue #496) */
+  input,
+  textarea,
+  select {
+    background-color: transparent;
+  }
 }
 
 /* Storybook specific styles */
