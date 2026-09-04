@@ -3,6 +3,8 @@
 import { createPortal } from 'react-dom';
 import { Toaster } from 'sonner';
 
+import { PetRampage } from '@/components/EasterEgg';
+
 import FeedBack from './FeedbackForm';
 import { LoginCallbackWatcher } from './LoginCallbackWatcher';
 import { SessionExpiredDialog } from './SessionExpiredDialog';
@@ -15,6 +17,7 @@ function GlobalComponent() {
       <DialogComponent />
       <SessionExpiredDialog />
       <LoginCallbackWatcher />
+      <PetRampage />
       <Toaster
         position="top-center"
         toastOptions={{
