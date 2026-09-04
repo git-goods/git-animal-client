@@ -7,8 +7,9 @@ import { Button } from '@gitanimals/ui-tailwind';
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { ErrorPage } from '@/components/Error/ErrorPage';
 import { isDev } from '@/constants/env';
-import { usePathname, useRouter } from '@/i18n/routing';
 import { useClientUser } from '@/hooks/clientAuth';
+import { usePathname, useRouter } from '@/i18n/routing';
+import { isTokenExpiredError } from '@/utils/sessionExpired';
 
 interface Props {
   error: Error;
@@ -30,6 +31,8 @@ const GlobalErrorPage = ({ error, reset }: Props) => {
   useEffect(() => {
     if (isDev) return;
     if (KNOWN_ERROR_MESSAGES.includes(error.message)) return;
+    // 세션 만료는 장애가 아니다. 만료된 사용자 수만큼 <!here> 가 울린다.
+    if (isTokenExpiredError(error)) return;
 
     sendMessageToErrorChannel(`<!here>
 🔥 Global Error 발생 🔥

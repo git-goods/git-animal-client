@@ -5,12 +5,15 @@ import { useEffect } from 'react';
 import { sendMessageToErrorChannel } from '@/apis/slack/sendMessage';
 import { isDev } from '@/constants/env';
 import { GITHUB_ISSUE_URL } from '@/constants/outlink';
+import { isTokenExpiredError } from '@/utils/sessionExpired';
 
 // layout 에서 새는 에러를 받는다 — error.tsx 는 page 만 감싼다 (gitanimals#506).
 // 루트 레이아웃을 대체하므로 <html>/<body> 를 직접 그려야 하고 globals.css 도 적용되지 않는다.
 export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
     if (isDev) return;
+    // 세션 만료는 장애가 아니다. 만료된 사용자 수만큼 <!here> 가 울린다.
+    if (isTokenExpiredError(error)) return;
 
     sendMessageToErrorChannel(`<!here>
 🔥 Global Error (root) 발생 🔥
