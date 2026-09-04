@@ -11,7 +11,7 @@ import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConf
 
 import { getServerAuth } from '@/auth';
 import type { ApiErrorScheme } from '@/exceptions/type';
-import { triggerSessionExpired } from '@/utils/sessionExpired';
+import { isAuthFailureResponse, triggerSessionExpired } from '@/utils/sessionExpired';
 
 // Server path: request-scoped memoization via React cache(). Deduped within a
 // single render (one JWT decode instead of one per outbound request), and never
@@ -90,7 +90,7 @@ export const interceptorResponseFulfilled = (res: AxiosResponse) => {
 
 // Response interceptor
 export const interceptorResponseRejected = async (error: AxiosError<ApiErrorScheme>) => {
-  if (error?.response?.status === 401) {
+  if (isAuthFailureResponse(error?.response?.status, error?.response?.data)) {
     // 캐시 무효화는 환경과 무관하게 먼저 수행 — 만료된 토큰 재사용 방지.
     clearSessionCache();
     // 복구 UX(세션 만료 다이얼로그)는 클라이언트에서만 띄운다.
