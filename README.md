@@ -35,8 +35,8 @@ GitAnimals 펫들을 쉽게 페이지에서 관리하고, 펫을 뽑을 수 있�
 
 ### Core
 
-- ⚛️ React 18 + Next.js 14
-- 🎨 Styling: PandaCSS
+- ⚛️ React 18 + Next.js 14 (`apps/web`)
+- 🎨 Styling: Tailwind CSS (`apps/web`, `apps/admin-main`)
 - 🔄 State Management:
   - Tanstack Query v5 (Server State)
   - Jotai & Zustand (Client State)
@@ -54,4 +54,4 @@ GitAnimals 펫들을 쉽게 페이지에서 관리하고, 펫을 뽑을 수 있�
 ### Apps
 
 - 🌐 Web (@gitanimals/web)
-- 👨‍💼 Admin (@gitanimals/admin)
+- 👨‍💼 Admin (@gitanimals/admin-main)
