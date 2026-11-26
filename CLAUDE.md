@@ -10,7 +10,7 @@ GitAnimals is a monorepo that allows users to raise virtual pets through GitHub 
 
 **Monorepo Structure:**
 - `apps/web` - Next.js 14 web application (main frontend)  
-- `apps/admin` - Remix admin dashboard
+- `apps/admin-main` - Vite + React Router admin dashboard (Tailwind v4)
 - `apps/webview` - Vite + React Router webview for mobile integration
 - `apps/webview-history` - Legacy Next.js webview (being migrated)
 - `packages/ui/panda` - Component library using PandaCSS

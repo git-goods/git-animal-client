@@ -1,9 +1,0 @@
-node_modules
-
-/.cache
-/build
-.env
-
-## Panda
-styled-system
-styled-system-studio
