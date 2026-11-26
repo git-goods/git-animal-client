@@ -18,7 +18,6 @@ interface SelectionSummaryProps {
   onPetClick: (pet: Persona) => void;
 }
 
-// SelectionSummary 스타일
 const selectionSummaryStyle = 'bg-gray-250 rounded-[12px] p-[16px] mb-[16px]';
 
 const summaryHeaderStyle = 'flex items-center justify-between mb-[4px]';

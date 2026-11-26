@@ -14,7 +14,6 @@ export default function CherryBlossomDemoPage() {
       <div className={pageStyle}>
         <h1 className={titleStyle}>Cherry Blossom Particle Demo</h1>
 
-        {/* Static variants */}
         <section className={sectionStyle}>
           <h2 className={subtitleStyle}>Static Variants (sizes: {SIZES.join(', ')}px)</h2>
           <div className={gridStyle}>
@@ -41,7 +40,6 @@ export default function CherryBlossomDemoPage() {
           </div>
         </section>
 
-        {/* Animated preview */}
         <section className={sectionStyle}>
           <h2 className={subtitleStyle}>Animated Preview</h2>
           <div className={previewStyle}>

@@ -12,12 +12,7 @@ export interface PerspectiveTweenOptions {
   fade?: number;
 }
 
-/**
- * flicking 의 Perspective({rotate, scale}) + Fade() 플러그인을 embla scroll-progress 로 재현한다.
- * 각 슬라이드의 (스냅 위치 − 현재 스크롤 진행도) diff 로 rotateY/scale/opacity 를 계산해 transform 한다.
- *
- * ⚠️ flicking 내부 공식과 미묘하게 다를 수 있어 브라우저에서 시각 확인이 필요하다(rotate/scale 값 튜닝 포인트).
- */
+// flicking 의 Perspective+Fade 플러그인을 embla scroll progress 로 재현한다.
 export function usePerspectiveTween(
   emblaApi: EmblaCarouselType | undefined,
   { rotate = 0.5, scale = 0.2, fade = 1 }: PerspectiveTweenOptions = {},

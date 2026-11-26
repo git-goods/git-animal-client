@@ -10,9 +10,6 @@ export const LABORATORY_FEEDBACK_QUERY_KEYS = {
     ['laboratory-upvote', 'user', userId, 'lab', laboratoryId] as const,
 };
 
-/**
- * Query options for checking if user has upvoted for a specific laboratory
- */
 const checkUserUpvoteOptions = (userId: string, laboratoryId: string) =>
   queryOptions({
     queryKey: LABORATORY_FEEDBACK_QUERY_KEYS.userCheck(userId, laboratoryId),
@@ -20,9 +17,6 @@ const checkUserUpvoteOptions = (userId: string, laboratoryId: string) =>
     enabled: !!userId && !!laboratoryId,
   });
 
-/**
- * Query options for getting all laboratory upvotes for a specific laboratory
- */
 const getAllUpvotesOptions = (laboratoryId: string) =>
   queryOptions({
     queryKey: LABORATORY_FEEDBACK_QUERY_KEYS.byLab(laboratoryId),
@@ -30,9 +24,6 @@ const getAllUpvotesOptions = (laboratoryId: string) =>
     enabled: !!laboratoryId,
   });
 
-/**
- * Query options for getting upvote count for a specific laboratory
- */
 const getUpvoteCountOptions = (laboratoryId: string) =>
   queryOptions({
     queryKey: LABORATORY_FEEDBACK_QUERY_KEYS.count(laboratoryId),

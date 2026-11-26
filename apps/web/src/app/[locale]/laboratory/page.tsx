@@ -9,8 +9,6 @@ import { LABORATORY_FEEDBACK_QUERY_KEYS, upvoteQueryOptions } from '@/apis/labor
 import { Link } from '@/i18n/routing';
 import { useClientUser } from '@/hooks/clientAuth';
 
-// Note: This is now a client component, metadata should be handled at layout level if needed
-
 interface LaboratoryItem {
   id: string;
   title: string;

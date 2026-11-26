@@ -21,9 +21,6 @@ export interface CheckUpvoteResponse {
   upvote?: LaboratoryUpvote;
 }
 
-/**
- * Create or update laboratory upvote
- */
 export async function createOrUpdateUpvote(request: CreateUpvoteRequest): Promise<LaboratoryUpvote> {
   // Check if upvote already exists for this user + laboratory combination
   const { data: existingUpvote, error: checkError } = await supabase
@@ -75,9 +72,6 @@ export async function createOrUpdateUpvote(request: CreateUpvoteRequest): Promis
   return data as LaboratoryUpvote;
 }
 
-/**
- * Check if user has already upvoted for a specific laboratory
- */
 export async function checkUserUpvote(userId: string, laboratoryId: string): Promise<CheckUpvoteResponse> {
   const { data, error } = await supabase
     .from('laboratory_feedback')
@@ -96,9 +90,6 @@ export async function checkUserUpvote(userId: string, laboratoryId: string): Pro
   };
 }
 
-/**
- * Get all laboratory upvotes for a specific laboratory
- */
 export async function getAllUpvotes(laboratoryId: string): Promise<LaboratoryUpvote[]> {
   const { data, error } = await supabase
     .from('laboratory_feedback')
@@ -113,9 +104,6 @@ export async function getAllUpvotes(laboratoryId: string): Promise<LaboratoryUpv
   return data as LaboratoryUpvote[];
 }
 
-/**
- * Get upvote count for a specific laboratory
- */
 export async function getUpvoteCount(laboratoryId: string): Promise<number> {
   const { count, error } = await supabase
     .from('laboratory_feedback')

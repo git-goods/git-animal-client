@@ -5,8 +5,6 @@ import { Banner, cn, LevelBanner } from '@gitanimals/ui-tailwind';
 
 import { getPersonaImage } from '@/utils/image';
 
-// --- LevelPersonaItem (LevelBanner 기반) ---
-
 interface LevelPersonaItemProps {
   persona: Persona;
   isSelected: boolean;
@@ -46,8 +44,6 @@ export const MemoizedLevelPersonaItem = memo(LevelPersonaItem, (prev, next) => {
     prev.persona.level === next.persona.level
   );
 });
-
-// --- BannerPersonaItem (Banner 기반) ---
 
 interface BannerPersonaItemProps {
   persona: Persona;

@@ -5,7 +5,7 @@ import { TextField } from '@gitanimals/ui-tailwind';
 
 import { useClientSession, useClientUser } from '@/hooks/clientAuth';
 
-/** 상점 Auction 섹션과 동일 그라데이션 */
+// 상점 Auction 섹션과 같은 그라데이션
 const pageRootClass =
   'flex min-h-screen flex-col items-center justify-center p-[24px] text-white bg-[linear-gradient(180deg,#000_0%,#004875_38.51%,#005B93_52.46%,#006FB3_73.8%,#0187DB_100%)] mobile:p-[16px]';
 const cardClass =

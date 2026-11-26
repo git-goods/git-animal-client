@@ -1,14 +1,6 @@
 import type { Page, Request } from '@playwright/test';
 
-/**
- * Stubs the CLIENT-side gitanimals API/render calls the landing page fires
- * (browser-initiated only — Next SSR fetches run in node and are NOT
- * interceptable here). Shapes match the zod schemas in @gitanimals/api so
- * safeGet validation passes and Suspense settles deterministically.
- *
- * Returns a live list of the auth headers seen on intercepted requests, so a
- * test can assert what the API interceptor attached (Bearer token or nothing).
- */
+// Next SSR fetch 는 node 에서 돌아 여기서 가로챌 수 없다 — 브라우저 요청만 스텁한다.
 export async function stubGitanimalsApi(page: Page): Promise<{ authHeaders: (string | undefined)[] }> {
   const authHeaders: (string | undefined)[] = [];
 

@@ -74,7 +74,6 @@
   }
 }
 
-/* toast */
 [data-sonner-toaster] {
   isolation: isolate;
 }
@@ -143,7 +142,6 @@
   animation: gradientMove 3s ease infinite;
 }
 
-/* Laboratory page animations */
 @keyframes fadeIn {
   from {
     opacity: 0;

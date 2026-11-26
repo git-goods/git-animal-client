@@ -52,7 +52,6 @@ const loadGoogleSheet = async (doc: GoogleSpreadsheet, type: GoogleSheetType): P
   return sheet;
 };
 
-// google sheet load get
 export async function GET() {
   const type = 'general';
 

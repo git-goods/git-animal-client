@@ -110,7 +110,6 @@ export default function GameConsole({ children }: { children: React.ReactNode })
               </div>
             </motion.foreignObject>
 
-            {/* Screen Content */}
             <motion.foreignObject
               x="280"
               y="121"

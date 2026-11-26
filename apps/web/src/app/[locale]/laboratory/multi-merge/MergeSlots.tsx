@@ -17,7 +17,6 @@ interface MergeSlotsProps {
   resultLevel: number;
 }
 
-// MergeSlots 스타일
 const mergeSlotsContainerStyle = 'flex items-center justify-center gap-[16px]';
 
 const slotContainerStyle = 'flex flex-col items-center';
@@ -46,7 +45,6 @@ export function MergeSlots({ targetPet, materialPets, totalLevel, resultLevel }:
 
       <span className={operatorStyle}>+</span>
 
-      {/* Material Slot - Shows count of material pets */}
       <div className={slotContainerStyle}>
         <div className={slotStyle}>
           {materialPets.length > 0 ? (
@@ -67,7 +65,6 @@ export function MergeSlots({ targetPet, materialPets, totalLevel, resultLevel }:
 
       <span className={operatorStyle}>=</span>
 
-      {/* Result Slot */}
       <div className={slotContainerStyle}>
         <div className={slotStyle}>
           {targetPet && materialPets.length > 0 ? (

@@ -13,18 +13,13 @@ import { getServerAuth } from '@/auth';
 import type { ApiErrorScheme } from '@/exceptions/type';
 import { isAuthFailureResponse, triggerSessionExpired } from '@/utils/sessionExpired';
 
-// Server path: request-scoped memoization via React cache(). Deduped within a
-// single render (one JWT decode instead of one per outbound request), and never
-// shared across concurrent requests from different users.
+// 서버는 cache() 로 요청 단위 메모이즈 — 모듈 전역은 동시 요청 간 다른 유저 토큰이 섞인다.
 const getServerAccessToken = cache(async (): Promise<string | null> => {
   const session = await getServerAuth();
   return session?.user?.accessToken ?? null;
 });
 
-// Client-only module-global cache. The browser global is per-user, so caching
-// here is safe. It MUST NOT be shared on the server, where a single module
-// instance is shared across concurrent requests from different users — the
-// server path above deliberately uses request-scoped cache() instead.
+// 브라우저 전역은 유저 한 명 것이라 모듈 캐시가 안전하다.
 interface CachedSession {
   accessToken: string;
   expiresAt: number;
@@ -83,12 +78,10 @@ export const interceptorRequestFulfilled = async (config: InternalAxiosRequestCo
   return config;
 };
 
-// Response interceptor
 export const interceptorResponseFulfilled = (res: AxiosResponse) => {
   return res;
 };
 
-// Response interceptor
 export const interceptorResponseRejected = async (error: AxiosError<ApiErrorScheme>) => {
   if (isAuthFailureResponse(error?.response?.status, error?.response?.data)) {
     // 캐시 무효화는 환경과 무관하게 먼저 수행 — 만료된 토큰 재사용 방지.
@@ -107,11 +100,7 @@ export const interceptorResponseRejected = async (error: AxiosError<ApiErrorSche
 
 let registered = false;
 
-/**
- * Attaches the request/response interceptors to the shared @gitanimals/api
- * instances exactly once. Idempotent: safe to call from multiple module scopes
- * (server root layout, client provider) without stacking handlers.
- */
+// server layout·client provider 양쪽에서 불려도 핸들러가 쌓이지 않게 한 번만 등록한다.
 export const registerInterceptors = () => {
   if (registered) return;
   registered = true;

@@ -1,6 +1,3 @@
-// import withBundleAnalyzer from '@next/bundle-analyzer';
-// withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
-
 /** @type {import('next').NextConfig} */
 
 import createNextIntlPlugin from 'next-intl/plugin';
@@ -41,4 +38,3 @@ const nextConfig = withNextIntl({
 });
 
 export default withPWA(nextConfig);
-// export default withBundleAnalyzer(nextConfig);

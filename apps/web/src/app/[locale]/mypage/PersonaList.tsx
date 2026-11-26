@@ -17,8 +17,6 @@ import type { PersonaFilterState } from '@/hooks/persona/usePersonaListFilter';
 import { usePersonaListFilter } from '@/hooks/persona/usePersonaListFilter';
 import { useClientUser } from '@/hooks/clientAuth';
 
-// ─── Context ────────────────────────────────────────────────────────
-
 interface SelectPersonaListContextValue {
   filterState: PersonaFilterState;
   updateFilter: (partial: Partial<PersonaFilterState>) => void;
@@ -40,16 +38,12 @@ function useSelectPersonaListContext() {
   return ctx;
 }
 
-// ─── Styles ─────────────────────────────────────────────────────────
-
 const listStyle = cn(
   'gap-[4px] grid grid-cols-[repeat(auto-fill,minmax(64px,auto))]',
   'mobile:grid-cols-[repeat(auto-fill,minmax(52px,auto))]',
 );
 
 const emptyStyle = 'glyph14-regular text-white-50 text-center px-0 py-[24px]';
-
-// ─── Sub-components ─────────────────────────────────────────────────
 
 interface ToolbarProps {
   showSearch?: boolean;
@@ -98,8 +92,6 @@ function Grid() {
   );
 }
 
-// ─── InventoryGrid (Embla carousel + dynamic grid) ─────────────────
-
 const MAX_DOTS = 5;
 
 // 컨테이너 너비에서 컬럼 수 계산 (순수 함수)
@@ -108,8 +100,7 @@ function computeCols(width: number, minItemSize: number, gap: number): number {
   return Math.max(Math.floor((width + gap) / (minItemSize + gap)), 1);
 }
 
-// cols는 항상 너비에서 계산. rows는 prop(고정) 또는 'auto'(gridArea 높이에서 도출).
-// 그리드 높이는 cols/rows에서 직접 계산하므로, 고정 rows일 땐 부모 높이 제약이 필요 없다.
+// 고정 rows 면 그리드 높이를 cols/rows 로 계산하므로 부모 높이 제약이 필요 없다.
 function useGridLayout(rows: number | 'auto', minRows: number, minItemSize: number, gap: number) {
   const containerRef = useRef<HTMLDivElement>(null);
   const gridAreaRef = useRef<HTMLDivElement>(null);
@@ -277,8 +268,6 @@ function InventoryGrid({ rows = 3, minRows = 1, minItemSize = 64, gap = 4 }: Inv
   );
 }
 
-// ─── Root ───────────────────────────────────────────────────────────
-
 interface Props {
   selectPersona?: string[];
   onSelectPersona: (persona: Persona) => void;
@@ -361,8 +350,6 @@ const Root = wrap
       <SelectPersonaListContext.Provider value={contextValue}>{children ?? <Grid />}</SelectPersonaListContext.Provider>
     );
   });
-
-// ─── Export ─────────────────────────────────────────────────────────
 
 export const SelectPersonaList = Object.assign(Root, {
   Toolbar,

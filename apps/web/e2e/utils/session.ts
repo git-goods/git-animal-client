@@ -1,17 +1,7 @@
 import { encode } from 'next-auth/jwt';
 import type { BrowserContext } from '@playwright/test';
 
-/**
- * Seeds a NextAuth session cookie so authenticated flows can be tested without
- * going through GitHub OAuth. Requires NEXTAUTH_SECRET to match the running app.
- *
- * The token shape mirrors auth.ts's jwt callback (user fields spread onto the
- * token; the session callback exposes them as session.user). Adjust `user` to a
- * valid test account if your assertions read specific fields.
- *
- * Used by the (skipped-by-default) authenticated interceptor test — enable it
- * once a test secret + accessToken are available in the E2E env.
- */
+// NEXTAUTH_SECRET 이 실행 중인 앱과 같아야 쿠키가 풀린다.
 export async function seedSession(
   context: BrowserContext,
   user: { id: string; name: string; accessToken: string; image?: string },

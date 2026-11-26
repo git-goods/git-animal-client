@@ -1,10 +1,6 @@
 import type { AnimalTierType } from '@/constants/animalTier';
 import { ANIMAL_TIER_INFO, AnimalTier } from '@/constants/animalTier';
 
-/**
- * 페르소나 등급 정렬 우선순위 (낮을수록 우선)
- * COLLABORATOR > DEFAULT > EVOLUTION
- */
 const PERSONA_GRADE_PRIORITY: Record<string, number> = {
   COLLABORATOR: 0,
   DEFAULT: 1,
