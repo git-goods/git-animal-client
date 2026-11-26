@@ -7,13 +7,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 
 import { usePerspectiveTween } from './usePerspectiveTween';
 
-/**
- * 중앙에 있는 카드를 3D 효과로 보여주는 슬라이더.
- *
- * flicking(Perspective+Fade+Arrow) → embla 로 전환(PR3c). Perspective/Fade 는
- * usePerspectiveTween 으로 재현. embla 구조 클래스(viewport/container/slide)만 tailwind 이고,
- * 화살표/컨테이너 시각 스타일(panda)은 landing 스타일 전환(PR3d) 때 함께 옮긴다.
- */
+// 중앙 카드를 3D 로 강조하는 슬라이더. flicking 의 Perspective/Fade 를 usePerspectiveTween 으로 재현한다.
 export function PerspectiveCenterSlider({ children }: { children: React.ReactNode }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'center', containScroll: false });
   usePerspectiveTween(emblaApi, { rotate: 0.5, scale: 0.2 });

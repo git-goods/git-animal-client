@@ -1,5 +1,4 @@
-/* PandaCSS 제거 완료(PR final): Tailwind preflight 가 base reset 을 담당하고,
-   GitAnimals 커스텀 전역 reset 은 아래 @layer base 에 둔다(preflight 뒤에 적용). */
+/* 커스텀 전역 reset 은 @layer base 에 둬야 preflight 뒤에 적용된다. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

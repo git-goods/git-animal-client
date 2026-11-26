@@ -9,7 +9,6 @@ export default defineConfig({
     // (e.g. `@gitanimals/...`) that merely start with `@`.
     alias: [
       { find: /^@\//, replacement: fileURLToPath(new URL('./src/', import.meta.url)) },
-      { find: /^_panda\//, replacement: fileURLToPath(new URL('./styled-system/', import.meta.url)) },
     ],
   },
   test: {

@@ -9,10 +9,6 @@ import { usePerspectiveTween } from '@/components/Slider/usePerspectiveTween';
 
 import { sliderContainer } from '../MainSection/MainSlider.styles';
 
-/**
- * flicking(Perspective+Fade) → embla 전환(PR3c). 3D 효과는 usePerspectiveTween 으로 재현.
- * 시각 스타일(panda)은 landing 스타일 전환(PR3d)에서 함께 옮긴다.
- */
 function AnimalSliderContainerMobile({ children }: { children: React.ReactNode }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'center' });
   usePerspectiveTween(emblaApi, { rotate: 0.5, scale: 0.2 });
