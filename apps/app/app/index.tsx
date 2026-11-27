@@ -1,17 +1,13 @@
-import { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
-import { getAllPersona } from '@gitanimals/api';
+import { useQuery } from '@tanstack/react-query';
+import { renderStatsQueries } from '@gitanimals/react-query';
 
 export default function Index() {
-  const [count, setCount] = useState<number | null>(null);
-
-  useEffect(() => {
-    getAllPersona().then((res) => setCount(res.personas.length));
-  }, []);
+  const { data } = useQuery(renderStatsQueries.allPersonaOptions());
 
   return (
     <View className="flex-1 items-center justify-center">
-      <Text className="text-xl">{count ?? '...'}</Text>
+      <Text className="text-xl">{data ? data.personas.length : '...'}</Text>
     </View>
   );
 }

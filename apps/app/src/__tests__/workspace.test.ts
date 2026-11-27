@@ -1,22 +1,28 @@
+import { execSync } from 'child_process';
+import fs from 'fs';
+import os from 'os';
 import path from 'path';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const metroConfig = require('../../metro.config.js');
 
 const appRoot = path.resolve(__dirname, '../..');
 
-describe('workspace', () => {
-  it('Metro 가 계층 탐색을 끄고 앱 node_modules 를 먼저 본다', () => {
-    const { disableHierarchicalLookup, nodeModulesPaths } = metroConfig.resolver;
-    expect(disableHierarchicalLookup).toBe(true);
-    expect(nodeModulesPaths[0]).toBe(path.join(appRoot, 'node_modules'));
-  });
+const unique = (text: string, pattern: RegExp) => [...new Set(text.match(pattern) ?? [])];
 
-  it('react 와 react-query 가 워크스페이스 패키지에서도 앱 사본 하나로 해석된다', () => {
-    const { nodeModulesPaths } = metroConfig.resolver;
-    for (const name of ['react', '@tanstack/react-query', 'axios', 'zod']) {
-      const fromApp = require.resolve(name, { paths: [appRoot] });
-      expect(require.resolve(name, { paths: nodeModulesPaths })).toBe(fromApp);
-    }
-  });
+describe('workspace', () => {
+  it('Metro 번들에 react 와 @tanstack/react-query 가 사본 하나씩만 들어간다', () => {
+    const outDir = fs.mkdtempSync(path.join(os.tmpdir(), 'app-export-'));
+    execSync(
+      `npx expo export --platform ios --no-bytecode --dump-sourcemap --output-dir ${outDir}`,
+      { cwd: appRoot, env: { ...process.env, CI: '1' }, stdio: 'pipe' },
+    );
+
+    const jsDir = path.join(outDir, '_expo/static/js/ios');
+    const mapFile = fs.readdirSync(jsDir).find((file) => file.endsWith('.map'))!;
+    const sourceMap = fs.readFileSync(path.join(jsDir, mapFile), 'utf8');
+
+    expect(sourceMap).toContain('packages/lib/react-query/src/index.ts');
+    expect(unique(sourceMap, /\.pnpm\/react@[\d.]+/g)).toEqual(['.pnpm/react@19.3.0']);
+    expect(unique(sourceMap, /\.pnpm\/@tanstack\+react-query@[^/"]+/g)).toHaveLength(1);
+
+    fs.rmSync(outDir, { recursive: true, force: true });
+  }, 180000);
 });
