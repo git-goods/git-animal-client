@@ -67,7 +67,12 @@
     "pet-gotcha-title": "Pet Gotcha",
     "pull-lever": "Tap the egg to hatch your pet!",
     "open-pack": "Tap the pack to open it!",
-    "tap-to-skip": "Tap the screen to skip"
+    "tap-to-skip": "Tap the screen to skip",
+    "error-server": "The server is temporarily unstable. Please try again in a moment.",
+    "error-timeout": "The response is taking too long. Please try again in a moment.",
+    "error-network": "Check your network connection and try again.",
+    "points-not-charged": "Your points were not deducted.",
+    "retry": "Try again"
   },
   "Shop": {
     "no-mobile-support": "Currently, mobile is not supported. Please connect to the desktop.",

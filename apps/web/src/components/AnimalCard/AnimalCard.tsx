@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react';
 import type { PersonaInfo } from '@gitanimals/api';
-import { CardBack, GameCard } from '@gitanimals/ui-tailwind';
 import type { CardTierType } from '@gitanimals/ui-tailwind';
+import { CardBack, GameCard } from '@gitanimals/ui-tailwind';
 
 import { getAnimalTierInfo } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
@@ -12,7 +12,6 @@ interface AnimalCardProps extends Partial<PersonaInfo> {
 }
 
 function AnimalCard(props: AnimalCardProps) {
-  props.type.includes('WHITE') && console.log('props', props);
   const tier = getAnimalTierInfo(Number(props.dropRate.replace('%', '')));
 
   if (props.grade === 'EVOLUTION') {
