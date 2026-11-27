@@ -1,4 +1,6 @@
 import { Image, Pressable, View } from 'react-native';
+import { BlurView } from 'expo-blur';
+import { colors } from '@gitanimals/ui-tailwind/theme';
 import { useQuery } from '@tanstack/react-query';
 import { userQueries } from '@gitanimals/react-query';
 import { useRouter } from 'expo-router';
@@ -59,7 +61,12 @@ export default function Home() {
           // 피그마 943:18128: 탭바 위 18px, 오른쪽 18px
           style={{ right: 18, bottom: TAB_BAR_HEIGHT + insets.bottom + 18 }}
         >
-          <Image source={require('../../assets/home/paw-button.png')} style={{ width: 48, height: 48 }} />
+          {/* 피그마 943:18128: 흐림 40 위 검정 20% 원과 흰 paw-print 24 */}
+          <View style={{ width: 48, height: 48, borderRadius: 24, overflow: 'hidden', alignItems: 'center', justifyContent: 'center' }}>
+            <BlurView intensity={40} className="absolute inset-0" />
+            <View className="absolute inset-0" style={{ backgroundColor: colors.black['25'] }} />
+            <Image source={require('../../assets/home/paw.png')} style={{ width: 24, height: 24 }} />
+          </View>
         </Pressable>
       )}
     </View>
