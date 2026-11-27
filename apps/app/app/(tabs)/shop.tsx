@@ -6,6 +6,7 @@ import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GOTCHA_PRICE } from '../../src/shop/useGotcha';
+import { CardFan } from '../../src/shop/CardFan';
 import { AuctionCat, ShopBackground } from '../../src/shop/ShopArt';
 import { CanaryButton } from '../../src/ui/CanaryButton';
 import { sans } from '../../src/ui/sans';
@@ -65,7 +66,7 @@ export default function Shop() {
                 {t('gotcha.pet-gotcha-desc')}
               </Text>
             </View>
-            <Image source={require('../../assets/shop/pet-gotcha-image-card.webp')} style={{ width: 240, height: 113.9 }} />
+            <CardFan />
             <View className="flex-row flex-wrap justify-center" style={{ gap: 8 }}>
               <CanaryButton label={t('gotcha.draw-one')} onPress={() => draw(1)} className="h-8 min-w-20 px-5" />
               <CanaryButton label={t('gotcha.draw-ten')} onPress={() => draw(10)} className="h-8 min-w-20 px-5" />

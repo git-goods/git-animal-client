@@ -23,7 +23,7 @@ const BACK = require('../../assets/card/card-back-S_PLUS.webp');
 
 // 피그마 card 인스턴스(943:39432)
 export const CARD_W = 108.975;
-const CARD_H = 134.883;
+export const CARD_H = 134.883;
 const PET = 95.816;
 
 export function GameCard({ type, dropRate }: { type: string; dropRate: string }) {
