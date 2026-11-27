@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import createMiddleware from 'next-intl/middleware';
 
-import { resolveLegacyLocalePath } from './i18n/legacyLocaleRedirect';
 import { getCountryLocale } from './i18n/countryLocale';
+import { resolveLegacyLocalePath } from './i18n/legacyLocaleRedirect';
 import { routing } from './i18n/routing';
 import { isBackendTokenExpired } from './utils/backendToken';
 
@@ -23,10 +23,10 @@ const extractLocale = (pathname: string): string | null => {
   return (routing.locales as readonly string[]).includes(segments[0]) ? segments[0] : null;
 };
 
-// next-intl 이 Vary 를 안 붙여 CDN 이 다른 locale 응답을 줄 수 있다.
+// next-intl 이 Vary 를 안 붙여 CDN 이 다른 locale 응답을 줄 수 있다. 접속 국가도 locale 을 바꾼다.
 const withVary = (response: Response) => {
   if (response instanceof NextResponse) {
-    response.headers.set('Vary', 'Accept-Language, Cookie');
+    response.headers.set('Vary', 'Accept-Language, Cookie, X-Vercel-IP-Country');
   }
   return response;
 };
@@ -54,7 +54,7 @@ export default async function middleware(req: NextRequest) {
   // URL 정보를 헤더에 추가한 새로운 요청 생성
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set('x-pathname', req.nextUrl.pathname);
-  // 접속 국가 언어를 브라우저 언어보다 우선한다. 직접 고른 언어(NEXT_LOCALE 쿠키)는 그대로 우선.
+  // 접속 국가 언어를 브라우저 언어보다 우선한다. NEXT_LOCALE 쿠키(next-intl 이 지난 방문 locale 로 심는다)는 그대로 우선.
   const countryLocale = getCountryLocale(req.headers.get('x-vercel-ip-country'));
   if (countryLocale) {
     requestHeaders.set('accept-language', countryLocale);
