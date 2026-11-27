@@ -1,6 +1,7 @@
 import { Image, Text, View } from 'react-native';
 import { colors } from '@gitanimals/ui-tailwind/theme';
 import { personaImageUrl } from '../home/pickHomePets';
+import { PET_SIZE as PET_PNG } from '../home/WanderingPet';
 import { PixelSprite } from '../ui/pixel';
 import { sans } from '../ui/sans';
 import { cardName, cardTier, type CardTier } from './cardTier';
@@ -34,9 +35,10 @@ export function GameCard({ type, dropRate, width }: Props) {
     <View accessibilityLabel={`${cardName(type)} ${dropRate}`} style={{ width, height: width * RATIO }}>
       <Image source={BG[tier]} className="absolute inset-0" style={{ width: '100%', height: '100%' }} />
       <View style={{ padding: 6.58 * u, paddingBottom: 0 }}>
-        <View className="items-center justify-center" style={{ width: pet, height: pet }}>
+        <View className="items-center justify-center overflow-hidden" style={{ width: pet, height: pet }}>
           <Image source={THUMBNAIL[tier]} className="absolute inset-0" style={{ width: '100%', height: '100%' }} />
-          <PixelSprite source={personaImageUrl(type)} maxWidth={pet} maxHeight={pet} />
+          {/* 펫 PNG(140) 는 둘레 여백이 커서 칸에 맞춰 줄이면 펫이 너무 작다. 원본 배율로 그리고 여백을 자른다 */}
+          <PixelSprite source={personaImageUrl(type)} maxWidth={PET_PNG * u} maxHeight={PET_PNG * u} />
         </View>
       </View>
       <View className="flex-row items-center" style={{ padding: 8.225 * u, gap: 3.29 * u }}>
