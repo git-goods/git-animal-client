@@ -14,6 +14,7 @@ module.exports = {
     },
     borderRadius: { none: '0' },
     boxShadow: {},
+    backgroundImage: {},
   },
   plugins: [],
 };
