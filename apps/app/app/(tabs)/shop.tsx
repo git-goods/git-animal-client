@@ -9,8 +9,6 @@ import { CanaryButton } from '../../src/ui/CanaryButton';
 import { sans } from '../../src/ui/sans';
 import { TAB_BAR_HEIGHT } from '../../src/ui/TabBar';
 
-// 피그마 943:38402 뽑기 버튼은 primary-S 의 32 높이
-const DRAW = { height: 32, minWidth: 80, paddingHorizontal: 20 } as const;
 const CARD = { backgroundColor: colors.white['25'], borderRadius: 10 } as const;
 
 // 피그마 943:38402 Shop
@@ -57,8 +55,8 @@ export default function Shop() {
             </View>
             <Image source={require('../../assets/shop/pet-gotcha-image-card.webp')} style={{ width: 240, height: 113.9 }} />
             <View className="flex-row flex-wrap justify-center" style={{ gap: 8 }}>
-              <CanaryButton label={t('gotcha.draw-one')} style={DRAW} />
-              <CanaryButton label={t('gotcha.draw-ten')} style={DRAW} />
+              <CanaryButton label={t('gotcha.draw-one')} className="h-8 min-w-20 px-5" />
+              <CanaryButton label={t('gotcha.draw-ten')} className="h-8 min-w-20 px-5" />
             </View>
           </View>
 

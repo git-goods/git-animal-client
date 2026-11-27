@@ -150,7 +150,7 @@ export default function SelectPet() {
       />
       <Dim width={width} />
       <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, paddingHorizontal: 16, paddingTop: 8, paddingBottom: insets.bottom + 8 }}>
-        <CanaryButton label={t('selectPet.save')} disabled={!changed || saving} onPress={() => void save()} />
+        <CanaryButton label={t('selectPet.save')} className="h-10" disabled={!changed || saving} onPress={() => void save()} />
       </View>
     </View>
   );
