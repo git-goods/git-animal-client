@@ -73,6 +73,11 @@ export function AsciiLogo({ className }: { className?: string }) {
   }, []);
 
   return (
-    <canvas ref={canvasRef} role="img" aria-label="Git Animals Christmas" className={`block w-full ${className ?? ''}`} />
+    <canvas
+      ref={canvasRef}
+      role="img"
+      aria-label="Git Animals Christmas"
+      className={`block w-full ${className ?? ''}`}
+    />
   );
 }

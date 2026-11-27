@@ -194,3 +194,9 @@
 .mypage-tour .driver-popover-arrow-side-bottom {
   border-bottom-color: theme('colors.gray.150');
 }
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}

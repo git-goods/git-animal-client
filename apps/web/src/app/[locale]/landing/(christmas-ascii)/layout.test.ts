@@ -18,8 +18,14 @@ describe('getTreeLayout', () => {
   });
 
   test('768 이하는 가운데 정렬 모바일 값', () => {
-    expect(getTreeLayout(768, 1024)).toEqual({ centerX: 384, fill: 0.98, treeDrop: -0.01, fs: 9, bloomScale: 0.56 });
-    expect(getTreeLayout(390, 844).centerX).toBe(195);
+    expect(getTreeLayout(390, 844)).toEqual({ centerX: 195, fill: 0.98, treeDrop: -0.01, fs: 9, bloomScale: 0.56 });
+    expect(getTreeLayout(360, 740).fill).toBe(0.98);
+  });
+
+  test('세로가 짧은 태블릿(768×1024)은 트리를 줄여 로고·버튼을 덮지 않는다', () => {
+    const l = getTreeLayout(768, 1024);
+    expect(l.centerX).toBe(384);
+    expect(l.fill).toBeLessThan(0.7);
   });
 });
 

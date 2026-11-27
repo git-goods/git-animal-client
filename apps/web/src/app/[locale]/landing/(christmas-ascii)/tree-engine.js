@@ -15,7 +15,6 @@
  *
  * Exported as createTreeEngine().
  */
-/* eslint-disable */
 // 원본: xmasqr.vercel.app (catherinee.md), 사용 허락 받음
 export function createTreeEngine() {
   function qrEncode(text, forceMask) {

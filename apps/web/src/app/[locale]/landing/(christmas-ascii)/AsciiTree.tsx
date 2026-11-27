@@ -90,7 +90,12 @@ export function AsciiTree({ link, hintToQr, hintToTree, className }: AsciiTreePr
   const hint = view === 'qr' ? hintToTree : hintToQr;
 
   return (
-    <button type="button" onClick={toggle} aria-label={hint} className={`absolute inset-0 cursor-pointer ${className ?? ''}`}>
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={hint}
+      className={`absolute inset-0 cursor-pointer ${className ?? ''}`}
+    >
       <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 block h-full w-full" />
       <p
         ref={hintRef}
