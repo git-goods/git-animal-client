@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 
 import { registerInterceptors } from '@/apis/interceptor';
 
+import 'driver.js/dist/driver.css';
 import './globals.css';
 import '@gitanimals/asset-font/product-sans/index.css';
 

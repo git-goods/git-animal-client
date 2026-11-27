@@ -11,12 +11,14 @@ import { useClientUser } from '@/hooks/clientAuth';
 import { FarmBackgroundSelect } from './FarmBackgroundSelect';
 import { FarmPersonaSelect } from './FarmPersonaSelect';
 import { useGithubPublish } from './useGithubPublish';
+import { tourTarget, useMypageTour } from './useMypageTour';
 
 export function FarmType() {
   const t = useTranslations('Mypage');
 
   const { name } = useClientUser();
   const publish = useGithubPublish();
+  useMypageTour('farm');
 
   const [imageKey, refreshImage] = useReducer((x: number) => x + 1, 0);
 
@@ -25,21 +27,23 @@ export function FarmType() {
   return (
     <>
       <div>
-        <div className={farmStyle}>
+        <div className={farmStyle} {...tourTarget('preview')}>
           <GitanimalsFarm
             imageKey={String(imageKey)}
             className="w-[600px] aspect-[2/1] pc:w-[400px] tablet:w-[300px] mobile:w-full"
           />
-          <Button size="s" className={publishButtonStyle} onClick={onPublish}>
+          <Button size="s" className={publishButtonStyle} onClick={onPublish} {...tourTarget('publish')}>
             <Github size={16} />
             {t('GithubGuide.upload-button')}
           </Button>
         </div>
       </div>
-      <div>
+      <div {...tourTarget('pet')}>
         <FarmPersonaSelect onImageRefresh={refreshImage} />
       </div>
-      <FarmBackgroundSelect onImageRefresh={refreshImage} />
+      <div {...tourTarget('background')}>
+        <FarmBackgroundSelect onImageRefresh={refreshImage} />
+      </div>
     </>
   );
 }

@@ -312,6 +312,9 @@ importers:
       canvas-confetti:
         specifier: ^1.9.4
         version: 1.9.4
+      driver.js:
+        specifier: ^1.3.1
+        version: 1.14.0
       embla-carousel:
         specifier: ^8.6.0
         version: 8.6.0
@@ -6725,6 +6728,9 @@ packages:
   dotenv@16.0.3:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
     engines: {node: '>=12'}
+
+  driver.js@1.14.0:
+    resolution: {integrity: sha512-BnCFuNU8QO2rrYiDra43Ortx6D6chqMvEMF1q3fWQfsC3xNyCX4T1P1vZDTXTxGdtcXh2v5r11hxSpNLF3DJVw==}
 
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
@@ -18742,6 +18748,8 @@ snapshots:
   dotenv-expand@10.0.0: {}
 
   dotenv@16.0.3: {}
+
+  driver.js@1.14.0: {}
 
   dunder-proto@1.0.1:
     dependencies:
