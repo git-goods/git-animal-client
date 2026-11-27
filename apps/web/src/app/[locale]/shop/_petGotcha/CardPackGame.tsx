@@ -243,10 +243,13 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
             >
               {isRare(best) && (
                 <motion.div
-                  className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2"
+                  className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[420px] w-[420px]"
                   animate={{ rotate: 360 }}
                   transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+                  // rotate 가 transform 을 덮어써 Tailwind translate 가 사라지므로 motion 값으로 중앙 정렬
                   style={{
+                    x: '-50%',
+                    y: '-50%',
                     background: `conic-gradient(${TIER_GLOW[tierOf(best)]}00, ${TIER_GLOW[tierOf(best)]}88, ${TIER_GLOW[tierOf(best)]}00, ${TIER_GLOW[tierOf(best)]}88, ${TIER_GLOW[tierOf(best)]}00)`,
                     borderRadius: '9999px',
                     maskImage: 'radial-gradient(circle, transparent 32%, black 34%, transparent 70%)',
