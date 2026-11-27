@@ -246,7 +246,6 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
   );
 }
 
-// 픽셀 카드 뒷면을 겹쳐 만든 덱(×10)
 function CardDeck() {
   return (
     <div className="relative aspect-[109/135] w-[200px] mobile:w-[150px]">

@@ -15,9 +15,6 @@ interface Props extends ComponentProps<typeof Portal> {
   mode?: ComponentProps<typeof AnimatePresence>['mode'];
 }
 
-/**
- * @description Portal을 AnimatePresence와 함께 사용합니다
- */
 export const AnimatePortal = ({ children, isShowing, mode = 'wait' }: Props) => {
   return (
     <Portal>

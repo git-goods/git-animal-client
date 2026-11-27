@@ -22,9 +22,7 @@ const extractLocale = (pathname: string): string | null => {
   return (routing.locales as readonly string[]).includes(segments[0]) ? segments[0] : null;
 };
 
-// With `localeDetection: true`, locale-detected entry routes vary by
-// `accept-language` and the `NEXT_LOCALE` cookie, but next-intl sets no `Vary`
-// header. Add one so a shared/CDN cache never serves a wrong-locale response.
+// next-intl 이 Vary 를 안 붙여 CDN 이 다른 locale 응답을 줄 수 있다.
 const withVary = (response: Response) => {
   if (response instanceof NextResponse) {
     response.headers.set('Vary', 'Accept-Language, Cookie');

@@ -2,11 +2,6 @@ import { expect, test } from '@playwright/test';
 
 import { stubGitanimalsApi } from './utils/api-stub';
 
-/**
- * Covers the query-relocation change: the landing stat counts (moved from
- * app-local queries.ts into @gitanimals/react-query) must still render, and the
- * seasonal spring content + relocated Footer must still be present.
- */
 test.describe('landing page', () => {
   test('renders shell, seasonal content and Footer', async ({ page }) => {
     await stubGitanimalsApi(page);

@@ -26,11 +26,6 @@ interface SelectableFormItemProps {
   defaultValue?: string;
 }
 
-/**
- * SelecableFormItem은 선택 가능한 폼 아이템을 만드는 컴포넌트입니다.
- *
- * @param props.name - 폼 데이터로 전송될 때 사용될 필드 이름
- */
 export function SelectableFormItem(props: PropsWithChildren<SelectableFormItemProps>) {
   const [value, setValue] = useState<string | null>(props.defaultValue ?? null);
 
@@ -53,11 +48,7 @@ interface SelectableFormItemOptionProps {
   value: string;
 }
 
-/**
- * SelectableFormItemOption은 선택 가능한 폼 아이템의 옵션을 만드는 컴포넌트입니다.
- * 주의! children을 render pattern을 이용한 방법은 server component에서 사용이 불가능합니다.
- * 스타일을 위해서라면 _group을 이용해주세요 (ex, _groupActive)
- */
+// children render prop 은 server component 에서 쓸 수 없다.
 export function SelectableFormItemOption(props: SelectableFormItemOptionProps) {
   const { selected, onChange } = useSelectableFormItemContext();
 

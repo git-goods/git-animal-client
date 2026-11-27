@@ -1,10 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 
-/**
- * E2E config for apps/web. Auto-starts `next dev` (reused if already running).
- * Run: `pnpm --filter @gitanimals/web test:e2e`
- * First-time browser install: `pnpm --filter @gitanimals/web exec playwright install chromium`
- */
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,

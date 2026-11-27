@@ -21,10 +21,7 @@ const dialogAtom = atom<DialogState>({
   onConfirm: undefined,
 });
 
-/**
- * 전역적으로 사용할 수 있는 다이얼로그 훅.
- * 간단한 confirm/alert 용도. 복잡한 다이얼로그는 컴파운드 <Dialog> 직접 사용 권장.
- */
+// 간단한 alert/confirm 용. 복잡한 다이얼로그는 <Dialog> 를 직접 쓴다.
 export function useDialog() {
   const [, setDialog] = useAtom(dialogAtom);
 
@@ -39,9 +36,6 @@ export function useDialog() {
   return { showDialog, closeDialog };
 }
 
-/**
- * 전역 다이얼로그 UI. onConfirm이 없으면 Alert 로, 있으면 Confirm 으로 동작.
- */
 export function DialogComponent() {
   const [dialog, setDialog] = useAtom(dialogAtom);
   const t = useTranslations('Common');

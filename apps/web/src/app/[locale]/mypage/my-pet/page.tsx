@@ -42,7 +42,6 @@ function MypageMyPets() {
 
 export default MypageMyPets;
 
-// 안내 멘트 5초 뒤에 등장
 const captionMessageStyle =
   'glyph18-regular text-white-75 mt-[16px] opacity-0 animate-[fadeIn_0.5s_ease-in-out_5s_forwards]';
 

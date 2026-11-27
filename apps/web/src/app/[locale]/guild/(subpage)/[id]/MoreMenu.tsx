@@ -23,9 +23,6 @@ interface MenuType {
   access: ('leader' | 'member')[];
 }
 
-/**
- * 더보기 메뉴
- */
 export const MoreMenu = wrap
   .ErrorBoundary({ fallback: null })
   .Suspense({

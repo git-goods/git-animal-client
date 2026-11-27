@@ -1,8 +1,4 @@
-// import withBundleAnalyzer from '@next/bundle-analyzer';
-// withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
-
-/** @type {import('next').NextConfig} */
-
+import withBundleAnalyzer from '@next/bundle-analyzer';
 import createNextIntlPlugin from 'next-intl/plugin';
 import NextPWA from 'next-pwa';
 
@@ -15,6 +11,7 @@ const withPWA = NextPWA({
   skipWaiting: true,
 });
 
+/** @type {import('next').NextConfig} */
 const nextConfig = withNextIntl({
   transpilePackages: ['@gitanimals/ui-tailwind'],
   reactStrictMode: true,
@@ -40,5 +37,4 @@ const nextConfig = withNextIntl({
   },
 });
 
-export default withPWA(nextConfig);
-// export default withBundleAnalyzer(nextConfig);
+export default withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' })(withPWA(nextConfig));

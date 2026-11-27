@@ -3,11 +3,6 @@ import { expect, test } from '@playwright/test';
 import { stubGitanimalsApi } from './utils/api-stub';
 import { seedSession } from './utils/session';
 
-/**
- * Covers the API-interceptor rewrite (single registration via
- * registerInterceptors + request-scoped auth). Asserts what the request
- * interceptor attaches to outbound gitanimals API calls.
- */
 test.describe('API interceptor auth header', () => {
   test('unauthenticated: no Authorization header attached', async ({ page }) => {
     const { authHeaders } = await stubGitanimalsApi(page);

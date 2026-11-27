@@ -45,9 +45,7 @@ export const isTokenExpiredError = (error: unknown): boolean => {
   return name === 'CustomException' && message === 'token expired';
 };
 
-// 백엔드는 만료·무효 토큰에 400 {"message":"Authorization fail"} 을 준다. 401 은
-// Authorization 헤더가 아예 없을 때만 온다 (api.gitanimals.org 실측, 2026-09-04).
-// 401 만 보면 정작 진짜 만료 케이스를 놓친다 (gitanimals#509).
+// 백엔드는 만료 토큰에 400 "Authorization fail" 을 준다. 401 은 헤더가 없을 때뿐이다 (gitanimals#509).
 const AUTH_FAIL_MESSAGE = 'Authorization fail';
 
 export const isAuthFailureResponse = (status?: number, data?: ApiErrorScheme): boolean => {
