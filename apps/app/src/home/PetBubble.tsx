@@ -1,21 +1,33 @@
-import { View } from 'react-native';
-import { PixelBox, PixelText, WOOD } from '../ui/pixel';
+import { Text, View } from 'react-native';
+import { colors } from '@gitanimals/ui-tailwind/theme';
+import { sans } from '../ui/sans';
 
-const S = 3;
+const FILL = colors.white['75'];
 
-// 펫 머리 위 가운데. 크림 상자 아래로 두 단 꼬리가 펫을 가리킨다
+// 피그마 943:21748: 반투명 흰 상자(둥근 4) 와 아래로 향한 세모 꼬리(14×12, 위로 3px 겹침)
 export function PetBubble({ text, petSize }: { text: string; petSize: number }) {
   return (
     <View
       testID="pet-bubble"
       pointerEvents="none"
-      style={{ position: 'absolute', bottom: petSize - S * 4, left: petSize / 2 - 100, width: 200, alignItems: 'center' }}
+      // ponytail: 펫 PNG 위쪽 여백만큼 내려 머리 위에 붙인다. 펫마다 여백이 다르면 펫별 보정값이 필요하다
+      style={{ position: 'absolute', bottom: petSize * 0.7, left: petSize / 2 - 100, width: 200, alignItems: 'center' }}
     >
-      <PixelBox shadow={false}>
-        <PixelText variant="glyph12" style={{ color: WOOD.ink }}>{text}</PixelText>
-      </PixelBox>
-      <View style={{ marginTop: -S * 2, width: S * 4, height: S, backgroundColor: WOOD.cream, borderLeftWidth: S, borderRightWidth: S, borderColor: WOOD.outline }} />
-      <View style={{ width: S * 2, height: S, backgroundColor: WOOD.outline }} />
+      <View style={{ backgroundColor: FILL, borderRadius: 4, paddingHorizontal: 8, paddingVertical: 2, marginBottom: -3 }}>
+        <Text style={[sans(13, 1.4), { color: colors.black['90'], textAlign: 'center', maxWidth: 120 }]}>{text}</Text>
+      </View>
+      <View
+        style={{
+          width: 0,
+          height: 0,
+          borderLeftWidth: 6,
+          borderRightWidth: 6,
+          borderTopWidth: 9,
+          borderLeftColor: 'transparent',
+          borderRightColor: 'transparent',
+          borderTopColor: FILL,
+        }}
+      />
     </View>
   );
 }

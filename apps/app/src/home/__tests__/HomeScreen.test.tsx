@@ -13,6 +13,7 @@ jest.mock('@gitanimals/react-query', () => ({
 jest.mock('react-native-safe-area-context', () => ({ useSafeAreaInsets: () => ({ top: 0 }) }));
 jest.mock('@shopify/react-native-skia', () => ({}));
 jest.mock('../PetStage', () => ({ PetStage: () => null }));
+jest.mock('../ScoreBoard', () => ({ ScoreBoard: () => null }));
 jest.mock('expo-router', () => ({ useRouter: () => ({ push: jest.fn() }) }));
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),

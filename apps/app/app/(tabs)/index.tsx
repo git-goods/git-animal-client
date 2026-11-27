@@ -1,4 +1,4 @@
-import { Pressable, View } from 'react-native';
+import { Image, Pressable, View } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { userQueries } from '@gitanimals/react-query';
 import { useRouter } from 'expo-router';
@@ -11,7 +11,8 @@ import { pickHomePets } from '../../src/home/pickHomePets';
 import { ProfileBoard } from '../../src/home/ProfileBoard';
 import { RetryNotice } from '../../src/home/RetryNotice';
 import { ScoreBoard } from '../../src/home/ScoreBoard';
-import { PAW_ROWS, PixelBox, PixelIcon, PixelText, WOOD } from '../../src/ui/pixel';
+import { PixelText } from '../../src/ui/pixel';
+import { TAB_BAR_HEIGHT } from '../../src/ui/TabBar';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ export default function Home() {
   const loading = user.isPending || (!!username && (personas.isPending || selection.isPending));
 
   return (
-    <View className="flex-1 bg-gray-000">
+    <View className="flex-1">
       <FarmBackground />
       {!user.isError && !loading && user.data && !personas.isError && (
         <PetStage
@@ -34,7 +35,7 @@ export default function Home() {
           fieldBottom={FARM_FIELD.bottom}
         />
       )}
-      <View className="gap-3 px-4" style={{ paddingTop: insets.top + 12 }} pointerEvents="box-none">
+      <View style={{ paddingTop: insets.top + 8, gap: 14 }} pointerEvents="box-none">
         {user.isError ? (
           <RetryNotice onRetry={() => void user.refetch()} />
         ) : loading || !user.data ? (
@@ -54,11 +55,11 @@ export default function Home() {
           accessibilityRole="button"
           accessibilityLabel={t('selectPet.title')}
           onPress={() => router.push('/select-pet')}
-          className="absolute bottom-4 right-4"
+          className="absolute"
+          // 피그마 943:18128: 탭바 위 18px, 오른쪽 18px
+          style={{ right: 18, bottom: TAB_BAR_HEIGHT + insets.bottom + 18 }}
         >
-          <PixelBox tone="wood">
-            <PixelIcon rows={PAW_ROWS} palette={{ O: WOOD.outline, C: WOOD.cream }} unit={3} />
-          </PixelBox>
+          <Image source={require('../../assets/home/paw-button.png')} style={{ width: 48, height: 48 }} />
         </Pressable>
       )}
     </View>

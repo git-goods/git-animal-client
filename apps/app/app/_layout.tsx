@@ -40,6 +40,8 @@ export default function RootLayout() {
     [FONT.body]: require('../assets/fonts/Galmuri11.ttf'),
     [FONT.bodyBold]: require('../assets/fonts/Galmuri11-Bold.ttf'),
     [FONT.title]: require('../assets/fonts/DNFBitBitv2.otf'),
+    [FONT.sans]: require('../assets/fonts/ProductSans-Regular.ttf'),
+    [FONT.sansBold]: require('../assets/fonts/ProductSans-Bold.ttf'),
   });
 
   if (!loaded && !error) return null;
