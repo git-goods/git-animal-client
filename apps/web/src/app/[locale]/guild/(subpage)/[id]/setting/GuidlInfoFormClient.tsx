@@ -91,8 +91,8 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
               className={cn(
                 'border border-solid rounded-[6px] py-[8px] px-[16px] glyph14-regular transition-all duration-100 ease-in-out last:ml-1',
                 !props.fields.autoJoin
-                  ? 'bg-white-25 border-white-50 text-white'
-                  : 'bg-white-10 border-white-10 text-white-25',
+                  ? 'bg-white-alpha-25 border-white-alpha-50 text-white'
+                  : 'bg-white-alpha-10 border-white-alpha-10 text-white-alpha-25',
               )}
               onClick={() => props.onFieldChange('autoJoin', false)}
             >
@@ -102,8 +102,8 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
               className={cn(
                 'border border-solid rounded-[6px] py-[8px] px-[16px] glyph14-regular transition-all duration-100 ease-in-out last:ml-1',
                 props.fields.autoJoin
-                  ? 'bg-white-25 border-white-50 text-white'
-                  : 'bg-white-10 border-white-10 text-white-25',
+                  ? 'bg-white-alpha-25 border-white-alpha-50 text-white'
+                  : 'bg-white-alpha-10 border-white-alpha-10 text-white-alpha-25',
               )}
               onClick={() => props.onFieldChange('autoJoin', true)}
             >
@@ -126,7 +126,7 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
               >
                 <img
                   src={icon}
-                  className="border-white-90 rounded-[8px] border-none"
+                  className="border-white-alpha-90 rounded-[8px] border-none"
                   width={70}
                   height={70}
                   key={icon}
@@ -151,7 +151,7 @@ export function GuildInfoFormClient({ setFormError, formError, ...props }: Guild
               >
                 <img
                   src={getBackgroundImage(background)}
-                  className="border-white-90 rounded-[8px] border-none"
+                  className="border-white-alpha-90 rounded-[8px] border-none"
                   width={284}
                   height={124}
                   key={background}

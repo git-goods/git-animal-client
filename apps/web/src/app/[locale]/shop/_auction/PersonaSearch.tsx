@@ -35,7 +35,7 @@ interface PersonaSearchProps {
   selected?: string;
 }
 
-const buttonWrapperStyle = 'flex items-center justify-center w-[36px] h-[36px] bg-white-25 rounded-[10px]';
+const buttonWrapperStyle = 'flex items-center justify-center w-[36px] h-[36px] bg-white-alpha-25 rounded-[10px]';
 
 export const PersonaSearch = wrap
   .ErrorBoundary({ fallback: <></> })
@@ -127,7 +127,7 @@ const selectedPersonaWrapperStyle =
   'flex justify-start w-full mb-[16px] mobile:mb-0 mobile:mx-0 mobile:my-[24px]';
 
 const selectedPersonaTagStyle =
-  'glyph16-bold text-white-90 rounded-[8px] bg-[rgba(255,255,255,0.25)] h-[36px] flex gap-[2px] items-center px-[8px] mobile:glyph12-regular mobile:text-white-50 mobile:h-[30px] mobile:px-[12px]';
+  'glyph16-bold text-white-alpha-90 rounded-[8px] bg-white-alpha-25 h-[36px] flex gap-[2px] items-center px-[8px] mobile:glyph12-regular mobile:text-white-alpha-50 mobile:h-[30px] mobile:px-[12px]';
 
 const contentStyle = cn('flex-1 overflow-auto gap-[4px] justify-center', customScrollStyle);
 

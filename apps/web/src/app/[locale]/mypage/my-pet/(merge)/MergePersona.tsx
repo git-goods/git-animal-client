@@ -99,4 +99,4 @@ export function MergePersona({ isOpen, onClose, targetPersona: initTargetPersona
 
 const footerStyle = 'flex justify-center sm:justify-center gap-[12px]';
 
-const listTitleStyle = 'glyph16-regular text-white-50 flex justify-between';
+const listTitleStyle = 'glyph16-regular text-white-alpha-50 flex justify-between';

@@ -23,7 +23,7 @@ function SelectOption({ children, value, onClick }: SelectOptionProps) {
 
   return (
     <button
-      className="relative flex items-center gap-[8px] rounded-[6px] py-[6px] pl-[32px] pr-[14px] font-['Product_Sans'] text-[14px] font-normal leading-[150%] tracking-[-0.3px] text-[rgba(0,0,0,0.75)] transition-[background] duration-200"
+      className="relative flex items-center gap-[8px] rounded-[6px] py-[6px] pl-[32px] pr-[14px] font-['Product_Sans'] text-[14px] font-normal leading-[150%] tracking-[-0.3px] text-black-alpha-75 transition-[background] duration-200"
       onClick={onOptionClick}
       style={{
         background: isSelected ? 'rgba(0, 0, 0, 0.05)' : undefined,

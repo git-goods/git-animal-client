@@ -73,7 +73,7 @@ const SelectCategorySection = wrap
       <div className="flex h-full w-full flex-1 flex-col items-center justify-center bg-gray-050 px-[16px]">
         <div className="flex w-full flex-col items-center justify-center">
           <h1 className="glyph40-bold [font-family:'Product_Sans'] font-bold text-white">{t('category')}</h1>
-          <h2 className="glyph18-regular mb-[60px] text-white-90">
+          <h2 className="glyph18-regular mb-[60px] text-white-alpha-90">
             {t('category-description')}
           </h2>
           <Tabs value={category} onValueChange={(value) => handleChangeCategory(value as QuizCategory)}>

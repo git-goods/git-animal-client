@@ -9,7 +9,7 @@ const styles = {
   wayItem: 'relative flex flex-col gap-[12px] justify-between mobile:gap-[4px]',
   wayItemHeading: 'glyph32-bold flex items-center gap-[12px] pt-[40px] px-[40px] mobile:glyph20-bold',
   wayItemHeadingSpan: 'glyph22-regular block w-[32px] h-[32px] bg-black text-white text-center mobile:glyph16-regular mobile:w-[24px] mobile:h-[24px]',
-  wayItemDesc: 'glyph18-regular mt-[16px] px-[40px] text-black-90 mobile:glyph14-regular',
+  wayItemDesc: 'glyph18-regular mt-[16px] px-[40px] text-black-alpha-90 mobile:glyph14-regular',
   wayItemImage: 'w-full',
 };
 

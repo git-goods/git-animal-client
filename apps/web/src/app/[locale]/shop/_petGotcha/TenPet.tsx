@@ -89,7 +89,7 @@ User: ${data?.user.name}
         if (!open && !busy) onClose();
       }}
     >
-      <Dialog.Content size="screen" isShowClose={!busy} className="border-none bg-black-90 p-0">
+      <Dialog.Content size="screen" isShowClose={!busy} className="border-none bg-black-alpha-90 p-0">
         <Dialog.Title className="sr-only">{t('pet-gotcha-title')}</Dialog.Title>
         <CardPackGame onOpen={onOpen} results={getPersona} onClose={onClose} onBusyChange={setBusy} />
       </Dialog.Content>

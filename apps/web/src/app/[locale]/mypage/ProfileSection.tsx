@@ -66,8 +66,8 @@ export const ProfileSection = memo(
 );
 
 const laboButtonStyle = cn(
-  'bg-white-10 [backdrop-filter:blur(7px)] rounded-[8px] px-[20px] py-[10px]',
-  'flex items-center gap-[10px] glyph16-regular text-white-100',
+  'bg-white-alpha-10 [backdrop-filter:blur(7px)] rounded-[8px] px-[20px] py-[10px]',
+  'flex items-center gap-[10px] glyph16-regular text-white',
   'mt-[24px] [animation:pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite] [transition:background_0.3s_ease]',
   'hover:[background:linear-gradient(150.51deg,#016EDB_11.25%,#16B7CD_61.95%,#5CCA69_94.01%)] hover:[animation:pulse_1.6s_cubic-bezier(0.4,0,0.6,1)_infinite]',
   'pc:px-[12px] pc:py-[8px] pc:[&>svg]:w-[18px] pc:[&>svg]:h-[18px]',
@@ -81,16 +81,16 @@ const profileTextStyle = 'mobile:flex-1';
 const navStyle = 'flex flex-col';
 
 const navItemStyle = cn(
-  'p-[4px] flex items-center gap-[4px] glyph18-regular text-white-50',
+  'p-[4px] flex items-center gap-[4px] glyph18-regular text-white-alpha-50',
   'mobile:gap-0 mobile:glyph15-regular mobile:p-0',
 );
 
 const navItemSelectedStyle = 'text-brand-canary';
 
-const dividerStyle = 'bg-white-25 h-[1px] m-0 border-none mt-[48px] mb-[20px] mobile:hidden';
+const dividerStyle = 'bg-white-alpha-25 h-[1px] m-0 border-none mt-[48px] mb-[20px] mobile:hidden';
 
 const profileImageStyle = cn(
-  'w-[160px] h-[160px] rounded-[50%] bg-[#fff] overflow-hidden',
+  'w-[160px] h-[160px] rounded-[50%] bg-white overflow-hidden',
   'mobile:w-[48px] mobile:h-[48px]',
 );
 

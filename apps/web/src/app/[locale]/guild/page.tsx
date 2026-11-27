@@ -166,9 +166,9 @@ const containerStyle =
 const cardListStyle = 'grid grid-cols-3 gap-[8px] w-full mobile:grid-cols-[1fr]';
 
 const cardListEmptyStyle =
-  'w-full h-full [grid-column:1_/_-1] [grid-row:1_/_-1] flex items-center justify-center rounded-[16px] bg-white-10 [backdrop-filter:blur(7px)]';
+  'w-full h-full [grid-column:1_/_-1] [grid-row:1_/_-1] flex items-center justify-center rounded-[16px] bg-white-alpha-10 [backdrop-filter:blur(7px)]';
 
-const emptyStyle = 'flex flex-col items-center justify-center text-white-50 glyph16-regular';
+const emptyStyle = 'flex flex-col items-center justify-center text-white-alpha-50 glyph16-regular';
 
 const bottomBgStyle =
   'absolute w-[100vw] bottom-0 left-[50%] [transform:translateX(-50%)] h-[228px] object-cover z-base';

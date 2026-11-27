@@ -23,7 +23,7 @@ const MAX_PRICE = 100_000_000;
 
 const tableCss = 'w-full mb-[32px] mobile:mb-[12px]';
 const theadCss =
-  'grid grid-cols-[1fr_2.5fr_1fr_1fr_4.2fr_1.5fr] gap-[16px] px-[32px] py-[4px] rounded-[12px] bg-white-50 items-center h-[46px] glyph18-bold text-white-100 mb-[4px] [&>span:nth-child(1)]:text-center mobile:hidden';
+  'grid grid-cols-[1fr_2.5fr_1fr_1fr_4.2fr_1.5fr] gap-[16px] px-[32px] py-[4px] rounded-[12px] bg-white-alpha-50 items-center h-[46px] glyph18-bold text-white mb-[4px] [&>span:nth-child(1)]:text-center mobile:hidden';
 
 interface Props {
   item: Persona;
@@ -184,12 +184,12 @@ function SellPriceModal({
 }
 
 const mobilePriceinputStyle =
-  'flex h-[55px] pt-[14px] pr-[14px] pb-[13px] pl-[20px] items-start gap-[8px] w-full outline-none rounded-[8px] border border-[rgba(255,255,255,0.25)] glyph16-regular text-white-100 placeholder:glyph16-regular placeholder:text-white-75 [&::-webkit-outer-spin-button]:[-webkit-appearance:none] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:[-webkit-appearance:none] [&::-webkit-inner-spin-button]:m-0';
+  'flex h-[55px] pt-[14px] pr-[14px] pb-[13px] pl-[20px] items-start gap-[8px] w-full outline-none rounded-[8px] border border-white-alpha-25 glyph16-regular text-white placeholder:glyph16-regular placeholder:text-white-alpha-75 [&::-webkit-outer-spin-button]:[-webkit-appearance:none] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:[-webkit-appearance:none] [&::-webkit-inner-spin-button]:m-0';
 
 const buttonWrapperStyle = 'flex justify-end gap-[8px] w-full';
 
 const inputStyle =
-  'glyph20-regular w-full h-full min-h-[64px] text-[20px] font-bold border-none outline-none placeholder:glyph20-regular placeholder:text-white-25 [&::-webkit-outer-spin-button]:[-webkit-appearance:none] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:[-webkit-appearance:none] [&::-webkit-inner-spin-button]:m-0';
+  'glyph20-regular w-full h-full min-h-[64px] text-[20px] font-bold border-none outline-none placeholder:glyph20-regular placeholder:text-white-alpha-25 [&::-webkit-outer-spin-button]:[-webkit-appearance:none] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:[-webkit-appearance:none] [&::-webkit-inner-spin-button]:m-0';
 
 function usePrice() {
   const [price, setPrice] = useState<number | undefined>();

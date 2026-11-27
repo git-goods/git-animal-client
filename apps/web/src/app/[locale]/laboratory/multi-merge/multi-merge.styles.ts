@@ -1,13 +1,13 @@
-export const modalOverlayStyle = 'fixed inset-0 bg-black-90 flex items-center justify-center p-[16px] z-modal';
+export const modalOverlayStyle = 'fixed inset-0 bg-black-alpha-90 flex items-center justify-center p-[16px] z-modal';
 
 export const modalContainerStyle =
-  'bg-black-100 rounded-[16px] w-full max-w-[80rem] max-h-[95vh] overflow-hidden flex flex-col';
+  'bg-black rounded-[16px] w-full max-w-[80rem] max-h-[95vh] overflow-hidden flex flex-col';
 
 export const headerStyle = 'px-[32px] py-[24px]';
 
-export const titleStyle = 'text-[30px] font-bold text-white-100 text-center';
+export const titleStyle = 'text-[30px] font-bold text-white text-center';
 
-export const closeButtonStyle = 'text-gray-400 transition-colors cursor-pointer hover:text-white-100';
+export const closeButtonStyle = 'text-gray-400 transition-colors cursor-pointer hover:text-white';
 
 export const contentSectionStyle = 'px-[32px] py-[12px]';
 

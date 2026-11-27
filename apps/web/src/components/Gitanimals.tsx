@@ -71,7 +71,7 @@ export function GitanimalsFarm({ imageKey, className }: FarmImageProps) {
       width={600}
       height={300}
       alt="preview farm"
-      className={cn('bg-[#fff]', className)}
+      className={cn('bg-white', className)}
       draggable={false}
     />
   );

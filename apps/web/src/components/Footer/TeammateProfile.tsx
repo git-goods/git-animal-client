@@ -21,8 +21,8 @@ const styles = {
     'mb-[8px] mobile:w-[32px] mobile:h-[24px] mobile:mb-[0px] mobile:object-contain mobile:object-[left_50%]',
   textWrapper: 'flex flex-col',
   nicknameWrapper: 'flex items-center gap-[5px] mb-[4px] mobile:mb-[1px]',
-  nickname: 'glyph18-bold text-white-90 mobile:glyph15-bold mobile:font-bold',
-  role: 'glyph16-regular text-white-75 mobile:glyph12-regular',
+  nickname: 'glyph18-bold text-white-alpha-90 mobile:glyph15-bold mobile:font-bold',
+  role: 'glyph16-regular text-white-alpha-75 mobile:glyph12-regular',
 };
 
 const ICON_MAP: Record<Exclude<UrlType, null>, ReactElement> = {

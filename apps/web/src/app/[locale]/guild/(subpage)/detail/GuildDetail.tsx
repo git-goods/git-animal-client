@@ -11,11 +11,11 @@ export const GuildDetail = ({ details }: { guildId: string; details: Guild }) =>
   return (
     <>
       <div>
-        <div className="flex items-center gap-4 glyph36-bold text-white-100 [&_img]:rounded-[8px]">
+        <div className="flex items-center gap-4 glyph36-bold text-white [&_img]:rounded-[8px]">
           <img src={details.guildIcon} width={40} height={40} alt={details.title} />
           <h2>{details.title}</h2>
         </div>
-        <div className="glyph16-regular text-white-75 mt-3">{details.body}</div>
+        <div className="glyph16-regular text-white-alpha-75 mt-3">{details.body}</div>
       </div>
       <GuildPeopleList members={details.members} leader={details.leader} />
       <div className="aspect-[1/0.5] w-full rounded-[8px] overflow-hidden [&_img]:w-full [&_img]:h-full">

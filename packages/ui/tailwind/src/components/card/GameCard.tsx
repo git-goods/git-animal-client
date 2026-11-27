@@ -70,14 +70,14 @@ export function GameCard({ title, percentage, tier, imageUrl, size = 'medium' }:
       </div>
 
       <div
-        className="absolute bottom-0 left-0 right-0 flex justify-between p-[1rem] font-bold text-[#000000]"
+        className="absolute bottom-0 left-0 right-0 flex justify-between p-[1rem] font-bold text-black"
         style={{ fontSize: `${fontSize.title}px`, padding: positions }}
       >
-        <div className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-left font-bold text-[#000000]">
+        <div className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-left font-bold text-black">
           {title}
         </div>
 
-        <div className="text-right font-bold text-[#000000]">{percentage}%</div>
+        <div className="text-right font-bold text-black">{percentage}%</div>
       </div>
     </div>
   );

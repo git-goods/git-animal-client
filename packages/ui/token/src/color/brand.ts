@@ -19,9 +19,5 @@ export const BRAND = {
   green: '#00894D',
   coral: '#FF6B56',
   claret: '#611848',
-  periwinkle: '#BDBBD7',
-  safe: '#A0B8AE',
-  glacier: '#96C0D6',
-  moss: '#E6E6B9',
   beige: '#F4F3EC',
 } as const;

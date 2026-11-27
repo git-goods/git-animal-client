@@ -43,7 +43,7 @@ function MypageMyPets() {
 export default MypageMyPets;
 
 const captionMessageStyle =
-  'glyph18-regular text-white-75 mt-[16px] opacity-0 animate-[fadeIn_0.5s_ease-in-out_5s_forwards]';
+  'glyph18-regular text-white-alpha-75 mt-[16px] opacity-0 animate-[fadeIn_0.5s_ease-in-out_5s_forwards]';
 
 const petListBoxStyle = 'h-[calc(100vh-424px)] min-h-0 flex flex-col';
 

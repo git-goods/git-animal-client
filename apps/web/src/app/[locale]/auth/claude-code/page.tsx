@@ -9,7 +9,7 @@ import { useClientSession, useClientUser } from '@/hooks/clientAuth';
 const pageRootClass =
   'flex min-h-screen flex-col items-center justify-center p-[24px] text-white bg-[linear-gradient(180deg,#000_0%,#004875_38.51%,#005B93_52.46%,#006FB3_73.8%,#0187DB_100%)] mobile:p-[16px]';
 const cardClass =
-  'flex w-fit min-w-[520px] max-w-full flex-col items-center gap-[24px] rounded-[16px] bg-white-10 p-[40px] backdrop-blur-[7px] mobile:min-w-full mobile:bg-[rgba(255,255,255,0.08)] mobile:px-[16px] mobile:py-[24px]';
+  'flex w-fit min-w-[520px] max-w-full flex-col items-center gap-[24px] rounded-[16px] bg-white-alpha-10 p-[40px] backdrop-blur-[7px] mobile:min-w-full mobile:bg-[rgba(255,255,255,0.08)] mobile:px-[16px] mobile:py-[24px]';
 
 export default function ClaudeCodePage() {
   const { status } = useClientSession();

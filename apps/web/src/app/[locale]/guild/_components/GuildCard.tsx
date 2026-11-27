@@ -41,12 +41,12 @@ export function GuildCard({ guild }: GuildCardProps) {
 }
 
 const cardStyle = [
-  'w-full h-full p-[24px] flex flex-col rounded-[12px] bg-white-10 [backdrop-filter:blur(7px)] text-white mobile:w-[calc(100vw_-_40px)]',
-  '[&_.card-top]:w-full [&_.card-top]:flex [&_.card-top]:justify-between [&_.card-top]:text-white-75 [&_.card-top]:glyph16-regular [&_.card-top]:items-start',
+  'w-full h-full p-[24px] flex flex-col rounded-[12px] bg-white-alpha-10 [backdrop-filter:blur(7px)] text-white mobile:w-[calc(100vw_-_40px)]',
+  '[&_.card-top]:w-full [&_.card-top]:flex [&_.card-top]:justify-between [&_.card-top]:text-white-alpha-75 [&_.card-top]:glyph16-regular [&_.card-top]:items-start',
   '[&_.card-guild-icon]:w-[40px] [&_.card-guild-icon]:h-[40px] [&_.card-guild-icon]:rounded-[8px]',
   '[&_.card-title]:glyph24-bold [&_.card-title]:mt-3 [&_.card-title]:mb-1 [&_.card-title]:overflow-hidden [&_.card-title]:text-ellipsis [&_.card-title]:whitespace-nowrap',
-  '[&_.card-body]:glyph12-regular [&_.card-body]:text-white-75 [&_.card-body]:overflow-hidden [&_.card-body]:text-ellipsis [&_.card-body]:whitespace-nowrap',
+  '[&_.card-body]:glyph12-regular [&_.card-body]:text-white-alpha-75 [&_.card-body]:overflow-hidden [&_.card-body]:text-ellipsis [&_.card-body]:whitespace-nowrap',
   '[&_.card-sub-info]:flex [&_.card-sub-info]:flex-col [&_.card-sub-info]:mt-4 [&_.card-sub-info]:glyph14-regular [&_.card-sub-info]:text-left [&_.card-sub-info]:items-start',
-  '[&_.card-sub-info_span:first-child]:text-white-50 [&_.card-sub-info_span:first-child]:mr-2',
+  '[&_.card-sub-info_span:first-child]:text-white-alpha-50 [&_.card-sub-info_span:first-child]:mr-2',
   '[&_.card-sub-info_span:last-child]:text-white',
 ].join(' ');

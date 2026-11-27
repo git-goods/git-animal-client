@@ -33,7 +33,7 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      'fixed inset-0 z-[3000] bg-black-75 backdrop-blur-[4px]',
+      'fixed inset-0 z-[3000] bg-black-alpha-75 backdrop-blur-[4px]',
       'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
       className,
     )}
@@ -45,7 +45,7 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 const dialogContentCva = cva(
   cn(
     'fixed left-1/2 top-1/2 z-[3001] flex flex-col -translate-x-1/2 -translate-y-1/2',
-    'bg-gray-150 text-white-100 shadow-lg',
+    'bg-gray-150 text-white shadow-lg',
     'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
     'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]',
   ),
@@ -113,13 +113,13 @@ Content.displayName = DialogPrimitive.Content.displayName;
  * hero size 의 히어로 타이포. dialogTitleStyle export 는 하위호환용으로 값 유지.
  */
 export const dialogTitleStyle =
-  'glyph48-bold text-white-100 text-center [@media(max-width:1200px)]:glyph32-bold mobile:glyph24-bold';
+  'glyph48-bold text-white text-center [@media(max-width:1200px)]:glyph32-bold mobile:glyph24-bold';
 
 const titleRecipe: Record<DialogSize, string> = {
-  sm: 'w-full glyph16-bold text-left text-white-100',
-  md: 'w-full glyph20-regular text-left text-white-100',
-  lg: 'w-full glyph24-bold text-left text-white-100',
-  screen: 'w-full glyph24-bold text-left text-white-100 mobile:glyph20-bold',
+  sm: 'w-full glyph16-bold text-left text-white',
+  md: 'w-full glyph20-regular text-left text-white',
+  lg: 'w-full glyph24-bold text-left text-white',
+  screen: 'w-full glyph24-bold text-left text-white mobile:glyph20-bold',
   hero: `w-full ${dialogTitleStyle}`,
 };
 
@@ -137,11 +137,11 @@ const Title = React.forwardRef<
 Title.displayName = DialogPrimitive.Title.displayName;
 
 const descriptionRecipe: Record<DialogSize, string> = {
-  sm: 'w-full glyph14-regular text-left text-white-75',
-  md: 'w-full glyph16-regular text-left text-white-75',
-  lg: 'w-full glyph16-regular text-left text-white-75',
-  screen: 'w-full glyph16-regular text-left text-white-75',
-  hero: 'w-full glyph20-regular text-center text-white-75 mobile:glyph16-regular',
+  sm: 'w-full glyph14-regular text-left text-white-alpha-75',
+  md: 'w-full glyph16-regular text-left text-white-alpha-75',
+  lg: 'w-full glyph16-regular text-left text-white-alpha-75',
+  screen: 'w-full glyph16-regular text-left text-white-alpha-75',
+  hero: 'w-full glyph20-regular text-center text-white-alpha-75 mobile:glyph16-regular',
 };
 
 const Description = React.forwardRef<

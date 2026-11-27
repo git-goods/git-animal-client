@@ -43,7 +43,7 @@ const listStyle = cn(
   'mobile:grid-cols-[repeat(auto-fill,minmax(52px,auto))]',
 );
 
-const emptyStyle = 'glyph14-regular text-white-50 text-center px-0 py-[24px]';
+const emptyStyle = 'glyph14-regular text-white-alpha-50 text-center px-0 py-[24px]';
 
 interface ToolbarProps {
   showSearch?: boolean;

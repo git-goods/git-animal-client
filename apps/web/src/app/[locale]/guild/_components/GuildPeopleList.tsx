@@ -60,7 +60,7 @@ export function GuildPeopleList({ members, leader }: { members: GuildMember[]; l
 }
 
 const listStyle =
-  'grid grid-cols-[120px_1fr] gap-4 overflow-x-hidden min-h-[180px] text-white-100 mobile:max-w-[calc(100vw_-_40px)]';
+  'grid grid-cols-[120px_1fr] gap-4 overflow-x-hidden min-h-[180px] text-white mobile:max-w-[calc(100vw_-_40px)]';
 
 const leaderStyle = '[&>p]:mb-1';
 

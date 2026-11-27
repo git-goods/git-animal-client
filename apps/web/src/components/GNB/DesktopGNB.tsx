@@ -50,7 +50,7 @@ export async function DesktopGNB() {
                   />
                 </div>
                 <button className="flex items-center justify-center">
-                  <span className="glyph16-regular ml-[12px] mr-[4px] text-black-75">
+                  <span className="glyph16-regular ml-[12px] mr-[4px] text-black-alpha-75">
                     {session.user.name}
                   </span>
                   <ChevronRightIcon size={16} color="#000" />

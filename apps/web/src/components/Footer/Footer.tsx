@@ -14,7 +14,7 @@ const styles = {
   repoContentWrapper: 'w-full flex flex-col gap-[16px]',
   repoLi: 'flex gap-[8px] mobile:flex-col mobile:gap-[1px]',
   repoLiTitle: 'flex items-center gap-[8px] w-[226px] glyph18-bold mobile:glyph15-bold mobile:gap-[17px]',
-  repoLiLink: 'glyph16-regular text-white-75 underline mobile:glyph12-regular mobile:ml-[37px]',
+  repoLiLink: 'glyph16-regular text-white-alpha-75 underline mobile:glyph12-regular mobile:ml-[37px]',
 };
 
 export function Footer() {

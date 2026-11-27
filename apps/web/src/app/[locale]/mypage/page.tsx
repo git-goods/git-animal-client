@@ -52,9 +52,9 @@ const tabListStyle = 'flex gap-[12px] mobile:[&_a]:flex-1';
 
 const tabItemStyle = cn(
   'glyph28-bold rounded-[12px] p-[12px] text-center border-[1.5px] border-solid h-[58px]',
-  'text-white-25 bg-white-10 border-white-10',
-  'hover:text-white-75 hover:bg-white-25 hover:border-white-50',
+  'text-white-alpha-25 bg-white-alpha-10 border-white-alpha-10',
+  'hover:text-white-alpha-75 hover:bg-white-alpha-25 hover:border-white-alpha-50',
   'mobile:w-full mobile:rounded-[6px] mobile:border mobile:border-solid mobile:glyph16-bold mobile:h-[40px] mobile:px-[16px] mobile:py-[8px]',
 );
 
-const tabItemSelectedStyle = 'text-white-100 bg-white-25 border-white-50';
+const tabItemSelectedStyle = 'text-white bg-white-alpha-25 border-white-alpha-50';

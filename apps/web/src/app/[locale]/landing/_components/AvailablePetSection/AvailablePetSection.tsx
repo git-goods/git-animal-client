@@ -20,9 +20,9 @@ const styles = {
     'flex flex-col items-center justify-center gap-[60px] relative z-floating mobile:gap-[40px]',
   heading: 'glyph82-bold text-white mobile:glyph32-bold',
   infoContainer:
-    'flex flex-row justify-between gap-[60px] w-full max-w-[766px] px-[52px] py-[40px] bg-white-10 rounded-[16px] mobile:flex-col mobile:gap-[12px] mobile:p-[24px] mobile:max-w-[calc(100%-40px)]',
+    'flex flex-row justify-between gap-[60px] w-full max-w-[766px] px-[52px] py-[40px] bg-white-alpha-10 rounded-[16px] mobile:flex-col mobile:gap-[12px] mobile:p-[24px] mobile:max-w-[calc(100%-40px)]',
   infoItem:
-    'w-fit [&_p:first-child]:glyph48-bold [&_p:first-child]:text-[#FDFAFF] mobile:[&_p:first-child]:glyph24-bold [&_p:last-child]:glyph18-bold [&_p:last-child]:text-white-50 mobile:[&_p:last-child]:glyph14-regular',
+    'w-fit [&_p:first-child]:glyph48-bold [&_p:first-child]:text-[#FDFAFF] mobile:[&_p:first-child]:glyph24-bold [&_p:last-child]:glyph18-bold [&_p:last-child]:text-white-alpha-50 mobile:[&_p:last-child]:glyph14-regular',
   buttonWrapper: 'pt-[20px] mobile:pt-0',
   bgPictureTop: 'absolute left-0 right-0 top-0 z-0',
   bgPictureBottom: 'absolute left-0 right-0 bottom-0 z-0',

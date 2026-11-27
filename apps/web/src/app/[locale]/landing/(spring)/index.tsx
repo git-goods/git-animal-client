@@ -41,7 +41,7 @@ export async function SpringContent() {
             alt="GITANIMALS"
             className="w-[min(600px,45vw)] h-auto select-none [filter:drop-shadow(0_4px_12px_rgba(255,150,170,0.3))] mobile:w-[min(280px,80vw)]"
           />
-          <p className="text-black-75 glyph32-bold font-normal whitespace-pre-line mt-[16px] mb-[28px] leading-[1.5] mobile:glyph16-regular mobile:text-[16px] mobile:mt-[12px] mobile:mb-[20px] mobile:text-center">
+          <p className="text-black-alpha-75 glyph32-bold font-normal whitespace-pre-line mt-[16px] mb-[28px] leading-[1.5] mobile:glyph16-regular mobile:text-[16px] mobile:mt-[12px] mobile:mb-[20px] mobile:text-center">
             Spring is blooming in Gitanimals!
             <br />
             Collect a spring pet now!
