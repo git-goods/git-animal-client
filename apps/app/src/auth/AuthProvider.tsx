@@ -23,9 +23,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signOut = useCallback(async () => {
     tokenRef.current = null;
-    await tokenStore.clear();
-    queryClient.clear();
-    setStatus('signedOut');
+    // 저장소 삭제가 실패해도 화면은 로그아웃 상태로 보낸다
+    try {
+      await tokenStore.clear();
+    } finally {
+      queryClient.clear();
+      setStatus('signedOut');
+    }
   }, [queryClient]);
 
   const signOutRef = useRef(signOut);
