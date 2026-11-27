@@ -15,4 +15,5 @@ config.resolver.nodeModulesPaths = [
 ];
 config.resolver.disableHierarchicalLookup = true;
 
-module.exports = withNativeWind(config, { input: './global.css' });
+// 웹과 같이 1rem = 16px 로 계산해 h-8 이 32 가 되게 한다 (NativeWind 기본은 14)
+module.exports = withNativeWind(config, { input: './global.css', inlineRem: 16 });
