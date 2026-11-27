@@ -185,6 +185,26 @@
       "sort-name": "이름순",
       "reset": "필터 초기화",
       "no-results": "조건에 맞는 펫이 없습니다."
+    },
+    "Tour": {
+      "close": "닫기",
+      "next": "다음",
+      "prev": "이전",
+      "done": "시작하기",
+      "farm-preview-title": "Farm 미리보기",
+      "farm-preview-desc": "고른 펫들이 내 농장을 돌아다니는 모습이에요.",
+      "farm-pet-title": "펫 고르기",
+      "farm-pet-desc": "농장에 풀어 둘 펫을 눌러서 넣고 빼요. 오른쪽 버튼으로 목록을 크게 볼 수 있어요.",
+      "farm-background-title": "배경 고르기",
+      "farm-background-desc": "농장 배경을 바꿀 수 있어요.",
+      "farm-publish-title": "GitHub에 올리기",
+      "farm-publish-desc": "다 꾸몄으면 눌러서 내 GitHub 프로필에 붙여요.",
+      "line-preview-title": "1 Type 미리보기",
+      "line-preview-desc": "펫 한 마리가 한 줄 위를 걸어 다니는 모습이에요.",
+      "line-pet-title": "펫 고르기",
+      "line-pet-desc": "걸어 다닐 펫 한 마리를 골라요.",
+      "line-publish-title": "GitHub에 올리기",
+      "line-publish-desc": "눌러서 내 GitHub 프로필에 붙여요."
     }
   },
   "Event": {

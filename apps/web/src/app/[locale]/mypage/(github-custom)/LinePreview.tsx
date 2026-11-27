@@ -7,8 +7,8 @@ import { Github } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { getGitanimalsLineString, GitanimalsLine } from '@/components/Gitanimals';
-import { customScrollStyle } from '@/styles/scrollStyle';
 import { useClientUser } from '@/hooks/clientAuth';
+import { customScrollStyle } from '@/styles/scrollStyle';
 
 import { useGithubPublish } from './useGithubPublish';
 
@@ -37,10 +37,10 @@ export function LinePreview({ selectPersona }: { selectPersona: string | null })
       {/* TODO: 임시로 모바일에선 input 안보이게 처리 */}
       <SizeInputList onApply={(width, height) => setSizes({ width, height })} />
       <section>
-        <div className={lineContainerStyle} style={{ width: sizes.width, height: sizes.height }}>
+        <div className={lineContainerStyle} style={{ width: sizes.width, height: sizes.height }} data-tour="preview">
           <GitanimalsLine sizes={[sizes.width, sizes.height]} petId={selectPersona} />
 
-          <Button size="s" className={publishButtonStyle} onClick={onPublish}>
+          <Button size="s" className={publishButtonStyle} onClick={onPublish} data-tour="publish">
             <Github size={16} />
             {t('GithubGuide.upload-button')}
           </Button>

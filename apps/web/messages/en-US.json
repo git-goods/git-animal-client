@@ -184,6 +184,26 @@
       "sort-name": "By Name",
       "reset": "Reset filters",
       "no-results": "No pets match the criteria."
+    },
+    "Tour": {
+      "close": "Close",
+      "next": "Next",
+      "prev": "Back",
+      "done": "Got it",
+      "farm-preview-title": "Farm preview",
+      "farm-preview-desc": "This is how your chosen pets roam around your farm.",
+      "farm-pet-title": "Choose pets",
+      "farm-pet-desc": "Tap a pet to add it to or remove it from the farm. Use the button on the right to see the full list.",
+      "farm-background-title": "Choose a background",
+      "farm-background-desc": "Change your farm background.",
+      "farm-publish-title": "Add to GitHub",
+      "farm-publish-desc": "When you are done, add it to your GitHub profile.",
+      "line-preview-title": "1 Type preview",
+      "line-preview-desc": "One pet walks along a single line.",
+      "line-pet-title": "Choose a pet",
+      "line-pet-desc": "Pick the pet that walks on the line.",
+      "line-publish-title": "Add to GitHub",
+      "line-publish-desc": "Add it to your GitHub profile."
     }
   },
   "Event": {

@@ -2,6 +2,7 @@ export const LOCAL_STORAGE_KEY = {
   callbackUrl: 'callbackUrl',
   isDoNotShowAgain: '@gitanimals/isDoNotShowAgain',
   githubGuideSeen: '@gitanimals/githubGuideSeen',
+  mypageTourSeen: '@gitanimals/mypageTourSeen',
 } as const;
 
 export const SESSION_STORAGE_KEY = {
