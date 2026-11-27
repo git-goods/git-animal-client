@@ -30,12 +30,18 @@ export function useMypageTour(type: TourType) {
     }
 
     const steps: DriveStep[] = STEPS[type].map((name) => ({
-      element: `[data-tour="${name}"]`,
+      // Suspense fallback 으로 비어 있는 영역은 건너뛴다
+      element: `[data-tour="${name}"]:not(:empty)`,
       popover: { title: t(`${type}-${name}-title`), description: t(`${type}-${name}-desc`) },
     }));
 
     const tour = driver({
       showProgress: true,
+      progressText: '{{current}} / {{total}}',
+      closeBtnLabel: t('close'),
+      skipMissingElement: true,
+      // 강조 영역의 버튼이 연 Dialog 는 오버레이 아래에 깔려 조작할 수 없다
+      disableActiveInteraction: true,
       overlayOpacity: 0.8,
       popoverClass: POPOVER_STYLE,
       // driver.css 기본 스타일을 서비스 Dialog(sm)·Button 과 같은 모양으로 덮는다
@@ -43,7 +49,10 @@ export function useMypageTour(type: TourType) {
         popover.title.className = cn(popover.title.className, 'glyph16-bold text-white');
         popover.description.className = cn(popover.description.className, 'glyph14-regular text-white-alpha-75');
         popover.progress.className = cn(popover.progress.className, 'glyph12-regular text-white-alpha-50');
-        popover.closeButton.className = cn(popover.closeButton.className, 'text-white-alpha-50 hover:text-white');
+        popover.closeButton.className = cn(
+          popover.closeButton.className,
+          'text-white-alpha-50 hover:text-white focus-visible:text-white',
+        );
         popover.previousButton.className = cn(
           popover.previousButton.className,
           buttonVariants({ variant: 'secondary', size: 's' }),

@@ -41,7 +41,7 @@ export function FarmType() {
       <div {...tourTarget('pet')}>
         <FarmPersonaSelect onImageRefresh={refreshImage} />
       </div>
-      <div {...tourTarget('background')}>
+      <div className="empty:hidden" {...tourTarget('background')}>
         <FarmBackgroundSelect onImageRefresh={refreshImage} />
       </div>
     </>

@@ -186,6 +186,7 @@
       "no-results": "No pets match the criteria."
     },
     "Tour": {
+      "close": "Close",
       "next": "Next",
       "prev": "Back",
       "done": "Got it",
