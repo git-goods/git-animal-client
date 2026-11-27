@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import { memo } from 'react';
+import { StyleSheet, useWindowDimensions } from 'react-native';
 import { Canvas, LinearGradient, Path, Rect, Skia, vec } from '@shopify/react-native-skia';
 import { CAT_RECTS, CITY_PATH } from './art';
 
@@ -13,27 +13,20 @@ const CITY_HEIGHT = 190;
 const city = Skia.Path.MakeFromSVGString(CITY_PATH)!;
 
 // 하늘 그라데이션 + 화면 맨 아래 190px 도시. 탭 바가 위에 떠서 아래쪽을 덮는다
-export function ShopBackground() {
-  const [size, setSize] = useState({ w: 0, h: 0 });
-  const onLayout = ({ nativeEvent: { layout } }: LayoutChangeEvent) =>
-    setSize({ w: layout.width, h: layout.height });
-
+export const ShopBackground = memo(function ShopBackground() {
+  const { width: w, height: h } = useWindowDimensions();
   return (
-    <View style={StyleSheet.absoluteFill} onLayout={onLayout} pointerEvents="none">
-      {size.h > 0 && (
-        <Canvas style={{ width: size.w, height: size.h }}>
-          <Rect x={0} y={0} width={size.w} height={size.h}>
-            <LinearGradient start={vec(0, 0)} end={vec(0, size.h)} colors={SKY.colors} positions={SKY.positions} />
-          </Rect>
-          <Path path={city} color={CITY_COLOR} transform={[{ translateY: size.h - CITY_HEIGHT }]} />
-          <Rect x={0} y={size.h - 102} width={size.w} height={102} color={CITY_COLOR} />
-        </Canvas>
-      )}
-    </View>
+    <Canvas style={StyleSheet.absoluteFill} pointerEvents="none">
+      <Rect x={0} y={0} width={w} height={h}>
+        <LinearGradient start={vec(0, 0)} end={vec(0, h)} colors={SKY.colors} positions={SKY.positions} />
+      </Rect>
+      <Path path={city} color={CITY_COLOR} transform={[{ translateY: h - CITY_HEIGHT }]} />
+      <Rect x={0} y={h - 102} width={w} height={102} color={CITY_COLOR} />
+    </Canvas>
   );
-}
+});
 
-export function AuctionCat() {
+export const AuctionCat = memo(function AuctionCat() {
   return (
     <Canvas style={{ width: 80, height: 80 }}>
       {CAT_RECTS.map(([color, x, y, width, height], i) => (
@@ -41,4 +34,4 @@ export function AuctionCat() {
       ))}
     </Canvas>
   );
-}
+});
