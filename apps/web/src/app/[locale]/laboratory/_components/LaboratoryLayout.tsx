@@ -132,19 +132,19 @@ export function LaboratoryLayout({
 }
 
 const backButtonStyle =
-  'inline-flex items-center gap-[8px] p-[4px_12px] rounded-[8px] bg-[rgba(255,255,255,0.05)] border border-solid border-[rgba(255,255,255,0.1)] text-white-100 glyph12-regular cursor-pointer transition-all duration-300 ease-[ease] ' +
+  'inline-flex items-center gap-[8px] p-[4px_12px] rounded-[8px] bg-[rgba(255,255,255,0.05)] border border-solid border-[rgba(255,255,255,0.1)] text-white-100 glyph12-regular cursor-pointer transition-all duration-300 [transition-timing-function:ease] ' +
   'hover:bg-[rgba(255,255,255,0.1)] hover:[transform:translateX(-4px)]';
 
 const experimentBadgeStyle =
   'glyph12-bold p-[4px_8px] rounded-[8px] bg-[linear-gradient(135deg,_#667eea_0%,_#764ba2_100%)] text-white-100 whitespace-nowrap animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite] shadow-[0_0_20px_rgba(102,126,234,0.5)]';
 
 const upvoteButtonStyle =
-  'flex items-center gap-[8px] p-[4px_12px] rounded-[8px] bg-[linear-gradient(145deg,_rgba(255,255,255,0.1),_rgba(255,255,255,0.05))] border border-solid border-[rgba(255,255,255,0.2)] text-white-100 glyph12-regular cursor-pointer transition-all duration-300 ease-[ease] shadow-[0_4px_12px_rgba(0,0,0,0.1)] ' +
-  'hover:not-disabled:bg-[linear-gradient(135deg,_#667eea_0%,_#764ba2_100%)] hover:not-disabled:border-transparent hover:not-disabled:[transform:translateY(-2px)] hover:not-disabled:shadow-[0_6px_20px_rgba(102,126,234,0.4)] ' +
-  'active:not-disabled:[transform:translateY(0)] ' +
+  'flex items-center gap-[8px] p-[4px_12px] rounded-[8px] bg-[linear-gradient(145deg,_rgba(255,255,255,0.1),_rgba(255,255,255,0.05))] border border-solid border-[rgba(255,255,255,0.2)] text-white-100 glyph12-regular cursor-pointer transition-all duration-300 [transition-timing-function:ease] shadow-[0_4px_12px_rgba(0,0,0,0.1)] ' +
+  'enabled:hover:bg-[linear-gradient(135deg,_#667eea_0%,_#764ba2_100%)] enabled:hover:border-transparent enabled:hover:[transform:translateY(-2px)] enabled:hover:shadow-[0_6px_20px_rgba(102,126,234,0.4)] ' +
+  'enabled:active:[transform:translateY(0)] ' +
   'data-[upvoted=true]:bg-[linear-gradient(135deg,_#f093fb_0%,_#f5576c_100%)] data-[upvoted=true]:border-transparent data-[upvoted=true]:cursor-default data-[upvoted=true]:shadow-[0_4px_12px_rgba(240,147,251,0.3)] ' +
   'disabled:opacity-70 disabled:cursor-not-allowed';
 
-const heartStyle = 'w-[18px] h-[18px] [stroke-width:2] transition-all duration-300 ease-[ease]';
+const heartStyle = 'w-[18px] h-[18px] [stroke-width:2] transition-all duration-300 [transition-timing-function:ease]';
 
 const heartFilledStyle = 'w-[18px] h-[18px] fill-current [stroke-width:2] animate-[heartbeat_1s_ease-in-out]';

@@ -1,4 +1,4 @@
-export const modalOverlayStyle = 'fixed inset-0 bg-black-95 flex items-center justify-center p-[16px] z-modal';
+export const modalOverlayStyle = 'fixed inset-0 bg-black-90 flex items-center justify-center p-[16px] z-modal';
 
 export const modalContainerStyle =
   'bg-black-100 rounded-[16px] w-full max-w-[80rem] max-h-[95vh] overflow-hidden flex flex-col';

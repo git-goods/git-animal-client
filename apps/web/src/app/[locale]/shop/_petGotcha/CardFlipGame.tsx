@@ -56,7 +56,7 @@ const CardFlipGame = ({ onGetPersona, getPersona }: CardFlipGameProps) => {
             onClick={() => handleCardClick(index)}
           >
             <div
-              className="relative h-full w-full text-center transition-transform duration-[0.6s] [transform-style:preserve-3d]"
+              className="relative h-full w-full text-center transition-transform [transition-duration:0.6s] [transform-style:preserve-3d]"
               style={{
                 transform: isCardFlipped ? 'rotateY(180deg)' : 'none',
                 animation: selectedCard === index && isShaking ? 'move 0.5s' : 'none',
@@ -65,7 +65,7 @@ const CardFlipGame = ({ onGetPersona, getPersona }: CardFlipGameProps) => {
               <div
                 className={cn(
                   'absolute flex h-full w-full items-center justify-center [backface-visibility:hidden]',
-                  selectedCard !== null && 'transition-transform duration-[0.3s] hover:scale-105',
+                  selectedCard !== null && 'transition-transform duration-300 hover:scale-105',
                 )}
               >
                 <AnimalCardBack tier="S_PLUS" />

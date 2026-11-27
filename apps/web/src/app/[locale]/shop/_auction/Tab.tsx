@@ -56,7 +56,7 @@ function Tab({ selectedTab, rightElement }: Props) {
 export default Tab;
 
 const defaultLinkCss =
-  "py-[4px] px-[10px] glyph24-bold [font-feature-settings:liga_off,clig_off] transition-all duration-300 ease-[ease] mobile:py-0 mobile:px-[12px] mobile:inline-flex mobile:glyph16-bold mobile:h-[32px] mobile:rounded-[32px] mobile:leading-[32px]";
+  "py-[4px] px-[10px] glyph24-bold [font-feature-settings:liga_off,clig_off] transition-all duration-300 [transition-timing-function:ease] mobile:py-0 mobile:px-[12px] mobile:inline-flex mobile:glyph16-bold mobile:h-[32px] mobile:rounded-[32px] mobile:leading-[32px]";
 
 const selectedLinkCss = `${defaultLinkCss} text-white mobile:text-white-75 mobile:bg-white-10`;
 
