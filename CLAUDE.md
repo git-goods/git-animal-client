@@ -34,7 +34,7 @@ GitAnimals is a monorepo that allows users to raise virtual pets through GitHub 
 ```bash
 # Development servers
 pnpm dev:web          # Start web app dev server (Next.js)
-pnpm dev:admin        # Start admin app dev server (Remix)
+pnpm dev:admin        # Start admin app dev server (Vite)
 pnpm dev:webview      # Start webview dev server (Vite)
 
 # Build commands
