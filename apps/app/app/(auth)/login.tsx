@@ -84,8 +84,8 @@ function GithubLoginButton() {
     <View className="gap-2">
       {failed && (
         // 버튼과 같은 폭·모서리로 붙여 한 덩어리로 보이게 한다
-        <View style={{ borderRadius: 14, backgroundColor: colors.black['75'], paddingVertical: 10 }}>
-          <Text style={[sans(15, 1.4, true), { color: colors.white.DEFAULT, textAlign: 'center' }]}>{t('auth.login_failed')}</Text>
+        <View style={{ borderRadius: 14, backgroundColor: colors['black-alpha']['75'], paddingVertical: 10 }}>
+          <Text style={[sans(15, 1.4, true), { color: colors.white, textAlign: 'center' }]}>{t('auth.login_failed')}</Text>
         </View>
       )}
       {/* 피그마 943:28935 */}
@@ -107,7 +107,7 @@ function GithubLoginButton() {
         }}
       >
         <Image source={require('../../assets/ui/github.png')} style={{ width: 18, height: 18 }} />
-        <Text style={[sans(19, 1.26, true), { color: colors.black.DEFAULT }]}>{t('auth.github_login')}</Text>
+        <Text style={[sans(19, 1.26, true), { color: colors.black }]}>{t('auth.github_login')}</Text>
       </Pressable>
     </View>
   );
