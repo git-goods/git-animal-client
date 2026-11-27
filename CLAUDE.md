@@ -54,7 +54,6 @@ pnpm sb:panda         # Start Storybook for UI components
 **Workspace-specific commands:**
 ```bash
 # Web app (apps/web)
-pnpm --filter @gitanimals/web prepare      # PandaCSS codegen
 pnpm --filter @gitanimals/web type-check   # TypeScript validation
 pnpm --filter @gitanimals/web lint:fix     # Fix ESLint issues
 
@@ -162,7 +161,7 @@ pnpm --filter @gitanimals/ui-panda storybook # Start Storybook
 
 The build system has specific dependency chains:
 - Most builds depend on `^build` and `^prepare` 
-- `prepare` tasks generate PandaCSS styled-system
+- `prepare` tasks generate PandaCSS styled-system (webview only)
 - Admin uses different output patterns (dist/**) vs others (.next/**)
 
 ## Notes for Development
