@@ -17,12 +17,6 @@ export function PetStage({ personas, fieldTop, fieldBottom }: Props) {
   const { t } = useTranslation();
   const [field, setField] = useState<Field | null>(null);
   const [failed, setFailed] = useState<ReadonlySet<string>>(new Set());
-  // 보여 줄 펫이 바뀌면 실패 목록을 비워 이미지를 다시 받는다
-  const [seen, setSeen] = useState(personas);
-  if (seen !== personas) {
-    setSeen(personas);
-    setFailed(new Set());
-  }
   const pets = personas.filter((p) => !failed.has(p.type));
   const allFailed = personas.length > 0 && pets.length === 0;
 
