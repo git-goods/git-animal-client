@@ -13,7 +13,7 @@ const STEPS: Record<TourType, string[]> = {
 };
 
 const POPOVER_STYLE =
-  'bg-gray-150 text-white rounded-2xl border border-solid border-white-alpha-10 p-5 min-w-[280px] max-w-[320px] shadow-lg';
+  'mypage-tour bg-gray-150 text-white rounded-2xl border border-solid border-white-alpha-10 p-5 min-w-[280px] max-w-[320px] shadow-lg';
 const BUTTON_BASE = 'inline-flex items-center justify-center px-[16px]';
 
 export const tourTarget = (name: string) => ({ 'data-tour': name });
@@ -36,6 +36,7 @@ export function useMypageTour(type: TourType) {
 
     const tour = driver({
       showProgress: true,
+      overlayOpacity: 0.8,
       popoverClass: POPOVER_STYLE,
       // driver.css 기본 스타일을 서비스 Dialog(sm)·Button 과 같은 모양으로 덮는다
       onPopoverRender: (popover) => {
@@ -56,8 +57,6 @@ export function useMypageTour(type: TourType) {
         // driver 기본 버튼 hover 배경(#f7f7f7)이 서비스 버튼 색을 이겨서 기본 클래스를 뗀다
         popover.previousButton.classList.remove('driver-popover-footer-btn');
         popover.nextButton.classList.remove('driver-popover-footer-btn');
-        // ponytail: 화살표는 흰색 고정이라 숨김. 필요하면 globals.css 에서 방향별 border 색을 덮기
-        popover.arrow.style.display = 'none';
       },
       nextBtnText: t('next'),
       prevBtnText: t('prev'),

@@ -180,3 +180,17 @@
     transform: scale(1);
   }
 }
+
+/* 튜토리얼 말풍선 화살표: driver.css 는 흰색 고정이라 말풍선(gray-150)과 같은 색으로 */
+.mypage-tour .driver-popover-arrow-side-left {
+  border-left-color: theme('colors.gray.150');
+}
+.mypage-tour .driver-popover-arrow-side-right {
+  border-right-color: theme('colors.gray.150');
+}
+.mypage-tour .driver-popover-arrow-side-top {
+  border-top-color: theme('colors.gray.150');
+}
+.mypage-tour .driver-popover-arrow-side-bottom {
+  border-bottom-color: theme('colors.gray.150');
+}
