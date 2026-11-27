@@ -14,6 +14,8 @@ type Props = {
 const TONE = {
   canary: { face: 'bg-brand-canary', top: 'bg-[#fdfed2]', bottom: 'bg-[#c4c382]' },
   white: { face: 'bg-white', top: 'bg-[#d2dcfe]', bottom: 'bg-[#a1a1b1]' },
+  // 피그마 위험 버튼은 canary 띠가 남아 있는 실수라, canary 띠처럼 흰 50%·검정 25% 를 겹친다
+  red: { face: 'bg-warning-red', top: 'bg-white-alpha-50', bottom: 'bg-black-alpha-25' },
 };
 
 // 피그마 primary-S: canary 면, 검정 1px 테두리, 위 밝은·아래 어두운 3px 안쪽 띠, 아래 그림자

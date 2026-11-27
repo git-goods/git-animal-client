@@ -105,13 +105,21 @@
     "account": "Account",
     "clear_cache": "Clear Cache",
     "reload_app": "Reload App",
-    "logout": "Logout",
+    "logout": "Log out",
     "logout_confirm_title": "Confirm Logout",
     "logout_confirm_description": "Are you sure you want to logout? You will need to authenticate again to use the app.",
     "banner_message": "Settings page for managing your WebView preferences",
     "yes": "Yes",
     "no": "No",
-    "unknown": "Unknown"
+    "unknown": "Unknown",
+    "setting": "Setting",
+    "feedback": "Feedback",
+    "terms": "Terms of Service",
+    "deleteAccount": "Delete Account",
+    "logoutConfirmShort": "Are you sure you want to log out?",
+    "deleteConfirm": "Are you sure you want to delete your account information?",
+    "delete": "Delete",
+    "deletePending": "Account deletion is coming soon"
   },
   "notfound": {
     "title": "Page Not Found",
