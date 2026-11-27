@@ -3,38 +3,52 @@ import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import type { Persona } from '@gitanimals/api';
 import { PixelText } from '../ui/pixel';
-import { WanderingPet, PET_SIZE } from './WanderingPet';
+import { WanderingPet, PET_SIZE, type Field } from './WanderingPet';
 
-export function PetStage({ personas }: { personas: Persona[] }) {
+type Props = {
+  personas: Persona[];
+  // 무대 높이 대비 펫이 걸을 수 있는 영역(발 위치 기준)
+  fieldTop: number;
+  fieldBottom: number;
+};
+
+export function PetStage({ personas, fieldTop, fieldBottom }: Props) {
   const { t } = useTranslation();
-  const [width, setWidth] = useState(0);
+  const [field, setField] = useState<Field | null>(null);
   const [failed, setFailed] = useState<ReadonlySet<string>>(new Set());
   const pets = personas.filter((p) => !failed.has(p.type));
 
-  if (pets.length === 0) {
-    return (
-      <View className="items-center justify-center" style={{ height: PET_SIZE }}>
-        <PixelText variant="glyph14" className="text-white">
-          {t('home.no_visible_pets')}
-        </PixelText>
-      </View>
-    );
-  }
-
   return (
     <View
-      className="w-full overflow-hidden"
-      style={{ height: PET_SIZE + 6 }}
-      onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
+      className="absolute inset-0"
+      pointerEvents="box-none"
+      onLayout={(e) => {
+        const { width, height } = e.nativeEvent.layout;
+        setField({
+          width,
+          minX: 0,
+          maxX: Math.max(0, width - PET_SIZE),
+          minY: height * fieldTop,
+          maxY: Math.max(height * fieldTop, height * fieldBottom - PET_SIZE),
+        });
+      }}
     >
-      {pets.map((p) => (
-        <WanderingPet
-          key={p.id}
-          persona={p}
-          stageWidth={width}
-          onError={() => setFailed((prev) => new Set(prev).add(p.type))}
-        />
-      ))}
+      {pets.length === 0 ? (
+        <View className="absolute inset-x-0 items-center" style={{ top: `${fieldTop * 100 + 10}%` }}>
+          <PixelText variant="glyph14" className="text-white">
+            {t('home.no_visible_pets')}
+          </PixelText>
+        </View>
+      ) : (
+        pets.map((p) => (
+          <WanderingPet
+            key={p.id}
+            persona={p}
+            field={field}
+            onError={() => setFailed((prev) => new Set(prev).add(p.type))}
+          />
+        ))
+      )}
     </View>
   );
 }

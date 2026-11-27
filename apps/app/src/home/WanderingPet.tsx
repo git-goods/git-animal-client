@@ -1,5 +1,5 @@
-import { useEffect, useRef, type ComponentType } from 'react';
-import type { ViewProps } from 'react-native';
+import { useEffect, useRef, useState, type ComponentType } from 'react';
+import { Pressable, type ViewProps } from 'react-native';
 import Animated, {
   Easing,
   cancelAnimation,
@@ -10,17 +10,23 @@ import Animated, {
   withSequence,
   withTiming,
 } from 'react-native-reanimated';
+import { useTranslation } from 'react-i18next';
 import type { Persona } from '@gitanimals/api';
 import { PixelSprite } from '../ui/pixel';
 import { personaImageUrl } from './pickHomePets';
+import { bubbleSide, pickGreeting, type BubbleSide } from './bubblePlacement';
+import { PetBubble } from './PetBubble';
 
 // reanimated 4.7 타입이 RN 0.88 View 의 children·style 을 잃어서 좁혀서 다시 선언한다
 const AnimatedView = Animated.View as unknown as ComponentType<
   Omit<ViewProps, 'style'> & { className?: string; style?: unknown }
 >;
 
-export const PET_SIZE = 140;
+export const PET_SIZE = 70;
 const GRID = 3;
+const BUBBLE_MS = 2500;
+
+export type Field = { minX: number; maxX: number; minY: number; maxY: number; width: number };
 
 const snap = (v: number) => {
   'worklet';
@@ -30,35 +36,43 @@ const between = (min: number, max: number) => min + Math.random() * (max - min);
 
 type Props = {
   persona: Persona;
-  stageWidth: number;
+  field: Field | null;
   onError: () => void;
 };
 
-export function WanderingPet({ persona, stageWidth, onError }: Props) {
+export function WanderingPet({ persona, field, onError }: Props) {
+  const { t } = useTranslation();
   const reducedMotion = useReducedMotion();
-  const maxX = Math.max(0, stageWidth - PET_SIZE);
-  const x = useSharedValue(snap(between(0, maxX)));
+  const x = useSharedValue(0);
+  const y = useSharedValue(0);
   const bounce = useSharedValue(0);
   const facing = useSharedValue(1);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [bubble, setBubble] = useState<{ text: string; side: BubbleSide } | null>(null);
+
+  const { minX = 0, maxX = 0, minY = 0, maxY = 0 } = field ?? {};
 
   useEffect(() => {
-    if (maxX === 0) return;
-    x.value = snap(between(0, maxX));
+    if (!field) return;
+    x.value = snap(between(minX, maxX));
+    y.value = snap(between(minY, maxY));
     if (reducedMotion) return;
     let active = true;
 
     const rest = () => {
       bounce.value = 0;
-      timer.current = setTimeout(walk, between(1000, 2000));
+      timer.current = setTimeout(walk, between(1000, 2500));
     };
     const walk = () => {
       if (!active) return;
-      const target = snap(between(0, maxX));
-      const duration = between(2000, 4000);
-      if (target === x.value) return rest();
-      facing.value = target > x.value ? 1 : -1;
-      x.value = withTiming(target, { duration, easing: Easing.linear });
+      const tx = snap(between(minX, maxX));
+      const ty = snap(between(minY, maxY));
+      const distance = Math.hypot(tx - x.value, ty - y.value);
+      if (distance < GRID) return rest();
+      const duration = distance * 25;
+      facing.value = tx >= x.value ? 1 : -1;
+      x.value = withTiming(tx, { duration, easing: Easing.linear });
+      y.value = withTiming(ty, { duration, easing: Easing.linear });
       bounce.value = withRepeat(
         withSequence(withTiming(-GRID, { duration: 150 }), withTiming(0, { duration: 150 })),
         -1,
@@ -74,30 +88,42 @@ export function WanderingPet({ persona, stageWidth, onError }: Props) {
       active = false;
       if (timer.current) clearTimeout(timer.current);
       cancelAnimation(x);
+      cancelAnimation(y);
       cancelAnimation(bounce);
     };
-  }, [reducedMotion, maxX, x, bounce, facing]);
+  }, [field, reducedMotion, minX, maxX, minY, maxY, x, y, bounce, facing]);
 
-  const style = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: snap(x.value) },
-      { translateY: snap(bounce.value) },
-      { scaleX: facing.value },
-    ],
+  useEffect(() => {
+    if (!bubble) return;
+    const id = setTimeout(() => setBubble(null), BUBBLE_MS);
+    return () => clearTimeout(id);
+  }, [bubble]);
+
+  const greet = () => {
+    if (!field) return;
+    const greetings = t('home.greetings', { returnObjects: true }) as string[];
+    setBubble({ text: pickGreeting(greetings), side: bubbleSide(x.value + PET_SIZE / 2, field.width) });
+  };
+
+  // 아래에 있는 펫이 앞에 오도록 y 를 zIndex 로 쓴다
+  const position = useAnimatedStyle(() => ({
+    zIndex: Math.round(y.value),
+    transform: [{ translateX: snap(x.value) }, { translateY: snap(y.value + bounce.value) }],
   }));
+  const flip = useAnimatedStyle(() => ({ transform: [{ scaleX: facing.value }] }));
 
   return (
     <AnimatedView
       testID={`wandering-pet-${persona.id}`}
-      className="absolute bottom-0 left-0"
-      style={[{ width: PET_SIZE, height: PET_SIZE }, style]}
+      className="absolute left-0 top-0"
+      style={[{ width: PET_SIZE, height: PET_SIZE }, position]}
     >
-      <PixelSprite
-        source={personaImageUrl(persona.type)}
-        maxWidth={PET_SIZE}
-        maxHeight={PET_SIZE}
-        onError={onError}
-      />
+      <Pressable accessibilityRole="button" accessibilityLabel={persona.type} onPress={greet}>
+        <AnimatedView style={flip}>
+          <PixelSprite source={personaImageUrl(persona.type)} maxWidth={PET_SIZE} maxHeight={PET_SIZE} onError={onError} />
+        </AnimatedView>
+      </Pressable>
+      {bubble && <PetBubble text={bubble.text} side={bubble.side} petSize={PET_SIZE} />}
     </AnimatedView>
   );
 }

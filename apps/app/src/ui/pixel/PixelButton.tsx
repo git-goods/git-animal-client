@@ -7,11 +7,12 @@ type Props = {
   label: string;
   onPress: () => void;
   disabled?: boolean;
+  wide?: boolean;
 };
 
 const SCALE = 3;
 
-export function PixelButton({ label, onPress, disabled = false }: Props) {
+export function PixelButton({ label, onPress, disabled = false, wide = false }: Props) {
   const [pressed, setPressed] = useState(false);
 
   return (
@@ -22,14 +23,14 @@ export function PixelButton({ label, onPress, disabled = false }: Props) {
       onPress={onPress}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
-      className="self-start"
+      className={wide ? 'self-stretch' : 'self-start'}
     >
       <View
         testID="pixel-button-content"
         style={{ transform: [{ translateY: pressed ? SCALE : 0 }], opacity: disabled ? 0.5 : 1 }}
       >
         <PixelBox scale={SCALE} shadow={!pressed}>
-          <PixelText bold>{label}</PixelText>
+          <PixelText bold style={wide ? { textAlign: 'center' } : undefined}>{label}</PixelText>
         </PixelBox>
       </View>
     </Pressable>

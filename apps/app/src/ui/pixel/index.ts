@@ -1,6 +1,7 @@
 export { PixelBox } from './PixelBox';
 export { PixelButton } from './PixelButton';
 export { PixelPanel } from './PixelPanel';
+export { PixelIcon, COIN_ROWS, PAW_ROWS } from './PixelIcon';
 export { PixelSprite } from './PixelSprite';
 export { PixelTabBar } from './PixelTabBar';
 export { PixelText } from './PixelText';

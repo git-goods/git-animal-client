@@ -44,7 +44,7 @@ describe('PetStage', () => {
   beforeEach(() => mockLoadData.mockReset());
 
   it('펫이 0마리면 안내 문구를 보여준다', async () => {
-    await render(<PetStage personas={[]} />);
+    await render(<PetStage personas={[]} fieldTop={0.4} fieldBottom={0.9} />);
     expect(screen.getByText(i18n.t('home.no_visible_pets'))).toBeTruthy();
   });
 
@@ -58,7 +58,7 @@ describe('PetStage', () => {
     });
 
     await render(
-      <PetStage personas={[persona('1', 'CAT'), persona('2', 'PENGUIN'), persona('3', 'QUOKKA')]} />,
+      <PetStage personas={[persona('1', 'CAT'), persona('2', 'PENGUIN'), persona('3', 'QUOKKA')]} fieldTop={0.4} fieldBottom={0.9} />,
     );
 
     await waitFor(() => expect(screen.queryByTestId('wandering-pet-2')).toBeNull());

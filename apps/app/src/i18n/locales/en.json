@@ -57,7 +57,17 @@
     "banner_message": "WebView with Token Manager is working!",
     "status": "Status",
     "user_profile": "User Profile",
-    "no_visible_pets": "No visible pets"
+    "no_visible_pets": "No visible pets",
+    "contribution": "Contribution",
+    "greetings": [
+      "Hi!",
+      "Nice to see you!",
+      "Did you commit today?",
+      "Play with me!",
+      "I'm hungry…",
+      "Have a good day!"
+    ],
+    "pet_count": "Pets"
   },
   "about": {
     "title": "About GitAnimals",
@@ -224,5 +234,10 @@
     "shop": "Shop",
     "game": "Game",
     "mypage": "My"
+  },
+  "selectPet": {
+    "title": "Home pets",
+    "hint": "Pick the pets shown at home",
+    "save": "Save"
   }
 }

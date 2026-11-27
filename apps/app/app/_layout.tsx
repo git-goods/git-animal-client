@@ -25,6 +25,7 @@ function AuthStack() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Protected guard={status === 'signedIn'}>
         <Stack.Screen name={HOME_ROUTE} />
+        <Stack.Screen name="select-pet" />
       </Stack.Protected>
       <Stack.Protected guard={status === 'signedOut'}>
         <Stack.Screen name="(auth)" />
