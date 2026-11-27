@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, TextInput, View } from 'react-native';
+import { Image, Pressable, Text, TextInput, View } from 'react-native';
+import { colors } from '@gitanimals/ui-tailwind/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PixelBox, PixelButton, PixelSprite, PixelText } from '../../src/ui/pixel';
 import { FarmBackground } from '../../src/home/FarmBackground';
@@ -8,6 +9,8 @@ import { personaImageUrl } from '../../src/home/pickHomePets';
 import { useAuth } from '../../src/auth/AuthProvider';
 import { loginWithGithub } from '../../src/auth/githubLogin';
 import { FONT } from '../../src/ui/pixel/glyph';
+import { CenterLogo } from '../../src/ui/CenterLogo';
+import { sans } from '../../src/ui/sans';
 
 function DevTokenForm() {
   const { signIn } = useAuth();
@@ -67,8 +70,26 @@ function GithubLoginButton() {
 
   return (
     <View className="gap-2">
-      <PixelButton label={t('auth.github_login')} onPress={login} disabled={busy} wide />
-      {failed && <PixelText variant="glyph14" className="text-white">{t('auth.login_failed')}</PixelText>}
+      {/* 피그마 943:28935 */}
+      <Pressable
+        onPress={login}
+        disabled={busy}
+        accessibilityRole="button"
+        style={{
+          height: 54,
+          borderRadius: 14,
+          backgroundColor: colors.brand.canary,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 8,
+          opacity: busy ? 0.5 : 1,
+        }}
+      >
+        <Image source={require('../../assets/ui/github.png')} style={{ width: 18, height: 18 }} />
+        <Text style={{ fontSize: 19, fontWeight: '600', color: colors.black.DEFAULT }}>{t('auth.github_login')}</Text>
+      </Pressable>
+      {failed && <Text style={[sans(13, 1.4), { color: colors.black.DEFAULT, textAlign: 'center' }]}>{t('auth.login_failed')}</Text>}
     </View>
   );
 }
@@ -77,16 +98,16 @@ export default function Login() {
   const insets = useSafeAreaInsets();
 
   return (
-    <View className="flex-1 bg-gray-000">
-      <FarmBackground />
-      <View className="items-center" style={{ paddingTop: insets.top + 96 }}>
-        <View className="items-end">
-          <PixelSprite source={personaImageUrl('LITTLE_CHICK')} maxWidth={70} maxHeight={70} />
-          {/* 피그마 로고 3배 export(726×198)를 1/3 로 */}
-          <Image source={require('../../assets/brand/logo.png')} style={{ width: 242, height: 66 }} accessibilityLabel="Git Animals" />
+    <View className="flex-1">
+      <FarmBackground tabBar={false} />
+      <CenterLogo>
+        {/* 피그마 108px 병아리의 오른쪽 아래 모서리(로고 기준 293, 40)에 맞춘다. 108 은 140px 원본의 정수배가 아니라 1배로 그린다 */}
+        <View style={{ position: 'absolute', left: 153, top: -100 }}>
+          <PixelSprite source={personaImageUrl('LITTLE_CHICK')} maxWidth={140} maxHeight={140} />
         </View>
-      </View>
-      <View className="absolute inset-x-0 bottom-0 gap-4 px-4" style={{ paddingBottom: insets.bottom + 24 }}>
+      </CenterLogo>
+      {/* 피그마 버튼 아래 끝은 화면 아래에서 116px(홈 인디케이터 34 포함) */}
+      <View className="absolute inset-x-0 bottom-0 gap-4 px-4" style={{ paddingBottom: insets.bottom + 82 }}>
         <GithubLoginButton />
         {__DEV__ && (
           <PixelBox className="self-stretch">
