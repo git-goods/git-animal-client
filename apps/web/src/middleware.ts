@@ -3,6 +3,7 @@ import { getToken } from 'next-auth/jwt';
 import createMiddleware from 'next-intl/middleware';
 
 import { resolveLegacyLocalePath } from './i18n/legacyLocaleRedirect';
+import { getCountryLocale } from './i18n/countryLocale';
 import { routing } from './i18n/routing';
 import { isBackendTokenExpired } from './utils/backendToken';
 
@@ -53,6 +54,11 @@ export default async function middleware(req: NextRequest) {
   // URL 정보를 헤더에 추가한 새로운 요청 생성
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set('x-pathname', req.nextUrl.pathname);
+  // 접속 국가 언어를 브라우저 언어보다 우선한다. 직접 고른 언어(NEXT_LOCALE 쿠키)는 그대로 우선.
+  const countryLocale = getCountryLocale(req.headers.get('x-vercel-ip-country'));
+  if (countryLocale) {
+    requestHeaders.set('accept-language', countryLocale);
+  }
 
   const modifiedRequest = new NextRequest(req.url, {
     headers: requestHeaders,
