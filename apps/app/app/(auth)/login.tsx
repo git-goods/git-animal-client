@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { TextInput, View } from 'react-native';
 import { PixelButton, PixelPanel, PixelText } from '../../src/ui/pixel';
 import { useAuth } from '../../src/auth/AuthProvider';
+import { loginWithGithub } from '../../src/auth/githubLogin';
 import { FONT } from '../../src/ui/pixel/glyph';
 
 function DevTokenForm() {
@@ -43,16 +43,41 @@ function DevTokenForm() {
   );
 }
 
-export default function Login() {
-  const router = useRouter();
+function GithubLoginButton() {
+  const { signIn } = useAuth();
   const { t } = useTranslation();
+  const [busy, setBusy] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  const login = async () => {
+    setBusy(true);
+    setFailed(false);
+    try {
+      const jwt = await loginWithGithub();
+      if (jwt) await signIn(jwt);
+    } catch {
+      setFailed(true);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <View className="gap-2">
+      <PixelButton label={t('auth.github_login')} onPress={login} disabled={busy} />
+      {failed && <PixelText variant="glyph14">{t('auth.login_failed')}</PixelText>}
+    </View>
+  );
+}
+
+export default function Login() {
 
   return (
     <View className="flex-1 items-center justify-center px-6">
       <PixelPanel source={require('../../assets/ui/panel.png')} style={{ width: '100%' }}>
         <View className="gap-4 p-6">
           <PixelText variant="glyph24" title>GitAnimals</PixelText>
-          <PixelButton label={t('auth.github_login')} onPress={() => router.push('/github')} />
+          <GithubLoginButton />
           {__DEV__ && <DevTokenForm />}
         </View>
       </PixelPanel>

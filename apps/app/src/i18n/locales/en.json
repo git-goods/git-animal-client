@@ -37,7 +37,7 @@
     "refresh_token": "Refresh Token",
     "request_new_auth": "Request New Auth",
     "github_login": "Sign in with GitHub",
-    "login_failed": "Couldn't sign in. Close and try again."
+    "login_failed": "Couldn't sign in. Please try again."
   },
   "home": {
     "title": "GitAnimals Webview - Home",
