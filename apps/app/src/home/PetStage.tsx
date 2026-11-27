@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import type { Persona } from '@gitanimals/api';
 import { PixelText } from '../ui/pixel';
+import { RetryNotice } from './RetryNotice';
 import { WanderingPet, PET_SIZE, type Field } from './WanderingPet';
 
 type Props = {
@@ -17,6 +18,7 @@ export function PetStage({ personas, fieldTop, fieldBottom }: Props) {
   const [field, setField] = useState<Field | null>(null);
   const [failed, setFailed] = useState<ReadonlySet<string>>(new Set());
   const pets = personas.filter((p) => !failed.has(p.type));
+  const allFailed = personas.length > 0 && pets.length === 0;
 
   return (
     <View
@@ -36,9 +38,13 @@ export function PetStage({ personas, fieldTop, fieldBottom }: Props) {
     >
       {pets.length === 0 ? (
         <View className="absolute inset-x-0 items-center" style={{ top: `${fieldTop * 100 + 10}%` }}>
-          <PixelText variant="glyph14" className="text-white">
-            {t('home.no_visible_pets')}
-          </PixelText>
+          {allFailed ? (
+            <RetryNotice onRetry={() => setFailed(new Set())} />
+          ) : (
+            <PixelText variant="glyph14" className="text-white">
+              {t('home.no_visible_pets')}
+            </PixelText>
+          )}
         </View>
       ) : (
         pets.map((p) => (

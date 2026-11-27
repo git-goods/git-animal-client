@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react-native';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import type { Persona } from '@gitanimals/api';
 import { PetStage } from '../PetStage';
 import i18n from '../../i18n';
@@ -62,5 +62,17 @@ describe('PetStage', () => {
     expect(screen.getByTestId('wandering-pet-1')).toBeTruthy();
     expect(screen.getByTestId('wandering-pet-3')).toBeTruthy();
     expect(screen.queryByText(i18n.t('home.no_visible_pets'))).toBeNull();
+  });
+
+  it('펫 이미지가 모두 실패하면 다시 시도를 보여 주고, 누르면 다시 받는다', async () => {
+    mockLoadData.mockResolvedValue(null);
+    await render(<PetStage personas={[persona('9', 'GOOSE')]} fieldTop={0.4} fieldBottom={0.9} />);
+
+    await waitFor(() => expect(screen.getByText(i18n.t('common.retry'))).toBeTruthy());
+    expect(screen.queryByText(i18n.t('home.no_visible_pets'))).toBeNull();
+
+    mockLoadData.mockResolvedValue({ width: () => 140, height: () => 140 });
+    fireEvent.press(screen.getByText(i18n.t('common.retry')));
+    await waitFor(() => expect(screen.getByTestId('wandering-pet-9')).toBeTruthy());
   });
 });
