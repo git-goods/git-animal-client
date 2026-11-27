@@ -20,7 +20,11 @@ export function installInterceptors(deps: Deps) {
   setResponseInterceptor(
     (response) => response,
     (error) => {
-      if (error?.response?.status === 401) current?.onUnauthorized();
+      // 예전 토큰으로 나간 요청의 401 이 새로 로그인한 세션을 끊지 않게 한다
+      const sent = error?.config?.headers?.Authorization;
+      const token = current?.getToken() ?? null;
+      const stale = !!sent && sent !== `Bearer ${token}`;
+      if (error?.response?.status === 401 && !stale) current?.onUnauthorized();
       return Promise.reject(error);
     },
   );

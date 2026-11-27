@@ -8,6 +8,8 @@ describe('extractJwt', () => {
   it('gitanimals://auth?jwt= 에서 토큰을 꺼낸다', () => {
     expect(extractJwt('gitanimals://auth?jwt=abc.def')).toBe('abc.def');
     expect(extractJwt('gitanimals://auth?x=1&jwt=Bearer%20xyz')).toBe('Bearer xyz');
+    expect(extractJwt('gitanimals://auth?jwt=Bearer+xyz')).toBe('Bearer xyz');
+    expect(extractJwt('gitanimals://auth?jwt=a.b=')).toBe('a.b=');
   });
 
   it('다른 주소나 jwt 가 없는 주소는 무시한다', () => {
