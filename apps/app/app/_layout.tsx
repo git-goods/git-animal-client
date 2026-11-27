@@ -8,12 +8,17 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { FONT } from '../src/ui/pixel/glyph';
 import { AuthProvider, useAuth } from '../src/auth/AuthProvider';
 
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 const HOME_ROUTE = '(tabs)';
 
 function AuthStack() {
   const { status } = useAuth();
+
+  useEffect(() => {
+    if (status !== 'loading') SplashScreen.hideAsync().catch(() => {});
+  }, [status]);
+
   if (status === 'loading') return null;
 
   return (
@@ -35,10 +40,6 @@ export default function RootLayout() {
     [FONT.bodyBold]: require('../assets/fonts/Galmuri11-Bold.ttf'),
     [FONT.title]: require('../assets/fonts/DNFBitBitv2.otf'),
   });
-
-  useEffect(() => {
-    if (loaded || error) SplashScreen.hideAsync();
-  }, [loaded, error]);
 
   if (!loaded && !error) return null;
 

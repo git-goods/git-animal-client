@@ -52,14 +52,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     let cancelled = false;
     (async () => {
-      const stored = await tokenStore.get();
-      if (cancelled) return;
-      if (!stored) {
-        setStatus('signedOut');
-        return;
+      try {
+        const stored = await tokenStore.get();
+        if (cancelled) return;
+        if (!stored) {
+          setStatus('signedOut');
+          return;
+        }
+        tokenRef.current = stored;
+        await validate();
+      } catch {
+        // Keystore 복호화 실패 등 — 로딩에 갇히지 않도록 로그아웃 상태로 둔다
+        tokenRef.current = null;
+        await tokenStore.clear().catch(() => {});
+        if (!cancelled) setStatus('signedOut');
       }
-      tokenRef.current = stored;
-      await validate();
     })();
     return () => {
       cancelled = true;

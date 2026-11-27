@@ -85,4 +85,11 @@ describe('AuthProvider', () => {
     await waitFor(() => expect(screen.getByText('signedIn')).toBeTruthy());
     expect(store.clear).not.toHaveBeenCalled();
   });
+
+  it('저장소 읽기가 실패해도 loading 에 머무르지 않고 signedOut 이다', async () => {
+    store.get.mockRejectedValue(new Error('Keystore decrypt failed'));
+    await renderProvider();
+    await waitFor(() => expect(screen.getByText('signedOut')).toBeTruthy());
+    expect(store.clear).toHaveBeenCalled();
+  });
 });
