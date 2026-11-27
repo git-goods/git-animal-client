@@ -25,7 +25,15 @@
       "expo-router",
       "expo-status-bar",
       "expo-font",
-      "expo-splash-screen",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#098761",
+          "image": "./assets/brand/logo.png",
+          "imageWidth": 242,
+          "resizeMode": "contain"
+        }
+      ],
       "expo-secure-store",
       "expo-localization",
       "expo-web-browser"
