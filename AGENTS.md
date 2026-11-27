@@ -31,7 +31,7 @@
 
 ## Git과 작업 절차
 
-- 기본 대상은 원격 `origin/main`이다. 이슈를 먼저 만들고 `feature/*` 브랜치에서 작업한 뒤
+- PR 대상은 원격 `origin/dev`이고, `main`에는 `dev → main` 릴리스 PR로만 들어간다(앱·웹 모두). 이슈를 먼저 만들고 `feature/*` 브랜치에서 작업한 뒤
   PR을 만든다. 기존 [`CONTRIBUTING.md`](CONTRIBUTING.md)의 소문자 커밋 타입과 squash merge
   규칙을 따른다.
 - Git 절차(브랜치 준비, rebase, PR, push, merge)는 Horbis `git-workflow`를 사용한다.
