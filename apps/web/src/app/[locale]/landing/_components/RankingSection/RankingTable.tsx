@@ -30,12 +30,12 @@ const trBaseStyle = cn(
   'mobile:[&_td:nth-child(2)]:w-[28px] mobile:[&_th:nth-child(2)]:w-[28px] mobile:[&_td:nth-child(2)]:pl-0 mobile:[&_th:nth-child(2)]:pl-0',
 );
 
-const theadTrStyle = cn(trBaseStyle, 'glyph16-bold bg-white-50 text-white-100 h-[40px]');
+const theadTrStyle = cn(trBaseStyle, 'glyph16-bold bg-white-alpha-50 text-white h-[40px]');
 
 const trStyle = cn(
   trBaseStyle,
-  'glyph18-regular text-white-100 bg-white-10 h-[60px]',
-  '[&_td:first-child]:text-[20px] [&_td:first-child]:leading-[28px] [&_td:first-child]:font-dnf [&_td:first-child]:text-white-50',
+  'glyph18-regular text-white bg-white-alpha-10 h-[60px]',
+  '[&_td:first-child]:text-[20px] [&_td:first-child]:leading-[28px] [&_td:first-child]:font-dnf [&_td:first-child]:text-white-alpha-50',
   'mobile:h-[48px] mobile:glyph15-regular',
   'mobile:[&_td:first-child]:text-[16px]',
 );

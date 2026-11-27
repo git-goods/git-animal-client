@@ -54,12 +54,12 @@ const SolvingQuizSection = wrap
           <p className="glyph40-bold mb-[24px] [font-family:'Product_Sans'] font-bold text-white">
             Quiz {round.current}/{round.total}
           </p>
-          <span className="glyph12-regular mb-[12px] w-fit rounded-[6px] bg-white-10 px-[12px] py-[6px] [font-family:'Product_Sans'] font-normal text-white-50">
+          <span className="glyph12-regular mb-[12px] w-fit rounded-[6px] bg-white-alpha-10 px-[12px] py-[6px] [font-family:'Product_Sans'] font-normal text-white-alpha-50">
             {t(level.toLowerCase())} {t('level')}
           </span>
           <p
             className={cn(
-              'glyph16-regular h-full flex-1 shrink overflow-y-auto [font-family:\'Product_Sans\'] font-normal text-white-75',
+              'glyph16-regular h-full flex-1 shrink overflow-y-auto [font-family:\'Product_Sans\'] font-normal text-white-alpha-75',
               customScrollStyle,
             )}
           >
@@ -72,14 +72,14 @@ const SolvingQuizSection = wrap
             <QuizProgressBar timeoutAt={round.timeoutAt} onTimeout={failDialog.open} paused={isRoundEnd} />
             <div className="mt-[24px] flex gap-[8px]">
               <button
-                className="flex h-[76px] w-full items-center justify-center rounded-[10px] border-[3px] border-solid border-white-75 bg-[linear-gradient(132.51deg,rgba(255,253,201,0.8)_2.19%,rgba(150,230,216,0.8)_49.24%,rgba(125,171,241,0.8)_98.21%)]"
+                className="flex h-[76px] w-full items-center justify-center rounded-[10px] border-[3px] border-solid border-white-alpha-75 bg-[linear-gradient(132.51deg,rgba(255,253,201,0.8)_2.19%,rgba(150,230,216,0.8)_49.24%,rgba(125,171,241,0.8)_98.21%)]"
                 title="O"
                 onClick={() => submit(QUIZ_ANSWER.YES)}
               >
                 <Image src="/assets/game/quiz/ox_o.webp" alt="O" width={60} height={60} />
               </button>
               <button
-                className="flex h-[76px] w-full items-center justify-center rounded-[10px] border-[3px] border-solid border-white-75 bg-[linear-gradient(132.51deg,rgba(255,253,201,0.8)_2.19%,rgba(150,230,216,0.8)_49.24%,rgba(125,171,241,0.8)_98.21%)]"
+                className="flex h-[76px] w-full items-center justify-center rounded-[10px] border-[3px] border-solid border-white-alpha-75 bg-[linear-gradient(132.51deg,rgba(255,253,201,0.8)_2.19%,rgba(150,230,216,0.8)_49.24%,rgba(125,171,241,0.8)_98.21%)]"
                 title="X"
                 onClick={() => submit(QUIZ_ANSWER.NO)}
               >
@@ -99,7 +99,7 @@ const SolvingQuizSection = wrap
               <Dialog.Title className="!glyph24-bold !text-center [font-family:'Product_Sans'] font-bold">
                 {t('correct-dialog.title')}
               </Dialog.Title>
-              <Dialog.Description className="glyph16-regular text-center [font-family:'Product_Sans'] font-normal text-white-75 [word-break:keep-all]">
+              <Dialog.Description className="glyph16-regular text-center [font-family:'Product_Sans'] font-normal text-white-alpha-75 [word-break:keep-all]">
                 {t('correct-dialog.description')}
               </Dialog.Description>
             </div>
@@ -137,7 +137,7 @@ const SolvingQuizSection = wrap
               <Dialog.Title className="!glyph24-bold !text-center [font-family:'Product_Sans'] font-bold">
                 {t('fail-dialog.title')}
               </Dialog.Title>
-              <Dialog.Description className="glyph16-regular text-center [font-family:'Product_Sans'] font-normal text-white-75 [word-break:keep-all]">
+              <Dialog.Description className="glyph16-regular text-center [font-family:'Product_Sans'] font-normal text-white-alpha-75 [word-break:keep-all]">
                 {t('fail-dialog.description')}
               </Dialog.Description>
             </div>
@@ -168,7 +168,7 @@ const SolvingQuizSection = wrap
               <Dialog.Title className="!glyph24-bold !text-center [font-family:'Product_Sans'] font-bold">
                 {t('complete-dialog.title')}
               </Dialog.Title>
-              <Dialog.Description className="glyph16-regular text-center [font-family:'Product_Sans'] font-normal text-white-75 [word-break:keep-all]">
+              <Dialog.Description className="glyph16-regular text-center [font-family:'Product_Sans'] font-normal text-white-alpha-75 [word-break:keep-all]">
                 {customT(t('complete-dialog.description'), { point: prize })}
               </Dialog.Description>
             </div>

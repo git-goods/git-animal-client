@@ -22,7 +22,7 @@ export function Banner({ image, label, loading, className, ...styleProps }: Bann
         </p>
       )}
       {loading && (
-        <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center border-white-50 bg-white-25">
+        <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center border-white-alpha-50 bg-white-alpha-25">
           <Loader width={32} height={32} color="white" />
         </div>
       )}

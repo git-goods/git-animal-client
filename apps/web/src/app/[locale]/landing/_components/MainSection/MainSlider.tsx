@@ -47,7 +47,7 @@ function MainSlider() {
   const moveToPrevPanel = () => emblaApi?.scrollPrev();
 
   return (
-    <div className="m-auto h-fit w-fit rounded-[16px] bg-[rgba(255,255,255,0.10)]">
+    <div className="m-auto h-fit w-fit rounded-[16px] bg-white-alpha-10">
       <div className="flex items-center justify-center gap-0 pt-[40px] mobile:pt-[26px]">
         {MODE_ITEM_LIST.map((item, index) => (
           <button

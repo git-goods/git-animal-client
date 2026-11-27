@@ -132,7 +132,7 @@ export function PersonaListToolbar({
         {/* 진화 가능 필터 */}
         {showEvolvableFilter && (
           <button
-            className="glyph12-regular h-[30px] cursor-pointer rounded-[6px] border border-solid border-transparent bg-white-5 px-[12px] py-[6px] text-white-50 transition-all duration-150 ease-[ease] hover:bg-white-10 data-[active]:border-brand-sky data-[active]:bg-brand-sky_25 data-[active]:text-white-90"
+            className="glyph12-regular h-[30px] cursor-pointer rounded-[6px] border border-solid border-transparent bg-white-alpha-5 px-[12px] py-[6px] text-white-alpha-50 transition-all duration-150 [transition-timing-function:ease] hover:bg-white-alpha-10 data-[active]:border-brand-sky data-[active]:bg-brand-sky_25 data-[active]:text-white-alpha-90"
             data-active={filterState.evolvableOnly || undefined}
             onClick={() => onFilterChange({ evolvableOnly: !filterState.evolvableOnly })}
           >
@@ -156,12 +156,12 @@ export function PersonaListToolbar({
 
         {/* 결과 수 + 초기화 */}
         <div className="ml-auto flex items-center gap-[4px]">
-          <span className="glyph12-regular text-white-50">
+          <span className="glyph12-regular text-white-alpha-50">
             {counts.filtered}/{counts.total}
           </span>
           {isFiltering && (
             <button
-              className="flex h-[24px] w-[24px] cursor-pointer items-center justify-center rounded-[4px] text-white-50 hover:bg-white-10 hover:text-white-75"
+              className="flex h-[24px] w-[24px] cursor-pointer items-center justify-center rounded-[4px] text-white-alpha-50 hover:bg-white-alpha-10 hover:text-white-alpha-75"
               onClick={onReset}
               aria-label={t('reset')}
             >

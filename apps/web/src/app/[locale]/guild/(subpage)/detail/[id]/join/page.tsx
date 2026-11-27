@@ -31,7 +31,7 @@ export default function GuildJoinPage({ params }: { params: { id: string } }) {
     <>
       <div>
         <h2 className={dialogTitleStyle}>Choose your pet</h2>
-        <p className="glyph20-regular text-white-50 mt-3 text-center">
+        <p className="glyph20-regular text-white-alpha-50 mt-3 text-center">
           If you choose a pet, it will be shown in the guild image.
         </p>
       </div>

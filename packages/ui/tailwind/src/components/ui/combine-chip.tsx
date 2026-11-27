@@ -18,8 +18,10 @@ const chipTriggerStyle = cva(
   {
     variants: {
       size: {
-        small: 'h-[30px] gap-[1px] rounded-[6px] border-white-5 bg-white-5 glyph12-regular text-white-50',
-        medium: 'h-[36px] gap-[2px] rounded-[8px] border-white-25 bg-white-25 glyph16-regular text-white-90',
+        small:
+          'h-[30px] gap-[1px] rounded-[6px] border-white-alpha-5 bg-white-alpha-5 glyph12-regular text-white-alpha-50',
+        medium:
+          'h-[36px] gap-[2px] rounded-[8px] border-white-alpha-25 bg-white-alpha-25 glyph16-regular text-white-alpha-90',
       },
     },
     defaultVariants: {
@@ -52,7 +54,7 @@ const Content = React.forwardRef<
       data-position={position}
       {...props}
       className={cn(
-        'pointer-events-auto relative z-[9999] min-w-[8rem] overflow-hidden rounded-[10px] border border-solid border-black-50 bg-black-75 text-white shadow-md',
+        'pointer-events-auto relative z-[9999] min-w-[8rem] overflow-hidden rounded-[10px] border border-solid border-black-alpha-50 bg-black-alpha-75 text-white shadow-md',
         'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
         className,
       )}
@@ -74,7 +76,7 @@ const Item = React.forwardRef<
     {...props}
     className={cn(
       'relative flex cursor-default select-none items-center rounded-[4px] py-[6px] pl-[32px] pr-[8px] outline-none glyph16-regular text-white',
-      'hover:bg-white-5 focus:bg-white-5 data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'hover:bg-white-alpha-5 focus:bg-white-alpha-5 data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       className,
     )}
   >

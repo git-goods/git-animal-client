@@ -3,12 +3,6 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { getAnimalTierInfo } from '@/utils/animals';
 
-/**
- * 페르소나의 드랍률을 가져오는 훅
- * @param personaType - 페르소나 타입
- * @returns 페르소나의 드랍률 (예: "1.2%")
- * @throws 페르소나를 찾을 수 없을 경우 에러
- */
 export const useGetPersonaDropRate = (personaType: string) => {
   const {
     data: { personas },

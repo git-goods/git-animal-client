@@ -148,13 +148,13 @@ const tableCss = 'w-full mb-[32px]';
 
 const theadCss = cn(
   'grid grid-cols-[1fr_2.5fr_1fr_1fr_5.7fr] items-center gap-[16px] px-[32px] py-[4px]',
-  'h-[46px] rounded-[12px] bg-white-50 glyph18-bold text-white-100',
+  'h-[46px] rounded-[12px] bg-white-alpha-50 glyph18-bold text-white',
   '[&>span:nth-child(1)]:text-center mb-[4px] mobile:text-[16px]',
 );
 
 const rowStyle = cn(
   'grid grid-cols-[1fr_2.5fr_1fr_1fr_5.7fr] items-center gap-[16px] px-[32px] py-0',
-  'h-[80px] w-full rounded-[12px] bg-white-10 glyph20-regular text-white-100',
+  'h-[80px] w-full rounded-[12px] bg-white-alpha-10 glyph20-regular text-white',
   '[&_button]:w-full [&_button]:px-[6px] [&_button]:text-black',
   '[&_*]:overflow-hidden [&_*]:text-ellipsis mobile:text-[16px]',
 );

@@ -26,8 +26,6 @@ export function GameConsoleSvgContainer({ children }: { children: React.ReactNod
           strokeWidth="20"
         />
 
-        {/* Power Button - Interactive */}
-
         <foreignObject x="187" y="33" width="1286" height="1148">
           <div className="backdrop-blur-[20px] [clip-path:url(#bgblur_0_2620_81262_clip_path)] h-full w-full" />
         </foreignObject>
@@ -40,7 +38,6 @@ export function GameConsoleSvgContainer({ children }: { children: React.ReactNod
           strokeWidth="10"
         />
 
-        {/* Screen Background */}
         <path d="M280 121H1380V1086H280V121Z" fill="url(#paint4_linear_2620_81262)" />
 
         {children}

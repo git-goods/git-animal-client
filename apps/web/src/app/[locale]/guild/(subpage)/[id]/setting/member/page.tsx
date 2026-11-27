@@ -24,7 +24,7 @@ export default async function GuildMemberSetting({ params }: { params: { id: str
       )}
 
       {guild?.members.length === 0 ? (
-        <p className="text-center py-[40px] text-white-50">No members</p>
+        <p className="text-center py-[40px] text-white-alpha-50">No members</p>
       ) : (
         <>
           <h3 className="glyph14-regular text-white mb-[8px]">Members</h3>

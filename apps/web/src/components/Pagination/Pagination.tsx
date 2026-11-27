@@ -39,6 +39,6 @@ export default Pagination;
 const paginationContainerStyle =
   'flex items-center justify-center gap-[6px] [&_button]:min-w-[15px] [&_button]:h-[26px] [&_button]:rounded-[4px] [&_button]:inline-flex [&_button]:items-center [&_button]:justify-center';
 
-const nonSelectedCss = 'glyph16-regular text-white-50';
+const nonSelectedCss = 'glyph16-regular text-white-alpha-50';
 
-const selectedCss = 'glyph16-bold text-white-100';
+const selectedCss = 'glyph16-bold text-white';

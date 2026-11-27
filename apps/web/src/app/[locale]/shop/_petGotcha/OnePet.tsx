@@ -89,13 +89,11 @@ function OnePet({ onClose }: Props) {
       // 그 외에는 창을 유지하고 원인과 재시도를 화면에 남긴다.
       setErrorKind(kind);
 
-      sendMessageToErrorChannel(`<!here>
-🔥 펫 뽑기 실패 🔥
+      sendMessageToErrorChannel(`🔥 펫 뽑기 실패 🔥
 \`\`\`
 Error Message: ${JSON.stringify(error)}
 \`\`\`
 User: ${data?.user.name}
-Token: ${data?.user.accessToken}
       `);
     }
   };
@@ -109,7 +107,7 @@ Token: ${data?.user.accessToken}
       }}
     >
       {/* 가챠 연출은 풀스크린 몰입형 — 박스 모달 대신 screen 변형 사용 */}
-      <Dialog.Content size="screen" isShowClose={!busy} className="border-none bg-black-90 p-0">
+      <Dialog.Content size="screen" isShowClose={!busy} className="border-none bg-black-alpha-90 p-0">
         {/* 타이틀은 GOTCHA 워드마크가 대신 — a11y용으로만 유지 */}
         <Dialog.Title className="sr-only">{t('pet-gotcha-title')}</Dialog.Title>
 

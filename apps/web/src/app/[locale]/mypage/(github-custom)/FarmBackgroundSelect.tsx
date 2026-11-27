@@ -71,4 +71,4 @@ const backgroundContainerStyle = cn('overflow-x-auto', customScrollStyle);
 
 const backgroundItemStyle = 'border border-solid border-transparent w-[248px] rounded-[8px] overflow-hidden';
 
-const backgroundItemSelectedStyle = 'border-white-90';
+const backgroundItemSelectedStyle = 'border-white-alpha-90';

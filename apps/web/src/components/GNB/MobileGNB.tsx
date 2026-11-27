@@ -22,7 +22,7 @@ const mobileHeaderClass =
 const mobileMenuClass =
   'fixed left-0 right-0 top-[60px] z-drawer max-h-[calc(100vh-60px)] overflow-y-auto bg-white shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] mobile:flex';
 const menuItemClass =
-  'glyph16-regular flex justify-between border-b border-gray-900 capitalize text-black-75 [&_div]:flex [&_div]:items-center [&_div]:gap-[10px]';
+  'glyph16-regular flex justify-between border-b border-gray-900 capitalize text-black-alpha-75 [&_div]:flex [&_div]:items-center [&_div]:gap-[10px]';
 
 export const MobileGNB = () => {
   const t = useTranslations('Layout');

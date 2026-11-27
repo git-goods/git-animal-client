@@ -6,6 +6,8 @@ import { signOut } from 'next-auth/react';
 import { getUserByToken } from '@gitanimals/api';
 import axios from 'axios';
 
+import { isBackendTokenExpired } from '@/utils/backendToken';
+
 export const config = {
   providers: [
     CredentialsProvider({
@@ -83,6 +85,12 @@ export const config = {
         // user 객체가 있을 때만 token을 업데이트
         return { ...token, ...user };
       }
+
+      // throw 하면 next-auth 가 세션 쿠키를 정리한다.
+      if (isBackendTokenExpired(token.accessToken)) {
+        throw new Error('BACKEND_TOKEN_EXPIRED');
+      }
+
       return token;
     },
 

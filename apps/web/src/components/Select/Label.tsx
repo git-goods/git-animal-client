@@ -13,11 +13,11 @@ function SelectLabel(props: SelectLabelProps) {
 
   return (
     <button
-      className="flex w-full items-center gap-[8px] rounded-[8px] border border-solid border-[rgba(0,0,0,0.1)] bg-transparent py-[14px] pl-[20px] pr-[14px] font-['Product_Sans'] text-[16px] font-normal leading-[150%] tracking-[-0.3px] text-[rgba(0,0,0,0.75)] [&_.arrow-icon]:absolute [&_.arrow-icon]:bottom-0 [&_.arrow-icon]:right-[14px] [&_.arrow-icon]:top-0 [&_.arrow-icon]:m-auto [&_.arrow-icon]:rotate-0 [&_.arrow-icon]:transition-transform [&_.arrow-icon]:duration-200"
+      className="flex w-full items-center gap-[8px] rounded-[8px] border border-solid border-black-alpha-10 bg-transparent py-[14px] pl-[20px] pr-[14px] font-['Product_Sans'] text-[16px] font-normal leading-[150%] tracking-[-0.3px] text-black-alpha-75 [&_.arrow-icon]:absolute [&_.arrow-icon]:bottom-0 [&_.arrow-icon]:right-[14px] [&_.arrow-icon]:top-0 [&_.arrow-icon]:m-auto [&_.arrow-icon]:rotate-0 [&_.arrow-icon]:transition-transform [&_.arrow-icon]:duration-200"
       style={isOpen ? { border: '1px solid #00894d' } : {}}
       onClick={() => setIsOpen((prev) => !prev)}
     >
-      {!selectedValue && <div className="text-[rgba(0,0,0,0.5)]">{props.placeholder}</div>}
+      {!selectedValue && <div className="text-black-alpha-50">{props.placeholder}</div>}
       {selectedValue &&
         (typeof props.children === 'function' ? props.children({ value: selectedValue }) : props.children)}
       <ArrowIcon />

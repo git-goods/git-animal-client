@@ -26,9 +26,9 @@ const TabsTrigger = ({ children, className, ...props }: PropsWithChildren<TabsTr
 };
 
 const buttonStyle = cn(
-  'flex items-center justify-center w-full h-[40px] text-white-25 bg-white-10 border border-solid border-transparent rounded-[6px] outline-none py-[8px] px-[16px] glyph16-bold transition-all duration-100 ease-in-out',
-  'focus:border-white-50',
-  '[&.selected]:bg-white-50 [&.selected]:text-white [&.selected]:border-white-50 [&.selected]:focus:border-white',
+  'flex items-center justify-center w-full h-[40px] text-white-alpha-25 bg-white-alpha-10 border border-solid border-transparent rounded-[6px] outline-none py-[8px] px-[16px] glyph16-bold transition-all duration-100 ease-in-out',
+  'focus:border-white-alpha-50',
+  '[&.selected]:bg-white-alpha-50 [&.selected]:text-white [&.selected]:border-white-alpha-50 [&.selected]:focus:border-white',
 );
 
 export default TabsTrigger;

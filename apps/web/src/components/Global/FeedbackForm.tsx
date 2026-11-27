@@ -180,13 +180,13 @@ const openIconStyle =
   'fixed bottom-0 right-[4px] h-[121px] w-[110px] z-[2] mobile:scale-[0.7] mobile:right-[-12px] mobile:bottom-[-12px]';
 
 const containerStyle =
-  'fixed bottom-[120px] right-[24px] flex flex-col w-[406px] shadow-[0px_4px_24px_0px_rgba(0,0,0,0.25)] bg-[#fff] z-[1400] animate-fade-in-up mobile:w-full mobile:bottom-0 mobile:right-0 mobile:left-0 mobile:gap-0';
+  'fixed bottom-[120px] right-[24px] flex flex-col w-[406px] shadow-[0px_4px_24px_0px_rgba(0,0,0,0.25)] bg-white z-[1400] animate-fade-in-up mobile:w-full mobile:bottom-0 mobile:right-0 mobile:left-0 mobile:gap-0';
 
 const issueOptionColorStyle = 'w-[14px] h-[14px] rounded-full';
 
 const closeIconWrapperStyle = 'top-[16px] right-[16px] absolute cursor-pointer';
 
 const headingStyle =
-  'py-[24px] px-[32px] relative bg-brand-sky flex flex-col gap-[24px] items-center [&_h2]:text-black-90 [&_h2]:text-center [&_h2]:glyph18-bold [&_p]:text-black-75 [&_p]:glyph14-regular [@media_screen_and_(max-width:768px)]:p-[16px]';
+  'py-[24px] px-[32px] relative bg-brand-sky flex flex-col gap-[24px] items-center [&_h2]:text-black-alpha-90 [&_h2]:text-center [&_h2]:glyph18-bold [&_p]:text-black-alpha-75 [&_p]:glyph14-regular [@media_screen_and_(max-width:768px)]:p-[16px]';
 
 const formStyle = 'p-[20px] flex flex-col gap-[24px] mobile:gap-3';

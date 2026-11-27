@@ -134,7 +134,6 @@ function PetMergeUI() {
         </div>
       </div>
 
-      {/* Instruction Text */}
       <div className={instructionTextStyle}>
         <p className={instructionStyle}>
           {!targetPet
@@ -145,7 +144,6 @@ function PetMergeUI() {
         </p>
       </div>
 
-      {/* Pets Grid */}
       <Suspense>
         <PetList
           targetPet={targetPet}

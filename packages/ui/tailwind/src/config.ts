@@ -1,6 +1,6 @@
 import type { Config } from 'tailwindcss';
 import tailwindcssAnimate from 'tailwindcss-animate';
-import { colors } from './theme/colors';
+import { backgroundImage, colors } from './theme/colors';
 import { fontFamily } from './theme/typography';
 import { keyframes, animation } from './theme/keyframes';
 import { screens } from './theme/screens';
@@ -16,6 +16,7 @@ export const gitAnimalsConfig = {
   theme: {
     extend: {
       colors,
+      backgroundImage,
       fontFamily,
       screens,
       zIndex,
@@ -54,6 +55,7 @@ export function createGitAnimalsConfig(contentPaths: string[] = [], options: Git
     theme: {
       extend: {
         colors,
+        backgroundImage,
         fontFamily,
         screens,
         zIndex,

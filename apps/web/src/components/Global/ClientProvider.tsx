@@ -11,8 +11,7 @@ import Monitoring from '@/components/Global/Monitoring';
 
 import SessionLoader from './SessionLoader';
 
-// Registers auth interceptors on the client bundle. The server root layout
-// module does not run in the browser, so this is the client-side entry point.
+// server root layout 모듈은 브라우저에서 돌지 않아 클라이언트 인터셉터는 여기서 등록한다.
 registerInterceptors();
 
 function ClientProvider({ children }: PropsWithChildren) {

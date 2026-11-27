@@ -1,7 +1,7 @@
-// NOTE: This module intentionally couples the evolution & merge result modal visuals — both modals share identical container/content variants and styles.
+// 진화·합성 결과 모달은 같은 모양이어야 해서 일부러 스타일을 공유한다.
 
 export const containerStyle =
-  'absolute top-0 right-0 bottom-0 left-0 w-full h-full flex items-center justify-center bg-black-50 z-50 cursor-pointer';
+  'absolute top-0 right-0 bottom-0 left-0 w-full h-full flex items-center justify-center bg-black-alpha-50 z-50 cursor-pointer';
 
 export const containerInnerVariants = {
   initial: { scale: 0, rotate: -180 },

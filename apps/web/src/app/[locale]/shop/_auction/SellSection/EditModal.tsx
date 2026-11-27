@@ -83,4 +83,4 @@ function EditModal({ isOpen, onClose, productId }: { isOpen: boolean; onClose: (
 export default EditModal;
 
 const inputStyle =
-  'flex h-[55px] pt-[14px] pr-[14px] pb-[13px] pl-[20px] items-start gap-[8px] w-full outline-none rounded-[8px] border border-[rgba(255,255,255,0.25)] glyph16-regular text-white-100 placeholder:glyph16-regular placeholder:text-white-75 [&::-webkit-outer-spin-button]:[-webkit-appearance:none] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:[-webkit-appearance:none] [&::-webkit-inner-spin-button]:m-0';
+  'flex h-[55px] pt-[14px] pr-[14px] pb-[13px] pl-[20px] items-start gap-[8px] w-full outline-none rounded-[8px] border border-white-alpha-25 glyph16-regular text-white placeholder:glyph16-regular placeholder:text-white-alpha-75 [&::-webkit-outer-spin-button]:[-webkit-appearance:none] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:[-webkit-appearance:none] [&::-webkit-inner-spin-button]:m-0';

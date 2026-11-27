@@ -8,9 +8,6 @@ import { Button } from '@gitanimals/ui-tailwind';
 import { getGithubOauthUrl } from '@/apis/auth/getGithubOauth';
 import { COOKIE_KEY, LOCAL_STORAGE_KEY } from '@/constants/storage';
 
-/**
- * client용 로그인 함수
- */
 export const login = (callbackUrl?: string) => {
   // 인자가 없으면(예: 헤더 로그인 버튼) 미들웨어가 심어둔 딥링크 복귀 경로를 우선 사용한다.
   const target = callbackUrl ?? localStorage.getItem(LOCAL_STORAGE_KEY.callbackUrl) ?? '/mypage';
@@ -25,16 +22,8 @@ export const login = (callbackUrl?: string) => {
   getGithubOauthUrl();
 };
 
-/**
- * client용 로그아웃 함수
- */
 export const logout = () => signOut();
 
-/**
- * 로그인 버튼 렌더링
- * - render props 패턴 사용
- * - 렌더링할 dom은 props로 전달받고, 로직만을 담당
- */
 export function RenderLoginButton({
   render,
 }: {
@@ -45,11 +34,6 @@ export function RenderLoginButton({
   return render({ label: t('login'), onClick: () => login() });
 }
 
-/**
- * 로그아웃 버튼 렌더링
- * - render props 패턴 사용
- * - 렌더링할 dom은 props로 전달받고, 로직만을 담당
- */
 export function RenderLogoutButton({
   render,
 }: {
@@ -60,10 +44,6 @@ export function RenderLogoutButton({
   return render({ label: t('logout'), onClick: logout });
 }
 
-/**
- * 로그인 버튼
- * - design system 상의 Button 컴포넌트로 렌더링
- */
 export function LoginButton(props: Omit<ComponentProps<typeof Button>, 'children' | 'onClick'> & { label?: string }) {
   return (
     <RenderLoginButton
@@ -76,10 +56,6 @@ export function LoginButton(props: Omit<ComponentProps<typeof Button>, 'children
   );
 }
 
-/**
- * 로그아웃 버튼
- * - design system 상의 Button 컴포넌트로 렌더링
- */
 export function LogoutButton(props: Omit<ComponentProps<typeof Button>, 'children' | 'onClick'>) {
   return (
     <RenderLogoutButton

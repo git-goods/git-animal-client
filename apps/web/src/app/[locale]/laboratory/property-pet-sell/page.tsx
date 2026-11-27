@@ -212,7 +212,7 @@ function PersonaItem({ type, level, onClick, count }: PersonaItemProps) {
   const t = useTranslations('Laboratory.property-pet-sell');
   return (
     <button onClick={onClick} className="outline-none bg-transparent">
-      <div className="rounded-[4px] bg-black-25 px-[8px] text-white-75 glyph16-bold text-[10px] leading-[20px] mb-[4px]">
+      <div className="rounded-[4px] bg-black-alpha-25 px-[8px] text-white-alpha-75 glyph16-bold text-[10px] leading-[20px] mb-[4px]">
         {count}
         {t('count')}
       </div>

@@ -67,13 +67,11 @@ export function TenPet({ onClose }: Props) {
 
       // 그 외에는 창을 유지하고 원인과 재시도를 화면에 남긴다.
       setErrorKind(kind);
-      sendMessageToErrorChannel(`<!here>
-🔥 펫 뽑기 실패 🔥
+      sendMessageToErrorChannel(`🔥 펫 뽑기 실패 🔥
 \`\`\`
 Error Message: ${JSON.stringify(error)}
 \`\`\`
 User: ${data?.user.name}
-Token: ${data?.user.accessToken}
       `);
     },
   });
@@ -101,7 +99,7 @@ Token: ${data?.user.accessToken}
         if (!open && !busy) onClose();
       }}
     >
-      <Dialog.Content size="screen" isShowClose={!busy} className="border-none bg-black-90 p-0">
+      <Dialog.Content size="screen" isShowClose={!busy} className="border-none bg-black-alpha-90 p-0">
         <Dialog.Title className="sr-only">{t('pet-gotcha-title')}</Dialog.Title>
         <CardPackGame
           onOpen={onOpen}

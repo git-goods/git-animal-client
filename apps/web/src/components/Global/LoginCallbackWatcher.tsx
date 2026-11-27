@@ -5,9 +5,7 @@ import { useSearchParams } from 'next/navigation';
 
 import { LOCAL_STORAGE_KEY } from '@/constants/storage';
 
-// 보호 라우트에서 미들웨어가 홈으로 되돌릴 때 실어 보낸 `?callbackUrl` 을 캡처해
-// localStorage 에 저장한다. 사용자가 로그인하면 login()/LoginButton 이 이 값을 읽어
-// 원래 목적지로 자동 복귀시킨다. (useSearchParams 구독으로 클라 네비게이션 유입도 감지)
+// 미들웨어가 붙여 보낸 ?callbackUrl 을 저장해 두면 login() 이 로그인 후 그 경로로 돌려보낸다.
 export function LoginCallbackWatcher() {
   const searchParams = useSearchParams();
 

@@ -37,11 +37,11 @@ export function ShopTableRowViewSkeleton() {
   return <div className={cn(rowStyle, skeletonStyle)} />;
 }
 
-// rowStyle 의 bg-white-10 위에 opacity blink 만 — sweep 없는 최소 로딩 신호.
+// rowStyle 의 bg-white-alpha-10 위에 opacity blink 만 — sweep 없는 최소 로딩 신호.
 const skeletonStyle = 'animate-pulse';
 
 export const rowStyle =
-  'w-full h-[80px] bg-white-10 rounded-[12px] grid grid-cols-[1fr_2.5fr_1fr_1fr_4.2fr_1.5fr] items-center px-[32px] gap-[16px] glyph20-regular text-white-100 [&_button]:text-black [&_button]:w-full [&_button]:px-[6px] [&_*]:overflow-hidden [&_*]:text-ellipsis';
+  'w-full h-[80px] bg-white-alpha-10 rounded-[12px] grid grid-cols-[1fr_2.5fr_1fr_1fr_4.2fr_1.5fr] items-center px-[32px] gap-[16px] glyph20-regular text-white [&_button]:text-black [&_button]:w-full [&_button]:px-[6px] [&_*]:overflow-hidden [&_*]:text-ellipsis';
 
 export function ShopTableMobileRow({ personaType, personaLevel, price, rightElement }: Props) {
   const tier = useGetPersonaTier(personaType);
@@ -76,6 +76,6 @@ export function ShopTableMobileRow({ personaType, personaLevel, price, rightElem
 
 const personaTypeStyle = 'glyph15-regular text-white';
 
-const personaContentStyle = 'flex gap-[8px] items-center text-white-50 glyph14-regular';
+const personaContentStyle = 'flex gap-[8px] items-center text-white-alpha-50 glyph14-regular';
 
-const contentStyle = 'flex gap-[4px] items-center text-white-50 glyph14-regular bg-white-10 rounded-[6px] p-[4px_16px_4px_8px]';
+const contentStyle = 'flex gap-[4px] items-center text-white-alpha-50 glyph14-regular bg-white-alpha-10 rounded-[6px] p-[4px_16px_4px_8px]';

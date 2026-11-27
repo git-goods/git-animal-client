@@ -1,11 +1,7 @@
 import { createSharedPathnamesNavigation } from 'next-intl/navigation';
 import { defineRouting } from 'next-intl/routing';
 
-// The app uses BCP-47 locale identifiers (`en-US`, `ko-KR`) everywhere:
-// URL segments, `useLocale()`, message filenames, and SEO. The backend API
-// expects the underscore form (`en_US`, `ko_KR`); conversion happens only at the
-// API boundary via `toSegmentLocale`/`useSegmentLocale`. Legacy underscore URLs
-// (`/en_US`) are 308-redirected to the hyphen form by the middleware.
+// URL 은 BCP-47(en-US). 레거시 /en_US 는 middleware 가 308 로 넘긴다.
 export const LOCALE = {
   EN_US: 'en-US',
   KO_KR: 'ko-KR',
@@ -32,6 +28,4 @@ export const routing = defineRouting({
 
 export type Locale = (typeof routing.locales)[number];
 
-// Lightweight wrappers around Next.js' navigation APIs
-// that will consider the routing configuration
 export const { Link, redirect, usePathname, useRouter } = createSharedPathnamesNavigation(routing);

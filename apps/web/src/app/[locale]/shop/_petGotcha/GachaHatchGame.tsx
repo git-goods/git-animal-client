@@ -58,7 +58,6 @@ const TIER_THEME: Record<
 
 const isRareTier = (tier: AnimalTierType) => tier === 'EX' || tier === 'S_PLUS';
 
-// 세로 스트립에서 f번째 프레임만 보이도록 하는 배경 스타일
 const eggFrameStyle = (f: number) => ({
   backgroundImage: `url(${EGG_SPRITE})`,
   backgroundSize: '100% auto',

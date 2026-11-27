@@ -39,7 +39,7 @@ export function ChristmasContent() {
             className="object-contain mx-auto max-w-[80vw] h-auto mobile:max-w-[90vw]"
             draggable={false}
           />
-          <p className="text-white-90 glyph32-bold font-normal text-center whitespace-pre-line mt-[60px] mb-[100px] mobile:glyph16-regular mobile:text-[16px] mobile:mt-[20px] mobile:mb-[40px]">
+          <p className="text-white-alpha-90 glyph32-bold font-normal text-center whitespace-pre-line mt-[60px] mb-[100px] mobile:glyph16-regular mobile:text-[16px] mobile:mt-[20px] mobile:mb-[40px]">
             Christmas has come to Gitanimals
             <br />
             Draw Christmas pet for free!

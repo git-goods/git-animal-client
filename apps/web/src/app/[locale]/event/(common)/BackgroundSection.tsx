@@ -19,8 +19,7 @@ import { addNumberComma } from '@/utils/number';
 interface BackgroundSectionProps {
   possibleBgTypes: string[];
 }
-// apps/web/src/app/[locale]/shop/BackgroundSection/BackgroundSection.tsx
-// TODO : 위의 컴포넌트와 유사합니다. 리팩토링이 필요합니다.
+// TODO: shop/_background/ShopBackgroundSection 과 거의 같다. 합쳐야 한다.
 export const BackgroundSection = wrap
   .ErrorBoundary({
     fallback: () => <></>,
@@ -112,7 +111,7 @@ function BackgroundItem({
       >
         <img src={getBackgroundImage(item.type)} alt={item.type} width={550} height={275} />
       </div>
-      <div className="glyph18-bold text-black-75 border border-solid border-[#99C7DB] bg-[#DDF2FB] mt-[4px] mb-[24px] py-[4px] px-[25px] w-full">
+      <div className="glyph18-bold text-black-alpha-75 border border-solid border-[#99C7DB] bg-[#DDF2FB] mt-[4px] mb-[24px] py-[4px] px-[25px] w-full">
         {addNumberComma(item.price)} P
       </div>
       <Button variant="secondary" onClick={() => onBuy(item.type)} disabled={isPurchased} className="min-w-[120px]">

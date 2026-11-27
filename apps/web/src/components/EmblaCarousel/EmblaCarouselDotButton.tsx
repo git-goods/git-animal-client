@@ -60,5 +60,5 @@ const dotButtonStyle = cn(
   '[-webkit-tap-highlight-color:rgba(v__ar(--text-high-contrast-rgb-value),_0.5)]',
   '[-webkit-appearance:none] appearance-none bg-transparent touch-manipulation inline-flex no-underline cursor-pointer border-0 p-0 m-0 w-[26px] h-[26px] items-center justify-center rounded-full',
   "after:border after:border-solid after:border-[#EAEAEA] after:w-[14px] after:h-[14px] after:rounded-full after:flex after:items-center after:content-['']",
-  '[&.selected]:after:bg-white-75',
+  '[&.selected]:after:bg-white-alpha-75',
 );

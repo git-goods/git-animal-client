@@ -48,7 +48,7 @@ export async function HalloweenContent() {
           className="object-contain mx-auto max-w-[80vw] h-auto mobile:max-w-[90vw]"
           draggable={false}
         />
-        <h2 className="mt-[24px] text-[28px] leading-[1.5] text-center text-[#fff] mb-[40px] whitespace-pre-line font-semibold mobile:text-[24px]">
+        <h2 className="mt-[24px] text-[28px] leading-[1.5] text-center text-white mb-[40px] whitespace-pre-line font-semibold mobile:text-[24px]">
           {t('description')}
         </h2>
 

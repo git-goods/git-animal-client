@@ -6,7 +6,7 @@ import { RankingLink } from './RankingLink';
 const podiumStyle = 'flex justify-center items-end gap-[12px] flex-1 mobile:min-h-[300px]';
 
 const rostrumStyle =
-  'w-[140px] rounded-[8px] bg-[linear-gradient(180deg,#B9FFBD_0%,rgba(195,255,199,0.85)_24.5%,rgba(203,255,206,0.74)_43%,rgba(255,255,255,0.00)_100%)] text-white-100 text-center [font-feature-settings:liga_off,clig_off] [text-shadow:0px_0px_40px_rgba(0,201,50,0.70)] text-[60px] not-italic font-normal leading-[140%] tracking-[-5.961px] font-dnf pt-[16px] mt-[12px] relative overflow-hidden mobile:w-[80px] mobile:text-[36px] mobile:pt-[12px] mobile:mt-[8px] mobile:pr-[4px]';
+  'w-[140px] rounded-[8px] bg-[linear-gradient(180deg,#B9FFBD_0%,rgba(195,255,199,0.85)_24.5%,rgba(203,255,206,0.74)_43%,rgba(255,255,255,0.00)_100%)] text-white text-center [font-feature-settings:liga_off,clig_off] [text-shadow:0px_0px_40px_rgba(0,201,50,0.70)] text-[60px] not-italic font-normal leading-[140%] tracking-[-5.961px] font-dnf pt-[16px] mt-[12px] relative overflow-hidden mobile:w-[80px] mobile:text-[36px] mobile:pt-[12px] mobile:mt-[8px] mobile:pr-[4px]';
 
 const runnerUpStyle = 'flex flex-col items-center text-[20px] min-h-[170px] mobile:min-h-[80px]';
 
@@ -23,9 +23,9 @@ const winnerCrownStyle =
   'absolute top-[-46px] left-1/2 -translate-x-1/2 w-[60px] h-[60px] [&>img]:w-full [&>img]:h-full mobile:w-[40px] mobile:h-[40px] mobile:top-[-40px]';
 
 const nameStyle =
-  'glyph18-bold mt-[12px] text-white-90 max-w-full overflow-visible flex justify-center whitespace-nowrap mobile:glyph15-bold mobile:max-w-[80px] mobile:mt-[6px]';
+  'glyph18-bold mt-[12px] text-white-alpha-90 max-w-full overflow-visible flex justify-center whitespace-nowrap mobile:glyph15-bold mobile:max-w-[80px] mobile:mt-[6px]';
 
-const contributionStyle = 'glyph14-regular text-white-50 mobile:glyph12-regular';
+const contributionStyle = 'glyph14-regular text-white-alpha-50 mobile:glyph12-regular';
 
 export function TopPodium({ ranks }: { ranks: RankType[] }) {
   const RANK = [

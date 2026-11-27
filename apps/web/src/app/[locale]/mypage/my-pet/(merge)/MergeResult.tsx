@@ -45,7 +45,7 @@ export const MergeResultModal = ({ isOpen, onClose, result }: MergeResultModalPr
 };
 
 const mergeItemStyle =
-  'rounded-[16px] border-2 border-solid border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.25)] w-fit';
+  'rounded-[16px] border-2 border-solid border-white-alpha-25 bg-white-alpha-25 w-fit';
 
 const resultTextStyle = 'glyph18-bold text-white [&>span]:mt-[4px]';
 

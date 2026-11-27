@@ -48,7 +48,7 @@ const QuizProgressBar = ({ onTimeout, timeoutAt, paused }: QuizProgressBarProps)
   }, [progress, onTimeout]);
 
   return (
-    <div className="h-[4px] w-full overflow-hidden rounded-[4px] bg-white-25">
+    <div className="h-[4px] w-full overflow-hidden rounded-[4px] bg-white-alpha-25">
       <div
         className={cn(
           'h-full rounded-[4px] bg-white [transition:width_0.1s_linear,background-color_0.1s_linear]',

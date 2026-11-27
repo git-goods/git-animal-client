@@ -46,7 +46,7 @@ export async function ChristmasContent() {
             className="object-contain h-auto mobile:max-w-[90vw]"
             draggable={false}
           />
-          <p className="text-white-90 glyph32-bold font-normal whitespace-pre-line mt-[40px] mb-[40px] mobile:glyph16-regular mobile:text-[16px] mobile:mt-[20px] mobile:text-center">
+          <p className="text-white-alpha-90 glyph32-bold font-normal whitespace-pre-line mt-[40px] mb-[40px] mobile:glyph16-regular mobile:text-[16px] mobile:mt-[20px] mobile:text-center">
             Christmas is here in Gitaniamals!
             <br />
             Draw a Christmas pet now!
