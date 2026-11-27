@@ -11,9 +11,7 @@ GitAnimals is a monorepo that allows users to raise virtual pets through GitHub 
 **Monorepo Structure:**
 - `apps/web` - Next.js 14 web application (main frontend)  
 - `apps/admin-main` - Vite + React Router admin dashboard (Tailwind v4)
-- `apps/webview` - Vite + React Router webview for mobile integration
-- `apps/webview-history` - Legacy Next.js webview (being migrated)
-- `packages/ui/panda` - Component library using PandaCSS
+- `packages/ui/tailwind` - Tailwind preset + UI components (`@gitanimals/ui-tailwind`)
 - `packages/ui/icon` - Icon components  
 - `packages/ui/token` - Design tokens
 - `packages/api` - Shared API client with interceptors
@@ -21,10 +19,10 @@ GitAnimals is a monorepo that allows users to raise virtual pets through GitHub 
 - `packages/util/*` - Utility packages (common, typescript)
 
 **Key Technologies:**
-- **Styling:** PandaCSS with Shadow Panda preset for component styling
+- **Styling:** Tailwind CSS with `@gitanimals/ui-tailwind` preset (tokens from `packages/ui/token`)
 - **State Management:** Tanstack Query v5 (server state), Jotai & Zustand (client state)  
-- **Authentication:** NextAuth.js (web), token-based auth (webview)
-- **UI Components:** Radix UI primitives + custom PandaCSS components
+- **Authentication:** NextAuth.js (web)
+- **UI Components:** Radix UI primitives + components in `@gitanimals/ui-tailwind`
 - **Package Manager:** pnpm v9.0+ with workspace configuration
 - **Build System:** Turborepo for orchestration
 
@@ -35,12 +33,10 @@ GitAnimals is a monorepo that allows users to raise virtual pets through GitHub 
 # Development servers
 pnpm dev:web          # Start web app dev server (Next.js)
 pnpm dev:admin        # Start admin app dev server (Vite)
-pnpm dev:webview      # Start webview dev server (Vite)
 
 # Build commands
 pnpm build:web        # Build web application
 pnpm build:admin      # Build admin application  
-pnpm build:webview    # Build webview application
 
 # Analysis & Quality
 pnpm analyze:web      # Bundle analyzer for web app
@@ -48,7 +44,7 @@ pnpm lint             # Lint all workspaces
 pnpm format           # Format code with Prettier
 
 # UI Development
-pnpm sb:panda         # Start Storybook for UI components
+pnpm sb:tailwind      # Start Storybook for UI components
 ```
 
 **Workspace-specific commands:**
@@ -56,25 +52,18 @@ pnpm sb:panda         # Start Storybook for UI components
 # Web app (apps/web)
 pnpm --filter @gitanimals/web type-check   # TypeScript validation
 pnpm --filter @gitanimals/web lint:fix     # Fix ESLint issues
-
-# Webview app (apps/webview) 
-pnpm --filter @gitanimals/webview dev       # Vite dev server on port 3000
-pnpm --filter @gitanimals/webview type-check # TypeScript validation
-
-# UI components (packages/ui/panda)
-pnpm --filter @gitanimals/ui-panda storybook # Start Storybook
 ```
 
 ## Code Patterns & Conventions
 
 **Component Architecture:**
-- UI components in `packages/ui/panda/src/components/`
+- UI components in `packages/ui/tailwind/src/components/`
 - Each component has: `Component.tsx`, `Component.stories.tsx`, `index.ts`
-- PandaCSS styling with design tokens from `packages/ui/token`
+- Tailwind classes with design tokens from `packages/ui/token`
 
 **Import Patterns:**
 - Workspace dependencies use `workspace:*` protocol
-- UI components imported from `@gitanimals/ui-panda`
+- UI components imported from `@gitanimals/ui-tailwind`
 - Shared utilities from `@gitanimals/util-common`
 
 **State Management:**
@@ -138,9 +127,7 @@ pnpm --filter @gitanimals/ui-panda storybook # Start Storybook
   - No need for custom hooks unless adding extra logic
 
 **Styling Approach:**
-- PandaCSS with `styled-system` generation
-- Shadow Panda preset for enhanced component styling
-- Responsive design using PandaCSS conditions (mobile/desktop)
+- Tailwind CSS via `createGitAnimalsConfig` in `packages/ui/tailwind`
 - Design tokens centralized in `packages/ui/token`
 
 ## Testing & Quality
@@ -154,19 +141,16 @@ pnpm --filter @gitanimals/ui-panda storybook # Start Storybook
 
 - `turbo.json` - Build pipeline configuration
 - `pnpm-workspace.yaml` - Workspace definition
-- `apps/*/panda.config.ts` - PandaCSS configuration per app
-- `packages/ui/panda/src/theme/` - Design system tokens and styles
+- `packages/ui/tailwind/src/theme/` - Tailwind theme built from tokens
 
 ## Build Pipeline Dependencies
 
 The build system has specific dependency chains:
-- Most builds depend on `^build` and `^prepare` 
-- `prepare` tasks generate PandaCSS styled-system (webview only)
+- Most builds depend on `^build`
 - Admin uses different output patterns (dist/**) vs others (.next/**)
 
 ## Notes for Development
 
-- Always run `panda codegen` after theme changes
 - UI component changes require Storybook restart
 - Mobile app uses Expo SDK ~53.0.17 with React Native 0.79.5
 - Web app uses Next.js App Router with internationalization (next-intl)
