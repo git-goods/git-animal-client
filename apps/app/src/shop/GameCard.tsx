@@ -41,10 +41,10 @@ export function GameCard({ type, dropRate }: { type: string; dropRate: string })
         </View>
       </View>
       <View className="flex-row items-center" style={{ padding: 8.225, gap: 3.29 }}>
-        <Text numberOfLines={1} className="flex-1" style={[sans(9.869, 1.2, true), { color: colors.black.DEFAULT }]}>
+        <Text numberOfLines={1} className="flex-1" style={[sans(9.869, 1.2, true), { color: colors.black }]}>
           {name}
         </Text>
-        <Text style={[sans(9.047, 1.5), { color: colors.black['90'] }]}>{`${rateNumber(dropRate)}%`}</Text>
+        <Text style={[sans(9.047, 1.5), { color: colors['black-alpha']['90'] }]}>{`${rateNumber(dropRate)}%`}</Text>
       </View>
     </View>
   );

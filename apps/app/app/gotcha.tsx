@@ -51,7 +51,7 @@ export default function Gotcha() {
       className={`flex-1 items-center bg-gray-050 ${one ? 'justify-center' : ''}`}
       style={{ paddingTop: insets.top + (one ? 0 : 48), paddingBottom: insets.bottom, paddingHorizontal: 16, gap: 40 }}
     >
-      <Text style={[sans(28, 1.2, true), { color: colors.white.DEFAULT, textAlign: 'center' }]}>
+      <Text style={[sans(28, 1.2, true), { color: colors.white, textAlign: 'center' }]}>
         {one ? t('gotcha.one-title') : t('gotcha.ten-title')}
       </Text>
 
@@ -81,7 +81,7 @@ export default function Gotcha() {
       {done && (
         <Text
           className="absolute"
-          style={[sans(14, 1.5), { color: colors.white['50'], bottom: insets.bottom + 16 }]}
+          style={[sans(14, 1.5), { color: colors['white-alpha']['50'], bottom: insets.bottom + 16 }]}
         >
           {t('gotcha.click-to-close')}
         </Text>
