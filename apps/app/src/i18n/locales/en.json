@@ -17,7 +17,8 @@
     "delete": "Delete",
     "edit": "Edit",
     "back": "Back",
-    "comingSoon": "Coming soon"
+    "comingSoon": "Coming soon",
+    "load_failed": "Failed to load"
   },
   "auth": {
     "welcome_title": "Welcome to GitAnimals",

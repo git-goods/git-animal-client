@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PetStage } from '../../src/home/PetStage';
 import { pickHomePets } from '../../src/home/pickHomePets';
 import { ProfileBoard } from '../../src/home/ProfileBoard';
+import { RetryNotice } from '../../src/home/RetryNotice';
 import { PixelText } from '../../src/ui/pixel';
 
 export default function Home() {
@@ -22,7 +23,9 @@ export default function Home() {
       className="flex-1 justify-between bg-brand-green px-4 pb-6"
       style={{ paddingTop: insets.top + 24 }}
     >
-      {loading || !user.data ? (
+      {user.isError ? (
+        <RetryNotice onRetry={() => void user.refetch()} />
+      ) : loading || !user.data ? (
         <PixelText variant="glyph14" className="text-white">{t('common.loading')}</PixelText>
       ) : (
         <>
@@ -31,7 +34,11 @@ export default function Home() {
             points={user.data.points}
             profileImage={user.data.profileImage}
           />
-          <PetStage personas={pickHomePets(personas.data?.personas ?? [])} />
+          {personas.isError ? (
+            <RetryNotice onRetry={() => void personas.refetch()} />
+          ) : (
+            <PetStage personas={pickHomePets(personas.data?.personas ?? [])} />
+          )}
         </>
       )}
     </View>

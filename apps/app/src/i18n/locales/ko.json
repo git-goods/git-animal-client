@@ -17,7 +17,8 @@
     "delete": "삭제",
     "edit": "편집",
     "back": "뒤로가기",
-    "comingSoon": "준비 중"
+    "comingSoon": "준비 중",
+    "load_failed": "불러오지 못했어요"
   },
   "auth": {
     "welcome_title": "GitAnimals에 오신 것을 환영합니다",
