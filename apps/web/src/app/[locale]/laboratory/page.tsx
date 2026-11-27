@@ -38,7 +38,7 @@ export default function LaboratoryPage() {
         <h1 className="glyph36-bold mb-[12px] bg-[linear-gradient(150.51deg,_#016EDB_11.25%,_#16B7CD_61.95%,_#5CCA69_94.01%)] bg-clip-text text-transparent">
           🧪 실험실
         </h1>
-        <p className="text-[16px] text-white-100">새로운 기능을 먼저 경험하고 피드백을 남겨주세요</p>
+        <p className="text-[16px] text-white">새로운 기능을 먼저 경험하고 피드백을 남겨주세요</p>
       </header>
       <div className="grid grid-cols-[1fr] gap-[24px] [@media(min-width:768px)]:grid-cols-[repeat(2,_1fr)]">
         {list.map((item) => (
@@ -109,10 +109,10 @@ function Card({ item }: { item: LaboratoryItem }) {
     <Link href={item.href} className={cardStyle}>
       <div className="flex-1 flex flex-col gap-[8px]">
         <div className="flex justify-between items-start gap-[8px]">
-          <h2 className="glyph18-bold text-white-100 flex-1">{item.title}</h2>
+          <h2 className="glyph18-bold text-white flex-1">{item.title}</h2>
           <div className={badgeStyle}>실험중</div>
         </div>
-        <p className="glyph14-regular text-white-75">{item.description}</p>
+        <p className="glyph14-regular text-white-alpha-75">{item.description}</p>
       </div>
 
       <div className="flex justify-end pt-[8px] border-t border-solid border-[rgba(255,255,255,0.05)]">
@@ -145,7 +145,7 @@ const badgeStyle =
   'text-[12px] font-bold p-[4px_12px] rounded-[12px] bg-[linear-gradient(150.51deg,_#016EDB_11.25%,_#16B7CD_61.95%,_#5CCA69_94.01%)] text-white whitespace-nowrap animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite] shadow-[0_0_20px_rgba(82,209,109,0.5)]';
 
 const upvoteButtonStyle =
-  'flex items-center gap-[8px] p-[10px_16px] rounded-[12px] bg-[rgba(255,255,255,0.05)] border border-solid border-[rgba(255,255,255,0.1)] text-white-100 text-[14px] font-semibold cursor-pointer transition-all duration-300 [transition-timing-function:ease] ' +
+  'flex items-center gap-[8px] p-[10px_16px] rounded-[12px] bg-[rgba(255,255,255,0.05)] border border-solid border-[rgba(255,255,255,0.1)] text-white text-[14px] font-semibold cursor-pointer transition-all duration-300 [transition-timing-function:ease] ' +
   'enabled:hover:bg-[linear-gradient(135deg,_#016EDB_0%,_#16B7CD_100%)] enabled:hover:border-transparent enabled:hover:[transform:scale(1.03)] enabled:hover:shadow-[0_4px_12px_rgba(82,209,109,0.5)] ' +
   'enabled:active:[transform:scale(0.98)] ' +
   'data-[upvoted=true]:bg-[linear-gradient(135deg,_#d9b9f9_0%,_#e56997_100%)] data-[upvoted=true]:border-transparent data-[upvoted=true]:cursor-default ' +

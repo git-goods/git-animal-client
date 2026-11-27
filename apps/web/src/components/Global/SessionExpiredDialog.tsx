@@ -24,7 +24,7 @@ export function SessionExpiredDialog() {
         onInteractOutside={(e) => e.preventDefault()}
       >
         <Dialog.Title className="text-left glyph20-regular">{t('sessionExpiredTitle')}</Dialog.Title>
-        <Dialog.Description className="w-full text-left glyph16-regular text-white-75">
+        <Dialog.Description className="w-full text-left glyph16-regular text-white-alpha-75">
           {t('sessionExpiredDescription')}
         </Dialog.Description>
         <div className="flex w-full justify-end gap-[8px]">

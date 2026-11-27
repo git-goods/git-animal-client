@@ -32,8 +32,8 @@ async function LaboButton() {
 }
 
 const laboButtonStyle = cn(
-  'absolute bg-white-10 [backdrop-filter:blur(7px)] rounded-[8px] px-[20px] py-[10px]',
-  'flex items-center gap-[10px] glyph16-regular text-white-100',
+  'absolute bg-white-alpha-10 [backdrop-filter:blur(7px)] rounded-[8px] px-[20px] py-[10px]',
+  'flex items-center gap-[10px] glyph16-regular text-white',
   'top-[64px] right-[200px]',
   'pc:top-[12px] pc:right-[40px] pc:px-[12px] pc:py-[8px] pc:[&>svg]:w-[18px] pc:[&>svg]:h-[18px]',
   'mobile:hidden',
@@ -47,7 +47,7 @@ const mainStyle = cn(
 );
 
 const rightSectionStyle = cn(
-  'overflow-x-hidden w-full rounded-[16px] bg-white-10 [backdrop-filter:blur(7px)] max-h-[1400px] p-[40px]',
+  'overflow-x-hidden w-full rounded-[16px] bg-white-alpha-10 [backdrop-filter:blur(7px)] max-h-[1400px] p-[40px]',
   'flex flex-col relative gap-[40px]',
   'pc:gap-[24px] pc:p-[24px]',
   'mobile:gap-[12px] mobile:bg-none mobile:p-0 mobile:max-h-[auto] mobile:h-auto mobile:overflow-y-auto mobile:rounded-none',

@@ -16,7 +16,7 @@ export const FloatingPointSection = memo(
       const { data } = useSuspenseQuery(userQueries.userOptions());
 
       return (
-        <div className="fixed top-[88px] left-[20px] w-fit p-[12px_16px] rounded-[12px] bg-black-25 z-sticky flex flex-col gap-[4px] text-white-100 backdrop-blur-[7px] mobile:p-[6px_10px_6px_8px]">
+        <div className="fixed top-[88px] left-[20px] w-fit p-[12px_16px] rounded-[12px] bg-black-alpha-25 z-sticky flex flex-col gap-[4px] text-white backdrop-blur-[7px] mobile:p-[6px_10px_6px_8px]">
           <span className="glyph16-bold mobile:hidden">My Points</span>
           <span className="flex items-center gap-[6px] glyph32-bold mobile:glyph15-bold">
             <Image width={28} height={28} src="/shop/coin.webp" alt="coin" />

@@ -116,7 +116,7 @@ function BackgroundItem({
       >
         <img src={getBackgroundImage(item.type)} alt={item.type} width={550} height={275} />
       </div>
-      <div className="glyph18-bold text-black-75 border border-[#3FB458] bg-[#56CA6F] mt-[4px] mb-[24px] p-[4px_25px] w-full">
+      <div className="glyph18-bold text-black-alpha-75 border border-[#3FB458] bg-[#56CA6F] mt-[4px] mb-[24px] p-[4px_25px] w-full">
         {addNumberComma(item.price)} P
       </div>
       <Button variant="secondary" onClick={() => onBuy(item.type)} disabled={isPurchased}>

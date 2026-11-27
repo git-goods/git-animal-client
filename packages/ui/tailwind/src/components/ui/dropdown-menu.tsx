@@ -9,7 +9,7 @@ import { cn } from '../../utils/cn';
  * PandaCSS `@gitanimals/ui-panda` 의 DropdownMenu 와 1:1 (visible 스타일은 GitAnimals override 기준).
  * - Content override: bg rgba(0,0,0,0.5) + backdrop-blur 7px + rounded 8 + border-none + p-4px (다크/blur).
  *   recipe 의 z-50/min-w-8rem/overflow-hidden/shadow 구조는 유지.
- * - Item override: white-90, glyph16, gap 8, padding 8/12, rounded 6, hover/active/focus bg white-10.
+ * - Item override: white-alpha-90, glyph16, gap 8, padding 8/12, rounded 6, hover/active/focus bg white-alpha-10.
  * - 애니메이션은 표준 shadcn(tailwindcss-animate). guild MoreMenu 가 쓰는 Root/Trigger/Content/Item +
  *   흔한 Group/Label/Separator/Portal 만 포팅(Sub/Checkbox/Radio 는 사용처 생기면 추가).
  */
@@ -45,8 +45,8 @@ const DropdownMenuItem = React.forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-default select-none items-center gap-[8px] rounded-[6px] px-[12px] py-[8px] outline-none glyph16-regular text-white-90',
-      'hover:bg-white-10 focus:bg-white-10 active:bg-white-10 data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'relative flex cursor-default select-none items-center gap-[8px] rounded-[6px] px-[12px] py-[8px] outline-none glyph16-regular text-white-alpha-90',
+      'hover:bg-white-alpha-10 focus:bg-white-alpha-10 active:bg-white-alpha-10 data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       className,
     )}
     {...props}

@@ -187,6 +187,6 @@ const issueOptionColorStyle = 'w-[14px] h-[14px] rounded-full';
 const closeIconWrapperStyle = 'top-[16px] right-[16px] absolute cursor-pointer';
 
 const headingStyle =
-  'py-[24px] px-[32px] relative bg-brand-sky flex flex-col gap-[24px] items-center [&_h2]:text-black-90 [&_h2]:text-center [&_h2]:glyph18-bold [&_p]:text-black-75 [&_p]:glyph14-regular [@media_screen_and_(max-width:768px)]:p-[16px]';
+  'py-[24px] px-[32px] relative bg-brand-sky flex flex-col gap-[24px] items-center [&_h2]:text-black-alpha-90 [&_h2]:text-center [&_h2]:glyph18-bold [&_p]:text-black-alpha-75 [&_p]:glyph14-regular [@media_screen_and_(max-width:768px)]:p-[16px]';
 
 const formStyle = 'p-[20px] flex flex-col gap-[24px] mobile:gap-3';

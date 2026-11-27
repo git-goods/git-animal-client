@@ -1,30 +1,30 @@
-import { BRAND, COLORS } from '@gitanimals/ui-token';
+import { BRAND, COLORS, GRADIENT } from '@gitanimals/ui-token';
 
 export const colors = {
   transparent: 'transparent',
   current: 'currentColor',
 
-  // Black & White
-  black: {
-    DEFAULT: COLORS.black,
-    '100': COLORS.black_100,
-    '90': COLORS.black_90,
-    '75': COLORS.black_75,
-    '50': COLORS.black_50,
-    '25': COLORS.black_25,
-    '10': COLORS.black_10,
-    '5': COLORS.black_5,
+  // Figma Color 명세: -100 은 black/white 와 같아 두지 않는다.
+  black: COLORS.black,
+  white: COLORS.white,
+  'black-alpha': {
+    '5': COLORS.black_alpha_5,
+    '10': COLORS.black_alpha_10,
+    '25': COLORS.black_alpha_25,
+    '50': COLORS.black_alpha_50,
+    '75': COLORS.black_alpha_75,
+    '90': COLORS.black_alpha_90,
   },
-  white: {
-    DEFAULT: COLORS.white,
-    '100': COLORS.white_100,
-    '90': COLORS.white_90,
-    '75': COLORS.white_75,
-    '50': COLORS.white_50,
-    '25': COLORS.white_25,
-    '10': COLORS.white_10,
-    '5': COLORS.white_5,
+  'white-alpha': {
+    '5': COLORS.white_alpha_5,
+    '10': COLORS.white_alpha_10,
+    '25': COLORS.white_alpha_25,
+    '50': COLORS.white_alpha_50,
+    '75': COLORS.white_alpha_75,
+    '90': COLORS.white_alpha_90,
   },
+  'green-500': COLORS.green_500,
+  'warning-red': COLORS.warning_red,
 
   // Gray scale (mapped from GitAnimals naming). panda semanticTokens.gray.DEFAULT = gray_000.
   gray: {
@@ -60,4 +60,8 @@ export const colors = {
   peach: COLORS.peach,
   ocean: COLORS.ocean,
   fern: COLORS.fern,
+};
+
+export const backgroundImage = {
+  'gradient-rainbow': GRADIENT.rainbow,
 };

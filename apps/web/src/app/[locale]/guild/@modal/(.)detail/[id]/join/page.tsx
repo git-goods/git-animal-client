@@ -39,7 +39,7 @@ export default function GuildJoinModal({ params }: { params: { id: string } }) {
     <RouteModal>
       <div>
         <RouteModalTitle>Choose your pet</RouteModalTitle>
-        <p className="glyph20-regular text-white-50 mt-3 text-center">
+        <p className="glyph20-regular text-white-alpha-50 mt-3 text-center">
           If you choose a pet, it will be shown in the guild image.
         </p>
       </div>

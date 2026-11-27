@@ -90,7 +90,7 @@ const blankStyle = 'w-full h-[78px] mobile:h-[52px]';
 
 const coinContainerStyle = 'flex items-center justify-center';
 
-const containerStyle = 'bg-white-25 text-white-100 py-[10px] absolute top-0 left-0 right-0 w-full';
+const containerStyle = 'bg-white-alpha-25 text-white py-[10px] absolute top-0 left-0 right-0 w-full';
 
 const textContainerStyle =
   "border-t border-b border-white flex h-[58px] items-center justify-center text-center not-italic font-medium font-dosgothic text-[32px] leading-[120%] tracking-[-0.3px] [font-feature-settings:'liga'_off,'clig'_off] mobile:h-[35px] mobile:text-[16px]";

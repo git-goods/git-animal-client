@@ -6,7 +6,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
  * panda base 는 borderColor 만 transparent 로 두고 border-width 는 두지 않는다
  * (2px solid 는 status=selected 에서만 생김). dev 변환본은 base 에 border-2 를
  * 항상 박고 transition-all·rounded-xl·white/25(opacity 모디파이어)·gradient-to-br
- * 로 근사해놔서 폐기했다. 색은 white 토큰(white-50/25/10) 클래스로,
+ * 로 근사해놔서 폐기했다. 색은 white 토큰(white-alpha-50/25/10) 클래스로,
  * gradient 는 133deg 원본 그대로 arbitrary 로 재현한다.
  */
 export const bannerVariants = cva(
@@ -14,10 +14,10 @@ export const bannerVariants = cva(
   {
     variants: {
       status: {
-        selected: 'border-2 border-white-50 bg-white-25',
+        selected: 'border-2 border-white-alpha-50 bg-white-alpha-25',
         gradient:
           'bg-[linear-gradient(133deg,rgba(255,253,201,0.40)_2.19%,rgba(150,230,216,0.40)_49.24%,rgba(125,171,241,0.40)_98.21%)]',
-        default: 'bg-white-10',
+        default: 'bg-white-alpha-10',
       },
       size: {
         small:

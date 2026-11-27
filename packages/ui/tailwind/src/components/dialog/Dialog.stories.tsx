@@ -176,7 +176,7 @@ export const OverflowScrollable: Story = {
             <Dialog.Body>
               <ul className="flex flex-col gap-2">
                 {Array.from({ length: 40 }, (_, i) => (
-                  <li key={i} className="rounded-lg border border-gray-800 p-3 text-white-75">
+                  <li key={i} className="rounded-lg border border-gray-800 p-3 text-white-alpha-75">
                     아이템 {i + 1}
                   </li>
                 ))}
@@ -214,7 +214,7 @@ export const OverflowUnmanaged: Story = {
             <Dialog.Description>Body 슬롯 없이 넣은 상태.</Dialog.Description>
             <ul className="flex flex-col gap-2">
               {Array.from({ length: 40 }, (_, i) => (
-                <li key={i} className="rounded-lg border border-gray-800 p-3 text-white-75">
+                <li key={i} className="rounded-lg border border-gray-800 p-3 text-white-alpha-75">
                   아이템 {i + 1}
                 </li>
               ))}
@@ -243,7 +243,7 @@ export const DomainOverride: Story = {
           <Dialog.Content size="lg">
             <Dialog.Title>Merge to Level Up</Dialog.Title>
             <Dialog.Description>재료 펫을 선택하세요.</Dialog.Description>
-            <div className="min-h-[200px] flex items-center justify-center rounded-lg border border-gray-800 text-white-50">
+            <div className="min-h-[200px] flex items-center justify-center rounded-lg border border-gray-800 text-white-alpha-50">
               (여기에 SelectPersonaList 등의 리스트 슬롯)
             </div>
             <Dialog.Footer className="justify-center gap-3">

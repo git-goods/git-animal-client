@@ -20,10 +20,10 @@ const fetchingStyle = 'opacity-50';
 
 const paginationStyle = 'mt-[16px] flex items-center justify-center';
 
-const paginationTextStyle = 'glyph14-regular text-white-50';
+const paginationTextStyle = 'glyph14-regular text-white-alpha-50';
 
 const arrowButtonStyle =
-  'w-[32px] h-[32px] flex items-center justify-center border-none bg-none text-white-75 text-[20px] cursor-pointer disabled:opacity-25 disabled:cursor-default';
+  'w-[32px] h-[32px] flex items-center justify-center border-none bg-none text-white-alpha-75 text-[20px] cursor-pointer disabled:opacity-25 disabled:cursor-default';
 
 const tableStyle = 'w-full border-separate text-left [border-spacing:0_4px]';
 
@@ -36,12 +36,12 @@ const trBaseStyle = cn(
   '[&_td:nth-child(2)]:text-center [&_th:nth-child(2)]:text-center [&_td:nth-child(2)]:w-[28px] [&_th:nth-child(2)]:w-[28px] [&_td:nth-child(2)]:pl-0 [&_th:nth-child(2)]:pl-0',
 );
 
-const theadTrStyle = cn(trBaseStyle, 'glyph16-bold bg-white-50 text-white-100 h-[40px]');
+const theadTrStyle = cn(trBaseStyle, 'glyph16-bold bg-white-alpha-50 text-white h-[40px]');
 
 const trStyle = cn(
   trBaseStyle,
-  'glyph18-regular text-white-100 bg-white-10 h-[48px] glyph15-regular',
-  '[&_td:first-child]:text-[16px] [&_td:first-child]:leading-[28px] [&_td:first-child]:font-dnf [&_td:first-child]:text-white-50',
+  'glyph18-regular text-white bg-white-alpha-10 h-[48px] glyph15-regular',
+  '[&_td:first-child]:text-[16px] [&_td:first-child]:leading-[28px] [&_td:first-child]:font-dnf [&_td:first-child]:text-white-alpha-50',
 );
 
 const currentUserTrStyle =

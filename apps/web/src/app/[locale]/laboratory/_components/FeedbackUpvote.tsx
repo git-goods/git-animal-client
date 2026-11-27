@@ -78,9 +78,9 @@ export function FeedbackUpvote() {
   }
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 border-t border-solid border-white-10 p-[16px_24px] z-10 bg-gray-150">
+    <footer className="fixed bottom-0 left-0 right-0 border-t border-solid border-white-alpha-10 p-[16px_24px] z-10 bg-gray-150">
       <div className="mx-auto flex flex-col gap-[12px] items-center [@media(min-width:768px)]:flex-row [@media(min-width:768px)]:justify-start">
-        <p className="text-white-100 text-[14px] leading-[1.5] flex-1 text-center [@media(min-width:768px)]:text-left">
+        <p className="text-white text-[14px] leading-[1.5] flex-1 text-center [@media(min-width:768px)]:text-left">
           실험실 기능이 마음에 드셨나요? 정식 출시를 원하시면 업보트를 눌러주세요!
           {typeof upvoteCount === 'number' && (
             <span className="text-brand-sky font-bold ml-[8px]"> ({upvoteCount}명이 업보트했어요)</span>

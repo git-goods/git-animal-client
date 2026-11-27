@@ -48,7 +48,7 @@ export function GithubGuideModal({ isOpen, onClose, username, code, type }: Gith
           <li className={stepItemStyle}>
             <span className={stepBadgeStyle}>1</span>
             <div className={stepBodyStyle}>
-              <strong className="glyph16-bold text-white-100">{t('step1-title')}</strong>
+              <strong className="glyph16-bold text-white">{t('step1-title')}</strong>
               <p className="glyph14-regular text-gray-500">
                 {t.rich('step1-desc', {
                   repo: repoName,
@@ -61,7 +61,7 @@ export function GithubGuideModal({ isOpen, onClose, username, code, type }: Gith
           <li className={stepItemStyle}>
             <span className={stepBadgeStyle}>2</span>
             <div className={stepBodyStyle}>
-              <strong className="glyph16-bold text-white-100">{t('step2-title')}</strong>
+              <strong className="glyph16-bold text-white">{t('step2-title')}</strong>
               <p className="glyph14-regular text-gray-500">{t('step2-desc')}</p>
               <button
                 type="button"
@@ -69,7 +69,7 @@ export function GithubGuideModal({ isOpen, onClose, username, code, type }: Gith
                 onClick={onRecopy}
                 aria-label={tMypage('copy-link-title')}
               >
-                <code className="font-mono text-[12px] text-white-100 whitespace-pre-wrap break-all">{code}</code>
+                <code className="font-mono text-[12px] text-white whitespace-pre-wrap break-all">{code}</code>
                 <Copy size={16} className={codeCopyIconStyle} />
               </button>
             </div>
@@ -78,7 +78,7 @@ export function GithubGuideModal({ isOpen, onClose, username, code, type }: Gith
           <li className={stepItemStyle}>
             <span className={stepBadgeStyle}>3</span>
             <div className={stepBodyStyle}>
-              <strong className="glyph16-bold text-white-100">{t('step3-title')}</strong>
+              <strong className="glyph16-bold text-white">{t('step3-title')}</strong>
               <p className="glyph14-regular text-gray-500">{t('step3-desc')}</p>
             </div>
           </li>
@@ -118,11 +118,11 @@ const stepListStyle = 'w-full flex flex-col gap-[20px]';
 const stepItemStyle = 'flex gap-[12px] items-start';
 
 const stepBadgeStyle =
-  'shrink-0 w-[24px] h-[24px] rounded-full flex items-center justify-center bg-brand-green text-white-100 glyph14-bold';
+  'shrink-0 w-[24px] h-[24px] rounded-full flex items-center justify-center bg-brand-green text-white glyph14-bold';
 
 const stepBodyStyle = 'flex flex-col gap-[4px]';
 
-const codeChipStyle = 'px-[6px] py-[1px] rounded-[4px] bg-gray-400 text-white-100 font-mono';
+const codeChipStyle = 'px-[6px] py-[1px] rounded-[4px] bg-gray-400 text-white font-mono';
 
 const codeBlockStyle =
   'mt-[8px] w-full flex items-start justify-between gap-[8px] p-[12px] rounded-[8px] bg-gray-400 cursor-pointer text-left max-h-[120px] overflow-y-auto';

@@ -9,13 +9,13 @@ interface QuizTextAreaProps extends ComponentProps<'textarea'> {
 }
 
 const textAreaStyle =
-  "bg-transparent border-none text-white p-[16px_12px_2px_20px] glyph14-regular font-['Product_Sans'] font-normal rounded-[8px] outline-none w-full h-[160px] resize-none placeholder:glyph14-regular placeholder:font-['Product_Sans'] placeholder:font-normal placeholder:text-white-50 [&.error]:border [&.error]:border-solid [&.error]:border-[#FF6B56]";
+  "bg-transparent border-none text-white p-[16px_12px_2px_20px] glyph14-regular font-['Product_Sans'] font-normal rounded-[8px] outline-none w-full h-[160px] resize-none placeholder:glyph14-regular placeholder:font-['Product_Sans'] placeholder:font-normal placeholder:text-white-alpha-50 [&.error]:border [&.error]:border-solid [&.error]:border-[#FF6B56]";
 
 const textLenStyle =
-  "relative text-white-50 glyph12-regular font-['Product_Sans'] font-normal p-[0px_12px_8px_0px] [&_strong]:font-normal [&_strong]:text-white-50 [&.error]:text-[#FF6B56]";
+  "relative text-white-alpha-50 glyph12-regular font-['Product_Sans'] font-normal p-[0px_12px_8px_0px] [&_strong]:font-normal [&_strong]:text-white-alpha-50 [&.error]:text-[#FF6B56]";
 
 const containerStyle =
-  'relative border border-solid border-white-25 rounded-[8px] transition-all duration-100 ease-in-out overflow-hidden focus-within:border-white-50 [&:focus-within_strong]:text-[#00894d]';
+  'relative border border-solid border-white-alpha-25 rounded-[8px] transition-all duration-100 ease-in-out overflow-hidden focus-within:border-white-alpha-50 [&:focus-within_strong]:text-[#00894d]';
 
 function QuizTextArea({ maxLength = 1000, ...props }: QuizTextAreaProps) {
   const [inputLen, setInputLen] = useState(String(props.value ?? '')?.length || 0);

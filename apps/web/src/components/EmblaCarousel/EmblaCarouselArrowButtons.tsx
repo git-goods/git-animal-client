@@ -47,7 +47,7 @@ export const usePrevNextButtons = (emblaApi: EmblaCarouselType | undefined): Use
 type PropType = ComponentPropsWithRef<'button'>;
 
 const arrowButtonStyle =
-  'appearance-none touch-manipulation inline-flex no-underline cursor-pointer p-0 m-0 border border-solid border-[#EAEAEA] w-[36px] h-[36px] z-[1] rounded-full text-black-75 items-center justify-center bg-white-75 [&.disabled]:opacity-50 [&.disabled]:cursor-not-allowed';
+  'appearance-none touch-manipulation inline-flex no-underline cursor-pointer p-0 m-0 border border-solid border-[#EAEAEA] w-[36px] h-[36px] z-[1] rounded-full text-black-alpha-75 items-center justify-center bg-white-alpha-75 [&.disabled]:opacity-50 [&.disabled]:cursor-not-allowed';
 
 const arrowIconStyle = 'w-[35%] h-[35%]';
 

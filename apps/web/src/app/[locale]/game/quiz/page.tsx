@@ -12,7 +12,7 @@ async function QuizPage() {
       <Background widthBottom />
       <div className="flex flex-col justify-center items-center w-full h-full p-[40px_16px]">
         <h1 className="mb-[8px] glyph40-bold font-['Product_Sans'] font-bold text-white">Quiz</h1>
-        <p className="mb-[48px] glyph18-regular font-['Product_Sans'] font-normal text-white-90">
+        <p className="mb-[48px] glyph18-regular font-['Product_Sans'] font-normal text-white-alpha-90">
           {t('quiz-solve-description')}
         </p>
         <SelectQuizType />

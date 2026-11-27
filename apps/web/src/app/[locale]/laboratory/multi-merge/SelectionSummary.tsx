@@ -22,7 +22,7 @@ const selectionSummaryStyle = 'bg-gray-200 rounded-[12px] p-[16px] mb-[16px]';
 
 const summaryHeaderStyle = 'flex items-center justify-between mb-[4px]';
 
-const summaryTextStyle = 'text-white-100 glyph14-regular';
+const summaryTextStyle = 'text-white glyph14-regular';
 
 const selectedPetsContainerStyle = 'flex flex-wrap gap-[8px] py-[6px]';
 
