@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { cn, GameCard } from '@gitanimals/ui-tailwind';
+import { snakeToTitleCase } from '@gitanimals/util-common';
 
 import { AnimalCardBack } from '@/components/AnimalCard/AnimalCard';
 import type { AnimalTierType } from '@/constants/animalTier';
@@ -73,7 +74,7 @@ const CardFlipGame = ({ onGetPersona, getPersona }: CardFlipGameProps) => {
               <div className="absolute flex h-full w-full items-center justify-center [backface-visibility:hidden] [transform:rotateY(180deg)]">
                 {getPersona && (
                   <GameCard
-                    title={getPersona.type}
+                    title={snakeToTitleCase(getPersona.type)}
                     percentage={getPersona.dropRate}
                     tier={getPersona.tier}
                     imageUrl={getPersonaImage(getPersona.type)}

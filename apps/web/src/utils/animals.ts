@@ -28,11 +28,3 @@ export const ANIMAL_TIER_TEXT_MAP: Record<AnimalTierType, string> = {
   [AnimalTier.A_PLUS]: 'A+',
   [AnimalTier.B_MINUS]: 'B-',
 };
-
-// DESSERT_FOX → Dessert Fox
-export const toPetName = (type: string) =>
-  type
-    .toLowerCase()
-    .split('_')
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
