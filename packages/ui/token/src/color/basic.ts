@@ -1,4 +1,6 @@
 export const BASIC = {
+  black: '#000000',
+  white: '#FFFFFF',
   green_500: '#019C5A',
   warning_red: '#ED473F',
 } as const;
