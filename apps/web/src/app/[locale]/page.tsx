@@ -5,7 +5,7 @@ import { ErrorBoundary } from '@suspensive/react';
 import { ErrorSection } from '@/components/Error/ErrorSection';
 import GNB from '@/components/GNB/GNB';
 
-import { SpringContent } from './landing/(spring)';
+import { ChristmasAsciiContent } from './landing/(christmas-ascii)';
 import {
   AvailablePetSection,
   ChoosePetSection,
@@ -31,9 +31,9 @@ export default async function HomePage({
 
   return (
     <>
-      <GNB />
+      <GNB mobileHideAtTop />
       <main>
-        <SpringContent />
+        <ChristmasAsciiContent />
         <ErrorBoundary
           fallback={<ErrorSection title={t('ranking-error-title')} description={t('ranking-error-description')} />}
         >

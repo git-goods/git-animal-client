@@ -32,7 +32,13 @@
     "about": "Go to the about page"
   },
   "Landing": {
-    "title": "Have your pet in GITHUB! "
+    "title": "Have your pet in GITHUB! ",
+    "christmas-line1": "Christmas is here in GitAnimals!",
+    "christmas-line2": "Draw a Christmas pet now!",
+    "christmas-go-mypage": "Go To Mypage ->",
+    "christmas-login": "Login ->",
+    "christmas-hint-qr": "Tap the tree to see QR code",
+    "christmas-hint-tree": "Tap to see the tree"
   },
   "Common": {
     "pet": "Pet",

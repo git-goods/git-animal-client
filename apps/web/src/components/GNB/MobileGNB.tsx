@@ -2,7 +2,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import type { Transition, Variants } from 'framer-motion';
@@ -11,8 +11,8 @@ import { ChevronRight, Globe, LogOutIcon, Menu } from 'lucide-react';
 
 import { AdaptiveLink } from '@/components/AdaptiveLink';
 import { RenderLoginButton, RenderLogoutButton } from '@/components/AuthButton';
-import { Link } from '@/i18n/routing';
 import { useClientSession } from '@/hooks/clientAuth';
+import { Link } from '@/i18n/routing';
 
 import { MobileLanguageSelector } from './LanguageSelector';
 import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
@@ -24,7 +24,9 @@ const mobileMenuClass =
 const menuItemClass =
   'glyph16-regular flex justify-between border-b border-gray-900 capitalize text-black-alpha-75 [&_div]:flex [&_div]:items-center [&_div]:gap-[10px]';
 
-export const MobileGNB = () => {
+const SHOW_AFTER_SCROLL_Y = 40;
+
+export const MobileGNB = ({ hideAtTop = false }: { hideAtTop?: boolean }) => {
   const t = useTranslations('Layout');
 
   const { status, data } = useClientSession();
@@ -35,14 +37,28 @@ export const MobileGNB = () => {
 
   const menuList = isAuth ? [...LOGIN_NAV_MENU_LIST, ...NON_LOGIN_NAV_MENU_LIST] : NON_LOGIN_NAV_MENU_LIST;
 
+  const [isAtTop, setIsAtTop] = useState(hideAtTop);
+
+  useEffect(() => {
+    if (!hideAtTop) return;
+    const onScroll = () => setIsAtTop(window.scrollY <= SHOW_AFTER_SCROLL_Y);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [hideAtTop]);
+
+  const isHidden = hideAtTop && isAtTop && !isOpen;
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
     <>
-      <div className="h-[60px]" />
-      <header className={mobileHeaderClass}>
+      {!hideAtTop && <div className="h-[60px]" />}
+      <header
+        className={`${mobileHeaderClass} transition-transform duration-[250ms] ${isHidden ? '-translate-y-full' : 'translate-y-0'}`}
+      >
         <div className="relative flex h-[44px] w-full items-center justify-between">
           <button onClick={toggleMenu}>
             <Menu size={24} color="black" />
