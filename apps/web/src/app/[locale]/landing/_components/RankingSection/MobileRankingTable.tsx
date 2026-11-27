@@ -14,7 +14,7 @@ const SWIPE_THRESHOLD = 50;
 
 const containerStyle = 'w-full overflow-hidden';
 
-const tableWrapperStyle = 'transition-opacity duration-150 ease-[ease]';
+const tableWrapperStyle = 'transition-opacity duration-150 [transition-timing-function:ease]';
 
 const fetchingStyle = 'opacity-50';
 

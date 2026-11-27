@@ -15,7 +15,7 @@ const textLenStyle =
   "relative text-white-50 glyph12-regular font-['Product_Sans'] font-normal p-[0px_12px_8px_0px] [&_strong]:font-normal [&_strong]:text-white-50 [&.error]:text-[#FF6B56]";
 
 const containerStyle =
-  'relative border border-solid border-white-25 rounded-[8px] transition-all duration-[0.1s] ease-in-out overflow-hidden focus-within:border-white-50 [&:focus-within_strong]:text-[#00894d]';
+  'relative border border-solid border-white-25 rounded-[8px] transition-all duration-100 ease-in-out overflow-hidden focus-within:border-white-50 [&:focus-within_strong]:text-[#00894d]';
 
 function QuizTextArea({ maxLength = 1000, ...props }: QuizTextAreaProps) {
   const [inputLen, setInputLen] = useState(String(props.value ?? '')?.length || 0);

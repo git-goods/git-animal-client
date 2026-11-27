@@ -132,7 +132,7 @@ export function PersonaListToolbar({
         {/* 진화 가능 필터 */}
         {showEvolvableFilter && (
           <button
-            className="glyph12-regular h-[30px] cursor-pointer rounded-[6px] border border-solid border-transparent bg-white-5 px-[12px] py-[6px] text-white-50 transition-all duration-150 ease-[ease] hover:bg-white-10 data-[active]:border-brand-sky data-[active]:bg-brand-sky_25 data-[active]:text-white-90"
+            className="glyph12-regular h-[30px] cursor-pointer rounded-[6px] border border-solid border-transparent bg-white-5 px-[12px] py-[6px] text-white-50 transition-all duration-150 [transition-timing-function:ease] hover:bg-white-10 data-[active]:border-brand-sky data-[active]:bg-brand-sky_25 data-[active]:text-white-90"
             data-active={filterState.evolvableOnly || undefined}
             onClick={() => onFilterChange({ evolvableOnly: !filterState.evolvableOnly })}
           >
