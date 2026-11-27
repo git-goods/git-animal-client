@@ -248,5 +248,10 @@
     "hint": "Pick the pets shown at home",
     "save": "Save",
     "preview": "Preview"
+  },
+  "game": {
+    "description": "Join the game and earn points!",
+    "matching-card-title": "Matching Card",
+    "matching-card-description": "Flip the cards to find the same animal and earn points!"
   }
 }
