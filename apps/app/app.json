@@ -23,7 +23,9 @@
     },
     "plugins": [
       "expo-router",
-      "expo-status-bar"
+      "expo-status-bar",
+      "expo-font",
+      "expo-splash-screen"
     ],
     "scheme": "gitanimals"
   }
