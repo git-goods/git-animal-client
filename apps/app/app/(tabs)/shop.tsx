@@ -33,7 +33,13 @@ export default function Shop() {
         <View className="w-full" style={{ gap: 8 }}>
           <View className="flex-row items-end justify-between">
             <View className="flex-row items-center" style={{ gap: 4, minHeight: 32, paddingLeft: 8, paddingRight: 10 }}>
-              <Image source={require('../../assets/home/coin.png')} style={{ width: 16, height: 16 }} />
+              {/* 피그마 943:39180 coin: 16 칸을 코인이 꽉 채운다. webp 는 둘레가 투명 여백이라 키워서 자른다 */}
+              <View style={{ width: 16, height: 16, overflow: 'hidden' }}>
+                <Image
+                  source={require('../../assets/shop/coin.webp')}
+                  style={{ position: 'absolute', left: -2, top: -2, width: 20, height: 20 }}
+                />
+              </View>
               <Text style={[sans(15, 1.5, true), { color: colors.white.DEFAULT }]}>
                 {user.data ? `${user.data.points} P` : '-'}
               </Text>
