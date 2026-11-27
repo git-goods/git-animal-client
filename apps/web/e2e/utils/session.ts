@@ -1,7 +1,7 @@
 import { encode } from 'next-auth/jwt';
 import type { BrowserContext } from '@playwright/test';
 
-// NEXTAUTH_SECRET 이 실행 중인 앱과 같아야 쿠키가 풀린다.
+// NEXTAUTH_SECRET 이 실행 중인 앱과 같아야 쿠키가 풀린다. 토큰 모양은 auth.ts jwt 콜백과 같아야 한다.
 export async function seedSession(
   context: BrowserContext,
   user: { id: string; name: string; accessToken: string; image?: string },

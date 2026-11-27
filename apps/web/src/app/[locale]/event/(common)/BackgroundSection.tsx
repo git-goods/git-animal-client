@@ -19,7 +19,7 @@ import { addNumberComma } from '@/utils/number';
 interface BackgroundSectionProps {
   possibleBgTypes: string[];
 }
-// TODO: shop/BackgroundSection 과 거의 같다. 합쳐야 한다.
+// TODO: shop/_background/ShopBackgroundSection 과 거의 같다. 합쳐야 한다.
 export const BackgroundSection = wrap
   .ErrorBoundary({
     fallback: () => <></>,

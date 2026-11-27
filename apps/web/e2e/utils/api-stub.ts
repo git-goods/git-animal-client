@@ -1,6 +1,7 @@
 import type { Page, Request } from '@playwright/test';
 
 // Next SSR fetch 는 node 에서 돌아 여기서 가로챌 수 없다 — 브라우저 요청만 스텁한다.
+// 응답 모양은 @gitanimals/api zod 스키마와 같아야 safeGet 검증을 통과하고 Suspense 가 풀린다.
 export async function stubGitanimalsApi(page: Page): Promise<{ authHeaders: (string | undefined)[] }> {
   const authHeaders: (string | undefined)[] = [];
 
