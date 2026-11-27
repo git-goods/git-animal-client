@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextInput, View } from 'react-native';
-import { PixelButton, PixelPanel, PixelText } from '../../src/ui/pixel';
+import { Image, TextInput, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { PixelBox, PixelButton, PixelSprite, PixelText } from '../../src/ui/pixel';
+import { FarmBackground } from '../../src/home/FarmBackground';
+import { personaImageUrl } from '../../src/home/pickHomePets';
 import { useAuth } from '../../src/auth/AuthProvider';
 import { loginWithGithub } from '../../src/auth/githubLogin';
 import { FONT } from '../../src/ui/pixel/glyph';
@@ -64,23 +67,33 @@ function GithubLoginButton() {
 
   return (
     <View className="gap-2">
-      <PixelButton label={t('auth.github_login')} onPress={login} disabled={busy} />
-      {failed && <PixelText variant="glyph14">{t('auth.login_failed')}</PixelText>}
+      <PixelButton label={t('auth.github_login')} onPress={login} disabled={busy} wide />
+      {failed && <PixelText variant="glyph14" className="text-white">{t('auth.login_failed')}</PixelText>}
     </View>
   );
 }
 
 export default function Login() {
+  const insets = useSafeAreaInsets();
 
   return (
-    <View className="flex-1 items-center justify-center px-6">
-      <PixelPanel source={require('../../assets/ui/panel.png')} style={{ width: '100%' }}>
-        <View className="gap-4 p-6">
-          <PixelText variant="glyph24" title>GitAnimals</PixelText>
-          <GithubLoginButton />
-          {__DEV__ && <DevTokenForm />}
+    <View className="flex-1 bg-gray-000">
+      <FarmBackground />
+      <View className="items-center" style={{ paddingTop: insets.top + 96 }}>
+        <View className="items-end">
+          <PixelSprite source={personaImageUrl('LITTLE_CHICK')} maxWidth={70} maxHeight={70} />
+          {/* 피그마 로고 3배 export(726×198)를 1/3 로 */}
+          <Image source={require('../../assets/brand/logo.png')} style={{ width: 242, height: 66 }} accessibilityLabel="Git Animals" />
         </View>
-      </PixelPanel>
+      </View>
+      <View className="absolute inset-x-0 bottom-0 gap-4 px-4" style={{ paddingBottom: insets.bottom + 24 }}>
+        <GithubLoginButton />
+        {__DEV__ && (
+          <PixelBox className="self-stretch">
+            <DevTokenForm />
+          </PixelBox>
+        )}
+      </View>
     </View>
   );
 }
