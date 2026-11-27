@@ -248,5 +248,13 @@
     "hint": "Pick the pets shown at home",
     "save": "Save",
     "preview": "Preview"
+  },
+  "mypage": {
+    "petsList": "Pets List",
+    "sell": "Sell {{price}}P",
+    "merge": "Merge Level",
+    "sellConfirm": "Would you like to sell your pet for {{price}} points?",
+    "sellAction": "Sell",
+    "sellFail": "Couldn't sell the pet"
   }
 }

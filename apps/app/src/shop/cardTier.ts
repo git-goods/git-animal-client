@@ -11,3 +11,5 @@ export function cardTier(dropRate: string): CardTier {
   if (rate <= 0.14) return 'A_PLUS';
   return 'B_MINUS';
 }
+
+export const TIER_LABEL: Record<CardTier, string> = { EX: 'EX', S_PLUS: 'S+', A_PLUS: 'A+', B_MINUS: 'B-' };
