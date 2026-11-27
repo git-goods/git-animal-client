@@ -18,7 +18,7 @@ interface SelectionSummaryProps {
   onPetClick: (pet: Persona) => void;
 }
 
-const selectionSummaryStyle = 'bg-gray-250 rounded-[12px] p-[16px] mb-[16px]';
+const selectionSummaryStyle = 'bg-gray-200 rounded-[12px] p-[16px] mb-[16px]';
 
 const summaryHeaderStyle = 'flex items-center justify-between mb-[4px]';
 
@@ -27,7 +27,7 @@ const summaryTextStyle = 'text-white-100 glyph14-regular';
 const selectedPetsContainerStyle = 'flex flex-wrap gap-[8px] py-[6px]';
 
 const selectedPetItemStyle =
-  'relative w-[40px] h-[40px] bg-gray-200 rounded-[8px] flex items-center justify-center border border-solid border-brand-sky cursor-pointer transition-colors text-gray-400 hover:border-brand-sky_light';
+  'relative w-[40px] h-[40px] bg-gray-200 rounded-[8px] flex items-center justify-center border border-solid border-brand-sky cursor-pointer transition-colors text-gray-400';
 
 export function SelectionSummary({ targetPet, materialPets, onPetClick }: SelectionSummaryProps) {
   return (

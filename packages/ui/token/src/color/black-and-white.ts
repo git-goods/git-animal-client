@@ -1,7 +1,6 @@
 export const BLACK = {
   black: '#000000',
   black_100: 'rgba(0, 0, 0, 1)',
-  black_95: 'rgba(0, 0, 0, 0.95)',
   black_90: 'rgba(0, 0, 0, 0.9)',
   black_75: 'rgba(0, 0, 0, 0.75)',
   black_50: 'rgba(0, 0, 0, 0.5)',
