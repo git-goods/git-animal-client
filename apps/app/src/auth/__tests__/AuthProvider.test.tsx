@@ -23,9 +23,9 @@ function Probe() {
   return <Text>{status}</Text>;
 }
 
-const renderProvider = () =>
+const renderProvider = (client = new QueryClient()) =>
   render(
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider client={client}>
       <AuthProvider>
         <Probe />
       </AuthProvider>
@@ -51,6 +51,16 @@ describe('AuthProvider', () => {
     await renderProvider();
     await waitFor(() => expect(screen.getByText('signedOut')).toBeTruthy());
     expect(store.clear).toHaveBeenCalled();
+  });
+
+  it('로그아웃하면 queryClient 도 비운다', async () => {
+    store.get.mockResolvedValue('stale');
+    mockGetUser.mockRejectedValue({ response: { status: 401 } });
+    const client = new QueryClient();
+    const clear = jest.spyOn(client, 'clear');
+    await renderProvider(client);
+    await waitFor(() => expect(screen.getByText('signedOut')).toBeTruthy());
+    expect(clear).toHaveBeenCalled();
   });
 
   it('getUser 가 성공하기 전에는 loading 이다', async () => {

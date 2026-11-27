@@ -69,4 +69,18 @@ describe('installInterceptors', () => {
     token = 'restored';
     expect((request(config()).headers as any).Authorization).toBe('Bearer restored');
   });
+
+  it('다시 install 하면 새 getToken 과 onUnauthorized 를 쓴다', async () => {
+    const install = load();
+    const oldUnauthorized = jest.fn();
+    const newUnauthorized = jest.fn();
+    install({ getToken: () => 'old', onUnauthorized: oldUnauthorized });
+    install({ getToken: () => 'new', onUnauthorized: newUnauthorized });
+    const request: Request = mockSetRequest.mock.calls[0][0];
+    expect((request(config()).headers as any).Authorization).toBe('Bearer new');
+    const rejected: Rejected = mockSetResponse.mock.calls[0][1];
+    await expect(rejected({ response: { status: 401 } } as AxiosError)).rejects.toBeDefined();
+    expect(newUnauthorized).toHaveBeenCalledTimes(1);
+    expect(oldUnauthorized).not.toHaveBeenCalled();
+  });
 });
