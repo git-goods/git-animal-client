@@ -24,9 +24,7 @@ export default function DesignSystemPage() {
       {/* Header */}
       <div>
         <h1 className="text-2xl text-slate-900 mb-1">디자인 시스템</h1>
-        <p className="text-sm text-slate-600">
-          프로젝트 전체에서 사용하는 UI 컴포넌트 라이브러리
-        </p>
+        <p className="text-sm text-slate-600">프로젝트 전체에서 사용하는 UI 컴포넌트 라이브러리</p>
       </div>
 
       {/* Buttons */}

@@ -236,10 +236,13 @@ export function PointsManagement() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
           {/* Left: User Selection */}
           <div>
-            <label className="block text-slate-700 mb-1.5 text-xs">사용자 검색 및 선택</label>
+            <label htmlFor="points-user-search" className="block text-slate-700 mb-1.5 text-xs">
+              사용자 검색 및 선택
+            </label>
             <div className="relative mb-2">
               <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
               <input
+                id="points-user-search"
                 type="text"
                 placeholder="이름 또는 이메일로 검색..."
                 value={searchTerm}
@@ -274,7 +277,7 @@ export function PointsManagement() {
 
           {/* Right: Point Adjustment Form */}
           <div>
-            <label className="block text-slate-700 mb-1.5 text-xs">포인트 조정</label>
+            <p className="block text-slate-700 mb-1.5 text-xs">포인트 조정</p>
 
             {selectedUser ? (
               <div className="space-y-2">
@@ -288,8 +291,11 @@ export function PointsManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-slate-700 mb-1 text-xs">포인트 금액</label>
+                  <label htmlFor="points-amount" className="block text-slate-700 mb-1 text-xs">
+                    포인트 금액
+                  </label>
                   <input
+                    id="points-amount"
                     type="number"
                     placeholder="금액 입력"
                     value={pointAmount}
@@ -299,8 +305,11 @@ export function PointsManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-slate-700 mb-1 text-xs">조정 사유</label>
+                  <label htmlFor="points-reason" className="block text-slate-700 mb-1 text-xs">
+                    조정 사유
+                  </label>
                   <textarea
+                    id="points-reason"
                     placeholder="포인트 조정 사유를 입력하세요"
                     value={reason}
                     onChange={(e) => setReason(e.target.value)}

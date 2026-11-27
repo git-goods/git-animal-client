@@ -1,7 +1,7 @@
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ds";
 import { ApprovedQuizTab } from "@/components/quiz/ApprovedQuizTab";
 import { NotApprovedQuizTab } from "@/components/quiz/NotApprovedQuizTab";
 import { QuizSolveContextsTab } from "@/components/quiz/QuizSolveContextsTab";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ds";
 
 export default function QuizManagementPage() {
   return (
