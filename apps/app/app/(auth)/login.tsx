@@ -20,6 +20,7 @@ import { useAuth } from '../../src/auth/AuthProvider';
 import { loginWithGithub } from '../../src/auth/githubLogin';
 import { FONT } from '../../src/ui/pixel/glyph';
 import { CenterLogo } from '../../src/ui/CenterLogo';
+import { sans } from '../../src/ui/sans';
 
 function DevTokenForm() {
   const { signIn } = useAuth();
@@ -63,6 +64,8 @@ function GithubLoginButton() {
   const { t } = useTranslation();
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
+  // NativeWind 가 감싼 Pressable 은 함수형 style 을 버려서 눌림 상태를 직접 든다
+  const [pressed, setPressed] = useState(false);
 
   const login = async () => {
     setBusy(true);
@@ -82,7 +85,7 @@ function GithubLoginButton() {
       {failed && (
         // 버튼과 같은 폭·모서리로 붙여 한 덩어리로 보이게 한다
         <View style={{ borderRadius: 14, backgroundColor: colors.black['75'], paddingVertical: 10 }}>
-          <Text style={{ fontSize: 15, fontWeight: '600', color: colors.white.DEFAULT, textAlign: 'center' }}>{t('auth.login_failed')}</Text>
+          <Text style={[sans(15, 1.4, true), { color: colors.white.DEFAULT, textAlign: 'center' }]}>{t('auth.login_failed')}</Text>
         </View>
       )}
       {/* 피그마 943:28935 */}
@@ -90,6 +93,8 @@ function GithubLoginButton() {
         onPress={login}
         disabled={busy}
         accessibilityRole="button"
+        onPressIn={() => setPressed(true)}
+        onPressOut={() => setPressed(false)}
         style={{
           height: 54,
           borderRadius: 14,
@@ -98,11 +103,11 @@ function GithubLoginButton() {
           alignItems: 'center',
           justifyContent: 'center',
           gap: 8,
-          opacity: busy ? 0.5 : 1,
+          opacity: busy ? 0.5 : pressed ? 0.7 : 1,
         }}
       >
         <Image source={require('../../assets/ui/github.png')} style={{ width: 18, height: 18 }} />
-        <Text style={{ fontSize: 19, fontWeight: '600', color: colors.black.DEFAULT }}>{t('auth.github_login')}</Text>
+        <Text style={[sans(19, 1.26, true), { color: colors.black.DEFAULT }]}>{t('auth.github_login')}</Text>
       </Pressable>
     </View>
   );
