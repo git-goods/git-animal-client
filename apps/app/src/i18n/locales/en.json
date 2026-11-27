@@ -189,7 +189,10 @@
     "gotcha-in-progress": "Drawing in progress. Please wait a moment.",
     "click-card-to-flip": "Click the card to flip!",
     "not-enough-points": "You don't have enough points to draw a pet.",
-    "click-to-close": "Touch the screen to close."
+    "click-to-close": "Touch the screen to close.",
+    "pet-gotcha-title": "Pet Gotcha",
+    "draw-one": "1 Pet / 1,000 P",
+    "draw-ten": "10 Pets / 10,000 P"
   },
   "shop": {
     "no-mobile-support": "Currently, mobile is not supported. Please connect to the desktop.",
@@ -227,7 +230,10 @@
       "buy": "Buy",
       "event-sale": "Event Limited Sale",
       "buy-possible-user": "Please sign in to use this feature."
-    }
+    },
+    "drop-rate": "Drop Rate",
+    "auction": "Auction",
+    "auction-desc": "Buy and sell pets with other users at the auction"
   },
   "tabs": {
     "home": "Home",
