@@ -25,7 +25,7 @@ Expo 호환 네이티브 의존성은 `apps/app`에서 `npx expo install <pkg>`�
 - 화면 기준은 Figma `place-su`다. 둥근 모서리·그라데이션·그림자도 Figma에 있으면 그대로
   쓰고, 글자는 `src/ui/sans.ts`(Product Sans)로 쓴다. 색은 `@gitanimals/ui-tailwind` 토큰을
   먼저 쓰고, 토큰에 없는 Figma 값만 그 자리에 노드 ID와 함께 둔다. 펫 PNG는 `PixelSprite`로
-  정수배 nearest 스케일해 그린다.
+  정수배 nearest 스케일해 그린다. Figma가 칸에 딱 맞춘 곳(뽑기 카드)만 `scale={fitScale}`을 쓴다.
 - 반투명 색은 `colors['white-alpha']['50']`, `colors['black-alpha']['25']`처럼 쓴다.
   `colors.white`에는 `DEFAULT`가 없고, 예전 이름 `colors.white['50']`은 타입 에러 없이
   `undefined`가 되어 색이 사라진다.

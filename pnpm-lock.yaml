@@ -266,6 +266,9 @@ importers:
       '@gitanimals/ui-token':
         specifier: workspace:*
         version: link:../../packages/ui/token
+      '@gitanimals/util-common':
+        specifier: workspace:*
+        version: link:../../packages/util/common
       '@react-native-async-storage/async-storage':
         specifier: 2.2.0
         version: 2.2.0(react-native@0.88.1(@babel/core@7.28.3)(@react-native/metro-config@0.88.1(@babel/core@7.28.3))(@types/react@19.3.3)(react@19.3.0))

@@ -12,18 +12,17 @@ type Props = {
   maxWidth: number;
   maxHeight: number;
   onError?: () => void;
+  scale?: (src: { w: number; h: number }, box: { w: number; h: number }) => number;
 };
 
-export function PixelSprite({ source, maxWidth, maxHeight, onError }: Props) {
+export function PixelSprite({ source, maxWidth, maxHeight, onError, scale: toScale = integerScale }: Props) {
   const image = useSkiaImage(source, onError);
   if (!image) return null;
 
-  const scale = integerScale(
-    { w: image.width(), h: image.height() },
-    { w: maxWidth, h: maxHeight },
-  );
-  const width = image.width() * scale;
-  const height = image.height() * scale;
+  const src = { w: image.width(), h: image.height() };
+  const scale = toScale(src, { w: maxWidth, h: maxHeight });
+  const width = src.w * scale;
+  const height = src.h * scale;
 
   return (
     <Canvas style={{ width, height }}>
