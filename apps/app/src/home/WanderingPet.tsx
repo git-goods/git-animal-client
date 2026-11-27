@@ -17,13 +17,13 @@ import { personaImageUrl } from './pickHomePets';
 import { PetBubble } from './PetBubble';
 
 // reanimated 4.7 타입이 RN 0.88 View 의 children·style 을 잃어서 좁혀서 다시 선언한다
-const AnimatedView = Animated.View as unknown as ComponentType<
+export const AnimatedView = Animated.View as unknown as ComponentType<
   Omit<ViewProps, 'style'> & { className?: string; style?: unknown }
 >;
 
 // 펫 PNG 원본(140×140) 1배. 그림 둘레 여백이 커서 이보다 작으면 펫이 너무 작아 보인다
 export const PET_SIZE = 140;
-const GRID = 3;
+export const GRID = 3;
 const BUBBLE_MS = 2500;
 
 export type Field = { minX: number; maxX: number; minY: number; maxY: number };

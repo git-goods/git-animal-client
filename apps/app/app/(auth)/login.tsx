@@ -1,4 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import {
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withDelay,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
 import { Image, Pressable, Text, TextInput, View } from 'react-native';
 import { colors } from '@gitanimals/ui-tailwind/theme';
@@ -6,6 +15,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PixelBox, PixelButton, PixelSprite, PixelText } from '../../src/ui/pixel';
 import { FarmBackground } from '../../src/home/FarmBackground';
 import { personaImageUrl } from '../../src/home/pickHomePets';
+import { AnimatedView, GRID } from '../../src/home/WanderingPet';
 import { useAuth } from '../../src/auth/AuthProvider';
 import { loginWithGithub } from '../../src/auth/githubLogin';
 import { FONT } from '../../src/ui/pixel/glyph';
@@ -98,6 +108,26 @@ function GithubLoginButton() {
   );
 }
 
+// 홈 펫처럼 3px 격자로 두 번 통통 뛰고 잠깐 쉰다
+function HoppingChick() {
+  const reducedMotion = useReducedMotion();
+  const hop = useSharedValue(0);
+
+  useEffect(() => {
+    if (reducedMotion) return;
+    const once = [withTiming(-GRID * 2, { duration: 250 }), withTiming(0, { duration: 250 })];
+    hop.value = withRepeat(withSequence(...once, ...once, withDelay(1500, withTiming(0, { duration: 0 }))), -1);
+  }, [reducedMotion, hop]);
+
+  const style = useAnimatedStyle(() => ({ transform: [{ translateY: Math.round(hop.value / GRID) * GRID }] }));
+
+  return (
+    <AnimatedView style={style}>
+      <PixelSprite source={personaImageUrl('LITTLE_CHICK')} maxWidth={140} maxHeight={140} />
+    </AnimatedView>
+  );
+}
+
 export default function Login() {
   const insets = useSafeAreaInsets();
 
@@ -107,7 +137,7 @@ export default function Login() {
       <CenterLogo>
         {/* 피그마 108px 병아리의 오른쪽 아래 모서리(로고 기준 293, 40)에 맞춘다. 108 은 140px 원본의 정수배가 아니라 1배로 그린다 */}
         <View style={{ position: 'absolute', left: 153, top: -100 }}>
-          <PixelSprite source={personaImageUrl('LITTLE_CHICK')} maxWidth={140} maxHeight={140} />
+          <HoppingChick />
         </View>
       </CenterLogo>
       {/* 피그마 버튼 아래 끝은 화면 아래에서 116px(홈 인디케이터 34 포함) */}
