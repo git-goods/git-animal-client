@@ -33,5 +33,11 @@
   "engines": {
     "node": ">=18",
     "pnpm": ">=9.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@gitanimals/app>react": "19.3.0",
+      "@gitanimals/app>@types/react": "~19.3.0"
+    }
   }
 }

@@ -5,6 +5,7 @@ import { PersonaSchema } from './schema';
 const GetAllPersonasResponseSchema = z.object({
   id: z.string(),
   name: z.string(),
+  totalContributions: z.string(),
   personas: z.array(PersonaSchema),
 });
 
