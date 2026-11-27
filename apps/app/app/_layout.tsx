@@ -9,8 +9,7 @@ import { AuthProvider, useAuth } from '../src/auth/AuthProvider';
 
 SplashScreen.preventAutoHideAsync();
 
-// 로그인 후 첫 화면. Task 6 에서 '(tabs)' 로 바꾼다.
-const HOME_ROUTE = 'index';
+const HOME_ROUTE = '(tabs)';
 
 function AuthStack() {
   const { status } = useAuth();

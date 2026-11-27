@@ -5,6 +5,7 @@ const mockLoadData = jest.fn();
 jest.mock('@shopify/react-native-skia', () => ({
   Canvas: 'Canvas',
   Image: 'SkiaImage',
+  BlendColor: 'BlendColor',
   FilterMode: { Nearest: 1 },
   MipmapMode: { None: 0 },
   Skia: { Image: { MakeImageFromEncoded: jest.fn() } },
@@ -39,5 +40,21 @@ describe('PixelSprite', () => {
     await render(<PixelSprite source="x" maxWidth={300} maxHeight={300} />);
     await waitFor(() => expect(screen.toJSON()).not.toBeNull());
     expect(JSON.stringify(screen.toJSON())).toContain('"width":280');
+  });
+
+  it('tintColor 를 srcIn 색 필터로 전달한다', async () => {
+    mockLoadData.mockResolvedValue({ width: () => 16, height: () => 16 });
+    await render(<PixelSprite source="x" maxWidth={48} maxHeight={48} tintColor="#ffe55c" />);
+    await waitFor(() => expect(screen.toJSON()).not.toBeNull());
+    const json = JSON.stringify(screen.toJSON());
+    expect(json).toContain('"color":"#ffe55c"');
+    expect(json).toContain('"mode":"srcIn"');
+  });
+
+  it('tintColor 가 없으면 색 필터를 그리지 않는다', async () => {
+    mockLoadData.mockResolvedValue({ width: () => 16, height: () => 16 });
+    await render(<PixelSprite source="x" maxWidth={48} maxHeight={48} />);
+    await waitFor(() => expect(screen.toJSON()).not.toBeNull());
+    expect(JSON.stringify(screen.toJSON())).not.toContain('srcIn');
   });
 });

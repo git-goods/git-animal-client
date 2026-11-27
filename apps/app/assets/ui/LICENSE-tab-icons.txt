@@ -1,0 +1,1 @@
+tab-*.png: drawn for GitAnimals, CC0
