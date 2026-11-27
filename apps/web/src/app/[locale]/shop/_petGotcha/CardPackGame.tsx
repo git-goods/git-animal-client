@@ -22,6 +22,10 @@ const TIER_RANK: Record<AnimalTierType, number> = { EX: 0, S_PLUS: 1, A_PLUS: 2,
 const tierOf = (p: GotchaResult) => getAnimalTierInfo(Number(p.dropRate.replace('%', '')));
 const isRare = (p: GotchaResult) => tierOf(p) === 'EX' || tierOf(p) === 'S_PLUS';
 
+// 레어 강조(팝·광채·컨페티)는 모두 이 값에 맞춘다 — 뒷면이 보이는 동안 터지면 등급이 미리 새어나간다
+const FLIP_DURATION_S = 0.5;
+const RARE_EMPHASIS_DELAY_MS = FLIP_DURATION_S * 1000;
+
 type Phase = 'pack' | 'opening' | 'revealing' | 'finale' | 'done';
 
 interface Props {
@@ -82,17 +86,23 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
         return next;
       });
       const rare = isRare(res[i]);
-      if (rare) {
-        doShake();
-        fireConfetti({
-          particleCount: 50,
-          spread: 70,
-          startVelocity: 38,
-          origin: { y: 0.5 },
-          colors: [TIER_GLOW[tierOf(res[i])], '#ffffff'],
-        });
+      if (!rare) {
+        await wait(150);
+        if (skippedRef.current) return;
+        continue;
       }
-      await wait(rare ? 340 : 150);
+      // 앞면이 보인 뒤에 강조 — 뒷면 상태에서 글로우/컨페티가 터지면 등급이 미리 새어나간다
+      await wait(RARE_EMPHASIS_DELAY_MS);
+      if (skippedRef.current) return;
+      doShake();
+      fireConfetti({
+        particleCount: 50,
+        spread: 70,
+        startVelocity: 38,
+        origin: { y: 0.5 },
+        colors: [TIER_GLOW[tierOf(res[i])], '#ffffff'],
+      });
+      await wait(340);
       if (skippedRef.current) return;
     }
 
@@ -149,23 +159,37 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
       className="relative flex h-full min-h-[560px] w-full flex-col items-center justify-center overflow-hidden"
       onClick={handleStageClick}
     >
-      {/* 닫힌 덱(×10) */}
-      <AnimatePresence>
-        {phase === 'pack' && (
+      {/* 닫힌 덱(×10) — 응답 대기(opening) 동안에도 남겨 정적인 빈 화면을 만들지 않는다 */}
+      {/* popLayout — 사라지는 덱이 자리를 차지하면 그리드가 밀렸다가 튄다 */}
+      <AnimatePresence mode="popLayout">
+        {(phase === 'pack' || phase === 'opening') && (
           <motion.button
             type="button"
             key="deck"
             className="relative z-10"
+            // disabled 를 쓰면 포커스가 다이얼로그 밖으로 빠진다 — openPack 의 phase 가드로 막는다
+            aria-disabled={phase === 'opening'}
             onClick={(e) => {
               e.stopPropagation();
               openPack();
             }}
-            aria-label="open pack"
+            aria-label={t('open-pack')}
             initial={{ scale: 0.9, opacity: 0 }}
-            animate={reduce ? { scale: 1, opacity: 1 } : { scale: 1, opacity: 1, y: [0, -10, 0] }}
+            animate={
+              reduce
+                ? { scale: 1, opacity: 1 }
+                : phase === 'opening'
+                  ? { scale: [1, 1.06, 1], opacity: 1, rotate: [0, -2, 2, 0], y: 0 }
+                  : { scale: 1, opacity: 1, y: [0, -10, 0] }
+            }
             exit={{ scale: 1.15, opacity: 0, transition: { duration: 0.2 } }}
-            transition={{ y: { duration: 1.8, repeat: Infinity, ease: 'easeInOut' }, default: { duration: 0.3 } }}
-            whileHover={{ scale: 1.05 }}
+            transition={{
+              y: phase === 'opening' ? { duration: 0.2 } : { duration: 1.8, repeat: Infinity, ease: 'easeInOut' },
+              scale: phase === 'opening' ? { duration: 0.6, repeat: Infinity } : { duration: 0.3 },
+              rotate: { duration: 0.6, repeat: Infinity },
+              default: { duration: 0.3 },
+            }}
+            whileHover={phase === 'pack' ? { scale: 1.05 } : undefined}
           >
             <CardDeck />
           </motion.button>
@@ -173,7 +197,7 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
       </AnimatePresence>
 
       {/* 개봉 순간 — 중앙에서 부드럽게 퍼지는 빛 (전체 화이트 플래시 대신) */}
-      {phase === 'opening' && (
+      {phase === 'revealing' && (
         <motion.div
           className="pointer-events-none absolute left-1/2 top-1/2 z-20 h-[340px] w-[340px] -translate-x-1/2 -translate-y-1/2"
           initial={{ opacity: 0.6, scale: 0.2 }}
@@ -183,8 +207,8 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
         />
       )}
 
-      {/* 카드 그리드 */}
-      {phase !== 'pack' && (
+      {/* 카드 그리드 — 결과 도착 후에만 펼친다 */}
+      {phase !== 'pack' && phase !== 'opening' && (
         <motion.div className="z-10 grid grid-cols-5 gap-[14px] px-4 mobile:gap-[6px]" animate={shake}>
           {Array.from({ length: 10 }).map((_, i) => (
             <PackCard
@@ -209,18 +233,23 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
+            {/* 스크림 — 없으면 확대 카드가 그리드에 파묻혀 '잘못 놓인 카드'처럼 보인다 */}
+            <div className="absolute inset-0 bg-black/75" />
             <motion.div
-              className="relative w-[260px] max-w-[70vw]"
+              className="relative w-[320px] max-w-[75vw]"
               initial={{ scale: 0.3, y: 40, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
               transition={{ type: 'spring', stiffness: 140, damping: 13 }}
             >
               {isRare(best) && (
                 <motion.div
-                  className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2"
+                  className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[420px] w-[420px]"
                   animate={{ rotate: 360 }}
                   transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+                  // rotate 가 transform 을 덮어써 Tailwind translate 가 사라지므로 motion 값으로 중앙 정렬
                   style={{
+                    x: '-50%',
+                    y: '-50%',
                     background: `conic-gradient(${TIER_GLOW[tierOf(best)]}00, ${TIER_GLOW[tierOf(best)]}88, ${TIER_GLOW[tierOf(best)]}00, ${TIER_GLOW[tierOf(best)]}88, ${TIER_GLOW[tierOf(best)]}00)`,
                     borderRadius: '9999px',
                     maskImage: 'radial-gradient(circle, transparent 32%, black 34%, transparent 70%)',
@@ -234,7 +263,7 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
       </AnimatePresence>
 
       {/* 안내 문구 */}
-      <div className="absolute bottom-6 left-0 w-full text-center">
+      <div className="absolute bottom-6 left-0 z-40 w-full text-center">
         {phase === 'pack' && <p className="glyph16-regular text-white/80">{t('open-pack')}</p>}
         {phase === 'opening' && <p className="glyph16-regular text-white/60">{t('gotcha-in-progress')}</p>}
         {(phase === 'revealing' || phase === 'finale') && (
@@ -306,6 +335,7 @@ function PackCard({
           className="pointer-events-none absolute -inset-1.5 -z-10 rounded-2xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          transition={{ duration: 0.35, delay: FLIP_DURATION_S }}
           style={{
             boxShadow: `0 0 ${isBest ? 28 : 18}px ${isBest ? 8 : 4}px ${TIER_GLOW[tier]}`,
             background: `${TIER_GLOW[tier]}22`,
@@ -316,7 +346,10 @@ function PackCard({
         className="relative h-full w-full [transform-style:preserve-3d]"
         initial={false}
         animate={{ rotateY: isFlipped ? 180 : 0, scale: isFlipped && rare ? [1, 1.16, 1] : 1 }}
-        transition={{ rotateY: { duration: 0.5, ease: 'easeInOut' }, scale: { duration: 0.45 } }}
+        transition={{
+          rotateY: { duration: FLIP_DURATION_S, ease: 'easeInOut' },
+          scale: { duration: 0.45, delay: FLIP_DURATION_S / 2 },
+        }}
       >
         <div className="absolute h-full w-full [backface-visibility:hidden]">
           <AnimalCardBack tier="S_PLUS" />
