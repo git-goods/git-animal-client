@@ -8,6 +8,7 @@ export const colors = {
   black: {
     DEFAULT: COLORS.black,
     '100': COLORS.black_100,
+    '95': COLORS.black_95,
     '90': COLORS.black_90,
     '75': COLORS.black_75,
     '50': COLORS.black_50,

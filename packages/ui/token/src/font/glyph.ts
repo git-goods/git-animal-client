@@ -79,6 +79,13 @@ export const GLYPH = {
       lineHeight: '150%',
       letterSpacing: '-0.3px',
     },
+    bold: {
+      fontFamily: 'Product Sans',
+      fontSize: '22px',
+      fontWeight: '700',
+      lineHeight: '120%',
+      letterSpacing: '-0.3px',
+    },
   },
   glyph20: {
     regular: {
@@ -154,6 +161,13 @@ export const GLYPH = {
       lineHeight: '150%',
       letterSpacing: '-0.3px',
     },
+    bold: {
+      fontFamily: 'Product Sans',
+      fontSize: '14px',
+      fontWeight: '700',
+      lineHeight: '120%',
+      letterSpacing: '-0.3px',
+    },
   },
   glyph12: {
     regular: {
@@ -161,6 +175,13 @@ export const GLYPH = {
       fontSize: '12px',
       fontWeight: '400',
       lineHeight: '150%',
+      letterSpacing: '-0.3px',
+    },
+    bold: {
+      fontFamily: 'Product Sans',
+      fontSize: '12px',
+      fontWeight: '700',
+      lineHeight: '120%',
       letterSpacing: '-0.3px',
     },
   },
