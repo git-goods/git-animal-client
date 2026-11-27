@@ -1,41 +1,30 @@
-This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
+# app 작업 계약
 
-## Expo has changed — do not trust your training data
+이 앱은 `@gitanimals/app`이라는 Expo(expo-router) 모바일 앱이다. 제품 설명은 저장소
+루트 문서에 두고, 이 파일에는 작업 시 필요한 조건만 둔다.
 
-Expo ships breaking changes every SDK release. APIs you remember are likely renamed, moved, or removed. Before writing any code that touches an Expo, EAS, or React Native API:
-
-1. Read the major version of the `expo` package in `package.json`.
-2. Fetch the matching versioned docs: `https://docs.expo.dev/versions/v<major>.0.0/`
-3. For anything else, fetch https://docs.expo.dev/llms.txt — an index of all Expo docs with corrections to common LLM misconceptions. Follow its links to the specific page you need; never answer from memory.
-
-## Commands
-
-Use `bunx` instead of `npx` if the project uses bun (`bun.lock` present).
+## 명령
 
 ```bash
-npx expo install <package>  # ALWAYS use instead of npm/yarn/pnpm/bun add — resolves SDK-compatible versions
-npx expo start              # start the dev server
-npx expo lint               # lint
-npx tsc --noEmit            # typecheck
-npx expo-doctor             # diagnose dependency and config issues
-npx expo install --fix      # fix incompatible package versions
+pnpm --filter @gitanimals/app start
+pnpm --filter @gitanimals/app test
+pnpm --filter @gitanimals/app type-check
+pnpm --filter @gitanimals/app lint
 ```
 
-Run lint and typecheck before declaring any task done.
+Expo 호환 네이티브 의존성은 `apps/app`에서 `npx expo install <pkg>`로 추가한다. 그 외
+패키지 관리는 pnpm을 쓴다.
 
-## Navigation & Routing
+## 실제 작업 조건
 
-- Use **Expo Router** for all navigation. Routes live in `src/app/` — every file there is a screen, `_layout.tsx` files define navigators. Keep non-route code (components, hooks, utils) outside `src/app/`.
-- Import `Link`, `router`, and `useLocalSearchParams` from `expo-router`.
-- Docs: https://docs.expo.dev/router/introduction.md
-
-## Building with EAS
-
-Use EAS to build, sign, and submit the app in the cloud (`eas build`, `eas submit`) and to ship over-the-air updates (`eas update`) — no local Xcode or Android Studio required. Run EAS CLI as `bunx eas-cli <command>` in Bun projects, or `npx eas-cli@latest <command>` otherwise; substitute that for bare `eas` in docs examples.
-Docs: https://docs.expo.dev/eas/index.md
-
-## Rules
-
-- If `ios/` and `android/` directories do not exist, they are generated (Continuous Native Generation). Never create or edit them by hand — configure native behavior in `app.json` and config plugins.
-- Expo Go only includes its bundled native modules. After adding a library with native code, the app needs a development build: `npx expo run:ios|android` locally, or `eas build --profile development`.
-- Prefer recommended Expo modules over third-party libraries, and check your available skills before adding dependencies. Docs: https://docs.expo.dev/versions/latest/index.md
+- 라우트는 `app/`에 둔다(`src/app/` 아님). `(auth)`와 `(tabs)` 그룹은 루트 레이아웃의
+  `Stack.Protected`로 보호하므로 새 최상위 라우트는 반드시 가드 안에서 선언한다.
+- 이 앱만 React 19.3을 쓴다. 루트 `pnpm.overrides`로 맞추며 web은 React 18을 유지한다.
+  `src/__tests__/workspace.test.ts`가 react·react-query 사본이 하나인지 확인하므로
+  의존성을 바꾸면 이 테스트를 돌린다.
+- 픽셀 규칙: 둥근 모서리, 블러 그림자, 그라데이션, 이모지, 이탤릭을 쓰지 않는다. 펫 PNG는
+  `PixelSprite`로 정수배 nearest 스케일해 그린다. 색과 크기는 테마 토큰만 쓰고 새 hex를
+  만들지 않는다.
+- 인증 토큰은 `expo-secure-store`에만 저장하고 로그에 남기지 않는다. 개발용 토큰 로그인은
+  `__DEV__`에서만 열고, Login-Secret·Image-Secret 같은 비밀값은 앱에 넣지 않는다.
+- Git 절차와 push 승인은 루트 [`AGENTS.md`](../../AGENTS.md)를 따른다.
