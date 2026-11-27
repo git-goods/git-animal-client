@@ -33,20 +33,15 @@ export const EvolutionResult = ({ isOpen, onClose, result }: MergeResultModalPro
   return (
     <MotionContainer onClose={onClose}>
       <h3 className="glyph24-bold text-white">{t('evolution-result')}</h3>
-      <div className={mergeItemStyle}>
+      <div className="rounded-[16px] border-2 border-solid border-white-alpha-25 bg-white-alpha-25 w-fit">
         <img src={getPersonaImage(result.type)} alt={result.type} width={100} height={100} />
       </div>
-      <div className={resultTextStyle}>
+      <div className="glyph18-bold text-white">
         <p>{snakeToTitleCase(result.type)}</p>
       </div>
     </MotionContainer>
   );
 };
-
-const mergeItemStyle =
-  'rounded-[16px] border-2 border-solid border-white-alpha-25 bg-white-alpha-25 w-fit';
-
-const resultTextStyle = 'glyph18-bold text-white [&>span]:mt-[4px]';
 
 function MotionContainer({ children, onClose }: PropsWithChildren<{ onClose: () => void }>) {
   return (
