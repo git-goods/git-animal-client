@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { TextInput, View } from 'react-native';
 import { PixelButton, PixelPanel, PixelText } from '../../src/ui/pixel';
 import { useAuth } from '../../src/auth/AuthProvider';
@@ -42,12 +44,16 @@ function DevTokenForm() {
 }
 
 export default function Login() {
+  const router = useRouter();
+  const { t } = useTranslation();
+
   return (
     <View className="flex-1 items-center justify-center px-6">
       <PixelPanel source={require('../../assets/ui/panel.png')} style={{ width: '100%' }}>
         <View className="gap-4 p-6">
           <PixelText variant="glyph24" title>GitAnimals</PixelText>
-          {__DEV__ ? <DevTokenForm /> : <PixelText>GitHub 로그인 준비 중</PixelText>}
+          <PixelButton label={t('auth.github_login')} onPress={() => router.push('/github')} />
+          {__DEV__ && <DevTokenForm />}
         </View>
       </PixelPanel>
     </View>

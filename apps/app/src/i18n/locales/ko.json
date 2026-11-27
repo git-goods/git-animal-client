@@ -35,7 +35,9 @@
     "expires_in": "만료까지",
     "minutes": "분",
     "refresh_token": "토큰 새로고침",
-    "request_new_auth": "새 인증 요청"
+    "request_new_auth": "새 인증 요청",
+    "github_login": "GitHub 로그인",
+    "login_failed": "로그인하지 못했어요. 닫고 다시 시도해 주세요."
   },
   "home": {
     "title": "GitAnimals Webview - 홈",
