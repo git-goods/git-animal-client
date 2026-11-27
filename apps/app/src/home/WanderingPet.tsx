@@ -22,7 +22,10 @@ const AnimatedView = Animated.View as unknown as ComponentType<
 export const PET_SIZE = 140;
 const GRID = 3;
 
-const snap = (v: number) => Math.round(v / GRID) * GRID;
+const snap = (v: number) => {
+  'worklet';
+  return Math.round(v / GRID) * GRID;
+};
 const between = (min: number, max: number) => min + Math.random() * (max - min);
 
 type Props = {
@@ -42,6 +45,7 @@ export function WanderingPet({ persona, stageWidth, onError }: Props) {
   useEffect(() => {
     if (reducedMotion || maxX === 0) return;
     let active = true;
+    x.value = snap(between(0, maxX));
 
     const rest = () => {
       bounce.value = 0;
