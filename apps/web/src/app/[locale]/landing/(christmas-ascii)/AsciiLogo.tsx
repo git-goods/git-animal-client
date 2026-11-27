@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 
+// 캔버스 기본 크기(width/height)는 SVG 1358×249 를 COLS·CELL 로 줄인 결과 — 로드 전 레이아웃 밀림 방지
 const LOGO_SRC = '/event/christmas/christmas-logo.svg';
 const COLS = 150;
 const CELL_W = 4.5;
@@ -75,6 +76,8 @@ export function AsciiLogo({ className }: { className?: string }) {
   return (
     <canvas
       ref={canvasRef}
+      width={675}
+      height={124}
       role="img"
       aria-label="Git Animals Christmas"
       className={`block w-full ${className ?? ''}`}

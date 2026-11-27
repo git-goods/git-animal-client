@@ -29,6 +29,14 @@ describe('getTreeLayout', () => {
   });
 });
 
+describe('getTreeLayout 모바일 판정', () => {
+  test('스크롤바 때문에 캔버스가 768 이하여도 뷰포트가 데스크톱이면 데스크톱 배치', () => {
+    const l = getTreeLayout(760, 900, false);
+    expect(l.centerX).not.toBe(380);
+    expect(l.fs).toBe(12);
+  });
+});
+
 describe('asciiBox', () => {
   test('영문 라벨', () => {
     expect(asciiBox('Go To Mypage ->')).toBe(

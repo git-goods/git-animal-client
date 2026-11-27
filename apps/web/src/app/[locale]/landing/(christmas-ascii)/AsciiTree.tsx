@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import { getTreeLayout } from './layout';
+import { getTreeLayout, MOBILE_MAX } from './layout';
 import { createTreeEngine } from './tree-engine';
 
 const TREE_KEY = 'classic';
@@ -26,6 +26,7 @@ export function AsciiTree({ link, hintToQr, hintToTree, className }: AsciiTreePr
     if (!canvas) return;
     const engine = createTreeEngine();
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mobileQuery = window.matchMedia(`(max-width: ${MOBILE_MAX}px)`);
     // 첫 진입부터 완성된 트리 — 조립 애니메이션 없음
     const anim = { p: 0, drop: 1 };
     const t0 = performance.now();
@@ -57,7 +58,7 @@ export function AsciiTree({ link, hintToQr, hintToTree, className }: AsciiTreePr
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
-      const layout = getTreeLayout(w, h);
+      const layout = getTreeLayout(w, h, mobileQuery.matches);
       if (hintRef.current) hintRef.current.style.left = `${layout.centerX}px`;
 
       engine.draw(ctx, w, h, link, TREE_KEY, {

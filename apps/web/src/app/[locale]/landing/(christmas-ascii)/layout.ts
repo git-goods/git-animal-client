@@ -12,8 +12,9 @@ export interface TreeLayout {
   bloomScale: number;
 }
 
-export function getTreeLayout(w: number, h: number): TreeLayout {
-  if (w <= MOBILE_MAX) {
+// mobile 은 CSS 와 같은 뷰포트 기준으로 받는다 — 캔버스 폭은 스크롤바만큼 좁다
+export function getTreeLayout(w: number, h: number, mobile = w <= MOBILE_MAX): TreeLayout {
+  if (mobile) {
     // 폰(세로/가로 ≥ 2) 기준 값. 덜 길쭉한 태블릿은 로고·버튼 사이에 들어가도록 줄인다
     return { centerX: w / 2, fill: 0.98 * Math.min(1, h / w / 2), treeDrop: -0.01, fs: 9, bloomScale: 0.56 };
   }
