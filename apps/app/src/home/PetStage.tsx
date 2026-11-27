@@ -24,13 +24,14 @@ export function PetStage({ personas, fieldTop, fieldBottom }: Props) {
       pointerEvents="box-none"
       onLayout={(e) => {
         const { width, height } = e.nativeEvent.layout;
-        setField({
-          width,
+        const next = {
           minX: 0,
           maxX: Math.max(0, width - PET_SIZE),
           minY: height * fieldTop,
           maxY: Math.max(height * fieldTop, height * fieldBottom - PET_SIZE),
-        });
+        };
+        // 크기가 그대로면 같은 객체를 둬서 펫 애니메이션이 처음부터 다시 시작되지 않게 한다
+        setField((prev) => (prev && prev.maxX === next.maxX && prev.minY === next.minY && prev.maxY === next.maxY ? prev : next));
       }}
     >
       {pets.length === 0 ? (

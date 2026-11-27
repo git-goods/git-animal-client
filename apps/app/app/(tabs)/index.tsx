@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { colors } from '@gitanimals/ui-tailwind/theme';
@@ -25,6 +26,10 @@ export default function Home() {
   const personas = useQuery({ ...userQueries.allPersonasOptions(username), enabled: !!username });
   const selection = useQuery(homePetsOptions(username));
 
+  const homePets = useMemo(
+    () => pickHomePets(personas.data?.personas ?? [], selection.data ?? null),
+    [personas.data, selection.data],
+  );
   const loading = user.isPending || (!!username && (personas.isPending || selection.isPending));
 
   return (
@@ -32,7 +37,7 @@ export default function Home() {
       <FarmBackground />
       {!user.isError && !loading && user.data && !personas.isError && (
         <PetStage
-          personas={pickHomePets(personas.data?.personas ?? [], selection.data ?? null)}
+          personas={homePets}
           fieldTop={FARM_FIELD.top}
           fieldBottom={FARM_FIELD.bottom}
         />

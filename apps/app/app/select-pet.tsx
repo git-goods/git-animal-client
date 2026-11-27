@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useWindowDimensions, FlatList, Image, Pressable, Text, View } from 'react-native';
 import { Canvas, LinearGradient, Rect, vec } from '@shopify/react-native-skia';
 import { colors } from '@gitanimals/ui-tailwind/theme';
@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { homePetsKey, homePetsOptions, saveHomePets } from '../src/home/homePetSelection';
 import { PetStage } from '../src/home/PetStage';
+import { PET_SIZE } from '../src/home/WanderingPet';
 import { HOME_PET_MAX, personaImageUrl, pickHomePets } from '../src/home/pickHomePets';
 import { toggleSelection } from '../src/home/toggleSelection';
 import { PixelSprite } from '../src/ui/pixel';
@@ -19,14 +20,24 @@ const PREVIEW_HEIGHT = 220;
 const GAP = 4;
 const BG = colors.gray['050'];
 
-// 피그마 banner-pet-select: 고르면 밝은 면 + 테두리, 아니면 어두운 면. 펫 PNG(140) 를 1배로 가운데 두고 잘라 낸다
-function PetCell({ persona, selected, size, onPress }: { persona: Persona; selected: boolean; size: number; onPress: () => void }) {
+// 피그마 banner-pet-select: 고르면 밝은 면 + 테두리, 아니면 어두운 면. 펫 PNG 를 1배로 가운데 두고 잘라 낸다
+const PetCell = memo(function PetCell({
+  persona,
+  selected,
+  size,
+  onToggle,
+}: {
+  persona: Persona;
+  selected: boolean;
+  size: number;
+  onToggle: (id: string) => void;
+}) {
   return (
     <Pressable
       accessibilityRole="checkbox"
       accessibilityState={{ checked: selected }}
       accessibilityLabel={persona.type}
-      onPress={onPress}
+      onPress={() => onToggle(persona.id)}
       style={{
         width: size,
         height: size,
@@ -39,15 +50,15 @@ function PetCell({ persona, selected, size, onPress }: { persona: Persona; selec
         justifyContent: 'center',
       }}
     >
-      <View style={{ position: 'absolute', left: (size - 140) / 2, top: (size - 140) / 2 }}>
-        <PixelSprite source={personaImageUrl(persona.type)} maxWidth={140} maxHeight={140} />
+      <View style={{ position: 'absolute', left: (size - PET_SIZE) / 2, top: (size - PET_SIZE) / 2 }}>
+        <PixelSprite source={personaImageUrl(persona.type)} maxWidth={PET_SIZE} maxHeight={PET_SIZE} />
       </View>
       <View style={{ position: 'absolute', right: 2, top: 57, backgroundColor: colors.black['25'], borderRadius: 12, paddingHorizontal: 8, paddingVertical: 2 }}>
         <Text style={[sans(10, 1.5), { color: colors.white['75'] }]}>{`Lv.${persona.level}`}</Text>
       </View>
     </Pressable>
   );
-}
+});
 
 // 피그마 bottom 의 dim: 위는 투명, 절반부터 배경색
 function Dim({ width }: { width: number }) {
@@ -78,7 +89,7 @@ function SaveButton({ label, disabled, onPress }: { label: string; disabled: boo
         alignItems: 'center',
         justifyContent: 'center',
         opacity: disabled ? 0.5 : 1,
-        boxShadow: '0px 4px 2px rgba(0, 0, 0, 0.25)',
+        boxShadow: `0px 4px 2px ${colors.black['25']}`,
       }}
     >
       <View style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 3, backgroundColor: '#fdfed2' }} />
@@ -106,6 +117,12 @@ export default function SelectPet() {
   const [picked, setPicked] = useState<string[] | null>(null);
   const [saving, setSaving] = useState(false);
   const current = picked ?? initial;
+  const selected = useMemo(() => new Set(current), [current]);
+  const preview = useMemo(() => all.filter((p) => selected.has(p.id)), [all, selected]);
+  const toggle = useCallback(
+    (id: string) => setPicked((prev) => toggleSelection(prev ?? initial, id, HOME_PET_MAX)),
+    [initial],
+  );
   const changed = picked !== null && (picked.length !== initial.length || picked.some((id) => !initial.includes(id)));
 
   const save = async () => {
@@ -142,7 +159,7 @@ export default function SelectPet() {
               <Text style={[sans(15, 1.5, true), { color: colors.white.DEFAULT }]}>{t('selectPet.preview')}</Text>
               <View style={{ height: PREVIEW_HEIGHT, borderRadius: 8, overflow: 'hidden' }}>
                 <Image source={require('../assets/home/preview-bg.png')} style={{ position: 'absolute', width: '100%', height: '100%' }} />
-                <PetStage personas={all.filter((p) => current.includes(p.id))} fieldTop={0} fieldBottom={1} />
+                <PetStage personas={preview} fieldTop={0} fieldBottom={1} />
               </View>
             </View>
             <View className="flex-row items-start justify-between">
@@ -155,12 +172,7 @@ export default function SelectPet() {
           </View>
         }
         renderItem={({ item }) => (
-          <PetCell
-            persona={item}
-            size={cell}
-            selected={current.includes(item.id)}
-            onPress={() => setPicked(toggleSelection(current, item.id, HOME_PET_MAX))}
-          />
+          <PetCell persona={item} size={cell} selected={selected.has(item.id)} onToggle={toggle} />
         )}
       />
       <Dim width={width} />

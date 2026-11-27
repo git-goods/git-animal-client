@@ -14,7 +14,6 @@ import { useTranslation } from 'react-i18next';
 import type { Persona } from '@gitanimals/api';
 import { PixelSprite } from '../ui/pixel';
 import { personaImageUrl } from './pickHomePets';
-import { pickGreeting } from './bubblePlacement';
 import { PetBubble } from './PetBubble';
 
 // reanimated 4.7 타입이 RN 0.88 View 의 children·style 을 잃어서 좁혀서 다시 선언한다
@@ -27,7 +26,7 @@ export const PET_SIZE = 140;
 const GRID = 3;
 const BUBBLE_MS = 2500;
 
-export type Field = { minX: number; maxX: number; minY: number; maxY: number; width: number };
+export type Field = { minX: number; maxX: number; minY: number; maxY: number };
 
 const snap = (v: number) => {
   'worklet';
@@ -102,7 +101,7 @@ export function WanderingPet({ persona, field, onError }: Props) {
 
   const greet = () => {
     const greetings = t('home.greetings', { returnObjects: true }) as string[];
-    setBubble(pickGreeting(greetings));
+    setBubble(greetings[Math.floor(Math.random() * greetings.length)] ?? '');
   };
 
   // 아래에 있는 펫이 앞에 오도록 y 를 zIndex 로 쓴다

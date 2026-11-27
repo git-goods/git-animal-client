@@ -2,11 +2,6 @@
 export const WOOD = {
   outline: '#90625d',
   dark: '#aa7959',
-  mid: '#c49a6c',
-  light: '#dcb98a',
   cream: '#f3e5c2',
   ink: '#6b4b5b',
-  gold: '#eae178',
-  goldDark: '#d4c169',
-  goldEdge: '#b09643',
 } as const;

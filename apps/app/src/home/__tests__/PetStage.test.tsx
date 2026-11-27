@@ -49,11 +49,8 @@ describe('PetStage', () => {
   });
 
   it('이미지 로드에 실패한 펫만 무대에서 빠진다', async () => {
-    mockLoadData.mockImplementation((source: string, _decode: unknown, onError: () => void) => {
-      if (source.endsWith('/PENGUIN')) {
-        onError();
-        return Promise.resolve(null);
-      }
+    mockLoadData.mockImplementation((source: string) => {
+      if (source.endsWith('/PENGUIN')) return Promise.resolve(null);
       return Promise.resolve({ width: () => 140, height: () => 140 });
     });
 

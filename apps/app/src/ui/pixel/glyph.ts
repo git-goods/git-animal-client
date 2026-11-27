@@ -7,7 +7,6 @@ type Weight = 'regular' | 'bold';
 export const FONT = {
   body: 'Galmuri11',
   bodyBold: 'Galmuri11-Bold',
-  title: 'DNFBitBitv2',
   sans: 'ProductSans-Regular',
   sansBold: 'ProductSans-Bold',
 } as const;

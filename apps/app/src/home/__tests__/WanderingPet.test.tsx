@@ -16,11 +16,11 @@ jest.mock('react-native-reanimated', () => ({
   withRepeat: (v: unknown) => v,
 }));
 
-jest.mock('../../ui/pixel', () => ({ WOOD: {}, PixelBox: ({ children }: { children: unknown }) => children, PixelSprite: () => null, PixelText: ({ children }: { children: string }) => require('react').createElement(require('react-native').Text, null, children) }));
+jest.mock('../../ui/pixel', () => ({ PixelSprite: () => null }));
 
 const persona: Persona = { id: 'p1', type: 'PENGUIN', level: '1', visible: true, dropRate: '1', grade: 'DEFAULT' };
 
-const field = { width: 390, minX: 0, maxX: 320, minY: 300, maxY: 600 };
+const field = { minX: 0, maxX: 320, minY: 300, maxY: 600 };
 
 describe('WanderingPet', () => {
   afterEach(() => jest.restoreAllMocks());

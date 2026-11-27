@@ -1,17 +1,15 @@
 import { Text, type TextProps } from 'react-native';
-import { FONT, glyphStyle, type GlyphKey } from './glyph';
+import { glyphStyle, type GlyphKey } from './glyph';
 
 type PixelTextProps = TextProps & {
   variant?: GlyphKey;
   bold?: boolean;
-  title?: boolean;
   className?: string;
 };
 
 export function PixelText({
   variant = 'glyph16',
   bold = false,
-  title = false,
   style,
   ...rest
 }: PixelTextProps) {
@@ -20,7 +18,7 @@ export function PixelText({
   return (
     <Text
       {...rest}
-      style={[base, title && { fontFamily: FONT.title }, style]}
+      style={[base, style]}
     />
   );
 }
