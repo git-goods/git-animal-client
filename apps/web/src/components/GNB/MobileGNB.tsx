@@ -11,8 +11,8 @@ import { ChevronRight, Globe, LogOutIcon, Menu } from 'lucide-react';
 
 import { AdaptiveLink } from '@/components/AdaptiveLink';
 import { RenderLoginButton, RenderLogoutButton } from '@/components/AuthButton';
-import { Link } from '@/i18n/routing';
 import { useClientSession } from '@/hooks/clientAuth';
+import { Link } from '@/i18n/routing';
 
 import { MobileLanguageSelector } from './LanguageSelector';
 import { LOGIN_NAV_MENU_LIST, NON_LOGIN_NAV_MENU_LIST } from './menu.constants';
