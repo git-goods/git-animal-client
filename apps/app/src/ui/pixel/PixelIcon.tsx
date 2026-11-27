@@ -25,5 +25,30 @@ export function PixelIcon({ rows, palette, unit = 3 }: Props) {
   );
 }
 
-export const COIN_ROWS = ['.XXX.', 'XYYYX', 'XYXYX', 'XYYYX', '.XXX.'] as const;
-export const PAW_ROWS = ['.X.X.', 'X...X', '..X..', '.XXX.', '.XXX.'] as const;
+// O 테두리, G 금색, H 반짝임, D 그늘 (Sprout Lands 의 금 상자 색)
+export const COIN_ROWS = [
+  '..OOOO..',
+  '.OGGGGO.',
+  'OGHGGGDO',
+  'OGHGGGDO',
+  'OGGGGGDO',
+  'OGGGGDDO',
+  '.ODDDDO.',
+  '..OOOO..',
+] as const;
+
+// O 테두리, C 크림
+export const PAW_ROWS = [
+  '...OO..OO...',
+  '..OCCOOCCO..',
+  '..OCCOOCCO..',
+  '.OOOO..OOOO.',
+  'OCCO....OCCO',
+  'OCCO....OCCO',
+  '.OO......OO.',
+  '....OOOO....',
+  '...OCCCCO...',
+  '..OCCCCCCO..',
+  '..OCCCCCCO..',
+  '...OOOOOO...',
+] as const;

@@ -11,7 +11,7 @@ import { homePetsKey, homePetsOptions, saveHomePets } from '../src/home/homePetS
 import { PetStage } from '../src/home/PetStage';
 import { HOME_PET_MAX, personaImageUrl, pickHomePets } from '../src/home/pickHomePets';
 import { toggleSelection } from '../src/home/toggleSelection';
-import { PixelBox, PixelButton, PixelSprite, PixelText } from '../src/ui/pixel';
+import { PixelBox, PixelButton, PixelSprite, PixelText, WOOD } from '../src/ui/pixel';
 
 const PREVIEW_HEIGHT = 210;
 const CELL = 70;
@@ -25,10 +25,10 @@ function PetCell({ persona, selected, onPress }: { persona: Persona; selected: b
       onPress={onPress}
       className="flex-1 p-1"
     >
-      <PixelBox tone={selected ? 'paper' : 'dark'} shadow={false}>
+      <PixelBox tone={selected ? 'paper' : 'wood'} shadow={false}>
         <View className="items-center" style={{ opacity: selected ? 1 : 0.6 }}>
           <PixelSprite source={personaImageUrl(persona.type)} maxWidth={CELL} maxHeight={CELL} />
-          <PixelText variant="glyph12" className={selected ? '' : 'text-white'}>{`Lv.${persona.level}`}</PixelText>
+          <PixelText variant="glyph12" style={{ color: WOOD.ink }}>{`Lv.${persona.level}`}</PixelText>
         </View>
       </PixelBox>
     </Pressable>
@@ -67,10 +67,10 @@ export default function SelectPet() {
   };
 
   return (
-    <View className="flex-1 bg-gray-000" style={{ paddingTop: insets.top }}>
+    <View className="flex-1" style={{ paddingTop: insets.top, backgroundColor: WOOD.mid }}>
       <View className="flex-row items-center gap-3 px-4 py-2">
         <PixelButton label="<" onPress={() => router.back()} />
-        <PixelText variant="glyph18" bold className="text-white">{t('selectPet.title')}</PixelText>
+        <PixelText variant="glyph18" bold style={{ color: WOOD.ink }}>{t('selectPet.title')}</PixelText>
       </View>
       <FlatList
         data={all}
@@ -86,8 +86,8 @@ export default function SelectPet() {
               </View>
             </PixelBox>
             <View className="flex-row items-center justify-between">
-              <PixelText variant="glyph14" className="text-white">{t('selectPet.hint')}</PixelText>
-              <PixelText variant="glyph14" bold className="text-white">{`${current.length}/${HOME_PET_MAX}`}</PixelText>
+              <PixelText variant="glyph14" style={{ color: WOOD.ink }}>{t('selectPet.hint')}</PixelText>
+              <PixelText variant="glyph14" bold style={{ color: WOOD.ink }}>{`${current.length}/${HOME_PET_MAX}`}</PixelText>
             </View>
           </View>
         }
@@ -99,7 +99,7 @@ export default function SelectPet() {
           />
         )}
       />
-      <View className="absolute inset-x-0 bottom-0 bg-gray-000 px-4 pt-3" style={{ paddingBottom: insets.bottom + 12 }}>
+      <View className="absolute inset-x-0 bottom-0 px-4 pt-3" style={{ paddingBottom: insets.bottom + 12, backgroundColor: WOOD.mid }}>
         <PixelButton label={t('selectPet.save')} onPress={() => void save()} disabled={!changed || saving} wide />
       </View>
     </View>

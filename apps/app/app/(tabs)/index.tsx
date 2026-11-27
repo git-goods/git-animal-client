@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 import { userQueries } from '@gitanimals/react-query';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { colors } from '@gitanimals/ui-tailwind/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FarmBackground, FARM_FIELD } from '../../src/home/FarmBackground';
 import { homePetsOptions } from '../../src/home/homePetSelection';
@@ -12,7 +11,7 @@ import { pickHomePets } from '../../src/home/pickHomePets';
 import { ProfileBoard } from '../../src/home/ProfileBoard';
 import { RetryNotice } from '../../src/home/RetryNotice';
 import { ScoreBoard } from '../../src/home/ScoreBoard';
-import { PAW_ROWS, PixelBox, PixelIcon, PixelText } from '../../src/ui/pixel';
+import { PAW_ROWS, PixelBox, PixelIcon, PixelText, WOOD } from '../../src/ui/pixel';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -57,8 +56,8 @@ export default function Home() {
           onPress={() => router.push('/select-pet')}
           className="absolute bottom-4 right-4"
         >
-          <PixelBox>
-            <PixelIcon rows={PAW_ROWS} palette={{ X: colors.gray['000'] }} unit={4} />
+          <PixelBox tone="wood">
+            <PixelIcon rows={PAW_ROWS} palette={{ O: WOOD.outline, C: WOOD.cream }} unit={3} />
           </PixelBox>
         </Pressable>
       )}

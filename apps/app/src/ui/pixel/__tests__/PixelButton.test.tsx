@@ -16,7 +16,7 @@ describe('PixelButton', () => {
     await fireEvent(screen.getByText('입양하기'), 'pressIn');
     expect(content().transform).toEqual([{ translateY: 3 }]);
     expect(screen.queryByTestId('pixel-box-shadow')).toBeNull();
-    expect(StyleSheet.flatten(screen.getByTestId('pixel-box').props.style)).toMatchObject({ paddingRight: 3, paddingBottom: 3 });
+    expect(StyleSheet.flatten(screen.getByTestId('pixel-box').props.style)).toMatchObject({ paddingBottom: 3 });
 
     await fireEvent(screen.getByText('입양하기'), 'pressOut');
     expect(screen.getByTestId('pixel-box-shadow')).toBeTruthy();

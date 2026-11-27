@@ -1,12 +1,12 @@
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { PixelBox, PixelText } from '../ui/pixel';
+import { PixelBox, PixelText, WOOD } from '../ui/pixel';
 
 function Score({ label, value }: { label: string; value: string }) {
   return (
     <View className="flex-1 items-center gap-1">
-      <PixelText variant="glyph12" className="text-gray-500">{label}</PixelText>
-      <PixelText variant="glyph18" bold>{value}</PixelText>
+      <PixelText variant="glyph12" style={{ color: WOOD.dark }}>{label}</PixelText>
+      <PixelText variant="glyph18" bold style={{ color: WOOD.ink }}>{value}</PixelText>
     </View>
   );
 }

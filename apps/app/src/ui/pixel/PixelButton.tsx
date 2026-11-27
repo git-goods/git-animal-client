@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { PixelBox } from './PixelBox';
 import { PixelText } from './PixelText';
+import { WOOD } from './palette';
 
 type Props = {
   label: string;
@@ -30,7 +31,7 @@ export function PixelButton({ label, onPress, disabled = false, wide = false }: 
         style={{ transform: [{ translateY: pressed ? SCALE : 0 }], opacity: disabled ? 0.5 : 1 }}
       >
         <PixelBox scale={SCALE} shadow={!pressed}>
-          <PixelText bold style={wide ? { textAlign: 'center' } : undefined}>{label}</PixelText>
+          <PixelText bold style={[{ color: WOOD.ink }, wide && { textAlign: 'center' }]}>{label}</PixelText>
         </PixelBox>
       </View>
     </Pressable>

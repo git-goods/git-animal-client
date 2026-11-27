@@ -16,7 +16,7 @@ jest.mock('react-native-reanimated', () => ({
   withRepeat: (v: unknown) => v,
 }));
 
-jest.mock('../../ui/pixel', () => ({ PixelSprite: () => null, PixelText: ({ children }: { children: string }) => require('react').createElement(require('react-native').Text, null, children) }));
+jest.mock('../../ui/pixel', () => ({ WOOD: {}, PixelBox: ({ children }: { children: unknown }) => children, PixelSprite: () => null, PixelText: ({ children }: { children: string }) => require('react').createElement(require('react-native').Text, null, children) }));
 
 const persona: Persona = { id: 'p1', type: 'PENGUIN', level: '1', visible: true, dropRate: '1', grade: 'DEFAULT' };
 

@@ -1,9 +1,9 @@
 import { Pressable, View } from 'react-native';
 import type { BottomTabBarProps } from 'expo-router/js-tabs';
-import { colors } from '@gitanimals/ui-tailwind/theme';
 import { useTranslation } from 'react-i18next';
 import { PixelSprite } from './PixelSprite';
 import { PixelText } from './PixelText';
+import { WOOD } from './palette';
 
 const SCALE = 3;
 const ICON_SIZE = 16 * SCALE;
@@ -22,20 +22,21 @@ const LABEL_KEYS: Record<string, string> = {
   mypage: 'tabs.mypage',
 };
 
-const SELECTED = colors.brand.canary;
-const UNSELECTED = colors.gray['600'];
+const SELECTED = WOOD.ink;
+const UNSELECTED = WOOD.dark;
 
 export function PixelTabBar({ state, emitter, navigateToTab, insets }: BottomTabBarProps) {
   const { t } = useTranslation();
 
   return (
     <View
-      className="flex-row bg-gray-000"
+      className="flex-row"
       style={{
         paddingTop: SCALE * 2,
         paddingBottom: insets.bottom + SCALE * 3,
         borderTopWidth: SCALE,
-        borderTopColor: colors.gray['400'],
+        borderTopColor: WOOD.outline,
+        backgroundColor: WOOD.light,
       }}
     >
       {state.routes.map((route, index) => {

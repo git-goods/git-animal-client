@@ -8,3 +8,4 @@ export { PixelText } from './PixelText';
 export { nineSlice, type Rect } from './nineSlice';
 export { integerScale } from './scale';
 export { FONT, glyphStyle, type GlyphKey } from './glyph';
+export { WOOD } from './palette';
