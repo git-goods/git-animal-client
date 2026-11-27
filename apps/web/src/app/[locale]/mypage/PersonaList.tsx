@@ -13,9 +13,9 @@ import { NextButton, PrevButton, usePrevNextButtons } from '@/components/EmblaCa
 import { DotButton, useDotButton } from '@/components/EmblaCarousel/EmblaCarouselDotButton';
 import { MemoizedBannerPersonaItem } from '@/components/PersonaItem';
 import { PersonaListToolbar } from '@/components/PersonaListToolbar';
+import { useClientUser } from '@/hooks/clientAuth';
 import type { PersonaFilterState } from '@/hooks/persona/usePersonaListFilter';
 import { usePersonaListFilter } from '@/hooks/persona/usePersonaListFilter';
-import { useClientUser } from '@/hooks/clientAuth';
 
 interface SelectPersonaListContextValue {
   filterState: PersonaFilterState;

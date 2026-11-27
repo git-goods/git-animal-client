@@ -1,9 +1,6 @@
-import { getTranslations } from 'next-intl/server';
 import { cn } from '@gitanimals/ui-tailwind';
-import { FlaskConical } from 'lucide-react';
 
 import GNB from '@/components/GNB/GNB';
-import { Link } from '@/i18n/routing';
 
 import { ProfileSection } from './ProfileSection';
 
@@ -20,24 +17,6 @@ async function MypageLayout({ children }: { children: React.ReactNode }) {
 }
 
 export default MypageLayout;
-
-async function LaboButton() {
-  const t = await getTranslations('Mypage');
-  return (
-    <Link href="/laboratory" className={laboButtonStyle}>
-      <FlaskConical />
-      {t('laboratory')}
-    </Link>
-  );
-}
-
-const laboButtonStyle = cn(
-  'absolute bg-white-alpha-10 [backdrop-filter:blur(7px)] rounded-[8px] px-[20px] py-[10px]',
-  'flex items-center gap-[10px] glyph16-regular text-white',
-  'top-[64px] right-[200px]',
-  'pc:top-[12px] pc:right-[40px] pc:px-[12px] pc:py-[8px] pc:[&>svg]:w-[18px] pc:[&>svg]:h-[18px]',
-  'mobile:hidden',
-);
 
 const mainStyle = cn(
   'grid gap-[80px] grid-cols-[222px_1fr] relative z-aboveDefault px-[200px] py-[120px] min-h-[var(--main-min-height)]',

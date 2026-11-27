@@ -43,8 +43,7 @@ export const EvolutionResult = ({ isOpen, onClose, result }: MergeResultModalPro
   );
 };
 
-const mergeItemStyle =
-  'rounded-[16px] border-2 border-solid border-white-alpha-25 bg-white-alpha-25 w-fit';
+const mergeItemStyle = 'rounded-[16px] border-2 border-solid border-white-alpha-25 bg-white-alpha-25 w-fit';
 
 const resultTextStyle = 'glyph18-bold text-white [&>span]:mt-[4px]';
 
