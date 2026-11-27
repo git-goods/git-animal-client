@@ -43,9 +43,10 @@ export function WanderingPet({ persona, stageWidth, onError }: Props) {
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    if (reducedMotion || maxX === 0) return;
-    let active = true;
+    if (maxX === 0) return;
     x.value = snap(between(0, maxX));
+    if (reducedMotion) return;
+    let active = true;
 
     const rest = () => {
       bounce.value = 0;

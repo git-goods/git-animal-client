@@ -42,6 +42,13 @@ describe('PixelSprite', () => {
     expect(JSON.stringify(screen.toJSON())).toContain('"width":280');
   });
 
+  it('Nearest 필터와 mipmap 없음으로 샘플링한다', async () => {
+    mockLoadData.mockResolvedValue(image);
+    await render(<PixelSprite source="x" maxWidth={300} maxHeight={300} />);
+    await waitFor(() => expect(screen.toJSON()).not.toBeNull());
+    expect(JSON.stringify(screen.toJSON())).toContain('"sampling":{"filter":1,"mipmap":0}');
+  });
+
   it('tintColor 를 srcIn 색 필터로 전달한다', async () => {
     mockLoadData.mockResolvedValue({ width: () => 16, height: () => 16 });
     await render(<PixelSprite source="x" maxWidth={48} maxHeight={48} tintColor="#ffe55c" />);

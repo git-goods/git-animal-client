@@ -20,17 +20,18 @@ const TONE = {
 // 모서리 정사각형을 비운 십자 모양을 겹쳐 그려 배경색과 무관하게 계단 모서리를 만든다
 export function PixelBox({ tone = 'paper', scale = 3, shadow = true, className, children }: Props) {
   const s = scale;
+  const edge = shadow ? s : 0;
   const colors = TONE[tone];
 
   return (
-    <View className={className} style={{ paddingRight: s, paddingBottom: s }}>
+    <View className={className} style={shadow ? { paddingRight: s, paddingBottom: s } : undefined}>
       {shadow && (
         <View testID="pixel-box-shadow" pointerEvents="none" className="absolute" style={{ left: s, top: s, right: 0, bottom: 0 }}>
           <View className="absolute bg-gray-000" style={{ left: 0, right: 0, top: s, bottom: s }} />
           <View className="absolute bg-gray-000" style={{ left: s, right: s, top: 0, bottom: 0 }} />
         </View>
       )}
-      <View pointerEvents="none" className="absolute" style={{ left: 0, top: 0, right: s, bottom: s }}>
+      <View pointerEvents="none" className="absolute" style={{ left: 0, top: 0, right: edge, bottom: edge }}>
         <View className={`absolute ${colors.border}`} style={{ left: 0, right: 0, top: s, bottom: s }} />
         <View className={`absolute ${colors.border}`} style={{ left: s, right: s, top: 0, bottom: 0 }} />
         <View className={`absolute ${colors.fill}`} style={{ left: s, right: s, top: s * 2, bottom: s * 2 }} />
