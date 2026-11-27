@@ -14,6 +14,7 @@ import { PET_SIZE } from '../src/home/WanderingPet';
 import { HOME_PET_MAX, personaImageUrl, pickHomePets } from '../src/home/pickHomePets';
 import { toggleSelection } from '../src/home/toggleSelection';
 import { PixelSprite } from '../src/ui/pixel';
+import { AppBar } from '../src/ui/AppBar';
 import { CanaryButton } from '../src/ui/CanaryButton';
 import { sans } from '../src/ui/sans';
 
@@ -114,12 +115,7 @@ export default function SelectPet() {
 
   return (
     <View className="flex-1" style={{ backgroundColor: BG, paddingTop: insets.top }}>
-      <View style={{ height: 44, justifyContent: 'center', alignItems: 'center' }}>
-        <Pressable accessibilityRole="button" accessibilityLabel={t('common.back')} onPress={() => router.back()} style={{ position: 'absolute', left: 16 }} hitSlop={10}>
-          <Image source={require('../assets/ui/chevron-left.png')} style={{ width: 24, height: 24 }} />
-        </Pressable>
-        <Text style={[sans(18, 1.2, true), { color: colors.white }]}>{t('selectPet.title')}</Text>
-      </View>
+      <AppBar title={t('selectPet.title')} />
       <FlatList
         data={all}
         keyExtractor={(p) => p.id}

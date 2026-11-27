@@ -4,12 +4,13 @@ import { colors } from '@gitanimals/ui-tailwind/theme';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { userQueries } from '@gitanimals/react-query';
 import { dropPet, type Persona } from '@gitanimals/api';
+import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { personaImageUrl } from '../../src/home/pickHomePets';
-import { SellDialog } from '../../src/mypage/SellDialog';
 import { cardTier, TIER_LABEL } from '../../src/shop/cardTier';
 import { CanaryButton } from '../../src/ui/CanaryButton';
+import { ConfirmDialog } from '../../src/ui/ConfirmDialog';
 import { PixelSprite } from '../../src/ui/pixel';
 import { fitScale } from '../../src/ui/pixel/scale';
 import { sans } from '../../src/ui/sans';
@@ -45,6 +46,7 @@ const PetCell = memo(function PetCell({ persona, selected, onPress }: { persona:
 // 피그마 943:37912 My page
 export default function MyPage() {
   const { t } = useTranslation();
+  const router = useRouter();
   const insets = useSafeAreaInsets();
   const queryClient = useQueryClient();
   const user = useQuery(userQueries.userOptions());
@@ -81,8 +83,9 @@ export default function MyPage() {
             </View>
           </View>
         </View>
-        {/* ponytail: 설정 화면은 #445 에서 연결 */}
-        <Image source={require('../../assets/ui/settings.png')} style={{ width: 24, height: 24 }} />
+        <Pressable accessibilityRole="button" accessibilityLabel={t('settings.setting')} onPress={() => router.push('/settings')} hitSlop={10}>
+          <Image source={require('../../assets/ui/settings.png')} style={{ width: 24, height: 24 }} />
+        </Pressable>
       </View>
       <FlatList
         data={list}
@@ -117,12 +120,13 @@ export default function MyPage() {
         }
         renderItem={({ item }) => <PetCell persona={item} selected={item.id === current?.id} onPress={setSelectedId} />}
       />
-      <SellDialog
+      <ConfirmDialog
         visible={selling}
-        price={SELL_PRICE}
+        message={t('mypage.sellConfirm', { price: SELL_PRICE })}
+        confirmLabel={t('mypage.sellAction')}
         busy={sell.isPending}
         onCancel={() => setSelling(false)}
-        onSell={() => current && sell.mutate(current.id)}
+        onConfirm={() => current && sell.mutate(current.id)}
       />
     </View>
   );
