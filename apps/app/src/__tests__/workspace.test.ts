@@ -8,7 +8,7 @@ const appRoot = path.resolve(__dirname, '../..');
 const unique = (text: string, pattern: RegExp) => [...new Set(text.match(pattern) ?? [])];
 
 describe('workspace', () => {
-  it('Metro 번들에 워크스페이스 패키지가 들어가고 react 와 @tanstack/react-query 는 사본 하나씩만 들어간다', () => {
+  it('Metro 번들에 @gitanimals/react-query 가 들어가고 react 와 @tanstack/react-query 는 사본 하나씩만 들어간다', () => {
     const outDir = fs.mkdtempSync(path.join(os.tmpdir(), 'app-export-'));
     execSync(
       `npx expo export --platform ios --no-bytecode --dump-sourcemap --output-dir ${outDir}`,
@@ -19,7 +19,7 @@ describe('workspace', () => {
     const mapFile = fs.readdirSync(jsDir).find((file) => file.endsWith('.map'))!;
     const sourceMap = fs.readFileSync(path.join(jsDir, mapFile), 'utf8');
 
-    expect(sourceMap).toContain('packages/ui/token/src/index.ts');
+    expect(sourceMap).toContain('packages/lib/react-query/src');
     expect(unique(sourceMap, /\.pnpm\/react@[\d.]+/g)).toEqual(['.pnpm/react@19.3.0']);
     expect(unique(sourceMap, /\.pnpm\/@tanstack\+react-query@[^/"]+/g)).toHaveLength(1);
 
