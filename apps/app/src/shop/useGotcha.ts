@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { postGotcha, type GotchaResult } from '@gitanimals/api';
-import { userQueries } from '@gitanimals/react-query';
+import { useEffect, useRef } from 'react';
+import { userQueries, usePostGotcha } from '@gitanimals/react-query';
 import { useQueryClient } from '@tanstack/react-query';
 
 export const GOTCHA_PRICE = 1000;
@@ -9,19 +8,16 @@ export const GOTCHA_PRICE = 1000;
 export function useGotcha(count: number) {
   const queryClient = useQueryClient();
   const started = useRef(false);
-  const [state, setState] = useState<{ results?: GotchaResult[]; failed?: boolean }>({});
+  // userKey 는 ['user'] 라 포인트와 펫 목록을 함께 다시 불러온다
+  const { mutate, data, isError } = usePostGotcha({
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: userQueries.userKey() }),
+  });
 
   useEffect(() => {
     if (started.current) return;
     started.current = true;
-    postGotcha({ count })
-      .then((res) => {
-        setState({ results: res.gotchaResults });
-        // userKey 는 ['user'] 라 포인트와 펫 목록을 함께 다시 불러온다
-        void queryClient.invalidateQueries({ queryKey: userQueries.userKey() });
-      })
-      .catch(() => setState({ failed: true }));
-  }, [count, queryClient]);
+    mutate({ count });
+  }, [count, mutate]);
 
-  return state;
+  return { results: data?.gotchaResults, failed: isError };
 }

@@ -13,8 +13,7 @@ import { sans } from '../src/ui/sans';
 // reanimated 4.7 타입이 RN 0.88 View 의 children 을 잃는다 (src/home/WanderingPet.tsx 와 같은 우회)
 const AnimatedView = Animated.View as unknown as ComponentType<ViewProps & { entering?: unknown }>;
 
-// 피그마 card 인스턴스 폭과 카드 사이 간격
-const CARD_W = 108.975;
+// 피그마 카드 사이 간격
 const GAP = 8;
 const ONE_PET_ROWS = [3, 2];
 const TEN_PET_ROWS = [2, 3, 3, 2];
@@ -40,7 +39,7 @@ export default function Gotcha() {
   const done = !!results && (!one || picked !== null);
   const front = (result: GotchaResult) => (
     <AnimatedView entering={FlipInEasyY.duration(400)}>
-      <GameCard type={result.name} dropRate={result.dropRate} width={CARD_W} />
+      <GameCard type={result.name} dropRate={result.dropRate} />
     </AnimatedView>
   );
 
@@ -69,13 +68,13 @@ export default function Gotcha() {
                 onPress={() => setPicked(i)}
                 style={{ opacity: picked !== null && picked !== i ? 0.4 : 1 }}
               >
-                <CardBack width={CARD_W} />
+                <CardBack />
               </Pressable>
             )
           }
         />
       ) : (
-        <CardRows rows={TEN_PET_ROWS} render={(i) => (results?.[i] ? front(results[i]) : <CardBack width={CARD_W} />)} />
+        <CardRows rows={TEN_PET_ROWS} render={(i) => (results?.[i] ? front(results[i]) : <CardBack />)} />
       )}
 
       {/* 피그마에는 없다. 결과를 본 뒤 닫는 방법을 알려 준다 */}
