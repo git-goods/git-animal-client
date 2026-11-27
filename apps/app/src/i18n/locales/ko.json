@@ -249,5 +249,13 @@
     "hint": "홈에 보일 펫을 골라 주세요",
     "save": "저장",
     "preview": "미리보기"
+  },
+  "mypage": {
+    "petsList": "펫 목록",
+    "sell": "{{price}}P 팔기",
+    "merge": "레벨 합치기",
+    "sellConfirm": "펫을 {{price}}포인트에 팔까요?",
+    "sellAction": "팔기",
+    "sellFail": "판매에 실패했어요"
   }
 }
