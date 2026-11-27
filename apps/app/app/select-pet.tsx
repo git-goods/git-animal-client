@@ -25,7 +25,7 @@ function PetCell({ persona, selected, onPress }: { persona: Persona; selected: b
       onPress={onPress}
       className="flex-1 p-1"
     >
-      <PixelBox tone={selected ? 'paper' : 'wood'} shadow={false}>
+      <PixelBox tone={selected ? 'gold' : 'wood'} shadow={false}>
         <View className="items-center" style={{ opacity: selected ? 1 : 0.6 }}>
           <PixelSprite source={personaImageUrl(persona.type)} maxWidth={CELL} maxHeight={CELL} />
           <PixelText variant="glyph12" style={{ color: WOOD.ink }}>{`Lv.${persona.level}`}</PixelText>
