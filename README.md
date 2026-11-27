@@ -54,4 +54,4 @@ GitAnimals 펫들을 쉽게 페이지에서 관리하고, 펫을 뽑을 수 있�
 ### Apps
 
 - 🌐 Web (@gitanimals/web)
-- 👨‍💼 Admin (@gitanimals/admin)
+- 👨‍💼 Admin (@gitanimals/admin-main)
