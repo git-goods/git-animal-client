@@ -5,8 +5,7 @@ import { sans } from './sans';
 type Props = {
   label: string;
   className?: string;
-  // ponytail: 상점 뽑기 버튼은 결과 화면(#436)이 붙기 전까지 누를 곳이 없다
-  onPress?: () => void;
+  onPress: () => void;
   disabled?: boolean;
 };
 

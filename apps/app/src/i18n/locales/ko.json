@@ -192,7 +192,9 @@
     "click-to-close": "결과를 확인하셨다면 화면을 터치해주세요",
     "pet-gotcha-title": "펫 뽑기",
     "draw-one": "펫 1마리 / 1,000 P",
-    "draw-ten": "펫 10마리 / 10,000 P"
+    "draw-ten": "펫 10마리 / 10,000 P",
+    "one-title": "원하는 카드를\n하나 골라 주세요!",
+    "ten-title": "10마리 모두 가질 수 있어요!"
   },
   "shop": {
     "no-mobile-support": "현재 모바일은 지원하지 않습니다. 데스크탑으로 접속해주세요.",

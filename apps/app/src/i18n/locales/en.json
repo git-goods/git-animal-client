@@ -192,7 +192,9 @@
     "click-to-close": "Touch the screen to close.",
     "pet-gotcha-title": "Pet Gotcha",
     "draw-one": "1 Pet / 1,000 P",
-    "draw-ten": "10 Pets / 10,000 P"
+    "draw-ten": "10 Pets / 10,000 P",
+    "one-title": "Choose one card\nyou want!",
+    "ten-title": "You can have all 10 pets!"
   },
   "shop": {
     "no-mobile-support": "Currently, mobile is not supported. Please connect to the desktop.",
