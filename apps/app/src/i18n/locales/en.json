@@ -53,7 +53,8 @@
     ],
     "banner_message": "WebView with Token Manager is working!",
     "status": "Status",
-    "user_profile": "User Profile"
+    "user_profile": "User Profile",
+    "no_visible_pets": "No visible pets"
   },
   "about": {
     "title": "About GitAnimals",

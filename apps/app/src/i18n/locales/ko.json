@@ -7,7 +7,7 @@
     "login": "로그인"
   },
   "common": {
-    "loading": "로딩중...",
+    "loading": "불러오는 중...",
     "retry": "다시시도",
     "refresh": "새로고침",
     "close": "닫기",
@@ -53,7 +53,8 @@
     ],
     "banner_message": "토큰 매니저가 포함된 WebView가 작동하고 있습니다!",
     "status": "상태",
-    "user_profile": "사용자 프로필"
+    "user_profile": "사용자 프로필",
+    "no_visible_pets": "보이는 펫이 없어요"
   },
   "about": {
     "title": "GitAnimals 소개",
