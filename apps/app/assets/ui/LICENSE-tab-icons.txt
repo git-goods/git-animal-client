@@ -1,1 +1,1 @@
-tab-*.png: drawn for GitAnimals, CC0
+tab-*.png: lucide icons (house, store, gamepad-2, user-round) from the place-su Figma, ISC License, https://lucide.dev

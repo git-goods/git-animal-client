@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { getUser } from '@gitanimals/api';
+import { userQueries } from '@gitanimals/react-query';
 import { installInterceptors } from './interceptors';
 import { normalizeToken, tokenStore } from './tokenStore';
 
@@ -23,9 +23,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signOut = useCallback(async () => {
     tokenRef.current = null;
-    await tokenStore.clear();
-    queryClient.clear();
-    setStatus('signedOut');
+    // 저장소 삭제가 실패해도 화면은 로그아웃 상태로 보낸다
+    try {
+      await tokenStore.clear();
+    } finally {
+      queryClient.clear();
+      setStatus('signedOut');
+    }
   }, [queryClient]);
 
   const signOutRef = useRef(signOut);
@@ -36,13 +40,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // 401 이면 로그아웃, 그 밖의 오류(오프라인 등)는 토큰을 유지한 채 로그인 상태로 둔다.
   const validate = useCallback(async () => {
     try {
-      await getUser();
+      await queryClient.fetchQuery(userQueries.userOptions());
       setStatus('signedIn');
     } catch (e) {
       if (isUnauthorized(e)) await signOutRef.current();
       else setStatus('signedIn');
     }
-  }, []);
+  }, [queryClient]);
 
   useEffect(() => {
     installInterceptors({
@@ -79,7 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await tokenStore.set(normalized);
       tokenRef.current = normalized;
       try {
-        await getUser();
+        await queryClient.fetchQuery(userQueries.userOptions());
         setStatus('signedIn');
       } catch (e) {
         if (isUnauthorized(e)) {
@@ -89,7 +93,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setStatus('signedIn');
       }
     },
-    [],
+    [queryClient],
   );
 
   const value = useMemo(() => ({ status, signIn, signOut }), [status, signIn, signOut]);

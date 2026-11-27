@@ -21,9 +21,18 @@ describe('pickHomePets', () => {
     expect(result.map((p) => p.id)).toEqual(['3', '2', '1']);
   });
 
-  it('7마리면 5마리만 남긴다', () => {
-    const many = Array.from({ length: 7 }, (_, i) => persona(String(i), String(i)));
-    expect(pickHomePets(many)).toHaveLength(5);
+  it('12마리면 10마리만 남긴다', () => {
+    const many = Array.from({ length: 12 }, (_, i) => persona(String(i), String(i)));
+    expect(pickHomePets(many)).toHaveLength(10);
+  });
+
+  it('앱에서 고른 펫이 있으면 visible 과 상관없이 그것만 쓴다', () => {
+    const result = pickHomePets([persona('1', '5'), persona('2', '9', false), persona('3', '1')], ['2', '3']);
+    expect(result.map((p) => p.id)).toEqual(['2', '3']);
+  });
+
+  it('고른 목록이 비어 있으면 아무 펫도 없다', () => {
+    expect(pickHomePets([persona('1', '5')], [])).toEqual([]);
   });
 
   it('빈 배열이면 빈 배열', () => {

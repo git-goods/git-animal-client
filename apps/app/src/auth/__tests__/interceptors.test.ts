@@ -53,6 +53,15 @@ describe('installInterceptors', () => {
     expect(onUnauthorized).not.toHaveBeenCalled();
   });
 
+  it('예전 토큰으로 나간 요청의 401 은 onUnauthorized 를 부르지 않는다', async () => {
+    const onUnauthorized = jest.fn();
+    load()({ getToken: () => 'new', onUnauthorized });
+    const rejected: Rejected = mockSetResponse.mock.calls[0][1];
+    const error = { response: { status: 401 }, config: { headers: { Authorization: 'Bearer old' } } } as unknown as AxiosError;
+    await expect(rejected(error)).rejects.toBe(error);
+    expect(onUnauthorized).not.toHaveBeenCalled();
+  });
+
   it('두 번 불러도 한 번만 등록한다', () => {
     const install = load();
     install({ getToken: () => null, onUnauthorized: jest.fn() });

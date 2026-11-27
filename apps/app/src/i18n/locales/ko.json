@@ -57,7 +57,17 @@
     "banner_message": "토큰 매니저가 포함된 WebView가 작동하고 있습니다!",
     "status": "상태",
     "user_profile": "사용자 프로필",
-    "no_visible_pets": "보이는 펫이 없어요"
+    "no_visible_pets": "보이는 펫이 없어요",
+    "contribution": "기여",
+    "greetings": [
+      "안녕!",
+      "반가워!",
+      "오늘도 커밋했어?",
+      "놀아 줘!",
+      "배고파…",
+      "좋은 하루 보내!"
+    ],
+    "pet_count": "보유 펫"
   },
   "about": {
     "title": "GitAnimals 소개",
@@ -225,5 +235,11 @@
     "shop": "상점",
     "game": "게임",
     "mypage": "마이"
+  },
+  "selectPet": {
+    "title": "홈 펫 고르기",
+    "hint": "홈에 보일 펫을 골라 주세요",
+    "save": "저장",
+    "preview": "미리보기"
   }
 }

@@ -11,8 +11,12 @@ export function extractJwt(url: string): string | null {
   const query = CALLBACK.exec(url)?.[1];
   if (!query) return null;
   for (const pair of query.split('&')) {
-    const [key, value] = pair.split('=');
-    if (key === 'jwt' && value) return decodeURIComponent(value);
+    const eq = pair.indexOf('=');
+    if (eq < 0) continue;
+    const key = pair.slice(0, eq);
+    const value = pair.slice(eq + 1);
+    // form 인코딩(`Bearer+eyJ...`)의 + 도 공백으로 본다. JWT(base64url)에는 + 가 없다
+    if (key === 'jwt' && value) return decodeURIComponent(value.replace(/\+/g, ' '));
   }
   return null;
 }

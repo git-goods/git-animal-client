@@ -13,6 +13,11 @@ jest.mock('@gitanimals/react-query', () => ({
 jest.mock('react-native-safe-area-context', () => ({ useSafeAreaInsets: () => ({ top: 0 }) }));
 jest.mock('@shopify/react-native-skia', () => ({}));
 jest.mock('../PetStage', () => ({ PetStage: () => null }));
+jest.mock('../ScoreBoard', () => ({ ScoreBoard: () => null }));
+jest.mock('expo-router', () => ({ useRouter: () => ({ push: jest.fn() }) }));
+jest.mock('@react-native-async-storage/async-storage', () =>
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
+);
 
 const mockUseQuery = useQuery as jest.Mock;
 const refetchUser = jest.fn();
@@ -31,7 +36,7 @@ describe('Home 조회 실패', () => {
 
   it('사용자 조회가 실패하면 로딩 대신 다시 시도 버튼을 보여주고 누르면 refetch 한다', async () => {
     mockUseQuery.mockImplementation((o: { queryKey: string[] }) =>
-      o.queryKey[0] === 'user' ? failed(refetchUser) : { isPending: true, isError: false, refetch: refetchPersonas },
+      o.queryKey[0] === 'homePets' ? { isPending: false, data: null } : o.queryKey[0] === 'user' ? failed(refetchUser) : { isPending: true, isError: false, refetch: refetchPersonas },
     );
     await render(<Home />);
     expect(screen.queryByText(i18n.t('common.loading'))).toBeNull();
@@ -41,7 +46,7 @@ describe('Home 조회 실패', () => {
 
   it('펫 조회가 실패하면 펫 없음 대신 다시 시도 버튼을 보여주고 누르면 refetch 한다', async () => {
     mockUseQuery.mockImplementation((o: { queryKey: string[] }) =>
-      o.queryKey[0] === 'user' ? userOk : failed(refetchPersonas),
+      o.queryKey[0] === 'homePets' ? { isPending: false, data: null } : o.queryKey[0] === 'user' ? userOk : failed(refetchPersonas),
     );
     await render(<Home />);
     expect(screen.queryByText(i18n.t('home.no_visible_pets'))).toBeNull();

@@ -9,7 +9,6 @@ module.exports = {
       colors,
       fontFamily: {
         body: ['Galmuri11'],
-        title: ['DNFBitBitv2'],
       },
     },
     borderRadius: { none: '0' },

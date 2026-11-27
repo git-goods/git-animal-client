@@ -1,5 +1,4 @@
 import {
-  BlendColor,
   Canvas,
   FilterMode,
   Image as SkiaImage,
@@ -12,11 +11,10 @@ type Props = {
   source: string | number;
   maxWidth: number;
   maxHeight: number;
-  tintColor?: string;
   onError?: () => void;
 };
 
-export function PixelSprite({ source, maxWidth, maxHeight, tintColor, onError }: Props) {
+export function PixelSprite({ source, maxWidth, maxHeight, onError }: Props) {
   const image = useSkiaImage(source, onError);
   if (!image) return null;
 
@@ -36,9 +34,7 @@ export function PixelSprite({ source, maxWidth, maxHeight, tintColor, onError }:
         width={width}
         height={height}
         sampling={{ filter: FilterMode.Nearest, mipmap: MipmapMode.None }}
-      >
-        {tintColor && <BlendColor color={tintColor} mode="srcIn" />}
-      </SkiaImage>
+      />
     </Canvas>
   );
 }

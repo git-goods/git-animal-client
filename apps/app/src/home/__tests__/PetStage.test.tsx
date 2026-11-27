@@ -44,21 +44,18 @@ describe('PetStage', () => {
   beforeEach(() => mockLoadData.mockReset());
 
   it('펫이 0마리면 안내 문구를 보여준다', async () => {
-    await render(<PetStage personas={[]} />);
+    await render(<PetStage personas={[]} fieldTop={0.4} fieldBottom={0.9} />);
     expect(screen.getByText(i18n.t('home.no_visible_pets'))).toBeTruthy();
   });
 
   it('이미지 로드에 실패한 펫만 무대에서 빠진다', async () => {
-    mockLoadData.mockImplementation((source: string, _decode: unknown, onError: () => void) => {
-      if (source.endsWith('/PENGUIN')) {
-        onError();
-        return Promise.resolve(null);
-      }
+    mockLoadData.mockImplementation((source: string) => {
+      if (source.endsWith('/PENGUIN')) return Promise.resolve(null);
       return Promise.resolve({ width: () => 140, height: () => 140 });
     });
 
     await render(
-      <PetStage personas={[persona('1', 'CAT'), persona('2', 'PENGUIN'), persona('3', 'QUOKKA')]} />,
+      <PetStage personas={[persona('1', 'CAT'), persona('2', 'PENGUIN'), persona('3', 'QUOKKA')]} fieldTop={0.4} fieldBottom={0.9} />,
     );
 
     await waitFor(() => expect(screen.queryByTestId('wandering-pet-2')).toBeNull());
