@@ -16,6 +16,15 @@ export const QuizCardContent = ({ quiz }: QuizCardContentProps) => {
   return (
     <div
       className="p-3 cursor-pointer select-none"
+      role="button"
+      tabIndex={0}
+      aria-expanded={expanded}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setExpanded((prev) => !prev);
+        }
+      }}
       onClick={() => setExpanded((prev) => !prev)}
     >
       <div className="flex items-center gap-1.5 mb-2">
@@ -73,6 +82,15 @@ export const SolveContextCardContent = ({ context }: SolveContextCardContentProp
   return (
     <div
       className="rounded-lg border border-slate-200 bg-white p-3 cursor-pointer select-none"
+      role="button"
+      tabIndex={0}
+      aria-expanded={expanded}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setExpanded((prev) => !prev);
+        }
+      }}
       onClick={() => setExpanded((prev) => !prev)}
     >
       <div className="flex items-center gap-1.5 mb-2">
@@ -89,9 +107,7 @@ export const SolveContextCardContent = ({ context }: SolveContextCardContentProp
 
       <div className="flex items-center justify-between">
         <span className="text-sm text-slate-700">{context.userId}</span>
-        <span className="text-sm font-medium text-blue-600">
-          {context.prize.toLocaleString()}P
-        </span>
+        <span className="text-sm font-medium text-blue-600">{context.prize.toLocaleString()}P</span>
       </div>
 
       <AnimatePresence>

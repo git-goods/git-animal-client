@@ -1,6 +1,6 @@
 import { type ReactNode, useState } from "react";
 import { Check, Trash2 } from "lucide-react";
-import { motion, useMotionValue, useTransform, animate } from "motion/react";
+import { animate, motion, useMotionValue, useTransform } from "motion/react";
 
 interface SwipeAction {
   type: "approve" | "delete";
@@ -69,7 +69,10 @@ export const SwipeableCard = ({ children, leftAction, rightAction }: SwipeableCa
           className={`absolute inset-y-0 left-0 flex items-center justify-center ${actionConfig[rightAction.type].bg}`}
           style={{ width: ACTION_WIDTH, opacity: leftOpacity }}
         >
-          <motion.div className="flex flex-col items-center gap-1 text-white" style={{ scale: leftScale }}>
+          <motion.div
+            className="flex flex-col items-center gap-1 text-white"
+            style={{ scale: leftScale }}
+          >
             {(() => {
               const Icon = actionConfig[rightAction.type].icon;
               return <Icon className="h-5 w-5" />;
@@ -85,7 +88,10 @@ export const SwipeableCard = ({ children, leftAction, rightAction }: SwipeableCa
           className={`absolute inset-y-0 right-0 flex items-center justify-center ${actionConfig[leftAction.type].bg}`}
           style={{ width: ACTION_WIDTH, opacity: rightOpacity }}
         >
-          <motion.div className="flex flex-col items-center gap-1 text-white" style={{ scale: rightScale }}>
+          <motion.div
+            className="flex flex-col items-center gap-1 text-white"
+            style={{ scale: rightScale }}
+          >
             {(() => {
               const Icon = actionConfig[leftAction.type].icon;
               return <Icon className="h-5 w-5" />;

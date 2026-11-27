@@ -50,6 +50,8 @@ module.exports = {
   overrides: [{ files: ['*.js?(x)', '*.ts?(x)'] }],
   rules: {
     'react/react-in-jsx-scope': 'off',
+    // TS 타입이 props 를 검사한다.
+    'react/prop-types': 'off',
     'react/jsx-curly-brace-presence': [
       'warn',
       {
