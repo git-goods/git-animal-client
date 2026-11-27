@@ -1,15 +1,20 @@
-import { Image, ScrollView, Text, View, type ImageSourcePropType } from 'react-native';
+import { Image, Pressable, ScrollView, Text, View, type ImageSourcePropType } from 'react-native';
 import { colors } from '@gitanimals/ui-tailwind/theme';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ShopBackground } from '../../src/shop/ShopArt';
 import { sans } from '../../src/ui/sans';
+import { Snackbar } from '../../src/ui/Snackbar';
 import { TAB_BAR_HEIGHT } from '../../src/ui/TabBar';
 
 // 피그마 943:29011 Game. 하늘·도시 배경은 상점과 같다
 export default function Game() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const router = useRouter();
+  // 퀴즈를 만들고 돌아오면 서버 메시지를 스낵바로 보여 준다
+  const { notice } = useLocalSearchParams<{ notice?: string }>();
   const fill = (text: string, point: number) => text.replace('[point]', String(point));
 
   return (
@@ -30,13 +35,14 @@ export default function Game() {
           </Text>
         </View>
 
-        {/* ponytail: 카드는 아직 누를 곳이 없다. 퀴즈 만들기·풀기 화면이 붙을 때 onPress 를 단다 */}
+        {/* ponytail: 퀴즈 풀기·짝맞추기는 아직 누를 곳이 없다. 화면이 붙을 때 onPress 를 단다 */}
         <View style={{ gap: 8 }}>
           <GameCard
             icon={require('../../assets/game/create-quiz.png')}
             title={t('quiz.create-quiz-card-title')}
             description={fill(t('quiz.create-quiz-card-description'), 5000)}
             badge="5000P"
+            onPress={() => router.push('/quiz-create')}
           />
           <GameCard
             icon={require('../../assets/game/solve-quiz.png')}
@@ -52,13 +58,29 @@ export default function Game() {
           />
         </View>
       </ScrollView>
+      <Snackbar message={notice} bottom={TAB_BAR_HEIGHT + insets.bottom + 16} />
     </View>
   );
 }
 
-function GameCard({ icon, title, description, badge }: { icon: ImageSourcePropType; title: string; description: string; badge: string }) {
+function GameCard({
+  icon,
+  title,
+  description,
+  badge,
+  onPress,
+}: {
+  icon: ImageSourcePropType;
+  title: string;
+  description: string;
+  badge: string;
+  onPress?: () => void;
+}) {
   return (
-    <View
+    <Pressable
+      accessibilityRole="button"
+      disabled={!onPress}
+      onPress={onPress}
       className="flex-row items-center"
       style={{ gap: 12, paddingHorizontal: 24, paddingVertical: 20, borderRadius: 10, backgroundColor: colors['white-alpha']['25'] }}
     >
@@ -74,6 +96,6 @@ function GameCard({ icon, title, description, badge }: { icon: ImageSourcePropTy
         {/* 피그마 943:29796 brand-color-glacier. ui-tailwind 토큰에 없다 */}
         <Text style={[sans(10, 1.5), { color: '#96c0d6' }]}>{badge}</Text>
       </View>
-    </View>
+    </Pressable>
   );
 }

@@ -1,6 +1,5 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useWindowDimensions, FlatList, Image, Pressable, Text, View } from 'react-native';
-import { Canvas, LinearGradient, Rect, vec } from '@shopify/react-native-skia';
 import { colors } from '@gitanimals/ui-tailwind/theme';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { userQueries } from '@gitanimals/react-query';
@@ -14,6 +13,7 @@ import { PET_SIZE } from '../src/home/WanderingPet';
 import { HOME_PET_MAX, personaImageUrl, pickHomePets } from '../src/home/pickHomePets';
 import { toggleSelection } from '../src/home/toggleSelection';
 import { PixelSprite } from '../src/ui/pixel';
+import { BottomDim } from '../src/ui/BottomDim';
 import { CanaryButton } from '../src/ui/CanaryButton';
 import { sans } from '../src/ui/sans';
 
@@ -62,16 +62,6 @@ const PetCell = memo(function PetCell({
 });
 
 // 피그마 bottom 의 dim: 위는 투명, 절반부터 배경색
-function Dim({ width }: { width: number }) {
-  return (
-    <Canvas pointerEvents="none" style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 160 }}>
-      <Rect x={0} y={0} width={width} height={160}>
-        <LinearGradient start={vec(0, 0)} end={vec(0, 160)} colors={['rgba(24, 26, 29, 0)', BG, BG]} positions={[0, 0.5, 1]} />
-      </Rect>
-    </Canvas>
-  );
-}
-
 export default function SelectPet() {
   const { t } = useTranslation();
   const router = useRouter();
@@ -148,7 +138,7 @@ export default function SelectPet() {
           <PetCell persona={item} size={cell} selected={selected.has(item.id)} onToggle={toggle} />
         )}
       />
-      <Dim width={width} />
+      <BottomDim />
       <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, paddingHorizontal: 16, paddingTop: 8, paddingBottom: insets.bottom + 8 }}>
         <CanaryButton label={t('selectPet.save')} className="h-10 px-4" disabled={!changed || saving} onPress={() => void save()} />
       </View>
