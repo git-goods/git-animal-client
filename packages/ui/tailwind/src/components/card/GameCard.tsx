@@ -77,7 +77,7 @@ export function GameCard({ title, percentage, tier, imageUrl, size = 'medium' }:
           {title}
         </div>
 
-        <div className="text-right font-bold text-black">{percentage}%</div>
+        <div className="text-right font-bold text-black">{percentage.replace('%', '')}%</div>
       </div>
     </div>
   );
