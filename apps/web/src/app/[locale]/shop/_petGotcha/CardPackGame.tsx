@@ -22,8 +22,9 @@ const TIER_RANK: Record<AnimalTierType, number> = { EX: 0, S_PLUS: 1, A_PLUS: 2,
 const tierOf = (p: GotchaResult) => getAnimalTierInfo(Number(p.dropRate.replace('%', '')));
 const isRare = (p: GotchaResult) => tierOf(p) === 'EX' || tierOf(p) === 'S_PLUS';
 
-// 회전(0.5s)이 끝나고 한 박자 뒤 — 이때 광채/컨페티로 레어를 강조한다
-const RARE_EMPHASIS_DELAY_MS = 500;
+// 레어 강조(팝·광채·컨페티)는 모두 이 값에 맞춘다 — 뒷면이 보이는 동안 터지면 등급이 미리 새어나간다
+const FLIP_DURATION_S = 0.5;
+const RARE_EMPHASIS_DELAY_MS = FLIP_DURATION_S * 1000;
 
 type Phase = 'pack' | 'opening' | 'revealing' | 'finale' | 'done';
 
@@ -159,29 +160,31 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
       onClick={handleStageClick}
     >
       {/* 닫힌 덱(×10) — 응답 대기(opening) 동안에도 남겨 정적인 빈 화면을 만들지 않는다 */}
-      <AnimatePresence>
+      {/* popLayout — 사라지는 덱이 자리를 차지하면 그리드가 밀렸다가 튄다 */}
+      <AnimatePresence mode="popLayout">
         {(phase === 'pack' || phase === 'opening') && (
           <motion.button
             type="button"
             key="deck"
             className="relative z-10"
-            disabled={phase === 'opening'}
+            // disabled 를 쓰면 포커스가 다이얼로그 밖으로 빠진다 — openPack 의 phase 가드로 막는다
+            aria-disabled={phase === 'opening'}
             onClick={(e) => {
               e.stopPropagation();
               openPack();
             }}
-            aria-label="open pack"
+            aria-label={t('open-pack')}
             initial={{ scale: 0.9, opacity: 0 }}
             animate={
               reduce
                 ? { scale: 1, opacity: 1 }
                 : phase === 'opening'
-                  ? { scale: [1, 1.06, 1], opacity: 1, rotate: [0, -2, 2, 0] }
+                  ? { scale: [1, 1.06, 1], opacity: 1, rotate: [0, -2, 2, 0], y: 0 }
                   : { scale: 1, opacity: 1, y: [0, -10, 0] }
             }
             exit={{ scale: 1.15, opacity: 0, transition: { duration: 0.2 } }}
             transition={{
-              y: { duration: 1.8, repeat: Infinity, ease: 'easeInOut' },
+              y: phase === 'opening' ? { duration: 0.2 } : { duration: 1.8, repeat: Infinity, ease: 'easeInOut' },
               scale: phase === 'opening' ? { duration: 0.6, repeat: Infinity } : { duration: 0.3 },
               rotate: { duration: 0.6, repeat: Infinity },
               default: { duration: 0.3 },
@@ -257,7 +260,7 @@ export function CardPackGame({ onOpen, results, onClose, onBusyChange }: Props) 
       </AnimatePresence>
 
       {/* 안내 문구 */}
-      <div className="absolute bottom-6 left-0 w-full text-center">
+      <div className="absolute bottom-6 left-0 z-40 w-full text-center">
         {phase === 'pack' && <p className="glyph16-regular text-white/80">{t('open-pack')}</p>}
         {phase === 'opening' && <p className="glyph16-regular text-white/60">{t('gotcha-in-progress')}</p>}
         {(phase === 'revealing' || phase === 'finale') && (
@@ -330,8 +333,7 @@ function PackCard({
           className="pointer-events-none absolute -inset-1.5 -z-10 rounded-2xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          // 뒤집힘이 끝나고 한 박자 뒤에 번지도록 — 뒷면에서 광채가 새면 등급이 미리 노출된다
-          transition={{ duration: 0.35, delay: isBest ? 0 : 0.45 }}
+          transition={{ duration: 0.35, delay: FLIP_DURATION_S }}
           style={{
             boxShadow: `0 0 ${isBest ? 28 : 18}px ${isBest ? 8 : 4}px ${TIER_GLOW[tier]}`,
             background: `${TIER_GLOW[tier]}22`,
@@ -342,7 +344,10 @@ function PackCard({
         className="relative h-full w-full [transform-style:preserve-3d]"
         initial={false}
         animate={{ rotateY: isFlipped ? 180 : 0, scale: isFlipped && rare ? [1, 1.16, 1] : 1 }}
-        transition={{ rotateY: { duration: 0.5, ease: 'easeInOut' }, scale: { duration: 0.45 } }}
+        transition={{
+          rotateY: { duration: FLIP_DURATION_S, ease: 'easeInOut' },
+          scale: { duration: 0.45, delay: FLIP_DURATION_S / 2 },
+        }}
       >
         <div className="absolute h-full w-full [backface-visibility:hidden]">
           <AnimalCardBack tier="S_PLUS" />
