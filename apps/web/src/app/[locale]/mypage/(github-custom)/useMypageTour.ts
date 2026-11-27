@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
+import { buttonVariants, cn } from '@gitanimals/ui-tailwind';
 import { driver, type DriveStep } from 'driver.js';
 
 import { LOCAL_STORAGE_KEY } from '@/constants/storage';
@@ -10,6 +11,10 @@ const STEPS: Record<TourType, string[]> = {
   farm: ['preview', 'pet', 'background', 'publish'],
   line: ['preview', 'pet', 'publish'],
 };
+
+const POPOVER_STYLE =
+  'bg-gray-150 text-white rounded-2xl border border-solid border-white-alpha-10 p-5 min-w-[280px] max-w-[320px] shadow-lg';
+const BUTTON_BASE = 'inline-flex items-center justify-center px-[16px]';
 
 export const tourTarget = (name: string) => ({ 'data-tour': name });
 
@@ -31,6 +36,29 @@ export function useMypageTour(type: TourType) {
 
     const tour = driver({
       showProgress: true,
+      popoverClass: POPOVER_STYLE,
+      // driver.css 기본 스타일을 서비스 Dialog(sm)·Button 과 같은 모양으로 덮는다
+      onPopoverRender: (popover) => {
+        popover.title.className = cn(popover.title.className, 'glyph16-bold text-white');
+        popover.description.className = cn(popover.description.className, 'glyph14-regular text-white-alpha-75');
+        popover.progress.className = cn(popover.progress.className, 'glyph12-regular text-white-alpha-50');
+        popover.closeButton.className = cn(popover.closeButton.className, 'text-white-alpha-50 hover:text-white');
+        popover.previousButton.className = cn(
+          popover.previousButton.className,
+          buttonVariants({ variant: 'secondary', size: 's' }),
+          BUTTON_BASE,
+        );
+        popover.nextButton.className = cn(
+          popover.nextButton.className,
+          buttonVariants({ variant: 'primary', size: 's' }),
+          BUTTON_BASE,
+        );
+        // driver 기본 버튼 hover 배경(#f7f7f7)이 서비스 버튼 색을 이겨서 기본 클래스를 뗀다
+        popover.previousButton.classList.remove('driver-popover-footer-btn');
+        popover.nextButton.classList.remove('driver-popover-footer-btn');
+        // ponytail: 화살표는 흰색 고정이라 숨김. 필요하면 globals.css 에서 방향별 border 색을 덮기
+        popover.arrow.style.display = 'none';
+      },
       nextBtnText: t('next'),
       prevBtnText: t('prev'),
       doneBtnText: t('done'),
