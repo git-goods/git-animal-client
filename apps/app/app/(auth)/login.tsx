@@ -10,7 +10,6 @@ import { useAuth } from '../../src/auth/AuthProvider';
 import { loginWithGithub } from '../../src/auth/githubLogin';
 import { FONT } from '../../src/ui/pixel/glyph';
 import { CenterLogo } from '../../src/ui/CenterLogo';
-import { sans } from '../../src/ui/sans';
 
 function DevTokenForm() {
   const { signIn } = useAuth();
@@ -70,6 +69,12 @@ function GithubLoginButton() {
 
   return (
     <View className="gap-2">
+      {failed && (
+        // 버튼과 같은 폭·모서리로 붙여 한 덩어리로 보이게 한다
+        <View style={{ borderRadius: 14, backgroundColor: colors.black['75'], paddingVertical: 10 }}>
+          <Text style={{ fontSize: 15, fontWeight: '600', color: colors.white.DEFAULT, textAlign: 'center' }}>{t('auth.login_failed')}</Text>
+        </View>
+      )}
       {/* 피그마 943:28935 */}
       <Pressable
         onPress={login}
@@ -89,7 +94,6 @@ function GithubLoginButton() {
         <Image source={require('../../assets/ui/github.png')} style={{ width: 18, height: 18 }} />
         <Text style={{ fontSize: 19, fontWeight: '600', color: colors.black.DEFAULT }}>{t('auth.github_login')}</Text>
       </Pressable>
-      {failed && <Text style={[sans(13, 1.4), { color: colors.black.DEFAULT, textAlign: 'center' }]}>{t('auth.login_failed')}</Text>}
     </View>
   );
 }
