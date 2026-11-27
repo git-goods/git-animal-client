@@ -30,7 +30,7 @@ export const Notification = wrap
         <button className="relative" onClick={() => setIsOpen((prev) => !prev)}>
           <BellIcon size={24} />
           {inboxCount > 0 && (
-            <div className="glyph12-regular absolute right-[-10px] top-[-10px] flex h-[18px] w-[18px] items-center justify-center rounded-[12px] bg-[#019C5A] text-white">
+            <div className="glyph12-regular absolute right-[-10px] top-[-10px] flex h-[18px] w-[18px] items-center justify-center rounded-[12px] bg-green-500 text-white">
               {inboxCount}
             </div>
           )}

@@ -53,4 +53,4 @@ const rightSectionStyle = cn(
   'mobile:gap-[12px] mobile:bg-none mobile:p-0 mobile:max-h-[auto] mobile:h-auto mobile:overflow-y-auto mobile:rounded-none',
 );
 
-const containerStyle = 'min-h-screen h-fit bg-[#019C5A]';
+const containerStyle = 'min-h-screen h-fit bg-green-500';

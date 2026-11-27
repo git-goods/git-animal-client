@@ -11,7 +11,7 @@ interface ChristmasCardProps {
 
 export function ChristmasCard({ type }: ChristmasCardProps) {
   return (
-    <div className="[&_.animal-card-type]:text-[#000] [&_.animal-card-rating]:text-[#000]">
+    <div className="[&_.animal-card-type]:text-black [&_.animal-card-rating]:text-black">
       <NoRatingCard
         tier="EX"
         type={type}

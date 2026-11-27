@@ -115,7 +115,7 @@ function Card({ item }: { item: LaboratoryItem }) {
         <p className="glyph14-regular text-white-alpha-75">{item.description}</p>
       </div>
 
-      <div className="flex justify-end pt-[8px] border-t border-solid border-[rgba(255,255,255,0.05)]">
+      <div className="flex justify-end pt-[8px] border-t border-solid border-white-alpha-5">
         <button
           className={upvoteButtonStyle}
           onClick={handleUpvote}
@@ -136,7 +136,7 @@ function Card({ item }: { item: LaboratoryItem }) {
 }
 
 const cardStyle =
-  'relative bg-[linear-gradient(145deg,_rgba(255,255,255,0.1),_rgba(255,255,255,0.05))] backdrop-blur-[10px] rounded-[20px] p-[24px] flex flex-col gap-[8px] border border-solid border-[rgba(255,255,255,0.1)] shadow-[0_8px_32px_rgba(0,0,0,0.1)] transition-all duration-300 ease-in-out cursor-pointer overflow-hidden ' +
+  'relative bg-[linear-gradient(145deg,_rgba(255,255,255,0.1),_rgba(255,255,255,0.05))] backdrop-blur-[10px] rounded-[20px] p-[24px] flex flex-col gap-[8px] border border-solid border-white-alpha-10 shadow-[0_8px_32px_rgba(0,0,0,0.1)] transition-all duration-300 ease-in-out cursor-pointer overflow-hidden ' +
   'before:content-[""] before:absolute before:top-0 before:left-0 before:right-0 before:h-[1px] before:bg-[linear-gradient(150.51deg,_#016EDB_11.25%,_#16B7CD_61.95%,_#5CCA69_94.01%)] before:opacity-0 before:transition-[opacity] before:duration-300 before:[transition-timing-function:ease] ' +
   'hover:[transform:translateY(-2px)_scale(1.02)] hover:shadow-[0_20px_40px_rgba(82,209,109,0.3)] hover:border-[rgba(82,209,109,0.5)] hover:before:opacity-100 ' +
   'active:[transform:translateY(-4px)_scale(1.01)]';
@@ -145,7 +145,7 @@ const badgeStyle =
   'text-[12px] font-bold p-[4px_12px] rounded-[12px] bg-[linear-gradient(150.51deg,_#016EDB_11.25%,_#16B7CD_61.95%,_#5CCA69_94.01%)] text-white whitespace-nowrap animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite] shadow-[0_0_20px_rgba(82,209,109,0.5)]';
 
 const upvoteButtonStyle =
-  'flex items-center gap-[8px] p-[10px_16px] rounded-[12px] bg-[rgba(255,255,255,0.05)] border border-solid border-[rgba(255,255,255,0.1)] text-white text-[14px] font-semibold cursor-pointer transition-all duration-300 [transition-timing-function:ease] ' +
+  'flex items-center gap-[8px] p-[10px_16px] rounded-[12px] bg-white-alpha-5 border border-solid border-white-alpha-10 text-white text-[14px] font-semibold cursor-pointer transition-all duration-300 [transition-timing-function:ease] ' +
   'enabled:hover:bg-[linear-gradient(135deg,_#016EDB_0%,_#16B7CD_100%)] enabled:hover:border-transparent enabled:hover:[transform:scale(1.03)] enabled:hover:shadow-[0_4px_12px_rgba(82,209,109,0.5)] ' +
   'enabled:active:[transform:scale(0.98)] ' +
   'data-[upvoted=true]:bg-[linear-gradient(135deg,_#d9b9f9_0%,_#e56997_100%)] data-[upvoted=true]:border-transparent data-[upvoted=true]:cursor-default ' +

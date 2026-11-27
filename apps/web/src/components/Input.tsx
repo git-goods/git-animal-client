@@ -8,7 +8,7 @@ function Input(props: InputProps) {
     <input
       {...props}
       className={cn(
-        "w-full rounded-[8px] border border-solid border-[rgba(0,0,0,0.1)] bg-transparent py-[14px] pb-[13px] pl-[20px] pr-[14px] font-['Product_Sans'] text-[16px] font-normal leading-[150%] tracking-[-0.3px] text-[rgba(0,0,0,0.75)] outline-none focus:border focus:border-solid focus:border-[#00894d] placeholder:font-['Product_Sans'] placeholder:text-[16px] placeholder:font-normal placeholder:leading-[150%] placeholder:tracking-[-0.3px] placeholder:text-[rgba(0,0,0,0.5)]",
+        "w-full rounded-[8px] border border-solid border-black-alpha-10 bg-transparent py-[14px] pb-[13px] pl-[20px] pr-[14px] font-['Product_Sans'] text-[16px] font-normal leading-[150%] tracking-[-0.3px] text-black-alpha-75 outline-none focus:border focus:border-solid focus:border-brand-green placeholder:font-['Product_Sans'] placeholder:text-[16px] placeholder:font-normal placeholder:leading-[150%] placeholder:tracking-[-0.3px] placeholder:text-black-alpha-50",
         props.className,
       )}
     />

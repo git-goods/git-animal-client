@@ -180,7 +180,7 @@ const openIconStyle =
   'fixed bottom-0 right-[4px] h-[121px] w-[110px] z-[2] mobile:scale-[0.7] mobile:right-[-12px] mobile:bottom-[-12px]';
 
 const containerStyle =
-  'fixed bottom-[120px] right-[24px] flex flex-col w-[406px] shadow-[0px_4px_24px_0px_rgba(0,0,0,0.25)] bg-[#fff] z-[1400] animate-fade-in-up mobile:w-full mobile:bottom-0 mobile:right-0 mobile:left-0 mobile:gap-0';
+  'fixed bottom-[120px] right-[24px] flex flex-col w-[406px] shadow-[0px_4px_24px_0px_rgba(0,0,0,0.25)] bg-white z-[1400] animate-fade-in-up mobile:w-full mobile:bottom-0 mobile:right-0 mobile:left-0 mobile:gap-0';
 
 const issueOptionColorStyle = 'w-[14px] h-[14px] rounded-full';
 

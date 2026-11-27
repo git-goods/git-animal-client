@@ -90,7 +90,7 @@ const navItemSelectedStyle = 'text-brand-canary';
 const dividerStyle = 'bg-white-alpha-25 h-[1px] m-0 border-none mt-[48px] mb-[20px] mobile:hidden';
 
 const profileImageStyle = cn(
-  'w-[160px] h-[160px] rounded-[50%] bg-[#fff] overflow-hidden',
+  'w-[160px] h-[160px] rounded-[50%] bg-white overflow-hidden',
   'mobile:w-[48px] mobile:h-[48px]',
 );
 

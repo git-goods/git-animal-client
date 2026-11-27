@@ -63,4 +63,4 @@ const levelTextSmallStyle = 'mt-[6px] glyph14-bold';
 
 const levelEmptyTextStyle = 'text-white-alpha-75';
 
-const mergeItemStyle = 'rounded-[16px] border-2 border-solid border-[rgba(255,255,255,0.25)] bg-[rgba(255,255,255,0.25)]';
+const mergeItemStyle = 'rounded-[16px] border-2 border-solid border-white-alpha-25 bg-white-alpha-25';

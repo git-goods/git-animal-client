@@ -11,7 +11,7 @@ interface HalloweenCardProps {
 
 export function HalloweenCard({ type }: HalloweenCardProps) {
   return (
-    <div className="[&_.animal-card-type]:text-[#fff] [&_.animal-card-rating]:text-[#fff]">
+    <div className="[&_.animal-card-type]:text-white [&_.animal-card-rating]:text-white">
       <NoRatingCard
         tier="EX"
         type={type}

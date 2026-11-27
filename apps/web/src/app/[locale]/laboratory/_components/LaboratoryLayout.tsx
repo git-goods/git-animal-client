@@ -130,8 +130,8 @@ export function LaboratoryLayout({
 }
 
 const backButtonStyle =
-  'inline-flex items-center gap-[8px] p-[4px_12px] rounded-[8px] bg-[rgba(255,255,255,0.05)] border border-solid border-[rgba(255,255,255,0.1)] text-white glyph12-regular cursor-pointer transition-all duration-300 [transition-timing-function:ease] ' +
-  'hover:bg-[rgba(255,255,255,0.1)] hover:[transform:translateX(-4px)]';
+  'inline-flex items-center gap-[8px] p-[4px_12px] rounded-[8px] bg-white-alpha-5 border border-solid border-white-alpha-10 text-white glyph12-regular cursor-pointer transition-all duration-300 [transition-timing-function:ease] ' +
+  'hover:bg-white-alpha-10 hover:[transform:translateX(-4px)]';
 
 const experimentBadgeStyle =
   'glyph12-bold p-[4px_8px] rounded-[8px] bg-[linear-gradient(135deg,_#667eea_0%,_#764ba2_100%)] text-white whitespace-nowrap animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite] shadow-[0_0_20px_rgba(102,126,234,0.5)]';

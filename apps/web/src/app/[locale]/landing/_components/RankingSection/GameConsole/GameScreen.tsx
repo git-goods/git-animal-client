@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 export function GameScreen({ isPowered, children }: { isPowered: boolean; children: React.ReactNode }) {
   return (
     <motion.div
-      className="w-full h-full flex items-center justify-center bg-[#000000]"
+      className="w-full h-full flex items-center justify-center bg-black"
       initial={false}
       animate={{
         opacity: isPowered ? 1 : 0,

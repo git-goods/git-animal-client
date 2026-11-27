@@ -15,12 +15,12 @@ function TextArea({ maxLength = 300, ...props }: TextAreaProps) {
   };
 
   return (
-    <div className="relative rounded-[8px] border border-solid border-[rgba(0,0,0,0.1)] focus-within:border focus-within:border-solid focus-within:border-[#00894d] [&:focus-within_strong]:text-[#00894d]">
+    <div className="relative rounded-[8px] border border-solid border-black-alpha-10 focus-within:border focus-within:border-solid focus-within:border-brand-green [&:focus-within_strong]:text-brand-green">
       <textarea
         {...props}
         className={cn(
           props.className,
-          "w-full resize-none rounded-[8px] border-none bg-transparent p-[16px_20px] font-['Product_Sans'] text-[16px] font-normal leading-[150%] tracking-[-0.3px] text-[#000000bf] outline-none placeholder:font-['Product_Sans'] placeholder:text-[16px] placeholder:font-normal placeholder:leading-[150%] placeholder:tracking-[-0.3px] placeholder:text-[rgba(0,0,0,0.5)]",
+          "w-full resize-none rounded-[8px] border-none bg-transparent p-[16px_20px] font-['Product_Sans'] text-[16px] font-normal leading-[150%] tracking-[-0.3px] text-black-alpha-75 outline-none placeholder:font-['Product_Sans'] placeholder:text-[16px] placeholder:font-normal placeholder:leading-[150%] placeholder:tracking-[-0.3px] placeholder:text-black-alpha-50",
         )}
         onChange={onChange}
         maxLength={maxLength}
@@ -29,7 +29,7 @@ function TextArea({ maxLength = 300, ...props }: TextAreaProps) {
         }}
       />
       <div
-        className="absolute bottom-[8px] right-[20px] w-fit font-['Product_Sans'] text-[12px] font-normal text-[rgba(0,0,0,0.5)] [&_strong]:font-normal [&_strong]:text-[rgba(0,0,0,0.75)]"
+        className="absolute bottom-[8px] right-[20px] w-fit font-['Product_Sans'] text-[12px] font-normal text-black-alpha-50 [&_strong]:font-normal [&_strong]:text-black-alpha-75"
         style={{
           color: props.error ? '#FF6B56' : 'rgba(0, 0, 0, 0.5)',
         }}
