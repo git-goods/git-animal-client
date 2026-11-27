@@ -1,36 +1,89 @@
 import { useMemo, useState } from 'react';
-import { FlatList, Image, Pressable, View } from 'react-native';
+import { useWindowDimensions, FlatList, Image, Pressable, Text, View } from 'react-native';
+import { Canvas, LinearGradient, Rect, vec } from '@shopify/react-native-skia';
+import { colors } from '@gitanimals/ui-tailwind/theme';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { userQueries } from '@gitanimals/react-query';
 import type { Persona } from '@gitanimals/api';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FARM_FIELD, FARM_IMAGE } from '../src/home/FarmBackground';
 import { homePetsKey, homePetsOptions, saveHomePets } from '../src/home/homePetSelection';
 import { PetStage } from '../src/home/PetStage';
 import { HOME_PET_MAX, personaImageUrl, pickHomePets } from '../src/home/pickHomePets';
 import { toggleSelection } from '../src/home/toggleSelection';
-import { PixelBox, PixelButton, PixelSprite, PixelText, WOOD } from '../src/ui/pixel';
+import { PixelSprite } from '../src/ui/pixel';
+import { sans } from '../src/ui/sans';
 
-const PREVIEW_HEIGHT = 210;
-const CELL = 70;
+const PREVIEW_HEIGHT = 220;
+const GAP = 4;
+const BG = colors.gray['050'];
 
-function PetCell({ persona, selected, onPress }: { persona: Persona; selected: boolean; onPress: () => void }) {
+// 피그마 banner-pet-select: 고르면 밝은 면 + 테두리, 아니면 어두운 면. 펫 PNG(140) 를 1배로 가운데 두고 잘라 낸다
+function PetCell({ persona, selected, size, onPress }: { persona: Persona; selected: boolean; size: number; onPress: () => void }) {
   return (
     <Pressable
       accessibilityRole="checkbox"
       accessibilityState={{ checked: selected }}
       accessibilityLabel={persona.type}
       onPress={onPress}
-      className="flex-1 p-1"
+      style={{
+        width: size,
+        height: size,
+        borderRadius: 8,
+        overflow: 'hidden',
+        backgroundColor: selected ? colors.white['25'] : colors.white['10'],
+        borderWidth: selected ? 1.5 : 0,
+        borderColor: colors.white['50'],
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
     >
-      <PixelBox tone={selected ? 'gold' : 'wood'} shadow={false}>
-        <View className="items-center" style={{ opacity: selected ? 1 : 0.6 }}>
-          <PixelSprite source={personaImageUrl(persona.type)} maxWidth={CELL} maxHeight={CELL} />
-          <PixelText variant="glyph12" style={{ color: WOOD.ink }}>{`Lv.${persona.level}`}</PixelText>
-        </View>
-      </PixelBox>
+      <View style={{ position: 'absolute', left: (size - 140) / 2, top: (size - 140) / 2 }}>
+        <PixelSprite source={personaImageUrl(persona.type)} maxWidth={140} maxHeight={140} />
+      </View>
+      <View style={{ position: 'absolute', right: 2, top: 57, backgroundColor: colors.black['25'], borderRadius: 12, paddingHorizontal: 8, paddingVertical: 2 }}>
+        <Text style={[sans(10, 1.5), { color: colors.white['75'] }]}>{`Lv.${persona.level}`}</Text>
+      </View>
+    </Pressable>
+  );
+}
+
+// 피그마 bottom 의 dim: 위는 투명, 절반부터 배경색
+function Dim({ width }: { width: number }) {
+  return (
+    <Canvas pointerEvents="none" style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 160 }}>
+      <Rect x={0} y={0} width={width} height={160}>
+        <LinearGradient start={vec(0, 0)} end={vec(0, 160)} colors={['rgba(24, 26, 29, 0)', BG, BG]} positions={[0, 0.5, 1]} />
+      </Rect>
+    </Canvas>
+  );
+}
+
+// 피그마 primary-S: canary 면, 검정 1px 테두리, 위 밝은·아래 어두운 3px 안쪽 띠, 아래 그림자
+function SaveButton({ label, disabled, onPress }: { label: string; disabled: boolean; onPress: () => void }) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ disabled }}
+      disabled={disabled}
+      onPress={onPress}
+      style={{
+        height: 40,
+        borderRadius: 6,
+        borderWidth: 1,
+        borderColor: colors.black.DEFAULT,
+        backgroundColor: colors.brand.canary,
+        overflow: 'hidden',
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: disabled ? 0.5 : 1,
+        boxShadow: '0px 4px 2px rgba(0, 0, 0, 0.25)',
+      }}
+    >
+      <View style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 3, backgroundColor: '#fdfed2' }} />
+      <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 3, backgroundColor: '#c4c382' }} />
+      <Text style={[sans(14, 1.5), { color: colors.black.DEFAULT }]}>{label}</Text>
     </Pressable>
   );
 }
@@ -66,41 +119,53 @@ export default function SelectPet() {
     }
   };
 
+  const { width } = useWindowDimensions();
+  const cell = (width - 32 - GAP * 3) / 4;
+
   return (
-    <View className="flex-1" style={{ paddingTop: insets.top, backgroundColor: WOOD.mid }}>
-      <View className="flex-row items-center gap-3 px-4 py-2">
-        <PixelButton label="<" onPress={() => router.back()} />
-        <PixelText variant="glyph18" bold style={{ color: WOOD.ink }}>{t('selectPet.title')}</PixelText>
+    <View className="flex-1" style={{ backgroundColor: BG, paddingTop: insets.top }}>
+      <View style={{ height: 44, justifyContent: 'center', alignItems: 'center' }}>
+        <Pressable accessibilityRole="button" accessibilityLabel={t('common.back')} onPress={() => router.back()} style={{ position: 'absolute', left: 16 }} hitSlop={10}>
+          <Image source={require('../assets/ui/chevron-left.png')} style={{ width: 24, height: 24 }} />
+        </Pressable>
+        <Text style={[sans(18, 1.2, true), { color: colors.white.DEFAULT }]}>{t('selectPet.title')}</Text>
       </View>
       <FlatList
         data={all}
         keyExtractor={(p) => p.id}
         numColumns={4}
-        contentContainerStyle={{ paddingHorizontal: 12, paddingBottom: 120 }}
+        columnWrapperStyle={{ gap: GAP }}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16, paddingBottom: 160, gap: GAP }}
         ListHeaderComponent={
-          <View className="gap-3 px-1 pb-2 pt-2">
-            <PixelBox shadow={false} className="self-stretch">
-              <View style={{ height: PREVIEW_HEIGHT, margin: -9, overflow: 'hidden' }}>
-                <Image source={FARM_IMAGE} resizeMode="cover" className="absolute inset-x-0" style={{ top: '-75%', height: '250%' }} />
-                <PetStage personas={all.filter((p) => current.includes(p.id))} fieldTop={0.05} fieldBottom={0.95} />
+          <View style={{ gap: 24, marginBottom: 12 - GAP }}>
+            <View style={{ gap: 12 }}>
+              <Text style={[sans(15, 1.5, true), { color: colors.white.DEFAULT }]}>{t('selectPet.preview')}</Text>
+              <View style={{ height: PREVIEW_HEIGHT, borderRadius: 8, overflow: 'hidden' }}>
+                <Image source={require('../assets/home/preview-bg.png')} style={{ position: 'absolute', width: '100%', height: '100%' }} />
+                <PetStage personas={all.filter((p) => current.includes(p.id))} fieldTop={0} fieldBottom={1} />
               </View>
-            </PixelBox>
-            <View className="flex-row items-center justify-between">
-              <PixelText variant="glyph14" style={{ color: WOOD.ink }}>{t('selectPet.hint')}</PixelText>
-              <PixelText variant="glyph14" bold style={{ color: WOOD.ink }}>{`${current.length}/${HOME_PET_MAX}`}</PixelText>
+            </View>
+            <View className="flex-row items-start justify-between">
+              <Text style={[sans(15, 1.5), { color: colors.white['50'] }]}>{t('selectPet.hint')}</Text>
+              <Text style={sans(15, 1.5)}>
+                <Text style={{ color: colors.white['90'] }}>{current.length}</Text>
+                <Text style={{ color: colors.white['50'] }}>{`/${HOME_PET_MAX}`}</Text>
+              </Text>
             </View>
           </View>
         }
         renderItem={({ item }) => (
           <PetCell
             persona={item}
+            size={cell}
             selected={current.includes(item.id)}
             onPress={() => setPicked(toggleSelection(current, item.id, HOME_PET_MAX))}
           />
         )}
       />
-      <View className="absolute inset-x-0 bottom-0 px-4 pt-3" style={{ paddingBottom: insets.bottom + 12, backgroundColor: WOOD.mid }}>
-        <PixelButton label={t('selectPet.save')} onPress={() => void save()} disabled={!changed || saving} wide />
+      <Dim width={width} />
+      <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, paddingHorizontal: 16, paddingTop: 8, paddingBottom: insets.bottom + 8 }}>
+        <SaveButton label={t('selectPet.save')} disabled={!changed || saving} onPress={() => void save()} />
       </View>
     </View>
   );

@@ -238,6 +238,7 @@
   "selectPet": {
     "title": "Home pets",
     "hint": "Pick the pets shown at home",
-    "save": "Save"
+    "save": "Save",
+    "preview": "Preview"
   }
 }
