@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 
 import { registerInterceptors } from '@/apis/interceptor';
 
+// globals.css 보다 먼저 와야 같은 특이도에서 Tailwind 유틸이 driver 기본 스타일을 이긴다
 import 'driver.js/dist/driver.css';
 import './globals.css';
 import '@gitanimals/asset-font/product-sans/index.css';
