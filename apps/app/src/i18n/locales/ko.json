@@ -249,5 +249,10 @@
     "hint": "홈에 보일 펫을 골라 주세요",
     "save": "저장",
     "preview": "미리보기"
+  },
+  "game": {
+    "description": "게임에 참여하고 포인트를 모아보세요!",
+    "matching-card-title": "카드 짝맞추기",
+    "matching-card-description": "카드를 뒤집어 같은 동물을 찾고 포인트를 모아보세요!"
   }
 }
