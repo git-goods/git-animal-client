@@ -3,7 +3,7 @@ import type { PersonaInfo } from '@gitanimals/api';
 import type { CardTierType } from '@gitanimals/ui-tailwind';
 import { CardBack, GameCard } from '@gitanimals/ui-tailwind';
 
-import { getAnimalTierInfo } from '@/utils/animals';
+import { getAnimalTierInfo, toPetName } from '@/utils/animals';
 import { getPersonaImage } from '@/utils/image';
 
 interface AnimalCardProps extends Partial<PersonaInfo> {
@@ -18,7 +18,7 @@ function AnimalCard(props: AnimalCardProps) {
     return (
       <GameCard
         tier="EVOLUTION"
-        title={props.type}
+        title={toPetName(props.type)}
         percentage={props.dropRate}
         imageUrl={getPersonaImage(props.type)}
         size="responsive"
@@ -29,7 +29,7 @@ function AnimalCard(props: AnimalCardProps) {
   return (
     <GameCard
       tier={tier}
-      title={props.type}
+      title={toPetName(props.type)}
       percentage={props.dropRate}
       imageUrl={getPersonaImage(props.type)}
       size="responsive"
