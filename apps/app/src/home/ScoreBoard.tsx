@@ -21,8 +21,8 @@ function gradientEnds(w: number, h: number) {
 function Score({ label, value }: { label: string; value: string }) {
   return (
     <View className="flex-1 items-center">
-      <Text style={[sans(13, 1.4), { color: colors.white['50'], textAlign: 'center' }]}>{label}</Text>
-      <Text style={[sans(18, 1.5), { color: colors.white.DEFAULT, textAlign: 'center' }]}>{value}</Text>
+      <Text style={[sans(13, 1.4), { color: colors['white-alpha']['50'], textAlign: 'center' }]}>{label}</Text>
+      <Text style={[sans(18, 1.5), { color: colors.white, textAlign: 'center' }]}>{value}</Text>
     </View>
   );
 }

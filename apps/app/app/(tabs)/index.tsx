@@ -69,7 +69,7 @@ export default function Home() {
           {/* 피그마 943:18128: 흐림 40 위 검정 20% 원과 흰 paw-print 24 */}
           <View style={{ width: 48, height: 48, borderRadius: 24, overflow: 'hidden', alignItems: 'center', justifyContent: 'center' }}>
             <BlurView intensity={40} className="absolute inset-0" />
-            <View className="absolute inset-0" style={{ backgroundColor: colors.black['25'] }} />
+            <View className="absolute inset-0" style={{ backgroundColor: colors['black-alpha']['25'] }} />
             <Image source={require('../../assets/home/paw.png')} style={{ width: 24, height: 24 }} />
           </View>
         </Pressable>

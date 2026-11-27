@@ -19,7 +19,7 @@ export function CanaryButton({ label, className = '', onPress, disabled = false 
       disabled={disabled}
       onPress={onPress}
       className={`items-center justify-center overflow-hidden rounded-[6px] border border-black bg-brand-canary ${disabled ? 'opacity-50' : ''} ${className}`}
-      style={{ boxShadow: `0px 4px 2px ${colors.black['25']}` }}
+      style={{ boxShadow: `0px 4px 2px ${colors['black-alpha']['25']}` }}
     >
       <View className="absolute inset-x-0 top-0 h-[3px] bg-[#fdfed2]" />
       <View className="absolute inset-x-0 bottom-0 h-[3px] bg-[#c4c382]" />

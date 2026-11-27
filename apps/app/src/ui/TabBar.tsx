@@ -39,7 +39,7 @@ export function TabBar({ state, emitter, navigateToTab, insets }: BottomTabBarPr
     >
       {state.routes.map((route, index) => {
         const focused = state.index === index;
-        const color = focused ? colors.white['90'] : colors.white['25'];
+        const color = focused ? colors['white-alpha']['90'] : colors['white-alpha']['25'];
         const label = t(LABEL_KEYS[route.name] ?? route.name);
 
         const onPress = () => {

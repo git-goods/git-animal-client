@@ -2,7 +2,7 @@ import { Text, View } from 'react-native';
 import { colors } from '@gitanimals/ui-tailwind/theme';
 import { sans } from '../ui/sans';
 
-const FILL = colors.white['75'];
+const FILL = colors['white-alpha']['75'];
 
 // 피그마 943:21748: 반투명 흰 상자(둥근 4) 와 아래로 향한 세모 꼬리(14×12, 위로 3px 겹침)
 export function PetBubble({ text, petSize }: { text: string; petSize: number }) {
@@ -14,7 +14,7 @@ export function PetBubble({ text, petSize }: { text: string; petSize: number }) 
       style={{ position: 'absolute', bottom: petSize * 0.7, left: petSize / 2 - 100, width: 200, alignItems: 'center' }}
     >
       <View style={{ backgroundColor: FILL, borderRadius: 4, paddingHorizontal: 8, paddingVertical: 2, marginBottom: -3 }}>
-        <Text style={[sans(13, 1.4), { color: colors.black['90'], textAlign: 'center', maxWidth: 120 }]}>{text}</Text>
+        <Text style={[sans(13, 1.4), { color: colors['black-alpha']['90'], textAlign: 'center', maxWidth: 120 }]}>{text}</Text>
       </View>
       <View
         style={{

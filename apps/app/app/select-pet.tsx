@@ -44,9 +44,9 @@ const PetCell = memo(function PetCell({
         height: size,
         borderRadius: 8,
         overflow: 'hidden',
-        backgroundColor: selected ? colors.white['25'] : colors.white['10'],
+        backgroundColor: selected ? colors['white-alpha']['25'] : colors['white-alpha']['10'],
         borderWidth: selected ? 1.5 : 0,
-        borderColor: colors.white['50'],
+        borderColor: colors['white-alpha']['50'],
         alignItems: 'center',
         justifyContent: 'center',
       }}
@@ -54,8 +54,8 @@ const PetCell = memo(function PetCell({
       <View style={{ position: 'absolute', left: (size - PET_SIZE) / 2, top: (size - PET_SIZE) / 2 }}>
         <PixelSprite source={personaImageUrl(persona.type)} maxWidth={PET_SIZE} maxHeight={PET_SIZE} />
       </View>
-      <View style={{ position: 'absolute', right: 2, top: 57, backgroundColor: colors.black['25'], borderRadius: 12, paddingHorizontal: 8, paddingVertical: 2 }}>
-        <Text style={[sans(10, 1.5), { color: colors.white['75'] }]}>{`Lv.${persona.level}`}</Text>
+      <View style={{ position: 'absolute', right: 2, top: 57, backgroundColor: colors['black-alpha']['25'], borderRadius: 12, paddingHorizontal: 8, paddingVertical: 2 }}>
+        <Text style={[sans(10, 1.5), { color: colors['white-alpha']['75'] }]}>{`Lv.${persona.level}`}</Text>
       </View>
     </Pressable>
   );
@@ -118,7 +118,7 @@ export default function SelectPet() {
         <Pressable accessibilityRole="button" accessibilityLabel={t('common.back')} onPress={() => router.back()} style={{ position: 'absolute', left: 16 }} hitSlop={10}>
           <Image source={require('../assets/ui/chevron-left.png')} style={{ width: 24, height: 24 }} />
         </Pressable>
-        <Text style={[sans(18, 1.2, true), { color: colors.white.DEFAULT }]}>{t('selectPet.title')}</Text>
+        <Text style={[sans(18, 1.2, true), { color: colors.white }]}>{t('selectPet.title')}</Text>
       </View>
       <FlatList
         data={all}
@@ -129,17 +129,17 @@ export default function SelectPet() {
         ListHeaderComponent={
           <View style={{ gap: 24, marginBottom: 12 - GAP }}>
             <View style={{ gap: 12 }}>
-              <Text style={[sans(15, 1.5, true), { color: colors.white.DEFAULT }]}>{t('selectPet.preview')}</Text>
+              <Text style={[sans(15, 1.5, true), { color: colors.white }]}>{t('selectPet.preview')}</Text>
               <View style={{ height: PREVIEW_HEIGHT, borderRadius: 8, overflow: 'hidden' }}>
                 <Image source={require('../assets/home/preview-bg.png')} style={{ position: 'absolute', width: '100%', height: '100%' }} />
                 <PetStage personas={preview} fieldTop={0} fieldBottom={1} />
               </View>
             </View>
             <View className="flex-row items-start justify-between">
-              <Text style={[sans(15, 1.5), { color: colors.white['50'] }]}>{t('selectPet.hint')}</Text>
+              <Text style={[sans(15, 1.5), { color: colors['white-alpha']['50'] }]}>{t('selectPet.hint')}</Text>
               <Text style={sans(15, 1.5)}>
-                <Text style={{ color: colors.white['90'] }}>{current.length}</Text>
-                <Text style={{ color: colors.white['50'] }}>{`/${HOME_PET_MAX}`}</Text>
+                <Text style={{ color: colors['white-alpha']['90'] }}>{current.length}</Text>
+                <Text style={{ color: colors['white-alpha']['50'] }}>{`/${HOME_PET_MAX}`}</Text>
               </Text>
             </View>
           </View>
