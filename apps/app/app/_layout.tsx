@@ -26,6 +26,7 @@ function AuthStack() {
       <Stack.Protected guard={status === 'signedIn'}>
         <Stack.Screen name={HOME_ROUTE} />
         <Stack.Screen name="select-pet" />
+        <Stack.Screen name="gotcha" options={{ animation: 'fade' }} />
       </Stack.Protected>
       <Stack.Protected guard={status === 'signedOut'}>
         <Stack.Screen name="(auth)" />
